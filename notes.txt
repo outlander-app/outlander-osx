@@ -1,0 +1,290 @@
+Please wait for connection to game server.
+GSw000100000553399
+<--><mode id="GAME"/>
+<-->Welcome to DragonRealms (R) v2.00
+<-->Copyright 2014 Simutronics Corp.
+<-->All Rights Reserved
+<--><mode id="GAME"/>
+<--><app char="Tayek" game="DR" title="[DR: Tayek] StormFront"/>
+<--><streamWindow id="main" title="Story" location="center" target="drop" resident="true"/>
+<--><streamWindow id='inv' title='My Inventory' target='wear' ifClosed='' resident='true'/><clearStream id='inv' ifClosed=''/><pushStream id='inv'/>Your worn items are:
+<-->  some mail gloves
+<-->  a spruce longbow
+<-->  a well-used first aid kit stamped with herb emblems
+<-->  a dull iron wristcuff stamped with a crest
+<-->  an etched steel parry stick with black leather straps
+<-->  a black leather talisman case accented with amber
+<-->  a square chalcedony talisman case strung on a thin platinum chain
+<-->  a wool rucksack
+<-->  a dark steel belt knife
+<-->  a double-breasted coat tailored of dark steelsilk
+<-->  a dark steelsilk balaclava
+<-->  some chain greaves
+<-->  an oval shield
+<-->  a lumpy bundle
+<--><popStream/>
+<--><exposeContainer id='stow'/><container id='stow' title="My Rucksack" target='#39427846' location='right' save='' resident='true'/><clearContainer id="stow"/><inv id='stow'>In the rucksack:</inv><inv id='stow'> a bronze rapier</inv><inv id='stow'> a bascinet helm</inv><inv id='stow'> a bent copper ring engraved with the Estate Holder's crest</inv><inv id='stow'> some bundling rope</inv><inv id='stow'> a light crossbow</inv><inv id='stow'> a tiny wooden tree pin</inv><inv id='stow'> some silver-tipped arrows</inv><inv id='stow'> a map</inv><inv id='stow'> some dark steelsilk gauntlets</inv><inv id='stow'> a pair of steelsilk trousers with blackened steel buttons</inv><inv id='stow'> a dark asketine runestone</inv><openDialog type='dynamic' id='minivitals' title='Stats' location='statBar'><dialogData id='minivitals'></dialogData></openDialog>
+<--><dialogData id='minivitals'><skin id='healthSkin' name='healthBar' controls='health' left='0%' top='0%' width='20%' height='100%'/><progressBar id='health' value='100' text='health 100%' left='0%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><skin id='manaSkin' name='manaBar' controls='mana' left='20%' top='0%' width='20%' height='100%'/><progressBar id='mana' value='100' text='mana 100%' left='20%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><skin id='spiritSkin' name='spiritBar' controls='spirit' left='60%' top='0%' width='20%' height='100%'/><progressBar id='spirit' value='100' text='spirit 100%' left='60%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><skin id='staminaSkin' name='staminaBar' controls='stamina' left='40%' top='0%' width='20%' height='100%'/><progressBar id='stamina' value='100' text='fatigue 100%' left='40%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><progressBar id='concentration' value='100' text='concentration 100%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><openDialog type="dynamic" id="befriend" title="Friends &amp;&amp; Enemies" location="right" target="befriend" height="165" resident="true"><dialogData id="befriend"></dialogData></openDialog>
+<--><dialogData id="befriend" clear="t"></dialogData>
+<--><dialogData id="befriend"><label id='nofriends' align='n' value='No friends added'/></dialogData>
+<--><streamWindow id="familiar" title="Familiar" location="center" resident="true" styleIfClosed="watching"/>
+<--><streamWindow id="thoughts" title="Thoughts" location="center" resident="true" styleIfClosed="thought" timestamp="on"/>
+<--><streamWindow id="logons" title="Arrivals" location="left" resident="true" nameFilterOption="true" timestamp="on"/>
+<--><streamWindow id="death" title="Deaths" location="left" resident="true" nameFilterOption="true" timestamp="on"/>
+<--><streamWindow id="assess" title="Assess" location="right" resident="true"/>
+<--><streamWindow id='conversation' title='Conversation' location='center' resident='true' ifClosed='' timestamp='on'/>
+<--><streamWindow id='whispers' title='Whispers' location='center' resident='true' timestamp='on' ifClosed='conversation'/>
+<--><streamWindow id='talk' title='Talk' location='center' resident='true' timestamp='on' ifClosed='conversation'/>
+<--><streamWindow id='experience' title='Field Experience' location='center' target='drop' ifClosed='' resident='true'/><clearStream id='experience'/><pushStream id='experience'/><output class='mono'/>
+<--><compDef id='exp Shield Usage'></compDef>
+<--><compDef id='exp Light Armor'></compDef>
+<--><compDef id='exp Chain Armor'></compDef>
+<--><compDef id='exp Brigandine'></compDef>
+<--><compDef id='exp Plate Armor'></compDef>
+<--><compDef id='exp Defending'></compDef>
+<--><compDef id='exp Parry Ability'></compDef>
+<--><compDef id='exp Small Edged'></compDef>
+<--><compDef id='exp Large Edged'></compDef>
+<--><compDef id='exp Twohanded Edged'></compDef>
+<--><compDef id='exp Small Blunt'></compDef>
+<--><compDef id='exp Large Blunt'></compDef>
+<--><compDef id='exp Twohanded Blunt'></compDef>
+<--><compDef id='exp Slings'></compDef>
+<--><compDef id='exp Bow'></compDef>
+<--><compDef id='exp Crossbow'></compDef>
+<--><compDef id='exp Staves'></compDef>
+<--><compDef id='exp Polearms'></compDef>
+<--><compDef id='exp Light Thrown'></compDef>
+<--><compDef id='exp Heavy Thrown'></compDef>
+<--><compDef id='exp Brawling'></compDef>
+<--><compDef id='exp Offhand Weapon'></compDef>
+<--><compDef id='exp Melee Mastery'></compDef>
+<--><compDef id='exp Missile Mastery'></compDef>
+<--><compDef id='exp Elemental Magic'></compDef>
+<--><compDef id='exp Attunement'></compDef>
+<--><compDef id='exp Arcana'></compDef>
+<--><compDef id='exp Targeted Magic'></compDef>
+<--><compDef id='exp Augmentation'></compDef>
+<--><compDef id='exp Debilitation'></compDef>
+<--><compDef id='exp Utility'></compDef>
+<--><compDef id='exp Warding'></compDef>
+<--><compDef id='exp Sorcery'></compDef>
+<--><compDef id='exp Evasion'></compDef>
+<--><compDef id='exp Athletics'></compDef>
+<--><compDef id='exp Perception'></compDef>
+<--><compDef id='exp Stealth'></compDef>
+<--><compDef id='exp Locksmithing'></compDef>
+<--><compDef id='exp Thievery'></compDef>
+<--><compDef id='exp First Aid'></compDef>
+<--><compDef id='exp Outdoorsmanship'></compDef>
+<--><compDef id='exp Skinning'></compDef>
+<--><compDef id='exp Forging'></compDef>
+<--><compDef id='exp Engineering'></compDef>
+<--><compDef id='exp Outfitting'></compDef>
+<--><compDef id='exp Alchemy'></compDef>
+<--><compDef id='exp Enchanting'></compDef>
+<--><compDef id='exp Scholarship'></compDef>
+<--><compDef id='exp Mechanical Lore'></compDef>
+<--><compDef id='exp Appraisal'></compDef>
+<--><compDef id='exp Performance'></compDef>
+<--><compDef id='exp Summoning'></compDef>
+<--><compDef id='exp Tactics'></compDef>
+<-->
+<--><compDef id='exp mindstate'></compDef>
+<--><output class=''/>
+<--><popStream id='experience'/>
+<--><component id='exp Shield Usage'></component>
+<--><component id='exp Light Armor'></component>
+<--><component id='exp Chain Armor'></component>
+<--><component id='exp Brigandine'></component>
+<--><component id='exp Plate Armor'></component>
+<--><component id='exp Defending'></component>
+<--><component id='exp Parry Ability'></component>
+<--><component id='exp Small Edged'></component>
+<--><component id='exp Large Edged'></component>
+<--><component id='exp Twohanded Edged'></component>
+<--><component id='exp Small Blunt'></component>
+<--><component id='exp Large Blunt'></component>
+<--><component id='exp Twohanded Blunt'></component>
+<--><component id='exp Slings'></component>
+<--><component id='exp Bow'></component>
+<--><component id='exp Crossbow'></component>
+<--><component id='exp Staves'></component>
+<--><component id='exp Polearms'></component>
+<--><component id='exp Light Thrown'></component>
+<--><component id='exp Heavy Thrown'></component>
+<--><component id='exp Brawling'></component>
+<--><component id='exp Offhand Weapon'></component>
+<--><component id='exp Melee Mastery'></component>
+<--><component id='exp Missile Mastery'></component>
+<--><component id='exp Elemental Magic'></component>
+<--><component id='exp Attunement'></component>
+<--><component id='exp Arcana'></component>
+<--><component id='exp Targeted Magic'></component>
+<--><component id='exp Augmentation'></component>
+<--><component id='exp Debilitation'></component>
+<--><component id='exp Utility'></component>
+<--><component id='exp Warding'></component>
+<--><component id='exp Sorcery'></component>
+<--><component id='exp Evasion'></component>
+<--><component id='exp Athletics'>       Athletics:   50 85% scrutinizing </component>
+<--><component id='exp Perception'></component>
+<--><component id='exp Stealth'></component>
+<--><component id='exp Locksmithing'></component>
+<--><component id='exp Thievery'></component>
+<--><component id='exp First Aid'></component>
+<--><component id='exp Outdoorsmanship'></component>
+<--><component id='exp Skinning'></component>
+<--><component id='exp Forging'></component>
+<--><component id='exp Engineering'></component>
+<--><component id='exp Outfitting'></component>
+<--><component id='exp Alchemy'></component>
+<--><component id='exp Enchanting'></component>
+<--><component id='exp Scholarship'></component>
+<--><component id='exp Mechanical Lore'></component>
+<--><component id='exp Appraisal'>       Appraisal:   33 98% considering  </component>
+<--><component id='exp Performance'></component>
+<--><component id='exp Summoning'></component>
+<--><component id='exp Tactics'></component>
+<--><streamWindow id='group' title='Group' location='center' resident='true' ifClosed='' />
+<--><streamWindow id='atmospherics' title='Atmospherics' location='center' resident='true' timestamp='on' ifClosed='main'/>
+<--><streamWindow id='ooc' title='OOC' location='center' resident='true' timestamp='on' ifClosed=''/>
+<--><openDialog id='quick-simu' location='quickBar' title='Information'><dialogData id='quick-simu' clear='true'><link id='1' value='Game Info' cmd='url:/dr/info/' /><link id='2' value='Calendar' cmd='url:/bounce/redirect.asp?URL=http://forums.play.net/calendar?game=dragonrealms' /><link id='3' value='Forums' cmd='bbs' echo='bbs' /><link id='4' value='News' cmd='news' echo='news' /><link id='5' value='Policy' cmd='policy' echo='policy' /><link id='6' value='Premium' cmd='premium' echo='premium' /><link id='7' value='Platinum' cmd='url:/dr/platinum/' /><link id='8' value='SimuCon' cmd='url:/bounce/redirect.asp?URL=http://www.simucon.com' /><link id='9' value='Box Office' cmd='url:/dr/boxoffice.asp' /><link id='10' value='Vote for DR!' cmd='url:/bounce/redirect.asp?URL=http://www.topmudsites.com/vote-DragonRealms.html' /></dialogData></openDialog>
+<--><openDialog id='quick-char' location='quickBar' title='Character'><dialogData id='quick-char' clear='true'><link id='1' value='Info' cmd='info' echo='info' /><link id='2' value='Exp' cmd='exp' echo='exp' /><link id='3' value='Store' cmd='store window' echo='store window' /><link id='4' value='Look [self]' cmd='look Tayek' echo='look Tayek' /><link id='5' value='Look' cmd='look' echo='look' /><link id='6' value='Profile' cmd='profile /edit' echo='profile /edit' /><link id='7' value='Spells' cmd='spells' echo='spells' /><link id='8' value='Mana' cmd='mana' echo='mana' /><link id='9' value='Health' cmd='health' echo='health' /><link id='10' value='Wealth' cmd='wealth' echo='wealth' /><link id='11' value='Vote for DR!' cmd='url:/bounce/redirect.asp?URL=http://www.topmudsites.com/vote-DragonRealms.html' /></dialogData></openDialog>
+<--><openDialog id='quick-blank' location='quickBar' title='Blank'><dialogData id='quick-blank' clear='true'></dialogData></openDialog>
+<--><switchQuickBar id='quick-simu'/>
+<--><indicator id="IconKNEELING" visible="n"/><indicator id="IconPRONE" visible="n"/><indicator id="IconSITTING" visible="n"/><indicator id="IconSTANDING" visible="y"/><indicator id="IconSTUNNED" visible="n"/><indicator id="IconHIDDEN" visible="n"/><indicator id="IconINVISIBLE" visible="n"/><indicator id="IconDEAD" visible="n"/><indicator id="IconWEBBED" visible="n"/><indicator id="IconJOINED" visible="n"/>
+<--><spell>None</spell>
+<--><left>Empty</left><right>Empty</right>
+<--><endSetup/>
+<--><clearStream id='inv' ifClosed=''/><pushStream id='inv'/>Your worn items are:
+<-->  some mail gloves
+<-->  a spruce longbow
+<-->  a well-used first aid kit stamped with herb emblems
+<-->  a dull iron wristcuff stamped with a crest
+<-->  an etched steel parry stick with black leather straps
+<-->  a black leather talisman case accented with amber
+<-->  a square chalcedony talisman case strung on a thin platinum chain
+<-->  a wool rucksack
+<-->  a dark steel belt knife
+<-->  a double-breasted coat tailored of dark steelsilk
+<-->  a dark steelsilk balaclava
+<-->  some chain greaves
+<-->  an oval shield
+<-->  a lumpy bundle
+<--><popStream/>
+<--><dialogData id='minivitals'><skin id='healthSkin' name='healthBar' controls='health' left='0%' top='0%' width='20%' height='100%'/><progressBar id='health' value='100' text='health 100%' left='0%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><skin id='manaSkin' name='manaBar' controls='mana' left='20%' top='0%' width='20%' height='100%'/><progressBar id='mana' value='100' text='mana 100%' left='20%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><progressBar id='spirit' value='100' text='spirit 100%' left='60%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><skin id='staminaSkin' name='staminaBar' controls='stamina' left='40%' top='0%' width='20%' height='100%'/><progressBar id='stamina' value='100' text='fatigue 100%' left='40%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><dialogData id='minivitals'><progressBar id='concentration' value='100' text='concentration 100%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>
+<--><indicator id='IconBLEEDING' visible='n'/><streamWindow id='room' title='' subtitle='' location='center' target='drop' ifClosed='' resident='true'/>
+<--><clearStream id='room'/>
+<--><pushStream id='room'/>
+<--><compDef id='room desc'/>  <compDef id='room creatures'/><compDef id='room objs'/>
+<--><compDef id='room players'/>
+<--><compDef id='room exits'/>
+<--><compDef id='room extra'/>
+<--><popStream id='room'/>
+<--><nav/>
+<--><streamWindow id='main' title='Story' subtitle=" - [Woodland Path, Brook]" location='center' target='drop'/>
+<--><streamWindow id='room' title='Room' subtitle=" - [Woodland Path, Brook]" location='center' target='drop' ifClosed='' resident='true'/>
+<--><component id='room desc'>This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.</component>
+<--><component id='room objs'></component>
+<--><component id='room players'></component>
+<--><component id='room exits'>Obvious paths: <d>north</d>, <d>east</d>, <d>west</d>.<compass></compass></component>
+<--><component id='room extra'></component>
+<--><output class="mono"/>
+<-->
+<-->----------------------------------------------------------------------------
+<-->   Last login :  Friday, January 24, 2014 at 22:19:56
+<-->       Logoff :  Friday, January 24, 2014 at 22:21:44
+<-->----------------------------------------------------------------------------
+<-->
+<--><output class=""/>
+<--><resource picture="0"/><style id="roomName" />[Woodland Path, Brook]
+<--><style id=""/><preset id='roomDesc'>This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.</preset>  
+<-->Obvious paths: <d>north</d>, <d>east</d>, <d>west</d>.
+<--><compass><dir value="n"/><dir value="e"/><dir value="w"/></compass><pushStream id="logons"/> * Tayek joins the adventure.
+<--><popStream/><prompt time="1390623709">&gt;</prompt>
+<--><output class="mono"/>
+<--><pushBold/>*********************IMPORTANT!***********************
+<--><popBold/>Closing the STORMFRONT front end does NOT necessarily mean your
+<-->Character will be dropped from the game!  To ensure
+<-->that your character is disconnected type QUIT or EXIT!
+<--><pushBold/>*********************IMPORTANT!***********************
+<-->
+<-->* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+<--><popBold/>Dragons of Elanthia just went into Alpha Testing!  Sign up
+<-->for the beta at http://www.dragonsofelanthia.com and keep
+<-->your eyes peeled for an Alpha Key in your email!
+<-->
+<-->If you don't have an Alpha Key yet, you can still watch the
+<-->action on http://www.twitch.tv/simutronics!
+<--><pushBold/>* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+<--><popBold/><output class=""/>
+<--><prompt time="1390623719">&gt;</prompt>
+<--><pushStream id="logons"/> * Havoc Hailer Ticrit Augstawne joins the adventure.
+<--><popStream/><prompt time="1390623724">&gt;</prompt>
+<--><pushBold/>******************************************************
+<-->*** Please check <d>NEWS NEXT</d> for unread <d>NEWS</d> items. ***
+<-->******************************************************
+<--><popBold/><prompt time="1390623729">&gt;</prompt>
+<-->Gromko splashes into view coming from the west.
+<--><component id='room players'>Also here: Gromko.</component>
+<--><prompt time="1390623729">&gt;</prompt>
+<-->Prestidigitator Abrah swims into view coming from the north.
+<--><component id='room players'>Also here: Prestidigitator Abrah and Gromko.</component>
+<--><prompt time="1390623729">&gt;</prompt>
+<--><pushStream id="logons"/> * Dahaita returns home from a hard day of adventuring.
+<--><popStream/><prompt time="1390623731">&gt;</prompt>
+<-->A two auroch caravan arrives from the west, following Gromko.
+<--><component id='room objs'>You also see a two auroch caravan with several things on it.</component>
+<--><prompt time="1390623733">&gt;</prompt>
+<-->Gromko splashes east, moving sideways to the light current.
+<--><component id='room players'>Also here: Prestidigitator Abrah.</component>
+<--><prompt time="1390623734">&gt;</prompt>
+<-->Prestidigitator Abrah splashes north, moving against the light current.
+<--><component id='room players'></component>
+<--><prompt time="1390623734">&gt;</prompt>
+<--><pushStream id="logons"/> * Chief Marshal Penderrin Augstawne joins the adventure.
+<--><popStream/><prompt time="1390623735">&gt;</prompt>
+<-->The two auroch caravan moves east, following Gromko.
+<--><component id='room objs'></component>
+<--><prompt time="1390623737">&gt;</prompt>
+<-->Prestidigitator Abrah swims into view coming from the north.
+<--><component id='room players'>Also here: Prestidigitator Abrah.</component>
+<--><prompt time="1390623739">&gt;</prompt>
+<-->Prestidigitator Abrah splashes north, moving against the light current.
+<--><component id='room players'></component>
+<--><prompt time="1390623755">&gt;</prompt>
+<--><component id='exp Appraisal'><b>       Appraisal:   34 01% thinking     </b></component>
+<--><component id='exp Appraisal'>       Appraisal:   34 01% thinking     </component>
+<-->You've gained a new rank in your ability to appraise.
+<--><prompt time="1390623757">&gt;</prompt>
+<-->Prestidigitator Abrah swims into view coming from the north.
+<--><component id='room players'>Also here: Prestidigitator Abrah.</component>
+<--><prompt time="1390623760">&gt;</prompt>
+<-->Prestidigitator Abrah splashes north, moving against the light current.
+<--><component id='room players'></component>
+<--><prompt time="1390623766">&gt;</prompt>
+<--><pushStream id="logons"/> * Eladrin Crypts joins the adventure.
+<--><popStream/><prompt time="1390623768">&gt;</prompt>
+<-->Prestidigitator Abrah swims into view coming from the north.
+<--><component id='room players'>Also here: Prestidigitator Abrah.</component>
+<--><prompt time="1390623773">&gt;</prompt>
+<-->Prestidigitator Abrah splashes north, moving against the light current.
+<--><component id='room players'></component>
+<--><prompt time="1390623778">&gt;</prompt>
+<-->Prestidigitator Abrah swims into view coming from the north.
+<--><component id='room players'>Also here: Prestidigitator Abrah.</component>
+<--><prompt time="1390623784">&gt;</prompt>
+<-->Prestidigitator Abrah splashes east, moving sideways to the light current.
+<--><component id='room players'></component>
+<--><prompt time="1390623788">&gt;</prompt>
+<-->
