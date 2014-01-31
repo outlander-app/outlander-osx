@@ -24,6 +24,15 @@
     _gameParser = [[GameParser alloc] init];
     
     _globalVars = _gameParser.globalVars;
+    _connected = _gameServer.connected;
+    _vitals = _gameParser.vitals;
+    _room = _gameParser.room;
+    _exp = _gameParser.exp;
+    _thoughts = _gameParser.thoughts;
+    _arrivals = _gameParser.arrivals;
+    _deaths = _gameParser.deaths;
+    _familiar = _gameParser.familiar;
+    _log = _gameParser.log;
     
     [_globalVars setCacheObject:@">" forKey:@"prompt"];
     [_globalVars setCacheObject:@"Empty" forKey:@"lefthand"];

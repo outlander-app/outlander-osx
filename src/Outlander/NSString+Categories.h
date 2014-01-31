@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (Files)
+@interface NSString (Categories)
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
 - (BOOL) containsString: (NSString*) substring;
+- (NSString*) trim;
 - (NSString*) stringFromDateFormat: (NSString*) dateFormat;
 @end

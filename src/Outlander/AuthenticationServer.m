@@ -16,19 +16,17 @@
     self = [super init];
     if (self == nil) return nil;
     
-    [self initialize];
+    asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
     return self;
 }
 
-- (void) initialize {
-    asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    _subject = [RACReplaySubject subject];
-}
-
 - (RACSignal*) connectTo: (NSString *)host onPort:(UInt16)port {
+    _host = host;
+    _port = port;
+    _connected = [RACReplaySubject subject];
     [asyncSocket connectToHost:host onPort:port error:nil];
-    return _subject;
+    return _connected;
 }
 
 - (RACSignal*) authenticate:(NSString *)account password:(NSString *)password game:(NSString *) game character:(NSString *)character {
@@ -37,6 +35,8 @@
     _password = password;
     _game = game;
     _character = character;
+    
+    _subject = [RACReplaySubject subject];
     
     NSData *requestData = [@"K\r\n" dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -48,6 +48,7 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
     NSLog(@"Connected");
+    [_connected sendNext: [NSString stringWithFormat: @"connected to %@ on port %hu", _host, _port]];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -96,6 +97,16 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
     NSLog(@"socketDidDisconnect:withError:%@", err);
+    if(err != nil && err.code == 8) {
+        
+        NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
+        [info setObject:[NSString stringWithFormat:@"failed to connect to %@ on port %hu", _host, _port]
+                 forKey:@"message"];
+        
+        NSError *authErr = [NSError errorWithDomain:@"auth" code:0 userInfo:info];
+        [_connected sendError:authErr];
+    }
+    [_connected sendCompleted];
     [_subject sendCompleted];
 }
 

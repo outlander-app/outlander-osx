@@ -10,7 +10,7 @@
 #import "GCDAsyncSocket.h"
 #import "RACReplaySubject.h"
 #import "RACSignal.h"
-#import "NSString+Files.h"
+#import "NSString+Categories.h"
 
 @implementation GameServer
 
@@ -24,6 +24,11 @@
 }
 
 - (RACSignal*) connect:(NSString *) key toHost:(NSString *)host onPort:(UInt16)port {
+    
+    _host = host;
+    _port = port;
+    _connected = [RACReplaySubject subject];
+    
     _connection = [NSString stringWithFormat:@"%@\r\n/FE:STORMFRONT /VERSION:%@ /P:%@ /XML\r\n", key, @"1.0.1.26", @"OSX"];
     
     asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -43,6 +48,10 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
     NSLog(@"Connected");
+    
+    NSString *msg = [NSString stringWithFormat:@"connected to %@ on port %hu", _host, _port];
+    [_connected sendNext:msg];
+    
     NSData *data = [_connection dataUsingEncoding:NSUTF8StringEncoding];
     [asyncSocket writeData:data
                withTimeout:-1

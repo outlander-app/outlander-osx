@@ -10,7 +10,7 @@
 #import "HTMLNode.h"
 #import "HTMLParser.h"
 #import "TextTag.h"
-#import "NSString+Files.h"
+#import "NSString+Categories.h"
 #import "NSColor+Categories.h"
 #import "MyView.h"
 #import "NSView+Categories.h"
@@ -37,11 +37,17 @@
     _ViewContainer.backgroundColor = [NSColor redColor];
     _ViewContainer.draggable = NO;
     _ViewContainer.autoresizesSubviews = YES;
+    [_ViewContainer listenBoundsChanges];
     
-    TextViewController *mainController = [_ViewContainer addView:[NSColor blueColor] atLoc:NSMakeRect(0, 0, 600, 200)];
+    NSLog(@"size: %f, %f", _ViewContainer.frame.size.height, _ViewContainer.frame.size.width);
+    
+    TextViewController *mainController = [_ViewContainer addView:[NSColor blueColor] atLoc:NSMakeRect(0, 0, 600, _ViewContainer.frame.size.height)];
     [_windows setCacheObject:mainController forKey:@"main"];
     
-    TextViewController *expController = [_ViewContainer addView:[NSColor blueColor] atLoc:NSMakeRect(_ViewContainer.frame.size.width, 0, 225, _ViewContainer.frame.size.height)];
+    TextViewController *arrivalsController = [_ViewContainer addView:[NSColor blueColor] atLoc:NSMakeRect(_ViewContainer.frame.size.width, _ViewContainer.frame.size.height, 300, 200)];
+    [_windows setCacheObject:arrivalsController forKey:@"arrivals"];
+    
+    TextViewController *expController = [_ViewContainer addView:[NSColor blueColor] atLoc:NSMakeRect(_ViewContainer.frame.size.width, 0, 300, _ViewContainer.frame.size.height)];
     [_windows setCacheObject:expController forKey:@"exp"];
 }
 
@@ -63,39 +69,25 @@
     [controller append:text];
 }
 
-//- (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
-//        BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
-//        
-//        NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
-//        NSRange range = [[attr string] rangeOfString:[text text]];
-//        NSColor *color = [NSColor whiteColor];
-//        
-//        if(text.color != nil && [text.color length] > 0){
-//            color = [NSColor colorWithHexString:text.color];
-//        }
-//        
-//        [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
-//        NSString *fontName = @"Geneva";
-//        if(text.mono){
-//            fontName = @"Andale Mono";
-//        }
-//        [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:12] range:range];
-//        [[textView textStorage] appendAttributedString:attr];
-//        
-//        if(shouldScrollToBottom) {
-//            [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
-//        }
-//    });
-//}
-
 - (IBAction)connect:(id)sender {
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
     
     [authSignal
-     subscribeCompleted:^{
+     subscribeNext:^(id x) {
+         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, x]
+                                mono:true]
+                  to:@"main"];
+     }
+     error:^(NSError *error) {
+         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
+         NSString *msg = [error.userInfo objectForKey:@"message"];
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, msg]
+                                mono:true]
+                  to:@"main"];
+     }
+     completed:^{
         [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
@@ -122,6 +114,30 @@
                   to:@"main"];
     }];
     
+    [_gameStream.connected subscribeNext:^(NSString *message) {
+         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, message]
+                                mono:true]
+                  to:@"main"];
+    }];
+    
+    [_gameStream.thoughts subscribeNext:^(TextTag *tag) {
+        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
+        tag.text = [NSString stringWithFormat:@"[%@]%@\n", timeStamp, tag.text];
+//        [self append:tag to:@"thoughts"];
+    }];
+    
+    [_gameStream.arrivals subscribeNext:^(TextTag *tag) {
+        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
+        tag.text = [NSString stringWithFormat:@"[%@]%@\n", timeStamp, tag.text];
+        [self append:tag to:@"arrivals"];
+    }];
+    
+    [_gameStream.deaths subscribeNext:^(TextTag *tag) {
+        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
+        tag.text = [NSString stringWithFormat:@"[%@]%@\n", timeStamp, tag.text];
+        //[self append:tag to:@"deaths"];
+    }];
 }
 
 @end

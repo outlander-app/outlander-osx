@@ -306,6 +306,90 @@ describe(@"GameParser", ^{
             [[[_parser.globalVars cacheObjectForKey:@"righthandid"] should] equal:@""];
             [[[_parser.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@""];
         });
+        
+        it(@"should signal arrivals", ^{
+            NSString *data = @"<pushStream id=\"logons\"/> * Tayek joins the adventure.\r\n<popStream/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.arrivals subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            TextTag *tag = signalResults[0];
+            
+            [[tag.text should] equal:@" * Tayek joins the adventure."];
+        });
+        
+        it(@"should signal deaths", ^{
+            NSString *data = @"<pushStream id=\"death\"/> * Tayek was just struck down!\r\n<popStream/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.deaths subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            TextTag *tag = signalResults[0];
+            
+            [[tag.text should] equal:@" * Tayek was just struck down!"];
+        });
+        
+        it(@"should signal thoughts", ^{
+            NSString *data = @"<pushStream id=\"thoughts\"/><preset id='thought'>You hear your mental voice echo, </preset>\"Testing, one, two.\"\n<popStream/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.thoughts subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            TextTag *tag = signalResults[0];
+            
+            [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
+        });
+        
+        it(@"should signal vitals", ^{
+            NSString *data = @"<dialogData id='minivitals'><progressBar id='concentration' value='98' text='concentration 98%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.vitals subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            TextTag *tag = signalResults[0];
+            
+            [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
+        });
     });
 });
 

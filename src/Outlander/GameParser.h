@@ -24,6 +24,16 @@
 
 @property (atomic, strong) RACReplaySubject *subject;
 @property (atomic, strong) TSMutableDictionary *globalVars;
+
+@property (nonatomic, strong) RACReplaySubject *vitals;
+@property (nonatomic, strong) RACReplaySubject *room;
+@property (nonatomic, strong) RACReplaySubject *exp;
+@property (nonatomic, strong) RACReplaySubject *thoughts;
+@property (nonatomic, strong) RACReplaySubject *arrivals;
+@property (nonatomic, strong) RACReplaySubject *deaths;
+@property (nonatomic, strong) RACReplaySubject *familiar;
+@property (nonatomic, strong) RACReplaySubject *log;
+
 -(void) parse:(NSString*)data then:(CompleteBlock)block;
 
 @end

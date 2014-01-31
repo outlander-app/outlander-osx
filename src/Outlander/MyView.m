@@ -36,8 +36,22 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     return self;
 }
 
+-(void) listenBoundsChanges {
+    [self setPostsBoundsChangedNotifications:YES];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserverForName:NSViewFrameDidChangeNotification
+                        object:nil
+                         queue:nil
+                    usingBlock:^(NSNotification *note) {
+                        if(NSStringFromClass([note.object class])) {
+                            NSLog(@"%@ %@", note.name, note.object);
+                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
+                        }
+                    }];
+}
+
 - (BOOL)isFlipped {
-    return NO;
+    return YES;
 }
 
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect {
@@ -56,7 +70,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [textcrl.view fixBottomEdge:YES];
     [view addSubview:textcrl.view];
     
-    [self wireBottomLeftResize:view];
+    [self wireTopLeftResize:view];
     
     MyThumb *bottomThumb = [self wireDragRect:view withFrame:NSMakeRect(10, 0, view.frame.size.width-20, 10)];
     [bottomThumb fixLeftEdge:YES];
@@ -152,7 +166,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 //    }
 //}
 
--(void)wireBottomLeftResize:(MyView*)view {
+-(void)wireTopLeftResize:(MyView*)view {
     MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
     __block NSPoint nonTrans;
     __block NSPoint downPoint;
@@ -188,7 +202,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         float xDif = loc.x - nonTrans.x;
         float yDif = loc.y - nonTrans.y;
         
-        NSPoint newOrigin = NSMakePoint(origOrigin.x + xDif, origOrigin.y + yDif);
+        NSPoint newOrigin = NSMakePoint(origOrigin.x + xDif, origOrigin.y - yDif);
         if(newOrigin.x < 0)
             newOrigin.x = 0;
         if(newOrigin.y < 0)
@@ -251,7 +265,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         float xDif = loc.x - nonTrans.x;
         float yDif = loc.y - nonTrans.y;
         
-        NSPoint newOrigin = NSMakePoint(origOrigin.x + xDif, origOrigin.y + yDif);
+        NSPoint newOrigin = NSMakePoint(origOrigin.x + xDif, origOrigin.y - yDif);
         NSLog(@"new: %f, %f", newOrigin.x, newOrigin.y);
         if(newOrigin.x < 0)
             newOrigin.x = 0;

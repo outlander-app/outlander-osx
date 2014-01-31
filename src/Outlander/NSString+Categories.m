@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "NSString+Files.h"
+#import "NSString+Categories.h"
 
-@implementation NSString (Files)
+@implementation NSString (Categories)
 
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
 {
@@ -42,5 +42,9 @@
     [formatter setDateFormat:dateFormat];
     
     return [NSString stringWithFormat:self, [formatter stringFromDate:[NSDate date]]];
+}
+
+- (NSString*) trim {
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 @end

@@ -5,6 +5,7 @@
 //  Created by Joseph McBride on 1/27/14.
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
+// http://stackoverflow.com/a/843870/279764
 
 #import <Cocoa/Cocoa.h>
 

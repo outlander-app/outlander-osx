@@ -11,7 +11,7 @@
 #import "HTMLNode.h"
 #import "HTMLParser.h"
 #import "TextTag.h"
-#import "NSString+Files.h"
+#import "NSString+Categories.h"
 
 @implementation GameParser
 
@@ -20,6 +20,14 @@
     if(self == nil) return nil;
     
     _subject = [RACReplaySubject subject];
+    _vitals = [RACReplaySubject subject];
+    _room = [RACReplaySubject subject];
+    _exp = [RACReplaySubject subject];
+    _thoughts = [RACReplaySubject subject];
+    _arrivals = [RACReplaySubject subject];
+    _deaths = [RACReplaySubject subject];
+    _familiar = [RACReplaySubject subject];
+    _log = [RACReplaySubject subject];
     _globalVars = [[TSMutableDictionary alloc] initWithName:@"com.outlander.gobalvars"];
     _currenList = [[NSMutableArray alloc] init];
     _currentResult = [[NSMutableString alloc] init];
@@ -81,6 +89,22 @@
             }
         }
         else if([[node tagName] isEqualToString:@"popstream"]) {
+            if([_streamId isEqual: @"logons"]) {
+                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                [_arrivals sendNext:tag];
+                [_currentResult setString:@""];
+            }
+            else if([_streamId isEqual: @"death"]) {
+                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                [_deaths sendNext:tag];
+                [_currentResult setString:@""];
+            }
+            else if([_streamId isEqual: @"thoughts"]) {
+                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                [_thoughts sendNext:tag];
+                [_currentResult setString:@""];
+            }
+            
             _inStream = NO;
             _streamId = nil;
             _publishStream = YES;
@@ -263,7 +287,7 @@
             }
             
             NSString *val = [node rawContents];
-//            NSLog(@"text:%@", val);
+            NSLog(@"text:%@", val);
             
             [_currentResult appendString:val];
         }

@@ -22,12 +22,15 @@ typedef NS_ENUM(NSInteger, AuthStateType) {
 };
 
 @interface AuthenticationServer : NSObject {
+    NSString *_host;
+    UInt16 _port;
     GCDAsyncSocket *asyncSocket;
     NSString *_account;
     NSString *_password;
     NSString *_game;
     NSString *_character;
     NSString *_characterId;
+    RACReplaySubject *_connected;
     RACReplaySubject *_subject;
 }
 
