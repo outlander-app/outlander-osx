@@ -44,8 +44,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
                          queue:nil
                     usingBlock:^(NSNotification *note) {
                         if(NSStringFromClass([note.object class])) {
-                            NSLog(@"%@ %@", note.name, note.object);
-                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
+//                            NSLog(@"%@ %@", note.name, note.object);
+//                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
                         }
                     }];
 }
@@ -71,6 +71,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [view addSubview:textcrl.view];
     
     [self wireTopLeftResize:view];
+    [self wireBottomLeftResize:view];
     
     MyThumb *bottomThumb = [self wireDragRect:view withFrame:NSMakeRect(10, 0, view.frame.size.width-20, 10)];
     [bottomThumb fixLeftEdge:YES];
@@ -165,6 +166,89 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 //        self.needsDisplay = YES;
 //    }
 //}
+
+-(void)wireBottomLeftResize:(MyView*)view {
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, view.frame.size.height - 10, 10, 10)];
+    [thumb fixTopEdge:NO];
+    [thumb fixBottomEdge:YES];
+    [thumb fixLeftEdge:YES];
+    [thumb fixHeight:YES];
+    [thumb fixWidth:YES];
+    
+    __block NSPoint nonTrans;
+    __block NSPoint downPoint;
+    __block NSPoint origOrigin;
+    __block NSSize origSize;
+    
+    __block float minX = 0.0;
+    __block float minY = 0.0;
+    
+    thumb.down = ^(NSEvent *ev){
+        nonTrans = [ev locationInWindow];
+        downPoint = [view convertPoint:nonTrans fromView:nil];
+        origOrigin = view.frame.origin;
+        origSize = view.frame.size;
+        
+        minX = origOrigin.x + origSize.width - 100;
+        minY = origOrigin.y + origSize.height - 100;
+    };
+    
+    thumb.up = ^(NSEvent *ev) {
+        view.dragging = NO;
+        view.needsDisplay = YES;
+    };
+    
+    thumb.dragged = ^(NSEvent *ev){
+        if(!view.draggable) return;
+        
+        view.dragging = YES;
+        view.needsDisplay = YES;
+        
+        NSPoint loc = [ev locationInWindow];
+        
+        NSLog(@"%f,%f", loc.x, loc.y);
+        
+        NSPoint loc2 = NSMakePoint(loc.x < 0 ? 0 : loc.x, loc.y < 0 ? 0 : loc.y);
+        NSLog(@"loc2: %f,%f", loc2.x, loc2.y);
+        
+        float xDif = loc2.x - nonTrans.x;
+        float yDif = loc2.y - nonTrans.y;
+        
+        NSLog(@"dif: %f,%f", xDif, yDif);
+        
+        NSPoint newOrigin = NSMakePoint(origOrigin.x + xDif, origOrigin.y);
+        NSLog(@"newOrigin: %f,%f", newOrigin.x, newOrigin.y);
+        if(newOrigin.x < 0){
+            newOrigin.x = 0;
+            xDif = 0;
+        }
+        if(newOrigin.y < 0){
+            newOrigin.y = 0;
+            yDif = 0;
+        }
+        if(newOrigin.x > minX){
+            newOrigin.x = minX;
+        }
+        if(newOrigin.y > minY)
+            newOrigin.y = minY;
+        
+        NSSize size = NSMakeSize(origSize.width - xDif, origSize.height - yDif);
+        
+        if(size.height < 100)
+            size.height = 100;
+        if(size.width < 100)
+            size.width = 100;
+        
+        if(size.height > self.frame.size.height)
+            size.height = self.frame.size.height;
+        
+        NSLog(@"newOrigin: %f,%f", newOrigin.x, newOrigin.y);
+        NSLog(@"size: %f,%f", size.width, size.height);
+        [view setFrameSize:size];
+        [view setFrameOrigin:newOrigin];
+    };
+    [view addSubview:thumb];
+}
 
 -(void)wireTopLeftResize:(MyView*)view {
     MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
