@@ -8,6 +8,7 @@
 
 #import "MainWindowController.h"
 #import "TestViewController.h"
+#import "NSView+Categories.h"
 
 @interface MainWindowController ()
     @property (nonatomic, strong) NSViewController *currentViewController;
@@ -28,6 +29,9 @@
     TestViewController *vc = [[TestViewController alloc]init];
     
     [self setCurrentViewController:vc];
+    
+//    [self.window makeFirstResponder:vc._CommandTextField];
+//    [vc._CommandTextField becomeFirstResponder];
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {

@@ -13,6 +13,7 @@
 #import "CharacterViewModel.h"
 #import "MyView.h"
 #import "TSMutableDictionary.h"
+#import "MyNSTextField.h"
 
 @interface TestViewController : NSViewController {
     SignalSocket *signalSocket;
@@ -20,10 +21,10 @@
     GameStream *_gameStream;
     TSMutableDictionary *_windows;
 }
+@property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;
 @property (unsafe_unretained) IBOutlet NSTextView *MainTextView;
-@property (weak) IBOutlet NSTextField *CommandTextField;
 - (IBAction)commandSubmit:(id)sender;
 - (IBAction)connect:(id)sender;
 @end

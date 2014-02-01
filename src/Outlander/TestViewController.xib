@@ -6,8 +6,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TestViewController">
             <connections>
-                <outlet property="CommandTextField" destination="HLQ-x9-5se" id="efM-2o-QGA"/>
                 <outlet property="ViewContainer" destination="CHV-Sq-xD0" id="QCa-Iv-0gv"/>
+                <outlet property="_CommandTextField" destination="HLQ-x9-5se" id="dk3-gg-eI0"/>
                 <outlet property="view" destination="1" id="2"/>
                 <outlet property="viewModel" destination="BCL-fi-1Ob" id="dHA-Ak-DLE"/>
             </connections>
@@ -29,10 +29,10 @@
                         <action selector="connect:" target="-2" id="uuS-Z6-Pj5"/>
                     </connections>
                 </button>
-                <textField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
                     <rect key="frame" x="20" y="20" width="522" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" borderStyle="border" focusRingType="none" drawsBackground="YES" id="FN0-lT-QP8">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" focusRingType="none" drawsBackground="YES" id="FN0-lT-QP8">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -96,6 +96,7 @@
                 <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="QWV-dp-2uA"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="0o8-5z-kiJ" secondAttribute="bottom" constant="8" id="XmH-Hu-CXB"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="top" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="8" symbolic="YES" id="bGK-M0-WKG"/>
+                <constraint firstItem="3fp-Bx-F0v" firstAttribute="leading" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="8" id="caD-cW-Mc2"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="yf4-ji-u2U" secondAttribute="bottom" constant="8" id="dpV-Hf-jdd"/>
                 <constraint firstAttribute="trailing" secondItem="P3P-js-Xda" secondAttribute="trailing" constant="84" id="dwV-3m-mQc"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="CHV-Sq-xD0" secondAttribute="leading" id="gIy-HM-enD"/>

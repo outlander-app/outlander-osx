@@ -17,7 +17,6 @@
 - (id)init {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
-    
     return self;
 }
 
@@ -27,12 +26,13 @@
 
 - (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
         BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
         
         NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
         NSRange range = [[attr string] rangeOfString:[text text]];
-        NSColor *color = [NSColor whiteColor];
+        NSColor *color = [NSColor colorWithHexString:@"#F5F5F5"];
         
         if(text.color != nil && [text.color length] > 0){
             color = [NSColor colorWithHexString:text.color];

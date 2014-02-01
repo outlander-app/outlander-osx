@@ -14,7 +14,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
     }
     return self;
 }
@@ -22,13 +21,11 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	[super drawRect:dirtyRect];
-	
-    // Drawing code here.
 }
 
--(BOOL) becomeFirstResponder
+-(BOOL)becomeFirstResponder
 {
-    BOOL    success = [super becomeFirstResponder];
+    BOOL success = [super becomeFirstResponder];
     if( success )
     {
         // Strictly spoken, NSText (which currentEditor returns) doesn't

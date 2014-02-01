@@ -39,15 +39,16 @@
     _ViewContainer.autoresizesSubviews = YES;
     [_ViewContainer listenBoundsChanges];
     
-//    NSLog(@"size: %f, %f", _ViewContainer.frame.size.height, _ViewContainer.frame.size.width);
-    
-    TextViewController *mainController = [_ViewContainer addView:[NSColor blackColor] atLoc:NSMakeRect(0, 0, 600, _ViewContainer.frame.size.height)];
+    TextViewController *mainController = [_ViewContainer addView:[NSColor blackColor]
+                                                           atLoc:NSMakeRect(0, 0, 600, _ViewContainer.frame.size.height)];
     [_windows setCacheObject:mainController forKey:@"main"];
     
-    TextViewController *arrivalsController = [_ViewContainer addView:[NSColor blackColor] atLoc:NSMakeRect(_ViewContainer.frame.size.width, _ViewContainer.frame.size.height, 300, 200)];
+    TextViewController *arrivalsController = [_ViewContainer addView:[NSColor blackColor]
+                                                               atLoc:NSMakeRect(_ViewContainer.frame.size.width, _ViewContainer.frame.size.height, 300, 200)];
     [_windows setCacheObject:arrivalsController forKey:@"arrivals"];
     
-    TextViewController *expController = [_ViewContainer addView:[NSColor blackColor] atLoc:NSMakeRect(_ViewContainer.frame.size.width, 0, 300, _ViewContainer.frame.size.height)];
+    TextViewController *expController = [_ViewContainer addView:[NSColor blackColor]
+                                                          atLoc:NSMakeRect(_ViewContainer.frame.size.width, 0, 300, _ViewContainer.frame.size.height)];
     [_windows setCacheObject:expController forKey:@"exp"];
 }
 
