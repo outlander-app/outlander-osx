@@ -388,6 +388,7 @@ describe(@"GameParser", ^{
             
             TextTag *tag = signalResults[0];
             
+            
             [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
         });
     });

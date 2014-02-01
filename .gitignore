@@ -1,2 +1,3 @@
 src/Pods
 podfile.lock
+gemfile.lock
