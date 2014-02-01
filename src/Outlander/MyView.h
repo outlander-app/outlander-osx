@@ -19,6 +19,7 @@
 @property (nonatomic, assign) float kX;
 @property (nonatomic, assign) float kY;
 @property (nonatomic, assign) BOOL dragging;
+@property (nonatomic, assign) BOOL showBorder;
 @property (nonatomic, strong) NSMutableArray *viewsList;
 
 -(void) listenBoundsChanges;

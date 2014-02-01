@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 
 @implementation MyView {
     NSSize _maxViewSize;
+    NSCursor *_nwseCursor;
+    NSCursor *_neswCursor;
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -35,6 +37,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         self.viewsList = [[NSMutableArray alloc] init];
         self.autoresizesSubviews = YES;
         _maxViewSize = NSMakeSize(150, 150);
+        _nwseCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nwse"] hotSpot:NSMakePoint(10, 10)];
+        _neswCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nesw"] hotSpot:NSMakePoint(10, 10)];
     }
     return self;
 }
@@ -61,6 +65,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block MyView *view = [[MyView alloc] initWithFrame:rect];
     view.backgroundColor = color;
     view.draggable = YES;
+    view.showBorder = YES;
     [self addSubview:view];
     
     TextViewController *textcrl = [[TextViewController alloc] init];
@@ -78,24 +83,34 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [self wireBottomLeftResize:view];
     [self wireBottomRightResize:view];
     
-    MyThumb *bottomThumb = [self wireDragRect:view withFrame:NSMakeRect(10, 0, view.frame.size.width-20, 10)];
+    NSCursor *cursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"move"]  hotSpot:NSMakePoint(0, 0)];
+    
+    MyThumb *bottomThumb = [self wireDragRect:view
+                                    withFrame:NSMakeRect(10, 0, view.frame.size.width-20, 10)
+                                   withCursor:cursor];
     [bottomThumb fixLeftEdge:YES];
     [bottomThumb fixWidth:NO];
     [bottomThumb fixHeight:YES];
     
-    MyThumb *topThumb = [self wireDragRect:view withFrame:NSMakeRect(10, view.frame.size.height-10, view.frame.size.width-20, 10)];
+    MyThumb *topThumb = [self wireDragRect:view
+                                 withFrame:NSMakeRect(10, view.frame.size.height-10, view.frame.size.width-20, 10)
+                                withCursor:cursor];
     [topThumb fixTopEdge:NO];
     [topThumb fixLeftEdge:YES];
     [topThumb fixWidth:NO];
     [topThumb fixHeight:YES];
     
-    MyThumb *leftThumb = [self wireDragRect:view withFrame:NSMakeRect(0, 10, 10, view.frame.size.height - 20)];
+    MyThumb *leftThumb = [self wireDragRect:view
+                                  withFrame:NSMakeRect(0, 10, 10, view.frame.size.height - 20)
+                          withCursor:cursor];
     [leftThumb fixTopEdge:YES];
     [leftThumb fixLeftEdge:YES];
     [leftThumb fixWidth:YES];
     [leftThumb fixHeight:NO];
     
-    MyThumb *rightThumb = [self wireDragRect:view withFrame:NSMakeRect(view.frame.size.width - 10, 10, 10, view.frame.size.height - 20)];
+    MyThumb *rightThumb = [self wireDragRect:view
+                                   withFrame:NSMakeRect(view.frame.size.width - 10, 10, 10, view.frame.size.height - 20)
+                           withCursor:cursor];
     [rightThumb fixTopEdge:YES];
     [rightThumb fixLeftEdge:NO];
     [rightThumb fixRightEdge:YES];
@@ -110,12 +125,12 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [self.backgroundColor setFill];
     NSRectFill(dirtyRect);
    
-    if(self.dragging) {
+    if(self.dragging || self.showBorder) {
         [[NSColor whiteColor] setStroke];
         
         NSBezierPath* thePath = [NSBezierPath bezierPath];
         [thePath appendBezierPathWithRect:dirtyRect];
-        [thePath setLineWidth:4.0];
+        [thePath setLineWidth:2.0];
         [thePath setLineCapStyle:NSRoundLineCapStyle];
         [thePath stroke];
     }
@@ -165,6 +180,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 //    }
 //}
 //
+
 //-(void)mouseUp:(NSEvent *) theEvent {
 //    if(self.dragging) {
 //        self.dragging = NO;
@@ -173,7 +189,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 //}
 
 -(void)wireBottomRightResize:(MyView*)view {
-    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(view.frame.size.width - 10, view.frame.size.height - 10, 10, 10)];
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(view.frame.size.width - 10, view.frame.size.height - 10, 10, 10)
+                                         withCursor:_nwseCursor];
     [thumb fixTopEdge:NO];
     [thumb fixBottomEdge:YES];
     [thumb fixLeftEdge:NO];
@@ -207,9 +224,6 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     thumb.dragged = ^(NSEvent *ev){
         if(!view.draggable) return;
         
-        view.dragging = YES;
-        view.needsDisplay = YES;
-        
         NSPoint loc = [ev locationInWindow];
         
         float xDif = loc.x - nonTrans.x;
@@ -228,12 +242,16 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
             size.width = maxX;
         
         [view setFrameSize:size];
+        
+        view.dragging = YES;
+        view.needsDisplay = YES;
     };
     [view addSubview:thumb];
 }
 
 -(void)wireTopRightResize:(MyView*)view {
-    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(view.frame.size.width - 10, 0, 10, 10)];
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(view.frame.size.width - 10, 0, 10, 10)
+                                         withCursor:_neswCursor];
     [thumb fixRightEdge:YES];
     [thumb fixTopEdge:YES];
     [thumb fixLeftEdge:NO];
@@ -299,7 +317,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 }
 
 -(void)wireBottomLeftResize:(MyView*)view {
-    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, view.frame.size.height - 10, 10, 10)];
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, view.frame.size.height - 10, 10, 10)
+                                         withCursor:_neswCursor];
     [thumb fixTopEdge:NO];
     [thumb fixBottomEdge:YES];
     [thumb fixLeftEdge:YES];
@@ -370,7 +389,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 }
 
 -(void)wireTopLeftResize:(MyView*)view {
-    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)];
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)
+                                         withCursor:_nwseCursor];
     __block NSPoint nonTrans;
     __block NSPoint downPoint;
     __block NSPoint origOrigin;
@@ -431,8 +451,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [view addSubview:thumb];
 }
 
--(MyThumb *)wireDragRect:(MyView *)view withFrame:(NSRect) frame {
-    MyThumb *thumb = [[MyThumb alloc] initWithFrame:frame];
+-(MyThumb *)wireDragRect:(MyView *)view withFrame:(NSRect) frame withCursor:(NSCursor *)cursor {
+    MyThumb *thumb = [[MyThumb alloc] initWithFrame:frame withCursor:cursor];
     
     __block NSPoint nonTrans;
     __block NSPoint downPoint;

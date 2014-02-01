@@ -15,4 +15,6 @@
 @property (atomic, strong) CompleteBlock up;
 @property (atomic, strong) CompleteBlock dragged;
 
+- (id)initWithFrame:(NSRect)frame withCursor:(NSCursor *)cursor;
+
 @end
