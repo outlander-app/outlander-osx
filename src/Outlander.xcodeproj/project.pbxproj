@@ -47,12 +47,6 @@
 		F97A5CA31895E06400E2C318 /* MyView.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CA11895E06400E2C318 /* MyView.m */; };
 		F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CA51895E2C400E2C318 /* MyNSTextField.m */; };
 		F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CA51895E2C400E2C318 /* MyNSTextField.m */; };
-		F97A5CB31895E75E00E2C318 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB01895E75E00E2C318 /* MMDrawingUtils.m */; };
-		F97A5CB41895E75E00E2C318 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB01895E75E00E2C318 /* MMDrawingUtils.m */; };
-		F97A5CB51895E75E00E2C318 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB11895E75E00E2C318 /* MMScroller.m */; };
-		F97A5CB61895E75E00E2C318 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB11895E75E00E2C318 /* MMScroller.m */; };
-		F97A5CB71895E75E00E2C318 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB21895E75E00E2C318 /* MMScrollView.m */; };
-		F97A5CB81895E75E00E2C318 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CB21895E75E00E2C318 /* MMScrollView.m */; };
 		F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CBA1895EEF500E2C318 /* NSTextField+Categories.m */; };
 		F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CBA1895EEF500E2C318 /* NSTextField+Categories.m */; };
 		F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CBE1896384A00E2C318 /* MyThumb.m */; };
@@ -61,6 +55,12 @@
 		F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CC21896C21600E2C318 /* TextViewController.m */; };
 		F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5CC31896C21600E2C318 /* TextViewController.xib */; };
 		F97A5CC71896C21600E2C318 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5CC31896C21600E2C318 /* TextViewController.xib */; };
+		F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
+		F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
+		F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
+		F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
+		F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A85189E218F00A11EE9 /* MMScrollView.m */; };
+		F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A85189E218F00A11EE9 /* MMScrollView.m */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
@@ -120,8 +120,8 @@
 		F97A5C891893AFDF00E2C318 /* TextTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextTag.m; sourceTree = "<group>"; };
 		F97A5C8C1894918F00E2C318 /* GameStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStream.h; sourceTree = "<group>"; };
 		F97A5C8D1894918F00E2C318 /* GameStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStream.m; sourceTree = "<group>"; };
-		F97A5C901895086C00E2C318 /* NSColor+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Categories.h"; sourceTree = "<group>"; };
-		F97A5C911895086C00E2C318 /* NSColor+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Categories.m"; sourceTree = "<group>"; };
+		F97A5C901895086C00E2C318 /* NSColor+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+Categories.h"; path = "HTML/NSColor+Categories.h"; sourceTree = "<group>"; };
+		F97A5C911895086C00E2C318 /* NSColor+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+Categories.m"; path = "HTML/NSColor+Categories.m"; sourceTree = "<group>"; };
 		F97A5C9818957A5D00E2C318 /* TSMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMutableDictionary.h; sourceTree = "<group>"; };
 		F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMutableDictionary.m; sourceTree = "<group>"; };
 		F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterViewModel.h; sourceTree = "<group>"; };
@@ -130,12 +130,6 @@
 		F97A5CA11895E06400E2C318 /* MyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyView.m; sourceTree = "<group>"; };
 		F97A5CA41895E2C400E2C318 /* MyNSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextField.h; sourceTree = "<group>"; };
 		F97A5CA51895E2C400E2C318 /* MyNSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextField.m; sourceTree = "<group>"; };
-		F97A5CAD1895E75E00E2C318 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawingUtils.h; path = "../../../../../Downloads/XCode/custom-scroller/MMDrawingUtils.h"; sourceTree = "<group>"; };
-		F97A5CAE1895E75E00E2C318 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMScroller.h; path = "../../../../../Downloads/XCode/custom-scroller/MMScroller.h"; sourceTree = "<group>"; };
-		F97A5CAF1895E75E00E2C318 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMScrollView.h; path = "../../../../../Downloads/XCode/custom-scroller/MMScrollView.h"; sourceTree = "<group>"; };
-		F97A5CB01895E75E00E2C318 /* MMDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDrawingUtils.m; path = "../../../../../Downloads/XCode/custom-scroller/MMDrawingUtils.m"; sourceTree = "<group>"; };
-		F97A5CB11895E75E00E2C318 /* MMScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMScroller.m; path = "../../../../../Downloads/XCode/custom-scroller/MMScroller.m"; sourceTree = "<group>"; };
-		F97A5CB21895E75E00E2C318 /* MMScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMScrollView.m; path = "../../../../../Downloads/XCode/custom-scroller/MMScrollView.m"; sourceTree = "<group>"; };
 		F97A5CB91895EEF500E2C318 /* NSTextField+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Categories.h"; sourceTree = "<group>"; };
 		F97A5CBA1895EEF500E2C318 /* NSTextField+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Categories.m"; sourceTree = "<group>"; };
 		F97A5CBD1896384A00E2C318 /* MyThumb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyThumb.h; sourceTree = "<group>"; };
@@ -143,6 +137,12 @@
 		F97A5CC11896C21600E2C318 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		F97A5CC21896C21600E2C318 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		F97A5CC31896C21600E2C318 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawingUtils.h; sourceTree = "<group>"; };
+		F9AE6A81189E218F00A11EE9 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScroller.h; sourceTree = "<group>"; };
+		F9AE6A82189E218F00A11EE9 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScrollView.h; sourceTree = "<group>"; };
+		F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawingUtils.m; sourceTree = "<group>"; };
+		F9AE6A84189E218F00A11EE9 /* MMScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScroller.m; sourceTree = "<group>"; };
+		F9AE6A85189E218F00A11EE9 /* MMScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScrollView.m; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9CF92671890832800449548 /* Outlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +226,8 @@
 		F97A5C5C1891AADB00E2C318 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				F97A5C901895086C00E2C318 /* NSColor+Categories.h */,
+				F97A5C911895086C00E2C318 /* NSColor+Categories.m */,
 				F97A5C721893562800E2C318 /* NSString+Categories.h */,
 				F97A5C731893562800E2C318 /* NSString+Categories.m */,
 				F97A5C5D1891AB7D00E2C318 /* SignalSocket.h */,
@@ -269,8 +271,6 @@
 				F97A5C781893808F00E2C318 /* HTMLNode.m */,
 				F97A5C791893808F00E2C318 /* HTMLParser.h */,
 				F97A5C7A1893808F00E2C318 /* HTMLParser.m */,
-				F97A5C901895086C00E2C318 /* NSColor+Categories.h */,
-				F97A5C911895086C00E2C318 /* NSColor+Categories.m */,
 			);
 			path = HTML;
 			sourceTree = "<group>";
@@ -278,12 +278,12 @@
 		F97A5CAC1895E72D00E2C318 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				F97A5CAD1895E75E00E2C318 /* MMDrawingUtils.h */,
-				F97A5CAE1895E75E00E2C318 /* MMScroller.h */,
-				F97A5CAF1895E75E00E2C318 /* MMScrollView.h */,
-				F97A5CB01895E75E00E2C318 /* MMDrawingUtils.m */,
-				F97A5CB11895E75E00E2C318 /* MMScroller.m */,
-				F97A5CB21895E75E00E2C318 /* MMScrollView.m */,
+				F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */,
+				F9AE6A81189E218F00A11EE9 /* MMScroller.h */,
+				F9AE6A82189E218F00A11EE9 /* MMScrollView.h */,
+				F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */,
+				F9AE6A84189E218F00A11EE9 /* MMScroller.m */,
+				F9AE6A85189E218F00A11EE9 /* MMScrollView.m */,
 				F97A5CA01895E06400E2C318 /* MyView.h */,
 				F97A5CA11895E06400E2C318 /* MyView.m */,
 				F97A5CA41895E2C400E2C318 /* MyNSTextField.h */,
@@ -560,14 +560,13 @@
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
-				F97A5CB51895E75E00E2C318 /* MMScroller.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
+				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
-				F97A5CB31895E75E00E2C318 /* MMDrawingUtils.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
-				F97A5CB71895E75E00E2C318 /* MMScrollView.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
@@ -583,6 +582,7 @@
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
+				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,19 +601,19 @@
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
-				F97A5CB61895E75E00E2C318 /* MMScroller.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
+				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
-				F97A5CB81895E75E00E2C318 /* MMScrollView.m in Sources */,
-				F97A5CB41895E75E00E2C318 /* MMDrawingUtils.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
+				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,7 +698,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -730,7 +730,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
@@ -756,6 +756,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -793,6 +794,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -834,6 +836,7 @@
 					"\"/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -868,6 +871,7 @@
 					"\"/usr/include/libxml2\"",
 				);
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
