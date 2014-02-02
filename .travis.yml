@@ -1,4 +1,5 @@
 language: objective-c
 
+before_install: sudo gem install cocoapods
 before_script: travis/before.sh
 script: travis/script.sh
