@@ -44,7 +44,7 @@ describe(@"GameParser", ^{
         });
 
         it(@"should parse room description", ^{
-            NSString *data = @"<style id=\"\"/><preset id='roomDesc'>This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.</preset>  \n";
+            NSString *data = @"<style id=\"\"/><preset id='roomDesc'>This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.</preset>  \r\n";
             
             __block TextTag *result = nil;
             
@@ -52,7 +52,7 @@ describe(@"GameParser", ^{
                 result = res[0];
             }];
             
-            [[[result text] should] equal:@"This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.  \n"];
+            [[[result text] should] equal:@"This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.  \r\n"];
         });
         
         it(@"should handle exp mono", ^{
