@@ -1,6 +1,8 @@
 Outlander
 ==========
 
+[![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
+
 This project uses [CocoaPods](http://cocoapods.org) for dependency management.  Run the following at the root of the project to download and install dependencies.
 
     $ sudo gem install cocoapods
