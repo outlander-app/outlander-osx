@@ -64,12 +64,13 @@
     HTMLNode *bodyNode = [parser body];
     NSArray *children = [bodyNode children];
     NSUInteger count = [children count];
-//    NSLog(@"Count: %lu", count);
+    NSLog(@"Children Count: %lu", count);
     
     for (__block NSInteger i=0; i<count; i++) {
         HTMLNode *node = children[i];
-//        NSLog(@"%@", [node tagName]);
-        if([[node tagName] isEqualToString:@"prompt"]){
+        NSString * tagName = [node tagName];
+//        NSLog(@"%@", tagName);
+        if([tagName isEqualToString:@"prompt"]){
             NSString *time = [node getAttributeNamed:@"time"];
             NSString *prompt = [node contents];
             
@@ -78,7 +79,7 @@
             
             [_currentResult appendString:prompt];
         }
-        else if([[node tagName] isEqualToString:@"pushstream"]) {
+        else if([tagName isEqualToString:@"pushstream"]) {
             _inStream = YES;
             _streamId = [node getAttributeNamed:@"id"];
             if([_streamId isEqualToString:@"inv"]) _publishStream = NO;
@@ -88,7 +89,7 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"popstream"]) {
+        else if([tagName isEqualToString:@"popstream"]) {
             if([_streamId isEqual: @"logons"]) {
                 TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
                 [_arrivals sendNext:tag];
@@ -113,14 +114,14 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"spell"]) {
+        else if([tagName isEqualToString:@"spell"]) {
             [_globalVars setCacheObject:[node contents] forKey:@"spell"];
             
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"left"]) {
+        else if([tagName isEqualToString:@"left"]) {
             NSString *val = [node contents];
             [_globalVars setCacheObject:val forKey:@"lefthand"];
             [_globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"lefthandid"];
@@ -130,7 +131,7 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"right"]) {
+        else if([tagName isEqualToString:@"right"]) {
             NSString *val = [node contents];
             [_globalVars setCacheObject:val forKey:@"righthand"];
             [_globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"righthandid"];
@@ -140,12 +141,12 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"clearstream"]) {
+        else if([tagName isEqualToString:@"clearstream"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"pushbold"]) {
+        else if([tagName isEqualToString:@"pushbold"]) {
             if([_currentResult length] > 0){
                 TextTag *tag = [TextTag tagFor:[NSString stringWithString:_currentResult] mono:_mono];
                 [_currentResult setString:@""];
@@ -153,7 +154,7 @@
             }
             _bold = YES;
         }
-        else if([[node tagName] isEqualToString:@"popbold"]) {
+        else if([tagName isEqualToString:@"popbold"]) {
             if([_currentResult length] > 0){
                 TextTag *tag = [TextTag tagFor:[NSString stringWithString:_currentResult] mono:_mono];
                 tag.color = @"#FFFF00";
@@ -162,7 +163,7 @@
             }
             _bold = NO;
         }
-        else if([[node tagName] isEqualToString:@"component"]) {
+        else if([tagName isEqualToString:@"component"]) {
             NSString *compId = [node getAttributeNamed:@"id"];
             
             if (compId != nil && [compId length] >-0) {
@@ -175,12 +176,12 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"compdef"]) {
+        else if([tagName isEqualToString:@"compdef"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"style"]) {
+        else if([tagName isEqualToString:@"style"]) {
             
             NSString *attr = [node getAttributeNamed:@"id"];
             if ([attr isEqualToString:@"roomName"]){
@@ -197,52 +198,52 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"dialogdata"]) {
+        else if([tagName isEqualToString:@"dialogdata"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"opendialog"]) {
+        else if([tagName isEqualToString:@"opendialog"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"switchquickbar"]) {
+        else if([tagName isEqualToString:@"switchquickbar"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"streamwindow"]) {
+        else if([tagName isEqualToString:@"streamwindow"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"indicator"]) {
+        else if([tagName isEqualToString:@"indicator"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"nav"]) {
+        else if([tagName isEqualToString:@"nav"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"mode"]) {
+        else if([tagName isEqualToString:@"mode"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"app"]) {
+        else if([tagName isEqualToString:@"app"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"endsetup"]) {
+        else if([tagName isEqualToString:@"endsetup"]) {
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"output"]) {
+        else if([tagName isEqualToString:@"output"]) {
             NSString *attr = [node getAttributeNamed:@"class"];
             if([attr isEqual: @"mono"]) _mono = YES;
             else _mono = NO;
@@ -250,7 +251,7 @@
                 i++;
             }
         }
-        else if([[node tagName] isEqualToString:@"preset"]){
+        else if([tagName isEqualToString:@"preset"]){
             NSString *val = [node contents];
             NSString *attr = [node getAttributeNamed:@"id"];
             
@@ -261,12 +262,12 @@
             if(![attr isEqualToString:@"speech"])
                 [_currentResult appendString:val];
         }
-        else if([[node tagName] isEqualToString:@"p"]){
+        else if([tagName isEqualToString:@"p"]){
             NSString *val = [node contents];
             NSLog(@"raw: %@", [node rawContents]);
             [_currentResult appendString:val];
         }
-        else if([[node tagName] isEqualToString:@"pre"]){
+        else if([tagName isEqualToString:@"pre"]){
             if(!_publishStream) {
                 if([self isNextNodeNewline:children index:i]) {
                     i++;
@@ -278,7 +279,7 @@
             NSLog(@"%@", [node rawContents]);
             [_currentResult appendString:val];
         }
-        else if([[node tagName] isEqualToString:@"text"]){
+        else if([tagName isEqualToString:@"text"]){
             if(!_publishStream) {
                 if([self isNextNodeNewline:children index:i]) {
                     i++;
