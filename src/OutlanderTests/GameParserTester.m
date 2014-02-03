@@ -370,6 +370,19 @@ describe(@"GameParser", ^{
             [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
         });
         
+        it(@"should set roomtitle component", ^{
+            NSString *data = @"<streamWindow id='room' title='Room' subtitle=\" - [Ranger Guild, Longhouse]\" location='center' target='drop' ifClosed='' resident='true'/>\r\n";
+            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [results addObjectsFromArray:res];
+            }];
+            
+            [[results should] haveCountOf:0];
+            
+            [[[_parser.globalVars cacheObjectForKey:@"roomtitle"] should] equal:@"[Ranger Guild, Longhouse]"];
+        });
+        
 //        it(@"should signal vitals", ^{
 //            NSString *data = @"<dialogData id='minivitals'><progressBar id='concentration' value='98' text='concentration 98%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>\r\n";
 //            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];

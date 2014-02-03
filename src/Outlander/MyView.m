@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [textcrl.view fixRightEdge:YES];
     [textcrl.view fixBottomEdge:YES];
     [view addSubview:textcrl.view];
+    [_viewsList addObject:view];
     
     [self wireTopLeftResize:view];
     [self wireTopRightResize:view];
@@ -136,6 +137,12 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     }
     
     [super drawRect:dirtyRect];
+}
+
+-(void)mouseDown:(NSEvent *)theEvent {
+//        [self.viewsList exchangeObjectAtIndex:[self.viewsList indexOfObject:self.movingTile]
+//                            withObjectAtIndex:[self.viewsList count] - 1];
+//        [self setSubviews:self.viewsList]; //Reorder's the subviews so the picked up tile always appears on top
 }
 
 //-(void)mouseDown:(NSEvent *) theEvent {

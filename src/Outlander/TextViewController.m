@@ -7,6 +7,7 @@
 //
 
 #import "TextViewController.h"
+#import "NSString+Categories.h"
 
 @interface TextViewController ()
 
@@ -18,6 +19,16 @@
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
     return self;
+}
+
+- (BOOL)endsWith:(NSString*)value {
+    NSString *trimmed = [_TextView.string trim];
+    NSString *val = [[trimmed substringFromIndex:trimmed.length - 2] trim];
+    return [val isEqualToString:value];
+}
+
+- (void)clear {
+    [_TextView setString:@""];
 }
 
 - (void)append:(TextTag *)text {

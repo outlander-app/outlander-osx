@@ -13,7 +13,9 @@
 #import "TextTag.h"
 #import "NSString+Categories.h"
 
-@implementation GameParser
+@implementation GameParser {
+    NSArray *_roomTags;
+}
 
 -(id)init {
     self = [super init];
@@ -35,6 +37,8 @@
     _publishStream = YES;
     _bold = NO;
     _mono = NO;
+    
+    _roomTags = @[@"roomdesc", @"roomobjs", @"roomplayers", @"roomexits"];
     
     return self;
 }
@@ -168,8 +172,12 @@
             
             if (compId != nil && [compId length] >-0) {
                 compId = [compId stringByReplacingOccurrencesOfString:@" " withString:@""];
-                NSString *raw = [node contents];
+                NSString *raw = [node allContents];
                 [_globalVars setCacheObject:raw forKey:compId];
+                
+                if([_roomTags containsObject:compId]) {
+                    [_room sendNext:@""];
+                }
             }
             
             if([self isNextNodeNewline:children index:i]) {
@@ -187,7 +195,7 @@
             if ([attr isEqualToString:@"roomName"]){
                 HTMLNode *roomnode = children[i+1];
                 NSString *val = [roomnode rawContents];
-                [_globalVars setCacheObject:val forKey:@"roomname"];
+                [_globalVars setCacheObject:[val trim] forKey:@"roomname"];
                 TextTag *tag = [TextTag tagFor:[NSString stringWithString:val] mono:_mono];
                 tag.color = @"#0000FF";
                 [_currenList addObject:tag];
@@ -214,6 +222,17 @@
             }
         }
         else if([tagName isEqualToString:@"streamwindow"]) {
+            
+            if([[node getAttributeNamed:@"id"] isEqualToString:@"room"]) {
+                NSString *subtitle = [node getAttributeNamed:@"subtitle"];
+                NSString *name = @"";
+                if(subtitle != nil && subtitle.length > 3){
+                    name = [subtitle substringFromIndex:3];
+                }
+                [_globalVars setCacheObject:name forKey:@"roomtitle"];
+                [_room sendNext:@""];
+            }
+            
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
