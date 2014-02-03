@@ -10,4 +10,18 @@
 
 @implementation Vitals
 
+-(id)initWith:(NSString*)name value:(UInt16)value {
+    self = [super init];
+    if(self == nil) return nil;
+    
+    _name = name;
+    _value = value;
+    
+    return self;
+}
+
+-(NSString*)description {
+    return [NSString stringWithFormat:@"%@ name=%@ value=%hu", [super description], _name, _value];
+}
+
 @end

@@ -61,6 +61,7 @@
 		F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
 		F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A85189E218F00A11EE9 /* MMScrollView.m */; };
 		F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A85189E218F00A11EE9 /* MMScrollView.m */; };
+		F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
@@ -143,6 +144,8 @@
 		F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawingUtils.m; sourceTree = "<group>"; };
 		F9AE6A84189E218F00A11EE9 /* MMScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScroller.m; sourceTree = "<group>"; };
 		F9AE6A85189E218F00A11EE9 /* MMScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMScrollView.m; sourceTree = "<group>"; };
+		F9AE6A8F189FFE6100A11EE9 /* MyProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressBar.h; sourceTree = "<group>"; };
+		F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressBar.m; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9CF92671890832800449548 /* Outlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,6 +293,8 @@
 				F97A5CA51895E2C400E2C318 /* MyNSTextField.m */,
 				F97A5CBD1896384A00E2C318 /* MyThumb.h */,
 				F97A5CBE1896384A00E2C318 /* MyThumb.m */,
+				F9AE6A8F189FFE6100A11EE9 /* MyProgressBar.h */,
+				F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -567,6 +572,7 @@
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
+				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,

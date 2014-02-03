@@ -9,12 +9,17 @@
 #import "Kiwi.h"
 #import "GameParser.h"
 #import "TextTag.h"
+#import "Vitals.h"
 
 SPEC_BEGIN(GameParserTester)
 
 describe(@"GameParser", ^{
+   
+    __block GameParser *_parser = nil;
     
-    __block GameParser *_parser = [[GameParser alloc] init];
+    beforeEach(^{
+        _parser = [[GameParser alloc] init];
+    });
     
     context(@"parse", ^{
         
@@ -383,27 +388,29 @@ describe(@"GameParser", ^{
             [[[_parser.globalVars cacheObjectForKey:@"roomtitle"] should] equal:@"[Ranger Guild, Longhouse]"];
         });
         
-//        it(@"should signal vitals", ^{
-//            NSString *data = @"<dialogData id='minivitals'><progressBar id='concentration' value='98' text='concentration 98%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>\r\n";
-//            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
-//            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
-//            
-//            [_parser parse:data then:^(NSArray* res) {
-//                [parseResults addObjectsFromArray:res];
-//            }];
-//            
-//            [_parser.vitals subscribeNext:^(id x) {
-//                [signalResults addObject:x];
-//            }];
-//            
-//            [[parseResults should] haveCountOf:0];
-//            [[signalResults should] haveCountOf:1];
-//            
-//            TextTag *tag = signalResults[0];
-//            
-//            
-//            [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
-//        });
+        it(@"should signal vitals", ^{
+            NSString *data = @"<dialogData id='minivitals'><progressBar id='concentration' value='98' text='concentration 98%' left='80%' customText='t' top='0%' width='20%' height='100%'/></dialogData>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.vitals subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            Vitals *tag = signalResults[0];
+            
+            [[tag.name should] equal:@"concentration"];
+            [[theValue(tag.value) should] equal:theValue(98)];
+            
+            [[[_parser.globalVars cacheObjectForKey:@"concentration"] should] equal:@"98"];
+        });
     });
 });
 

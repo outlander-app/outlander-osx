@@ -11,6 +11,7 @@
 #import "HTMLNode.h"
 #import "HTMLParser.h"
 #import "TextTag.h"
+#import "Vitals.h"
 #import "NSString+Categories.h"
 
 @implementation GameParser {
@@ -207,6 +208,20 @@
             }
         }
         else if([tagName isEqualToString:@"dialogdata"]) {
+            
+            HTMLNode *progressTag = [node findChildTag:@"progressbar"];
+            
+            if(progressTag != nil) {
+                NSString *name = [progressTag getAttributeNamed:@"id"];
+                NSString *stringValue = [progressTag getAttributeNamed:@"value"];
+                UInt16 value = [self numberFrom:stringValue];
+                
+                Vitals *vitals = [[Vitals alloc] initWith:name value:value];
+                
+                [_globalVars setCacheObject:stringValue forKey:name];
+                
+                [_vitals sendNext:vitals];
+            }
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
@@ -342,6 +357,13 @@
     }
     
     return isNewLine;
+}
+
+- (UInt16) numberFrom: (NSString *)data {
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber * myNumber = [f numberFromString:data];
+    return [((NSNumber*)myNumber) unsignedIntValue];
 }
 
 -(void) ifNext:(PredicateBlock)filter then:(CompleteBlock)then {

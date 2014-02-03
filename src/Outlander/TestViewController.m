@@ -128,6 +128,10 @@
         [self updateRoom];
     }];
     
+    [_gameStream.vitals subscribeNext:^(id x) {
+        [self updateVitals];
+    }];
+    
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
     
     [authSignal
@@ -200,6 +204,9 @@
     
     TextTag *tag = [TextTag tagFor:room mono:false];
     [self append:tag to:@"room"];
+}
+
+-(void)updateVitals {
 }
 
 @end

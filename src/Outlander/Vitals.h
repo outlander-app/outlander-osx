@@ -13,4 +13,6 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) UInt16 value;
 
+-(id)initWith:(NSString*)name value:(UInt16)value;
+
 @end
