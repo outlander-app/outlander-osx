@@ -21,6 +21,7 @@
     GameStream *_gameStream;
     TSMutableDictionary *_windows;
 }
+@property (strong) IBOutlet MyView *VitalsView;
 @property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;

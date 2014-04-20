@@ -43,19 +43,19 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     return self;
 }
 
--(void) listenBoundsChanges {
-    [self setPostsBoundsChangedNotifications:YES];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserverForName:NSViewFrameDidChangeNotification
-                        object:nil
-                         queue:nil
-                    usingBlock:^(NSNotification *note) {
-                        if(NSStringFromClass([note.object class])) {
-//                            NSLog(@"%@ %@", note.name, note.object);
-//                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
-                        }
-                    }];
-}
+//-(void) listenBoundsChanges {
+//    [self setPostsBoundsChangedNotifications:YES];
+//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+//    [center addObserverForName:NSViewFrameDidChangeNotification
+//                        object:nil
+//                         queue:nil
+//                    usingBlock:^(NSNotification *note) {
+//                        if(NSStringFromClass([note.object class])) {
+////                            NSLog(@"%@ %@", note.name, note.object);
+////                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
+//                        }
+//                    }];
+//}
 
 - (BOOL)isFlipped {
     return YES;
@@ -125,6 +125,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 {
     [self.backgroundColor setFill];
     NSRectFill(dirtyRect);
+    
    
     if(self.dragging || self.showBorder) {
         [[NSColor whiteColor] setStroke];

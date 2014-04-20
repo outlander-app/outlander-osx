@@ -10,4 +10,10 @@
 
 @interface MyProgressBar : NSView
 
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, assign) float value;
+@property (nonatomic, strong) NSColor *backgroundColor;
+@property (nonatomic, strong) NSColor *foregroundColor;
+@property (nonatomic, strong) NSFont *font;
+
 @end

@@ -14,6 +14,7 @@
 @property (nonatomic, copy) NSString *righthand;
 @property (nonatomic, copy) NSString *spell;
 @property (nonatomic, assign) NSUInteger *roundtime;
+
 -(id)init;
 
 @end

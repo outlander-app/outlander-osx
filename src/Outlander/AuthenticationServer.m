@@ -121,7 +121,7 @@
     NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
     [f setNumberStyle:NSNumberFormatterDecimalStyle];
     NSNumber * myNumber = [f numberFromString:port];
-    return [((NSNumber*)myNumber) unsignedIntValue];
+    return [myNumber unsignedIntValue];
 }
 
 - (NSString *) valueFrom:(NSString *)data pattern:(NSString *)pattern {

@@ -6,7 +6,7 @@ This project uses [CocoaPods](http://cocoapods.org) for dependency management.  
     $ sudo gem install cocoapods
     $ pod install
 
-Use .xcworksapce workspace instead of .xcodeproj project after installation.
+Use .xcworkspace workspace instead of .xcodeproj project after installation.
 
 Install xctool to run unit tests on the command line.  xctool requires Xcode command line tools installed.
 

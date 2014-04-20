@@ -22,6 +22,5 @@
 @property (nonatomic, assign) BOOL showBorder;
 @property (nonatomic, strong) NSMutableArray *viewsList;
 
-- (void) listenBoundsChanges;
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect;
 @end

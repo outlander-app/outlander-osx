@@ -8,10 +8,11 @@
 
 #import "MainWindowController.h"
 #import "TestViewController.h"
+#import "ProgressBarViewController.h"
 #import "NSView+Categories.h"
 
 #define START_WIDTH 900
-#define START_HEIGHT 600
+#define START_HEIGHT 615
 
 @interface MainWindowController ()
     @property (nonatomic, strong) NSViewController *currentViewController;
@@ -38,15 +39,17 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    [[self.window windowController] setShouldCascadeWindows:NO];
-    [self.window setFrameAutosaveName:[self.window representedFilename]];
+//    [[self.window windowController] setShouldCascadeWindows:NO];
+//    [self.window setFrameAutosaveName:[self.window representedFilename]];
 //
     TestViewController *vc = [[TestViewController alloc]init];
-    
     [self setCurrentViewController:vc];
     
-//    [self.window makeFirstResponder:vc._CommandTextField];
-//    [vc._CommandTextField becomeFirstResponder];
+    [self.window makeFirstResponder:vc._CommandTextField];
+    [vc._CommandTextField becomeFirstResponder];
+    
+//    ProgressBarViewController *vc = [[ProgressBarViewController alloc] init];
+//    [self setCurrentViewController:vc];
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {

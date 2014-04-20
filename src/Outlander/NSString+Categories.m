@@ -44,7 +44,11 @@
     return [NSString stringWithFormat:self, [formatter stringFromDate:[NSDate date]]];
 }
 
-- (NSString*) trim {
+- (NSString*) trimNewLine {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+}
+
+- (NSString*) trimWhitespaceAndNewline {
+    return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 @end

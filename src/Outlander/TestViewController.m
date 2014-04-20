@@ -7,6 +7,7 @@
 //
 
 #import "TestViewController.h"
+#import "VitalsViewController.h"
 #import "HTMLNode.h"
 #import "HTMLParser.h"
 #import "TextTag.h"
@@ -14,20 +15,23 @@
 #import "NSColor+Categories.h"
 #import "MyView.h"
 #import "NSView+Categories.h"
+#import "Vitals.h"
 
 @interface TestViewController ()
 
 @end
 
-@implementation TestViewController
+@implementation TestViewController {
+    VitalsViewController *_vitalsViewController;
+}
 
 - (id)init {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
     
+    _vitalsViewController = [[VitalsViewController alloc] init];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
-    _gameStream = [[GameStream alloc] init];
     
     return self;
 }
@@ -36,16 +40,23 @@
     _ViewContainer.backgroundColor = [NSColor blackColor];
     _ViewContainer.draggable = NO;
     _ViewContainer.autoresizesSubviews = YES;
-    [_ViewContainer listenBoundsChanges];
+    
+    [_VitalsView addSubview:_vitalsViewController.view];
+    [_vitalsViewController.view fixTopEdge:YES];
+    [_vitalsViewController.view fixRightEdge:YES];
+    [_vitalsViewController.view fixBottomEdge:NO];
+    [_vitalsViewController.view fixLeftEdge:YES];
+    [_vitalsViewController.view fixWidth:NO];
+    [_vitalsViewController.view fixHeight:NO];
     
     [self addWindow:@"main"
-           withRect:NSMakeRect(0, 100, 611, 377)];
+           withRect:NSMakeRect(0, 100, 574, 377)];
     
     [self addWindow:@"thoughts"
            withRect:NSMakeRect(0, 0, 361, 101)];
     
     [self addWindow:@"arrivals"
-           withRect:NSMakeRect(360, 0, 251, 101)];
+           withRect:NSMakeRect(360, 0, 214, 101)];
     
     [self addWindow:@"deaths"
            withRect:NSMakeRect(_ViewContainer.frame.size.width, 0, 250, 101)];
@@ -87,7 +98,7 @@
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
-    if([[text.text trim] isEqualToString:prompt]) {
+    if([[text.text trimNewLine] isEqualToString:prompt]) {
         if(![controller endsWith:prompt]){
             [controller append:text];
         }
@@ -98,6 +109,8 @@
 }
 
 - (IBAction)connect:(id)sender {
+    
+    _gameStream = [[GameStream alloc] init];
     
     [_gameStream.connected subscribeNext:^(NSString *message) {
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
@@ -128,8 +141,11 @@
         [self updateRoom];
     }];
     
-    [_gameStream.vitals subscribeNext:^(id x) {
-        [self updateVitals];
+    [_gameStream.vitals subscribeNext:^(Vitals *vitals) {
+        NSLog(@"Vitals: %@", vitals);
+        [_vitalsViewController updateValue:vitals.name
+                                      text:[[NSString stringWithFormat:@"%@ %hu%%", vitals.name, vitals.value] capitalizedString]
+                                     value:vitals.value];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
@@ -173,6 +189,7 @@
         [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
+        _gameStream = nil;
     }];
 }
 
@@ -200,13 +217,10 @@
         [room appendFormat:@"%@\n", exits];
     if(players != nil && players.length != 0)
         [room appendFormat:@"%@\n", players];
-    
-    
+
+
     TextTag *tag = [TextTag tagFor:room mono:false];
     [self append:tag to:@"room"];
-}
-
--(void)updateVitals {
 }
 
 @end

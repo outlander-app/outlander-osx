@@ -12,6 +12,8 @@
 #import "HTMLParser.h"
 #import "TextTag.h"
 #import "Vitals.h"
+#import "SkillExp.h"
+#import "LearningRate.h"
 #import "NSString+Categories.h"
 
 @implementation GameParser {
@@ -96,17 +98,17 @@
         }
         else if([tagName isEqualToString:@"popstream"]) {
             if([_streamId isEqual: @"logons"]) {
-                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
                 [_arrivals sendNext:tag];
                 [_currentResult setString:@""];
             }
             else if([_streamId isEqual: @"death"]) {
-                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
                 [_deaths sendNext:tag];
                 [_currentResult setString:@""];
             }
             else if([_streamId isEqual: @"thoughts"]) {
-                TextTag *tag = [TextTag tagFor:[_currentResult trim] mono:_mono];
+                TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
                 [_thoughts sendNext:tag];
                 [_currentResult setString:@""];
             }
@@ -173,11 +175,24 @@
             
             if (compId != nil && [compId length] >-0) {
                 compId = [compId stringByReplacingOccurrencesOfString:@" " withString:@""];
-                NSString *raw = [node allContents];
-                [_globalVars setCacheObject:raw forKey:compId];
                 
-                if([_roomTags containsObject:compId]) {
-                    [_room sendNext:@""];
+                NSString *raw = [node allContents];
+                
+                if([compId hasPrefix:@"exp"]) {
+                    BOOL isNew = NO;
+                    if(node.children.count > 0) {
+                        HTMLNode *childNode = node.children[0];
+                        isNew = [[childNode getAttributeNamed:@"id"] isEqualToString:@"whisper"];
+                    }
+                    [self parseExp:compId withData:raw isNew:isNew];
+                }
+                else {
+                
+                    [_globalVars setCacheObject:raw forKey:compId];
+                
+                    if([_roomTags containsObject:compId]) {
+                        [_room sendNext:@""];
+                    }
                 }
             }
             
@@ -196,7 +211,7 @@
             if ([attr isEqualToString:@"roomName"]){
                 HTMLNode *roomnode = children[i+1];
                 NSString *val = [roomnode rawContents];
-                [_globalVars setCacheObject:[val trim] forKey:@"roomname"];
+                [_globalVars setCacheObject:[val trimNewLine] forKey:@"roomname"];
                 TextTag *tag = [TextTag tagFor:[NSString stringWithString:val] mono:_mono];
                 tag.color = @"#0000FF";
                 [_currenList addObject:tag];
@@ -370,6 +385,51 @@
     if(filter(nil)) {
         then(nil);
     }
+}
+
+-(void) parseExp:(NSString *)compId withData:(NSString *)data isNew:(BOOL)isNew {
+    
+    NSString *pattern = @".+:\\s+(\\d+)\\s(\\d+)%\\s(\\w.*)?.*";
+    NSString *trimmed = [data trimWhitespaceAndNewline];
+    
+    NSString *ranks = [self replace:trimmed withPattern:pattern andTemplate:@"$1.$2"];
+    NSString *mindState = [self replace:trimmed withPattern:pattern andTemplate:@"$3"];
+    LearningRate *learningRate = [LearningRate fromDescription:mindState];
+    
+    SkillExp *exp = [[SkillExp alloc] init];
+    exp.name = [compId substringFromIndex:3];
+    exp.mindState = learningRate;
+    exp.ranks = [NSDecimalNumber decimalNumberWithString:ranks];
+    exp.isNew = isNew;
+    
+    [_globalVars setCacheObject:ranks
+                         forKey:[NSString stringWithFormat:@"%@.Ranks", exp.name]];
+    [_globalVars setCacheObject:[NSString stringWithFormat:@"%hu", exp.mindState.rateId]
+                         forKey:[NSString stringWithFormat:@"%@.LearningRate", exp.name]];
+    [_globalVars setCacheObject:exp.mindState.description
+                         forKey:[NSString stringWithFormat:@"%@.LearningRateName", exp.name]];
+    
+    [_exp sendNext:exp];
+    
+    NSLog(@"%@ %@ %hhd", ranks, mindState, isNew);
+}
+
+-(float) floatFromString:(NSString *)data {
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    f.positiveFormat = @"0.##";
+    NSNumber * number = [f numberFromString:data];
+    return [number floatValue];
+}
+
+-(NSString *) replace: (NSString *)data withPattern:(NSString *)pattern andTemplate:(NSString *)template {
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:nil];
+    return [regex stringByReplacingMatchesInString:data
+                                           options:0
+                                             range:NSMakeRange(0, [data length])
+                                      withTemplate:template];
 }
 
 @end

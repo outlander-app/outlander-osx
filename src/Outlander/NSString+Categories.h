@@ -11,6 +11,7 @@
 @interface NSString (Categories)
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
 - (BOOL) containsString: (NSString*) substring;
-- (NSString*) trim;
+- (NSString*) trimNewLine;
+- (NSString*) trimWhitespaceAndNewline;
 - (NSString*) stringFromDateFormat: (NSString*) dateFormat;
 @end

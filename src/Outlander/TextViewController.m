@@ -22,8 +22,8 @@
 }
 
 - (BOOL)endsWith:(NSString*)value {
-    NSString *trimmed = [_TextView.string trim];
-    NSString *val = [[trimmed substringFromIndex:trimmed.length - 2] trim];
+    NSString *trimmed = [_TextView.string trimNewLine];
+    NSString *val = [[trimmed substringFromIndex:trimmed.length - 2] trimNewLine];
     return [val isEqualToString:value];
 }
 
@@ -42,7 +42,7 @@
         BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
         
         NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
-        NSRange range = [[attr string] rangeOfString:[text text]];
+        NSRange range = [[attr string] rangeOfString:text.text];
         NSColor *color = [NSColor colorWithHexString:@"#F5F5F5"];
         
         if(text.color != nil && [text.color length] > 0){
