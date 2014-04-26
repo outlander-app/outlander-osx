@@ -46,4 +46,12 @@
     return hasKey;
 }
 
+- (NSArray *)allItems {
+    __block NSArray *items = nil;
+    dispatch_sync(_queue, ^{
+        items = [_cache allValues];
+    });
+    return items;
+}
+
 @end

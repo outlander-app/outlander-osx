@@ -70,9 +70,9 @@
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {
     
-    TextViewController *expController = [_ViewContainer addView:[NSColor blackColor]
+    TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                           atLoc:rect];
-    [_windows setCacheObject:expController forKey:key];
+    [_windows setCacheObject:controller forKey:key];
 }
 
 - (IBAction)commandSubmit:(NSTextField*)sender {
@@ -98,10 +98,8 @@
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
-    if([[text.text trimNewLine] isEqualToString:prompt]) {
-        if(![controller endsWith:prompt]){
-            [controller append:text];
-        }
+    if([[text.text trimNewLine] isEqualToString:prompt] && ![controller endsWith:prompt]) {
+        [controller append:text];
     }
     else {
         [controller append:text];

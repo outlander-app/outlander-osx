@@ -460,6 +460,29 @@ describe(@"GameParser", ^{
             [[learningRateName should] equal:@"deliberative"];
         });
         
+        it(@"should set exp global variables, not new", ^{
+            NSString *data = @"<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            
+            NSString *ranks = [_parser.globalVars cacheObjectForKey:@"Athletics.Ranks"];
+            NSString *learningRate = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
+            NSString *learningRateName = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
+            
+            [[ranks should] beNonNil];
+            [[learningRate should] beNonNil];
+            [[learningRateName should] beNonNil];
+            
+            [[ranks should] equal:@"50.33"];
+            [[learningRate should] equal:@"11"];
+            [[learningRateName should] equal:@"deliberative"];
+        });
+        
         it(@"should signal exp", ^{
             NSString *data = @"<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n";
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];

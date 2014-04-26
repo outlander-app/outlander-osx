@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
-#import "RACSignal.h"
-#import "RACReplaySubject.h"
+#import "ReactiveCocoa.h"
 #import "Shared.h"
 
 typedef NS_ENUM(NSInteger, AuthStateType) {

@@ -10,4 +10,8 @@
 
 @implementation SkillExp
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%16s %4d %02.0f%% %2s/34", [self.name UTF8String], [self.ranks intValue], fmodf([self.ranks floatValue], 1.0f)*100, [[@(self.mindState.rateId) stringValue] UTF8String]];
+}
+
 @end
