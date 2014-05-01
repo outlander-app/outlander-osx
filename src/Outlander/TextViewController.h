@@ -13,6 +13,7 @@
 @interface TextViewController : NSViewController
 @property (unsafe_unretained) IBOutlet NSTextView *TextView;
 
+- (NSString *)text;
 - (void)clear;
 - (BOOL)endsWith:(NSString*)value;
 - (void)append:(TextTag*)text;

@@ -16,6 +16,7 @@
 #import "MyView.h"
 #import "NSView+Categories.h"
 #import "Vitals.h"
+#import "ExpTracker.h"
 
 @interface TestViewController ()
 
@@ -23,6 +24,7 @@
 
 @implementation TestViewController {
     VitalsViewController *_vitalsViewController;
+    ExpTracker *_expTracker;
 }
 
 - (id)init {
@@ -32,6 +34,7 @@
     _vitalsViewController = [[VitalsViewController alloc] init];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
+    _expTracker = [[ExpTracker alloc] init];
     
     return self;
 }
@@ -93,13 +96,20 @@
     [controller clear];
 }
 
+- (NSString *)textForWindow:(NSString *)key {
+    TextViewController *controller = [_windows cacheObjectForKey:key];
+    return controller.text;
+}
+
 - (void)append:(TextTag*)text to:(NSString *)key {
     NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
-    if([[text.text trimNewLine] isEqualToString:prompt] && ![controller endsWith:prompt]) {
-        [controller append:text];
+    if([[text.text trimWhitespaceAndNewline] isEqualToString:prompt]) {
+        if(![controller endsWith:prompt]){
+            [controller append:text];
+        }
     }
     else {
         [controller append:text];
@@ -144,6 +154,22 @@
         [_vitalsViewController updateValue:vitals.name
                                       text:[[NSString stringWithFormat:@"%@ %hu%%", vitals.name, vitals.value] capitalizedString]
                                      value:vitals.value];
+    }];
+    [_gameStream.exp subscribeNext:^(SkillExp *skillExp) {
+        [_expTracker update:skillExp];
+        NSArray *result = [_expTracker.skillsWithExp.rac_sequence map:^id(SkillExp *value) {
+            TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\r\n", value.description]
+                                      mono:true];
+            if(value.isNew) {
+                tag.color = @"#66FFFF";
+            }
+            return tag;
+        }].array;
+        
+        [self clear:@"exp"];
+        [result enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
+            [self append:item to:@"exp"];
+        }];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];

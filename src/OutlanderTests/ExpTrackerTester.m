@@ -40,7 +40,7 @@ describe(@"ExpTracker", ^{
             SkillExp *skill = [[SkillExp alloc] init];
             skill.name = @"Athletics";
             skill.ranks = [NSDecimalNumber decimalNumberWithString:@"55.5"];
-            skill.mindState  = [LearningRate fromRate:3];
+            skill.mindState  = [LearningRate fromRate:0];
             skill.isNew = NO;
             [_tracker update:skill];
             

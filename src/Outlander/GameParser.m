@@ -79,7 +79,7 @@
 //        NSLog(@"%@", tagName);
         if([tagName isEqualToString:@"prompt"]){
             NSString *time = [node getAttributeNamed:@"time"];
-            NSString *prompt = [node contents];
+            NSString *prompt = [[node contents] trimWhitespaceAndNewline];
             
             [_globalVars setCacheObject:prompt forKey:@"prompt"];
             [_globalVars setCacheObject:time forKey:@"time"];

@@ -21,6 +21,10 @@
     return self;
 }
 
+- (NSString *)text {
+    return _TextView.string;
+}
+
 - (BOOL)endsWith:(NSString*)value {
     NSString *trimmed = [_TextView.string trimNewLine];
     NSString *val = [[trimmed substringFromIndex:trimmed.length - 2] trimNewLine];
@@ -43,10 +47,14 @@
         
         NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
         NSRange range = [[attr string] rangeOfString:text.text];
-        NSColor *color = [NSColor colorWithHexString:@"#F5F5F5"];
+        
+        NSColor *color = nil;
         
         if(text.color != nil && [text.color length] > 0){
             color = [NSColor colorWithHexString:text.color];
+        }
+        else {
+            color = [NSColor colorWithHexString:@"#F5F5F5"];
         }
         
         [attr addAttribute:NSForegroundColorAttributeName value:color range:range];

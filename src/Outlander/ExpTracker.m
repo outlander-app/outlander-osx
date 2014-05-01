@@ -44,7 +44,7 @@
 
 -(NSArray *) skillsWithExp {
     return [_skills.allItems.rac_sequence filter:^BOOL(SkillExp *item) {
-        return item.isNew;
+        return item.mindState.rateId > 0;
     }].array;
 }
 @end

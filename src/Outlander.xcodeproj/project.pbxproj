@@ -59,6 +59,7 @@
 		F9818D571908CA0200137896 /* ExpTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D551908CA0200137896 /* ExpTracker.m */; };
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
+		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
 		F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
@@ -154,6 +155,7 @@
 		F9818D551908CA0200137896 /* ExpTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTracker.m; sourceTree = "<group>"; };
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
+		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
 		F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawingUtils.h; sourceTree = "<group>"; };
 		F9AE6A81189E218F00A11EE9 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScroller.h; sourceTree = "<group>"; };
 		F9AE6A82189E218F00A11EE9 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScrollView.h; sourceTree = "<group>"; };
@@ -417,8 +419,9 @@
 			children = (
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
-				F9CF928F1890832800449548 /* Supporting Files */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
+				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
+				F9CF928F1890832800449548 /* Supporting Files */,
 			);
 			path = OutlanderTests;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
+				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
