@@ -11,6 +11,7 @@
 #import "NSColor+Categories.h"
 
 @interface TextViewController : NSViewController
+@property (nonatomic, copy) NSString *key;
 @property (unsafe_unretained) IBOutlet NSTextView *TextView;
 
 - (NSString *)text;

@@ -19,4 +19,5 @@
 - (void)setCacheObject: (id)obj forKey: (id)key;
 - (BOOL)cacheDoesContain: (id)key;
 - (NSArray *)allItems;
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block;
 @end

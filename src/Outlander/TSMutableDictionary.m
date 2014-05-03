@@ -54,4 +54,8 @@
     return items;
 }
 
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block {
+    [_cache enumerateKeysAndObjectsUsingBlock:block];
+}
+
 @end

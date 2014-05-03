@@ -28,40 +28,25 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     NSCursor *_neswCursor;
 }
 
-- (id)initWithFrame:(NSRect)frame
-{
+- (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [NSColor blackColor];
         self.draggable = NO;
         self.viewsList = [[NSMutableArray alloc] init];
         self.autoresizesSubviews = YES;
-        _maxViewSize = NSMakeSize(150, 150);
+        _maxViewSize = NSMakeSize(50, 50);
         _nwseCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nwse"] hotSpot:NSMakePoint(10, 10)];
         _neswCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nesw"] hotSpot:NSMakePoint(10, 10)];
     }
     return self;
 }
 
-//-(void) listenBoundsChanges {
-//    [self setPostsBoundsChangedNotifications:YES];
-//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-//    [center addObserverForName:NSViewFrameDidChangeNotification
-//                        object:nil
-//                         queue:nil
-//                    usingBlock:^(NSNotification *note) {
-//                        if(NSStringFromClass([note.object class])) {
-////                            NSLog(@"%@ %@", note.name, note.object);
-////                            NSLog(@"size: %f, %f", self.frame.size.height, self.frame.size.width);
-//                        }
-//                    }];
-//}
-
 - (BOOL)isFlipped {
     return YES;
 }
 
-- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect {
+- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
     __block MyView *view = [[MyView alloc] initWithFrame:rect];
     view.backgroundColor = color;
     view.draggable = YES;
@@ -76,6 +61,9 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [textcrl.view fixHeight:NO];
     [textcrl.view fixRightEdge:YES];
     [textcrl.view fixBottomEdge:YES];
+    
+    view.key = textcrl.key = key;
+    
     [view addSubview:textcrl.view];
     [_viewsList addObject:view];
     

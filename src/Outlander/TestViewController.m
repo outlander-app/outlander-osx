@@ -17,6 +17,7 @@
 #import "NSView+Categories.h"
 #import "Vitals.h"
 #import "ExpTracker.h"
+#import "WindowDataService.h"
 
 @interface TestViewController ()
 
@@ -25,6 +26,7 @@
 @implementation TestViewController {
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
+    WindowDataService *_windowDataService;
 }
 
 - (id)init {
@@ -35,6 +37,7 @@
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
     _expTracker = [[ExpTracker alloc] init];
+    _windowDataService = [[WindowDataService alloc] init];
     
     return self;
 }
@@ -52,30 +55,31 @@
     [_vitalsViewController.view fixWidth:NO];
     [_vitalsViewController.view fixHeight:NO];
     
-    [self addWindow:@"main"
-           withRect:NSMakeRect(0, 100, 574, 377)];
+    NSArray *windows = [_windowDataService readWindowJson];
     
-    [self addWindow:@"thoughts"
-           withRect:NSMakeRect(0, 0, 361, 101)];
-    
-    [self addWindow:@"arrivals"
-           withRect:NSMakeRect(360, 0, 214, 101)];
-    
-    [self addWindow:@"deaths"
-           withRect:NSMakeRect(_ViewContainer.frame.size.width, 0, 250, 101)];
-    
-    [self addWindow:@"room"
-           withRect:NSMakeRect(_ViewContainer.frame.size.width, 100, 250, 177)];
-    
-    [self addWindow:@"exp"
-           withRect:NSMakeRect(_ViewContainer.frame.size.width, 276, 250, 201)];
+    [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
+        [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
+    }];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {
     
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
-                                                          atLoc:rect];
+                                                       atLoc:rect
+                                                     withKey:key];
     [_windows setCacheObject:controller forKey:key];
+}
+
+- (void)writeWindowJson {
+    NSArray *items = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
+        return [WindowData windowWithName:value.key atLoc:value.frame];
+    }].array;
+    
+    [_windowDataService writeWindowJson:items];
+}
+
+- (IBAction)saveLayout:(id)sender {
+    [self writeWindowJson];
 }
 
 - (IBAction)commandSubmit:(NSTextField*)sender {

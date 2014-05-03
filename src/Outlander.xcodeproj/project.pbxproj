@@ -60,6 +60,10 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F9A3452F1913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
+		F9A345301913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
+		F9A345331913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
+		F9A345341913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
 		F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
@@ -156,6 +160,10 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F9A3452D1913390400920F0E /* WindowData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowData.h; sourceTree = "<group>"; };
+		F9A3452E1913390400920F0E /* WindowData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowData.m; sourceTree = "<group>"; };
+		F9A345311913398800920F0E /* WindowDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowDataService.h; sourceTree = "<group>"; };
+		F9A345321913398800920F0E /* WindowDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowDataService.m; sourceTree = "<group>"; };
 		F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawingUtils.h; sourceTree = "<group>"; };
 		F9AE6A81189E218F00A11EE9 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScroller.h; sourceTree = "<group>"; };
 		F9AE6A82189E218F00A11EE9 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScrollView.h; sourceTree = "<group>"; };
@@ -339,6 +347,17 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
+		F9A3452C191338E900920F0E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F9A3452D1913390400920F0E /* WindowData.h */,
+				F9A3452E1913390400920F0E /* WindowData.m */,
+				F9A345311913398800920F0E /* WindowDataService.h */,
+				F9A345321913398800920F0E /* WindowDataService.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		F9CF925E1890832800449548 = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +405,7 @@
 		F9CF92701890832800449548 /* Outlander */ = {
 			isa = PBXGroup;
 			children = (
+				F9A3452C191338E900920F0E /* UI */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C761893808F00E2C318 /* HTML */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
@@ -611,6 +631,7 @@
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
+				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
@@ -620,6 +641,7 @@
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
+				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
@@ -649,6 +671,7 @@
 			files = (
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
+				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
@@ -663,6 +686,7 @@
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,

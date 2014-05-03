@@ -11,6 +11,7 @@
 
 @interface MyView : NSView {
 }
+@property (nonatomic, copy) NSString *key;
 @property (nonatomic, strong) NSColor *backgroundColor;
 @property (nonatomic, assign) BOOL draggable;
 @property (nonatomic, assign) NSPoint mouseLoc;
@@ -22,5 +23,5 @@
 @property (nonatomic, assign) BOOL showBorder;
 @property (nonatomic, strong) NSMutableArray *viewsList;
 
-- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect;
+- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
 @end
