@@ -10,6 +10,7 @@
 #import "ReactiveCocoa.h"
 
 @implementation WindowDataService
+
 - (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location {
     WindowData *data = [WindowData windowWithName:windowName atLoc:location];
     return [self jsonFor:data];
@@ -39,9 +40,9 @@
     return items;
 }
 
-- (NSArray *)readWindowJson {
+- (NSArray *)readWindowJson:(GameContext *)context {
     
-    NSString *filePath = [self getFilePath:@"test.json"];
+    NSString *filePath = [self get:context FilePath:@"layout.cfg"];
     NSData *json = [NSData dataWithContentsOfFile:filePath];
     
     if(!json) {
@@ -64,7 +65,7 @@
     return items;
 }
 
-- (void)writeWindowJson:(NSArray *)windows {
+- (void)write:(GameContext *)context WindowJson:(NSArray *)windows {
     
     NSArray *items = [windows.rac_sequence map:^id(WindowData *value) {
         return [self jsonFor:value];
@@ -73,16 +74,13 @@
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:items
                                                        options:kNilOptions
                                                          error:nil];
-    NSString *filePath = [self getFilePath:@"test.json"];
+    NSString *filePath = [self get:context FilePath:@"layout.cfg"];
     [jsonData writeToFile:filePath atomically:YES];
 }
 
--(NSString *)getFilePath:(NSString *)fileName {
+-(NSString *)get:(GameContext *)context FilePath:(NSString *)fileName {
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    
-    return [documentDirectory stringByAppendingPathComponent:fileName];
+    return [context.pathProvider.profileFolder stringByAppendingPathComponent:fileName];
 }
 
 @end

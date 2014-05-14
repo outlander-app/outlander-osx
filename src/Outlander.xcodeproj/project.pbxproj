@@ -64,6 +64,18 @@
 		F9A345301913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
 		F9A345331913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
 		F9A345341913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
+		F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */; };
+		F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */; };
+		F9A345401919D83900920F0E /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3453F1919D83900920F0E /* AppSettings.m */; };
+		F9A345411919D83900920F0E /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3453F1919D83900920F0E /* AppSettings.m */; };
+		F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345431919DADA00920F0E /* ConfigLoader.m */; };
+		F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345431919DADA00920F0E /* ConfigLoader.m */; };
+		F9A34548191A064100920F0E /* GameContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A34547191A064100920F0E /* GameContext.m */; };
+		F9A34549191A064100920F0E /* GameContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A34547191A064100920F0E /* GameContext.m */; };
+		F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
+		F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
+		F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
+		F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
 		F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
@@ -164,6 +176,18 @@
 		F9A3452E1913390400920F0E /* WindowData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowData.m; sourceTree = "<group>"; };
 		F9A345311913398800920F0E /* WindowDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowDataService.h; sourceTree = "<group>"; };
 		F9A345321913398800920F0E /* WindowDataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowDataService.m; sourceTree = "<group>"; };
+		F9A3453A1919CC1300920F0E /* AppSettingsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettingsLoader.h; sourceTree = "<group>"; };
+		F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsLoader.m; sourceTree = "<group>"; };
+		F9A3453E1919D83900920F0E /* AppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettings.h; sourceTree = "<group>"; };
+		F9A3453F1919D83900920F0E /* AppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettings.m; sourceTree = "<group>"; };
+		F9A345421919DADA00920F0E /* ConfigLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigLoader.h; sourceTree = "<group>"; };
+		F9A345431919DADA00920F0E /* ConfigLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigLoader.m; sourceTree = "<group>"; };
+		F9A34546191A064100920F0E /* GameContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameContext.h; sourceTree = "<group>"; };
+		F9A34547191A064100920F0E /* GameContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameContext.m; sourceTree = "<group>"; };
+		F9A3454A191C573200920F0E /* AppPathProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppPathProvider.h; sourceTree = "<group>"; };
+		F9A3454B191C573200920F0E /* AppPathProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPathProvider.m; sourceTree = "<group>"; };
+		F9A3454E191C59D500920F0E /* ProfileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLoader.h; sourceTree = "<group>"; };
+		F9A3454F191C59D500920F0E /* ProfileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLoader.m; sourceTree = "<group>"; };
 		F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawingUtils.h; sourceTree = "<group>"; };
 		F9AE6A81189E218F00A11EE9 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScroller.h; sourceTree = "<group>"; };
 		F9AE6A82189E218F00A11EE9 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScrollView.h; sourceTree = "<group>"; };
@@ -358,6 +382,25 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		F9A345391919CC0500920F0E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F9A3453A1919CC1300920F0E /* AppSettingsLoader.h */,
+				F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */,
+				F9A3453E1919D83900920F0E /* AppSettings.h */,
+				F9A3453F1919D83900920F0E /* AppSettings.m */,
+				F9A345421919DADA00920F0E /* ConfigLoader.h */,
+				F9A345431919DADA00920F0E /* ConfigLoader.m */,
+				F9A34546191A064100920F0E /* GameContext.h */,
+				F9A34547191A064100920F0E /* GameContext.m */,
+				F9A3454A191C573200920F0E /* AppPathProvider.h */,
+				F9A3454B191C573200920F0E /* AppPathProvider.m */,
+				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
+				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		F9CF925E1890832800449548 = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +448,7 @@
 		F9CF92701890832800449548 /* Outlander */ = {
 			isa = PBXGroup;
 			children = (
+				F9A345391919CC0500920F0E /* Settings */,
 				F9A3452C191338E900920F0E /* UI */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C761893808F00E2C318 /* HTML */,
@@ -632,8 +676,10 @@
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
+				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
+				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
@@ -642,6 +688,7 @@
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
+				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
@@ -655,13 +702,16 @@
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
+				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
+				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
+				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,20 +720,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
+				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
+				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
+				F9A34549191A064100920F0E /* GameContext.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
+				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
@@ -696,6 +750,8 @@
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
+				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
+				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,

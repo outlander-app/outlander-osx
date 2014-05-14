@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "RACSignal.h"
 #import "RACReplaySubject.h"
 #import "TSMutableDictionary.h"

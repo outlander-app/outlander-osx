@@ -8,26 +8,29 @@
 
 #import "MyNSTextField.h"
 
+@interface MyNSTextField () {
+    NSMutableArray *_history;
+}
+@end
+
 @implementation MyNSTextField
 
-- (id)initWithFrame:(NSRect)frame
-{
+- (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
-    if (self) {
-    }
+    if (!self) return nil;
+    
+    _history = [[NSMutableArray alloc] init];
+    
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
+- (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
 }
 
--(BOOL)becomeFirstResponder
-{
+-(BOOL)becomeFirstResponder {
     BOOL success = [super becomeFirstResponder];
-    if( success )
-    {
+    if( success ) {
         // Strictly spoken, NSText (which currentEditor returns) doesn't
         // implement setInsertionPointColor:, but it's an NSTextView in practice.
         // But let's be paranoid, better show an invisible black-on-black cursor
@@ -37,6 +40,20 @@
             [textField setInsertionPointColor: [NSColor whiteColor]];
     }
     return success;
+}
+
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
+    switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
+        case NSUpArrowFunctionKey:
+            return YES;
+            break;
+        case NSDownArrowFunctionKey:;
+            return YES;
+            break;
+        default:
+            break;
+    }
+    return [super performKeyEquivalent:theEvent];
 }
 
 @end

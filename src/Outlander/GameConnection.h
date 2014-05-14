@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface GameConnection : NSObject
 
 @property (nonatomic, copy) NSString *game;

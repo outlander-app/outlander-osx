@@ -31,4 +31,8 @@
              };
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"(%f,%f)(%fx%f)", _x, _y, _height, _width];
+}
+
 @end

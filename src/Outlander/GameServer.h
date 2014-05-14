@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
 #import "RACReplaySubject.h"
 #import "RACSignal.h"

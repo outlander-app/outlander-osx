@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "MyView.h"
 
 @interface VitalsViewController : NSViewController

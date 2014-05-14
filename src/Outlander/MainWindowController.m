@@ -47,9 +47,6 @@
     
     [self.window makeFirstResponder:vc._CommandTextField];
     [vc._CommandTextField becomeFirstResponder];
-    
-//    ProgressBarViewController *vc = [[ProgressBarViewController alloc] init];
-//    [self setCurrentViewController:vc];
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {

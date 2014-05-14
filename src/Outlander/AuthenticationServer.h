@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
 #import "ReactiveCocoa.h"
 #import "Shared.h"

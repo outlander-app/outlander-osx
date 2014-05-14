@@ -10,8 +10,7 @@
 
 @implementation NSString (Categories)
 
-- (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
-{
+- (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc {
     BOOL result = YES;
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:path];
     if ( !fh ) {
@@ -30,8 +29,7 @@
     return result;
 }
 
-- (BOOL) containsString: (NSString*) substring
-{
+- (BOOL) containsString: (NSString*) substring {
     NSRange range = [self rangeOfString : substring];
     BOOL found = ( range.location != NSNotFound );
     return found;

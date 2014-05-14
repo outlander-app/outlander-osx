@@ -7,9 +7,6 @@
 //
 // http://dinhviethoa.tumblr.com/post/6138273608/ios-style-scrollbars-for-nsscrollview
 
-#import <Cocoa/Cocoa.h>
-
-
 @interface MMScroller : NSScroller {
 	int _animationStep;
 	float _oldValue;

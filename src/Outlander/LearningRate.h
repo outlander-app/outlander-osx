@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface LearningRate : NSObject
 
 @property (nonatomic, assign) UInt16 rateId;

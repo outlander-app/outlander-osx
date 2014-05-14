@@ -18,6 +18,7 @@
 #import "Vitals.h"
 #import "ExpTracker.h"
 #import "WindowDataService.h"
+#import "AppSettingsLoader.h"
 
 @interface TestViewController ()
 
@@ -26,7 +27,8 @@
 @implementation TestViewController {
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
-    WindowDataService *_windowDataService;
+    GameContext *_gameContext;
+    AppSettingsLoader *_appSettingsLoader;
 }
 
 - (id)init {
@@ -37,7 +39,8 @@
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
     _expTracker = [[ExpTracker alloc] init];
-    _windowDataService = [[WindowDataService alloc] init];
+    _gameContext = [[GameContext alloc] init];
+    _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     
     return self;
 }
@@ -55,9 +58,9 @@
     [_vitalsViewController.view fixWidth:NO];
     [_vitalsViewController.view fixHeight:NO];
     
-    NSArray *windows = [_windowDataService readWindowJson];
+    [_appSettingsLoader load];
     
-    [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
+    [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
     }];
 }
@@ -75,7 +78,9 @@
         return [WindowData windowWithName:value.key atLoc:value.frame];
     }].array;
     
-    [_windowDataService writeWindowJson:items];
+    _gameContext.windows = items;
+    
+    [_appSettingsLoader saveProfile];
 }
 
 - (IBAction)saveLayout:(id)sender {
@@ -198,8 +203,10 @@
                   to:@"main"];
     }];
     
-    [[[_server
-       authenticate:@"" password:@"" game:@"DR" character:@""]
+    [[[_server authenticate:_gameContext.settings.account
+                   password:_gameContext.settings.password
+                       game:_gameContext.settings.game
+                  character:_gameContext.settings.character]
     flattenMap:^RACStream *(GameConnection *connection) {
         NSLog(@"Connection: %@", connection);
         return [_gameStream connect:connection];

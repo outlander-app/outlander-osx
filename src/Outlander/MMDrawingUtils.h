@@ -7,8 +7,6 @@
 //
 // http://dinhviethoa.tumblr.com/post/6138273608/ios-style-scrollbars-for-nsscrollview
 
-#import <Cocoa/Cocoa.h>
-
 void MMFillRoundedRect(NSRect rect, CGFloat x, CGFloat y);
 void MMStrokeRoundedRect(NSRect rect, CGFloat x, CGFloat y);
 

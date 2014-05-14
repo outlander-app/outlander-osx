@@ -21,7 +21,7 @@ describe(@"SkillExp", ^{
             exp.ranks = [NSDecimalNumber decimalNumberWithString:@"55.6"];
             exp.mindState = [LearningRate fromRate:3];
             
-            [[exp.description should] equal:@"    Locksmithing   55 60%  3/34"];
+            [[exp.description should] equal:@"    Locksmithing:   55 60%  3/34"];
         });
         
     });

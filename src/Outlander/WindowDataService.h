@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "Mantle.h"
 #import "WindowData.h"
+#import "GameContext.h"
 
 @interface WindowDataService : NSObject
 
 - (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location;
 - (WindowData *)dataFor:(NSDictionary *)json;
-- (NSArray *)readWindowJson;
-- (void)writeWindowJson:(NSArray *)windows;
+- (NSArray *)readWindowJson:(GameContext *)context;
+- (void)write:(GameContext *)context WindowJson:(NSArray *)windows;
 @end
