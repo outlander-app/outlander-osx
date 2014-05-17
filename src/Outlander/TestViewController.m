@@ -95,7 +95,8 @@
     NSString *command = [sender stringValue];
     if([command length] == 0) return;
     
-    [sender commitHistory];
+    if(command.length > 3)
+        [sender commitHistory];
     
     [_gameStream sendCommand:command];
     

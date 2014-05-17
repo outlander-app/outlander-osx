@@ -20,8 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="692" height="483"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
-                    <rect key="frame" x="20" y="37" width="564" height="22"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
+                    <rect key="frame" x="20" y="37" width="652" height="22"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" focusRingType="none" placeholderString="" drawsBackground="YES" id="FN0-lT-QP8">
                         <font key="font" metaFont="system"/>
@@ -87,11 +87,13 @@
                 <constraint firstItem="P3P-js-Xda" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="351" id="JGG-UH-tpP"/>
                 <constraint firstAttribute="trailing" secondItem="CHV-Sq-xD0" secondAttribute="trailing" constant="20" id="Jhs-BR-jfq"/>
                 <constraint firstAttribute="bottom" secondItem="aaS-Tl-hqC" secondAttribute="bottom" constant="8" id="MV0-Dv-ZlC"/>
+                <constraint firstAttribute="trailing" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="20" id="NT1-Zt-FNw"/>
                 <constraint firstAttribute="bottom" secondItem="P3P-js-Xda" secondAttribute="bottom" constant="67" id="QnR-ka-UHn"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="VJl-Th-Ry7"/>
                 <constraint firstAttribute="bottom" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="92" id="ZBe-cy-5d0"/>
                 <constraint firstAttribute="bottom" secondItem="0o8-5z-kiJ" secondAttribute="bottom" constant="67" id="aBX-TB-X04"/>
                 <constraint firstAttribute="bottom" secondItem="HLQ-x9-5se" secondAttribute="bottom" constant="37" id="bww-aF-LOb"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aaS-Tl-hqC" secondAttribute="trailing" constant="20" id="gWg-qX-N2P"/>
                 <constraint firstAttribute="trailing" secondItem="aaS-Tl-hqC" secondAttribute="trailing" constant="20" id="hUd-Ib-Rty"/>
                 <constraint firstAttribute="bottom" secondItem="yf4-ji-u2U" secondAttribute="bottom" constant="67" id="lGo-le-KDf"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="moF-p6-Mmw"/>

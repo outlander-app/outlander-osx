@@ -69,8 +69,8 @@
     
     [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
                                      (maxY / 2.0) - (START_HEIGHT / 2.0),
-                                     START_WIDTH,
-                                     START_HEIGHT)
+                                     maxX,
+                                     maxY)
                   display:YES
                   animate:NO];
 }

@@ -77,6 +77,7 @@
     
     NSString *val = [_history objectAtIndex:_currentHistory];
     [self setStringValue: val];
+    [[self currentEditor] moveToEndOfLine:nil];
 }
 
 - (void)nextHistory {
@@ -87,6 +88,7 @@
     
     NSString *val = [_history objectAtIndex:_currentHistory];
     [self setStringValue: val];
+    [[self currentEditor] moveToEndOfLine:nil];
 }
 
 @end
