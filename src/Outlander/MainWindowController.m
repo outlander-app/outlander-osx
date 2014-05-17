@@ -10,11 +10,14 @@
 #import "TestViewController.h"
 #import "ProgressBarViewController.h"
 #import "NSView+Categories.h"
+#import "LoginViewController.h"
 
 #define START_WIDTH 900
 #define START_HEIGHT 615
 
 @interface MainWindowController ()
+    @property (nonatomic, strong) LoginViewController *loginViewController;
+    @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
 @end
 
@@ -24,15 +27,23 @@
 	self = [super initWithWindowNibName:NSStringFromClass([self class]) owner:self];
 	if(self == nil) return nil;
     
-    int maxX = NSMaxX([[NSScreen mainScreen] frame]);
-    int maxY = NSMaxY([[NSScreen mainScreen] frame]);
+    _loginViewController = [[LoginViewController alloc] init];
     
-    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
-                                     (maxY / 2.0) - (START_HEIGHT / 2.0),
-                                     START_WIDTH,
-                                     START_HEIGHT)
-                  display:YES
-                  animate:NO];
+    _loginViewController.cancelCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        
+        [self endSheet];
+        return [RACSignal empty];
+    }];
+    
+    _loginViewController.connectCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        
+        [self endSheet];
+        
+        [self command:@"connect"];
+        
+        return [RACSignal empty];
+    }];
+    
 	return self;
 }
 
@@ -45,8 +56,23 @@
     TestViewController *vc = [[TestViewController alloc]init];
     [self setCurrentViewController:vc];
     
+    _loginViewController.context = vc.gameContext;
+    
     [self.window makeFirstResponder:vc._CommandTextField];
     [vc._CommandTextField becomeFirstResponder];
+}
+
+- (void)awakeFromNib {
+    
+    int maxX = NSMaxX([[NSScreen mainScreen] frame]);
+    int maxY = NSMaxY([[NSScreen mainScreen] frame]);
+    
+    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
+                                     (maxY / 2.0) - (START_HEIGHT / 2.0),
+                                     START_WIDTH,
+                                     START_HEIGHT)
+                  display:YES
+                  animate:NO];
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {
@@ -54,6 +80,38 @@
 	
 	_currentViewController = vc;
 	self.window.contentView = _currentViewController.view;
+}
+
+- (void)command:(NSString *)command {
+    if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
+        id<Commands> vc = (id<Commands>)_currentViewController;
+        [vc command:command];
+    }
+}
+
+- (void)showLogin {
+    [self showSheet:_loginViewController.view];
+}
+
+- (void)dismissLogin {
+    [self endSheet];
+}
+
+- (void)showSheet:(NSView *)view {
+    self.sheet.contentView = view;
+    [self.sheet setFrame:view.frame display:YES animate:NO];
+    
+    [NSApp beginSheet:self.sheet
+       modalForWindow:self.window
+        modalDelegate:self
+       didEndSelector:nil
+          contextInfo:nil];
+}
+
+- (void)endSheet {
+    [NSApp endSheet:self.sheet];
+    [self.sheet orderOut:self];
+    self.sheet.contentView = nil;
 }
 
 @end

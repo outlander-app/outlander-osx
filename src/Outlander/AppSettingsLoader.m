@@ -54,6 +54,7 @@
 - (void)saveProfile {
     
     [_windowDataService write:_context WindowJson:_context.windows];
+    [_profileLoader save];
 }
 
 - (void)loadHighlights {

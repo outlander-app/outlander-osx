@@ -23,4 +23,5 @@
 
 - (RACSignal*) connect:(NSString *) key toHost:(NSString *)host onPort:(UInt16)port;
 - (void) sendCommand: (NSString *) command;
+- (void) disconnect;
 @end

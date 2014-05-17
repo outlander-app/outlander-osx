@@ -13,13 +13,16 @@
 #import "MyView.h"
 #import "TSMutableDictionary.h"
 #import "MyNSTextField.h"
+#import "GameContext.h"
+#import "Commands.h"
 
-@interface TestViewController : NSViewController {
+@interface TestViewController : NSViewController <Commands> {
     SignalSocket *signalSocket;
     AuthenticationServer *_server;
     GameStream *_gameStream;
     TSMutableDictionary *_windows;
 }
+@property (nonatomic, strong) GameContext *gameContext;
 @property (strong) IBOutlet MyView *VitalsView;
 @property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;

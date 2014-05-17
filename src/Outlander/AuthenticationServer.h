@@ -19,6 +19,13 @@ typedef NS_ENUM(NSInteger, AuthStateType) {
     AuthStateEnd = 99
 };
 
+typedef NS_ENUM(NSInteger, AuthErrorType) {
+    AuthErrorNone = 0,
+    AuthErrorPassword = 1,
+    AuthErrorAccount = 2,
+    AuthErrorEnd = 99
+};
+
 @interface AuthenticationServer : NSObject {
     NSString *_host;
     UInt16 _port;

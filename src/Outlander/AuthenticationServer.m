@@ -10,11 +10,17 @@
 #import "GCDAsyncSocket.h"
 #import "GameConnection.h"
 
+@interface AuthenticationServer () {
+    AuthErrorType _authError;
+}
+@end
+
 @implementation AuthenticationServer
 
 - (id)init {
     self = [super init];
     if (self == nil) return nil;
+    
     
     asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
@@ -30,6 +36,8 @@
 }
 
 - (RACSignal*) authenticate:(NSString *)account password:(NSString *)password game:(NSString *) game character:(NSString *)character {
+    
+    _authError = AuthErrorNone;
     
     _account = account;
     _password = password;
@@ -66,6 +74,20 @@
     }
     
     if(tag == AuthStateAuthenticate){
+        if([response rangeOfString:@"KEY"].location == NSNotFound) {
+            _authError = AuthErrorEnd;
+            
+            if([response rangeOfString:@"PASSWORD"].location != NSNotFound) {
+                _authError = AuthErrorPassword;
+            }
+            else if([response rangeOfString:@"NORECORD"].location != NSNotFound) {
+                _authError = AuthErrorAccount;
+            }
+            
+            [asyncSocket disconnectAfterReadingAndWriting];
+            return;
+        }
+        
         NSData *data = [[NSString stringWithFormat:@"G\t%@\r\n", _game] dataUsingEncoding:NSUTF8StringEncoding];
         [asyncSocket writeData:data withTimeout:-1 tag:-1];
         [asyncSocket readDataWithTimeout:-1 tag:AuthStateChooseGame];
@@ -97,11 +119,20 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
     NSLog(@"socketDidDisconnect:withError:%@", err);
-    if(err != nil && err.code == 8) {
+    if((err != nil && err.code == 8) || _authError > AuthErrorNone) {
         
         NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
         [info setObject:[NSString stringWithFormat:@"failed to connect to %@ on port %hu", _host, _port]
                  forKey:@"message"];
+        
+        if(_authError == AuthErrorPassword) {
+            [info setObject:[NSString stringWithFormat:@"Invalid password"]
+                     forKey:@"authMessage"];
+        }
+        if(_authError == AuthErrorAccount) {
+            [info setObject:[NSString stringWithFormat:@"Invalid account"]
+                     forKey:@"authMessage"];
+        }
         
         NSError *authErr = [NSError errorWithDomain:@"auth" code:0 userInfo:info];
         [_connected sendError:authErr];

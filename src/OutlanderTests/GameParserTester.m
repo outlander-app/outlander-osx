@@ -461,7 +461,7 @@ describe(@"GameParser", ^{
         });
         
         it(@"should set exp global variables, not new", ^{
-            NSString *data = @"<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n";
+            NSString *data = @"<component id='exp Life Magic'>       Life Magic:   50 33% deliberative </component>\r\n";
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             
             [_parser parse:data then:^(NSArray* res) {
@@ -470,9 +470,9 @@ describe(@"GameParser", ^{
             
             [[parseResults should] haveCountOf:0];
             
-            NSString *ranks = [_parser.globalVars cacheObjectForKey:@"Athletics.Ranks"];
-            NSString *learningRate = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
-            NSString *learningRateName = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
+            NSString *ranks = [_parser.globalVars cacheObjectForKey:@"Life_Magic.Ranks"];
+            NSString *learningRate = [_parser.globalVars cacheObjectForKey:@"Life_Magic.LearningRate"];
+            NSString *learningRateName = [_parser.globalVars cacheObjectForKey:@"Life_Magic.LearningRateName"];
             
             [[ranks should] beNonNil];
             [[learningRate should] beNonNil];

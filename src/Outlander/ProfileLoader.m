@@ -59,10 +59,10 @@
     NSString *configFile = [_context.pathProvider.profileFolder stringByAppendingPathComponent:@"config.cfg"];
     
     NSMutableString *profile = [[NSMutableString alloc] init];
-    [profile appendFormat:@"Account: %@", _context.settings.account];
-    [profile appendFormat:@"Password: %@", _context.settings.password];
-    [profile appendFormat:@"Game: %@", _context.settings.game];
-    [profile appendFormat:@"Character: %@", _context.settings.character];
+    [profile appendFormat:@"Account: %@\n", _context.settings.account];
+//    [profile appendFormat:@"Password: %@\n", _context.settings.password];
+    [profile appendFormat:@"Game: %@\n", _context.settings.game];
+    [profile appendFormat:@"Character: %@\n", _context.settings.character];
     
     NSData *data = [profile dataUsingEncoding:NSUTF8StringEncoding];
     

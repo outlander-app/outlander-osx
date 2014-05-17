@@ -12,5 +12,6 @@
 
 - (id)initWithContext:(GameContext *)context;
 - (void)load;
+- (void)save;
 
 @end

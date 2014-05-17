@@ -21,13 +21,11 @@
 #import "AppSettingsLoader.h"
 
 @interface TestViewController ()
-
 @end
 
 @implementation TestViewController {
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
-    GameContext *_gameContext;
     AppSettingsLoader *_appSettingsLoader;
 }
 
@@ -83,19 +81,26 @@
     [_appSettingsLoader saveProfile];
 }
 
-- (IBAction)saveLayout:(id)sender {
-    [self writeWindowJson];
+- (void)command:(NSString *)command {
+    NSLog(@"Command: %@", command);
+    
+    if([command isEqualToString:@"saveProfile"]) {
+        [self writeWindowJson];
+    } else if([command isEqualToString:@"connect"]) {
+        [self connect:nil];
+    }
 }
 
 - (IBAction)commandSubmit:(NSTextField*)sender {
     NSString *command = [sender stringValue];
     if([command length] == 0) return;
     
-    if(_gameStream != nil) {
-        [_gameStream sendCommand:command];
-    }
+    
+    [_gameStream sendCommand:command];
+    
     [sender setStringValue:@""];
     NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
+    prompt = prompt ? prompt : @">";
     TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, command] mono:NO];
     [self append:tag to:@"main"];
 }
@@ -126,6 +131,15 @@
 }
 
 - (IBAction)connect:(id)sender {
+    
+    if(![_gameContext.settings isValid]) {
+        [self appendError:@"Invalid credentials.  Please provide all required credentials."];
+        return;
+    }
+    
+    if(_gameStream) {
+        [_gameStream complete];
+    }
     
     _gameStream = [[GameStream alloc] init];
     
@@ -191,11 +205,13 @@
                   to:@"main"];
      }
      error:^(NSError *error) {
-         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
          NSString *msg = [error.userInfo objectForKey:@"message"];
-        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, msg]
-                                mono:true]
-                  to:@"main"];
+         [self appendError:msg];
+         
+         NSString *authMsg = [error.userInfo objectForKey:@"authMessage"];
+         if(authMsg) {
+             [self appendError:authMsg];
+         }
      }
      completed:^{
         [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
@@ -228,6 +244,13 @@
     }];
 }
 
+- (void)appendError:(NSString *)msg {
+    NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
+    [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, msg]
+                            mono:true]
+              to:@"main"];
+}
+
 -(void)updateRoom {
     NSString *name = [_gameStream.globalVars cacheObjectForKey:@"roomtitle"];
     NSString *desc = [_gameStream.globalVars cacheObjectForKey:@"roomdesc"];
@@ -248,10 +271,10 @@
         [room appendFormat:@"%@\n", desc];
     if(objects != nil && objects.length != 0)
         [room appendFormat:@"%@\n", objects];
-    if(exits != nil && exits.length != 0)
-        [room appendFormat:@"%@\n", exits];
     if(players != nil && players.length != 0)
         [room appendFormat:@"%@\n", players];
+    if(exits != nil && exits.length != 0)
+        [room appendFormat:@"%@\n", exits];
 
 
     TextTag *tag = [TextTag tagFor:room mono:false];

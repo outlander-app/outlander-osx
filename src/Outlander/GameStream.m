@@ -11,8 +11,13 @@
 #import "GameParser.h"
 #import "GameConnection.h"
 #import "TextTag.h"
-#import "RACSignal.h"
-#import "RACReplaySubject.h"
+#import "ReactiveCocoa.h"
+
+@interface GameStream () {
+    RACSignal *_connection;
+}
+
+@end
 
 @implementation GameStream
 
@@ -49,6 +54,7 @@
 }
 
 -(void) complete {
+    [_gameServer disconnect];
     [_subject sendCompleted];
 }
 
@@ -62,7 +68,9 @@
 
 -(RACSignal *) connect:(GameConnection *)connection {
     
-    RACSignal *signal = [_gameServer connect:[connection key] toHost:[connection host] onPort:[connection port]];
+    RACSignal *signal = [_gameServer connect:connection.key
+                                      toHost:connection.host
+                                      onPort:connection.port];
     
     [signal subscribeCompleted:^{
         [_subject sendCompleted];

@@ -46,6 +46,11 @@
                        tag:0];
 }
 
+- (void) disconnect {
+    [_connected sendCompleted];
+    [_subject sendCompleted];
+}
+
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
     NSLog(@"Connected");
     

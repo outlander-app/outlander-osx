@@ -26,4 +26,12 @@
     return self;
 }
 
+- (BOOL)isValid {
+    return
+        self.account && self.account.length > 0
+        && self.password && self.password.length > 0
+        && self.game && self.game.length > 0
+        && self.character && self.character.length > 0;
+}
+
 @end

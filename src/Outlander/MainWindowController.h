@@ -6,6 +6,14 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-@interface MainWindowController : NSWindowController
+#import "Commands.h"
 
+@interface MainWindowController : NSWindowController <Commands>
+
+- (id)init;
+- (void)command:(NSString *)command;
+- (void)showLogin;
+- (void)dismissLogin;
+- (void)showSheet:(NSView *)view;
+- (void)endSheet;
 @end

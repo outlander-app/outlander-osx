@@ -20,4 +20,6 @@
 @property (nonatomic, copy) NSString *profilesFolder;
 @property (nonatomic, copy) NSString *scriptsFolder;
 
+- (BOOL)isValid;
+
 @end

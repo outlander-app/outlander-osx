@@ -174,7 +174,12 @@
             NSString *compId = [node getAttributeNamed:@"id"];
             
             if (compId != nil && [compId length] >-0) {
-                compId = [compId stringByReplacingOccurrencesOfString:@" " withString:@""];
+                if([compId hasPrefix:@"exp"]) {
+                    compId = [compId stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                }
+                else {
+                    compId = [compId stringByReplacingOccurrencesOfString:@" " withString:@""];
+                }
                 
                 NSString *raw = [node allContents];
                 
@@ -397,7 +402,7 @@
     LearningRate *learningRate = [LearningRate fromDescription:mindState];
     
     SkillExp *exp = [[SkillExp alloc] init];
-    exp.name = [compId substringFromIndex:3];
+    exp.name = [compId substringFromIndex:4];
     exp.mindState = learningRate;
     exp.ranks = [NSDecimalNumber decimalNumberWithString:ranks];
     exp.isNew = isNew;

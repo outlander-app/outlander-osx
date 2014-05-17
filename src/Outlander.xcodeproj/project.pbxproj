@@ -60,6 +60,10 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F98F22D419248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
+		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
+		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
+		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F9A3452F1913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
 		F9A345301913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
 		F9A345331913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
@@ -172,6 +176,10 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F98F22D119248506008175FD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
 		F9A3452D1913390400920F0E /* WindowData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowData.h; sourceTree = "<group>"; };
 		F9A3452E1913390400920F0E /* WindowData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowData.m; sourceTree = "<group>"; };
 		F9A345311913398800920F0E /* WindowDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowDataService.h; sourceTree = "<group>"; };
@@ -288,6 +296,9 @@
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
+				F98F22D119248506008175FD /* LoginViewController.h */,
+				F98F22D219248506008175FD /* LoginViewController.m */,
+				F98F22D319248506008175FD /* LoginViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -335,6 +346,7 @@
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
 				F9818D541908CA0200137896 /* ExpTracker.h */,
 				F9818D551908CA0200137896 /* ExpTracker.m */,
+				F98F22D81926654D008175FD /* Commands.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -579,6 +591,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
 				F9CF92831890832800449548 /* Images.xcassets in Resources */,
 				F9CF927B1890832800449548 /* Credits.rtf in Resources */,
@@ -595,6 +608,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
 				F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9CF92931890832800449548 /* InfoPlist.strings in Resources */,
 				F97A5CC71896C21600E2C318 /* TextViewController.xib in Resources */,
@@ -703,6 +717,7 @@
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
+				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
@@ -721,6 +736,7 @@
 			files = (
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
+				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
