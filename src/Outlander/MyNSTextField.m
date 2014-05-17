@@ -10,6 +10,7 @@
 
 @interface MyNSTextField () {
     NSMutableArray *_history;
+    NSInteger _currentHistory;
 }
 @end
 
@@ -19,9 +20,12 @@
     self = [super initWithFrame:frame];
     if (!self) return nil;
     
-    _history = [[NSMutableArray alloc] init];
-    
     return self;
+}
+
+- (void)awakeFromNib {
+    _history = [[NSMutableArray alloc] init];
+    _currentHistory = -1;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -45,15 +49,44 @@
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
     switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
         case NSUpArrowFunctionKey:
+            [self previousHistory];
             return YES;
             break;
-        case NSDownArrowFunctionKey:;
+        case NSDownArrowFunctionKey:
+            [self nextHistory];
             return YES;
             break;
         default:
             break;
     }
     return [super performKeyEquivalent:theEvent];
+}
+
+- (void)commitHistory {
+    [_history addObject:self.stringValue];
+    if(_history.count > 30) {
+        [_history removeObjectAtIndex:0];
+    }
+    _currentHistory = -1;
+}
+
+- (void)previousHistory {
+    _currentHistory -= 1;
+    if(_currentHistory < 0)
+        _currentHistory = _history.count - 1;
+    
+    NSString *val = [_history objectAtIndex:_currentHistory];
+    [self setStringValue: val];
+}
+
+- (void)nextHistory {
+    _currentHistory += 1;
+    
+    if(_currentHistory > (_history.count) -1)
+        _currentHistory = 0;
+    
+    NSString *val = [_history objectAtIndex:_currentHistory];
+    [self setStringValue: val];
 }
 
 @end

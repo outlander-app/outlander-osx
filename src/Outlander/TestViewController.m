@@ -91,10 +91,11 @@
     }
 }
 
-- (IBAction)commandSubmit:(NSTextField*)sender {
+- (IBAction)commandSubmit:(MyNSTextField*)sender {
     NSString *command = [sender stringValue];
     if([command length] == 0) return;
     
+    [sender commitHistory];
     
     [_gameStream sendCommand:command];
     

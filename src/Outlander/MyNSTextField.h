@@ -8,4 +8,6 @@
 
 @interface MyNSTextField : NSTextField
 
+- (void)commitHistory;
+
 @end
