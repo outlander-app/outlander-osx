@@ -11,7 +11,8 @@
 @implementation SkillExp
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%16s: %4d %02.0f%% %2s/34", [[self.name stringByReplacingOccurrencesOfString:@"_" withString:@" "] UTF8String], [self.ranks intValue], fmodf([self.ranks floatValue], 1.0f)*100, [[@(self.mindState.rateId) stringValue] UTF8String]];
+    NSString *mindstate = [NSString stringWithFormat:@"(%@/34)", @(self.mindState.rateId)];
+    return [NSString stringWithFormat:@"%16s: %4d %02.0f%%  %7s", [[self.name stringByReplacingOccurrencesOfString:@"_" withString:@" "] UTF8String], [self.ranks intValue], fmodf([self.ranks floatValue], 1.0f)*100, [mindstate UTF8String]];
 }
 
 @end

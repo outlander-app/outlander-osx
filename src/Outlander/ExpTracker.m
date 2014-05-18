@@ -43,8 +43,11 @@
 }
 
 -(NSArray *) skillsWithExp {
-    return [_skills.allItems.rac_sequence filter:^BOOL(SkillExp *item) {
+    NSArray *array = [_skills.allItems.rac_sequence filter:^BOOL(SkillExp *item) {
         return item.mindState.rateId > 0;
     }].array;
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+    return [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
 }
 @end

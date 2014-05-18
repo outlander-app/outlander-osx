@@ -52,7 +52,8 @@
 
 - (void)onTick:(NSTimer *)t {
     _count++;
-    if(!_spell || _spell.length == 0) {
+    if(!_spell || _spell.length == 0 || [_spell isEqualToString:@"None"]) {
+        _count = 0;
         [_timer invalidate];
         _timer = nil;
     }
