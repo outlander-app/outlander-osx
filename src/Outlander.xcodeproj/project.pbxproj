@@ -10,6 +10,7 @@
 		1B16717B043E46E09978A26F /* libPods-OutlanderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */; };
 		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
+		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
@@ -131,6 +132,7 @@
 		7070212539B84865B2217628 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
+		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		F97A5C231890A6B600E2C318 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 		F9CF92711890832800449548 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F91A371C19284E0900C6FD64 /* woodsword2.icns */,
 				F9CF92721890832800449548 /* Outlander-Info.plist */,
 				F9CF92731890832800449548 /* InfoPlist.strings */,
 				F9CF92761890832800449548 /* main.m */,
@@ -611,6 +614,7 @@
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
 				F9CF92831890832800449548 /* Images.xcassets in Resources */,
+				F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */,
 				F9CF927B1890832800449548 /* Credits.rtf in Resources */,
 				F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */,
 				F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */,
@@ -876,7 +880,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -909,7 +913,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};

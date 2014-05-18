@@ -54,15 +54,17 @@
             color = [NSColor colorWithHexString:text.color];
         }
         else {
-            color = [NSColor colorWithHexString:@"#F5F5F5"];
+            color = [NSColor colorWithHexString:@"#cccccc"];
         }
         
         [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
-        NSString *fontName = @"Geneva";
+        NSString *fontName = @"Verdana";
+        int fontSize = 12;
         if(text.mono){
-            fontName = @"Andale Mono";
+            fontName = @"Courier New";
+            fontSize = 13;
         }
-        [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:12] range:range];
+        [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
         [[textView textStorage] appendAttributedString:attr];
         
         if(shouldScrollToBottom) {

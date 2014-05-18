@@ -67,22 +67,22 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [view addSubview:textcrl.view];
     [_viewsList addObject:view];
     
-    [self wireTopLeftResize:view];
-    [self wireTopRightResize:view];
     [self wireBottomLeftResize:view];
     [self wireBottomRightResize:view];
+    [self wireTopLeftResize:view];
+    [self wireTopRightResize:view];
     
     NSCursor *cursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"move"]  hotSpot:NSMakePoint(0, 0)];
     
     MyThumb *bottomThumb = [self wireDragRect:view
-                                    withFrame:NSMakeRect(10, 0, view.frame.size.width-20, 10)
+                                    withFrame:NSMakeRect(15, 0, view.frame.size.width-30, 10)
                                    withCursor:cursor];
     [bottomThumb fixLeftEdge:YES];
     [bottomThumb fixWidth:NO];
     [bottomThumb fixHeight:YES];
     
     MyThumb *topThumb = [self wireDragRect:view
-                                 withFrame:NSMakeRect(10, view.frame.size.height-10, view.frame.size.width-20, 10)
+                                 withFrame:NSMakeRect(15, view.frame.size.height-10, view.frame.size.width-30, 10)
                                 withCursor:cursor];
     [topThumb fixTopEdge:NO];
     [topThumb fixLeftEdge:YES];
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [topThumb fixHeight:YES];
     
     MyThumb *leftThumb = [self wireDragRect:view
-                                  withFrame:NSMakeRect(0, 10, 10, view.frame.size.height - 20)
+                                  withFrame:NSMakeRect(0, 15, 10, view.frame.size.height - 30)
                           withCursor:cursor];
     [leftThumb fixTopEdge:YES];
     [leftThumb fixLeftEdge:YES];
@@ -98,7 +98,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [leftThumb fixHeight:NO];
     
     MyThumb *rightThumb = [self wireDragRect:view
-                                   withFrame:NSMakeRect(view.frame.size.width - 10, 10, 10, view.frame.size.height - 20)
+                                   withFrame:NSMakeRect(view.frame.size.width - 10, 15, 10, view.frame.size.height - 30)
                            withCursor:cursor];
     [rightThumb fixTopEdge:YES];
     [rightThumb fixLeftEdge:NO];

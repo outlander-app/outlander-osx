@@ -10,36 +10,46 @@
 
 @implementation MyThumb {
     NSCursor *_cursor;
+    NSTrackingArea *_trackingArea;
 }
 
-- (id)initWithFrame:(NSRect)frame withCursor:(NSCursor *)cursor;
-{
+- (id)initWithFrame:(NSRect)frame withCursor:(NSCursor *)cursor {
     self = [super initWithFrame:frame];
     if (self) {
         
         _cursor = cursor;
-        
-        NSTrackingArea *area = [[NSTrackingArea alloc] initWithRect: frame
-                                                            options:NSTrackingActiveInActiveApp | NSTrackingCursorUpdate
-                                                              owner:self
-                                                           userInfo:nil];
-        
-        [self addTrackingArea:area];
-        
+        [self createTrackingArea];
     }
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
+- (void)drawRect:(NSRect)dirtyRect {
 //    [[NSColor purpleColor] setFill];
 //    NSRectFill(dirtyRect);
-    
+//    
 	[super drawRect:self.bounds];
 }
 
 - (void) cursorUpdate:(NSEvent *)event {
     [_cursor set];
+}
+
+- (void) updateTrackingAreas {
+    
+    if(_trackingArea) {
+        [self removeTrackingArea:_trackingArea];
+    }
+    
+    [self createTrackingArea];
+    [super updateTrackingAreas];
+}
+
+- (void)createTrackingArea {
+    _trackingArea = [[NSTrackingArea alloc] initWithRect: self.bounds
+                                                        options: NSTrackingActiveInActiveApp | NSTrackingCursorUpdate
+                                                          owner: self
+                                                       userInfo: nil];
+    [self addTrackingArea:_trackingArea];
 }
 
 - (void) mouseDown:(NSEvent *)theEvent {

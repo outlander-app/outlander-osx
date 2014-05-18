@@ -14,7 +14,7 @@
     self = [super init];
     if(self == nil) return nil;
     
-    _spell = @"None";
+    _spell = @"S: None";
     _lefthand = @"L: Empty";
     _righthand = @"R: Empty";
     _roundtime = @"";
