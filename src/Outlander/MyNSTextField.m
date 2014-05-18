@@ -35,7 +35,7 @@
     progressRect.size.width *= _progress;
     progressRect.origin.x += 2;
     
-    [[NSColor colorWithHexString:@"#CC0000"] set];
+    [[NSColor colorWithHexString:@"#003366"] set];
     
     NSRectFillUsingOperation(progressRect, NSCompositeSourceOver);
     

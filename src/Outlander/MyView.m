@@ -116,7 +116,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     
    
     if(self.dragging || self.showBorder) {
-        [[NSColor whiteColor] setStroke];
+        [[NSColor colorWithHexString:@"#cccccc"] setStroke];
         
         NSBezierPath* thePath = [NSBezierPath bezierPath];
         [thePath appendBezierPathWithRect:dirtyRect];

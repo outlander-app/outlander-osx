@@ -19,6 +19,7 @@
     if (self == nil) return nil;
     
     _subject = [RACReplaySubject subject];
+    _connected = [RACReplaySubject subject];
     
     return self;
 }
@@ -27,7 +28,6 @@
     
     _host = host;
     _port = port;
-    _connected = [RACReplaySubject subject];
     
     _connection = [NSString stringWithFormat:@"%@\r\n/FE:STORMFRONT /VERSION:%@ /P:%@ /XML\r\n", key, @"1.0.1.26", @"OSX"];
     

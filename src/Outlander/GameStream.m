@@ -29,7 +29,6 @@
     _gameParser = [[GameParser alloc] init];
     
     _globalVars = _gameParser.globalVars;
-    _connected = _gameServer.connected;
     _vitals = _gameParser.vitals;
     _room = _gameParser.room;
     _exp = _gameParser.exp;
@@ -45,7 +44,12 @@
     [_globalVars setCacheObject:@"Empty" forKey:@"righthand"];
     [_globalVars setCacheObject:@"None" forKey:@"spell"];
     
+    _connected = [RACReplaySubject subject];
     _subject = [RACReplaySubject subject];
+    
+    [_gameServer.connected subscribeNext:^(id x) {
+        [_connected sendNext:x];
+    }];
     
     return self;
 }

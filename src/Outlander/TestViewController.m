@@ -70,7 +70,7 @@
     }];
     
     [_roundtimeNotifier.notification subscribeNext:^(Roundtime *rt) {
-        NSLog(@"RT Val: %f", rt.percent);
+        
         self._CommandTextField.progress = rt.percent;
         
         if(rt.value == 0){

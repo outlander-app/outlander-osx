@@ -18,7 +18,7 @@
 }
 @property (atomic, strong) RACReplaySubject *subject;
 @property (atomic, strong) TSMutableDictionary *globalVars;
-@property (atomic, strong) RACSignal *connected;
+@property (atomic, strong) RACReplaySubject *connected;
 @property (atomic, strong) RACSignal *vitals;
 @property (atomic, strong) RACSignal *room;
 @property (atomic, strong) RACSignal *exp;

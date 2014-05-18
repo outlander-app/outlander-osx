@@ -64,7 +64,7 @@
     NSString *sendValue = @"S: None";
     
     if(![_spell isEqualToString:@"None"])
-        sendValue =[NSString stringWithFormat:@"S: %@ (%ld)", _spell, (long)_count];
+        sendValue =[NSString stringWithFormat:@"S: (%ld)%@ ", (long)_count, _spell];
     
     [_notification sendNext:sendValue];
 }
