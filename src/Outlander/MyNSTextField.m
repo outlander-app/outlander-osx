@@ -7,6 +7,7 @@
 //
 
 #import "MyNSTextField.h"
+#import "NSColor+Categories.h"
 
 @interface MyNSTextField () {
     NSMutableArray *_history;
@@ -16,20 +17,29 @@
 
 @implementation MyNSTextField
 
-- (id)initWithFrame:(NSRect)frame {
-    self = [super initWithFrame:frame];
-    if (!self) return nil;
-    
-    return self;
-}
-
 - (void)awakeFromNib {
     _history = [[NSMutableArray alloc] init];
     _currentHistory = -1;
+    _progress = 0;
+    
+    [self addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-	[super drawRect:dirtyRect];
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    self.needsDisplay = YES;
+}
+
+-(void)drawRect:(NSRect)dirtyRect {
+    
+    NSRect progressRect = [self bounds];
+    progressRect.size.width *= _progress;
+    progressRect.origin.x += 2;
+    
+    [[NSColor colorWithHexString:@"#CC0000"] set];
+    
+    NSRectFillUsingOperation(progressRect, NSCompositeSourceOver);
+    
+    [super drawRect:dirtyRect];
 }
 
 -(BOOL)becomeFirstResponder {
@@ -63,11 +73,17 @@
 }
 
 - (void)commitHistory {
+    
+    _currentHistory = -1;
+    
+    // don't commit the same item multiple times
+    if(_history.count > 0 && [[_history objectAtIndex:_history.count-1] isEqualToString:self.stringValue])
+        return;
+    
     [_history addObject:self.stringValue];
     if(_history.count > 30) {
         [_history removeObjectAtIndex:0];
     }
-    _currentHistory = -1;
 }
 
 - (void)previousHistory {

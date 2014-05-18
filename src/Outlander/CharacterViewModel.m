@@ -17,7 +17,7 @@
     _spell = @"None";
     _lefthand = @"L: Empty";
     _righthand = @"R: Empty";
-    _roundtime = 0;
+    _roundtime = @"";
     
     return self;
 }

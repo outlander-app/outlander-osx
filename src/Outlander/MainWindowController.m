@@ -67,8 +67,17 @@
     int maxX = NSMaxX([[NSScreen mainScreen] frame]);
     int maxY = NSMaxY([[NSScreen mainScreen] frame]);
     
-    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
-                                     (maxY / 2.0) - (START_HEIGHT / 2.0),
+//    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
+//                                     (maxY / 2.0) - (START_HEIGHT / 2.0),
+//                                     maxX,
+//                                     maxY)
+//                  display:YES
+//                  animate:NO];
+    
+    maxX = maxX < START_WIDTH ? START_WIDTH : maxX;
+    
+    [self.window setFrame:NSMakeRect(0,
+                                     0,
                                      maxX,
                                      maxY)
                   display:YES

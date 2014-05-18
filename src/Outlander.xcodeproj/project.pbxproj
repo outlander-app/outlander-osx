@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B16717B043E46E09978A26F /* libPods-OutlanderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */; };
 		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
+		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
@@ -80,6 +81,10 @@
 		F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
 		F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
 		F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
+		F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
+		F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
+		F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
+		F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
 		F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */; };
 		F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A84189E218F00A11EE9 /* MMScroller.m */; };
@@ -124,6 +129,8 @@
 		35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OutlanderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A161DB5E5C4325AE50C012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7070212539B84865B2217628 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
+		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		F97A5C231890A6B600E2C318 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
@@ -196,6 +203,10 @@
 		F9A3454B191C573200920F0E /* AppPathProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPathProvider.m; sourceTree = "<group>"; };
 		F9A3454E191C59D500920F0E /* ProfileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLoader.h; sourceTree = "<group>"; };
 		F9A3454F191C59D500920F0E /* ProfileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLoader.m; sourceTree = "<group>"; };
+		F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundtimeNotifier.h; sourceTree = "<group>"; };
+		F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundtimeNotifier.m; sourceTree = "<group>"; };
+		F9A79E551927FDA0000AF892 /* Roundtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roundtime.h; sourceTree = "<group>"; };
+		F9A79E561927FDA0000AF892 /* Roundtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roundtime.m; sourceTree = "<group>"; };
 		F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawingUtils.h; sourceTree = "<group>"; };
 		F9AE6A81189E218F00A11EE9 /* MMScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScroller.h; sourceTree = "<group>"; };
 		F9AE6A82189E218F00A11EE9 /* MMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMScrollView.h; sourceTree = "<group>"; };
@@ -347,6 +358,12 @@
 				F9818D541908CA0200137896 /* ExpTracker.h */,
 				F9818D551908CA0200137896 /* ExpTracker.m */,
 				F98F22D81926654D008175FD /* Commands.h */,
+				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
+				F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */,
+				F9A79E551927FDA0000AF892 /* Roundtime.h */,
+				F9A79E561927FDA0000AF892 /* Roundtime.m */,
+				F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */,
+				F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -698,7 +715,9 @@
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
+				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
+				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
@@ -720,6 +739,7 @@
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
+				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
@@ -758,6 +778,7 @@
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
+				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
@@ -766,6 +787,7 @@
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
+				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,

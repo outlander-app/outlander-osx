@@ -32,7 +32,7 @@
     self.backgroundView.backgroundColor = [NSColor blackColor];
     self.backgroundView.showBorder = NO;
     float height = self.view.frame.size.height;
-    [self addBar:@"health" withFrame:NSMakeRect(0, 0, 150, height) text:@"Health 100%" color:[NSColor colorWithHexString:@"#ff3333"]];
+    [self addBar:@"health" withFrame:NSMakeRect(0, 0, 150, height) text:@"Health 100%" color:[NSColor colorWithHexString:@"#cc0000"]];
     [self addBar:@"mana" withFrame:NSMakeRect(149, 0, 150, height) text:@"Mana 100%" color:[NSColor colorWithHexString:@"#00004B"]];
     [self addBar:@"stamina" withFrame:NSMakeRect(298, 0, 150, height) text:@"Stamina 100%" color:[NSColor colorWithHexString:@"#004000"]];
     [self addBar:@"concentration" withFrame:NSMakeRect(447, 0, 150, height) text:@"Concentration 100%" color:[NSColor colorWithHexString:@"#009999"]];

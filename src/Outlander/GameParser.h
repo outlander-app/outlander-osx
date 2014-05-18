@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "RACSignal.h"
-#import "RACReplaySubject.h"
+#import "ReactiveCocoa.h"
 #import "TSMutableDictionary.h"
 #import "Shared.h"
 
@@ -32,6 +31,7 @@
 @property (nonatomic, strong) RACReplaySubject *deaths;
 @property (nonatomic, strong) RACReplaySubject *familiar;
 @property (nonatomic, strong) RACReplaySubject *log;
+@property (nonatomic, strong) RACReplaySubject *roundtime;
 
 -(void) parse:(NSString*)data then:(CompleteBlock)block;
 

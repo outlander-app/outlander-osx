@@ -12,7 +12,7 @@
 @property (nonatomic, copy) NSString *lefthand;
 @property (nonatomic, copy) NSString *righthand;
 @property (nonatomic, copy) NSString *spell;
-@property (nonatomic, assign) NSUInteger *roundtime;
+@property (nonatomic, copy) NSString *roundtime;
 
 -(id)init;
 

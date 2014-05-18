@@ -27,6 +27,7 @@
 @property (atomic, strong) RACSignal *deaths;
 @property (atomic, strong) RACSignal *familiar;
 @property (atomic, strong) RACSignal *log;
+@property (atomic, strong) RACSignal *roundtime;
 -(void) publish:(id)item;
 -(void) complete;
 -(void) error:(NSError *)error;

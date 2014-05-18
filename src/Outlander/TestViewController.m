@@ -19,6 +19,9 @@
 #import "ExpTracker.h"
 #import "WindowDataService.h"
 #import "AppSettingsLoader.h"
+#import "Roundtime.h"
+#import "RoundtimeNotifier.h"
+#import "SpelltimeNotifier.h"
 
 @interface TestViewController ()
 @end
@@ -27,6 +30,8 @@
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
     AppSettingsLoader *_appSettingsLoader;
+    RoundtimeNotifier *_roundtimeNotifier;
+    SpelltimeNotifier *_spelltimeNotifier;
 }
 
 - (id)init {
@@ -39,6 +44,8 @@
     _expTracker = [[ExpTracker alloc] init];
     _gameContext = [[GameContext alloc] init];
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
+    _roundtimeNotifier = [[RoundtimeNotifier alloc] init];
+    _spelltimeNotifier = [[SpelltimeNotifier alloc] init];
     
     return self;
 }
@@ -60,6 +67,22 @@
     
     [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
+    }];
+    
+    [_roundtimeNotifier.notification subscribeNext:^(Roundtime *rt) {
+        NSLog(@"RT Val: %f", rt.percent);
+        self._CommandTextField.progress = rt.percent;
+        
+        if(rt.value == 0){
+            _viewModel.roundtime = @"";
+        }
+        else {
+            _viewModel.roundtime = [NSString stringWithFormat:@"%ld", (long)rt.value];
+        }
+    }];
+    
+    [_spelltimeNotifier.notification subscribeNext:^(NSString *value) {
+        _viewModel.spell = value;
     }];
 }
 
@@ -92,6 +115,7 @@
 }
 
 - (IBAction)commandSubmit:(MyNSTextField*)sender {
+    
     NSString *command = [sender stringValue];
     if([command length] == 0) return;
     
@@ -152,6 +176,18 @@
                   to:@"main"];
     }];
     
+    [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
+        NSString *time = [_gameStream.globalVars cacheObjectForKey:@"gametime"];
+        NSString *updated = [_gameStream.globalVars cacheObjectForKey:@"gametimeupdate"];
+        
+        NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
+        NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
+        
+        NSTimeInterval diff = t - offset;
+        
+        [_roundtimeNotifier set:diff];
+    }];
+    
     [_gameStream.thoughts subscribeNext:^(TextTag *tag) {
         NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
         tag.text = [NSString stringWithFormat:@"[%@]: %@\n", timeStamp, tag.text];
@@ -195,6 +231,7 @@
         [result enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
             [self append:item to:@"exp"];
         }];
+        [self append:[[TextTag alloc] initWith:[@"Last updated: %@" stringFromDateFormat:@"HH:mm:ss a"] mono:true] to:@"exp"];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
@@ -233,7 +270,7 @@
         
         _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameStream.globalVars cacheObjectForKey:@"righthand"]];
         _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameStream.globalVars cacheObjectForKey:@"lefthand"]];
-        _viewModel.spell = [NSString stringWithFormat:@"S: %@", [_gameStream.globalVars cacheObjectForKey:@"spell"]];
+        [_spelltimeNotifier set:[_gameStream.globalVars cacheObjectForKey:@"spell"]];
         
         for (TextTag *tag in tags) {
             [self append:tag to:@"main"];

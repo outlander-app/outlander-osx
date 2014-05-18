@@ -38,6 +38,7 @@
     _deaths = _gameParser.deaths;
     _familiar = _gameParser.familiar;
     _log = _gameParser.log;
+    _roundtime = _gameParser.roundtime;
     
     [_globalVars setCacheObject:@">" forKey:@"prompt"];
     [_globalVars setCacheObject:@"Empty" forKey:@"lefthand"];

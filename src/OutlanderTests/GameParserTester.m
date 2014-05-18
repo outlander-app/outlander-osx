@@ -11,6 +11,7 @@
 #import "TextTag.h"
 #import "Vitals.h"
 #import "SkillExp.h"
+#import "Roundtime.h"
 
 SPEC_BEGIN(GameParserTester)
 
@@ -529,6 +530,27 @@ describe(@"GameParser", ^{
             [[tag.ranks should] equal:[NSDecimalNumber decimalNumberWithString:@"150.47"]];
             [[tag.mindState should] equal:[LearningRate fromDescription:@"mind lock"]];
             [[theValue(tag.isNew) should] beNo];
+        });
+        
+        it(@"should signal roundtime", ^{
+            NSString *data = @"<roundTime value='1400357815'/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.roundtime subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            Roundtime *tag = signalResults[0];
+            
+            [[tag.time should] equal:[NSDate dateWithTimeIntervalSince1970:[@"1400357815" doubleValue]]];
         });
     });
 });

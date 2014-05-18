@@ -14,6 +14,7 @@
 #import "Vitals.h"
 #import "SkillExp.h"
 #import "LearningRate.h"
+#import "Roundtime.h"
 #import "NSString+Categories.h"
 
 @implementation GameParser {
@@ -33,6 +34,7 @@
     _deaths = [RACReplaySubject subject];
     _familiar = [RACReplaySubject subject];
     _log = [RACReplaySubject subject];
+    _roundtime = [RACReplaySubject subject];
     _globalVars = [[TSMutableDictionary alloc] initWithName:@"com.outlander.gobalvars"];
     _currenList = [[NSMutableArray alloc] init];
     _currentResult = [[NSMutableString alloc] init];
@@ -82,9 +84,26 @@
             NSString *prompt = [[node contents] trimWhitespaceAndNewline];
             
             [_globalVars setCacheObject:prompt forKey:@"prompt"];
-            [_globalVars setCacheObject:time forKey:@"time"];
+            [_globalVars setCacheObject:time forKey:@"gametime"];
+            
+            NSTimeInterval today = [[NSDate date] timeIntervalSince1970];
+            NSString *intervalString = [NSString stringWithFormat:@"%f", today];
+            [_globalVars setCacheObject:intervalString forKey:@"gametimeupdate"];
             
             [_currentResult appendString:prompt];
+        }
+        else if([tagName isEqualToString:@"roundtime"]) {
+            
+            NSString *time = [node getAttributeNamed:@"value"];
+            
+            Roundtime *rt = [[Roundtime alloc] init];
+            rt.time =[ NSDate dateWithTimeIntervalSince1970:[time doubleValue]];
+            
+            [_roundtime sendNext:rt];
+            
+            if([self isNextNodeNewline:children index:i]) {
+                i++;
+            }
         }
         else if([tagName isEqualToString:@"pushstream"]) {
             _inStream = YES;
