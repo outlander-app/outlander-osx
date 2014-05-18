@@ -11,6 +11,7 @@
 @interface AppPathProvider : NSObject
 
 - (id)initWithSettings:(AppSettings *)settings;
+- (NSString *)logsFolder;
 - (NSString *)configFolder;
 - (NSString *)profileFolder;
 - (NSString *)folderForProfile:(NSString *)profile;

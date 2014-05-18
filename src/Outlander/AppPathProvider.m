@@ -24,12 +24,20 @@
     return self;
 }
 
-- (NSString *)configFolder {
+- (NSString *)rootFolder {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
     
     NSString *homeFolder = [documentDirectory stringByAppendingPathComponent:_settings.homeDirectory];
-    return [homeFolder stringByAppendingPathComponent:_settings.configFolder];
+    return homeFolder;
+}
+
+- (NSString *)configFolder {
+    return [[self rootFolder] stringByAppendingPathComponent:_settings.configFolder];
+}
+
+- (NSString *)logsFolder {
+    return [[self rootFolder] stringByAppendingPathComponent:@"Logs"];
 }
 
 - (NSString *)profileFolder {

@@ -7,9 +7,9 @@
 //
 
 #import "GCDAsyncSocket.h"
-#import "RACReplaySubject.h"
-#import "RACSignal.h"
+#import "ReactiveCocoa.h"
 #import "Shared.h"
+#import "GameContext.h"
 
 @interface GameServer : NSObject {
     NSString *_host;
@@ -20,6 +20,8 @@
 }
 
 @property (atomic, strong) RACReplaySubject *connected;
+
+- (id)initWithContext:(GameContext *)context;
 
 - (RACSignal*) connect:(NSString *) key toHost:(NSString *)host onPort:(UInt16)port;
 - (void) sendCommand: (NSString *) command;

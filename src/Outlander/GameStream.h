@@ -5,12 +5,12 @@
 //  Created by Joseph McBride on 1/25/14.
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
-
-#import "RACReplaySubject.h"
+#import "ReactiveCocoa.h"
 #import "GameServer.h"
 #import "GameParser.h"
 #import "GameConnection.h"
 #import "TSMutableDictionary.h"
+#import "GameContext.h"
 
 @interface GameStream : NSObject {
     GameServer *_gameServer;
@@ -28,6 +28,8 @@
 @property (atomic, strong) RACSignal *familiar;
 @property (atomic, strong) RACSignal *log;
 @property (atomic, strong) RACSignal *roundtime;
+
+-(id) initWithContext:(GameContext *)context;
 -(void) publish:(id)item;
 -(void) complete;
 -(void) error:(NSError *)error;

@@ -15,17 +15,20 @@
 
 @interface GameStream () {
     RACSignal *_connection;
+    GameContext *_gameContext;
 }
 
 @end
 
 @implementation GameStream
 
--(id) init {
+-(id) initWithContext:(GameContext *)context {
     self = [super init];
     if(self == nil) return nil;
     
-    _gameServer = [[GameServer alloc] init];
+    _gameContext = context;
+    
+    _gameServer = [[GameServer alloc] initWithContext:context];
     _gameParser = [[GameParser alloc] init];
     
     _globalVars = _gameParser.globalVars;

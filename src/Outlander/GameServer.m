@@ -12,11 +12,18 @@
 #import "RACSignal.h"
 #import "NSString+Categories.h"
 
+@interface GameServer () {
+    GameContext *_gameContext;
+}
+@end
+
 @implementation GameServer
 
-- (id)init {
+- (id)initWithContext:(GameContext *)context {
     self = [super init];
     if (self == nil) return nil;
+    
+    _gameContext = context;
     
     _subject = [RACReplaySubject subject];
     _connected = [RACReplaySubject subject];
@@ -115,10 +122,11 @@
 }
 
 - (void) writeLog:(NSString *)data {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
     
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"test.txt"];
+    NSString *logsDir = _gameContext.pathProvider.logsFolder;
+    NSString *fileName = [NSString stringWithFormat:@"%@-%@.txt", _gameContext.settings.character, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
+    
+    NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
     [[NSString stringWithFormat:@"%@<-->", data] appendToFile:filePath encoding:NSUTF8StringEncoding];
 }
 

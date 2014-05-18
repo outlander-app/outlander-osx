@@ -167,7 +167,7 @@
         [_gameStream complete];
     }
     
-    _gameStream = [[GameStream alloc] init];
+    _gameStream = [[GameStream alloc] initWithContext:_gameContext];
     
     [_gameStream.connected subscribeNext:^(NSString *message) {
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
