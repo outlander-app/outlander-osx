@@ -231,7 +231,7 @@
         [result enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
             [self append:item to:@"exp"];
         }];
-        [self append:[[TextTag alloc] initWith:[@"Last updated: %@" stringFromDateFormat:@"HH:mm:ss a"] mono:true] to:@"exp"];
+        [self append:[[TextTag alloc] initWith:[@"Last updated: %@" stringFromDateFormat:@"hh:mm:ss a"] mono:true] to:@"exp"];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];

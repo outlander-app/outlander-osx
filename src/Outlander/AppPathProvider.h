@@ -12,6 +12,7 @@
 
 - (id)initWithSettings:(AppSettings *)settings;
 - (NSString *)logsFolder;
+- (NSString *)scriptsFolder;
 - (NSString *)configFolder;
 - (NSString *)profileFolder;
 - (NSString *)folderForProfile:(NSString *)profile;

@@ -65,6 +65,8 @@
 
 - (void)writeConfigFolders {
     [self writeProfileFolders:@"Default"];
+    [self ensurePath:[_context.pathProvider logsFolder]];
+    [self ensurePath:[_context.pathProvider scriptsFolder]];
 }
 
 - (void)writeProfileFolders:(NSString *)profile {

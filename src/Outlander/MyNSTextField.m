@@ -18,11 +18,14 @@
 @implementation MyNSTextField
 
 - (void)awakeFromNib {
+    [self configure];
+    [self addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)configure {
     _history = [[NSMutableArray alloc] init];
     _currentHistory = -1;
     _progress = 0;
-    
-    [self addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -80,29 +83,47 @@
     if(_history.count > 0 && [[_history objectAtIndex:_history.count-1] isEqualToString:self.stringValue])
         return;
     
-    [_history addObject:self.stringValue];
+    [_history insertObject:self.stringValue atIndex:0];
     if(_history.count > 30) {
-        [_history removeObjectAtIndex:0];
+        [_history removeObjectAtIndex:_history.count -1];
     }
 }
 
 - (void)previousHistory {
-    _currentHistory -= 1;
-    if(_currentHistory < 0)
-        _currentHistory = _history.count - 1;
     
-    NSString *val = [_history objectAtIndex:_currentHistory];
+    NSString *val = @"";
+    
+    _currentHistory += 1;
+    
+    if(_currentHistory > -1) {
+        if (_currentHistory >= _history.count) {
+            _currentHistory = -1;
+        } else {
+            val = [_history objectAtIndex:_currentHistory];
+        }
+    }
+    
     [self setStringValue: val];
     [[self currentEditor] moveToEndOfLine:nil];
 }
 
 - (void)nextHistory {
-    _currentHistory += 1;
     
-    if(_currentHistory > (_history.count) -1)
-        _currentHistory = 0;
+    NSString *val = @"";
+    NSInteger lastVal = _currentHistory;
     
-    NSString *val = [_history objectAtIndex:_currentHistory];
+    if(lastVal == -1)
+        _currentHistory = _history.count;
+    
+    _currentHistory -= 1;
+    if(_currentHistory > -1) {
+        if (lastVal == 0) {
+            _currentHistory = -1;
+        } else {
+            val = [_history objectAtIndex:_currentHistory];
+        }
+    }
+    
     [self setStringValue: val];
     [[self currentEditor] moveToEndOfLine:nil];
 }

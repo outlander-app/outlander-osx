@@ -11,6 +11,7 @@
 		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
+		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
@@ -133,6 +134,7 @@
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
+		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		F97A5C231890A6B600E2C318 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
@@ -341,31 +343,31 @@
 			children = (
 				F97A5C611891F2C400E2C318 /* AuthenticationServer.h */,
 				F97A5C621891F2C400E2C318 /* AuthenticationServer.m */,
-				F97A5C651892388D00E2C318 /* GameServer.h */,
-				F97A5C661892388D00E2C318 /* GameServer.m */,
+				F98F22D81926654D008175FD /* Commands.h */,
+				F9818D541908CA0200137896 /* ExpTracker.h */,
+				F9818D551908CA0200137896 /* ExpTracker.m */,
 				F97A5C6E1892CE1400E2C318 /* GameConnection.h */,
 				F97A5C6F1892CE1400E2C318 /* GameConnection.m */,
 				F97A5C811893962E00E2C318 /* GameParser.h */,
 				F97A5C821893962E00E2C318 /* GameParser.m */,
-				F97A5C881893AFDF00E2C318 /* TextTag.h */,
-				F97A5C891893AFDF00E2C318 /* TextTag.m */,
+				F97A5C651892388D00E2C318 /* GameServer.h */,
+				F97A5C661892388D00E2C318 /* GameServer.m */,
 				F97A5C8C1894918F00E2C318 /* GameStream.h */,
 				F97A5C8D1894918F00E2C318 /* GameStream.m */,
-				F9C29108189AB86000F70224 /* Vitals.h */,
-				F9C29109189AB86000F70224 /* Vitals.m */,
-				F9CB310E1903238B004587A5 /* SkillExp.h */,
-				F9CB310F1903238B004587A5 /* SkillExp.m */,
 				F9CB311219032EDE004587A5 /* LearningRate.h */,
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
-				F9818D541908CA0200137896 /* ExpTracker.h */,
-				F9818D551908CA0200137896 /* ExpTracker.m */,
-				F98F22D81926654D008175FD /* Commands.h */,
-				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
-				F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
 				F9A79E561927FDA0000AF892 /* Roundtime.m */,
+				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
+				F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */,
+				F9CB310E1903238B004587A5 /* SkillExp.h */,
+				F9CB310F1903238B004587A5 /* SkillExp.m */,
 				F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */,
 				F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */,
+				F97A5C881893AFDF00E2C318 /* TextTag.h */,
+				F97A5C891893AFDF00E2C318 /* TextTag.m */,
+				F9C29108189AB86000F70224 /* Vitals.h */,
+				F9C29109189AB86000F70224 /* Vitals.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -416,16 +418,16 @@
 		F9A345391919CC0500920F0E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F9A3453A1919CC1300920F0E /* AppSettingsLoader.h */,
-				F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */,
+				F9A3454A191C573200920F0E /* AppPathProvider.h */,
+				F9A3454B191C573200920F0E /* AppPathProvider.m */,
 				F9A3453E1919D83900920F0E /* AppSettings.h */,
 				F9A3453F1919D83900920F0E /* AppSettings.m */,
+				F9A3453A1919CC1300920F0E /* AppSettingsLoader.h */,
+				F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */,
 				F9A345421919DADA00920F0E /* ConfigLoader.h */,
 				F9A345431919DADA00920F0E /* ConfigLoader.m */,
 				F9A34546191A064100920F0E /* GameContext.h */,
 				F9A34547191A064100920F0E /* GameContext.m */,
-				F9A3454A191C573200920F0E /* AppPathProvider.h */,
-				F9A3454B191C573200920F0E /* AppPathProvider.m */,
 				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 			);
@@ -479,20 +481,20 @@
 		F9CF92701890832800449548 /* Outlander */ = {
 			isa = PBXGroup;
 			children = (
-				F9A345391919CC0500920F0E /* Settings */,
-				F9A3452C191338E900920F0E /* UI */,
-				F97A5CAC1895E72D00E2C318 /* Controls */,
-				F97A5C761893808F00E2C318 /* HTML */,
-				F97A5C6D1892CDAA00E2C318 /* Core */,
-				F97A5C1C1890A4E400E2C318 /* Views */,
-				F97A5C5C1891AADB00E2C318 /* Support */,
-				F97A5C1A1890A07B00E2C318 /* Scripting */,
-				F97A5C1B1890A08400E2C318 /* Text */,
 				F9CF927C1890832800449548 /* AppDelegate.h */,
 				F9CF927D1890832800449548 /* AppDelegate.m */,
-				F9CF927F1890832800449548 /* MainMenu.xib */,
+				F97A5CAC1895E72D00E2C318 /* Controls */,
+				F97A5C6D1892CDAA00E2C318 /* Core */,
+				F97A5C761893808F00E2C318 /* HTML */,
 				F9CF92821890832800449548 /* Images.xcassets */,
+				F9CF927F1890832800449548 /* MainMenu.xib */,
+				F97A5C1A1890A07B00E2C318 /* Scripting */,
+				F9A345391919CC0500920F0E /* Settings */,
+				F97A5C5C1891AADB00E2C318 /* Support */,
 				F9CF92711890832800449548 /* Supporting Files */,
+				F97A5C1B1890A08400E2C318 /* Text */,
+				F9A3452C191338E900920F0E /* UI */,
+				F97A5C1C1890A4E400E2C318 /* Views */,
 			);
 			path = Outlander;
 			sourceTree = "<group>";
@@ -515,6 +517,7 @@
 			children = (
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
+				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
 				F9CF928F1890832800449548 /* Supporting Files */,
@@ -775,6 +778,7 @@
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
+				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,

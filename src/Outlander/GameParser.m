@@ -73,7 +73,7 @@
     HTMLNode *bodyNode = [parser body];
     NSArray *children = [bodyNode children];
     NSUInteger count = [children count];
-    NSLog(@"Children Count: %lu", count);
+//    NSLog(@"Children Count: %lu", count);
     
     for (__block NSInteger i=0; i<count; i++) {
         HTMLNode *node = children[i];

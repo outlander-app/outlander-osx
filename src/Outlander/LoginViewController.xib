@@ -50,6 +50,7 @@
                         <objectValues>
                             <string>DR</string>
                             <string>DRX</string>
+                            <string>DRF</string>
                             <string>DRT</string>
                         </objectValues>
                     </comboBoxCell>

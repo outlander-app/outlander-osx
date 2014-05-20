@@ -37,7 +37,11 @@
 }
 
 - (NSString *)logsFolder {
-    return [[self rootFolder] stringByAppendingPathComponent:@"Logs"];
+    return [[self rootFolder] stringByAppendingPathComponent:_settings.logsFolder];
+}
+
+- (NSString *)scriptsFolder {
+    return [[self rootFolder] stringByAppendingPathComponent:_settings.scriptsFolder];
 }
 
 - (NSString *)profileFolder {
