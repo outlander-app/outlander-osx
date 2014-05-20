@@ -16,7 +16,10 @@
     
     self.profile = @"Default";
     self.game = @"DR";
-    
+    self.account = @"";
+    self.password = @"";
+    self.character = @"";
+   
     self.homeDirectory = @"Outlander";
     self.configFolder = @"Config";
     self.logsFolder = @"Logs";
