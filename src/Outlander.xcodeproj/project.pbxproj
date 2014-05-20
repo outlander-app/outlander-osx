@@ -493,10 +493,10 @@
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
 				F97A5C5C1891AADB00E2C318 /* Support */,
-				F9CF92711890832800449548 /* Supporting Files */,
 				F97A5C1B1890A08400E2C318 /* Text */,
 				F9A3452C191338E900920F0E /* UI */,
 				F97A5C1C1890A4E400E2C318 /* Views */,
+				F9CF92711890832800449548 /* Supporting Files */,
 			);
 			path = Outlander;
 			sourceTree = "<group>";
