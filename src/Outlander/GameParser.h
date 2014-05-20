@@ -9,6 +9,7 @@
 #import "ReactiveCocoa.h"
 #import "TSMutableDictionary.h"
 #import "Shared.h"
+#import "GameContext.h"
 
 @interface GameParser : NSObject {
     NSMutableArray *_currenList;
@@ -19,6 +20,9 @@
     BOOL _bold;
     BOOL _mono;
 }
+
+
+-(id)initWithContext:(GameContext *)context;
 
 @property (atomic, strong) RACReplaySubject *subject;
 @property (atomic, strong) TSMutableDictionary *globalVars;

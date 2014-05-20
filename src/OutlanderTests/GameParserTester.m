@@ -20,7 +20,7 @@ describe(@"GameParser", ^{
     __block GameParser *_parser = nil;
     
     beforeEach(^{
-        _parser = [[GameParser alloc] init];
+        _parser = [[GameParser alloc] initWithContext:nil];
     });
     
     context(@"parse", ^{

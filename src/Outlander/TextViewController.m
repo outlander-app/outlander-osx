@@ -10,7 +10,6 @@
 #import "NSString+Categories.h"
 
 @interface TextViewController ()
-
 @end
 
 @implementation TextViewController
@@ -18,7 +17,18 @@
 - (id)init {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
+    
+    _keyup = [RACReplaySubject subject];
+    
     return self;
+}
+
+- (void)awakeFromNib {
+    _TextView.keyupSignal = [RACReplaySubject subject];
+    [_TextView.keyupSignal subscribeNext:^(id x) {
+        id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
+        [sub sendNext:x];
+    }];
 }
 
 - (NSString *)text {

@@ -13,6 +13,8 @@
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
+		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
+		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
@@ -137,6 +139,10 @@
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
+		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
+		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
+		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
+		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		F97A5C231890A6B600E2C318 /* MainWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
@@ -402,6 +408,10 @@
 				F97A5CBE1896384A00E2C318 /* MyThumb.m */,
 				F9AE6A8F189FFE6100A11EE9 /* MyProgressBar.h */,
 				F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */,
+				F92A4FBF192B3484006C71F9 /* MyWindow.h */,
+				F92A4FC0192B3484006C71F9 /* MyWindow.m */,
+				F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */,
+				F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -485,11 +495,11 @@
 			children = (
 				F9CF927C1890832800449548 /* AppDelegate.h */,
 				F9CF927D1890832800449548 /* AppDelegate.m */,
+				F9CF92821890832800449548 /* Images.xcassets */,
+				F9CF927F1890832800449548 /* MainMenu.xib */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
 				F97A5C761893808F00E2C318 /* HTML */,
-				F9CF92821890832800449548 /* Images.xcassets */,
-				F9CF927F1890832800449548 /* MainMenu.xib */,
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
 				F97A5C5C1891AADB00E2C318 /* Support */,
@@ -727,6 +737,7 @@
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
+				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
@@ -743,6 +754,7 @@
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
+				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,

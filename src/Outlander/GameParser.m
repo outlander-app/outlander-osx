@@ -19,11 +19,14 @@
 
 @implementation GameParser {
     NSArray *_roomTags;
+    GameContext *_gameContext;
 }
 
--(id)init {
+-(id)initWithContext:(GameContext *)context {
     self = [super init];
     if(self == nil) return nil;
+    
+    _gameContext = context;
     
     _subject = [RACReplaySubject subject];
     _vitals = [RACReplaySubject subject];

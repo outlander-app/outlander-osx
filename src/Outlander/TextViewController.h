@@ -8,10 +8,14 @@
 
 #import "TextTag.h"
 #import "NSColor+Categories.h"
+#import "MyNSTextView.h"
+#import "ReactiveCocoa.h"
 
 @interface TextViewController : NSViewController
+
+@property (nonatomic, strong) RACSignal *keyup;
 @property (nonatomic, copy) NSString *key;
-@property (unsafe_unretained) IBOutlet NSTextView *TextView;
+@property (unsafe_unretained) IBOutlet MyNSTextView *TextView;
 
 - (NSString *)text;
 - (void)clear;

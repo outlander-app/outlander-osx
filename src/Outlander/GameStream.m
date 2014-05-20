@@ -29,7 +29,7 @@
     _gameContext = context;
     
     _gameServer = [[GameServer alloc] initWithContext:context];
-    _gameParser = [[GameParser alloc] init];
+    _gameParser = [[GameParser alloc] initWithContext:context];
     
     _globalVars = _gameParser.globalVars;
     _vitals = _gameParser.vitals;

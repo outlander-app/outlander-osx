@@ -91,6 +91,11 @@
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                        atLoc:rect
                                                      withKey:key];
+    [controller.keyup subscribeNext:^(id x) {
+        [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], x]];
+        [__CommandTextField selectText:self];
+        [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
+    }];
     [_windows setCacheObject:controller forKey:key];
 }
 
