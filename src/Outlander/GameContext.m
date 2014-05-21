@@ -16,6 +16,7 @@
     
     _settings = [[AppSettings alloc] init];
     _pathProvider = [[AppPathProvider alloc] initWithSettings:_settings];
+    _highlights = [[NSMutableArray alloc] init];
     
     return self;
 }

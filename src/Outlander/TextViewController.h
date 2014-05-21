@@ -10,9 +10,11 @@
 #import "NSColor+Categories.h"
 #import "MyNSTextView.h"
 #import "ReactiveCocoa.h"
+#import "GameContext.h"
 
 @interface TextViewController : NSViewController
 
+@property (nonatomic, strong) GameContext *gameContext;
 @property (nonatomic, strong) RACSignal *keyup;
 @property (nonatomic, copy) NSString *key;
 @property (unsafe_unretained) IBOutlet MyNSTextView *TextView;

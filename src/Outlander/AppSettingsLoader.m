@@ -9,11 +9,14 @@
 #import "AppSettingsLoader.h"
 #import "WindowDataService.h"
 #import "ProfileLoader.h"
+#import "HighlightsLoader.h"
+#import "LocalFileSysem.h"
 
 @interface AppSettingsLoader () {
     GameContext *_context;
     WindowDataService *_windowDataService;
     ProfileLoader *_profileLoader;
+    HighlightsLoader *_highlightsLoader;
 }
 @end
 
@@ -26,6 +29,7 @@
     _context = context;
     _windowDataService = [[WindowDataService alloc] init];
     _profileLoader = [[ProfileLoader alloc] initWithContext:_context];
+    _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:[[LocalFileSysem alloc] init]];
     
     return self;
 }
@@ -55,9 +59,11 @@
     
     [_windowDataService write:_context WindowJson:_context.windows];
     [_profileLoader save];
+    [_highlightsLoader save];
 }
 
 - (void)loadHighlights {
+    [_highlightsLoader load];
 }
 
 - (void)loadVariables {

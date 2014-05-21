@@ -14,5 +14,6 @@
 @property (nonatomic, strong) AppPathProvider *pathProvider;
 @property (nonatomic, strong) AppSettings *settings;
 @property (nonatomic, strong) NSArray *windows;
+@property (nonatomic, strong) NSMutableArray *highlights;
 
 @end

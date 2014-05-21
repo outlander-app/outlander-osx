@@ -91,6 +91,7 @@
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                        atLoc:rect
                                                      withKey:key];
+    controller.gameContext = _gameContext;
     [controller.keyup subscribeNext:^(id x) {
         [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], x]];
         [__CommandTextField selectText:self];

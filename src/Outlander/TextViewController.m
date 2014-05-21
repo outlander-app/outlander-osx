@@ -8,8 +8,10 @@
 
 #import "TextViewController.h"
 #import "NSString+Categories.h"
+#import "Highlight.h"
 
-@interface TextViewController ()
+@interface TextViewController () {
+}
 @end
 
 @implementation TextViewController
@@ -80,7 +82,49 @@
         if(shouldScrollToBottom) {
             [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
+        
+        [self updateHighlights:text.text];
     });
+}
+
+- (void)updateHighlights:(NSString *)data {
+    if(!_gameContext) return;
+    
+    NSUInteger len = self.TextView.string.length;
+    NSUInteger startOfString = len - data.length;
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        
+        [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+            
+            [[[self matchesFor:data pattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
+                return value.numberOfRanges > 0;
+            }].signal subscribeNext:^(NSTextCheckingResult *x) {
+                NSRange range = [x rangeAtIndex:0];
+                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
+                
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
+                                                    value:[NSColor colorWithHexString:hl.color]
+                                                    range:newRange];
+                });
+            }];
+        }];
+    });
+}
+
+- (NSArray *)matchesFor:(NSString *)data pattern:(NSString *)pattern {
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines
+                                                                             error:&error];
+    if(error) {
+        NSLog(@"matchesFor Error: %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    NSArray *matches = [regex matchesInString:data options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [data length])];
+    return matches;
 }
 
 @end

@@ -66,6 +66,13 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
+		F989E1F9192C27AD00562E32 /* LocalFileSysem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSysem.m */; };
+		F989E1FA192C27AD00562E32 /* LocalFileSysem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSysem.m */; };
+		F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */; };
+		F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E200192C2B9B00562E32 /* StubFileSystem.m */; };
+		F989E205192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
+		F989E206192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
 		F98F22D419248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
@@ -195,6 +202,16 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
+		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
+		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		F989E1F7192C27AD00562E32 /* LocalFileSysem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileSysem.h; sourceTree = "<group>"; };
+		F989E1F8192C27AD00562E32 /* LocalFileSysem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileSysem.m; sourceTree = "<group>"; };
+		F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoaderTester.m; sourceTree = "<group>"; };
+		F989E1FF192C2B9B00562E32 /* StubFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubFileSystem.h; sourceTree = "<group>"; };
+		F989E200192C2B9B00562E32 /* StubFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubFileSystem.m; sourceTree = "<group>"; };
+		F989E203192C2E6200562E32 /* Highlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Highlight.h; sourceTree = "<group>"; };
+		F989E204192C2E6200562E32 /* Highlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Highlight.m; sourceTree = "<group>"; };
 		F98F22D119248506008175FD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -376,6 +393,11 @@
 				F97A5C891893AFDF00E2C318 /* TextTag.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
+				F989E1F6192C278C00562E32 /* FileSystem.h */,
+				F989E1F7192C27AD00562E32 /* LocalFileSysem.h */,
+				F989E1F8192C27AD00562E32 /* LocalFileSysem.m */,
+				F989E203192C2E6200562E32 /* Highlight.h */,
+				F989E204192C2E6200562E32 /* Highlight.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -416,6 +438,15 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
+		F989E202192C2BA700562E32 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				F989E1FF192C2B9B00562E32 /* StubFileSystem.h */,
+				F989E200192C2B9B00562E32 /* StubFileSystem.m */,
+			);
+			name = Stubs;
+			sourceTree = "<group>";
+		};
 		F9A3452C191338E900920F0E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,6 +473,8 @@
 				F9A34547191A064100920F0E /* GameContext.m */,
 				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
+				F989E1EF192C254800562E32 /* HighlightsLoader.h */,
+				F989E1F0192C254800562E32 /* HighlightsLoader.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -527,9 +560,11 @@
 		F9CF928E1890832800449548 /* OutlanderTests */ = {
 			isa = PBXGroup;
 			children = (
+				F989E202192C2BA700562E32 /* Stubs */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
+				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
@@ -734,9 +769,11 @@
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
+				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
@@ -759,6 +796,7 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
+				F989E1F9192C27AD00562E32 /* LocalFileSysem.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
@@ -780,6 +818,7 @@
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
+				F989E206192C2E6200562E32 /* Highlight.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
@@ -795,6 +834,7 @@
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
+				F989E1FA192C27AD00562E32 /* LocalFileSysem.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
@@ -816,8 +856,10 @@
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
+				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
