@@ -120,7 +120,7 @@
         else if([tagName isEqualToString:@"pushstream"]) {
             _inStream = YES;
             _streamId = [node getAttributeNamed:@"id"];
-            if([_streamId isEqualToString:@"inv"]) _publishStream = NO;
+            if([_streamId isEqualToString:@"inv"] || [_streamId isEqualToString:@"talk"]) _publishStream = NO;
             else _publishStream = YES;
             
             if([self isNextNodeNewline:children index:i]) {
@@ -344,7 +344,7 @@
                 [_globalVars setCacheObject:val forKey:@"roomdesc"];
             }
             
-            if(![attr isEqualToString:@"speech"])
+            if(!_inStream)
                 [_currentResult appendString:val];
         }
         else if([tagName isEqualToString:@"p"]){
