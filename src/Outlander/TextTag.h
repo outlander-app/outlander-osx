@@ -11,6 +11,7 @@
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, copy) NSString *color;
 @property (nonatomic, assign) BOOL mono;
+@property (nonatomic, assign) BOOL bold;
 
 - initWith:(NSString*)text mono:(BOOL)mono;
 + tagFor:(NSString*)text mono:(BOOL)mono;

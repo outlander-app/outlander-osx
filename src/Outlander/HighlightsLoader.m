@@ -37,7 +37,6 @@
     
     NSString *pattern = @"^#highlight \\{(.*)\\} \\{(.*)\\}$";
     [[self matchesFor:data pattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
-        NSLog(@"ranges: %lu", (unsigned long)res.numberOfRanges);
         if(res.numberOfRanges > 1) {
             Highlight *hl = [[Highlight alloc] init];
             hl.color = [data substringWithRange:[res rangeAtIndex:1]];

@@ -56,17 +56,26 @@
     
     if(data == nil) return;
     
-    data = [data stringByReplacingOccurrencesOfString:@"<style id=\"\"/>" withString:@""];
-    data = [data stringByReplacingOccurrencesOfString:@"<d>" withString:@""];
-    data = [data stringByReplacingOccurrencesOfString:@"<d/>" withString:@""];
+    NSMutableString *str = [[NSMutableString alloc] initWithString:data];
     
-    if([data length] == 0) return;
+    [str replaceOccurrencesOfString:@"<style id=\"\"/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    [str replaceOccurrencesOfString:@"<d>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    [str replaceOccurrencesOfString:@"<d/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     
-    if(![data containsString:@"<"]) {
-        data = [NSString stringWithFormat:@"<pre>%@</pre>", data];
+    if([str hasPrefix:@"&lt;"]) {
+        NSRange range = [data rangeOfString:@"<pushBold"];
+        [str insertString:@"<p>" atIndex:0];
+        [str insertString:@"</p>" atIndex:range.location + 1];
     }
     
-    HTMLParser *parser = [[HTMLParser alloc] initWithString:data error:&error];
+    if([str length] == 0) return;
+    
+    if(![str containsString:@"<"]) {
+        [str insertString:@"<pre>" atIndex:0];
+        [str insertString:@"</pre>" atIndex:[str length]];
+    }
+    
+    HTMLParser *parser = [[HTMLParser alloc] initWithString:str error:&error];
     
     if (error) {
         NSLog(@"Error: %@", error);
@@ -373,6 +382,7 @@
         TextTag *tag = [TextTag tagFor:[NSString stringWithString:_currentResult] mono:_mono];
         if (_bold) {
             tag.color = @"#FFFF00";
+            tag.bold = YES;
         }
         [_currentResult setString:@""];
         [_currenList addObject:tag];
@@ -437,8 +447,6 @@
                          forKey:[NSString stringWithFormat:@"%@.LearningRateName", exp.name]];
     
     [_exp sendNext:exp];
-    
-    NSLog(@"%@ %@ %hhd", ranks, mindState, isNew);
 }
 
 -(float) floatFromString:(NSString *)data {

@@ -104,9 +104,17 @@
                 NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
-                                                    value:[NSColor colorWithHexString:hl.color]
-                                                    range:newRange];
+                    // TODO: calling *stop=YES throws, even though we can stop iterating
+                    @try {
+                        if(_TextView.string && _TextView.string.length >= len) {
+                            [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
+                                                            value:[NSColor colorWithHexString:hl.color]
+                                                            range:newRange];
+                        }
+                    }
+                    @catch (NSException *exception) {
+                        NSLog(@"Highlight Error: (%lu,%lu) %@", (unsigned long)newRange.location, (unsigned long)newRange.length, exception.description);
+                    }
                 });
             }];
         }];

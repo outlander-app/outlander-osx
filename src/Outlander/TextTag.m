@@ -16,16 +16,17 @@
 
 - initWith:(NSString*)text mono:(BOOL)mono {
     self = [super init];
-    if(self) {
-        _text = text;
-        _mono = mono;
-    }
+    if(!self) return nil;
+    
+    _text = text;
+    _mono = mono;
+    _bold = NO;
     
     return self;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"TextTag: text='%@' mono='%hhd'", _text, _mono];
+    return [NSString stringWithFormat:@"TextTag: text='%@' mono='%hhd' color='%@'", _text, _mono, _color];
 }
 
 @end

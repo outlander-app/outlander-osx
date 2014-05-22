@@ -111,7 +111,6 @@
 }
 
 - (void)command:(NSString *)command {
-    NSLog(@"Command: %@", command);
     
     if([command isEqualToString:@"saveProfile"]) {
         [self writeWindowJson];

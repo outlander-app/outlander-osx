@@ -552,6 +552,27 @@ describe(@"GameParser", ^{
             
             [[tag.time should] equal:[NSDate dateWithTimeIntervalSince1970:[@"1400357815" doubleValue]]];
         });
+        
+        it(@"should handle combat hit messages", ^{
+            NSString *data = @"&lt; Moving like a striking snake, you draw a longsword at a musk hog.  A musk hog fails to dodge, mis-stepping and blundering into the blow.  <pushBold/>The longsword lands a heavy strike to the hog's right arm.<popBold/>\r\n";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:3];
+            
+            TextTag *tag = parseResults[0];
+            [[tag.text should] equal:@"< Moving like a striking snake, you draw a longsword at a musk hog.  A musk hog fails to dodge, mis-stepping and blundering into the blow.  "];
+            
+            tag = parseResults[1];
+            [[tag.text should] equal:@"The longsword lands a heavy strike to the hog's right arm."];
+            
+            tag = parseResults[2];
+            [[tag.text should] equal:@"\r\n"];
+        });
     });
 });
 
