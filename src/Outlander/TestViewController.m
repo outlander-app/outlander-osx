@@ -211,7 +211,7 @@
         [self append:tag to:@"deaths"];
     }];
     
-    [_gameStream.room subscribeNext:^(id x) {
+    [[_gameStream.room throttle:0.1] subscribeNext:^(id x) {
         [self updateRoom];
     }];
     

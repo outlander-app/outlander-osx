@@ -65,6 +65,17 @@ describe(@"My TextField", ^{
             [_textField nextHistory];
             [[[_textField stringValue] should] equal:@""];
         });
+        
+        it(@"does not commit the same value twice", ^{
+            [_textField setStringValue:@"two"];
+            [_textField commitHistory];
+            
+            [_textField previousHistory];
+            [[[_textField stringValue] should] equal:@"two"];
+            
+            [_textField previousHistory];
+            [[[_textField stringValue] should] equal:@"one"];
+        });
     });
 });
 

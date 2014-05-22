@@ -80,7 +80,7 @@
     _currentHistory = -1;
     
     // don't commit the same item multiple times
-    if(_history.count > 0 && [[_history objectAtIndex:_history.count-1] isEqualToString:self.stringValue])
+    if(_history.count > 0 && [[_history objectAtIndex:0] isEqualToString:self.stringValue])
         return;
     
     [_history insertObject:self.stringValue atIndex:0];
