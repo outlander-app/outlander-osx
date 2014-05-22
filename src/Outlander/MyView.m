@@ -128,12 +128,6 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [super drawRect:dirtyRect];
 }
 
--(void)mouseDown:(NSEvent *)theEvent {
-//        [self.viewsList exchangeObjectAtIndex:[self.viewsList indexOfObject:self.movingTile]
-//                            withObjectAtIndex:[self.viewsList count] - 1];
-//        [self setSubviews:self.viewsList]; //Reorder's the subviews so the picked up tile always appears on top
-}
-
 //-(void)mouseDown:(NSEvent *) theEvent {
 //    
 //    self.mouseLoc = [theEvent locationInWindow];
@@ -203,6 +197,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float maxX = 0.0;
     
     thumb.down = ^(NSEvent *ev){
+        [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
         origOrigin = view.frame.origin;
@@ -264,6 +259,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float maxY = 0.0;
     
     thumb.down = ^(NSEvent *ev){
+        [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
         origOrigin = view.frame.origin;
@@ -332,6 +328,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float minXOrigin = 0.0;
     
     thumb.down = ^(NSEvent *ev){
+        [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
         origOrigin = view.frame.origin;
@@ -396,6 +393,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float minX = 0.0;
     
     thumb.down = ^(NSEvent *ev){
+        [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
         origOrigin = view.frame.origin;
@@ -458,6 +456,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float maxY = 0.0;
     
     thumb.down = ^(NSEvent *ev) {
+        [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
         origOrigin = view.frame.origin;
@@ -496,6 +495,14 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [view addSubview:thumb];
     
     return thumb;
+}
+
+//Reorder's the subviews so the picked up view always appears on top
+- (void)reOrderView:(NSView *)view {
+    NSMutableArray *subViews = [self.subviews mutableCopy];
+    [subViews exchangeObjectAtIndex:[subViews indexOfObject:view]
+                        withObjectAtIndex:[subViews count] - 1];
+    [self setSubviews:subViews];
 }
 
 @end

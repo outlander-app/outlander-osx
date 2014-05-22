@@ -344,7 +344,7 @@
                 [_globalVars setCacheObject:val forKey:@"roomdesc"];
             }
             
-            if(!_inStream)
+            if(![_streamId isEqualToString:@"speech"])
                 [_currentResult appendString:val];
         }
         else if([tagName isEqualToString:@"p"]){
