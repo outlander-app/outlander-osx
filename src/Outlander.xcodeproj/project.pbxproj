@@ -72,8 +72,8 @@
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
-		F989E1F9192C27AD00562E32 /* LocalFileSysem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSysem.m */; };
-		F989E1FA192C27AD00562E32 /* LocalFileSysem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSysem.m */; };
+		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
+		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */; };
 		F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E200192C2B9B00562E32 /* StubFileSystem.m */; };
 		F989E205192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
@@ -220,8 +220,8 @@
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
-		F989E1F7192C27AD00562E32 /* LocalFileSysem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileSysem.h; sourceTree = "<group>"; };
-		F989E1F8192C27AD00562E32 /* LocalFileSysem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileSysem.m; sourceTree = "<group>"; };
+		F989E1F7192C27AD00562E32 /* LocalFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileSystem.h; sourceTree = "<group>"; };
+		F989E1F8192C27AD00562E32 /* LocalFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileSystem.m; sourceTree = "<group>"; };
 		F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoaderTester.m; sourceTree = "<group>"; };
 		F989E1FF192C2B9B00562E32 /* StubFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubFileSystem.h; sourceTree = "<group>"; };
 		F989E200192C2B9B00562E32 /* StubFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubFileSystem.m; sourceTree = "<group>"; };
@@ -410,8 +410,8 @@
 				F989E204192C2E6200562E32 /* Highlight.m */,
 				F9CB311219032EDE004587A5 /* LearningRate.h */,
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
-				F989E1F7192C27AD00562E32 /* LocalFileSysem.h */,
-				F989E1F8192C27AD00562E32 /* LocalFileSysem.m */,
+				F989E1F7192C27AD00562E32 /* LocalFileSystem.h */,
+				F989E1F8192C27AD00562E32 /* LocalFileSystem.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
 				F9A79E561927FDA0000AF892 /* Roundtime.m */,
 				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
@@ -830,7 +830,7 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
-				F989E1F9192C27AD00562E32 /* LocalFileSysem.m in Sources */,
+				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
@@ -871,7 +871,7 @@
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
-				F989E1FA192C27AD00562E32 /* LocalFileSysem.m in Sources */,
+				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,

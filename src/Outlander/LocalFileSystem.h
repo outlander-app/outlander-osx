@@ -8,6 +8,6 @@
 
 #import "FileSystem.h"
 
-@interface LocalFileSysem : NSObject <FileSystem>
+@interface LocalFileSystem : NSObject <FileSystem>
 
 @end

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "LocalFileSysem.h"
+#import "LocalFileSystem.h"
 
-@implementation LocalFileSysem
+@implementation LocalFileSystem
 
 - (NSString *)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error {
     return [NSString stringWithContentsOfFile:path encoding:enc error:error];

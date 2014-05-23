@@ -10,7 +10,7 @@
 #import "WindowDataService.h"
 #import "ProfileLoader.h"
 #import "HighlightsLoader.h"
-#import "LocalFileSysem.h"
+#import "LocalFileSystem.h"
 #import "AliasLoader.h"
 
 @interface AppSettingsLoader () {
@@ -31,7 +31,7 @@
     _context = context;
     _windowDataService = [[WindowDataService alloc] init];
     _profileLoader = [[ProfileLoader alloc] initWithContext:_context];
-    id<FileSystem> fileSystem = [[LocalFileSysem alloc] init];
+    id<FileSystem> fileSystem = [[LocalFileSystem alloc] init];
     _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _aliasLoader = [[AliasLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     

@@ -199,8 +199,11 @@
         NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
         
         NSTimeInterval diff = t - offset;
+        double rounded = ceil(diff);
         
-        [_roundtimeNotifier set:diff];
+        NSLog(@"RT: %f,%f", diff, rounded);
+        
+        [_roundtimeNotifier set:rounded];
     }];
     
     [_gameStream.thoughts subscribeNext:^(TextTag *tag) {
