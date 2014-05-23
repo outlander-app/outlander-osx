@@ -15,5 +15,6 @@
 @property (nonatomic, strong) AppSettings *settings;
 @property (nonatomic, strong) NSArray *windows;
 @property (nonatomic, strong) NSMutableArray *highlights;
+@property (nonatomic, strong) NSMutableArray *aliases;
 
 @end
