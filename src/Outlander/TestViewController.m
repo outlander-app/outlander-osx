@@ -201,8 +201,6 @@
         NSTimeInterval diff = t - offset;
         double rounded = ceil(diff);
         
-        NSLog(@"RT: %f,%f", diff, rounded);
-        
         [_roundtimeNotifier set:rounded];
     }];
     
