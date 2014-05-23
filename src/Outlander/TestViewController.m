@@ -22,6 +22,9 @@
 #import "Roundtime.h"
 #import "RoundtimeNotifier.h"
 #import "SpelltimeNotifier.h"
+#import "CommandProcessor.h"
+#import "GameCommandProcessor.h"
+#import "VariableReplacer.h"
 
 @interface TestViewController ()
 @end
@@ -32,6 +35,8 @@
     AppSettingsLoader *_appSettingsLoader;
     RoundtimeNotifier *_roundtimeNotifier;
     SpelltimeNotifier *_spelltimeNotifier;
+    id<CommandProcessor> _commandProcessor;
+    VariableReplacer *_variablesReplacer;
 }
 
 - (id)init {
@@ -46,6 +51,8 @@
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _roundtimeNotifier = [[RoundtimeNotifier alloc] init];
     _spelltimeNotifier = [[SpelltimeNotifier alloc] init];
+    _variablesReplacer = [[VariableReplacer alloc] init];
+    _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
     
     return self;
 }
@@ -127,13 +134,16 @@
     if(command.length > 3)
         [sender commitHistory];
     
-    [_gameStream sendCommand:command];
-    
     [sender setStringValue:@""];
-    NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
-    prompt = prompt ? prompt : @">";
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, command] mono:NO];
-    [self append:tag to:@"main"];
+    
+    [[_commandProcessor process:command] subscribeNext:^(id x) {
+        
+        [_gameStream sendCommand:x];
+        NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
+        prompt = prompt ? prompt : @">";
+        TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x] mono:NO];
+        [self append:tag to:@"main"];
+    }];
 }
 
 - (void)clear:(NSString*)key{

@@ -11,12 +11,14 @@
 #import "ProfileLoader.h"
 #import "HighlightsLoader.h"
 #import "LocalFileSysem.h"
+#import "AliasLoader.h"
 
 @interface AppSettingsLoader () {
     GameContext *_context;
     WindowDataService *_windowDataService;
     ProfileLoader *_profileLoader;
     HighlightsLoader *_highlightsLoader;
+    AliasLoader *_aliasLoader;
 }
 @end
 
@@ -29,7 +31,9 @@
     _context = context;
     _windowDataService = [[WindowDataService alloc] init];
     _profileLoader = [[ProfileLoader alloc] initWithContext:_context];
-    _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:[[LocalFileSysem alloc] init]];
+    id<FileSystem> fileSystem = [[LocalFileSysem alloc] init];
+    _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:fileSystem];
+    _aliasLoader = [[AliasLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     
     return self;
 }
@@ -44,6 +48,7 @@
     
     [self loadHighlights];
     [self loadVariables];
+    [self loadAliases];
 }
 
 - (void)loadConfig {
@@ -67,6 +72,10 @@
 }
 
 - (void)loadVariables {
+}
+
+- (void)loadAliases {
+    [_aliasLoader load];
 }
 
 - (void)writeConfigFolders {
