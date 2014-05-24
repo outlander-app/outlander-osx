@@ -56,7 +56,7 @@ describe(@"Variables Loader", ^{
       
         it(@"should save variables", ^{
             
-            NSString *result = @"#var {spell} {None}\n#var {lefthand} {Empty}\n#var {righthand} {Empty}\n#var {prompt} {>}\n";
+            NSString *result = @"#var {lefthand} {Empty}\n#var {prompt} {>}\n#var {righthand} {Empty}\n#var {spell} {None}\n";
            
             [theLoader save];
             

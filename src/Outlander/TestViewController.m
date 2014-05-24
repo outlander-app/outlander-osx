@@ -93,7 +93,6 @@
     }];
     
     [[_gameContext.globalVars.changed throttle:1.0] subscribeNext:^(id x) {
-        NSLog(@"\n\n**** Saving Vars ****\n\n");
         [_appSettingsLoader saveVariables];
     }];
 }
