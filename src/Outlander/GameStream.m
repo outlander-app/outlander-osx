@@ -31,7 +31,6 @@
     _gameServer = [[GameServer alloc] initWithContext:context];
     _gameParser = [[GameParser alloc] initWithContext:context];
     
-    _globalVars = _gameParser.globalVars;
     _vitals = _gameParser.vitals;
     _room = _gameParser.room;
     _exp = _gameParser.exp;
@@ -41,11 +40,6 @@
     _familiar = _gameParser.familiar;
     _log = _gameParser.log;
     _roundtime = _gameParser.roundtime;
-    
-    [_globalVars setCacheObject:@">" forKey:@"prompt"];
-    [_globalVars setCacheObject:@"Empty" forKey:@"lefthand"];
-    [_globalVars setCacheObject:@"Empty" forKey:@"righthand"];
-    [_globalVars setCacheObject:@"None" forKey:@"spell"];
     
     _connected = [RACReplaySubject subject];
     _subject = [RACReplaySubject subject];

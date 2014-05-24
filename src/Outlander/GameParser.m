@@ -38,7 +38,6 @@
     _familiar = [RACReplaySubject subject];
     _log = [RACReplaySubject subject];
     _roundtime = [RACReplaySubject subject];
-    _globalVars = [[TSMutableDictionary alloc] initWithName:@"com.outlander.gobalvars"];
     _currenList = [[NSMutableArray alloc] init];
     _currentResult = [[NSMutableString alloc] init];
     _inStream = NO;
@@ -95,12 +94,12 @@
             NSString *time = [node getAttributeNamed:@"time"];
             NSString *prompt = [[node contents] trimWhitespaceAndNewline];
             
-            [_globalVars setCacheObject:prompt forKey:@"prompt"];
-            [_globalVars setCacheObject:time forKey:@"gametime"];
+            [_gameContext.globalVars setCacheObject:prompt forKey:@"prompt"];
+            [_gameContext.globalVars setCacheObject:time forKey:@"gametime"];
             
             NSTimeInterval today = [[NSDate date] timeIntervalSince1970];
             NSString *intervalString = [NSString stringWithFormat:@"%f", today];
-            [_globalVars setCacheObject:intervalString forKey:@"gametimeupdate"];
+            [_gameContext.globalVars setCacheObject:intervalString forKey:@"gametimeupdate"];
             
             [_currentResult appendString:prompt];
         }
@@ -153,7 +152,7 @@
             }
         }
         else if([tagName isEqualToString:@"spell"]) {
-            [_globalVars setCacheObject:[node contents] forKey:@"spell"];
+            [_gameContext.globalVars setCacheObject:[node contents] forKey:@"spell"];
             
             if([self isNextNodeNewline:children index:i]) {
                 i++;
@@ -161,9 +160,9 @@
         }
         else if([tagName isEqualToString:@"left"]) {
             NSString *val = [node contents];
-            [_globalVars setCacheObject:val forKey:@"lefthand"];
-            [_globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"lefthandid"];
-            [_globalVars setCacheObject:[node getAttributeNamed:@"noun"] forKey:@"lefthandnoun"];
+            [_gameContext.globalVars setCacheObject:val forKey:@"lefthand"];
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"lefthandid"];
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"noun"] forKey:@"lefthandnoun"];
 
             if([self isNextNodeNewline:children index:i]) {
                 i++;
@@ -171,9 +170,9 @@
         }
         else if([tagName isEqualToString:@"right"]) {
             NSString *val = [node contents];
-            [_globalVars setCacheObject:val forKey:@"righthand"];
-            [_globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"righthandid"];
-            [_globalVars setCacheObject:[node getAttributeNamed:@"noun"] forKey:@"righthandnoun"];
+            [_gameContext.globalVars setCacheObject:val forKey:@"righthand"];
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"exist"] forKey:@"righthandid"];
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"noun"] forKey:@"righthandnoun"];
 
             if([self isNextNodeNewline:children index:i]) {
                 i++;
@@ -224,7 +223,7 @@
                 }
                 else {
                 
-                    [_globalVars setCacheObject:raw forKey:compId];
+                    [_gameContext.globalVars setCacheObject:raw forKey:compId];
                 
                     if([_roomTags containsObject:compId]) {
                         [_room sendNext:@""];
@@ -247,7 +246,7 @@
             if ([attr isEqualToString:@"roomName"]){
                 HTMLNode *roomnode = children[i+1];
                 NSString *val = [roomnode rawContents];
-                [_globalVars setCacheObject:[val trimNewLine] forKey:@"roomname"];
+                [_gameContext.globalVars setCacheObject:[val trimNewLine] forKey:@"roomname"];
                 TextTag *tag = [TextTag tagFor:[NSString stringWithString:val] mono:_mono];
                 tag.color = @"#0000FF";
                 [_currenList addObject:tag];
@@ -269,7 +268,7 @@
                 
                 Vitals *vitals = [[Vitals alloc] initWith:name value:value];
                 
-                [_globalVars setCacheObject:stringValue forKey:name];
+                [_gameContext.globalVars setCacheObject:stringValue forKey:name];
                 
                 [_vitals sendNext:vitals];
             }
@@ -295,7 +294,7 @@
                 if(subtitle != nil && subtitle.length > 3){
                     name = [subtitle substringFromIndex:3];
                 }
-                [_globalVars setCacheObject:name forKey:@"roomtitle"];
+                [_gameContext.globalVars setCacheObject:name forKey:@"roomtitle"];
                 [_room sendNext:@""];
             }
             
@@ -341,7 +340,7 @@
             NSString *attr = [node getAttributeNamed:@"id"];
             
             if([attr isEqualToString:@"roomDesc"]) {
-                [_globalVars setCacheObject:val forKey:@"roomdesc"];
+                [_gameContext.globalVars setCacheObject:val forKey:@"roomdesc"];
             }
             
             if(![_streamId isEqualToString:@"speech"])
@@ -439,11 +438,11 @@
     exp.ranks = [NSDecimalNumber decimalNumberWithString:ranks];
     exp.isNew = isNew;
     
-    [_globalVars setCacheObject:ranks
+    [_gameContext.globalVars setCacheObject:ranks
                          forKey:[NSString stringWithFormat:@"%@.Ranks", exp.name]];
-    [_globalVars setCacheObject:[NSString stringWithFormat:@"%hu", exp.mindState.rateId]
+    [_gameContext.globalVars setCacheObject:[NSString stringWithFormat:@"%hu", exp.mindState.rateId]
                          forKey:[NSString stringWithFormat:@"%@.LearningRate", exp.name]];
-    [_globalVars setCacheObject:exp.mindState.description
+    [_gameContext.globalVars setCacheObject:exp.mindState.description
                          forKey:[NSString stringWithFormat:@"%@.LearningRateName", exp.name]];
     
     [_exp sendNext:exp];

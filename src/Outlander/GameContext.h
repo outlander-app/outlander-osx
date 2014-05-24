@@ -8,6 +8,7 @@
 
 #import "AppSettings.h"
 #import "AppPathProvider.h"
+#import "TSMutableDictionary.h"
 
 @interface GameContext : NSObject
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) NSArray *windows;
 @property (nonatomic, strong) NSMutableArray *highlights;
 @property (nonatomic, strong) NSMutableArray *aliases;
+@property (nonatomic, strong) TSMutableDictionary *globalVars;
 
 @end

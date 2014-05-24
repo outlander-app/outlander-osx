@@ -9,7 +9,6 @@
 #import "GameServer.h"
 #import "GameParser.h"
 #import "GameConnection.h"
-#import "TSMutableDictionary.h"
 #import "GameContext.h"
 
 @interface GameStream : NSObject {
@@ -17,7 +16,6 @@
     GameParser *_gameParser;
 }
 @property (atomic, strong) RACReplaySubject *subject;
-@property (atomic, strong) TSMutableDictionary *globalVars;
 @property (atomic, strong) RACReplaySubject *connected;
 @property (atomic, strong) RACSignal *vitals;
 @property (atomic, strong) RACSignal *room;

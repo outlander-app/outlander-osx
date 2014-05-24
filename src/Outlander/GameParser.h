@@ -25,7 +25,6 @@
 -(id)initWithContext:(GameContext *)context;
 
 @property (atomic, strong) RACReplaySubject *subject;
-@property (atomic, strong) TSMutableDictionary *globalVars;
 
 @property (nonatomic, strong) RACReplaySubject *vitals;
 @property (nonatomic, strong) RACReplaySubject *room;

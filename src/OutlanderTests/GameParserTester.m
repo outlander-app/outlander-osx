@@ -12,15 +12,18 @@
 #import "Vitals.h"
 #import "SkillExp.h"
 #import "Roundtime.h"
+#import "GameContext.h"
 
 SPEC_BEGIN(GameParserTester)
 
 describe(@"GameParser", ^{
    
     __block GameParser *_parser = nil;
+    __block GameContext *_context = nil;
     
     beforeEach(^{
-        _parser = [[GameParser alloc] initWithContext:nil];
+        _context = [[GameContext alloc] init];
+        _parser = [[GameParser alloc] initWithContext:_context];
     });
     
     context(@"parse", ^{
@@ -202,9 +205,9 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
             }];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"roomdesc"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"roomdesc"]) should] beYes];
             
-            NSString *roomDesc = [_parser.globalVars cacheObjectForKey:@"roomdesc"];
+            NSString *roomDesc = [_context.globalVars cacheObjectForKey:@"roomdesc"];
             [[roomDesc should] equal:@"For a moment you lose your sense of direction.  Bending down to gain a better perspective of the lie of the land, you manage to identify several landmarks and reorient yourself."];
         });
 
@@ -218,9 +221,9 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"roomobjs"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"roomobjs"]) should] beYes];
             
-            NSString *roomObjs = [_parser.globalVars cacheObjectForKey:@"roomobjs"];
+            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"roomobjs"];
             [[roomObjs should] equal:@"You also see a two auroch caravan with several things on it."];
         });
         
@@ -234,9 +237,9 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"spell"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"spell"]) should] beYes];
             
-            NSString *roomObjs = [_parser.globalVars cacheObjectForKey:@"spell"];
+            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"spell"];
             [[roomObjs should] equal:@"None"];
         });
 
@@ -250,11 +253,11 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
             
-            [[[_parser.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"longsword"];
-            [[[_parser.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@"41807070"];
-            [[[_parser.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@"longsword"];
+            [[[_context.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"longsword"];
+            [[[_context.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@"41807070"];
+            [[[_context.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@"longsword"];
         });
         
         it(@"should set left global var as Empty", ^{
@@ -267,13 +270,13 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"lefthandid"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"lefthandnoun"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"lefthandid"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"lefthandnoun"]) should] beYes];
             
-            [[[_parser.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"Empty"];
-            [[[_parser.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@""];
-            [[[_parser.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@""];
+            [[[_context.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"Empty"];
+            [[[_context.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@""];
+            [[[_context.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@""];
         });
         
         it(@"should set right global var", ^{
@@ -286,13 +289,13 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthand"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthand"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
             
-            [[[_parser.globalVars cacheObjectForKey:@"righthand"] should] equal:@"longsword"];
-            [[[_parser.globalVars cacheObjectForKey:@"righthandid"] should] equal:@"41807070"];
-            [[[_parser.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@"longsword"];
+            [[[_context.globalVars cacheObjectForKey:@"righthand"] should] equal:@"longsword"];
+            [[[_context.globalVars cacheObjectForKey:@"righthandid"] should] equal:@"41807070"];
+            [[[_context.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@"longsword"];
         });
         
         it(@"should set right global var as Empty", ^{
@@ -305,13 +308,13 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthand"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
-            [[theValue([_parser.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthand"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
             
-            [[[_parser.globalVars cacheObjectForKey:@"righthand"] should] equal:@"Empty"];
-            [[[_parser.globalVars cacheObjectForKey:@"righthandid"] should] equal:@""];
-            [[[_parser.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@""];
+            [[[_context.globalVars cacheObjectForKey:@"righthand"] should] equal:@"Empty"];
+            [[[_context.globalVars cacheObjectForKey:@"righthandid"] should] equal:@""];
+            [[[_context.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@""];
         });
         
         it(@"should signal arrivals", ^{
@@ -387,7 +390,7 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[[_parser.globalVars cacheObjectForKey:@"roomtitle"] should] equal:@"[Ranger Guild, Longhouse]"];
+            [[[_context.globalVars cacheObjectForKey:@"roomtitle"] should] equal:@"[Ranger Guild, Longhouse]"];
         });
         
         it(@"should signal concentration vitals", ^{
@@ -411,7 +414,7 @@ describe(@"GameParser", ^{
             [[tag.name should] equal:@"concentration"];
             [[theValue(tag.value) should] equal:theValue(98)];
             
-            [[[_parser.globalVars cacheObjectForKey:@"concentration"] should] equal:@"98"];
+            [[[_context.globalVars cacheObjectForKey:@"concentration"] should] equal:@"98"];
         });
         
         it(@"should signal health vitals", ^{
@@ -435,7 +438,7 @@ describe(@"GameParser", ^{
             [[tag.name should] equal:@"health"];
             [[theValue(tag.value) should] equal:theValue(98)];
             
-            [[[_parser.globalVars cacheObjectForKey:@"health"] should] equal:@"98"];
+            [[[_context.globalVars cacheObjectForKey:@"health"] should] equal:@"98"];
         });
         
         it(@"should set exp global variables", ^{
@@ -448,9 +451,9 @@ describe(@"GameParser", ^{
             
             [[parseResults should] haveCountOf:0];
             
-            NSString *ranks = [_parser.globalVars cacheObjectForKey:@"Athletics.Ranks"];
-            NSString *learningRate = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
-            NSString *learningRateName = [_parser.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
+            NSString *ranks = [_context.globalVars cacheObjectForKey:@"Athletics.Ranks"];
+            NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
+            NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
             
             [[ranks should] beNonNil];
             [[learningRate should] beNonNil];
@@ -471,9 +474,9 @@ describe(@"GameParser", ^{
             
             [[parseResults should] haveCountOf:0];
             
-            NSString *ranks = [_parser.globalVars cacheObjectForKey:@"Life_Magic.Ranks"];
-            NSString *learningRate = [_parser.globalVars cacheObjectForKey:@"Life_Magic.LearningRate"];
-            NSString *learningRateName = [_parser.globalVars cacheObjectForKey:@"Life_Magic.LearningRateName"];
+            NSString *ranks = [_context.globalVars cacheObjectForKey:@"Life_Magic.Ranks"];
+            NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRate"];
+            NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRateName"];
             
             [[ranks should] beNonNil];
             [[learningRate should] beNonNil];

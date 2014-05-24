@@ -139,7 +139,7 @@
     [[_commandProcessor process:command] subscribeNext:^(id x) {
         
         [_gameStream sendCommand:x];
-        NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
+        NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
         prompt = prompt ? prompt : @">";
         TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x] mono:NO];
         [self append:tag to:@"main"];
@@ -157,7 +157,7 @@
 }
 
 - (void)append:(TextTag*)text to:(NSString *)key {
-    NSString *prompt = [_gameStream.globalVars cacheObjectForKey:@"prompt"];
+    NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
@@ -192,8 +192,8 @@
     }];
     
     [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
-        NSString *time = [_gameStream.globalVars cacheObjectForKey:@"gametime"];
-        NSString *updated = [_gameStream.globalVars cacheObjectForKey:@"gametimeupdate"];
+        NSString *time = [_gameContext.globalVars cacheObjectForKey:@"gametime"];
+        NSString *updated = [_gameContext.globalVars cacheObjectForKey:@"gametimeupdate"];
         
         NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
         NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
@@ -284,9 +284,9 @@
     }]
     subscribeNext:^(NSArray *tags) {
         
-        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameStream.globalVars cacheObjectForKey:@"righthand"]];
-        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameStream.globalVars cacheObjectForKey:@"lefthand"]];
-        [_spelltimeNotifier set:[_gameStream.globalVars cacheObjectForKey:@"spell"]];
+        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
+        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
+        [_spelltimeNotifier set:[_gameContext.globalVars cacheObjectForKey:@"spell"]];
         
         for (TextTag *tag in tags) {
             [self append:tag to:@"main"];
@@ -307,11 +307,11 @@
 }
 
 -(void)updateRoom {
-    NSString *name = [_gameStream.globalVars cacheObjectForKey:@"roomtitle"];
-    NSString *desc = [_gameStream.globalVars cacheObjectForKey:@"roomdesc"];
-    NSString *objects = [_gameStream.globalVars cacheObjectForKey:@"roomobjs"];
-    NSString *exits = [_gameStream.globalVars cacheObjectForKey:@"roomexits"];
-    NSString *players = [_gameStream.globalVars cacheObjectForKey:@"roomplayers"];
+    NSString *name = [_gameContext.globalVars cacheObjectForKey:@"roomtitle"];
+    NSString *desc = [_gameContext.globalVars cacheObjectForKey:@"roomdesc"];
+    NSString *objects = [_gameContext.globalVars cacheObjectForKey:@"roomobjs"];
+    NSString *exits = [_gameContext.globalVars cacheObjectForKey:@"roomexits"];
+    NSString *players = [_gameContext.globalVars cacheObjectForKey:@"roomplayers"];
     
     [self clear:@"room"];
     

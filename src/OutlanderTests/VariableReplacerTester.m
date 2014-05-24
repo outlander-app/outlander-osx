@@ -24,26 +24,51 @@ describe(@"Variable Replacer", ^{
     
     context(@"replace", ^{
         
-        it(@"should replace alias", ^{
-            Alias *al = [[Alias alloc] init];
-            al.pattern = @"l2";
-            al.replace = @"load arrows";
-            [_context.aliases addObject:al];
+        context(@"alias", ^{
             
-            NSString *result = [_replacer replace:@"l2" withContext:_context];
+            it(@"should replace alias", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"l2";
+                al.replace = @"load arrows";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"l2" withContext:_context];
+                
+                [[result should] equal:@"load arrows"];
+            });
             
-            [[result should] equal:@"load arrows"];
+            it(@"should replace alias within other text", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"l2";
+                al.replace = @"load arrows";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"do something l2 with something else" withContext:_context];
+                
+                [[result should] equal:@"do something load arrows with something else"];
+            });
         });
         
-        it(@"should replace alias within other text", ^{
-            Alias *al = [[Alias alloc] init];
-            al.pattern = @"l2";
-            al.replace = @"load arrows";
-            [_context.aliases addObject:al];
+        context(@"global vars", ^{
             
-            NSString *result = [_replacer replace:@"do something l2 with something else" withContext:_context];
+            it(@"should replace global variable", ^{
+                
+                [_context.globalVars setCacheObject:@"longsword" forKey:@"lefthand"];
+                
+                NSString *result = [_replacer replace:@"$lefthand" withContext:_context];
+                
+                [[result should] equal:@"longsword"];
+            });
             
-            [[result should] equal:@"do something load arrows with something else"];
+            it(@"should replace multiple global variables within text", ^{
+                
+                [_context.globalVars setCacheObject:@"longsword" forKey:@"lefthand"];
+                [_context.globalVars setCacheObject:@"backpack" forKey:@"primary.container"];
+                
+                NSString *result = [_replacer replace:@"stow my $lefthand in my $primary.container" withContext:_context];
+                
+                [[result should] equal:@"stow my longsword in my backpack"];
+            });
         });
     });
 });
