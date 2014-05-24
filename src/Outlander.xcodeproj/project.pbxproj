@@ -99,6 +99,9 @@
 		F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
 		F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
 		F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F0D192ED272008F410A /* VariableReplacerTester.m */; };
+		F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F1019305D14008F410A /* VariablesLoader.m */; };
+		F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F1019305D14008F410A /* VariablesLoader.m */; };
+		F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F131930606A008F410A /* VariablesLoaderTester.m */; };
 		F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
 		F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
 		F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
@@ -248,6 +251,9 @@
 		F9A3454E191C59D500920F0E /* ProfileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLoader.h; sourceTree = "<group>"; };
 		F9A3454F191C59D500920F0E /* ProfileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLoader.m; sourceTree = "<group>"; };
 		F9A74F0D192ED272008F410A /* VariableReplacerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableReplacerTester.m; sourceTree = "<group>"; };
+		F9A74F0F19305D14008F410A /* VariablesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariablesLoader.h; sourceTree = "<group>"; };
+		F9A74F1019305D14008F410A /* VariablesLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariablesLoader.m; sourceTree = "<group>"; };
+		F9A74F131930606A008F410A /* VariablesLoaderTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariablesLoaderTester.m; sourceTree = "<group>"; };
 		F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundtimeNotifier.h; sourceTree = "<group>"; };
 		F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundtimeNotifier.m; sourceTree = "<group>"; };
 		F9A79E551927FDA0000AF892 /* Roundtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roundtime.h; sourceTree = "<group>"; };
@@ -505,6 +511,8 @@
 				F989E1F0192C254800562E32 /* HighlightsLoader.m */,
 				F9762F7A192E4F8700B873D7 /* AliasLoader.h */,
 				F9762F7B192E4F8700B873D7 /* AliasLoader.m */,
+				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
+				F9A74F1019305D14008F410A /* VariablesLoader.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -591,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				F989E202192C2BA700562E32 /* Stubs */,
+				F9A74F131930606A008F410A /* VariablesLoaderTester.m */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
@@ -829,6 +838,7 @@
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
+				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
@@ -858,6 +868,7 @@
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
+				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
@@ -886,6 +897,7 @@
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
+				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,

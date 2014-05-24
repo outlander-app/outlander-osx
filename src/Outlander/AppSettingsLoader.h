@@ -13,5 +13,6 @@
 - (id)initWithContext:(GameContext *)context;
 - (void)load;
 - (void)saveProfile;
+- (void)saveVariables;
 
 @end

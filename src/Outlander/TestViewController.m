@@ -91,6 +91,11 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *value) {
         _viewModel.spell = value;
     }];
+    
+    [[_gameContext.globalVars.changed throttle:1.0] subscribeNext:^(id x) {
+        NSLog(@"\n\n**** Saving Vars ****\n\n");
+        [_appSettingsLoader saveVariables];
+    }];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {

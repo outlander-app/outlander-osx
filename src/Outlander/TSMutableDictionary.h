@@ -7,17 +7,22 @@
 //
 // https://mikeash.com/pyblog/friday-qa-2011-10-14-whats-new-in-gcd.html
 
-#import <Foundation/Foundation.h>
+#import "ReactiveCocoa.h"
 
 @interface TSMutableDictionary : NSObject {
 
     NSMutableDictionary *_cache;
     dispatch_queue_t _queue;
 }
+
+@property (nonatomic, strong) RACSignal *changed;
+
 - (id)initWithName:(NSString *)queueName;
 - (id)cacheObjectForKey: (id)key;
 - (void)setCacheObject: (id)obj forKey: (id)key;
 - (BOOL)cacheDoesContain: (id)key;
+- (NSArray *)allKeys;
 - (NSArray *)allItems;
+- (NSUInteger)count;
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block;
 @end

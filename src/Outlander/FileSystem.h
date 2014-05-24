@@ -9,5 +9,6 @@
 @protocol FileSystem <NSObject>
 
 - (NSString *)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
+- (BOOL)write:(NSString *)data toFile:(NSString *)path;
 
 @end

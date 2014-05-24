@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSString *fileContents;
 @property (nonatomic, strong) NSString *givenFileName;
 @property (nonatomic, strong) NSError *errorToReturn;
+@property (nonatomic, assign) BOOL writeResult;
 
 @end

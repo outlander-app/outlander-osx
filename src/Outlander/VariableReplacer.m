@@ -24,7 +24,12 @@
     NSMutableString *str = [data mutableCopy];
     
     [[str matchesForPattern:@"\\$([a-zA-z0-9\\.]+)"] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        
+        if(res.numberOfRanges < 2) return;
+        
         NSString *value = [context.globalVars cacheObjectForKey:[data substringWithRange:[res rangeAtIndex:1]]];
+        
+        if(!value) return;
         
         NSString *pattern = [[data substringWithRange:[res rangeAtIndex:0]] stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
         

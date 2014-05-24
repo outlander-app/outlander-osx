@@ -69,6 +69,12 @@ describe(@"Variable Replacer", ^{
                 
                 [[result should] equal:@"stow my longsword in my backpack"];
             });
+            
+            it(@"should handle unfound vars", ^{
+                NSString *result = [_replacer replace:@"$does_not_exist" withContext:_context];
+                
+                [[result should] equal:@"$does_not_exist"];
+            });
         });
     });
 });

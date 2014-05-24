@@ -14,4 +14,9 @@
     return [NSString stringWithContentsOfFile:path encoding:enc error:error];
 }
 
+- (BOOL)write:(NSString *)data toFile:(NSString *)path {
+    NSData *bits = [data dataUsingEncoding:NSUTF8StringEncoding];
+    return [bits writeToFile:path atomically:YES];
+}
+
 @end

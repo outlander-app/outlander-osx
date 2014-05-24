@@ -16,6 +16,7 @@
 
     _cache = [[NSMutableDictionary alloc] init];
     _queue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_CONCURRENT);
+    _changed = [RACReplaySubject subject];
 
     return self;
 }
@@ -35,6 +36,9 @@
     }
     dispatch_barrier_async(_queue, ^{
         [_cache setObject: obj forKey: key];
+        
+        id<RACSubscriber> sub = (id<RACSubscriber>)_changed;
+        [sub sendNext:@{key: obj}];
     });
 }
 
@@ -54,8 +58,28 @@
     return items;
 }
 
+- (NSArray *)allKeys {
+    __block NSArray *keys = nil;
+    
+    dispatch_sync(_queue, ^{
+        keys = [[_cache allKeys] sortedArrayUsingSelector: @selector(compare:)];
+    });
+    
+    return keys;
+}
+
+- (NSUInteger)count {
+    __block NSUInteger count;
+    dispatch_sync(_queue, ^{
+       count = [_cache count];
+    });
+    return count;
+}
+
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block {
-    [_cache enumerateKeysAndObjectsUsingBlock:block];
+    dispatch_sync(_queue, ^{
+        [_cache enumerateKeysAndObjectsUsingBlock:block];
+    });
 }
 
 @end

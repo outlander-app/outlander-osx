@@ -11,7 +11,14 @@
 @implementation StubFileSystem
 
 - (NSString *)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError *__autoreleasing *)error {
+    _givenFileName = path;
     return _fileContents;
 };
+
+- (BOOL)write:(NSString *)data toFile:(NSString *)path {
+    _givenFileName = path;
+    _fileContents = data;
+    return _writeResult;
+}
 
 @end

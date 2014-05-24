@@ -12,6 +12,7 @@
 #import "HighlightsLoader.h"
 #import "LocalFileSystem.h"
 #import "AliasLoader.h"
+#import "VariablesLoader.h"
 
 @interface AppSettingsLoader () {
     GameContext *_context;
@@ -19,6 +20,7 @@
     ProfileLoader *_profileLoader;
     HighlightsLoader *_highlightsLoader;
     AliasLoader *_aliasLoader;
+    VariablesLoader *_variablesLoader;
 }
 @end
 
@@ -34,6 +36,7 @@
     id<FileSystem> fileSystem = [[LocalFileSystem alloc] init];
     _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _aliasLoader = [[AliasLoader alloc] initWithContext:_context andFileSystem:fileSystem];
+    _variablesLoader = [[VariablesLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     
     return self;
 }
@@ -72,6 +75,11 @@
 }
 
 - (void)loadVariables {
+    [_variablesLoader load];
+}
+
+- (void)saveVariables {
+    [_variablesLoader save];
 }
 
 - (void)loadAliases {
