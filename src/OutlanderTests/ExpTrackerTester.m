@@ -33,9 +33,14 @@ describe(@"ExpTracker", ^{
             [[[_tracker skills] should] haveCountOf:1];
         });
         
+        it(@"should handle nils", ^{
+            [_tracker update:nil];
+            
+            [[[_tracker skills] should] haveCountOf:0];
+        });
     });
     
-    context(@"skillsWithExp]", ^{
+    context(@"skillsWithExp", ^{
         it(@"should only return new skills", ^{
             SkillExp *skill = [[SkillExp alloc] init];
             skill.name = @"Athletics";

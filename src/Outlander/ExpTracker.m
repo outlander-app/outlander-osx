@@ -24,6 +24,9 @@
 }
 
 -(void) update:(SkillExp *)exp {
+    
+    if(!exp) return;
+    
     SkillExp *skill = nil;
     
     if(!skill) {

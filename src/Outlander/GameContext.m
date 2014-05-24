@@ -24,6 +24,7 @@
     [_globalVars setCacheObject:@"Empty" forKey:@"lefthand"];
     [_globalVars setCacheObject:@"Empty" forKey:@"righthand"];
     [_globalVars setCacheObject:@"None" forKey:@"spell"];
+    [_globalVars setCacheObject:@"0" forKey:@"tdp"];
     
     return self;
 }

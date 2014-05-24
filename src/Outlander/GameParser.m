@@ -213,7 +213,10 @@
                 
                 NSString *raw = [node allContents];
                 
-                if([compId hasPrefix:@"exp"]) {
+                if([compId hasPrefix:@"exp_tdp"]){
+                    [self parseTdp:raw];
+                }
+                else if([compId hasPrefix:@"exp"]) {
                     BOOL isNew = NO;
                     if(node.children.count > 0) {
                         HTMLNode *childNode = node.children[0];
@@ -318,6 +321,10 @@
             }
         }
         else if([tagName isEqualToString:@"app"]) {
+            
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"game"] forKey:@"game"];
+            [_gameContext.globalVars setCacheObject:[node getAttributeNamed:@"char"] forKey:@"charactername"];
+            
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }
@@ -343,8 +350,9 @@
                 [_gameContext.globalVars setCacheObject:val forKey:@"roomdesc"];
             }
             
-            if(![_streamId isEqualToString:@"speech"])
+            if(![_streamId isEqualToString:@"speech"]) {
                 [_currentResult appendString:val];
+            }
         }
         else if([tagName isEqualToString:@"p"]){
             NSString *val = [node contents];
@@ -374,7 +382,12 @@
             NSString *val = [node rawContents];
             NSLog(@"text:%@", val);
             
-            [_currentResult appendString:val];
+            if([val hasPrefix:@"  You also see"]) {
+                [_currentResult appendString:@"\n"];
+                [_currentResult appendString:[val substringFromIndex:2]];
+            } else {
+                [_currentResult appendString:val];
+            }
         }
     }
     if(!_inStream && [_currentResult length] > 0){
@@ -421,6 +434,18 @@
     if(filter(nil)) {
         then(nil);
     }
+}
+
+- (void)parseTdp:(NSString *)data {
+    
+    NSString *pattern = @"TDPs:\\s+(\\d+)";
+    NSString *trimmed = [data trimWhitespaceAndNewline];
+    
+    NSString *ranks = [self replace:trimmed withPattern:pattern andTemplate:@"$1"];
+    
+    [_gameContext.globalVars setCacheObject:ranks forKey:@"tdp"];
+    
+    [_exp sendNext:nil];
 }
 
 -(void) parseExp:(NSString *)compId withData:(NSString *)data isNew:(BOOL)isNew {

@@ -83,7 +83,7 @@
             [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
         
-        [self updateHighlights:text.text];
+//        [self updateHighlights:text.text];
     });
 }
 

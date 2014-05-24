@@ -576,6 +576,53 @@ describe(@"GameParser", ^{
             tag = parseResults[2];
             [[tag.text should] equal:@"\r\n"];
         });
+        
+        it(@"should signal exp when tdp", ^{
+            NSString *data = @"<component id='exp tdp'>            TDPs:  197</component>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block BOOL signaled = NO;
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [_parser.exp subscribeNext:^(id x) {
+                signaled = YES;
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[theValue(signaled) should] equal:theValue(YES)];
+            
+            [[[_context.globalVars cacheObjectForKey:@"tdp"] should] equal:@"197"];
+        });
+        
+        it(@"should parse app data", ^{
+            NSString *data = @"<app char=\"Tayek\" game=\"DR\" title=\"[DR: Tayek] StormFront\"/>";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            
+            [[[_context.globalVars cacheObjectForKey:@"charactername"] should] equal:@"Tayek"];
+            [[[_context.globalVars cacheObjectForKey:@"game"] should] equal:@"DR"];
+        });
+        
+        it(@"should add newline before 'you also see'", ^{
+            NSString *data = @"<preset id='roomDesc'>For a moment you lose your sense of direction.</preset>  You also see <pushBold/>a musk hog<popBold/>, <pushBold/>a musk hog<popBold/> and <pushBold/>a musk hog<popBold/>.";
+            
+            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [results addObjectsFromArray:res];
+            }];
+            
+            [[results should] haveCountOf:7];
+            TextTag *tag = results[0];
+            [[tag.text should] equal:@"For a moment you lose your sense of direction.\nYou also see "];
+        });
     });
 });
 

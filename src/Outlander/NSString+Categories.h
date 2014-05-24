@@ -10,9 +10,9 @@
 
 @interface NSString (Categories)
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
-- (BOOL) containsString: (NSString*) substring;
-- (NSString*) trimNewLine;
-- (NSString*) trimWhitespaceAndNewline;
-- (NSString*) stringFromDateFormat: (NSString*) dateFormat;
-- (NSArray *)matchesForPattern:(NSString *)pattern;
+- (BOOL) containsString: (NSString *) substring;
+- (NSString *) trimNewLine;
+- (NSString *) trimWhitespaceAndNewline;
+- (NSString *) stringFromDateFormat: (NSString *) dateFormat;
+- (NSArray  *) matchesForPattern:(NSString *)pattern;
 @end
