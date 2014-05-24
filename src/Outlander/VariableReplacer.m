@@ -9,6 +9,7 @@
 #import "VariableReplacer.h"
 #import "ReactiveCocoa.h"
 #import "Alias.h"
+#import "NSString+Categories.h"
 
 @implementation VariableReplacer
 
@@ -22,7 +23,7 @@
     
     NSMutableString *str = [data mutableCopy];
     
-    [[self matchesFor:data pattern:@"\\$([a-zA-z0-9\\.]+)"] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+    [[str matchesForPattern:@"\\$([a-zA-z0-9\\.]+)"] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         NSString *value = [context.globalVars cacheObjectForKey:[data substringWithRange:[res rangeAtIndex:1]]];
         
         NSString *pattern = [[data substringWithRange:[res rangeAtIndex:0]] stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
@@ -43,20 +44,6 @@
     }];
     
     return str;
-}
-
-- (NSArray *)matchesFor:(NSString *)data pattern:(NSString *)pattern {
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                           options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines
-                                                                             error:&error];
-    if(error) {
-        NSLog(@"matchesFor Error: %@", [error localizedDescription]);
-        return nil;
-    }
-    
-    NSArray *matches = [regex matchesInString:data options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [data length])];
-    return matches;
 }
 
 - (void) replace: (NSMutableString *)data withTemplate:(NSString *)template andPattern:(NSString *)pattern {

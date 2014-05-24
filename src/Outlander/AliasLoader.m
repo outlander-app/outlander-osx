@@ -7,6 +7,7 @@
 //
 
 #import "AliasLoader.h"
+#import "NSString+Categories.h"
 
 @interface AliasLoader () {
     GameContext *_context;
@@ -35,7 +36,7 @@
     if(!data || error) return;
     
     NSString *pattern = @"^#alias \\{(.*)\\} \\{(.*)\\}$";
-    [[self matchesFor:data pattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+    [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {
             Alias *hl = [[Alias alloc] init];
             hl.pattern = [data substringWithRange:[res rangeAtIndex:1]];
@@ -46,20 +47,6 @@
 }
 
 - (void)save {
-}
-
-- (NSArray *)matchesFor:(NSString *)data pattern:(NSString *)pattern {
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                           options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines
-                                                                             error:&error];
-    if(error) {
-        NSLog(@"matchesFor Error: %@", [error localizedDescription]);
-        return nil;
-    }
-    
-    NSArray *matches = [regex matchesInString:data options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [data length])];
-    return matches;
 }
 
 @end

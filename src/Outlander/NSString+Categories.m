@@ -49,4 +49,18 @@
 - (NSString*) trimWhitespaceAndNewline {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
+
+- (NSArray *)matchesForPattern:(NSString *)pattern {
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines
+                                                                             error:&error];
+    if(error) {
+        NSLog(@"matchesFor Error: %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    NSArray *matches = [regex matchesInString:self options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [self length])];
+    return matches;
+}
 @end

@@ -14,4 +14,5 @@
 - (NSString*) trimNewLine;
 - (NSString*) trimWhitespaceAndNewline;
 - (NSString*) stringFromDateFormat: (NSString*) dateFormat;
+- (NSArray *)matchesForPattern:(NSString *)pattern;
 @end

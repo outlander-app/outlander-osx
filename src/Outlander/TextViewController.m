@@ -97,7 +97,7 @@
         
         [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
             
-            [[[self matchesFor:data pattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
+            [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
                 return value.numberOfRanges > 0;
             }].signal subscribeNext:^(NSTextCheckingResult *x) {
                 NSRange range = [x rangeAtIndex:0];
@@ -119,20 +119,6 @@
             }];
         }];
     });
-}
-
-- (NSArray *)matchesFor:(NSString *)data pattern:(NSString *)pattern {
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                           options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines
-                                                                             error:&error];
-    if(error) {
-        NSLog(@"matchesFor Error: %@", [error localizedDescription]);
-        return nil;
-    }
-    
-    NSArray *matches = [regex matchesInString:data options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [data length])];
-    return matches;
 }
 
 @end
