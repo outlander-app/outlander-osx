@@ -96,27 +96,47 @@
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         
         [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+           
+            // this does not appear to be any better, in fact it appears to be worse - taking up lots of memory
+//            RACSequence *seq = [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
+//                return value.numberOfRanges > 0;
+//            }] map:^id(NSTextCheckingResult *value) {
+//                NSRange range = [value rangeAtIndex:0];
+//                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
+//                return [NSValue valueWithRange:newRange];
+//            }];
+//            
+//            [[seq.signal deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSValue *x) {
+//                
+//                NSRange newRange = [x rangeValue];
+//                
+//                if(_TextView.string && _TextView.string.length >= len) {
+//                    [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
+//                                                    value:[NSColor colorWithHexString:hl.color]
+//                                                    range:newRange];
+//                }
+//            }];
             
-            [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
-                return value.numberOfRanges > 0;
-            }].signal subscribeNext:^(NSTextCheckingResult *x) {
-                NSRange range = [x rangeAtIndex:0];
-                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
-                
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    // TODO: calling *stop=YES throws, even though we can stop iterating
-                    @try {
-                        if(_TextView.string && _TextView.string.length >= len) {
-                            [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
-                                                            value:[NSColor colorWithHexString:hl.color]
-                                                            range:newRange];
-                        }
-                    }
-                    @catch (NSException *exception) {
-                        NSLog(@"Highlight Error: (%lu,%lu) %@", (unsigned long)newRange.location, (unsigned long)newRange.length, exception.description);
-                    }
-                });
-            }];
+//            [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
+//                return value.numberOfRanges > 0;
+//            }].signal subscribeNext:^(NSTextCheckingResult *x) {
+//                NSRange range = [x rangeAtIndex:0];
+//                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
+//                
+//                dispatch_async(dispatch_get_main_queue(), ^(void){
+//                    // TODO: calling *stop=YES throws, even though we can stop iterating
+//                    @try {
+//                        if(_TextView.string && _TextView.string.length >= len) {
+//                            [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
+//                                                            value:[NSColor colorWithHexString:hl.color]
+//                                                            range:newRange];
+//                        }
+//                    }
+//                    @catch (NSException *exception) {
+//                        NSLog(@"Highlight Error: (%lu,%lu) %@", (unsigned long)newRange.location, (unsigned long)newRange.length, exception.description);
+//                    }
+//                });
+//            }];
         }];
     });
 }

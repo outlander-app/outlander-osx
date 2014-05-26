@@ -11,6 +11,8 @@
 #import "ProgressBarViewController.h"
 #import "NSView+Categories.h"
 #import "LoginViewController.h"
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
 
 #define START_WIDTH 900
 #define START_HEIGHT 615
@@ -54,7 +56,21 @@
 //    [self.window setFrameAutosaveName:[self.window representedFilename]];
 //
     TestViewController *vc = [[TestViewController alloc]init];
+    
+    
     [self setCurrentViewController:vc];
+    
+    @weakify(self);
+    @weakify(vc);
+    
+    [[vc.gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
+        
+        @strongify(self);
+        @strongify(vc);
+        NSString *game = [vc.gameContext.globalVars cacheObjectForKey:@"game"];
+        NSString *character = [vc.gameContext.globalVars cacheObjectForKey:@"charactername"];
+        [self.window setTitle:[NSString stringWithFormat:@"%@: %@", game, character]];
+    }];
     
     _loginViewController.context = vc.gameContext;
     
