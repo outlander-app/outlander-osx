@@ -12,7 +12,7 @@
 #import "ReactiveCocoa.h"
 #import "GameContext.h"
 
-@interface TextViewController : NSViewController
+@interface TextViewController : NSViewController <NSTextStorageDelegate>
 
 @property (nonatomic, strong) GameContext *gameContext;
 @property (nonatomic, strong) RACSignal *keyup;

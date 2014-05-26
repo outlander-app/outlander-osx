@@ -577,6 +577,42 @@ describe(@"GameParser", ^{
             [[tag.text should] equal:@"\r\n"];
         });
         
+        it(@"should handle combat non-hit messages", ^{
+            NSString *data = @"&lt; You punch your chain-clad fist at a scavenger goblin.  A scavenger goblin turns aside little of the fist with a mace.  \r\n";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            
+            TextTag *tag = parseResults[0];
+            [[tag.text should] equal:@"< You punch your chain-clad fist at a scavenger goblin.  A scavenger goblin turns aside little of the fist with a mace.  \r\n"];
+        });
+        
+        it(@"should handle combat monster hit messages", ^{
+            NSString *data = @"* Timing it well, a spotted scavenger goblin sweeps low at you.  You fail to evade.  <pushBold/>The cudgel lands a harmless strike to your chest.<popBold/>\r\n";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:3];
+            
+            TextTag *tag = parseResults[0];
+            [[tag.text should] equal:@"* Timing it well, a spotted scavenger goblin sweeps low at you.  You fail to evade.  "];
+            
+            tag = parseResults[1];
+            [[tag.text should] equal:@"The cudgel lands a harmless strike to your chest."];
+            
+            tag = parseResults[2];
+            [[tag.text should] equal:@"\r\n"];
+        });
+        
         it(@"should signal exp when tdp", ^{
             NSString *data = @"<component id='exp tdp'>            TDPs:  197</component>\r\n";
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
@@ -622,6 +658,36 @@ describe(@"GameParser", ^{
             [[results should] haveCountOf:7];
             TextTag *tag = results[0];
             [[tag.text should] equal:@"For a moment you lose your sense of direction.\nYou also see "];
+        });
+        
+        it(@"should not send talk stream data", ^{
+            NSString *data = @"<pushStream id=\"talk\"/><preset id='speech'>You say</preset>, \"Hrm.\"\r\n<popStream/><preset id='speech'>You say</preset>, \"Hrm.\"\r\n";
+            
+            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [results addObjectsFromArray:res];
+            }];
+            
+            [[results should] haveCountOf:1];
+            
+            TextTag *tag = results[0];
+            [[tag.text should] equal:@"You say, \"Hrm.\"\r\n"];
+        });
+        
+        it(@"should send yells", ^{
+            NSString *data = @"<pushStream id=\"talk\"/><b>You yell,</b> \"Hogs!\"\r\n<popStream/><b>You yell,</b> \"Hogs!\"\r\n";
+            
+            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [results addObjectsFromArray:res];
+            }];
+            
+            [[results should] haveCountOf:1];
+            
+            TextTag *tag = results[0];
+            [[tag.text should] equal:@"You yell, \"Hogs!\"\r\n"];
         });
     });
 });

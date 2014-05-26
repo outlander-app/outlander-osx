@@ -60,11 +60,15 @@
     [str replaceOccurrencesOfString:@"<style id=\"\"/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     [str replaceOccurrencesOfString:@"<d>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     [str replaceOccurrencesOfString:@"<d/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    [str replaceOccurrencesOfString:@"<b>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    [str replaceOccurrencesOfString:@"<b/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     
-    if([str hasPrefix:@"&lt;"]) {
+    if([str hasPrefix:@"&lt;"] || [str hasPrefix:@"*"]) {
         NSRange range = [data rangeOfString:@"<pushBold"];
-        [str insertString:@"<p>" atIndex:0];
-        [str insertString:@"</p>" atIndex:range.location + 1];
+        if(range.location != NSNotFound) {
+            [str insertString:@"<p>" atIndex:0];
+            [str insertString:@"</p>" atIndex:range.location + 1];
+        }
     }
     
     if([str length] == 0) return;
@@ -350,7 +354,7 @@
                 [_gameContext.globalVars setCacheObject:val forKey:@"roomdesc"];
             }
             
-            if(![_streamId isEqualToString:@"speech"]) {
+            if(![_streamId isEqualToString:@"talk"]) {
                 [_currentResult appendString:val];
             }
         }

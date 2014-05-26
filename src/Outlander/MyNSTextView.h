@@ -8,7 +8,7 @@
 
 #import "ReactiveCocoa.h"
 
-@interface MyNSTextView : NSTextView
+@interface MyNSTextView : NSTextView 
 
 @property (nonatomic, strong) RACSignal *keyupSignal;
 

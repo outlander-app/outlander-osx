@@ -8,7 +8,14 @@
 
 #import "MyNSTextView.h"
 
+@interface MyNSTextView () {
+}
+@end
+
 @implementation MyNSTextView
+
+- (void)awakeFromNib {
+}
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

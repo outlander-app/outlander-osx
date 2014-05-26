@@ -31,6 +31,8 @@
         id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
         [sub sendNext:x];
     }];
+    
+    [_TextView.textStorage setDelegate:self];
 }
 
 - (NSString *)text {
@@ -82,63 +84,35 @@
         if(shouldScrollToBottom) {
             [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
-        
-//        [self updateHighlights:text.text];
     });
 }
 
-- (void)updateHighlights:(NSString *)data {
-    if(!_gameContext) return;
+- (void)textStorageDidProcessEditing:(NSNotification *)notification {
+    NSTextStorage *textStorage = [notification object];
     
-    NSUInteger len = self.TextView.string.length;
-    NSUInteger startOfString = len - data.length;
+    NSRange editedRange = textStorage.editedRange;
+    NSString *data = [textStorage.string substringWithRange:editedRange];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        
-        [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
-           
-            // this does not appear to be any better, in fact it appears to be worse - taking up lots of memory
-//            RACSequence *seq = [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
-//                return value.numberOfRanges > 0;
-//            }] map:^id(NSTextCheckingResult *value) {
-//                NSRange range = [value rangeAtIndex:0];
-//                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
-//                return [NSValue valueWithRange:newRange];
-//            }];
-//            
-//            [[seq.signal deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSValue *x) {
-//                
-//                NSRange newRange = [x rangeValue];
-//                
-//                if(_TextView.string && _TextView.string.length >= len) {
-//                    [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
-//                                                    value:[NSColor colorWithHexString:hl.color]
-//                                                    range:newRange];
-//                }
-//            }];
+    if(!data || data.length == 0) return;
+    
+    NSUInteger len = textStorage.length;
+    
+    [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+    
+        [[data matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
             
-//            [[[data matchesForPattern:hl.pattern].rac_sequence filter:^BOOL(NSTextCheckingResult *value) {
-//                return value.numberOfRanges > 0;
-//            }].signal subscribeNext:^(NSTextCheckingResult *x) {
-//                NSRange range = [x rangeAtIndex:0];
-//                NSRange newRange = NSMakeRange(range.location + startOfString, range.length);
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^(void){
-//                    // TODO: calling *stop=YES throws, even though we can stop iterating
-//                    @try {
-//                        if(_TextView.string && _TextView.string.length >= len) {
-//                            [[_TextView textStorage] addAttribute:NSForegroundColorAttributeName
-//                                                            value:[NSColor colorWithHexString:hl.color]
-//                                                            range:newRange];
-//                        }
-//                    }
-//                    @catch (NSException *exception) {
-//                        NSLog(@"Highlight Error: (%lu,%lu) %@", (unsigned long)newRange.location, (unsigned long)newRange.length, exception.description);
-//                    }
-//                });
-//            }];
+            if(res.numberOfRanges > 0) {
+                NSRange range = [res rangeAtIndex:0];
+                NSRange newRange = NSMakeRange(range.location + editedRange.location, range.length);
+                
+                if(textStorage.string && textStorage.string.length >= len) {
+                    [textStorage addAttribute:NSForegroundColorAttributeName
+                                        value:[NSColor colorWithHexString:hl.color]
+                                        range:newRange];
+                }
+            }
         }];
-    });
+    }];
 }
 
 @end
