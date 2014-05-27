@@ -7,14 +7,23 @@
 //
 
 #import "GameCommandProcessor.h"
+#import "CommandHandler.h"
+#import "ScriptCommandHandler.h"
+#import "ScriptHandler.h"
+#import "CommandContext.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
     VariableReplacer *_replacer;
+    NSMutableArray *_handlers;
 }
 @end
 
 @implementation GameCommandProcessor
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 -(id)initWith:(GameContext *)context and:(VariableReplacer *)replacer {
     self = [super init];
@@ -22,17 +31,59 @@
     
     _gameContext = context;
     _replacer = replacer;
+    _processed = [RACReplaySubject subject];
+    _echoed = [RACReplaySubject subject];
+    
+    _handlers = [[NSMutableArray alloc] init];
+    [_handlers addObject:[[ScriptHandler alloc] init]];
+    [_handlers addObject:[[ScriptCommandHandler alloc] init]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveCommandNotification:)
+                                                 name:@"command"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveEchoNotification:)
+                                                 name:@"echo"
+                                               object:nil];
     
     return self;
 }
 
-- (RACSignal *)process:(NSString *)command {
-    RACReplaySubject *subject = [RACReplaySubject subject];
+- (void) receiveCommandNotification:(NSNotification *) notification {
+    CommandContext *command = notification.userInfo[@"command"];
+    [self process:command];
+}
+
+- (void) receiveEchoNotification:(NSNotification *) notification {
+    TextTag *tag = notification.userInfo[@"tag"];
+    [self echo:tag];
+}
+
+- (void)process:(CommandContext *)context {
     
-    command = [_replacer replace:command withContext:_gameContext];
+    context.command = [_replacer replace:context.command withContext:_gameContext];
     
-    [subject sendNext:command];
+    __block BOOL handled = NO;
     
-    return subject;
+    [_handlers enumerateObjectsUsingBlock:^(id<CommandHandler> handler, NSUInteger idx, BOOL *stop) {
+        if([handler canHandle:context.command]) {
+            handled = YES;
+            *stop = YES;
+            [handler handle:context.command];
+        }
+    }];
+    
+    if(!handled) {
+        id<RACSubscriber> sub = (id<RACSubscriber>)_processed;
+        
+        [sub sendNext:context];
+    }
+}
+
+- (void)echo:(TextTag *)tag {
+    id<RACSubscriber> sub = (id<RACSubscriber>)_echoed;
+    [sub sendNext:tag];
 }
 @end

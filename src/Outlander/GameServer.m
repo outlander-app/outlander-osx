@@ -124,7 +124,7 @@
 - (void) writeLog:(NSString *)data {
     
     NSString *logsDir = _gameContext.pathProvider.logsFolder;
-    NSString *fileName = [NSString stringWithFormat:@"%@-%@.txt", _gameContext.settings.character, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
+    NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@.txt", _gameContext.settings.character, _gameContext.settings.game, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
     
     NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
     [[NSString stringWithFormat:@"%@<-->", data] appendToFile:filePath encoding:NSUTF8StringEncoding];

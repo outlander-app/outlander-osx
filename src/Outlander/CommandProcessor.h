@@ -7,9 +7,15 @@
 //
 
 #import "ReactiveCocoa.h"
+#import "TextTag.h"
+#import "CommandContext.h"
 
 @protocol CommandProcessor <NSObject>
 
-- (RACSignal *)process:(NSString *)command;
+@property (nonatomic, strong) RACSignal *processed;
+@property (nonatomic, strong) RACSignal *echoed;
+
+- (void)process:(CommandContext *)command;
+- (void)echo:(TextTag *)tag;
 
 @end

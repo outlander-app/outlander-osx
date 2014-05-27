@@ -14,4 +14,7 @@
 
 -(id)initWith:(GameContext *)context and:(VariableReplacer *)replacer;
 
+@property (nonatomic, strong) RACSignal *processed;
+@property (nonatomic, strong) RACSignal *echoed;
+
 @end

@@ -7,7 +7,12 @@
 //
 
 #import "Actor.h"
+#import "GameContext.h"
 
 @interface Script : Actor
+
+@property (nonatomic, copy) NSString *name;
+
+- (instancetype)initWith:(GameContext *)context and:(NSString *)data;
 
 @end

@@ -10,8 +10,11 @@
 #import "TSMutableDictionary.h"
 #import <PEGKit/PEGKit.h>
 #import "OutlanderParser.h"
+#import "TextTag.h"
+#import "CommandContext.h"
 
 @interface Script () {
+    GameContext *_context;
     OutlanderParser *_parser;
     NSMutableArray *_scriptLines;
 }
@@ -24,22 +27,22 @@
 
 @implementation Script
 
-- (instancetype) init {
+- (instancetype)initWith:(GameContext *)context and:(NSString *)data {
     self = [super init];
     if(!self) return nil;
+    
+    _context = context;
     
     _labels = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.labels.%@", self.uuid]];
     _localVars = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.localvars.%@", self.uuid]];
     
     _parser = [[OutlanderParser alloc] initWithDelegate:self];
-    _scriptLines = [[NSMutableArray alloc] init];
     
     _lineNumber = 0;
-   
-    [_scriptLines addObject:@"start:"];
-    [_scriptLines addObject:@"put look"];
-    [_scriptLines addObject:@"pause 3"];
-    [_scriptLines addObject:@"goto start"];
+    
+    NSArray *lines = [data componentsSeparatedByString:@"\n"];
+    
+    _scriptLines = [[NSMutableArray alloc] initWithArray:lines];
     
     return self;
 }
@@ -85,6 +88,8 @@
     }
     
     NSLog(@"putting: %@", putString);
+    
+    [self sendCommand:putString];
 }
 
 - (void)parser:(PKParser *)p didMatchPauseStmt:(PKAssembly *)a {
@@ -127,6 +132,42 @@
     }
     
     _lineNumber = [gotoObj integerValue];
+}
+
+- (void)sendCommand:(NSString *)command {
+    
+    CommandContext *ctx = [[CommandContext alloc] init];
+    ctx.command = command;
+    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
+    ctx.tag.color = @"#0066CC";
+    
+    NSDictionary *userInfo = @{@"command": ctx};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"command"
+                                                        object:nil
+                                                      userInfo:userInfo];
+}
+
+- (void)sendEcho:(NSString *)echo {
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", echo] mono:YES];
+    tag.color = @"#0066CC";
+    
+    NSDictionary *userInfo = @{@"tag": tag};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
+                                                        object:nil
+                                                      userInfo:userInfo];
+}
+
+- (void)sendScriptDebug:(NSString *)msg {
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", msg] mono:YES];
+    tag.color = @"#0066CC";
+    
+    NSDictionary *userInfo = @{@"tag": tag};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
+                                                        object:nil
+                                                      userInfo:userInfo];
 }
 
 @end

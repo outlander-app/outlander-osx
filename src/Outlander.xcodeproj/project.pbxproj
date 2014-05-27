@@ -21,6 +21,16 @@
 		F96ECDAF1934160200787CB9 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* Script.m */; };
 		F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB11934194300787CB9 /* OutlanderParser.m */; };
 		F96ECDB31934194300787CB9 /* OutlanderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB11934194300787CB9 /* OutlanderParser.m */; };
+		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
+		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
+		F96ECDBA1934445000787CB9 /* ScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB91934445000787CB9 /* ScriptRunner.m */; };
+		F96ECDBB1934445000787CB9 /* ScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB91934445000787CB9 /* ScriptRunner.m */; };
+		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
+		F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
+		F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDC219345CAA00787CB9 /* ScriptHandler.m */; };
+		F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDC219345CAA00787CB9 /* ScriptHandler.m */; };
+		F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDC61934E23A00787CB9 /* CommandContext.m */; };
+		F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDC61934E23A00787CB9 /* CommandContext.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -175,6 +185,17 @@
 		F96ECDAD1934160200787CB9 /* Script.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Script.m; sourceTree = "<group>"; };
 		F96ECDB01934194300787CB9 /* OutlanderParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutlanderParser.h; sourceTree = "<group>"; };
 		F96ECDB11934194300787CB9 /* OutlanderParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlanderParser.m; sourceTree = "<group>"; };
+		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
+		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
+		F96ECDB81934445000787CB9 /* ScriptRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptRunner.h; sourceTree = "<group>"; };
+		F96ECDB91934445000787CB9 /* ScriptRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptRunner.m; sourceTree = "<group>"; };
+		F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCommandHandler.h; sourceTree = "<group>"; };
+		F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptCommandHandler.m; sourceTree = "<group>"; };
+		F96ECDC01934586900787CB9 /* CommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandHandler.h; sourceTree = "<group>"; };
+		F96ECDC119345CAA00787CB9 /* ScriptHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptHandler.h; sourceTree = "<group>"; };
+		F96ECDC219345CAA00787CB9 /* ScriptHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptHandler.m; sourceTree = "<group>"; };
+		F96ECDC51934E23A00787CB9 /* CommandContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandContext.h; sourceTree = "<group>"; };
+		F96ECDC61934E23A00787CB9 /* CommandContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandContext.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -350,6 +371,14 @@
 				F96ECDA9193404BB00787CB9 /* Actor.m */,
 				F96ECDAC1934160200787CB9 /* Script.h */,
 				F96ECDAD1934160200787CB9 /* Script.m */,
+				F96ECDB419343F5B00787CB9 /* ScriptLoader.h */,
+				F96ECDB519343F5B00787CB9 /* ScriptLoader.m */,
+				F96ECDB81934445000787CB9 /* ScriptRunner.h */,
+				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
+				F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */,
+				F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */,
+				F96ECDC119345CAA00787CB9 /* ScriptHandler.h */,
+				F96ECDC219345CAA00787CB9 /* ScriptHandler.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -415,6 +444,7 @@
 				F9762F77192E4EEB00B873D7 /* Alias.m */,
 				F97A5C611891F2C400E2C318 /* AuthenticationServer.h */,
 				F97A5C621891F2C400E2C318 /* AuthenticationServer.m */,
+				F96ECDC01934586900787CB9 /* CommandHandler.h */,
 				F9ACB135192ECD00006D3548 /* CommandProcessor.h */,
 				F98F22D81926654D008175FD /* Commands.h */,
 				F9818D541908CA0200137896 /* ExpTracker.h */,
@@ -446,10 +476,12 @@
 				F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */,
 				F97A5C881893AFDF00E2C318 /* TextTag.h */,
 				F97A5C891893AFDF00E2C318 /* TextTag.m */,
-				F9C29108189AB86000F70224 /* Vitals.h */,
-				F9C29109189AB86000F70224 /* Vitals.m */,
 				F9ACB13E192ECFC3006D3548 /* VariableReplacer.h */,
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
+				F9C29108189AB86000F70224 /* Vitals.h */,
+				F9C29109189AB86000F70224 /* Vitals.m */,
+				F96ECDC51934E23A00787CB9 /* CommandContext.h */,
+				F96ECDC61934E23A00787CB9 /* CommandContext.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -818,12 +850,14 @@
 			files = (
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F96ECDAE1934160200787CB9 /* Script.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
+				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
@@ -831,10 +865,12 @@
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
+				F96ECDBA1934445000787CB9 /* ScriptRunner.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
+				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F96ECDAA193404BB00787CB9 /* Actor.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
@@ -846,6 +882,7 @@
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
+				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
@@ -883,12 +920,14 @@
 			files = (
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
+				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
 				F96ECDAF1934160200787CB9 /* Script.m in Sources */,
 				F989E206192C2E6200562E32 /* Highlight.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
+				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
@@ -896,10 +935,12 @@
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F9762F79192E4EEB00B873D7 /* Alias.m in Sources */,
+				F96ECDBB1934445000787CB9 /* ScriptRunner.m in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9A34549191A064100920F0E /* GameContext.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
+				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
 				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F96ECDAB193404BB00787CB9 /* Actor.m in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
@@ -911,6 +952,7 @@
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,

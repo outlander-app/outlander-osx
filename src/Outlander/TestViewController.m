@@ -25,7 +25,9 @@
 #import "CommandProcessor.h"
 #import "GameCommandProcessor.h"
 #import "VariableReplacer.h"
-#import "Script.h"
+#import "ScriptRunner.h"
+#import "LocalFileSystem.h"
+#import "CommandContext.h"
 
 @interface TestViewController ()
 @end
@@ -38,7 +40,7 @@
     SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
-    Script *_actor;
+    ScriptRunner *_scriptRunner;
 }
 
 - (id)init {
@@ -55,6 +57,23 @@
     _spelltimeNotifier = [[SpelltimeNotifier alloc] init];
     _variablesReplacer = [[VariableReplacer alloc] init];
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
+    _scriptRunner = [[ScriptRunner alloc] initWith:_gameContext and:[[LocalFileSystem alloc] init]];
+    
+    [_commandProcessor.processed subscribeNext:^(CommandContext *x) {
+        [_gameStream sendCommand:x.command];
+        
+        TextTag *tag = x.tag;
+        if(!tag) {
+            NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
+            prompt = prompt ? prompt : @">";
+            tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x.command] mono:NO];
+        }
+        [self append:tag to:@"main"];
+    }];
+    
+    [_commandProcessor.echoed subscribeNext:^(TextTag *tag) {
+        [self append:tag to:@"main"];
+    }];
     
     return self;
 }
@@ -142,36 +161,10 @@
     
     [sender setStringValue:@""];
     
-    if([command isEqualToString:@"cancel"]) {
-        [_actor cancel];
-    }
+    CommandContext *ctx = [[CommandContext alloc] init];
+    ctx.command = command;
     
-    if([command isEqualToString:@"start"]) {
-        
-        if(_actor) {
-            [_actor cancel];
-        }
-        
-        _actor = [[Script alloc] init];
-        [_actor start];
-    }
-    
-    if([command isEqualToString:@"pause"]) {
-        [_actor suspend];
-    }
-    
-    if([command isEqualToString:@"resume"]) {
-        [_actor resume];
-    }
-    
-    [[_commandProcessor process:command] subscribeNext:^(id x) {
-        
-        [_gameStream sendCommand:x];
-        NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
-        prompt = prompt ? prompt : @">";
-        TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x] mono:NO];
-        [self append:tag to:@"main"];
-    }];
+    [_commandProcessor process:ctx];
 }
 
 - (void)clear:(NSString*)key{
