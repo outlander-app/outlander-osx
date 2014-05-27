@@ -21,8 +21,18 @@
     
     _uuid = [[NSUUID UUID] UUIDString];
     _condition = [[NSCondition alloc] init];
-
+    
     return self;
+}
+
+- (void)cancel {
+    
+    [super cancel];
+    
+    if (_paused) {
+        _paused = NO;
+        [_condition signal];
+    }
 }
 
 - (BOOL)isPaused {
@@ -56,10 +66,9 @@
                 [_condition wait];
             }
             
-            NSLog(@"%@ :: running", [self description]);
-            
-            NSTimeInterval interval = 2.0;
-            [NSThread sleepForTimeInterval:interval];
+            if(!self.isCancelled){
+                [self process];
+            }
             
             [_condition unlock];
         }
@@ -70,6 +79,13 @@
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ %p %@", NSStringFromClass([self class]), self, self.uuid];
+}
+
+- (void)process {
+    NSLog(@"%@ :: running", [self description]);
+    
+    NSTimeInterval interval = 2.0;
+    [NSThread sleepForTimeInterval:interval];
 }
 
 @end

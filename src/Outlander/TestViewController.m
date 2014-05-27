@@ -25,7 +25,7 @@
 #import "CommandProcessor.h"
 #import "GameCommandProcessor.h"
 #import "VariableReplacer.h"
-#import "Actor.h"
+#import "Script.h"
 
 @interface TestViewController ()
 @end
@@ -38,7 +38,7 @@
     SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
-    Actor *_actor;
+    Script *_actor;
 }
 
 - (id)init {
@@ -152,7 +152,7 @@
             [_actor cancel];
         }
         
-        _actor = [[Actor alloc] init];
+        _actor = [[Script alloc] init];
         [_actor start];
     }
     

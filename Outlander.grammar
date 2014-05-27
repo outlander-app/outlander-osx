@@ -201,6 +201,7 @@ stmt
     | putStmt
     | pauseStmt
     | labelStmt
+    | gotoStmt
     | function 
     | nonFunction
     ;
@@ -229,6 +230,7 @@ tryStmt
 
 put      = 'put';
 pause    = 'pause';
+goto     = 'goto';
 
 setVar = 'var' | 'setvariable';
 
@@ -246,6 +248,10 @@ pauseStmt
 
 labelStmt
     = name ':'!
+    ;
+
+gotoStmt
+    = 'goto'! name
     ;
 
 varStmt
