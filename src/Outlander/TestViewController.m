@@ -25,6 +25,7 @@
 #import "CommandProcessor.h"
 #import "GameCommandProcessor.h"
 #import "VariableReplacer.h"
+#import "Actor.h"
 
 @interface TestViewController ()
 @end
@@ -37,6 +38,7 @@
     SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
+    Actor *_actor;
 }
 
 - (id)init {
@@ -139,6 +141,28 @@
         [sender commitHistory];
     
     [sender setStringValue:@""];
+    
+    if([command isEqualToString:@"cancel"]) {
+        [_actor cancel];
+    }
+    
+    if([command isEqualToString:@"start"]) {
+        
+        if(_actor) {
+            [_actor cancel];
+        }
+        
+        _actor = [[Actor alloc] init];
+        [_actor start];
+    }
+    
+    if([command isEqualToString:@"pause"]) {
+        [_actor suspend];
+    }
+    
+    if([command isEqualToString:@"resume"]) {
+        [_actor resume];
+    }
     
     [[_commandProcessor process:command] subscribeNext:^(id x) {
         

@@ -15,6 +15,8 @@
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
+		F96ECDAA193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
+		F96ECDAB193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -163,6 +165,8 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
+		F96ECDA8193404BB00787CB9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
+		F96ECDA9193404BB00787CB9 /* Actor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actor.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -332,6 +336,8 @@
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
+				F96ECDA8193404BB00787CB9 /* Actor.h */,
+				F96ECDA9193404BB00787CB9 /* Actor.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -817,6 +823,7 @@
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
+				F96ECDAA193404BB00787CB9 /* Actor.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
@@ -879,6 +886,7 @@
 				F9A34549191A064100920F0E /* GameContext.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
+				F96ECDAB193404BB00787CB9 /* Actor.m in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
