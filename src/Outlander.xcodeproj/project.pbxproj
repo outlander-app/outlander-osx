@@ -39,6 +39,8 @@
 		F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */; };
 		F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
+		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
+		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -212,6 +214,8 @@
 		F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightCommandHandler.m; sourceTree = "<group>"; };
 		F96ECDD719356A6C00787CB9 /* OLMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLMutableArray.h; sourceTree = "<group>"; };
 		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
+		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
+		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -399,6 +403,8 @@
 				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
+				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
+				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -909,6 +915,7 @@
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
+				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
@@ -948,6 +955,7 @@
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
 				F96ECDAF1934160200787CB9 /* Script.m in Sources */,

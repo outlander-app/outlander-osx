@@ -15,5 +15,6 @@
 - (void)saveProfile;
 - (void)saveVariables;
 - (void)saveHighlights;
+- (void)saveAliases;
 
 @end

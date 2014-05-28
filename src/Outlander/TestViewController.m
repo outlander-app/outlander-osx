@@ -120,6 +120,10 @@
     [[_gameContext.highlights.changed throttle:1.0] subscribeNext:^(id x) {
         [_appSettingsLoader saveHighlights];
     }];
+    
+    [[_gameContext.aliases.changed throttle:1.0] subscribeNext:^(id x) {
+        [_appSettingsLoader saveAliases];
+    }];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {

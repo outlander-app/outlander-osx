@@ -13,6 +13,7 @@
 #import "ScriptHandler.h"
 #import "HighlightCommandHandler.h"
 #import "VarCommandHandler.h"
+#import "AliasCommandHandler.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
@@ -39,8 +40,9 @@
     _handlers = [[NSMutableArray alloc] init];
     [_handlers addObject:[[ScriptHandler alloc] init]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
-    [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[VarCommandHandler alloc] init]];
+    [_handlers addObject:[[HighlightCommandHandler alloc] init]];
+    [_handlers addObject:[[AliasCommandHandler alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)
@@ -67,8 +69,6 @@
 
 - (void)process:(CommandContext *)context {
     
-    context.command = [_replacer replace:context.command withContext:_gameContext];
-    
     __block BOOL handled = NO;
     
     [_handlers enumerateObjectsUsingBlock:^(id<CommandHandler> handler, NSUInteger idx, BOOL *stop) {
@@ -80,8 +80,9 @@
     }];
     
     if(!handled) {
-        id<RACSubscriber> sub = (id<RACSubscriber>)_processed;
+        context.command = [_replacer replace:context.command withContext:_gameContext];
         
+        id<RACSubscriber> sub = (id<RACSubscriber>)_processed;
         [sub sendNext:context];
     }
 }

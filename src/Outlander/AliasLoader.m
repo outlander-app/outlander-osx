@@ -47,6 +47,15 @@
 }
 
 - (void)save {
+    NSString *configFile = [_context.pathProvider.profileFolder stringByAppendingPathComponent:@"aliases.cfg"];
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    
+    [_context.aliases enumerateObjectsUsingBlock:^(Alias *alias, NSUInteger idx, BOOL *stop) {
+        [str appendFormat:@"#alias {%@} {%@}\n", alias.pattern, alias.replace];
+    }];
+    
+    [_fileSystem write:str toFile:configFile];
 }
 
 @end

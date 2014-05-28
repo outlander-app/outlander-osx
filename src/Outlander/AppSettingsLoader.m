@@ -73,6 +73,7 @@
 - (void)loadHighlights {
     [_highlightsLoader load];
 }
+
 - (void)saveHighlights {
     [_highlightsLoader save];
 }
@@ -87,6 +88,10 @@
 
 - (void)loadAliases {
     [_aliasLoader load];
+}
+
+- (void)saveAliases {
+    [_aliasLoader save];
 }
 
 - (void)writeConfigFolders {

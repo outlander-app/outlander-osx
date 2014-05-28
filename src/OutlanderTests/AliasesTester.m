@@ -41,7 +41,7 @@ describe(@"Alias Loader", ^{
         
         it(@"should parse multiple aliases", ^{
             
-            theFileSystem.fileContents = @"#alias {l2} {load arrows}\n#alias {atk} {.hunt lootcoin lootgem}";
+            theFileSystem.fileContents = @"#alias {l2} {load arrows}\n#alias {atk} {.hunt lootcoin lootgem}\n";
             
             [theLoader load];
             [[theContext.aliases should] haveCountOf:2];
@@ -53,6 +53,31 @@ describe(@"Alias Loader", ^{
             alias = [theContext.aliases objectAtIndex:1];
             [[alias.pattern should] equal:@"atk"];
             [[alias.replace should] equal:@".hunt lootcoin lootgem"];
+        });
+    });
+    
+    context(@"save", ^{
+      
+        it(@"should save alias", ^{
+            
+            Alias *hl = [[Alias alloc] init];
+            hl.pattern = @"l2";
+            hl.replace = @"load arrows";
+            [theContext.aliases addObject:hl];
+            
+            hl = [[Alias alloc] init];
+            hl.pattern = @"atk";
+            hl.replace = @".hunt lootcoin lootgem";
+            [theContext.aliases addObject:hl];
+            
+            NSString *result = @"#alias {l2} {load arrows}\n#alias {atk} {.hunt lootcoin lootgem}\n";
+            
+            [theLoader save];
+            
+            NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"aliases.cfg"];
+            
+            [[theFileSystem.givenFileName should] equal:path];
+            [[theFileSystem.fileContents should] equal:result];
         });
     });
 });
