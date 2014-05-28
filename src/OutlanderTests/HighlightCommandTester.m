@@ -39,9 +39,21 @@ describe(@"highlight command handler", ^{
         it(@"adds highlight to collection", ^{
             [theHandler handle:@"#highlght #000fff something" withContext:theContext];
             
-            Highlight *hl = theContext.highlights[0];
+            Highlight *hl = [theContext.highlights objectAtIndex:0];
             [[hl.color should] equal:@"#000fff"];
             [[hl.pattern should] equal:@"something"];
+        });
+        
+        it(@"updates an existing highlight", ^{
+            [theHandler handle:@"#highlght #000fff something" withContext:theContext];
+            
+            Highlight *hl = [theContext.highlights objectAtIndex:0];
+            [[hl.color should] equal:@"#000fff"];
+            [[hl.pattern should] equal:@"something"];
+            
+            [theHandler handle:@"#highlght #fcfcfc something" withContext:theContext];
+            
+            [[theValue(theContext.highlights.count) should] equal:theValue(1)];
         });
     });
 });

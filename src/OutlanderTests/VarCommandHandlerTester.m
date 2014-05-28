@@ -16,10 +16,13 @@ describe(@"var command handler", ^{
    
     __block VarCommandHandler *theHandler = nil;
     __block GameContext *theContext = nil;
+    __block NSInteger originalCount;
     
     beforeEach(^{
         theHandler = [[VarCommandHandler alloc] init];
         theContext = [[GameContext alloc] init];
+        
+        originalCount = theContext.globalVars.count;
     });
     
     context(@"can handle", ^{
@@ -40,6 +43,22 @@ describe(@"var command handler", ^{
             
             NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
             [[value should] equal:@"two"];
+            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+        });
+        
+        it(@"updates existing global var", ^{
+            [theHandler handle:@"#var one two" withContext:theContext];
+            
+            NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
+            [[value should] equal:@"two"];
+            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+            
+            [theHandler handle:@"#var one three" withContext:theContext];
+            
+            value = [theContext.globalVars cacheObjectForKey:@"one"];
+            [[value should] equal:@"three"];
+            
+            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
         });
     });
 });

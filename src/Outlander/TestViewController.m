@@ -116,6 +116,10 @@
     [[_gameContext.globalVars.changed throttle:1.0] subscribeNext:^(id x) {
         [_appSettingsLoader saveVariables];
     }];
+    
+    [[_gameContext.highlights.changed throttle:1.0] subscribeNext:^(id x) {
+        [_appSettingsLoader saveHighlights];
+    }];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {

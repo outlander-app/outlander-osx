@@ -9,14 +9,15 @@
 #import "AppSettings.h"
 #import "AppPathProvider.h"
 #import "TSMutableDictionary.h"
+#import "OLMutableArray.h"
 
 @interface GameContext : NSObject
 
 @property (nonatomic, strong) AppPathProvider *pathProvider;
 @property (nonatomic, strong) AppSettings *settings;
 @property (nonatomic, strong) NSArray *windows;
-@property (nonatomic, strong) NSMutableArray *highlights;
-@property (nonatomic, strong) NSMutableArray *aliases;
+@property (nonatomic, strong) OLMutableArray *highlights;
+@property (nonatomic, strong) OLMutableArray *aliases;
 @property (nonatomic, strong) TSMutableDictionary *globalVars;
 
 @end

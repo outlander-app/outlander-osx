@@ -73,6 +73,9 @@
 - (void)loadHighlights {
     [_highlightsLoader load];
 }
+- (void)saveHighlights {
+    [_highlightsLoader save];
+}
 
 - (void)loadVariables {
     [_variablesLoader load];

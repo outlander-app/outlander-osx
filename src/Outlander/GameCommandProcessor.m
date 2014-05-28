@@ -12,6 +12,7 @@
 #import "ScriptCommandHandler.h"
 #import "ScriptHandler.h"
 #import "HighlightCommandHandler.h"
+#import "VarCommandHandler.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
@@ -39,6 +40,7 @@
     [_handlers addObject:[[ScriptHandler alloc] init]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
+    [_handlers addObject:[[VarCommandHandler alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)

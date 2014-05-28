@@ -34,7 +34,7 @@ describe(@"Alias Loader", ^{
             [theLoader load];
             [[theContext.aliases should] haveCountOf:1];
             
-            Alias *alias = theContext.aliases[0];
+            Alias *alias = [theContext.aliases objectAtIndex:0];
             [[alias.pattern should] equal:@"l2"];
             [[alias.replace should] equal:@"load arrows"];
         });
@@ -46,11 +46,11 @@ describe(@"Alias Loader", ^{
             [theLoader load];
             [[theContext.aliases should] haveCountOf:2];
             
-            Alias *alias = theContext.aliases[0];
+            Alias *alias = [theContext.aliases objectAtIndex:0];
             [[alias.pattern should] equal:@"l2"];
             [[alias.replace should] equal:@"load arrows"];
             
-            alias = theContext.aliases[1];
+            alias = [theContext.aliases objectAtIndex:1];
             [[alias.pattern should] equal:@"atk"];
             [[alias.replace should] equal:@".hunt lootcoin lootgem"];
         });

@@ -23,11 +23,27 @@
         NSString *color = commands[0];
         NSString *pattern = commands[1];
         
-        Highlight *hl = [[Highlight alloc] init];
-        hl.color = color;
-        hl.pattern = pattern;
+        __block Highlight *hl;
         
-        [context.highlights addObject:hl];
+        [context.highlights enumerateObjectsUsingBlock:^(Highlight *check, NSUInteger idx, BOOL *stop) {
+            
+            if([check.pattern isEqualToString:pattern]) {
+                hl = check;
+                *stop = YES;
+            }
+        }];
+        
+        if(!hl) {
+            hl = [[Highlight alloc] init];
+            hl.pattern = pattern;
+            hl.color = color;
+            [context.highlights addObject:hl];
+        }
+        else {
+            // change color and signal update
+            hl.color = color;
+            [context.highlights signalChange:hl];
+        }
     }
 }
 

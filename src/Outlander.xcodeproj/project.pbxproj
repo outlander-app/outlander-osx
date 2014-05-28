@@ -37,6 +37,8 @@
 		F96ECDD2193565CE00787CB9 /* HighlightCommandTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */; };
 		F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */; };
 		F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */; };
+		F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
+		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -208,6 +210,8 @@
 		F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightCommandTester.m; sourceTree = "<group>"; };
 		F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightCommandHandler.m; sourceTree = "<group>"; };
+		F96ECDD719356A6C00787CB9 /* OLMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLMutableArray.h; sourceTree = "<group>"; };
+		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -449,6 +453,8 @@
 				F97A5CBA1895EEF500E2C318 /* NSTextField+Categories.m */,
 				F9FD07EE18977A380087D813 /* NSView+Categories.h */,
 				F9FD07EF18977A380087D813 /* NSView+Categories.m */,
+				F96ECDD719356A6C00787CB9 /* OLMutableArray.h */,
+				F96ECDD819356A6C00787CB9 /* OLMutableArray.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -929,6 +935,7 @@
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
+				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 			);
@@ -1005,6 +1012,7 @@
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
+				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

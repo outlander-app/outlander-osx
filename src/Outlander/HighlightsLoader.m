@@ -48,6 +48,15 @@
 }
 
 - (void)save {
+    NSString *configFile = [_context.pathProvider.profileFolder stringByAppendingPathComponent:@"highlights.cfg"];
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    
+    [_context.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+        [str appendFormat:@"#highlight {%@} {%@}\n", hl.color, hl.pattern];
+    }];
+    
+    [_fileSystem write:str toFile:configFile];
 }
 
 @end

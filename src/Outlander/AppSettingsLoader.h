@@ -14,5 +14,6 @@
 - (void)load;
 - (void)saveProfile;
 - (void)saveVariables;
+- (void)saveHighlights;
 
 @end
