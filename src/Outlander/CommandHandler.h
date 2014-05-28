@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
+#import "GameContext.h"
+
 @protocol CommandHandler <NSObject>
 
 - (BOOL)canHandle:(NSString *)command;
-- (void)handle:(NSString *)command;
+- (void)handle:(NSString *)command withContext:(GameContext *)context;
 
 @end

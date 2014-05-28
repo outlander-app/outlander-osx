@@ -232,9 +232,11 @@ put      = 'put';
 pause    = 'pause';
 goto     = 'goto';
 
-setVar = 'var' | 'setvariable';
+commands = '#var' | '#script' | '#highlight' | '#alias'
 
-putLiterals = name | stringLiteral | numberLiteral;
+setVar = 'var' | '#var' | 'setvariable';
+
+putLiterals = commands | name | stringLiteral | numberLiteral;
 
 putExpr = putLiterals (putLiterals)*;
 
@@ -255,7 +257,7 @@ gotoStmt
     ;
 
 varStmt
-    = (setVar! nameExprPair (','! nameExprPair)* ';')*
+    = (setVar nameExprPair (','! nameExprPair)* ';')*
     ;
 
 nameExprPair

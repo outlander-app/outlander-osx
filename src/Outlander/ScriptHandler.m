@@ -15,7 +15,7 @@
     return [command hasPrefix:@"."];
 }
 
-- (void)handle:(NSString *)command {
+- (void)handle:(NSString *)command withContext:(GameContext *)context {
     
     __block NSMutableArray *tokens = [[NSMutableArray alloc] init];
     

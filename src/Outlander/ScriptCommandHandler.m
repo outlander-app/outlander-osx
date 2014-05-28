@@ -14,7 +14,7 @@
     return [command hasPrefix:@"#script"];
 }
 
-- (void)handle:(NSString *)command {
+- (void)handle:(NSString *)command withContext:(GameContext *)context {
     
     NSMutableArray *commands = (NSMutableArray *)[[command substringFromIndex:7] componentsSeparatedByString:@" "];
     [commands removeObject:@""];
@@ -30,7 +30,6 @@
             postNotificationName:@"script"
                           object:self
                         userInfo:dict];
-        
     }
 }
 

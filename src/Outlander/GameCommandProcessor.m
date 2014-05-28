@@ -8,9 +8,10 @@
 
 #import "GameCommandProcessor.h"
 #import "CommandHandler.h"
+#import "CommandContext.h"
 #import "ScriptCommandHandler.h"
 #import "ScriptHandler.h"
-#import "CommandContext.h"
+#import "HighlightCommandHandler.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
@@ -37,6 +38,7 @@
     _handlers = [[NSMutableArray alloc] init];
     [_handlers addObject:[[ScriptHandler alloc] init]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
+    [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)
@@ -71,7 +73,7 @@
         if([handler canHandle:context.command]) {
             handled = YES;
             *stop = YES;
-            [handler handle:context.command];
+            [handler handle:context.command withContext:_gameContext];
         }
     }];
     
