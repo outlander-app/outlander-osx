@@ -8,10 +8,12 @@
 
 #import "Actor.h"
 #import "GameContext.h"
+#import "TSMutableDictionary.h"
 
 @interface Script : Actor
 
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) TSMutableDictionary *localVars;
 
 - (instancetype)initWith:(GameContext *)context and:(NSString *)data;
 

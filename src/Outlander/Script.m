@@ -12,6 +12,7 @@
 #import "OutlanderParser.h"
 #import "TextTag.h"
 #import "CommandContext.h"
+#import "CommandHandler.h"
 
 @interface Script () {
     GameContext *_context;
@@ -20,7 +21,6 @@
 }
 
 @property (nonatomic, strong) TSMutableDictionary *labels;
-@property (nonatomic, strong) TSMutableDictionary *localVars;
 @property (nonatomic, assign) NSUInteger lineNumber;
 
 @end
@@ -72,6 +72,44 @@
     _lineNumber++;
 }
 
+- (void)parser:(PKParser *)p didMatchCommandsStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    // ensure to keep script token on stack so pause is ignored
+    
+    NSMutableString *commandString = [[NSMutableString alloc] init];
+    
+    PKToken *token = [a pop];
+    PKToken *scriptToken = nil;
+    
+    if([[token stringValue] isEqualToString:@"script"]) {
+        scriptToken = token;
+    }
+    
+    while(token) {
+        
+        [commandString insertString:[NSString stringWithFormat:@"%@ ", [token stringValue]]
+                        atIndex:0];
+        
+        token = [a pop];
+    }
+    
+    [self sendCommand:commandString];
+    
+    if(scriptToken) {
+        [a push:scriptToken];
+    }
+}
+
+- (void)parser:(PKParser *)p didMatchVarStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    PKToken *rh = [a pop];
+    PKToken *lh = [a pop];
+    
+    [self.localVars setCacheObject:[rh stringValue] forKey:[lh stringValue]];
+}
+
 - (void)parser:(PKParser *)p didMatchPutStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
@@ -95,12 +133,20 @@
 - (void)parser:(PKParser *)p didMatchPauseStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSNumber *time = [a pop];
-    if(!time) {
-        time = @1.0;
+    PKToken *token = [a pop];
+    
+    // ignore pause in #script statements
+    if([[token stringValue] isEqualToString:@"script"])
+        return;
+    
+    NSTimeInterval interval = 1.0;
+    if(token) {
+        interval = [token doubleValue];
+        if(interval < 1) {
+            interval = 1.0;
+        }
     }
     
-    NSTimeInterval interval = [time doubleValue];
     NSLog(@"pausing for %f", interval);
     
     [NSThread sleepForTimeInterval:interval];

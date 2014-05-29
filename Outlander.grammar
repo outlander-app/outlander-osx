@@ -20,12 +20,12 @@ program
         [t.symbolState add:@"*="];
         [t.symbolState add:@"/="];
         [t.symbolState add:@"%="];
+        [t.symbolState add:@"#"];
 
         // setup comments
         t.commentState.reportsCommentTokens = YES;
         [t setTokenizerState:t.commentState from:'/' to:'/'];
         [t.commentState addSingleLineStartMarker:@"//"];
-        [t.commentState addSingleLineStartMarker:@"#"];
         [t.commentState addMultiLineStartMarker:@"/*" endMarker:@"*/"];
         
         // comment state should fallback to delimit state to match regex delimited strings
@@ -202,6 +202,7 @@ stmt
     | pauseStmt
     | labelStmt
     | gotoStmt
+    | commandsStmt
     | function 
     | nonFunction
     ;
@@ -232,13 +233,21 @@ put      = 'put';
 pause    = 'pause';
 goto     = 'goto';
 
-commands = '#var' | '#script' | '#highlight' | '#alias'
+commands = 'var' | 'script' | 'highlight' | 'alias';
 
-setVar = 'var' | '#var' | 'setvariable';
+commandExpr
+    = '#'! commands
+    ;
 
-putLiterals = commands | name | stringLiteral | numberLiteral;
+setVar = 'var' | 'setvariable';
+
+putLiterals = name | stringLiteral | numberLiteral;
 
 putExpr = putLiterals (putLiterals)*;
+
+commandsStmt
+    = commandExpr
+    ;
 
 putStmt
     = 'put'! putExpr
@@ -257,7 +266,7 @@ gotoStmt
     ;
 
 varStmt
-    = (setVar nameExprPair (','! nameExprPair)* ';')*
+    = setVar nameExprPair
     ;
 
 nameExprPair

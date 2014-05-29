@@ -94,9 +94,12 @@
 @property (nonatomic, retain) NSMutableDictionary *put_memo;
 @property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *goto_memo;
+@property (nonatomic, retain) NSMutableDictionary *commands_memo;
+@property (nonatomic, retain) NSMutableDictionary *commandExpr_memo;
 @property (nonatomic, retain) NSMutableDictionary *setVar_memo;
 @property (nonatomic, retain) NSMutableDictionary *putLiterals_memo;
 @property (nonatomic, retain) NSMutableDictionary *putExpr_memo;
+@property (nonatomic, retain) NSMutableDictionary *commandsStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pauseStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *labelStmt_memo;
@@ -114,107 +117,115 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"{"] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_CURLY);
-        self.tokenKindTab[@">="] = @(OUTLANDERPARSER_TOKEN_KIND_GE);
-        self.tokenKindTab[@"&&"] = @(OUTLANDERPARSER_TOKEN_KIND_DOUBLE_AMPERSAND);
-        self.tokenKindTab[@"for"] = @(OUTLANDERPARSER_TOKEN_KIND_FOR);
-        self.tokenKindTab[@"break"] = @(OUTLANDERPARSER_TOKEN_KIND_BREAK);
+        self.tokenKindTab[@"("] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_PAREN);
         self.tokenKindTab[@"}"] = @(OUTLANDERPARSER_TOKEN_KIND_CLOSE_CURLY);
-        self.tokenKindTab[@"return"] = @(OUTLANDERPARSER_TOKEN_KIND_RETURN);
-        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"+="] = @(OUTLANDERPARSER_TOKEN_KIND_PLUS_EQUALS);
-        self.tokenKindTab[@"function"] = @(OUTLANDERPARSER_TOKEN_KIND_FUNCTION);
-        self.tokenKindTab[@"if"] = @(OUTLANDERPARSER_TOKEN_KIND_IF);
-        self.tokenKindTab[@"new"] = @(OUTLANDERPARSER_TOKEN_KIND_NEW);
-        self.tokenKindTab[@"else"] = @(OUTLANDERPARSER_TOKEN_KIND_ELSE);
-        self.tokenKindTab[@"!"] = @(OUTLANDERPARSER_TOKEN_KIND_BANG);
-        self.tokenKindTab[@"finally"] = @(OUTLANDERPARSER_TOKEN_KIND_FINALLY);
-        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"catch"] = @(OUTLANDERPARSER_TOKEN_KIND_CATCH);
-        self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
-        self.tokenKindTab[@";"] = @(OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON);
-        self.tokenKindTab[@"do"] = @(OUTLANDERPARSER_TOKEN_KIND_DO);
-        self.tokenKindTab[@"<"] = @(OUTLANDERPARSER_TOKEN_KIND_LT);
+        self.tokenKindTab[@"return"] = @(OUTLANDERPARSER_TOKEN_KIND_RETURN);
+        self.tokenKindTab[@")"] = @(OUTLANDERPARSER_TOKEN_KIND_CLOSE_PAREN);
+        self.tokenKindTab[@"*"] = @(OUTLANDERPARSER_TOKEN_KIND_STAR);
+        self.tokenKindTab[@"delete"] = @(OUTLANDERPARSER_TOKEN_KIND_DELETE);
+        self.tokenKindTab[@"+"] = @(OUTLANDERPARSER_TOKEN_KIND_PLUS);
+        self.tokenKindTab[@","] = @(OUTLANDERPARSER_TOKEN_KIND_COMMA);
+        self.tokenKindTab[@"if"] = @(OUTLANDERPARSER_TOKEN_KIND_IF);
+        self.tokenKindTab[@"-"] = @(OUTLANDERPARSER_TOKEN_KIND_MINUS);
+        self.tokenKindTab[@"finally"] = @(OUTLANDERPARSER_TOKEN_KIND_FINALLY);
+        self.tokenKindTab[@"."] = @(OUTLANDERPARSER_TOKEN_KIND_DOT);
+        self.tokenKindTab[@"case"] = @(OUTLANDERPARSER_TOKEN_KIND_CASE);
+        self.tokenKindTab[@"/"] = @(OUTLANDERPARSER_TOKEN_KIND_FORWARD_SLASH);
+        self.tokenKindTab[@"+="] = @(OUTLANDERPARSER_TOKEN_KIND_PLUS_EQUALS);
+        self.tokenKindTab[@"<="] = @(OUTLANDERPARSER_TOKEN_KIND_LE);
+        self.tokenKindTab[@"["] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_BRACKET);
+        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"typeof"] = @(OUTLANDERPARSER_TOKEN_KIND_TYPEOF);
+        self.tokenKindTab[@"||"] = @(OUTLANDERPARSER_TOKEN_KIND_DOUBLE_PIPE);
+        self.tokenKindTab[@"function"] = @(OUTLANDERPARSER_TOKEN_KIND_FUNCTION);
+        self.tokenKindTab[@"]"] = @(OUTLANDERPARSER_TOKEN_KIND_CLOSE_BRACKET);
+        self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"break"] = @(OUTLANDERPARSER_TOKEN_KIND_BREAK);
+        self.tokenKindTab[@"/,/"] = @(OUTLANDERPARSER_TOKEN_KIND_REGEXBODY);
         self.tokenKindTab[@"-="] = @(OUTLANDERPARSER_TOKEN_KIND_MINUS_EQUALS);
-        self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@">="] = @(OUTLANDERPARSER_TOKEN_KIND_GE);
+        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"in"] = @(OUTLANDERPARSER_TOKEN_KIND_IN);
+        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
+        self.tokenKindTab[@";"] = @(OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON);
+        self.tokenKindTab[@"for"] = @(OUTLANDERPARSER_TOKEN_KIND_FOR);
+        self.tokenKindTab[@"<"] = @(OUTLANDERPARSER_TOKEN_KIND_LT);
+        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
         self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
         self.tokenKindTab[@"throw"] = @(OUTLANDERPARSER_TOKEN_KIND_THROW);
         self.tokenKindTab[@"try"] = @(OUTLANDERPARSER_TOKEN_KIND_TRY);
         self.tokenKindTab[@">"] = @(OUTLANDERPARSER_TOKEN_KIND_GT);
-        self.tokenKindTab[@"/,/"] = @(OUTLANDERPARSER_TOKEN_KIND_REGEXBODY);
-        self.tokenKindTab[@"typeof"] = @(OUTLANDERPARSER_TOKEN_KIND_TYPEOF);
-        self.tokenKindTab[@"("] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_PAREN);
+        self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
         self.tokenKindTab[@"while"] = @(OUTLANDERPARSER_TOKEN_KIND_WHILE);
+        self.tokenKindTab[@"else"] = @(OUTLANDERPARSER_TOKEN_KIND_ELSE);
+        self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
+        self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
+        self.tokenKindTab[@"&&"] = @(OUTLANDERPARSER_TOKEN_KIND_DOUBLE_AMPERSAND);
         self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
-        self.tokenKindTab[@")"] = @(OUTLANDERPARSER_TOKEN_KIND_CLOSE_PAREN);
-        self.tokenKindTab[@"||"] = @(OUTLANDERPARSER_TOKEN_KIND_DOUBLE_PIPE);
-        self.tokenKindTab[@"*"] = @(OUTLANDERPARSER_TOKEN_KIND_STAR);
-        self.tokenKindTab[@"+"] = @(OUTLANDERPARSER_TOKEN_KIND_PLUS);
-        self.tokenKindTab[@"["] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_BRACKET);
-        self.tokenKindTab[@","] = @(OUTLANDERPARSER_TOKEN_KIND_COMMA);
-        self.tokenKindTab[@"delete"] = @(OUTLANDERPARSER_TOKEN_KIND_DELETE);
-        self.tokenKindTab[@"switch"] = @(OUTLANDERPARSER_TOKEN_KIND_SWITCH);
-        self.tokenKindTab[@"-"] = @(OUTLANDERPARSER_TOKEN_KIND_MINUS);
-        self.tokenKindTab[@"in"] = @(OUTLANDERPARSER_TOKEN_KIND_IN);
-        self.tokenKindTab[@"]"] = @(OUTLANDERPARSER_TOKEN_KIND_CLOSE_BRACKET);
-        self.tokenKindTab[@"."] = @(OUTLANDERPARSER_TOKEN_KIND_DOT);
+        self.tokenKindTab[@"new"] = @(OUTLANDERPARSER_TOKEN_KIND_NEW);
+        self.tokenKindTab[@"!"] = @(OUTLANDERPARSER_TOKEN_KIND_BANG);
         self.tokenKindTab[@"default"] = @(OUTLANDERPARSER_TOKEN_KIND_DEFAULT);
-        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"/"] = @(OUTLANDERPARSER_TOKEN_KIND_FORWARD_SLASH);
-        self.tokenKindTab[@"case"] = @(OUTLANDERPARSER_TOKEN_KIND_CASE);
-        self.tokenKindTab[@"<="] = @(OUTLANDERPARSER_TOKEN_KIND_LE);
-        self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"do"] = @(OUTLANDERPARSER_TOKEN_KIND_DO);
+        self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
+        self.tokenKindTab[@"switch"] = @(OUTLANDERPARSER_TOKEN_KIND_SWITCH);
+        self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@"{"] = @(OUTLANDERPARSER_TOKEN_KIND_OPEN_CURLY);
 
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_CURLY] = @"{";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GE] = @">=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOUBLE_AMPERSAND] = @"&&";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FOR] = @"for";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_BREAK] = @"break";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_PAREN] = @"(";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CLOSE_CURLY] = @"}";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RETURN] = @"return";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PLUS_EQUALS] = @"+=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FUNCTION] = @"function";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_IF] = @"if";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEW] = @"new";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ELSE] = @"else";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_BANG] = @"!";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FINALLY] = @"finally";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CATCH] = @"catch";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON] = @";";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DO] = @"do";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_LT] = @"<";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RETURN] = @"return";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CLOSE_PAREN] = @")";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_STAR] = @"*";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DELETE] = @"delete";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PLUS] = @"+";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COMMA] = @",";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_IF] = @"if";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MINUS] = @"-";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FINALLY] = @"finally";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOT] = @".";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CASE] = @"case";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FORWARD_SLASH] = @"/";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PLUS_EQUALS] = @"+=";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_LE] = @"<=";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_BRACKET] = @"[";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_TYPEOF] = @"typeof";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOUBLE_PIPE] = @"||";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FUNCTION] = @"function";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CLOSE_BRACKET] = @"]";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_BREAK] = @"break";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_REGEXBODY] = @"/,/";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MINUS_EQUALS] = @"-=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GE] = @">=";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_IN] = @"in";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON] = @";";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FOR] = @"for";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_LT] = @"<";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_THROW] = @"throw";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_TRY] = @"try";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GT] = @">";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_REGEXBODY] = @"/,/";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_TYPEOF] = @"typeof";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_PAREN] = @"(";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WHILE] = @"while";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ELSE] = @"else";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOUBLE_AMPERSAND] = @"&&";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CLOSE_PAREN] = @")";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOUBLE_PIPE] = @"||";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_STAR] = @"*";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PLUS] = @"+";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_BRACKET] = @"[";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COMMA] = @",";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DELETE] = @"delete";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SWITCH] = @"switch";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MINUS] = @"-";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_IN] = @"in";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CLOSE_BRACKET] = @"]";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOT] = @".";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEW] = @"new";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_BANG] = @"!";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DEFAULT] = @"default";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_FORWARD_SLASH] = @"/";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_CASE] = @"case";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_LE] = @"<=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DO] = @"do";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SWITCH] = @"switch";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_OPEN_CURLY] = @"{";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.arrayLiteral_memo = [NSMutableDictionary dictionary];
@@ -258,9 +269,12 @@
         self.put_memo = [NSMutableDictionary dictionary];
         self.pause_memo = [NSMutableDictionary dictionary];
         self.goto_memo = [NSMutableDictionary dictionary];
+        self.commands_memo = [NSMutableDictionary dictionary];
+        self.commandExpr_memo = [NSMutableDictionary dictionary];
         self.setVar_memo = [NSMutableDictionary dictionary];
         self.putLiterals_memo = [NSMutableDictionary dictionary];
         self.putExpr_memo = [NSMutableDictionary dictionary];
+        self.commandsStmt_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
         self.pauseStmt_memo = [NSMutableDictionary dictionary];
         self.labelStmt_memo = [NSMutableDictionary dictionary];
@@ -315,9 +329,12 @@
     [_put_memo removeAllObjects];
     [_pause_memo removeAllObjects];
     [_goto_memo removeAllObjects];
+    [_commands_memo removeAllObjects];
+    [_commandExpr_memo removeAllObjects];
     [_setVar_memo removeAllObjects];
     [_putLiterals_memo removeAllObjects];
     [_putExpr_memo removeAllObjects];
+    [_commandsStmt_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
     [_pauseStmt_memo removeAllObjects];
     [_labelStmt_memo removeAllObjects];
@@ -361,12 +378,12 @@
         [t.symbolState add:@"*="];
         [t.symbolState add:@"/="];
         [t.symbolState add:@"%="];
+        [t.symbolState add:@"#"];
 
         // setup comments
         t.commentState.reportsCommentTokens = YES;
         [t setTokenizerState:t.commentState from:'/' to:'/'];
         [t.commentState addSingleLineStartMarker:@"//"];
-        [t.commentState addSingleLineStartMarker:@"#"];
         [t.commentState addMultiLineStartMarker:@"/*" endMarker:@"*/"];
         
         // comment state should fallback to delimit state to match regex delimited strings
@@ -1107,6 +1124,8 @@
         [self labelStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_GOTO, 0]) {
         [self gotoStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_POUND, 0]) {
+        [self commandsStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_FUNCTION, 0]) {
         [self function_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_IF, 0]) {
@@ -1282,6 +1301,41 @@
     [self parseRule:@selector(__goto) withMemo:_goto_memo];
 }
 
+- (void)__commands {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchCommands:)];
+        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SCRIPT, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT discard:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_ALIAS, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_ALIAS discard:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'commands'."];
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchCommands:)];
+}
+
+- (void)commands_ {
+    [self parseRule:@selector(__commands) withMemo:_commands_memo];
+}
+
+- (void)__commandExpr {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchCommandExpr:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
+    [self commands_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchCommandExpr:)];
+}
+
+- (void)commandExpr_ {
+    [self parseRule:@selector(__commandExpr) withMemo:_commandExpr_memo];
+}
+
 - (void)__setVar {
     
     [self fireDelegateSelector:@selector(parser:willMatchSetVar:)];
@@ -1333,6 +1387,18 @@
 
 - (void)putExpr_ {
     [self parseRule:@selector(__putExpr) withMemo:_putExpr_memo];
+}
+
+- (void)__commandsStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchCommandsStmt:)];
+        [self commandExpr_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchCommandsStmt:)];
+}
+
+- (void)commandsStmt_ {
+    [self parseRule:@selector(__commandsStmt) withMemo:_commandsStmt_memo];
 }
 
 - (void)__putStmt {
@@ -1396,19 +1462,8 @@
 - (void)__varStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchVarStmt:)];
-        while ([self speculate:^{ [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON block:^{ [self setVar_]; [self nameExprPair_]; while ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_COMMA discard:YES]; [self nameExprPair_]; }]) {[self match:OUTLANDERPARSER_TOKEN_KIND_COMMA discard:YES]; [self nameExprPair_]; }[self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:NO]; } completion:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:NO]; }];}]) {
-        [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON block:^{ 
-            [self setVar_]; 
-            [self nameExprPair_]; 
-            while ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_COMMA discard:YES]; [self nameExprPair_]; }]) {
-                [self match:OUTLANDERPARSER_TOKEN_KIND_COMMA discard:YES]; 
-                [self nameExprPair_]; 
-            }
-            [self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:NO]; 
-        } completion:^{ 
-            [self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:NO]; 
-        }];
-    }
+        [self setVar_]; 
+    [self nameExprPair_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchVarStmt:)];
 }

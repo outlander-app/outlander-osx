@@ -41,6 +41,7 @@
 		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
+		F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDE21936B82E00787CB9 /* ScriptTester.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -216,6 +217,7 @@
 		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
 		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
+		F96ECDE21936B82E00787CB9 /* ScriptTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptTester.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
+				F96ECDE21936B82E00787CB9 /* ScriptTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
 				F96ECDCE1934E84D00787CB9 /* VarCommandHandlerTester.m */,
@@ -1021,6 +1024,7 @@
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
+				F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

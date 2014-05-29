@@ -14,5 +14,6 @@
 - (void)suspend;
 - (void)resume;
 - (BOOL)isPaused;
+- (void)process;
 
 @end
