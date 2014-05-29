@@ -1,0 +1,77 @@
+program
+@before {
+        PKTokenizer *t = self.tokenizer;
+        
+        // setup comments
+        t.commentState.reportsCommentTokens = YES;
+        [t.commentState addSingleLineStartMarker:@"//"];
+        [t.commentState addMultiLineStartMarker:@"/*" endMarker:@"*/"];
+}
+    = stmts
+    ;
+
+name
+    = Word
+    ;
+
+numberLiteral
+    = Number
+    ;
+
+stringLiteral
+    = QuotedString
+    ;
+
+stmts
+    = stmt*
+    ;
+
+stmt
+    = varStmt
+    | commandsStmt
+    | putStmt
+    | pauseStmt
+    | labelStmt
+    | gotoStmt
+    ;
+
+commands = 'var' | 'script' | 'highlight' | 'alias';
+
+commandExpr
+    = '#'! commands name*
+    ;
+
+setVar = 'var' | 'setvariable';
+
+putLiterals = name | stringLiteral | numberLiteral;
+
+putExpr = putLiterals (putLiterals)*;
+
+commandsStmt
+    = commandExpr
+    ;
+
+putStmt
+    = 'put'! putExpr
+    ;
+
+pauseStmt
+    = 'pause'! (numberLiteral)?
+    ;
+
+labelStmt
+    = name ':'!
+    ;
+
+gotoStmt
+    = 'goto'! name
+    ;
+
+varStmt
+    = setVar nameExprPair
+    ;
+
+nameExprPair
+    = name ('='!)? name
+    ;
+
