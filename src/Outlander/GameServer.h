@@ -16,10 +16,10 @@
     UInt16 _port;
     GCDAsyncSocket *asyncSocket;
     NSString *_connection;
-    RACReplaySubject *_subject;
+    RACSubject *_subject;
 }
 
-@property (atomic, strong) RACReplaySubject *connected;
+@property (atomic, strong) RACSubject *connected;
 
 - (id)initWithContext:(GameContext *)context;
 

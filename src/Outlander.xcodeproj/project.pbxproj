@@ -42,6 +42,10 @@
 		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDE21936B82E00787CB9 /* ScriptTester.m */; };
+		F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
+		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
+		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
+		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -218,6 +222,13 @@
 		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
 		F96ECDE21936B82E00787CB9 /* ScriptTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptTester.m; sourceTree = "<group>"; };
+		F971EFD31938806C008AF6A8 /* CommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandRelay.h; sourceTree = "<group>"; };
+		F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandRelay.h; sourceTree = "<group>"; };
+		F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandRelay.m; sourceTree = "<group>"; };
+		F971EFD81938830D008AF6A8 /* StubCommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubCommandRelay.h; sourceTree = "<group>"; };
+		F971EFD91938830D008AF6A8 /* StubCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubCommandRelay.m; sourceTree = "<group>"; };
+		F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubInfoStream.h; sourceTree = "<group>"; };
+		F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubInfoStream.m; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -389,6 +400,9 @@
 			children = (
 				F96ECDA8193404BB00787CB9 /* Actor.h */,
 				F96ECDA9193404BB00787CB9 /* Actor.m */,
+				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
+				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
+				F971EFD31938806C008AF6A8 /* CommandRelay.h */,
 				F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */,
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
 				F96ECDB01934194300787CB9 /* OutlanderParser.h */,
@@ -405,8 +419,8 @@
 				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
-				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
-				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
+				F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */,
+				F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -557,6 +571,10 @@
 			children = (
 				F989E1FF192C2B9B00562E32 /* StubFileSystem.h */,
 				F989E200192C2B9B00562E32 /* StubFileSystem.m */,
+				F971EFD81938830D008AF6A8 /* StubCommandRelay.h */,
+				F971EFD91938830D008AF6A8 /* StubCommandRelay.m */,
+				F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */,
+				F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */,
 			);
 			name = Stubs;
 			sourceTree = "<group>";
@@ -916,6 +934,7 @@
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
+				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
@@ -986,6 +1005,8 @@
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
+				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
+				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F96ECDB31934194300787CB9 /* OutlanderParser.m in Sources */,
@@ -1010,6 +1031,7 @@
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
+				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,

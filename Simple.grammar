@@ -36,8 +36,12 @@ stmt
     | moveStmt
     ;
 
+moveExpr
+    = 'move' | 'nextroom'
+    ;
+
 moveStmt
-    = 'move'! name
+    = moveExpr name
     ;
 
 commands = 'var' | 'highlight' | 'alias';

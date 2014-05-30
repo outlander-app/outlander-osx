@@ -43,8 +43,8 @@
     _log = _gameParser.log;
     _roundtime = _gameParser.roundtime;
     
-    _connected = [RACReplaySubject subject];
-    _subject = [RACReplaySubject subject];
+    _connected = [RACSubject subject];
+    _subject = [RACSubject subject];
     
     [_gameServer.connected subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_connected;

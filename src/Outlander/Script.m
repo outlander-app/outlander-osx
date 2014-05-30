@@ -13,9 +13,12 @@
 #import "TextTag.h"
 #import "CommandContext.h"
 #import "CommandHandler.h"
+#import "GameCommandRelay.h"
+#import "NSString+Categories.h"
 
 @interface Script () {
     id<InfoStream> _gameStream;
+    id<CommandRelay> _commandRelay;
     GameContext *_context;
     OutlanderParser *_parser;
     NSMutableArray *_scriptLines;
@@ -38,18 +41,29 @@
     _localVars = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.localvars.%@", self.uuid]];
     
     _parser = [[OutlanderParser alloc] initWithDelegate:self];
+    _commandRelay = [[GameCommandRelay alloc] init];
+    _pauseCondition = [[NSCondition alloc] init];
     
-    _lineNumber = 0;
-    
-    NSArray *lines = [data componentsSeparatedByString:@"\n"];
-    
-    _scriptLines = [[NSMutableArray alloc] initWithArray:lines];
+    [self setData:data];
     
     return self;
 }
 
 - (void)setGameStream:(id<InfoStream>)stream {
     _gameStream = stream;
+}
+
+- (void)setCommandRelay:(id<CommandRelay>)relay {
+    _commandRelay = relay;
+}
+
+- (void)setData:(NSString *)data {
+    
+    _lineNumber = 0;
+    
+    NSArray *lines = [data componentsSeparatedByString:@"\n"];
+    
+    _scriptLines = [[NSMutableArray alloc] initWithArray:lines];
 }
 
 - (void)process {
@@ -86,13 +100,25 @@
     signal = [_gameStream.room.signal subscribeNext:^(id x) {
         gotRoom = YES;
         [signal dispose];
+        [self.pauseCondition signal];
     }];
-
-    NSString *moveString = [self popCommandsToString:a];
-    [self sendCommand:moveString];
+    
+    PKToken *direction = [a pop];
+    PKToken *command = [a pop];
+    
+    if([[command stringValue] isEqualToString:@"move"]) {
+        [self sendCommand:[direction stringValue]];
+    }
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"%@ - waiting for room description", [command stringValue]]];
+    
+    [self.pauseCondition lock];
     
     while(!gotRoom) {
+        [self.pauseCondition wait];
     }
+    
+    [self.pauseCondition unlock];
 }
 
 - (void)parser:(PKParser *)p didMatchCommandsStmt:(PKAssembly *)a {
@@ -177,37 +203,25 @@
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];
-    ctx.command = command;
+    ctx.command = [command trimWhitespaceAndNewline];
     ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
     ctx.tag.color = @"#0066CC";
     
-    NSDictionary *userInfo = @{@"command": ctx};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"command"
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [_commandRelay sendCommand:ctx];
 }
 
 - (void)sendEcho:(NSString *)echo {
     TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, echo] mono:YES];
     tag.color = @"#0066CC";
-    
-    NSDictionary *userInfo = @{@"tag": tag};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
-                                                        object:nil
-                                                      userInfo:userInfo];
+   
+    [_commandRelay sendEcho:tag];
 }
 
 - (void)sendScriptDebug:(NSString *)msg {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@ (%lu)]: %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     
-    NSDictionary *userInfo = @{@"tag": tag};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [_commandRelay sendEcho:tag];
 }
 
 - (NSMutableString *)popCommandsToString:(PKAssembly *)a {

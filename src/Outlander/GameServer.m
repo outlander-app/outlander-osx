@@ -25,8 +25,8 @@
     
     _gameContext = context;
     
-    _subject = [RACReplaySubject subject];
-    _connected = [RACReplaySubject subject];
+    _subject = [RACSubject subject];
+    _connected = [RACSubject subject];
     
     return self;
 }
