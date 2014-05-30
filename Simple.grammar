@@ -27,29 +27,43 @@ stmts
     ;
 
 stmt
-    = varStmt
-    | commandsStmt
+    = commandsStmt
+    | varStmt
     | putStmt
     | pauseStmt
     | labelStmt
     | gotoStmt
+    | moveStmt
     ;
 
-commands = 'var' | 'script' | 'highlight' | 'alias';
-
-commandExpr
-    = '#'! commands name*
+moveStmt
+    = 'move' name
     ;
 
-setVar = 'var' | 'setvariable';
+commands = 'var' | 'highlight' | 'alias';
+
+commandsExpr
+    = '#'! commands putLiterals putLiterals
+    ;
+
+scriptAbort = 'script' 'abort';
+scriptPause = 'script' 'pause';
+scriptResume = 'script' 'resume';
+
+scriptCommands = scriptResume | scriptAbort | scriptPause;
+
+scriptCommandsExpr
+    = '#'! scriptCommands putLiterals
+    ;
+
+commandsStmt
+    = scriptCommandsExpr | commandsExpr
+    ;
+
 
 putLiterals = name | stringLiteral | numberLiteral;
 
 putExpr = putLiterals (putLiterals)*;
-
-commandsStmt
-    = commandExpr
-    ;
 
 putStmt
     = 'put'! putExpr
@@ -66,6 +80,8 @@ labelStmt
 gotoStmt
     = 'goto'! name
     ;
+
+setVar = 'var' | 'setvariable';
 
 varStmt
     = setVar nameExprPair

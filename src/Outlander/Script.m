@@ -72,33 +72,23 @@
     _lineNumber++;
 }
 
+- (void)parser:(PKParser *)p didMatchMoveStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+
+    NSString *moveString = [self popCommandsToString:a];
+    
+    [self sendCommand:moveString];
+    
+    // TODO: wait till room desc recieved
+}
+
 - (void)parser:(PKParser *)p didMatchCommandsStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    // ensure to keep script token on stack so pause is ignored
+    NSMutableString *commandString = [self popCommandsToString:a];
     
-    NSMutableString *commandString = [[NSMutableString alloc] init];
-    
-    PKToken *token = [a pop];
-    PKToken *scriptToken = nil;
-    
-    if([[token stringValue] isEqualToString:@"script"]) {
-        scriptToken = token;
-    }
-    
-    while(token) {
-        
-        [commandString insertString:[NSString stringWithFormat:@"%@ ", [token stringValue]]
-                        atIndex:0];
-        
-        token = [a pop];
-    }
-    
+    [commandString insertString:@"#" atIndex:0];
     [self sendCommand:commandString];
-    
-    if(scriptToken) {
-        [a push:scriptToken];
-    }
 }
 
 - (void)parser:(PKParser *)p didMatchVarStmt:(PKAssembly *)a {
@@ -113,17 +103,7 @@
 - (void)parser:(PKParser *)p didMatchPutStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSMutableString *putString = [[NSMutableString alloc] init];
-    
-    PKToken *token = [a pop];
-    
-    while(token) {
-        
-        [putString insertString:[NSString stringWithFormat:@"%@ ", [token stringValue]]
-                        atIndex:0];
-        
-        token = [a pop];
-    }
+    NSString *putString = [self popCommandsToString:a];
     
     NSLog(@"putting: %@", putString);
     
@@ -214,6 +194,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
                                                         object:nil
                                                       userInfo:userInfo];
+}
+
+- (NSMutableString *)popCommandsToString:(PKAssembly *)a {
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    
+    PKToken *token = [a pop];
+    
+    while(token) {
+        
+        [str insertString:[NSString stringWithFormat:@"%@ ", [token stringValue]]
+                        atIndex:0];
+        
+        token = [a pop];
+    }
+    
+    return str;
 }
 
 @end

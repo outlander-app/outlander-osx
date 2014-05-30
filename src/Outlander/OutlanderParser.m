@@ -58,16 +58,22 @@
 @property (nonatomic, retain) NSMutableDictionary *stringLiteral_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmts_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *moveStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *commands_memo;
-@property (nonatomic, retain) NSMutableDictionary *commandExpr_memo;
-@property (nonatomic, retain) NSMutableDictionary *setVar_memo;
+@property (nonatomic, retain) NSMutableDictionary *commandsExpr_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptAbort_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptPause_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptResume_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptCommands_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptCommandsExpr_memo;
+@property (nonatomic, retain) NSMutableDictionary *commandsStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *putLiterals_memo;
 @property (nonatomic, retain) NSMutableDictionary *putExpr_memo;
-@property (nonatomic, retain) NSMutableDictionary *commandsStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pauseStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *labelStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *setVar_memo;
 @property (nonatomic, retain) NSMutableDictionary *varStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *nameExprPair_memo;
 @end
@@ -80,29 +86,35 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
-        self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
-        self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
-        self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
-        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
-        self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
-        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
-        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
         self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
+        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
+        self.tokenKindTab[@"abort"] = @(OUTLANDERPARSER_TOKEN_KIND_ABORT);
+        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
+        self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
+        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
+        self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
+        self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
+        self.tokenKindTab[@"resume"] = @(OUTLANDERPARSER_TOKEN_KIND_RESUME);
+        self.tokenKindTab[@"move"] = @(OUTLANDERPARSER_TOKEN_KIND_MOVE);
+        self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
+        self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
 
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ABORT] = @"abort";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RESUME] = @"resume";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MOVE] = @"move";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.name_memo = [NSMutableDictionary dictionary];
@@ -110,16 +122,22 @@
         self.stringLiteral_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
+        self.moveStmt_memo = [NSMutableDictionary dictionary];
         self.commands_memo = [NSMutableDictionary dictionary];
-        self.commandExpr_memo = [NSMutableDictionary dictionary];
-        self.setVar_memo = [NSMutableDictionary dictionary];
+        self.commandsExpr_memo = [NSMutableDictionary dictionary];
+        self.scriptAbort_memo = [NSMutableDictionary dictionary];
+        self.scriptPause_memo = [NSMutableDictionary dictionary];
+        self.scriptResume_memo = [NSMutableDictionary dictionary];
+        self.scriptCommands_memo = [NSMutableDictionary dictionary];
+        self.scriptCommandsExpr_memo = [NSMutableDictionary dictionary];
+        self.commandsStmt_memo = [NSMutableDictionary dictionary];
         self.putLiterals_memo = [NSMutableDictionary dictionary];
         self.putExpr_memo = [NSMutableDictionary dictionary];
-        self.commandsStmt_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
         self.pauseStmt_memo = [NSMutableDictionary dictionary];
         self.labelStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
+        self.setVar_memo = [NSMutableDictionary dictionary];
         self.varStmt_memo = [NSMutableDictionary dictionary];
         self.nameExprPair_memo = [NSMutableDictionary dictionary];
     }
@@ -133,16 +151,22 @@
     [_stringLiteral_memo removeAllObjects];
     [_stmts_memo removeAllObjects];
     [_stmt_memo removeAllObjects];
+    [_moveStmt_memo removeAllObjects];
     [_commands_memo removeAllObjects];
-    [_commandExpr_memo removeAllObjects];
-    [_setVar_memo removeAllObjects];
+    [_commandsExpr_memo removeAllObjects];
+    [_scriptAbort_memo removeAllObjects];
+    [_scriptPause_memo removeAllObjects];
+    [_scriptResume_memo removeAllObjects];
+    [_scriptCommands_memo removeAllObjects];
+    [_scriptCommandsExpr_memo removeAllObjects];
+    [_commandsStmt_memo removeAllObjects];
     [_putLiterals_memo removeAllObjects];
     [_putExpr_memo removeAllObjects];
-    [_commandsStmt_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
     [_pauseStmt_memo removeAllObjects];
     [_labelStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
+    [_setVar_memo removeAllObjects];
     [_varStmt_memo removeAllObjects];
     [_nameExprPair_memo removeAllObjects];
 }
@@ -231,10 +255,10 @@
 - (void)__stmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchStmt:)];
-        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
-        [self varStmt_]; 
-    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_POUND, 0]) {
+        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_POUND, 0]) {
         [self commandsStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
+        [self varStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PUT, 0]) {
         [self putStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PAUSE, 0]) {
@@ -243,6 +267,8 @@
         [self labelStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_GOTO, 0]) {
         [self gotoStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_MOVE, 0]) {
+        [self moveStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -254,13 +280,24 @@
     [self parseRule:@selector(__stmt) withMemo:_stmt_memo];
 }
 
+- (void)__moveStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchMoveStmt:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_MOVE discard:NO]; 
+    [self name_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchMoveStmt:)];
+}
+
+- (void)moveStmt_ {
+    [self parseRule:@selector(__moveStmt) withMemo:_moveStmt_memo];
+}
+
 - (void)__commands {
     
     [self fireDelegateSelector:@selector(parser:willMatchCommands:)];
         if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
-    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SCRIPT, 0]) {
-        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT discard:NO]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_ALIAS, 0]) {
@@ -276,38 +313,122 @@
     [self parseRule:@selector(__commands) withMemo:_commands_memo];
 }
 
-- (void)__commandExpr {
+- (void)__commandsExpr {
     
-    [self fireDelegateSelector:@selector(parser:willMatchCommandExpr:)];
+    [self fireDelegateSelector:@selector(parser:willMatchCommandsExpr:)];
         [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
     [self commands_]; 
-    while ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
-        [self name_]; 
-    }
+    [self putLiterals_]; 
+    [self putLiterals_]; 
 
-    [self fireDelegateSelector:@selector(parser:didMatchCommandExpr:)];
+    [self fireDelegateSelector:@selector(parser:didMatchCommandsExpr:)];
 }
 
-- (void)commandExpr_ {
-    [self parseRule:@selector(__commandExpr) withMemo:_commandExpr_memo];
+- (void)commandsExpr_ {
+    [self parseRule:@selector(__commandsExpr) withMemo:_commandsExpr_memo];
 }
 
-- (void)__setVar {
+- (void)__scriptAbort {
     
-    [self fireDelegateSelector:@selector(parser:willMatchSetVar:)];
-        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
-        [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
-    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, 0]) {
-        [self match:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE discard:NO]; 
-    } else {
-        [self raise:@"No viable alternative found in rule 'setVar'."];
-    }
+    [self fireDelegateSelector:@selector(parser:willMatchScriptAbort:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_ABORT block:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_ABORT discard:NO]; 
+    } completion:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_ABORT discard:NO]; 
+    }];
 
-    [self fireDelegateSelector:@selector(parser:didMatchSetVar:)];
+    [self fireDelegateSelector:@selector(parser:didMatchScriptAbort:)];
 }
 
-- (void)setVar_ {
-    [self parseRule:@selector(__setVar) withMemo:_setVar_memo];
+- (void)scriptAbort_ {
+    [self parseRule:@selector(__scriptAbort) withMemo:_scriptAbort_memo];
+}
+
+- (void)__scriptPause {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchScriptPause:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_PAUSE block:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_PAUSE discard:NO]; 
+    } completion:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_PAUSE discard:NO]; 
+    }];
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptPause:)];
+}
+
+- (void)scriptPause_ {
+    [self parseRule:@selector(__scriptPause) withMemo:_scriptPause_memo];
+}
+
+- (void)__scriptResume {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchScriptResume:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_RESUME block:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_RESUME discard:NO]; 
+    } completion:^{ 
+        [self match:OUTLANDERPARSER_TOKEN_KIND_RESUME discard:NO]; 
+    }];
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptResume:)];
+}
+
+- (void)scriptResume_ {
+    [self parseRule:@selector(__scriptResume) withMemo:_scriptResume_memo];
+}
+
+- (void)__scriptCommands {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchScriptCommands:)];
+        if ([self speculate:^{ [self scriptResume_]; }]) {
+        [self scriptResume_]; 
+    } else if ([self speculate:^{ [self scriptAbort_]; }]) {
+        [self scriptAbort_]; 
+    } else if ([self speculate:^{ [self scriptPause_]; }]) {
+        [self scriptPause_]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'scriptCommands'."];
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptCommands:)];
+}
+
+- (void)scriptCommands_ {
+    [self parseRule:@selector(__scriptCommands) withMemo:_scriptCommands_memo];
+}
+
+- (void)__scriptCommandsExpr {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchScriptCommandsExpr:)];
+        [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
+    [self scriptCommands_]; 
+    [self putLiterals_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptCommandsExpr:)];
+}
+
+- (void)scriptCommandsExpr_ {
+    [self parseRule:@selector(__scriptCommandsExpr) withMemo:_scriptCommandsExpr_memo];
+}
+
+- (void)__commandsStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchCommandsStmt:)];
+        if ([self speculate:^{ [self scriptCommandsExpr_]; }]) {
+        [self scriptCommandsExpr_]; 
+    } else if ([self speculate:^{ [self commandsExpr_]; }]) {
+        [self commandsExpr_]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'commandsStmt'."];
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchCommandsStmt:)];
+}
+
+- (void)commandsStmt_ {
+    [self parseRule:@selector(__commandsStmt) withMemo:_commandsStmt_memo];
 }
 
 - (void)__putLiterals {
@@ -343,18 +464,6 @@
 
 - (void)putExpr_ {
     [self parseRule:@selector(__putExpr) withMemo:_putExpr_memo];
-}
-
-- (void)__commandsStmt {
-    
-    [self fireDelegateSelector:@selector(parser:willMatchCommandsStmt:)];
-        [self commandExpr_]; 
-
-    [self fireDelegateSelector:@selector(parser:didMatchCommandsStmt:)];
-}
-
-- (void)commandsStmt_ {
-    [self parseRule:@selector(__commandsStmt) withMemo:_commandsStmt_memo];
 }
 
 - (void)__putStmt {
@@ -413,6 +522,24 @@
 
 - (void)gotoStmt_ {
     [self parseRule:@selector(__gotoStmt) withMemo:_gotoStmt_memo];
+}
+
+- (void)__setVar {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchSetVar:)];
+        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE discard:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'setVar'."];
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchSetVar:)];
+}
+
+- (void)setVar_ {
+    [self parseRule:@selector(__setVar) withMemo:_setVar_memo];
 }
 
 - (void)__varStmt {
