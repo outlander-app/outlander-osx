@@ -32,7 +32,9 @@
     _gameParser = [[GameParser alloc] initWithContext:context];
     
     _vitals = _gameParser.vitals;
-    _room = _gameParser.room;
+    
+    _room = [_gameParser.room multicast:[RACSubject subject]];
+    [_room connect];
     _exp = _gameParser.exp;
     _thoughts = _gameParser.thoughts;
     _arrivals = _gameParser.arrivals;
@@ -45,23 +47,27 @@
     _subject = [RACReplaySubject subject];
     
     [_gameServer.connected subscribeNext:^(id x) {
-        [_connected sendNext:x];
+        id<RACSubscriber> sub = (id<RACSubscriber>)_connected;
+        [sub sendNext:x];
     }];
     
     return self;
 }
 
 -(void) publish:(id)item {
-    [_subject sendNext:item];
+    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
+    [sub sendNext:item];
 }
 
 -(void) complete {
     [_gameServer disconnect];
-    [_subject sendCompleted];
+    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
+    [sub sendCompleted];
 }
 
 -(void) error:(NSError *)error {
-    [_subject sendError:error];
+    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
+    [sub sendError:error];
 }
 
 -(void) sendCommand:(NSString *)command {
@@ -69,20 +75,18 @@
 }
 
 -(RACSignal *) connect:(GameConnection *)connection {
+    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
     
-    RACSignal *signal = [_gameServer connect:connection.key
-                                      toHost:connection.host
-                                      onPort:connection.port];
-    
-    [signal subscribeCompleted:^{
-        [_subject sendCompleted];
-    }];
-    
-    [signal subscribeNext:^(NSString *result) {
+    [[_gameServer connect:connection.key
+                  toHost:connection.host
+                  onPort:connection.port]
+     subscribeNext:^(id result) {
         [_gameParser parse:result then:^(NSArray *result) {
-            [_subject sendNext:result];
+            [sub sendNext:result];
         }];
-    }];
+     } completed:^{
+        [sub sendCompleted];
+     }];
     
     return _subject;
 }

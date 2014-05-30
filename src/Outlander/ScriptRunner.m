@@ -13,6 +13,7 @@
 #import "TextTag.h"
 
 @interface ScriptRunner () {
+    id<InfoStream> _gameStream;
     GameContext *_context;
     ScriptLoader *_loader;
     TSMutableDictionary *_scripts;
@@ -44,6 +45,10 @@
                                                  name:@"startscript"
                                                object:nil];
     return self;
+}
+
+- (void)setGameStream:(id<InfoStream>)stream {
+    _gameStream = stream;
 }
 
 - (void) receiveStartScriptNotification:(NSNotification *) notification {
@@ -86,6 +91,8 @@
     
     Script *script = [[Script alloc] initWith:_context and:data];
     script.name = scriptName;
+    [script setGameStream:_gameStream];
+    
     [_scripts setCacheObject:script forKey:scriptName];
     
     [script start];

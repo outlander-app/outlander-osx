@@ -1,57 +1,9 @@
 #import "OutlanderParser.h"
 #import <PEGKit/PEGKit.h>
 
-#define LT(i) [self LT:(i)]
-#define LA(i) [self LA:(i)]
-#define LS(i) [self LS:(i)]
-#define LF(i) [self LD:(i)]
-
-#define POP()        [self.assembly pop]
-#define POP_STR()    [self popString]
-#define POP_TOK()    [self popToken]
-#define POP_BOOL()   [self popBool]
-#define POP_INT()    [self popInteger]
-#define POP_DOUBLE() [self popDouble]
-
-#define PUSH(obj)      [self.assembly push:(id)(obj)]
-#define PUSH_BOOL(yn)  [self pushBool:(BOOL)(yn)]
-#define PUSH_INT(i)    [self pushInteger:(NSInteger)(i)]
-#define PUSH_DOUBLE(d) [self pushDouble:(double)(d)]
-
-#define EQ(a, b) [(a) isEqual:(b)]
-#define NE(a, b) (![(a) isEqual:(b)])
-#define EQ_IGNORE_CASE(a, b) (NSOrderedSame == [(a) compare:(b)])
-
-#define MATCHES(pattern, str)               ([[NSRegularExpression regularExpressionWithPattern:(pattern) options:0                                  error:nil] numberOfMatchesInString:(str) options:0 range:NSMakeRange(0, [(str) length])] > 0)
-#define MATCHES_IGNORE_CASE(pattern, str)   ([[NSRegularExpression regularExpressionWithPattern:(pattern) options:NSRegularExpressionCaseInsensitive error:nil] numberOfMatchesInString:(str) options:0 range:NSMakeRange(0, [(str) length])] > 0)
-
-#define ABOVE(fence) [self.assembly objectsAbove:(fence)]
-
-#define LOG(obj) do { NSLog(@"%@", (obj)); } while (0);
-#define PRINT(str) do { printf("%s\n", (str)); } while (0);
-
-@interface PKParser ()
-//@property (nonatomic, retain) NSMutableDictionary *tokenKindTab;
-//@property (nonatomic, retain) NSMutableArray *tokenKindNameTab;
-//@property (nonatomic, retain) NSString *startRuleName;
-//@property (nonatomic, retain) NSString *statementTerminator;
-//@property (nonatomic, retain) NSString *singleLineCommentMarker;
-//@property (nonatomic, retain) NSString *blockStartMarker;
-//@property (nonatomic, retain) NSString *blockEndMarker;
-//@property (nonatomic, retain) NSString *braces;
-
-- (BOOL)popBool;
-- (NSInteger)popInteger;
-- (double)popDouble;
-- (PKToken *)popToken;
-- (NSString *)popString;
-
-- (void)pushBool:(BOOL)yn;
-- (void)pushInteger:(NSInteger)i;
-- (void)pushDouble:(double)d;
-@end
 
 @interface OutlanderParser ()
+
 @property (nonatomic, retain) NSMutableDictionary *program_memo;
 @property (nonatomic, retain) NSMutableDictionary *name_memo;
 @property (nonatomic, retain) NSMutableDictionary *numberLiteral_memo;
@@ -78,11 +30,12 @@
 @property (nonatomic, retain) NSMutableDictionary *nameExprPair_memo;
 @end
 
-@implementation OutlanderParser
+@implementation OutlanderParser { }
 
 - (id)initWithDelegate:(id)d {
     self = [super initWithDelegate:d];
     if (self) {
+        
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
@@ -144,7 +97,7 @@
     return self;
 }
 
-- (void)_clearMemo {
+- (void)clearMemo {
     [_program_memo removeAllObjects];
     [_name_memo removeAllObjects];
     [_numberLiteral_memo removeAllObjects];
@@ -172,18 +125,21 @@
 }
 
 - (void)start {
+
     [self tryAndRecover:TOKEN_KIND_BUILTIN_EOF block:^{
         [self program_]; 
         [self matchEOF:YES]; 
     } completion:^{
         [self matchEOF:YES];
     }];
+
 }
 
 - (void)__program {
     
     [self fireDelegateSelector:@selector(parser:willMatchProgram:)];
-        [self execute:(id)^{
+
+    [self execute:^{
     
         PKTokenizer *t = self.tokenizer;
         
@@ -205,7 +161,8 @@
 - (void)__name {
     
     [self fireDelegateSelector:@selector(parser:willMatchName:)];
-        [self matchWord:NO]; 
+
+    [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchName:)];
 }
@@ -217,7 +174,8 @@
 - (void)__numberLiteral {
     
     [self fireDelegateSelector:@selector(parser:willMatchNumberLiteral:)];
-        [self matchNumber:NO]; 
+
+    [self matchNumber:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchNumberLiteral:)];
 }
@@ -229,7 +187,8 @@
 - (void)__stringLiteral {
     
     [self fireDelegateSelector:@selector(parser:willMatchStringLiteral:)];
-        [self matchQuotedString:NO]; 
+
+    [self matchQuotedString:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchStringLiteral:)];
 }
@@ -241,7 +200,8 @@
 - (void)__stmts {
     
     [self fireDelegateSelector:@selector(parser:willMatchStmts:)];
-        while ([self speculate:^{ [self stmt_]; }]) {
+
+    while ([self speculate:^{ [self stmt_]; }]) {
         [self stmt_]; 
     }
 
@@ -255,7 +215,8 @@
 - (void)__stmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchStmt:)];
-        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_POUND, 0]) {
+
+    if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_POUND, 0]) {
         [self commandsStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
         [self varStmt_]; 
@@ -283,7 +244,8 @@
 - (void)__moveStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchMoveStmt:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_MOVE discard:NO]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_MOVE discard:YES]; 
     [self name_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchMoveStmt:)];
@@ -296,7 +258,8 @@
 - (void)__commands {
     
     [self fireDelegateSelector:@selector(parser:willMatchCommands:)];
-        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
+
+    if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT discard:NO]; 
@@ -316,7 +279,8 @@
 - (void)__commandsExpr {
     
     [self fireDelegateSelector:@selector(parser:willMatchCommandsExpr:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
     [self commands_]; 
     [self putLiterals_]; 
     [self putLiterals_]; 
@@ -331,7 +295,8 @@
 - (void)__scriptAbort {
     
     [self fireDelegateSelector:@selector(parser:willMatchScriptAbort:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
     [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_ABORT block:^{ 
         [self match:OUTLANDERPARSER_TOKEN_KIND_ABORT discard:NO]; 
     } completion:^{ 
@@ -348,7 +313,8 @@
 - (void)__scriptPause {
     
     [self fireDelegateSelector:@selector(parser:willMatchScriptPause:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
     [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_PAUSE block:^{ 
         [self match:OUTLANDERPARSER_TOKEN_KIND_PAUSE discard:NO]; 
     } completion:^{ 
@@ -365,7 +331,8 @@
 - (void)__scriptResume {
     
     [self fireDelegateSelector:@selector(parser:willMatchScriptResume:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
     [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_RESUME block:^{ 
         [self match:OUTLANDERPARSER_TOKEN_KIND_RESUME discard:NO]; 
     } completion:^{ 
@@ -382,7 +349,8 @@
 - (void)__scriptCommands {
     
     [self fireDelegateSelector:@selector(parser:willMatchScriptCommands:)];
-        if ([self speculate:^{ [self scriptResume_]; }]) {
+
+    if ([self speculate:^{ [self scriptResume_]; }]) {
         [self scriptResume_]; 
     } else if ([self speculate:^{ [self scriptAbort_]; }]) {
         [self scriptAbort_]; 
@@ -402,7 +370,8 @@
 - (void)__scriptCommandsExpr {
     
     [self fireDelegateSelector:@selector(parser:willMatchScriptCommandsExpr:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_POUND discard:YES]; 
     [self scriptCommands_]; 
     [self putLiterals_]; 
 
@@ -416,7 +385,8 @@
 - (void)__commandsStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchCommandsStmt:)];
-        if ([self speculate:^{ [self scriptCommandsExpr_]; }]) {
+
+    if ([self speculate:^{ [self scriptCommandsExpr_]; }]) {
         [self scriptCommandsExpr_]; 
     } else if ([self speculate:^{ [self commandsExpr_]; }]) {
         [self commandsExpr_]; 
@@ -434,7 +404,8 @@
 - (void)__putLiterals {
     
     [self fireDelegateSelector:@selector(parser:willMatchPutLiterals:)];
-        if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+
+    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
         [self name_]; 
     } else if ([self predicts:TOKEN_KIND_BUILTIN_QUOTEDSTRING, 0]) {
         [self stringLiteral_]; 
@@ -454,7 +425,8 @@
 - (void)__putExpr {
     
     [self fireDelegateSelector:@selector(parser:willMatchPutExpr:)];
-        [self putLiterals_]; 
+
+    [self putLiterals_]; 
     while ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
         [self putLiterals_]; 
     }
@@ -469,7 +441,8 @@
 - (void)__putStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchPutStmt:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; 
     [self putExpr_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchPutStmt:)];
@@ -482,7 +455,8 @@
 - (void)__pauseStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchPauseStmt:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_PAUSE discard:YES]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_PAUSE discard:YES]; 
     if ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, 0]) {
         [self numberLiteral_]; 
     }
@@ -497,7 +471,8 @@
 - (void)__labelStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchLabelStmt:)];
-        [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_COLON block:^{ 
+
+    [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_COLON block:^{ 
         [self name_]; 
         [self match:OUTLANDERPARSER_TOKEN_KIND_COLON discard:YES]; 
     } completion:^{ 
@@ -514,7 +489,8 @@
 - (void)__gotoStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchGotoStmt:)];
-        [self match:OUTLANDERPARSER_TOKEN_KIND_GOTO discard:YES]; 
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_GOTO discard:YES]; 
     [self name_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchGotoStmt:)];
@@ -527,7 +503,8 @@
 - (void)__setVar {
     
     [self fireDelegateSelector:@selector(parser:willMatchSetVar:)];
-        if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
+
+    if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_VAR, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_VAR discard:NO]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE discard:NO]; 
@@ -545,7 +522,8 @@
 - (void)__varStmt {
     
     [self fireDelegateSelector:@selector(parser:willMatchVarStmt:)];
-        [self setVar_]; 
+
+    [self setVar_]; 
     [self nameExprPair_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchVarStmt:)];
@@ -558,7 +536,8 @@
 - (void)__nameExprPair {
     
     [self fireDelegateSelector:@selector(parser:willMatchNameExprPair:)];
-        [self name_]; 
+
+    [self name_]; 
     if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_EQUALS, 0]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_EQUALS discard:YES]; 
     }

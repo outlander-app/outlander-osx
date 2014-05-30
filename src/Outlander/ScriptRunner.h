@@ -8,10 +8,12 @@
 
 #import "GameContext.h"
 #import "FileSystem.h"
+#import "GameStream.h"
 
 @interface ScriptRunner : NSObject
 
 - (instancetype)initWith:(GameContext *)context and:(id<FileSystem>)fileSystem;
+- (void)setGameStream:(id<InfoStream>)stream;
 - (void)run:(NSString *)scriptName withArgs:(NSArray *)args;
 - (void)pause:(NSString *)scriptName;
 - (void)resume:(NSString *)scriptName;

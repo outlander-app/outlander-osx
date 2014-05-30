@@ -213,6 +213,8 @@
     
     _gameStream = [[GameStream alloc] initWithContext:_gameContext];
     
+    [_scriptRunner setGameStream:_gameStream];
+    
     [_gameStream.connected subscribeNext:^(NSString *message) {
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
         [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, message]
@@ -251,7 +253,7 @@
         [self append:tag to:@"deaths"];
     }];
     
-    [[_gameStream.room throttle:0.15] subscribeNext:^(id x) {
+    [[_gameStream.room.signal throttle:0.15] subscribeNext:^(id x) {
         [self updateRoom];
     }];
     

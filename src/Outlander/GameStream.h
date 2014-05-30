@@ -11,14 +11,21 @@
 #import "GameConnection.h"
 #import "GameContext.h"
 
-@interface GameStream : NSObject {
+@protocol InfoStream <NSObject>
+
+@property (atomic, strong) RACSignal *subject;
+@property (atomic, strong) RACMulticastConnection *room;
+
+@end
+
+@interface GameStream : NSObject <InfoStream> {
     GameServer *_gameServer;
     GameParser *_gameParser;
 }
-@property (atomic, strong) RACReplaySubject *subject;
-@property (atomic, strong) RACReplaySubject *connected;
+@property (atomic, strong) RACSignal *subject;
+@property (atomic, strong) RACSignal *connected;
 @property (atomic, strong) RACSignal *vitals;
-@property (atomic, strong) RACSignal *room;
+@property (atomic, strong) RACMulticastConnection *room;
 @property (atomic, strong) RACSignal *exp;
 @property (atomic, strong) RACSignal *thoughts;
 @property (atomic, strong) RACSignal *arrivals;

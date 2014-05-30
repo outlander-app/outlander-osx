@@ -37,7 +37,7 @@ stmt
     ;
 
 moveStmt
-    = 'move' name
+    = 'move'! name
     ;
 
 commands = 'var' | 'highlight' | 'alias';

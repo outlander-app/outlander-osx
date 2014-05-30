@@ -9,6 +9,7 @@
 #import "Actor.h"
 #import "GameContext.h"
 #import "TSMutableDictionary.h"
+#import "GameStream.h"
 
 @interface Script : Actor
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) TSMutableDictionary *localVars;
 
 - (instancetype)initWith:(GameContext *)context and:(NSString *)data;
+- (void)setGameStream:(id<InfoStream>)stream;
 
 @end

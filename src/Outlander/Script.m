@@ -15,6 +15,7 @@
 #import "CommandHandler.h"
 
 @interface Script () {
+    id<InfoStream> _gameStream;
     GameContext *_context;
     OutlanderParser *_parser;
     NSMutableArray *_scriptLines;
@@ -47,6 +48,10 @@
     return self;
 }
 
+- (void)setGameStream:(id<InfoStream>)stream {
+    _gameStream = stream;
+}
+
 - (void)process {
     NSLog(@"%@ :: script running", [self description]);
     
@@ -74,12 +79,20 @@
 
 - (void)parser:(PKParser *)p didMatchMoveStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    __block BOOL gotRoom = NO;
+    __block RACDisposable *signal = nil;
+    
+    signal = [_gameStream.room.signal subscribeNext:^(id x) {
+        gotRoom = YES;
+        [signal dispose];
+    }];
 
     NSString *moveString = [self popCommandsToString:a];
-    
     [self sendCommand:moveString];
     
-    // TODO: wait till room desc recieved
+    while(!gotRoom) {
+    }
 }
 
 - (void)parser:(PKParser *)p didMatchCommandsStmt:(PKAssembly *)a {
@@ -127,7 +140,8 @@
         }
     }
     
-    NSLog(@"pausing for %f", interval);
+    NSString *debug = [NSString stringWithFormat:@"pausing for %#2.0f", interval];
+    [self sendScriptDebug:debug];
     
     [NSThread sleepForTimeInterval:interval];
 }
@@ -175,7 +189,7 @@
 }
 
 - (void)sendEcho:(NSString *)echo {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", echo] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, echo] mono:YES];
     tag.color = @"#0066CC";
     
     NSDictionary *userInfo = @{@"tag": tag};
@@ -186,7 +200,7 @@
 }
 
 - (void)sendScriptDebug:(NSString *)msg {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, msg] mono:YES];
     tag.color = @"#0066CC";
     
     NSDictionary *userInfo = @{@"tag": tag};
