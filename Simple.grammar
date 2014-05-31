@@ -30,6 +30,7 @@ stmt
     = commandsStmt
     | varStmt
     | putStmt
+    | echoStmt
     | pauseStmt
     | labelStmt
     | gotoStmt
@@ -71,6 +72,10 @@ putExpr = putLiterals (putLiterals)*;
 
 putStmt
     = 'put'! putExpr
+    ;
+
+echoStmt
+    = 'echo'! putLiterals*
     ;
 
 pauseStmt

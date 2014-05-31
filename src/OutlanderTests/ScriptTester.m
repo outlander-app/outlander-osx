@@ -47,7 +47,7 @@ describe(@"Script", ^{
             [[one should] equal:@"two"];
         });
         
-        it(@"use local var", ^{
+        xit(@"use local var", ^{
             NSString *sample = @"var one two\nput %one";
             
             [theScript setData:sample];
@@ -57,6 +57,32 @@ describe(@"Script", ^{
             NSString *one = [theScript.localVars cacheObjectForKey:@"one"];
             
             [[one should] equal:@"two"];
+            
+            [[theRelay.lastCommand.command should] equal:@"two"];
+        });
+    });
+    context(@"commands", ^{
+       
+        it(@"send echo", ^{
+            
+            NSString *sample = @"echo one two";
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastEcho.text should] equal:@"[test]: one two\n"];
+        });
+        
+        it(@"send empty echo", ^{
+            
+            NSString *sample = @"echo";
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastEcho.text should] equal:@"[test]: \n"];
         });
     });
     

@@ -139,6 +139,16 @@
     [self.localVars setCacheObject:[rh stringValue] forKey:[lh stringValue]];
 }
 
+- (void)parser:(PKParser *)p didMatchEchoStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    NSString *echoString = [self popCommandsToString:a];
+    
+    NSLog(@"echo: %@", echoString);
+    
+    [self sendEcho:echoString];
+}
+
 - (void)parser:(PKParser *)p didMatchPutStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
@@ -211,7 +221,7 @@
 }
 
 - (void)sendEcho:(NSString *)echo {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, echo] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, [echo trimWhitespaceAndNewline]] mono:YES];
     tag.color = @"#0066CC";
    
     [_commandRelay sendEcho:tag];

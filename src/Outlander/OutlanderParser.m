@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSMutableDictionary *putLiterals_memo;
 @property (nonatomic, retain) NSMutableDictionary *putExpr_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pauseStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *labelStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
@@ -41,13 +42,14 @@
         self.enableAutomaticErrorRecovery = YES;
 
         self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
-        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
-        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
         self.tokenKindTab[@"abort"] = @(OUTLANDERPARSER_TOKEN_KIND_ABORT);
+        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
+        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
-        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"echo"] = @(OUTLANDERPARSER_TOKEN_KIND_ECHO);
         self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
+        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
         self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
         self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
         self.tokenKindTab[@"nextroom"] = @(OUTLANDERPARSER_TOKEN_KIND_NEXTROOM);
@@ -57,13 +59,14 @@
         self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
 
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ABORT] = @"abort";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ECHO] = @"echo";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
@@ -91,6 +94,7 @@
         self.putLiterals_memo = [NSMutableDictionary dictionary];
         self.putExpr_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
+        self.echoStmt_memo = [NSMutableDictionary dictionary];
         self.pauseStmt_memo = [NSMutableDictionary dictionary];
         self.labelStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
@@ -121,6 +125,7 @@
     [_putLiterals_memo removeAllObjects];
     [_putExpr_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
+    [_echoStmt_memo removeAllObjects];
     [_pauseStmt_memo removeAllObjects];
     [_labelStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
@@ -227,6 +232,8 @@
         [self varStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PUT, 0]) {
         [self putStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_ECHO, 0]) {
+        [self echoStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PAUSE, 0]) {
         [self pauseStmt_]; 
     } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
@@ -474,6 +481,22 @@
 
 - (void)putStmt_ {
     [self parseRule:@selector(__putStmt) withMemo:_putStmt_memo];
+}
+
+- (void)__echoStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchEchoStmt:)];
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_ECHO discard:YES]; 
+    while ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
+        [self putLiterals_]; 
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchEchoStmt:)];
+}
+
+- (void)echoStmt_ {
+    [self parseRule:@selector(__echoStmt) withMemo:_echoStmt_memo];
 }
 
 - (void)__pauseStmt {
