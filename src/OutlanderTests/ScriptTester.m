@@ -188,7 +188,9 @@ describe(@"Script", ^{
     });
     
     context(@"wait commands", ^{
-        it(@"waits for command prompt", ^{
+        
+        // not really testing anything -- how to test for wait?
+        xit(@"waits for command prompt", ^{
             
             NSString *sample = @"wait";
             
@@ -199,6 +201,21 @@ describe(@"Script", ^{
             [theInfoStream publishSubject:@">"];
             
             [[expectFutureValue(theInfoStream.lastSubject) shouldEventually] equal:@">"];
+        });
+        
+        // not really testing anything -- how to test for wait?
+        xit(@"waitfor - wait for text", ^{
+            
+            NSString *sample = @"waitfor something";
+            
+            [theScript setData:sample];
+            
+            [theScript start];
+            
+            // TODO: send TextTag array
+            [theInfoStream publishSubject:@"something"];
+            
+            [[expectFutureValue(theRelay.lastEcho.text) shouldEventuallyBeforeTimingOutAfter(2.0)] equal:@"matched"];
         });
     });
 });

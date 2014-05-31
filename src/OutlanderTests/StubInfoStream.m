@@ -35,7 +35,7 @@
     [_roomSub sendNext:nil];
 }
 
-- (void)publishSubject:(NSString *)data {
+- (void)publishSubject:(id)data {
     _lastSubject = data;
     [_mainSub sendNext:data];
 }

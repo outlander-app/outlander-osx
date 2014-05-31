@@ -12,9 +12,9 @@
 
 @property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACMulticastConnection *room;
-@property (nonatomic, copy) NSString *lastSubject;
+@property (nonatomic, strong) id lastSubject;
 
 - (void)publishRoom;
-- (void)publishSubject:(NSString *)data;
+- (void)publishSubject:(id)data;
 
 @end

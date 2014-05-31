@@ -94,6 +94,40 @@
     _lineNumber++;
 }
 
+- (void)parser:(PKParser *)p didMatchWaitForStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    __block BOOL gotSignal = NO;
+    __block RACDisposable *signal = nil;
+    
+    NSString *matchText = [self popCommandsToString:a];
+    
+    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+        
+        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop) {
+            
+            if([obj.text containsString:matchText]){
+                *stop = YES;
+                gotSignal = YES;
+                [signal dispose];
+                [self.pauseCondition signal];
+                [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
+            }
+        }];
+        
+    }];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"waitfor %@", matchText]];
+    
+    [self.pauseCondition lock];
+    
+    while(!gotSignal) {
+        [self.pauseCondition wait];
+    }
+    
+    [self.pauseCondition unlock];
+}
+
 - (void)parser:(PKParser *)p didMatchWaitStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
    
@@ -267,11 +301,18 @@
     
     while(token) {
         
-        NSString *val = [NSString stringWithFormat:@"%@ ", [token stringValue]];
+        NSString *space = [str length] > 0 ? @" " : @"";
+        NSString *tokenVal = [token stringValue];
         
-        if([val hasPrefix:@"%"] || [val hasPrefix:@"$"]) {
-            val = [val trimWhitespaceAndNewline];
+        if([tokenVal hasPrefix:@"%"] || [tokenVal hasPrefix:@"$"] || [tokenVal hasPrefix:@"."]) {
+            space = @"";
         }
+        
+        if([str hasPrefix:@"."]) {
+            space = @"";
+        }
+        
+        NSString *val = [NSString stringWithFormat:@"%@%@", tokenVal, space];
         
         [str insertString:val atIndex:0];
         

@@ -14,6 +14,10 @@ name
     = Word | '%' Word | '$' Word
     ;
 
+refinement
+    = '.' name
+    ;
+
 numberLiteral
     = Number
     ;
@@ -36,6 +40,15 @@ stmt
     | gotoStmt
     | moveStmt
     | waitStmt
+    | waitForStmt
+    ;
+
+exprStmt
+    = name refinement*
+    ;
+
+waitForStmt
+    = 'waitfor'! putExpr
     ;
 
 waitStmt
@@ -70,7 +83,7 @@ commandsStmt
     = scriptCommandsExpr | commandsExpr
     ;
 
-putLiterals = name | stringLiteral | numberLiteral;
+putLiterals = exprStmt | stringLiteral | numberLiteral;
 
 putExpr = putLiterals*;
 
