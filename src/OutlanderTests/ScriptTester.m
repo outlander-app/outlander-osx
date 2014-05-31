@@ -47,20 +47,57 @@ describe(@"Script", ^{
             [[one should] equal:@"two"];
         });
         
-        xit(@"use local var", ^{
-            NSString *sample = @"var one two\nput %one";
+        it(@"use local var", ^{
+            NSString *sample = @"put %one";
+            
+            [theScript.localVars setCacheObject:@"two" forKey:@"one"];
             
             [theScript setData:sample];
             
             [theScript process];
             
-            NSString *one = [theScript.localVars cacheObjectForKey:@"one"];
-            
-            [[one should] equal:@"two"];
-            
             [[theRelay.lastCommand.command should] equal:@"two"];
         });
+        
+        it(@"use global var", ^{
+            NSString *sample = @"put $backpack";
+            
+            [theContext.globalVars setCacheObject:@"some value" forKey:@"backpack"];
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastCommand.command should] equal:@"some value"];
+        });
+        
+        it(@"use global var within sentence", ^{
+            NSString *sample = @"put put my $righthand in my $backpack";
+            
+            [theContext.globalVars setCacheObject:@"longsword" forKey:@"righthand"];
+            [theContext.globalVars setCacheObject:@"rucksack" forKey:@"backpack"];
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastCommand.command should] equal:@"put my longsword in my rucksack"];
+        });
+        
+        it(@"use global var with dot syntax", ^{
+            NSString *sample = @"put put my $righthand in my $primary.container";
+            
+            [theContext.globalVars setCacheObject:@"longsword" forKey:@"righthand"];
+            [theContext.globalVars setCacheObject:@"rucksack" forKey:@"primary.container"];
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastCommand.command should] equal:@"put my longsword in my rucksack"];
+        });
     });
+    
     context(@"commands", ^{
        
         it(@"send echo", ^{

@@ -14,6 +14,7 @@
 #import "CommandContext.h"
 #import "CommandHandler.h"
 #import "GameCommandRelay.h"
+#import "VariableReplacer.h"
 #import "NSString+Categories.h"
 
 @interface Script () {
@@ -22,6 +23,7 @@
     GameContext *_context;
     OutlanderParser *_parser;
     NSMutableArray *_scriptLines;
+    VariableReplacer *_varReplacer;
 }
 
 @property (nonatomic, strong) TSMutableDictionary *labels;
@@ -43,6 +45,7 @@
     _parser = [[OutlanderParser alloc] initWithDelegate:self];
     _commandRelay = [[GameCommandRelay alloc] init];
     _pauseCondition = [[NSCondition alloc] init];
+    _varReplacer = [[VariableReplacer alloc] init];
     
     [self setData:data];
     
@@ -101,6 +104,7 @@
         gotSignal = YES;
         [signal dispose];
         [self.pauseCondition signal];
+        [self sendScriptDebug:@"prompt recieved"];
     }];
     
     [self sendScriptDebug:@"waiting for prompt"];
@@ -130,7 +134,7 @@
     PKToken *command = [a pop];
     
     if([[command stringValue] isEqualToString:@"move"]) {
-        [self sendCommand:[direction stringValue]];
+        [self sendCommand:[self replaceVars:[direction stringValue]]];
     }
     
     [self sendScriptDebug:[NSString stringWithFormat:@"%@ - waiting for room description", [command stringValue]]];
@@ -167,8 +171,6 @@
     
     NSString *echoString = [self popCommandsToString:a];
     
-    NSLog(@"echo: %@", echoString);
-    
     [self sendEcho:echoString];
 }
 
@@ -176,8 +178,6 @@
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
     NSString *putString = [self popCommandsToString:a];
-    
-    NSLog(@"putting: %@", putString);
     
     [self sendCommand:putString];
 }
@@ -218,14 +218,16 @@
 - (void)parser:(PKParser *)p didMatchGotoStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    PKToken *label = [a pop];
+    PKToken *labelToken = [a pop];
     
-    NSLog(@"goto: %@", [label stringValue]);
+    NSString *label = [self replaceVars:[labelToken stringValue]];
     
-    NSNumber *gotoObj = [_labels cacheObjectForKey:[label stringValue]];
+    [self sendScriptDebug:[NSString stringWithFormat:@"goto %@", label]];
+    
+    NSNumber *gotoObj = [_labels cacheObjectForKey:label];
     
     if(!gotoObj) {
-        NSLog(@"Unknown label %@", [label stringValue]);
+        [self sendScriptDebug:[NSString stringWithFormat:@"unknown label %@", label]];
         [self cancel];
         return;
     }
@@ -265,13 +267,23 @@
     
     while(token) {
         
-        [str insertString:[NSString stringWithFormat:@"%@ ", [token stringValue]]
-                        atIndex:0];
+        NSString *val = [NSString stringWithFormat:@"%@ ", [token stringValue]];
+        
+        if([val hasPrefix:@"%"] || [val hasPrefix:@"$"]) {
+            val = [val trimWhitespaceAndNewline];
+        }
+        
+        [str insertString:val atIndex:0];
         
         token = [a pop];
     }
     
-    return str;
+    return [[self replaceVars:str] mutableCopy];
+}
+
+- (NSString *)replaceVars:(NSString *)str {
+    NSString *replaced = [_varReplacer replace:str withContext:_context];
+    return [_varReplacer replaceLocalVars:replaced withVars:_localVars];
 }
 
 @end

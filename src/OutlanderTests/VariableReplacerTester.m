@@ -47,6 +47,17 @@ describe(@"Variable Replacer", ^{
                 
                 [[result should] equal:@"do something load arrows with something else"];
             });
+            
+            it(@"should replace alias within word boundry", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"l2";
+                al.replace = @"load arrows";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"do al2a l2" withContext:_context];
+                
+                [[result should] equal:@"do al2a load arrows"];
+            });
         });
         
         context(@"global vars", ^{

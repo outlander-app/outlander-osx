@@ -312,7 +312,8 @@
                   character:_gameContext.settings.character]
     flattenMap:^RACStream *(GameConnection *connection) {
         NSLog(@"Connection: %@", connection);
-        return [_gameStream connect:connection];
+        RACMulticastConnection *conn = [_gameStream connect:connection];
+        return conn.signal;
     }]
     subscribeNext:^(NSArray *tags) {
         

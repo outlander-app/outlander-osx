@@ -39,5 +39,5 @@
 -(void) complete;
 -(void) error:(NSError *)error;
 -(void) sendCommand:(NSString *)command;
--(RACSignal *) connect:(GameConnection *)connection;
+-(RACMulticastConnection *) connect:(GameConnection *)connection;
 @end

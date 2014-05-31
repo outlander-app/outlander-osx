@@ -42,41 +42,47 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
-        self.tokenKindTab[@"abort"] = @(OUTLANDERPARSER_TOKEN_KIND_ABORT);
-        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
-        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
-        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
-        self.tokenKindTab[@"echo"] = @(OUTLANDERPARSER_TOKEN_KIND_ECHO);
-        self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
-        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
-        self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
-        self.tokenKindTab[@"nextroom"] = @(OUTLANDERPARSER_TOKEN_KIND_NEXTROOM);
-        self.tokenKindTab[@"resume"] = @(OUTLANDERPARSER_TOKEN_KIND_RESUME);
         self.tokenKindTab[@"move"] = @(OUTLANDERPARSER_TOKEN_KIND_MOVE);
+        self.tokenKindTab[@":"] = @(OUTLANDERPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"abort"] = @(OUTLANDERPARSER_TOKEN_KIND_ABORT);
+        self.tokenKindTab[@";"] = @(OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON);
+        self.tokenKindTab[@"echo"] = @(OUTLANDERPARSER_TOKEN_KIND_ECHO);
         self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
+        self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
         self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
         self.tokenKindTab[@"wait"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITSTMT);
+        self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
+        self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
+        self.tokenKindTab[@"nextroom"] = @(OUTLANDERPARSER_TOKEN_KIND_NEXTROOM);
+        self.tokenKindTab[@"$"] = @(OUTLANDERPARSER_TOKEN_KIND_DOLLAR);
+        self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@"resume"] = @(OUTLANDERPARSER_TOKEN_KIND_RESUME);
+        self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
+        self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
+        self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
+        self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
 
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ABORT] = @"abort";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ECHO] = @"echo";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RESUME] = @"resume";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MOVE] = @"move";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ABORT] = @"abort";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON] = @";";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ECHO] = @"echo";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITSTMT] = @"wait";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOLLAR] = @"$";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RESUME] = @"resume";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.name_memo = [NSMutableDictionary dictionary];
@@ -177,7 +183,17 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchName:)];
 
-    [self matchWord:NO]; 
+    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+        [self matchWord:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PERCENT, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_PERCENT discard:NO]; 
+        [self matchWord:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_DOLLAR, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_DOLLAR discard:NO]; 
+        [self matchWord:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'name'."];
+    }
 
     [self fireDelegateSelector:@selector(parser:didMatchName:)];
 }
@@ -216,7 +232,9 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchStmts:)];
 
-    while ([self speculate:^{ [self stmt_]; }]) {
+    [self stmt_]; 
+    while ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:YES]; [self stmt_]; }]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_SEMI_COLON discard:YES]; 
         [self stmt_]; 
     }
 
@@ -241,7 +259,7 @@
         [self echoStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PAUSE, 0]) {
         [self pauseStmt_]; 
-    } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_DOLLAR, OUTLANDERPARSER_TOKEN_KIND_PERCENT, TOKEN_KIND_BUILTIN_WORD, 0]) {
         [self labelStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_GOTO, 0]) {
         [self gotoStmt_]; 
@@ -456,7 +474,7 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchPutLiterals:)];
 
-    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+    if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_DOLLAR, OUTLANDERPARSER_TOKEN_KIND_PERCENT, TOKEN_KIND_BUILTIN_WORD, 0]) {
         [self name_]; 
     } else if ([self predicts:TOKEN_KIND_BUILTIN_QUOTEDSTRING, 0]) {
         [self stringLiteral_]; 
@@ -477,8 +495,7 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchPutExpr:)];
 
-    [self putLiterals_]; 
-    while ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
+    while ([self speculate:^{ [self putLiterals_]; }]) {
         [self putLiterals_]; 
     }
 
@@ -493,8 +510,20 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchPutStmt:)];
 
-    [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; 
-    [self putExpr_]; 
+            if ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_PUT block:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:NO]; } completion:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:NO]; }];[self putExpr_]; }]) {
+            [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; 
+            [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_PUT block:^{ 
+                [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:NO]; 
+            } completion:^{ 
+                [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:NO]; 
+            }];
+                [self putExpr_]; 
+            } else if ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; [self putExpr_]; }]) {
+                [self match:OUTLANDERPARSER_TOKEN_KIND_PUT discard:YES]; 
+                [self putExpr_]; 
+            } else {
+                [self raise:@"No viable alternative found in rule 'putStmt'."];
+            }
 
     [self fireDelegateSelector:@selector(parser:didMatchPutStmt:)];
 }
@@ -508,7 +537,7 @@
     [self fireDelegateSelector:@selector(parser:willMatchEchoStmt:)];
 
     [self match:OUTLANDERPARSER_TOKEN_KIND_ECHO discard:YES]; 
-    while ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
+    while ([self speculate:^{ [self putLiterals_]; }]) {
         [self putLiterals_]; 
     }
 

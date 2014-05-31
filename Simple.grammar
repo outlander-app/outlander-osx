@@ -11,7 +11,7 @@ program
     ;
 
 name
-    = Word
+    = Word | '%' Word | '$' Word
     ;
 
 numberLiteral
@@ -23,7 +23,7 @@ stringLiteral
     ;
 
 stmts
-    = stmt*
+    = stmt (';'! stmt)*
     ;
 
 stmt
@@ -72,10 +72,10 @@ commandsStmt
 
 putLiterals = name | stringLiteral | numberLiteral;
 
-putExpr = putLiterals (putLiterals)*;
+putExpr = putLiterals*;
 
 putStmt
-    = 'put'! putExpr
+    = 'put'! 'put' putExpr | 'put'! putExpr
     ;
 
 echoStmt

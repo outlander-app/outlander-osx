@@ -47,6 +47,7 @@
     _connected = [RACSubject subject];
     _mainSubject = [RACSubject subject];
     _subject = [_mainSubject multicast:[RACSubject subject]];
+    [_subject connect];
     
     [_gameServer.connected subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_connected;

@@ -22,9 +22,11 @@
   
     _mainSub = [RACSubject subject];
     _subject = [_mainSub multicast:[RACSubject subject]];
+    [_subject connect];
     
     _roomSub = [RACSubject subject];
     _room = [_roomSub multicast:[RACSubject subject]];
+    [_room connect];
     
     return self;
 }

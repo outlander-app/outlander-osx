@@ -20,23 +20,7 @@
 }
 
 - (NSString *)replaceGlobalVar:(NSString *)data withContext:(GameContext *)context {
-    
-    NSMutableString *str = [data mutableCopy];
-    
-    [[str matchesForPattern:@"\\$([a-zA-z0-9\\.]+)"] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
-        
-        if(res.numberOfRanges < 2) return;
-        
-        NSString *value = [context.globalVars cacheObjectForKey:[data substringWithRange:[res rangeAtIndex:1]]];
-        
-        if(!value) return;
-        
-        NSString *pattern = [[data substringWithRange:[res rangeAtIndex:0]] stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
-        
-        [self replace:str withTemplate:value andPattern:pattern];
-    }];
-    
-    return str;
+    return [self replaceVars:data withDict:context.globalVars andPattern:@"\\$([a-zA-z0-9\\.]+)"];
 }
 
 - (NSString *)replaceAlias:(NSString *)data withContext:(GameContext *)context {
@@ -45,7 +29,32 @@
     
     [context.aliases enumerateObjectsUsingBlock:^(Alias *obj, NSUInteger idx, BOOL *stop) {
         
-        [self replace:str withTemplate:obj.replace andPattern:obj.pattern];
+        NSString *pattern = [NSString stringWithFormat:@"\\b%@\\b", obj.pattern];
+        
+        [self replace:str withTemplate:obj.replace andPattern:pattern];
+    }];
+    
+    return str;
+}
+
+- (NSString *)replaceLocalVars:(NSString *)data withVars:(TSMutableDictionary *)dict {
+    return [self replaceVars:data withDict:dict andPattern:@"\\%([a-zA-z0-9\\.]+)"];
+}
+
+- (NSString *)replaceVars:(NSString *)data withDict:(TSMutableDictionary *)dict andPattern:(NSString *)pattern {
+    NSMutableString *str = [data mutableCopy];
+    
+    [[str matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        
+        if(res.numberOfRanges < 2) return;
+        
+        NSString *value = [dict cacheObjectForKey:[data substringWithRange:[res rangeAtIndex:1]]];
+        
+        if(!value) return;
+        
+        NSString *pattern = [[data substringWithRange:[res rangeAtIndex:0]] stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
+        
+        [self replace:str withTemplate:value andPattern:pattern];
     }];
     
     return str;
