@@ -9,7 +9,8 @@
 #import "StubInfoStream.h"
 
 @interface StubInfoStream () {
-    RACSubject *_sub;
+    RACSubject *_roomSub;
+    RACSubject *_mainSub;
 }
 @end
 
@@ -19,20 +20,22 @@
     self = [super init];
     if(!self) return nil;
   
-    _subject = [RACSubject subject];
-    _sub = [RACSubject subject];
-    _room = [_sub multicast:[RACSubject subject]];
+    _mainSub = [RACSubject subject];
+    _subject = [_mainSub multicast:[RACSubject subject]];
+    
+    _roomSub = [RACSubject subject];
+    _room = [_roomSub multicast:[RACSubject subject]];
     
     return self;
 }
 
 - (void)publishRoom {
-    [_sub sendNext:nil];
+    [_roomSub sendNext:nil];
 }
 
-- (void)publishSubject {
-    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
-    [sub sendNext:nil];
+- (void)publishSubject:(NSString *)data {
+    _lastSubject = data;
+    [_mainSub sendNext:data];
 }
 
 @end

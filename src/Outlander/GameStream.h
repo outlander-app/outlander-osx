@@ -13,7 +13,7 @@
 
 @protocol InfoStream <NSObject>
 
-@property (atomic, strong) RACSignal *subject;
+@property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACMulticastConnection *room;
 
 @end
@@ -22,7 +22,7 @@
     GameServer *_gameServer;
     GameParser *_gameParser;
 }
-@property (atomic, strong) RACSignal *subject;
+@property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACSignal *connected;
 @property (atomic, strong) RACSignal *vitals;
 @property (atomic, strong) RACMulticastConnection *room;

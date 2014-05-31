@@ -16,6 +16,7 @@
 @interface GameStream () {
     RACSignal *_connection;
     GameContext *_gameContext;
+    RACSubject *_mainSubject;
 }
 
 @end
@@ -44,7 +45,8 @@
     _roundtime = _gameParser.roundtime;
     
     _connected = [RACSubject subject];
-    _subject = [RACSubject subject];
+    _mainSubject = [RACSubject subject];
+    _subject = [_mainSubject multicast:[RACSubject subject]];
     
     [_gameServer.connected subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_connected;
@@ -55,37 +57,33 @@
 }
 
 -(void) publish:(id)item {
-    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
-    [sub sendNext:item];
+    [_mainSubject sendNext:item];
 }
 
 -(void) complete {
     [_gameServer disconnect];
-    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
-    [sub sendCompleted];
+    [_mainSubject sendCompleted];
 }
 
 -(void) error:(NSError *)error {
-    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
-    [sub sendError:error];
+    [_mainSubject sendError:error];
 }
 
 -(void) sendCommand:(NSString *)command {
     [_gameServer sendCommand:command];
 }
 
--(RACSignal *) connect:(GameConnection *)connection {
-    id<RACSubscriber> sub = (id<RACSubscriber>)_subject;
+-(RACMulticastConnection *) connect:(GameConnection *)connection {
     
     [[_gameServer connect:connection.key
                   toHost:connection.host
                   onPort:connection.port]
      subscribeNext:^(id result) {
         [_gameParser parse:result then:^(NSArray *result) {
-            [sub sendNext:result];
+            [_mainSubject sendNext:result];
         }];
      } completed:^{
-        [sub sendCompleted];
+        [_mainSubject sendCompleted];
      }];
     
     return _subject;

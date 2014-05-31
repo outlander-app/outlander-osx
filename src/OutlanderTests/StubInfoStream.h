@@ -10,10 +10,11 @@
 
 @interface StubInfoStream : NSObject <InfoStream>
 
-@property (atomic, strong) RACSignal *subject;
+@property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACMulticastConnection *room;
+@property (nonatomic, copy) NSString *lastSubject;
 
 - (void)publishRoom;
-- (void)publishSubject;
+- (void)publishSubject:(NSString *)data;
 
 @end

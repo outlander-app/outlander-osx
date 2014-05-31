@@ -10,6 +10,7 @@
 @property (nonatomic, retain) NSMutableDictionary *stringLiteral_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmts_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *waitStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *moveExpr_memo;
 @property (nonatomic, retain) NSMutableDictionary *moveStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *commands_memo;
@@ -57,6 +58,7 @@
         self.tokenKindTab[@"move"] = @(OUTLANDERPARSER_TOKEN_KIND_MOVE);
         self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
         self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"wait"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITSTMT);
 
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ABORT] = @"abort";
@@ -74,6 +76,7 @@
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MOVE] = @"move";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITSTMT] = @"wait";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.name_memo = [NSMutableDictionary dictionary];
@@ -81,6 +84,7 @@
         self.stringLiteral_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
+        self.waitStmt_memo = [NSMutableDictionary dictionary];
         self.moveExpr_memo = [NSMutableDictionary dictionary];
         self.moveStmt_memo = [NSMutableDictionary dictionary];
         self.commands_memo = [NSMutableDictionary dictionary];
@@ -112,6 +116,7 @@
     [_stringLiteral_memo removeAllObjects];
     [_stmts_memo removeAllObjects];
     [_stmt_memo removeAllObjects];
+    [_waitStmt_memo removeAllObjects];
     [_moveExpr_memo removeAllObjects];
     [_moveStmt_memo removeAllObjects];
     [_commands_memo removeAllObjects];
@@ -242,6 +247,8 @@
         [self gotoStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_MOVE, OUTLANDERPARSER_TOKEN_KIND_NEXTROOM, 0]) {
         [self moveStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_WAITSTMT, 0]) {
+        [self waitStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -251,6 +258,19 @@
 
 - (void)stmt_ {
     [self parseRule:@selector(__stmt) withMemo:_stmt_memo];
+}
+
+- (void)__waitStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchWaitStmt:)];
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_WAITSTMT discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchWaitStmt:)];
+}
+
+- (void)waitStmt_ {
+    [self parseRule:@selector(__waitStmt) withMemo:_waitStmt_memo];
 }
 
 - (void)__moveExpr {

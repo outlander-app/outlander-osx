@@ -91,6 +91,29 @@
     _lineNumber++;
 }
 
+- (void)parser:(PKParser *)p didMatchWaitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    __block BOOL gotSignal = NO;
+    __block RACDisposable *signal = nil;
+    
+    signal = [_gameStream.subject.signal subscribeNext:^(id x) {
+        gotSignal = YES;
+        [signal dispose];
+        [self.pauseCondition signal];
+    }];
+    
+    [self sendScriptDebug:@"waiting for prompt"];
+    
+    [self.pauseCondition lock];
+    
+    while(!gotSignal) {
+        [self.pauseCondition wait];
+    }
+    
+    [self.pauseCondition unlock];
+}
+
 - (void)parser:(PKParser *)p didMatchMoveStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
    

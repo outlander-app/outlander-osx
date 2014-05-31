@@ -120,7 +120,9 @@ describe(@"Script", ^{
             
             [[theRelay.lastCommand.command should] equal:@"#script resume one"];
         });
-       
+    });
+    
+    context(@"move commands", ^{
         it(@"send move command", ^{
             
             NSString *sample = @"move ne";
@@ -145,6 +147,21 @@ describe(@"Script", ^{
             [theInfoStream publishRoom];
             
             [[expectFutureValue(theRelay.lastEcho.text) shouldEventually] equal:@"[test (0)]: nextroom - waiting for room description\n"];
+        });
+    });
+    
+    context(@"wait commands", ^{
+        it(@"waits for command prompt", ^{
+            
+            NSString *sample = @"wait";
+            
+            [theScript setData:sample];
+            
+            [theScript start];
+            
+            [theInfoStream publishSubject:@">"];
+            
+            [[expectFutureValue(theInfoStream.lastSubject) shouldEventually] equal:@">"];
         });
     });
 });
