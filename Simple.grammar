@@ -42,6 +42,9 @@ stmt
     | waitStmt
     | waitForStmt
     | waitForReStmt
+    | matchStmt
+    | matchReStmt
+    | matchWaitStmt
     ;
 
 exprStmt
@@ -58,6 +61,18 @@ waitForReStmt
 
 waitStmt
     = 'wait'
+    ;
+
+matchStmt
+    = 'match'! name putExpr
+    ;
+
+matchReStmt
+    = 'matchre'! name putExpr
+    ;
+
+matchWaitStmt
+    = 'matchwait'! numberLiteral?
     ;
 
 moveExpr

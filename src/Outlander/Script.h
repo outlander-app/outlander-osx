@@ -17,6 +17,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) TSMutableDictionary *localVars;
 @property (nonatomic, strong) NSCondition *pauseCondition;
+@property (nonatomic, strong) NSMutableArray *matchList;
 
 - (instancetype)initWith:(GameContext *)context and:(NSString *)data;
 - (void)setData:(NSString *)data;

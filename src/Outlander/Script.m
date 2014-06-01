@@ -15,6 +15,7 @@
 #import "CommandHandler.h"
 #import "GameCommandRelay.h"
 #import "VariableReplacer.h"
+#import "Match.h"
 #import "NSString+Categories.h"
 
 @interface Script () {
@@ -46,6 +47,7 @@
     _commandRelay = [[GameCommandRelay alloc] init];
     _pauseCondition = [[NSCondition alloc] init];
     _varReplacer = [[VariableReplacer alloc] init];
+    _matchList = [[NSMutableArray alloc] init];
     
     [self setData:data];
     
@@ -92,6 +94,89 @@
     NSLog(@"Script line result: %@", [result description]);
     
     _lineNumber++;
+}
+
+- (void)parser:(PKParser *)p didMatchMatchStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    NSMutableArray *tokens = [self popCommandsToArray:a];
+    
+    __block NSString *label;
+    __block NSMutableString *matchText = [[NSMutableString alloc] init];
+    
+    [tokens enumerateObjectsUsingBlock:^(PKToken *obj, NSUInteger idx, BOOL *stop) {
+        if(idx == tokens.count - 1) {
+            label = [obj stringValue];
+        } else {
+            [matchText insertString:[obj stringValue] atIndex:0];
+        }
+    }];
+    
+    [_matchList addObject:[Match match:label with:matchText and:NO]];
+}
+
+- (void)parser:(PKParser *)p didMatchMatchReStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    NSMutableArray *tokens = [self popCommandsToArray:a];
+    
+    __block NSString *label;
+    __block NSMutableString *matchText = [[NSMutableString alloc] init];
+    
+    [tokens enumerateObjectsUsingBlock:^(PKToken *obj, NSUInteger idx, BOOL *stop) {
+        if(idx == tokens.count - 1) {
+            label = [obj stringValue];
+        } else {
+            [matchText insertString:[obj stringValue] atIndex:0];
+        }
+    }];
+    
+    [_matchList addObject:[Match match:label with:matchText and:YES]];
+}
+
+- (void)parser:(PKParser *)p didMatchMatchWaitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    __block BOOL gotSignal = NO;
+    __block RACDisposable *signal = nil;
+    
+    PKToken *waitToken = [a pop];
+    
+    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+        
+        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+            
+            [self.matchList enumerateObjectsUsingBlock:^(Match *match, NSUInteger idx, BOOL *stop2) {
+                
+                NSArray *matches = [obj.text matchesForPattern:match.text];
+                
+                [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                    if(res.numberOfRanges > 0) {
+                        *stop1 = YES;
+                        *stop2 = YES;
+                        *stop3 = YES;
+                        gotSignal = YES;
+                        [signal dispose];
+                        [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
+                        [self.pauseCondition signal];
+                        
+                        [self gotoLabel:match.label];
+                    }
+                }];
+            }];
+        }];
+    }];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"matchwait"]];
+    
+    [self.pauseCondition lock];
+    
+    while(!gotSignal) {
+        [self.pauseCondition wait];
+    }
+    
+    [self.matchList removeAllObjects];
+    [self.pauseCondition unlock];
 }
 
 - (void)parser:(PKParser *)p didMatchWaitForReStmt:(PKAssembly *)a {
@@ -296,6 +381,13 @@
     
     [self sendScriptDebug:[NSString stringWithFormat:@"goto %@", label]];
     
+    [self gotoLabel:label];
+}
+
+- (void)gotoLabel:(NSString *)label {
+    
+    label = [self replaceVars:label];
+    
     NSNumber *gotoObj = [_labels cacheObjectForKey:label];
     
     if(!gotoObj) {
@@ -358,6 +450,21 @@
     }
     
     return [[self replaceVars:str] mutableCopy];
+}
+
+- (NSMutableArray *)popCommandsToArray:(PKAssembly *)a {
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    
+    PKToken *token = [a pop];
+    
+    while(token) {
+        
+        [arr addObject:token];
+        
+        token = [a pop];
+    }
+    
+    return arr;
 }
 
 - (NSString *)replaceVars:(NSString *)str {
