@@ -69,6 +69,8 @@
     NSArray *lines = [data componentsSeparatedByString:@"\n"];
     
     _scriptLines = [[NSMutableArray alloc] initWithArray:lines];
+    
+    // TODO: pre-scan labels
 }
 
 - (void)process {
@@ -98,26 +100,15 @@
 
 - (void)parser:(PKParser *)p didMatchMatchStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
-   
-    NSMutableArray *tokens = [self popCommandsToArray:a];
-    
-    __block NSString *label;
-    __block NSMutableString *matchText = [[NSMutableString alloc] init];
-    
-    [tokens enumerateObjectsUsingBlock:^(PKToken *obj, NSUInteger idx, BOOL *stop) {
-        if(idx == tokens.count - 1) {
-            label = [obj stringValue];
-        } else {
-            [matchText insertString:[obj stringValue] atIndex:0];
-        }
-    }];
-    
-    [_matchList addObject:[Match match:label with:matchText and:NO]];
+    [self handleMatch:a isRegex:NO];
 }
 
 - (void)parser:(PKParser *)p didMatchMatchReStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
-    
+    [self handleMatch:a isRegex:YES];
+}
+
+- (void)handleMatch:(PKAssembly *)a isRegex:(BOOL)isRegex {
     NSMutableArray *tokens = [self popCommandsToArray:a];
     
     __block NSString *label;
@@ -131,16 +122,21 @@
         }
     }];
     
-    [_matchList addObject:[Match match:label with:matchText and:YES]];
+    [_matchList addObject:[Match match:label with:matchText and:isRegex]];
 }
 
 - (void)parser:(PKParser *)p didMatchMatchWaitStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
    
     __block BOOL gotSignal = NO;
+    __block BOOL timedOut = YES;
     __block RACDisposable *signal = nil;
-    
+   
     PKToken *waitToken = [a pop];
+    NSTimeInterval waitTime = 0;
+    if(waitToken) {
+        waitTime = [waitToken doubleValue];
+    }
     
     signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
         
@@ -155,6 +151,7 @@
                         *stop1 = YES;
                         *stop2 = YES;
                         *stop3 = YES;
+                        timedOut = NO;
                         gotSignal = YES;
                         [signal dispose];
                         [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
@@ -167,12 +164,29 @@
         }];
     }];
     
-    [self sendScriptDebug:[NSString stringWithFormat:@"matchwait"]];
+    NSString *debug = @"matchwait";
+    
+    if(waitTime > 0) {
+        debug = [NSString stringWithFormat:@"matchwait %#2.2f", waitTime];
+    }
+    
+    [self sendScriptDebug:debug];
     
     [self.pauseCondition lock];
     
     while(!gotSignal) {
-        [self.pauseCondition wait];
+        if(waitTime > 0) {
+            NSDate *date = [NSDate dateWithTimeIntervalSinceNow:waitTime];
+            [self.pauseCondition waitUntilDate:date];
+            if(timedOut) {
+                gotSignal = YES;
+                [signal dispose];
+                [self sendScriptDebug:@"matchwait timed out"];
+            }
+        }
+        else {
+            [self.pauseCondition wait];
+        }
     }
     
     [self.matchList removeAllObjects];
@@ -351,12 +365,12 @@
     NSTimeInterval interval = 1.0;
     if(token) {
         interval = [token doubleValue];
-        if(interval < 1) {
+        if(interval <= 0) {
             interval = 1.0;
         }
     }
     
-    NSString *debug = [NSString stringWithFormat:@"pausing for %#2.0f", interval];
+    NSString *debug = [NSString stringWithFormat:@"pausing for %#2.2f", interval];
     [self sendScriptDebug:debug];
     
     [NSThread sleepForTimeInterval:interval];
