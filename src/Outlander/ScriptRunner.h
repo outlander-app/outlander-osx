@@ -12,9 +12,11 @@
 
 @interface ScriptRunner : NSObject
 
+@property (nonatomic, strong) TSMutableDictionary *scripts;
+
 - (instancetype)initWith:(GameContext *)context and:(id<FileSystem>)fileSystem;
 - (void)setGameStream:(id<InfoStream>)stream;
-- (void)run:(NSString *)scriptName withArgs:(NSArray *)args;
+- (void)run:(NSString *)scriptName withArgs:(NSArray *)args and:(NSString *)allArgs;
 - (void)pause:(NSString *)scriptName;
 - (void)resume:(NSString *)scriptName;
 - (void)abort:(NSString *)scriptName;

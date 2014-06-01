@@ -7,7 +7,10 @@
 //
 
 #import "CommandHandler.h"
+#import "EventRelay.h"
 
 @interface ScriptHandler : NSObject <CommandHandler>
+
+- (instancetype)initWith:(id<EventRelay>)relay;
 
 @end

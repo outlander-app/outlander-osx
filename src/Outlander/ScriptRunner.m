@@ -16,7 +16,6 @@
     id<InfoStream> _gameStream;
     GameContext *_context;
     ScriptLoader *_loader;
-    TSMutableDictionary *_scripts;
 }
 @end
 
@@ -54,7 +53,8 @@
 - (void) receiveStartScriptNotification:(NSNotification *) notification {
     NSString *target = notification.userInfo[@"target"];
     NSArray *args = notification.userInfo[@"args"];
-    [self run:target withArgs:args];
+    NSString *allArgs = notification.userInfo[@"allArgs"];
+    [self run:target withArgs:args and:allArgs];
 }
 
 - (void) receiveScriptNotification:(NSNotification *) notification {
@@ -79,7 +79,7 @@
     }
 }
 
-- (void)run:(NSString *)scriptName withArgs:(NSArray *)args {
+- (void)run:(NSString *)scriptName withArgs:(NSArray *)args and:(NSString *)allArgs {
     
     [self abort:scriptName];
     
@@ -92,6 +92,8 @@
     Script *script = [[Script alloc] initWith:_context and:data];
     script.name = scriptName;
     [script setGameStream:_gameStream];
+   
+    [self setArgs:args and:allArgs forScript:script];
     
     [_scripts setCacheObject:script forKey:scriptName];
     
@@ -142,6 +144,16 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"echo"
                                                         object:nil
                                                       userInfo:userInfo];
+}
+
+- (void)setArgs:(NSArray *)args and:(NSString *)allArgs forScript:(Script *)script {
+    
+    [script.localVars setCacheObject:allArgs forKey:@"0"];
+    
+    [args enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *key = [NSString stringWithFormat:@"%lu", idx + 1];
+        [script.localVars setCacheObject:obj forKey:key];
+    }];
 }
 
 @end

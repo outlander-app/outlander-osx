@@ -9,7 +9,21 @@
 #import "ScriptHandler.h"
 #import <PEGKit/PEGKit.h>
 
+@interface ScriptHandler () {
+    id<EventRelay> _relay;
+}
+@end
+
 @implementation ScriptHandler
+
+- (instancetype)initWith:(id<EventRelay>)relay {
+    self = [super init];
+    if(!self) return nil;
+    
+    _relay = relay;
+    
+    return self;
+}
 
 - (BOOL)canHandle:(NSString *)command {
     return [command hasPrefix:@"."];
@@ -19,24 +33,26 @@
     
     __block NSMutableArray *tokens = [[NSMutableArray alloc] init];
     
+    NSRange range = [command rangeOfString:@" "];
+    NSString *allArgs = @"";
+    
+    if(range.location != NSNotFound) {
+        allArgs = [command substringFromIndex:range.location + 1];
+    }
+    
     PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:command];
     [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
        
-        NSLog(@"%@", tok);
-        
         if(tok.tokenType != PKTokenTypeSymbol) {
-            [tokens addObject:[tok stringValue]];
+            NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            [tokens addObject:val];
         }
     }];
     
     NSString *target = tokens[0];
     [tokens removeObjectAtIndex:0];
     
-    NSDictionary *userInfo = @{@"target": target, @"args": tokens};
-    
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:@"startscript"
-                      object:self
-                    userInfo:userInfo];
+    NSDictionary *userInfo = @{@"target": target, @"args": tokens, @"allArgs": allArgs};
+    [_relay send:@"startscript" with:userInfo];
 }
 @end

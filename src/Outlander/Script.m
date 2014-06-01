@@ -94,6 +94,44 @@
     _lineNumber++;
 }
 
+- (void)parser:(PKParser *)p didMatchWaitForReStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+   
+    __block BOOL gotSignal = NO;
+    __block RACDisposable *signal = nil;
+    
+    NSString *matchText = [self popCommandsToString:a];
+    
+    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+        
+        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+            
+            NSArray *matches = [obj.text matchesForPattern:matchText];
+            
+            [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop2) {
+                if(res.numberOfRanges > 0) {
+                    *stop1 = YES;
+                    *stop2 = YES;
+                    gotSignal = YES;
+                    [signal dispose];
+                    [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
+                    [self.pauseCondition signal];
+                }
+            }];
+        }];
+    }];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"waitfor %@", matchText]];
+    
+    [self.pauseCondition lock];
+    
+    while(!gotSignal) {
+        [self.pauseCondition wait];
+    }
+    
+    [self.pauseCondition unlock];
+}
+
 - (void)parser:(PKParser *)p didMatchWaitForStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
    
@@ -110,8 +148,8 @@
                 *stop = YES;
                 gotSignal = YES;
                 [signal dispose];
-                [self.pauseCondition signal];
                 [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
+                [self.pauseCondition signal];
             }
         }];
         
@@ -137,8 +175,8 @@
     signal = [_gameStream.subject.signal subscribeNext:^(id x) {
         gotSignal = YES;
         [signal dispose];
-        [self.pauseCondition signal];
         [self sendScriptDebug:@"prompt recieved"];
+        [self.pauseCondition signal];
     }];
     
     [self sendScriptDebug:@"waiting for prompt"];
@@ -304,11 +342,11 @@
         NSString *space = [str length] > 0 ? @" " : @"";
         NSString *tokenVal = [token stringValue];
         
-        if([tokenVal hasPrefix:@"%"] || [tokenVal hasPrefix:@"$"] || [tokenVal hasPrefix:@"."]) {
+        if([tokenVal hasPrefix:@"%"] || [tokenVal hasPrefix:@"$"] || [tokenVal hasPrefix:@"."] || [tokenVal hasPrefix:@"|"]) {
             space = @"";
         }
         
-        if([str hasPrefix:@"."]) {
+        if([str hasPrefix:@"."] || [str hasPrefix:@"|"]) {
             space = @"";
         }
         

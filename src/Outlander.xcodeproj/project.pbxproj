@@ -152,6 +152,11 @@
 		F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9718A0001300A11EE9 /* ProgressBarViewController.xib */; };
 		F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */; };
 		F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */; };
+		F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */; };
+		F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */; };
+		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
+		F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
+		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9CB31101903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
@@ -343,6 +348,13 @@
 		F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VitalsViewController.h; sourceTree = "<group>"; };
 		F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VitalsViewController.m; sourceTree = "<group>"; };
 		F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VitalsViewController.xib; sourceTree = "<group>"; };
+		F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptRunnerTester.m; sourceTree = "<group>"; };
+		F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptHandlerTester.m; sourceTree = "<group>"; };
+		F9BF6AEF193A90880075A12F /* EventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRelay.h; sourceTree = "<group>"; };
+		F9BF6AF0193A914B0075A12F /* GameEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEventRelay.h; sourceTree = "<group>"; };
+		F9BF6AF1193A914B0075A12F /* GameEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEventRelay.m; sourceTree = "<group>"; };
+		F9BF6AF4193A941B0075A12F /* StubEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubEventRelay.h; sourceTree = "<group>"; };
+		F9BF6AF5193A941B0075A12F /* StubEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubEventRelay.m; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9CB310E1903238B004587A5 /* SkillExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillExp.h; sourceTree = "<group>"; };
@@ -403,6 +415,11 @@
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 				F971EFD31938806C008AF6A8 /* CommandRelay.h */,
+				F9BF6AEF193A90880075A12F /* EventRelay.h */,
+				F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */,
+				F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */,
+				F9BF6AF0193A914B0075A12F /* GameEventRelay.h */,
+				F9BF6AF1193A914B0075A12F /* GameEventRelay.m */,
 				F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */,
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
 				F96ECDB01934194300787CB9 /* OutlanderParser.h */,
@@ -419,8 +436,6 @@
 				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
-				F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */,
-				F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -575,6 +590,8 @@
 				F971EFD91938830D008AF6A8 /* StubCommandRelay.m */,
 				F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */,
 				F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */,
+				F9BF6AF4193A941B0075A12F /* StubEventRelay.h */,
+				F9BF6AF5193A941B0075A12F /* StubEventRelay.m */,
 			);
 			name = Stubs;
 			sourceTree = "<group>";
@@ -704,6 +721,8 @@
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
+				F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */,
+				F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */,
 				F96ECDE21936B82E00787CB9 /* ScriptTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
@@ -944,6 +963,7 @@
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
+				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
@@ -977,6 +997,7 @@
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
@@ -985,6 +1006,7 @@
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F96ECDD2193565CE00787CB9 /* HighlightCommandTester.m in Sources */,
+				F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
@@ -1017,6 +1039,7 @@
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
+				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
@@ -1025,6 +1048,7 @@
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
+				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,

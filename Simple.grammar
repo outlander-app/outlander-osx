@@ -11,11 +11,11 @@ program
     ;
 
 name
-    = Word | '%' Word | '$' Word
+    = '%' Word | '$' Word | Word | '%' Number
     ;
 
 refinement
-    = '.' name
+    = ('.' | '|') name
     ;
 
 numberLiteral
@@ -41,14 +41,19 @@ stmt
     | moveStmt
     | waitStmt
     | waitForStmt
+    | waitForReStmt
     ;
 
 exprStmt
-    = name refinement*
+    = name? refinement*
     ;
 
 waitForStmt
     = 'waitfor'! putExpr
+    ;
+
+waitForReStmt
+    = 'waitforre'! putExpr
     ;
 
 waitStmt

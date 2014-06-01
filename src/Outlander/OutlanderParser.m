@@ -13,6 +13,7 @@
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *exprStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *waitForStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *waitForReStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *waitStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *moveExpr_memo;
 @property (nonatomic, retain) NSMutableDictionary *moveStmt_memo;
@@ -53,18 +54,20 @@
         self.tokenKindTab[@"echo"] = @(OUTLANDERPARSER_TOKEN_KIND_ECHO);
         self.tokenKindTab[@"pause"] = @(OUTLANDERPARSER_TOKEN_KIND_PAUSE);
         self.tokenKindTab[@"="] = @(OUTLANDERPARSER_TOKEN_KIND_EQUALS);
-        self.tokenKindTab[@"wait"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITSTMT);
         self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"wait"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITSTMT);
         self.tokenKindTab[@"#"] = @(OUTLANDERPARSER_TOKEN_KIND_POUND);
         self.tokenKindTab[@"alias"] = @(OUTLANDERPARSER_TOKEN_KIND_ALIAS);
         self.tokenKindTab[@"nextroom"] = @(OUTLANDERPARSER_TOKEN_KIND_NEXTROOM);
         self.tokenKindTab[@"$"] = @(OUTLANDERPARSER_TOKEN_KIND_DOLLAR);
+        self.tokenKindTab[@"waitforre"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITFORRE);
         self.tokenKindTab[@"waitfor"] = @(OUTLANDERPARSER_TOKEN_KIND_WAITFOR);
-        self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"resume"] = @(OUTLANDERPARSER_TOKEN_KIND_RESUME);
+        self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
         self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"goto"] = @(OUTLANDERPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"|"] = @(OUTLANDERPARSER_TOKEN_KIND_PIPE);
         self.tokenKindTab[@"highlight"] = @(OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT);
         self.tokenKindTab[@"var"] = @(OUTLANDERPARSER_TOKEN_KIND_VAR);
 
@@ -76,18 +79,20 @@
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ECHO] = @"echo";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PAUSE] = @"pause";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EQUALS] = @"=";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITSTMT] = @"wait";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITSTMT] = @"wait";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_POUND] = @"#";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_ALIAS] = @"alias";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_DOLLAR] = @"$";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITFORRE] = @"waitforre";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_WAITFOR] = @"waitfor";
-        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RESUME] = @"resume";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PIPE] = @"|";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_HIGHLIGHT] = @"highlight";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_VAR] = @"var";
 
@@ -100,6 +105,7 @@
         self.stmt_memo = [NSMutableDictionary dictionary];
         self.exprStmt_memo = [NSMutableDictionary dictionary];
         self.waitForStmt_memo = [NSMutableDictionary dictionary];
+        self.waitForReStmt_memo = [NSMutableDictionary dictionary];
         self.waitStmt_memo = [NSMutableDictionary dictionary];
         self.moveExpr_memo = [NSMutableDictionary dictionary];
         self.moveStmt_memo = [NSMutableDictionary dictionary];
@@ -135,6 +141,7 @@
     [_stmt_memo removeAllObjects];
     [_exprStmt_memo removeAllObjects];
     [_waitForStmt_memo removeAllObjects];
+    [_waitForReStmt_memo removeAllObjects];
     [_waitStmt_memo removeAllObjects];
     [_moveExpr_memo removeAllObjects];
     [_moveStmt_memo removeAllObjects];
@@ -196,14 +203,17 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchName:)];
 
-    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
-        [self matchWord:NO]; 
-    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PERCENT, 0]) {
+    if ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PERCENT discard:NO]; [self matchWord:NO]; }]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_PERCENT discard:NO]; 
         [self matchWord:NO]; 
-    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_DOLLAR, 0]) {
+    } else if ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_DOLLAR discard:NO]; [self matchWord:NO]; }]) {
         [self match:OUTLANDERPARSER_TOKEN_KIND_DOLLAR discard:NO]; 
         [self matchWord:NO]; 
+    } else if ([self speculate:^{ [self matchWord:NO]; }]) {
+        [self matchWord:NO]; 
+    } else if ([self speculate:^{ [self match:OUTLANDERPARSER_TOKEN_KIND_PERCENT discard:NO]; [self matchNumber:NO]; }]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_PERCENT discard:NO]; 
+        [self matchNumber:NO]; 
     } else {
         [self raise:@"No viable alternative found in rule 'name'."];
     }
@@ -219,7 +229,13 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchRefinement:)];
 
-    [self match:OUTLANDERPARSER_TOKEN_KIND_DOT discard:NO]; 
+    if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_DOT, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_DOT discard:NO]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_PIPE, 0]) {
+        [self match:OUTLANDERPARSER_TOKEN_KIND_PIPE discard:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'refinement'."];
+    }
     [self name_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRefinement:)];
@@ -296,6 +312,8 @@
         [self waitStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_WAITFOR, 0]) {
         [self waitForStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_WAITFORRE, 0]) {
+        [self waitForReStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -311,7 +329,9 @@
     
     [self fireDelegateSelector:@selector(parser:willMatchExprStmt:)];
 
-    [self name_]; 
+    if ([self speculate:^{ [self name_]; }]) {
+        [self name_]; 
+    }
     while ([self speculate:^{ [self refinement_]; }]) {
         [self refinement_]; 
     }
@@ -335,6 +355,20 @@
 
 - (void)waitForStmt_ {
     [self parseRule:@selector(__waitForStmt) withMemo:_waitForStmt_memo];
+}
+
+- (void)__waitForReStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchWaitForReStmt:)];
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_WAITFORRE discard:YES]; 
+    [self putExpr_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchWaitForReStmt:)];
+}
+
+- (void)waitForReStmt_ {
+    [self parseRule:@selector(__waitForReStmt) withMemo:_waitForReStmt_memo];
 }
 
 - (void)__waitStmt {

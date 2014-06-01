@@ -59,6 +59,30 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"two"];
         });
         
+        it(@"use numbered local var", ^{
+            NSString *sample = @"put %1";
+            
+            [theScript.localVars setCacheObject:@"one" forKey:@"1"];
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastCommand.command should] equal:@"one"];
+        });
+        
+        it(@"use numbered local var", ^{
+            NSString *sample = @"put %12";
+            
+            [theScript.localVars setCacheObject:@"one two three" forKey:@"12"];
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            [[theRelay.lastCommand.command should] equal:@"one two three"];
+        });
+        
         it(@"use global var", ^{
             NSString *sample = @"put $backpack";
             
@@ -212,8 +236,27 @@ describe(@"Script", ^{
             
             [theScript start];
             
-            // TODO: send TextTag array
-            [theInfoStream publishSubject:@"something"];
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            [arr addObject:[TextTag tagFor:@"something" mono:NO]];
+            
+            [theInfoStream publishSubject:arr];
+            
+            [[expectFutureValue(theRelay.lastEcho.text) shouldEventuallyBeforeTimingOutAfter(2.0)] equal:@"matched"];
+        });
+        
+        // not really testing anything -- how to test for wait?
+        xit(@"waitforre - wait for text", ^{
+            
+            NSString *sample = @"waitforre something|or another";
+            
+            [theScript setData:sample];
+            
+            [theScript start];
+            
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            [arr addObject:[TextTag tagFor:@"something" mono:NO]];
+            
+            [theInfoStream publishSubject:arr];
             
             [[expectFutureValue(theRelay.lastEcho.text) shouldEventuallyBeforeTimingOutAfter(2.0)] equal:@"matched"];
         });

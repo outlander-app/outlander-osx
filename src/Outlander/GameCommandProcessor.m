@@ -14,6 +14,7 @@
 #import "HighlightCommandHandler.h"
 #import "VarCommandHandler.h"
 #import "AliasCommandHandler.h"
+#import "GameEventRelay.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
@@ -38,7 +39,7 @@
     _echoed = [RACReplaySubject subject];
     
     _handlers = [[NSMutableArray alloc] init];
-    [_handlers addObject:[[ScriptHandler alloc] init]];
+    [_handlers addObject:[[ScriptHandler alloc] initWith:[[GameEventRelay alloc] init]]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
     [_handlers addObject:[[VarCommandHandler alloc] init]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
