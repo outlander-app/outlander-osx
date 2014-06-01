@@ -24,5 +24,6 @@
 - (NSArray *)allKeys;
 - (NSArray *)allItems;
 - (NSUInteger)count;
+- (void)removeObjectForKey:(id)key;
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block;
 @end

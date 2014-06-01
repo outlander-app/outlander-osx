@@ -77,6 +77,10 @@
     if([action isEqualToString:@"vars"]) {
         [self vars:target];
     }
+    
+    if([action isEqualToString:@"finish"]) {
+        [self finish:target];
+    }
 }
 
 - (void)run:(NSString *)scriptName withArgs:(NSArray *)args and:(NSString *)allArgs {
@@ -124,7 +128,24 @@
    
     if(script) {
         [self sendEcho:[NSString stringWithFormat:@"[Script aborted: %@]", scriptName]];
-        [script cancel];
+        [_scripts removeObjectForKey:scriptName];
+        
+        if(![script isCancelled]) {
+            [script cancel];
+        }
+    }
+}
+
+- (void)finish:(NSString *)scriptName {
+    Script *script = [_scripts cacheObjectForKey:scriptName];
+   
+    if(script) {
+        [self sendEcho:[NSString stringWithFormat:@"[Script finished: %@]", scriptName]];
+        [_scripts removeObjectForKey:scriptName];
+        
+        if(![script isCancelled]) {
+            [script cancel];
+        }
     }
 }
 

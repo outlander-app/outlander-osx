@@ -76,6 +76,12 @@
     return count;
 }
 
+- (void)removeObjectForKey:(id)key {
+    dispatch_barrier_async(_queue, ^{
+        [_cache removeObjectForKey:key];
+    });
+}
+
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block {
     dispatch_sync(_queue, ^{
         [_cache enumerateKeysAndObjectsUsingBlock:block];

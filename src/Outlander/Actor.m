@@ -7,10 +7,11 @@
 //
 
 #import "Actor.h"
+#import "GameEventRelay.h"
 
-@interface Actor ()
-@property (nonatomic, strong, readonly) NSCondition *condition;
-@property (nonatomic, assign) BOOL paused;
+@interface Actor () {
+    id<EventRelay> _relay;
+}
 @end
 
 @implementation Actor
@@ -21,6 +22,7 @@
     
     _uuid = [[NSUUID UUID] UUIDString];
     _condition = [[NSCondition alloc] init];
+    _relay = [[GameEventRelay alloc] init];
     
     return self;
 }
@@ -33,6 +35,9 @@
         _paused = NO;
         [_condition signal];
     }
+    
+    NSDictionary *dict = @{@"target": self.name, @"action": @"finish"};
+    [_relay send:@"script" with:dict];
 }
 
 - (BOOL)isPaused {

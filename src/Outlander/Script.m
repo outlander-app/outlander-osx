@@ -70,7 +70,15 @@
     
     _scriptLines = [[NSMutableArray alloc] initWithArray:lines];
     
-    // TODO: pre-scan labels
+    [_scriptLines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop1) {
+        NSArray *matches = [line matchesForPattern:@"^\\s*([\\w\\.-]+):"];
+        [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger matchIdx, BOOL *stop2) {
+            if(res.numberOfRanges > 0) {
+                NSString *label = [line substringWithRange:[res rangeAtIndex:1]];
+                [_labels setCacheObject:@(idx) forKey:[label lowercaseString]];
+            }
+        }];
+    }];
 }
 
 - (void)process {
@@ -383,7 +391,7 @@
     
     NSLog(@"Label: %@", [label stringValue]);
     
-    [_labels setCacheObject:@(_lineNumber) forKey:[label stringValue]];
+    [_labels setCacheObject:@(_lineNumber) forKey:[[label stringValue] lowercaseString]];
 }
 
 - (void)parser:(PKParser *)p didMatchGotoStmt:(PKAssembly *)a {
@@ -402,7 +410,7 @@
     
     label = [self replaceVars:label];
     
-    NSNumber *gotoObj = [_labels cacheObjectForKey:label];
+    NSNumber *gotoObj = [_labels cacheObjectForKey:[label lowercaseString]];
     
     if(!gotoObj) {
         [self sendScriptDebug:[NSString stringWithFormat:@"unknown label %@", label]];

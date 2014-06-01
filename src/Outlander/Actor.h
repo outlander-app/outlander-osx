@@ -7,9 +7,13 @@
 //
 //  http://albertodebortoli.github.io/blog/2014/05/20/asynchronous-message-passing-with-actors-in-objective-c/
 
+#import "EventRelay.h"
+
 @interface Actor : NSThread
 
 @property (nonatomic, copy, readonly) NSString *uuid;
+@property (nonatomic, strong, readonly) NSCondition *condition;
+@property (nonatomic, assign) BOOL paused;
 
 - (void)suspend;
 - (void)resume;
