@@ -120,11 +120,11 @@ pauseStmt
     ;
 
 labelStmt
-    = name ':'!
+    = name refinement* ':'!
     ;
 
 gotoStmt
-    = 'goto'! name
+    = 'goto'! name refinement*
     ;
 
 setVar = 'var' | 'setvariable';

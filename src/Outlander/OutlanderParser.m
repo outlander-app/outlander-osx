@@ -730,6 +730,9 @@
 
     [self tryAndRecover:OUTLANDERPARSER_TOKEN_KIND_COLON block:^{ 
         [self name_]; 
+        while ([self speculate:^{ [self refinement_]; }]) {
+            [self refinement_]; 
+        }
         [self match:OUTLANDERPARSER_TOKEN_KIND_COLON discard:YES]; 
     } completion:^{ 
         [self match:OUTLANDERPARSER_TOKEN_KIND_COLON discard:YES]; 
@@ -748,6 +751,9 @@
 
     [self match:OUTLANDERPARSER_TOKEN_KIND_GOTO discard:YES]; 
     [self name_]; 
+    while ([self speculate:^{ [self refinement_]; }]) {
+        [self refinement_]; 
+    }
 
     [self fireDelegateSelector:@selector(parser:didMatchGotoStmt:)];
 }

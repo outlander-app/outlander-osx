@@ -127,7 +127,9 @@
     Script *script = [_scripts cacheObjectForKey:scriptName];
    
     if(script) {
-        [self sendEcho:[NSString stringWithFormat:@"[Script aborted: %@]", scriptName]];
+        NSTimeInterval since = [script.started timeIntervalSinceNow];
+        
+        [self sendEcho:[NSString stringWithFormat:@"[Script aborted! (%#2.2f seconds): %@]", since*-1, scriptName]];
         [_scripts removeObjectForKey:scriptName];
         
         if(![script isCancelled]) {
@@ -140,7 +142,10 @@
     Script *script = [_scripts cacheObjectForKey:scriptName];
    
     if(script) {
-        [self sendEcho:[NSString stringWithFormat:@"[Script finished: %@]", scriptName]];
+        
+        NSTimeInterval since = [script.started timeIntervalSinceNow];
+        
+        [self sendEcho:[NSString stringWithFormat:@"[Script finished (%#2.2f seconds): %@]", since*-1, scriptName]];
         [_scripts removeObjectForKey:scriptName];
         
         if(![script isCancelled]) {

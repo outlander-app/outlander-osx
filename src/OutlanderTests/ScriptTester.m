@@ -122,6 +122,20 @@ describe(@"Script", ^{
         });
     });
     
+    context(@"goto", ^{
+       
+        it(@"goto label", ^{
+            
+            NSString *sample = @"label.one:\ngoto label.end\nlabel.end:";
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            [theScript process];
+            [[theRelay.lastEcho.text should] equal:@"[test (1)]: goto label.end\n"];
+        });
+    });
+    
     context(@"commands", ^{
        
         it(@"send echo", ^{

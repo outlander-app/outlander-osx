@@ -162,7 +162,7 @@
                         timedOut = NO;
                         gotSignal = YES;
                         [signal dispose];
-                        [self sendScriptDebug:[NSString stringWithFormat:@"matched %@", obj.text]];
+                        [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", match.label]];
                         [self.pauseCondition signal];
                         
                         [self gotoLabel:match.label];
@@ -387,19 +387,17 @@
 - (void)parser:(PKParser *)p didMatchLabelStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    PKToken *label = [a pop];
+    NSString *label = [self popCommandsToString:a];
     
-    NSLog(@"Label: %@", [label stringValue]);
+    NSLog(@"Label: %@", label);
     
-    [_labels setCacheObject:@(_lineNumber) forKey:[[label stringValue] lowercaseString]];
+    [_labels setCacheObject:@(_lineNumber) forKey:[label lowercaseString]];
 }
 
 - (void)parser:(PKParser *)p didMatchGotoStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    PKToken *labelToken = [a pop];
-    
-    NSString *label = [self replaceVars:[labelToken stringValue]];
+    NSString *label = [self popCommandsToString:a];
     
     [self sendScriptDebug:[NSString stringWithFormat:@"goto %@", label]];
     

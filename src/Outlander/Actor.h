@@ -14,6 +14,7 @@
 @property (nonatomic, copy, readonly) NSString *uuid;
 @property (nonatomic, strong, readonly) NSCondition *condition;
 @property (nonatomic, assign) BOOL paused;
+@property (nonatomic, strong) NSDate *started;
 
 - (void)suspend;
 - (void)resume;

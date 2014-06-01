@@ -40,6 +40,11 @@
     [_relay send:@"script" with:dict];
 }
 
+- (void)start {
+    self.started = [NSDate date];
+    [super start];
+}
+
 - (BOOL)isPaused {
     return _paused;
 }
