@@ -156,7 +156,7 @@
             }
         }
         else if([tagName isEqualToString:@"spell"]) {
-            [_gameContext.globalVars setCacheObject:[node contents] forKey:@"spell"];
+            [_gameContext.globalVars setCacheObject:[node contents] forKey:@"preparedspell"];
             
             if([self isNextNodeNewline:children index:i]) {
                 i++;

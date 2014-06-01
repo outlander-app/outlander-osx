@@ -82,11 +82,12 @@
 }
 
 - (void)process {
-    NSLog(@"%@ :: script running", [self description]);
     
-    if(_lineNumber >= _scriptLines.count) {
+    if(_lineNumber >= _scriptLines.count || self.isCancelled) {
         NSLog(@"End of script!");
-        [self cancel];
+        if(!self.isCancelled) {
+            [self cancel];
+        }
         return;
     }
     
@@ -402,6 +403,13 @@
     [self sendScriptDebug:[NSString stringWithFormat:@"goto %@", label]];
     
     [self gotoLabel:label];
+}
+
+- (void)parser:(PKParser *)p didMatchExitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    [self sendScriptDebug:@"exit"];
+    [self cancel];
 }
 
 - (void)gotoLabel:(NSString *)label {

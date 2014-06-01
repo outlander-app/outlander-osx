@@ -237,9 +237,9 @@ describe(@"GameParser", ^{
             
             [[results should] haveCountOf:0];
             
-            [[theValue([_context.globalVars cacheDoesContain:@"spell"]) should] beYes];
+            [[theValue([_context.globalVars cacheDoesContain:@"preparedspell"]) should] beYes];
             
-            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"spell"];
+            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"preparedspell"];
             [[roomObjs should] equal:@"None"];
         });
 

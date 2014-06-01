@@ -319,7 +319,7 @@
         
         _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
         _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
-        [_spelltimeNotifier set:[_gameContext.globalVars cacheObjectForKey:@"spell"]];
+        [_spelltimeNotifier set:[_gameContext.globalVars cacheObjectForKey:@"preparedspell"]];
         
         for (TextTag *tag in tags) {
             [self append:tag to:@"main"];

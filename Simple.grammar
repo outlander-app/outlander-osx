@@ -45,6 +45,7 @@ stmt
     | matchStmt
     | matchReStmt
     | matchWaitStmt
+    | exitStmt
     ;
 
 exprStmt
@@ -125,6 +126,10 @@ labelStmt
 
 gotoStmt
     = 'goto'! name refinement*
+    ;
+
+exitStmt
+    = 'exit'!
     ;
 
 setVar = 'var' | 'setvariable';

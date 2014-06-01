@@ -35,6 +35,7 @@
 @property (nonatomic, retain) NSMutableDictionary *pauseStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *labelStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *exitStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *setVar_memo;
 @property (nonatomic, retain) NSMutableDictionary *varStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *nameExprPair_memo;
@@ -69,6 +70,7 @@
         self.tokenKindTab[@"%"] = @(OUTLANDERPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"resume"] = @(OUTLANDERPARSER_TOKEN_KIND_RESUME);
         self.tokenKindTab[@"put"] = @(OUTLANDERPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"exit"] = @(OUTLANDERPARSER_TOKEN_KIND_EXITSTMT);
         self.tokenKindTab[@"script"] = @(OUTLANDERPARSER_TOKEN_KIND_SCRIPT);
         self.tokenKindTab[@"setvariable"] = @(OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"matchre"] = @(OUTLANDERPARSER_TOKEN_KIND_MATCHRE);
@@ -97,6 +99,7 @@
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_RESUME] = @"resume";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_EXITSTMT] = @"exit";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SCRIPT] = @"script";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[OUTLANDERPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
@@ -136,6 +139,7 @@
         self.pauseStmt_memo = [NSMutableDictionary dictionary];
         self.labelStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
+        self.exitStmt_memo = [NSMutableDictionary dictionary];
         self.setVar_memo = [NSMutableDictionary dictionary];
         self.varStmt_memo = [NSMutableDictionary dictionary];
         self.nameExprPair_memo = [NSMutableDictionary dictionary];
@@ -175,6 +179,7 @@
     [_pauseStmt_memo removeAllObjects];
     [_labelStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
+    [_exitStmt_memo removeAllObjects];
     [_setVar_memo removeAllObjects];
     [_varStmt_memo removeAllObjects];
     [_nameExprPair_memo removeAllObjects];
@@ -335,6 +340,8 @@
         [self matchReStmt_]; 
     } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_MATCHWAIT, 0]) {
         [self matchWaitStmt_]; 
+    } else if ([self predicts:OUTLANDERPARSER_TOKEN_KIND_EXITSTMT, 0]) {
+        [self exitStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -760,6 +767,19 @@
 
 - (void)gotoStmt_ {
     [self parseRule:@selector(__gotoStmt) withMemo:_gotoStmt_memo];
+}
+
+- (void)__exitStmt {
+    
+    [self fireDelegateSelector:@selector(parser:willMatchExitStmt:)];
+
+    [self match:OUTLANDERPARSER_TOKEN_KIND_EXITSTMT discard:YES]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchExitStmt:)];
+}
+
+- (void)exitStmt_ {
+    [self parseRule:@selector(__exitStmt) withMemo:_exitStmt_memo];
 }
 
 - (void)__setVar {
