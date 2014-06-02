@@ -322,12 +322,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.arrivals subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -343,12 +343,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.deaths subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -364,12 +364,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.thoughts subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -398,12 +398,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.vitals subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -422,12 +422,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.vitals subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -492,12 +492,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.exp subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -516,12 +516,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.exp subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -540,12 +540,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.roundtime subscribeNext:^(id x) {
                 [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
@@ -618,12 +618,12 @@ describe(@"GameParser", ^{
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             __block BOOL signaled = NO;
             
-            [_parser parse:data then:^(NSArray* res) {
-                [parseResults addObjectsFromArray:res];
-            }];
-            
             [_parser.exp subscribeNext:^(id x) {
                 signaled = YES;
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
