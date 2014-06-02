@@ -8,6 +8,7 @@
 
 #import "HighlightCommandHandler.h"
 #import "Highlight.h"
+#import "NSString+Categories.h"
 
 @implementation HighlightCommandHandler
 
@@ -21,7 +22,7 @@
     
     if(commands && commands.count > 0) {
         NSString *color = commands[0];
-        NSString *pattern = commands[1];
+        NSString *pattern = [self items:commands after:0];
         
         __block Highlight *hl;
         
@@ -45,6 +46,18 @@
             [context.highlights signalChange:hl];
         }
     }
+}
+
+- (NSString *) items:(NSArray *)items after:(NSInteger)index {
+    NSMutableString *str = [[NSMutableString alloc] init];
+   
+    [items enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+        if(idx > index) {
+            [str appendFormat:@"%@ ", obj];
+        }
+    }];
+    
+    return [str trimWhitespaceAndNewline];
 }
 
 @end

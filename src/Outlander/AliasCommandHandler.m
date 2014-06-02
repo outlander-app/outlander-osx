@@ -8,6 +8,7 @@
 
 #import "AliasCommandHandler.h"
 #import "Alias.h"
+#import "NSString+Categories.h"
 
 @implementation AliasCommandHandler
 
@@ -21,7 +22,7 @@
     
     if(commands && commands.count > 0) {
         NSString *pattern = commands[0];
-        NSString *replace = commands[1];
+        NSString *replace = [self items:commands after:0];
         
         __block Alias *hl;
         
@@ -45,6 +46,18 @@
             [context.aliases signalChange:hl];
         }
     }
+}
+
+- (NSString *) items:(NSArray *)items after:(NSInteger)index {
+    NSMutableString *str = [[NSMutableString alloc] init];
+   
+    [items enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+        if(idx > index) {
+            [str appendFormat:@"%@ ", obj];
+        }
+    }];
+    
+    return [str trimWhitespaceAndNewline];
 }
 
 @end

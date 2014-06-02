@@ -46,6 +46,14 @@ describe(@"var command handler", ^{
             [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
         });
         
+        it(@"sets global var", ^{
+            [theHandler handle:@"#var one two three four" withContext:theContext];
+            
+            NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
+            [[value should] equal:@"two three four"];
+            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+        });
+        
         it(@"updates existing global var", ^{
             [theHandler handle:@"#var one two" withContext:theContext];
             

@@ -7,6 +7,7 @@
 //
 
 #import "VarCommandHandler.h"
+#import "NSString+Categories.h"
 
 @implementation VarCommandHandler
 
@@ -20,10 +21,22 @@
     
     if(commands && commands.count > 0) {
         NSString *key = commands[0];
-        NSString *value = commands[1];
-        
+        NSString *value = [self items:commands after:0];
+
         [context.globalVars setCacheObject:value forKey:key];
     }
+}
+
+- (NSString *) items:(NSArray *)items after:(NSInteger)index {
+    NSMutableString *str = [[NSMutableString alloc] init];
+   
+    [items enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+        if(idx > index) {
+            [str appendFormat:@"%@ ", obj];
+        }
+    }];
+    
+    return [str trimWhitespaceAndNewline];
 }
 
 @end
