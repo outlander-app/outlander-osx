@@ -12,22 +12,28 @@
     NSString *_spell;
     NSInteger _count;
     NSTimer *_timer;
+    GameContext *_gameContext;
 }
 @end
 
 @implementation SpelltimeNotifier
 
-- (instancetype)init {
+- (instancetype)initWith:(GameContext *)context {
     self = [super init];
     if(!self)return nil;
     
+    _gameContext = context;
     _notification = [RACReplaySubject subject];
+    [_notification deliverOn:[RACScheduler mainThreadScheduler]];
     _count = 0;
     
     return self;
 }
 
 - (void)set:(NSString *)value {
+    
+    if([_spell isEqualToString:value])
+        return;
     
     _spell = value;
     if(!value || value.length == 0 || [value isEqualToString:@"None"])
@@ -63,10 +69,16 @@
 - (void)sendUpdate {
     NSString *sendValue = @"S: None";
     
-    if(![_spell isEqualToString:@"None"])
+    if(![_spell isEqualToString:@"None"]) {
         sendValue =[NSString stringWithFormat:@"S: (%ld)%@ ", (long)_count, _spell];
-    
+    }
+   
     [_notification sendNext:sendValue];
+    
+    NSString *time = [@(_count) stringValue];
+    
+    // this is causing issues - is getting a deadlock
+    [_gameContext.globalVars setCacheObject:time forKey:@"spelltime"];
 }
 
 @end

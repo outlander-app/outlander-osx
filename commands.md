@@ -1,5 +1,3 @@
-
-
 ## Configuration Commands
 
 * \#alias \<name\> \<replacement\>
@@ -17,10 +15,11 @@
     * ex: #script resume forage
 * coming - \#parse \<text\>
 	* sends the text to be parsed by the scripting engine, as if sent by the game
+
 ## Scripting
 
     .myscript one two "three four"
-    
+   
 Script arguments become local variables:
 	
 	%0 = one two "three four"
@@ -57,8 +56,8 @@ Script arguments become local variables:
 Global variables are prefixed with a $.
 
 * $charactername - your character name
-* coming - $preparedspell - currently prepared spell, 'None' when there isn't one.
-* coming - $spelltime - amount of time in seconds the spell has been prepared
+* $preparedspell - currently prepared spell, 'None' when there isn't one.
+* $spelltime - amount of time in seconds the spell has been prepared
 * $game - what game you are connected to, ex: 'DR'
 * $gametime - the time in game you are playing, a Unix timestamp, ex: 1388858263
 * $health - the percentange of your health
@@ -97,5 +96,5 @@ Global variables are prefixed with a $.
 * $roomplayers
 * $roomexits
 * $roomextra
-* coming - $roundtime
+* $roundtime
 * $prompt

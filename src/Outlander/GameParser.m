@@ -28,16 +28,18 @@
     
     _gameContext = context;
     
-    _subject = [RACReplaySubject subject];
-    _vitals = [RACReplaySubject subject];
-    _room = [RACReplaySubject subject];
-    _exp = [RACReplaySubject subject];
-    _thoughts = [RACReplaySubject subject];
-    _arrivals = [RACReplaySubject subject];
-    _deaths = [RACReplaySubject subject];
-    _familiar = [RACReplaySubject subject];
-    _log = [RACReplaySubject subject];
-    _roundtime = [RACReplaySubject subject];
+    _subject = [RACSubject subject];
+    _vitals = [RACSubject subject];
+    _room = [RACSubject subject];
+    _exp = [RACSubject subject];
+    _thoughts = [RACSubject subject];
+    _arrivals = [RACSubject subject];
+    _deaths = [RACSubject subject];
+    _familiar = [RACSubject subject];
+    _log = [RACSubject subject];
+    _roundtime = [RACSubject subject];
+    _spell = [RACSubject subject];
+    
     _currenList = [[NSMutableArray alloc] init];
     _currentResult = [[NSMutableString alloc] init];
     _inStream = NO;
@@ -156,7 +158,9 @@
             }
         }
         else if([tagName isEqualToString:@"spell"]) {
-            [_gameContext.globalVars setCacheObject:[node contents] forKey:@"preparedspell"];
+            NSString *spell = [node contents];
+            [_gameContext.globalVars setCacheObject:spell forKey:@"preparedspell"];
+            [_spell sendNext:spell];
             
             if([self isNextNodeNewline:children index:i]) {
                 i++;

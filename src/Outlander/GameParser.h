@@ -24,17 +24,18 @@
 
 -(id)initWithContext:(GameContext *)context;
 
-@property (atomic, strong) RACReplaySubject *subject;
+@property (atomic, strong) RACSubject *subject;
 
-@property (nonatomic, strong) RACReplaySubject *vitals;
-@property (nonatomic, strong) RACReplaySubject *room;
-@property (nonatomic, strong) RACReplaySubject *exp;
-@property (nonatomic, strong) RACReplaySubject *thoughts;
-@property (nonatomic, strong) RACReplaySubject *arrivals;
-@property (nonatomic, strong) RACReplaySubject *deaths;
-@property (nonatomic, strong) RACReplaySubject *familiar;
-@property (nonatomic, strong) RACReplaySubject *log;
-@property (nonatomic, strong) RACReplaySubject *roundtime;
+@property (nonatomic, strong) RACSubject *vitals;
+@property (nonatomic, strong) RACSubject *room;
+@property (nonatomic, strong) RACSubject *exp;
+@property (nonatomic, strong) RACSubject *thoughts;
+@property (nonatomic, strong) RACSubject *arrivals;
+@property (nonatomic, strong) RACSubject *deaths;
+@property (nonatomic, strong) RACSubject *familiar;
+@property (nonatomic, strong) RACSubject *log;
+@property (nonatomic, strong) RACSubject *roundtime;
+@property (nonatomic, strong) RACSubject *spell;
 
 -(void) parse:(NSString*)data then:(CompleteBlock)block;
 

@@ -28,6 +28,7 @@
 #import "ScriptRunner.h"
 #import "LocalFileSystem.h"
 #import "CommandContext.h"
+#import "RACEXTScope.h"
 
 @interface TestViewController ()
 @end
@@ -53,8 +54,8 @@
     _expTracker = [[ExpTracker alloc] init];
     _gameContext = [[GameContext alloc] init];
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
-    _roundtimeNotifier = [[RoundtimeNotifier alloc] init];
-    _spelltimeNotifier = [[SpelltimeNotifier alloc] init];
+    _roundtimeNotifier = [[RoundtimeNotifier alloc] initWith:_gameContext];
+    _spelltimeNotifier = [[SpelltimeNotifier alloc] initWith:_gameContext];
     _variablesReplacer = [[VariableReplacer alloc] init];
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
     _scriptRunner = [[ScriptRunner alloc] initWith:_gameContext and:[[LocalFileSystem alloc] init]];
@@ -109,11 +110,11 @@
         }
     }];
     
-    [_spelltimeNotifier.notification subscribeNext:^(NSString *value) {
-        _viewModel.spell = value;
+    [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
+        _viewModel.spell = val;
     }];
     
-    [[_gameContext.globalVars.changed throttle:1.0] subscribeNext:^(id x) {
+    [[_gameContext.globalVars.changed throttle:1.5] subscribeNext:^(id x) {
         [_appSettingsLoader saveVariables];
     }];
     
@@ -235,6 +236,10 @@
         [_roundtimeNotifier set:rounded];
     }];
     
+    [_gameStream.spell.signal subscribeNext:^(NSString *spell) {
+        [_spelltimeNotifier set:spell];
+    }];
+    
     [_gameStream.thoughts subscribeNext:^(TextTag *tag) {
         NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
         tag.text = [NSString stringWithFormat:@"[%@]: %@\n", timeStamp, tag.text];
@@ -319,7 +324,6 @@
         
         _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
         _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
-        [_spelltimeNotifier set:[_gameContext.globalVars cacheObjectForKey:@"preparedspell"]];
         
         for (TextTag *tag in tags) {
             [self append:tag to:@"main"];

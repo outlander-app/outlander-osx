@@ -15,6 +15,7 @@
 
 @property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACMulticastConnection *room;
+@property (atomic, strong) RACMulticastConnection *spell;
 
 @end
 
@@ -33,6 +34,7 @@
 @property (atomic, strong) RACSignal *familiar;
 @property (atomic, strong) RACSignal *log;
 @property (atomic, strong) RACSignal *roundtime;
+@property (atomic, strong) RACMulticastConnection *spell;
 
 -(id) initWithContext:(GameContext *)context;
 -(void) publish:(id)item;

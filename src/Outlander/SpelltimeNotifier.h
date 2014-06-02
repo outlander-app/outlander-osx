@@ -7,8 +7,11 @@
 //
 
 #import "ReactiveCocoa.h"
+#import "GameContext.h"
 
 @interface SpelltimeNotifier : NSObject
+
+- (instancetype)initWith:(GameContext *)context;
 
 @property (nonatomic, strong) RACReplaySubject *notification;
 - (void)set:(NSString *)value;

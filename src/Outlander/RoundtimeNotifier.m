@@ -13,15 +13,17 @@
     NSInteger _roundtime;
     NSInteger _maxrt;
     NSTimer *_timer;
+    GameContext *_gameContext;
 }
 @end
 
 @implementation RoundtimeNotifier
 
-- (instancetype)init {
+- (instancetype)initWith:(GameContext *)context {
     self = [super init];
     if(!self)return nil;
     
+    _gameContext = context;
     _notification = [RACReplaySubject subject];
     _roundtime = 0;
     
@@ -38,7 +40,8 @@
     Roundtime *rt = [[Roundtime alloc] init];
     rt.percent = 1.0;
     rt.value = value;
-    [_notification sendNext:rt];
+    
+    [self send:rt];
 }
 
 - (void)runTimer {
@@ -69,7 +72,14 @@
     }
     rt.percent = percent;
     rt.value = _roundtime;
+    
+    [self send:rt];
+}
+
+- (void)send:(Roundtime *)rt {
+    
     [_notification sendNext:rt];
+    [_gameContext.globalVars setCacheObject:[@(rt.value) stringValue] forKey:@"roundtime"];
 }
 
 @end

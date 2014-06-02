@@ -36,6 +36,8 @@
     
     _room = [_gameParser.room multicast:[RACSubject subject]];
     [_room connect];
+    _spell = [_gameParser.spell multicast:[RACSubject subject]];
+    [_spell connect];
     _exp = _gameParser.exp;
     _thoughts = _gameParser.thoughts;
     _arrivals = _gameParser.arrivals;
