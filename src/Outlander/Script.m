@@ -192,7 +192,9 @@
             if(timedOut) {
                 gotSignal = YES;
                 [signal dispose];
-                [self sendScriptDebug:@"matchwait timed out"];
+                if(!self.isCancelled) {
+                    [self sendScriptDebug:@"matchwait timed out"];
+                }
             }
         }
         else {

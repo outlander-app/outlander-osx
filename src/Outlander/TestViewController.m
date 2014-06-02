@@ -318,6 +318,7 @@
     flattenMap:^RACStream *(GameConnection *connection) {
         NSLog(@"Connection: %@", connection);
         RACMulticastConnection *conn = [_gameStream connect:connection];
+        [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
         return conn.signal;
     }]
     subscribeNext:^(NSArray *tags) {
@@ -328,6 +329,7 @@
         for (TextTag *tag in tags) {
             [self append:tag to:@"main"];
         }
+        
     } completed:^{
         [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
