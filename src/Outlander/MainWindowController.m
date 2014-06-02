@@ -69,7 +69,11 @@
         @strongify(vc);
         NSString *game = [vc.gameContext.globalVars cacheObjectForKey:@"game"];
         NSString *character = [vc.gameContext.globalVars cacheObjectForKey:@"charactername"];
-        [self.window setTitle:[NSString stringWithFormat:@"%@: %@", game, character]];
+        
+        NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
+        NSString *version = dict[@"CFBundleShortVersionString"];
+        
+        [self.window setTitle:[NSString stringWithFormat:@"%@: %@ - Outlander %@", game, character, version]];
     }];
     
     _loginViewController.context = vc.gameContext;
