@@ -417,7 +417,6 @@
     [self fireDelegateSelector:@selector(parser:willMatchMatchStmt:)];
 
     [self match:OUTLANDERPARSER_TOKEN_KIND_MATCH discard:YES]; 
-    [self name_]; 
     [self putExpr_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchMatchStmt:)];
@@ -432,7 +431,6 @@
     [self fireDelegateSelector:@selector(parser:willMatchMatchReStmt:)];
 
     [self match:OUTLANDERPARSER_TOKEN_KIND_MATCHRE discard:YES]; 
-    [self name_]; 
     [self putExpr_]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchMatchReStmt:)];

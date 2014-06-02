@@ -11,6 +11,7 @@
 #import "GameContext.h"
 #import "StubCommandRelay.h"
 #import "StubInfoStream.h"
+#import "Match.h"
 
 SPEC_BEGIN(ScriptTester)
 
@@ -273,6 +274,36 @@ describe(@"Script", ^{
             [theInfoStream publishSubject:arr];
             
             [[expectFutureValue(theRelay.lastEcho.text) shouldEventuallyBeforeTimingOutAfter(2.0)] equal:@"matched"];
+        });
+    });
+    
+    context(@"match commands", ^{
+        it(@"match", ^{
+            
+            NSString *sample = @"match one a string of characters";
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            Match *match = theScript.matchList[0];
+            
+            [[match.label should] equal:@"one"];
+            [[match.text should] equal:@"a string of characters"];
+        });
+        
+        it(@"matchre", ^{
+            
+            NSString *sample = @"matchre some.label You feel fully prepared|formation of a targeting pattern";
+            
+            [theScript setData:sample];
+            
+            [theScript process];
+            
+            Match *match = theScript.matchList[0];
+            
+            [[match.label should] equal:@"some.label"];
+            [[match.text should] equal:@"You feel fully prepared|formation of a targeting pattern"];
         });
     });
 });

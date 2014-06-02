@@ -118,20 +118,22 @@
 }
 
 - (void)handleMatch:(PKAssembly *)a isRegex:(BOOL)isRegex {
-    NSMutableArray *tokens = [self popCommandsToArray:a];
+    NSMutableString *commands = [self popCommandsToString:a];
     
     __block NSString *label;
     __block NSMutableString *matchText = [[NSMutableString alloc] init];
     
-    [tokens enumerateObjectsUsingBlock:^(PKToken *obj, NSUInteger idx, BOOL *stop) {
-        if(idx == tokens.count - 1) {
-            label = [obj stringValue];
+    NSArray *tokens = [commands componentsSeparatedByString:@" "];
+    
+    [tokens enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+        if(idx == 0) {
+            label = obj;
         } else {
-            [matchText insertString:[obj stringValue] atIndex:0];
+            [matchText appendFormat:@"%@ ", obj];
         }
     }];
     
-    [_matchList addObject:[Match match:label with:matchText and:isRegex]];
+    [_matchList addObject:[Match match:label with:[matchText trimWhitespaceAndNewline] and:isRegex]];
 }
 
 - (void)parser:(PKParser *)p didMatchMatchWaitStmt:(PKAssembly *)a {

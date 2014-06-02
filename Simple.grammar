@@ -65,11 +65,11 @@ waitStmt
     ;
 
 matchStmt
-    = 'match'! name putExpr
+    = 'match'! putExpr
     ;
 
 matchReStmt
-    = 'matchre'! name putExpr
+    = 'matchre'! putExpr
     ;
 
 matchWaitStmt
