@@ -1,0 +1,81 @@
+@interface {
+    @property (nonatomic, strong) NSMutableArray *tokens;
+}
+@init {
+  _tokens = [[NSMutableArray alloc] init];
+}
+
+program
+@before {
+  PKTokenizer *t = self.tokenizer;
+
+  // whitespace
+//  self.silentlyConsumesWhitespace = YES;
+//  t.whitespaceState.reportsWhitespaceTokens = YES;
+//  self.assembly.preservesWhitespaceTokens = YES;
+
+  [t.symbolState add:@"\\n"];
+  
+  // setup comments
+  t.commentState.reportsCommentTokens = YES;
+  [t.commentState addSingleLineStartMarker:@"//"];
+  [t.commentState addMultiLineStartMarker:@"/*" endMarker:@"*/"];
+}
+  = stmts
+  ;
+
+stmts
+  = stmt (';'! stmt)*
+  ;
+
+stmt
+  = label
+  | assignment
+  | putStmt
+  ;
+
+putStmt
+  = 'put'! atom atom*
+  ;
+
+label
+  = identifier refinement* ':'!
+  ;
+
+assignmentPrefix
+  = 'var'! | 'setvariable'!
+  ;
+
+assignment
+  = assignmentPrefix id atom atom*
+  ;
+
+varPrefix
+ = '%' | '$'
+ ;
+
+localVar
+  = varPrefix id | varPrefix Number
+  ;
+
+id
+  = identifier refinement*
+  ;
+
+identifier
+  = Word
+  ;
+
+refinement
+  = ('.' identifier | Number)
+  ;
+
+atom
+  = localVar
+  | Word
+  | Number
+  ;
+
+eol
+  = '\n'
+  ;

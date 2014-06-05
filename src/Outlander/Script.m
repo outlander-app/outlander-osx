@@ -25,6 +25,7 @@
     OutlanderParser *_parser;
     NSMutableArray *_scriptLines;
     VariableReplacer *_varReplacer;
+    NSString *_data;
 }
 
 @property (nonatomic, strong) TSMutableDictionary *labels;
@@ -65,6 +66,8 @@
 - (void)setData:(NSString *)data {
     
     _lineNumber = 0;
+    
+    _data = data;
     
     NSArray *lines = [data componentsSeparatedByString:@"\n"];
     
@@ -442,14 +445,14 @@
 }
 
 - (void)sendEcho:(NSString *)echo {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, [echo trimWhitespaceAndNewline]] mono:YES];
-    tag.color = @"#0066CC";
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", [echo trimWhitespaceAndNewline]] mono:YES];
+    tag.color = @"#00FFFF";
    
     [_commandRelay sendEcho:tag];
 }
 
 - (void)sendScriptDebug:(NSString *)msg {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@ (%lu)]: %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     
     [_commandRelay sendEcho:tag];

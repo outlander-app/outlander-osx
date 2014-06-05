@@ -133,7 +133,7 @@ describe(@"Script", ^{
             
             [theScript process];
             [theScript process];
-            [[theRelay.lastEcho.text should] equal:@"[test (1)]: goto label.end\n"];
+            [[theRelay.lastEcho.text should] equal:@"test (1): goto label.end\n"];
         });
     });
     
@@ -147,7 +147,7 @@ describe(@"Script", ^{
             
             [theScript process];
             
-            [[theRelay.lastEcho.text should] equal:@"[test]: one two\n"];
+            [[theRelay.lastEcho.text should] equal:@"one two\n"];
         });
         
         it(@"send empty echo", ^{
@@ -158,7 +158,7 @@ describe(@"Script", ^{
             
             [theScript process];
             
-            [[theRelay.lastEcho.text should] equal:@"[test]: \n"];
+            [[theRelay.lastEcho.text should] equal:@"\n"];
         });
     });
     
@@ -222,7 +222,7 @@ describe(@"Script", ^{
             
             [theInfoStream publishRoom];
             
-            [[expectFutureValue(theRelay.lastEcho.text) shouldEventually] equal:@"[test (0)]: nextroom - waiting for room description\n"];
+            [[expectFutureValue(theRelay.lastEcho.text) shouldEventually] equal:@"test (0): nextroom - waiting for room description\n"];
         });
     });
     
