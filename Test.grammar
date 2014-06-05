@@ -30,8 +30,13 @@ stmts
 
 stmt
   = label
+  | pause
   | assignment
   | putStmt
+  ;
+
+pause
+  = 'pause'! Number?
   ;
 
 putStmt

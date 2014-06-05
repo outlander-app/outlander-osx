@@ -169,6 +169,8 @@
 		F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6819405BD700C081C4 /* Atom.m */; };
 		F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
 		F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
+		F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
+		F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
 		F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */; };
 		F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */; };
 		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
@@ -383,6 +385,8 @@
 		F9B3AC6819405BD700C081C4 /* Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Atom.m; sourceTree = "<group>"; };
 		F9B3AC6B1940686700C081C4 /* PutToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutToken.h; sourceTree = "<group>"; };
 		F9B3AC6C1940686700C081C4 /* PutToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutToken.m; sourceTree = "<group>"; };
+		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
+		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
 		F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptRunnerTester.m; sourceTree = "<group>"; };
 		F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptHandlerTester.m; sourceTree = "<group>"; };
 		F9BF6AEF193A90880075A12F /* EventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRelay.h; sourceTree = "<group>"; };
@@ -452,6 +456,8 @@
 				F9B3AC6819405BD700C081C4 /* Atom.m */,
 				F9B3AC5F194046E400C081C4 /* LabelToken.h */,
 				F9B3AC60194046E400C081C4 /* LabelToken.m */,
+				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
+				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
 				F9B3AC6B1940686700C081C4 /* PutToken.h */,
 				F9B3AC6C1940686700C081C4 /* PutToken.m */,
 				F9772F151940389E00172083 /* VarToken.h */,
@@ -999,6 +1005,7 @@
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
 				F96ECDBA1934445000787CB9 /* ScriptRunner.m in Sources */,
+				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
@@ -1125,6 +1132,7 @@
 				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,

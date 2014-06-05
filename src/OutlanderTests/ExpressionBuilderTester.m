@@ -90,7 +90,7 @@ describe(@"ExpressionBuilder", ^{
         });
     });
     
-    context(@"misc", ^{
+    context(@"label", ^{
       
         it(@"creates label", ^{
             NSArray *a = [_builder build:@"one.two:"];
@@ -104,6 +104,23 @@ describe(@"ExpressionBuilder", ^{
             LabelToken *var = [a firstObject];
             
             [[[var eval] should] equal:@"one_two"];
+        });
+    });
+    
+    context(@"pause", ^{
+      
+        it(@"creates with default", ^{
+            NSArray *a = [_builder build:@"pause"];
+            PauseToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:[NSNumber numberWithDouble:1.0]];
+        });
+        
+        it(@"creates with number", ^{
+            NSArray *a = [_builder build:@"pause 3"];
+            PauseToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:[NSNumber numberWithDouble:3.0]];
         });
     });
 });

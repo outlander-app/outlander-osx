@@ -96,6 +96,23 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
     [_parser.tokens addObject:put];
 }
 
+- (void)parser:(PKParser *)p didMatchPause:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    PKToken *num = [a pop];
+    
+    double val = 1.0;
+    
+    if(num){
+        val = [num doubleValue];
+    }
+    
+    NSNumber *number = [NSNumber numberWithDouble:val];
+    
+    PauseToken *token = [[PauseToken alloc] initWith:number];
+    [_parser.tokens addObject:token];
+}
+
 - (void)parser:(PKParser *)p didMatchEol:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
 }

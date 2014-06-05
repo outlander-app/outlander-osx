@@ -7,6 +7,7 @@
 @property (nonatomic, retain) NSMutableDictionary *program_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmts_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *label_memo;
 @property (nonatomic, retain) NSMutableDictionary *assignmentPrefix_memo;
@@ -31,29 +32,32 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
+        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
         self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
         self.tokenKindTab[@"\n"] = @(EXPRESSIONPARSER_TOKEN_KIND_EOL);
         self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
         self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
 
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_EOL] = @"\n";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON] = @";";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
+        self.pause_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
         self.label_memo = [NSMutableDictionary dictionary];
         self.assignmentPrefix_memo = [NSMutableDictionary dictionary];
@@ -73,6 +77,7 @@
     [_program_memo removeAllObjects];
     [_stmts_memo removeAllObjects];
     [_stmt_memo removeAllObjects];
+    [_pause_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
     [_label_memo removeAllObjects];
     [_assignmentPrefix_memo removeAllObjects];
@@ -144,6 +149,8 @@
     
     if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
         [self label_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PAUSE, 0]) {
+        [self pause_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE, EXPRESSIONPARSER_TOKEN_KIND_VAR, 0]) {
         [self assignment_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PUT, 0]) {
@@ -157,6 +164,20 @@
 
 - (void)stmt_ {
     [self parseRule:@selector(__stmt) withMemo:_stmt_memo];
+}
+
+- (void)__pause {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_PAUSE discard:YES]; 
+    if ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, 0]) {
+        [self matchNumber:NO]; 
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchPause:)];
+}
+
+- (void)pause_ {
+    [self parseRule:@selector(__pause) withMemo:_pause_memo];
 }
 
 - (void)__putStmt {
