@@ -42,6 +42,10 @@ typedef BOOL (^tokenFilterBlock) (id token);
     return _parser.tokens;
 }
 
+-(NSArray *)matchTokens {
+    return _parser.match_tokens;
+}
+
 - (void)parser:(PKParser *)p didMatchLocalVar:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
@@ -173,7 +177,39 @@ typedef BOOL (^tokenFilterBlock) (id token);
     [_parser.tokens addObject:token];
 }
 
+- (void)parser:(PKParser *)p didMatchMatchStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    TokenList *tl = [self popTokensToList:a];
+   
+    id label = [tl.tokens objectAtIndex:0];
+    [tl.tokens removeObjectAtIndex:0];
+    
+    MatchToken *match = [[MatchToken alloc] initWith:tl and:label];
+    [_parser.match_tokens addObject:match];
+}
+
+- (void)parser:(PKParser *)p didMatchMatchWaitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    MatchWaitToken *mw = [[MatchWaitToken alloc] init];
+    
+    PKToken *wait = [a pop];
+    
+    if(wait) {
+        mw.waitTime = [NSNumber numberWithDouble:[wait doubleValue]];
+    }
+    
+    [mw.tokens addObjectsFromArray:_parser.match_tokens];
+    [_parser.match_tokens removeAllObjects];
+    [_parser.tokens addObject:mw];
+}
+
 - (void)parser:(PKParser *)p didMatchEol:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+}
+
+- (void)parser:(PKParser *)p didMatchLine:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
 }
 
@@ -197,6 +233,19 @@ typedef BOOL (^tokenFilterBlock) (id token);
     }
     
     return item;
+}
+
+- (TokenList *)popTokensToList:(PKAssembly *)a {
+    TokenList *tl = [[TokenList alloc] init];
+    
+    id token = [a pop];
+    
+    while (token) {
+        [tl.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
+    
+    return tl;
 }
 
 - (NSMutableString *)popTokensToString:(PKAssembly *)a until:(tokenFilterBlock)block {

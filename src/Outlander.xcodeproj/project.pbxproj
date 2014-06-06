@@ -127,6 +127,12 @@
 		F98782D01942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
 		F98782D3194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
 		F98782D4194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
+		F98782D71942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
+		F98782D81942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
+		F98782DB1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
+		F98782DC1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
+		F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
+		F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -352,6 +358,12 @@
 		F98782CE1942499300D76231 /* WaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitToken.m; sourceTree = "<group>"; };
 		F98782D1194249A400D76231 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
 		F98782D2194249A400D76231 /* TokenList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenList.m; sourceTree = "<group>"; };
+		F98782D51942649600D76231 /* LRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRToken.h; sourceTree = "<group>"; };
+		F98782D61942649600D76231 /* LRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRToken.m; sourceTree = "<group>"; };
+		F98782D91942656C00D76231 /* MatchToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchToken.h; sourceTree = "<group>"; };
+		F98782DA1942656C00D76231 /* MatchToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchToken.m; sourceTree = "<group>"; };
+		F98782DD194269CD00D76231 /* MatchWaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWaitToken.h; sourceTree = "<group>"; };
+		F98782DE194269CD00D76231 /* MatchWaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWaitToken.m; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -496,6 +508,12 @@
 				F98782BE1942128F00D76231 /* IdToken.m */,
 				F9B3AC5F194046E400C081C4 /* LabelToken.h */,
 				F9B3AC60194046E400C081C4 /* LabelToken.m */,
+				F98782D51942649600D76231 /* LRToken.h */,
+				F98782D61942649600D76231 /* LRToken.m */,
+				F98782D91942656C00D76231 /* MatchToken.h */,
+				F98782DA1942656C00D76231 /* MatchToken.m */,
+				F98782DD194269CD00D76231 /* MatchWaitToken.h */,
+				F98782DE194269CD00D76231 /* MatchWaitToken.m */,
 				F98782C11942288F00D76231 /* MoveToken.h */,
 				F98782C21942288F00D76231 /* MoveToken.m */,
 				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
@@ -1073,6 +1091,7 @@
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */,
+				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
@@ -1090,6 +1109,7 @@
 				F9772F171940389E00172083 /* VarToken.m in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
+				F98782D71942649600D76231 /* LRToken.m in Sources */,
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
@@ -1109,6 +1129,7 @@
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
+				F98782DB1942656C00D76231 /* MatchToken.m in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
@@ -1128,7 +1149,9 @@
 			files = (
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
+				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F98782D81942649600D76231 /* LRToken.m in Sources */,
 				F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
@@ -1210,6 +1233,7 @@
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9772F0B1940332200172083 /* ExpressionBuilderTester.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
 				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,

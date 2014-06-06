@@ -13,6 +13,8 @@
 #import "GotoToken.h"
 #import "IdToken.h"
 #import "LabelToken.h"
+#import "MatchToken.h"
+#import "MatchWaitToken.h"
 #import "MoveToken.h"
 #import "PauseToken.h"
 #import "PutToken.h"
@@ -22,5 +24,7 @@
 @interface ExpressionBuilder : NSObject
 
 -(NSArray *)build:(NSString *)data;
+
+-(NSArray *)matchTokens;
 
 @end

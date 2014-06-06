@@ -280,6 +280,45 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"%one_two $two"];
         });
     });
+    
+    context(@"match", ^{
+        it(@"creates match", ^{
+            [_builder build:@"match label some text"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[[match.left eval] should] equal:@"label"];
+            [[[match.right eval] should] equal:@"some text"];
+        });
+        
+        it(@"creates matchwait", ^{
+            NSArray *a = [_builder build:@"matchwait"];
+            
+            MatchWaitToken *matches = [a firstObject];
+            [[matches should] beNonNil];
+        });
+        
+        it(@"creates matchwait", ^{
+            NSArray *a = [_builder build:@"matchwait 10"];
+            
+            MatchWaitToken *matches = [a firstObject];
+            [[matches.waitTime should] equal:@(10)];
+        });
+        
+        it(@"creates matchwait with match tokens", ^{
+            [_builder build:@"match label1 some text"];
+            [_builder build:@"match label2 some other text"];
+            
+            [[[_builder matchTokens] should] haveCountOf:2];
+            
+            NSArray *a = [_builder build:@"matchwait 10"];
+            
+            MatchWaitToken *matches = [a firstObject];
+            [[matches.waitTime should] equal:@(10)];
+            [[matches.tokens should] haveCountOf:2];
+            
+            [[[_builder matchTokens] should] haveCountOf:0];
+        });
+    });
 });
 
 SPEC_END

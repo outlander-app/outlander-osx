@@ -10,18 +10,4 @@
 
 @implementation AssignmentToken
 
--(instancetype)initWith:(id<Token>)right and:(id<Token>)left {
-    self = [super init];
-    if(!self) return nil;
-    
-    _right = right;
-    _left = left;
-    
-    return self;
-}
-
--(id)eval {
-    return nil;
-}
-
 @end

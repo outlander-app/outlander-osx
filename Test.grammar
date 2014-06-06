@@ -1,8 +1,10 @@
 @interface {
     @property (nonatomic, strong) NSMutableArray *tokens;
+    @property (nonatomic, strong) NSMutableArray *match_tokens;
 }
 @init {
   _tokens = [[NSMutableArray alloc] init];
+  _match_tokens = [[NSMutableArray alloc] init];
 }
 
 program
@@ -10,8 +12,8 @@ program
   PKTokenizer *t = self.tokenizer;
 
   // whitespace
-  //self.silentlyConsumesWhitespace = YES;
-  //t.whitespaceState.reportsWhitespaceTokens = YES;
+  self.silentlyConsumesWhitespace = YES;
+  t.whitespaceState.reportsWhitespaceTokens = YES;
   //self.assembly.preservesWhitespaceTokens = YES;
 
   //[t.symbolState add:@"\\n"];
@@ -38,6 +40,8 @@ stmt
   | echoStmt
   | gotoStmt
   | moveStmt
+  | matchStmt
+  | matchWaitStmt
   | waitForStmt
   ;
 
@@ -49,6 +53,14 @@ gotoStmt
   = 'goto'! (id | localVar)
   ;
 
+matchStmt
+  = ('match'! | 'matchre'!) (id | localVar) atom+
+  ;
+
+matchWaitStmt
+  = 'matchwait'! Number?
+  ;
+
 moveStmt
  = 'move'! atom
  ;
@@ -58,11 +70,11 @@ pause
   ;
 
 putStmt
-  = 'put'! atom atom*
+  = 'put'! atom+
   ;
 
 waitForStmt
-  = ('waitfor'! | 'waitforre'!) atom atom*
+  = ('waitfor'! | 'waitforre'!) atom+
   ;
 
 label
@@ -74,7 +86,7 @@ assignmentPrefix
   ;
 
 assignment
-  = assignmentPrefix id atom atom*
+  = assignmentPrefix id atom+
   ;
 
 varPrefix
@@ -103,3 +115,7 @@ atom
   | Word
   | Number
   ;
+
+lines = line+;
+line  = ~eol* eol;
+eol   = { MATCHES(@"\\n", LS(1)) }? S;
