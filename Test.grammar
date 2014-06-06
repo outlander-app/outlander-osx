@@ -10,11 +10,13 @@ program
   PKTokenizer *t = self.tokenizer;
 
   // whitespace
-//  self.silentlyConsumesWhitespace = YES;
-//  t.whitespaceState.reportsWhitespaceTokens = YES;
-//  self.assembly.preservesWhitespaceTokens = YES;
+  //self.silentlyConsumesWhitespace = YES;
+  //t.whitespaceState.reportsWhitespaceTokens = YES;
+  //self.assembly.preservesWhitespaceTokens = YES;
 
-  [t.symbolState add:@"\\n"];
+  //[t.symbolState add:@"\\n"];
+  //[t.whitespaceState setWhitespaceChars:NO from:'\n' to:'\n'];
+
   
   // setup comments
   t.commentState.reportsCommentTokens = YES;
@@ -33,6 +35,11 @@ stmt
   | pause
   | assignment
   | putStmt
+  | echoStmt
+  ;
+
+echoStmt
+  = 'echo'! atom*
   ;
 
 pause
@@ -79,8 +86,4 @@ atom
   = localVar
   | Word
   | Number
-  ;
-
-eol
-  = '\n'
   ;

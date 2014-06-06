@@ -64,6 +64,14 @@ describe(@"ExpressionBuilder", ^{
     });
     
     context(@"put", ^{
+        
+        it(@"simple put", ^{
+            NSArray *a = [_builder build:@"put one"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one"];
+        });
       
         it(@"simple put", ^{
             NSArray *a = [_builder build:@"put one $two"];
@@ -74,7 +82,7 @@ describe(@"ExpressionBuilder", ^{
         });
         
         it(@"put", ^{
-            NSArray *a = [_builder build:@"put %one_two $two"];
+            NSArray *a = [_builder build:@"put %one_two $two\n"];
             
             PutToken *put = [a firstObject];
             
@@ -93,7 +101,7 @@ describe(@"ExpressionBuilder", ^{
     context(@"label", ^{
       
         it(@"creates label", ^{
-            NSArray *a = [_builder build:@"one.two:"];
+            NSArray *a = [_builder build:@"one.two:\n"];
             LabelToken *var = [a firstObject];
             
             [[[var eval] should] equal:@"one.two"];
@@ -121,6 +129,33 @@ describe(@"ExpressionBuilder", ^{
             PauseToken *var = [a firstObject];
             
             [[[var eval] should] equal:[NSNumber numberWithDouble:3.0]];
+        });
+    });
+
+    context(@"echo", ^{
+        
+        it(@"simple", ^{
+            NSArray *a = [_builder build:@"echo one"];
+            
+            EchoToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one"];
+        });
+      
+        it(@"mix vars and text", ^{
+            NSArray *a = [_builder build:@"echo one $two"];
+            
+            EchoToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one $two"];
+        });
+        
+        it(@"with vars", ^{
+            NSArray *a = [_builder build:@"echo %one_two $two\n"];
+            
+            EchoToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"%one_two $two"];
         });
     });
 });

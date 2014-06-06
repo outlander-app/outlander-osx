@@ -7,6 +7,7 @@
 @property (nonatomic, retain) NSMutableDictionary *program_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmts_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *label_memo;
@@ -18,12 +19,11 @@
 @property (nonatomic, retain) NSMutableDictionary *identifier_memo;
 @property (nonatomic, retain) NSMutableDictionary *refinement_memo;
 @property (nonatomic, retain) NSMutableDictionary *atom_memo;
-@property (nonatomic, retain) NSMutableDictionary *eol_memo;
 @end
 
 @implementation ExpressionParser { }
 
-- (id)initWithDelegate:(id)d {
+- (instancetype)initWithDelegate:(id)d {
     self = [super initWithDelegate:d];
     if (self) {
             
@@ -32,31 +32,32 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
         self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
-        self.tokenKindTab[@"\n"] = @(EXPRESSIONPARSER_TOKEN_KIND_EOL);
         self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
-        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
+        self.tokenKindTab[@"echo"] = @(EXPRESSIONPARSER_TOKEN_KIND_ECHO);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
 
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_EOL] = @"\n";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ECHO] = @"echo";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON] = @";";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
+        self.echoStmt_memo = [NSMutableDictionary dictionary];
         self.pause_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
         self.label_memo = [NSMutableDictionary dictionary];
@@ -68,7 +69,6 @@
         self.identifier_memo = [NSMutableDictionary dictionary];
         self.refinement_memo = [NSMutableDictionary dictionary];
         self.atom_memo = [NSMutableDictionary dictionary];
-        self.eol_memo = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -77,6 +77,7 @@
     [_program_memo removeAllObjects];
     [_stmts_memo removeAllObjects];
     [_stmt_memo removeAllObjects];
+    [_echoStmt_memo removeAllObjects];
     [_pause_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
     [_label_memo removeAllObjects];
@@ -88,7 +89,6 @@
     [_identifier_memo removeAllObjects];
     [_refinement_memo removeAllObjects];
     [_atom_memo removeAllObjects];
-    [_eol_memo removeAllObjects];
 }
 
 - (void)start {
@@ -109,11 +109,13 @@
   PKTokenizer *t = self.tokenizer;
 
   // whitespace
-//  self.silentlyConsumesWhitespace = YES;
-//  t.whitespaceState.reportsWhitespaceTokens = YES;
-//  self.assembly.preservesWhitespaceTokens = YES;
+  //self.silentlyConsumesWhitespace = YES;
+  //t.whitespaceState.reportsWhitespaceTokens = YES;
+  //self.assembly.preservesWhitespaceTokens = YES;
 
-  [t.symbolState add:@"\n"];
+  //[t.symbolState add:@"\n"];
+  //[t.whitespaceState setWhitespaceChars:NO from:'n' to:'n'];
+
   
   // setup comments
   t.commentState.reportsCommentTokens = YES;
@@ -155,6 +157,8 @@
         [self assignment_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PUT, 0]) {
         [self putStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_ECHO, 0]) {
+        [self echoStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -164,6 +168,20 @@
 
 - (void)stmt_ {
     [self parseRule:@selector(__stmt) withMemo:_stmt_memo];
+}
+
+- (void)__echoStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_ECHO discard:YES]; 
+    while ([self speculate:^{ [self atom_]; }]) {
+        [self atom_]; 
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchEchoStmt:)];
+}
+
+- (void)echoStmt_ {
+    [self parseRule:@selector(__echoStmt) withMemo:_echoStmt_memo];
 }
 
 - (void)__pause {
@@ -343,17 +361,6 @@
 
 - (void)atom_ {
     [self parseRule:@selector(__atom) withMemo:_atom_memo];
-}
-
-- (void)__eol {
-    
-    [self match:EXPRESSIONPARSER_TOKEN_KIND_EOL discard:NO]; 
-
-    [self fireDelegateSelector:@selector(parser:didMatchEol:)];
-}
-
-- (void)eol_ {
-    [self parseRule:@selector(__eol) withMemo:_eol_memo];
 }
 
 @end

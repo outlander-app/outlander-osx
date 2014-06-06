@@ -111,6 +111,8 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F98782B719420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
+		F98782B819420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -320,6 +322,8 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F98782B519420CB500D76231 /* EchoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoToken.h; sourceTree = "<group>"; };
+		F98782B619420CB500D76231 /* EchoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoToken.m; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 				F9B3AC64194058EE00C081C4 /* AssignmentToken.m */,
 				F9B3AC6719405BD700C081C4 /* Atom.h */,
 				F9B3AC6819405BD700C081C4 /* Atom.m */,
+				F98782B519420CB500D76231 /* EchoToken.h */,
+				F98782B619420CB500D76231 /* EchoToken.m */,
 				F9B3AC5F194046E400C081C4 /* LabelToken.h */,
 				F9B3AC60194046E400C081C4 /* LabelToken.m */,
 				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
@@ -988,6 +994,7 @@
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F96ECDAE1934160200787CB9 /* Script.m in Sources */,
@@ -1148,6 +1155,7 @@
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9772F0B1940332200172083 /* ExpressionBuilderTester.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,

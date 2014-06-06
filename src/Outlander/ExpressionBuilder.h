@@ -9,6 +9,7 @@
 #import <PEGKit/PEGKit.h>
 #import "AssignmentToken.h"
 #import "Atom.h"
+#import "EchoToken.h"
 #import "LabelToken.h"
 #import "PauseToken.h"
 #import "PutToken.h"

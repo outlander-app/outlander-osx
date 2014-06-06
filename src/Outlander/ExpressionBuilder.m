@@ -96,6 +96,22 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
     [_parser.tokens addObject:put];
 }
 
+- (void)parser:(PKParser *)p didMatchEchoStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    EchoToken *put = [[EchoToken alloc] init];
+    
+    id token = [a pop];
+    
+    while(token) {
+        token = [self tokenOrAtom:token];
+        [put.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
+    
+    [_parser.tokens addObject:put];
+}
+
 - (void)parser:(PKParser *)p didMatchPause:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
@@ -114,6 +130,10 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
 }
 
 - (void)parser:(PKParser *)p didMatchEol:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+}
+
+- (void)parser:(PKParser *)p didMatchAtom:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
 }
 
