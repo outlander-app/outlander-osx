@@ -12,7 +12,7 @@
 @property (nonatomic, retain) NSMutableDictionary *moveStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
-@property (nonatomic, retain) NSMutableDictionary *waitStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *waitForStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *label_memo;
 @property (nonatomic, retain) NSMutableDictionary *assignmentPrefix_memo;
 @property (nonatomic, retain) NSMutableDictionary *assignment_memo;
@@ -73,7 +73,7 @@
         self.moveStmt_memo = [NSMutableDictionary dictionary];
         self.pause_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
-        self.waitStmt_memo = [NSMutableDictionary dictionary];
+        self.waitForStmt_memo = [NSMutableDictionary dictionary];
         self.label_memo = [NSMutableDictionary dictionary];
         self.assignmentPrefix_memo = [NSMutableDictionary dictionary];
         self.assignment_memo = [NSMutableDictionary dictionary];
@@ -96,7 +96,7 @@
     [_moveStmt_memo removeAllObjects];
     [_pause_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
-    [_waitStmt_memo removeAllObjects];
+    [_waitForStmt_memo removeAllObjects];
     [_label_memo removeAllObjects];
     [_assignmentPrefix_memo removeAllObjects];
     [_assignment_memo removeAllObjects];
@@ -181,7 +181,7 @@
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_MOVE, 0]) {
         [self moveStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR, EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE, 0]) {
-        [self waitStmt_]; 
+        [self waitForStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -266,25 +266,25 @@
     [self parseRule:@selector(__putStmt) withMemo:_putStmt_memo];
 }
 
-- (void)__waitStmt {
+- (void)__waitForStmt {
     
     if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR discard:YES]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE discard:YES]; 
     } else {
-        [self raise:@"No viable alternative found in rule 'waitStmt'."];
+        [self raise:@"No viable alternative found in rule 'waitForStmt'."];
     }
     [self atom_]; 
     while ([self speculate:^{ [self atom_]; }]) {
         [self atom_]; 
     }
 
-    [self fireDelegateSelector:@selector(parser:didMatchWaitStmt:)];
+    [self fireDelegateSelector:@selector(parser:didMatchWaitForStmt:)];
 }
 
-- (void)waitStmt_ {
-    [self parseRule:@selector(__waitStmt) withMemo:_waitStmt_memo];
+- (void)waitForStmt_ {
+    [self parseRule:@selector(__waitForStmt) withMemo:_waitForStmt_memo];
 }
 
 - (void)__label {

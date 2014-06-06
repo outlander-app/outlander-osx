@@ -38,7 +38,7 @@ stmt
   | echoStmt
   | gotoStmt
   | moveStmt
-  | waitStmt
+  | waitForStmt
   ;
 
 echoStmt
@@ -61,7 +61,7 @@ putStmt
   = 'put'! atom atom*
   ;
 
-waitStmt
+waitForStmt
   = ('waitfor'! | 'waitforre'!) atom atom*
   ;
 
