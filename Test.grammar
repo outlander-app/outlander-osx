@@ -40,13 +40,19 @@ stmt
   | echoStmt
   | gotoStmt
   | moveStmt
+  | nextRoom
   | matchStmt
   | matchWaitStmt
   | waitForStmt
+  | exitStmt
   ;
 
 echoStmt
   = 'echo'! atom*
+  ;
+
+exitStmt
+  = 'exit'!
   ;
 
 gotoStmt
@@ -62,8 +68,12 @@ matchWaitStmt
   ;
 
 moveStmt
- = 'move'! atom
- ;
+  = 'move'! atom
+  ;
+
+nextRoom
+  = 'nextroom'
+  ;
 
 pause
   = 'pause'! Number?

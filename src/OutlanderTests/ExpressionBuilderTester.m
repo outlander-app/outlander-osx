@@ -319,6 +319,24 @@ describe(@"ExpressionBuilder", ^{
             [[[_builder matchTokens] should] haveCountOf:0];
         });
     });
+    
+    context(@"exit", ^{
+        it(@"creates exit token", ^{
+            NSArray *a = [_builder build:@"exit"];
+            
+            ExitToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+        });
+    });
+    
+    context(@"nextroom", ^{
+        it(@"creates nextroom token", ^{
+            NSArray *a = [_builder build:@"nextroom"];
+            
+            NextRoomToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+        });
+    });
 });
 
 SPEC_END

@@ -29,15 +29,22 @@ typedef BOOL (^tokenFilterBlock) (id token);
 }
 
 -(NSArray *)build:(NSString *)data {
-    NSError *err;
-    PKAssembly *result = [_parser parseString:data error:&err];
     
-    if(err) {
-        NSLog(@"err: %@", [err localizedDescription]);
-        return nil;
-    }
+    NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-    NSLog(@"Script line result: %@", [result description]);
+    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSError *err;
+        PKAssembly *result = [_parser parseString:data error:&err];
+        
+        if(err) {
+            NSLog(@"err: %@", [err localizedDescription]);
+            *stop = YES;
+        }
+        
+        NSLog(@"Script line result: %@", [result description]);
+    }];
+    
     
     return _parser.tokens;
 }
@@ -203,6 +210,20 @@ typedef BOOL (^tokenFilterBlock) (id token);
     [mw.tokens addObjectsFromArray:_parser.match_tokens];
     [_parser.match_tokens removeAllObjects];
     [_parser.tokens addObject:mw];
+}
+
+- (void)parser:(PKParser *)p didMatchExitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    ExitToken *tok = [[ExitToken alloc] init];
+    [_parser.tokens addObject:tok];
+}
+
+- (void)parser:(PKParser *)p didMatchNextRoom:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    NextRoomToken *tok = [[NextRoomToken alloc] init];
+    [_parser.tokens addObject:tok];
 }
 
 - (void)parser:(PKParser *)p didMatchEol:(PKAssembly *)a {
