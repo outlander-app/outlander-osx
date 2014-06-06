@@ -424,11 +424,13 @@
 
 - (void)__atom {
     
-    if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, 0]) {
+    if ([self speculate:^{ [self localVar_]; }]) {
         [self localVar_]; 
-    } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+    } else if ([self speculate:^{ [self id_]; }]) {
+        [self id_]; 
+    } else if ([self speculate:^{ [self matchWord:NO]; }]) {
         [self matchWord:NO]; 
-    } else if ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, 0]) {
+    } else if ([self speculate:^{ [self matchNumber:NO]; }]) {
         [self matchNumber:NO]; 
     } else {
         [self raise:@"No viable alternative found in rule 'atom'."];

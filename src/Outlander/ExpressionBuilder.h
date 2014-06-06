@@ -13,6 +13,7 @@
 #import "GotoToken.h"
 #import "IdToken.h"
 #import "LabelToken.h"
+#import "MoveToken.h"
 #import "PauseToken.h"
 #import "PutToken.h"
 #import "VarToken.h"

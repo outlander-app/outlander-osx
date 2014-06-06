@@ -174,6 +174,44 @@ describe(@"ExpressionBuilder", ^{
             
             [[[var eval] should] equal:@"one_two"];
         });
+        
+        it(@"creates goto", ^{
+            NSArray *a = [_builder build:@"goto $one_two"];
+            GotoToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"$one_two"];
+        });
+    });
+    
+    context(@"move", ^{
+      
+        it(@"creates move", ^{
+            NSArray *a = [_builder build:@"move one.two\n"];
+            MoveToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"one.two"];
+        });
+        
+        it(@"with global var", ^{
+            NSArray *a = [_builder build:@"move $one_two"];
+            MoveToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"$one_two"];
+        });
+        
+        it(@"with local var", ^{
+            NSArray *a = [_builder build:@"move %one_two"];
+            MoveToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"%one_two"];
+        });
+        
+        it(@"with argument var", ^{
+            NSArray *a = [_builder build:@"move %1"];
+            MoveToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"%1"];
+        });
     });
 });
 

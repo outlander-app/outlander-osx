@@ -121,6 +121,8 @@
 		F98782C41942288F00D76231 /* MoveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C21942288F00D76231 /* MoveToken.m */; };
 		F98782C7194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
 		F98782C8194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
+		F98782CB194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
+		F98782CC194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -340,6 +342,8 @@
 		F98782C21942288F00D76231 /* MoveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveToken.m; sourceTree = "<group>"; };
 		F98782C5194228C000D76231 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicToken.h; sourceTree = "<group>"; };
 		F98782C6194228C000D76231 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicToken.m; sourceTree = "<group>"; };
+		F98782C9194235EF00D76231 /* TokenSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSingle.h; sourceTree = "<group>"; };
+		F98782CA194235EF00D76231 /* TokenSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenSingle.m; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -490,6 +494,8 @@
 				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
 				F9B3AC6B1940686700C081C4 /* PutToken.h */,
 				F9B3AC6C1940686700C081C4 /* PutToken.m */,
+				F98782C9194235EF00D76231 /* TokenSingle.h */,
+				F98782CA194235EF00D76231 /* TokenSingle.m */,
 				F9772F151940389E00172083 /* VarToken.h */,
 				F9772F161940389E00172083 /* VarToken.m */,
 			);
@@ -1062,6 +1068,7 @@
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
+				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9772F07194032FB00172083 /* ExpressionParser.m in Sources */,
@@ -1173,6 +1180,7 @@
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
+				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,

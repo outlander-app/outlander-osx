@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Token.h"
+#import "TokenSingle.h"
 
-@interface GotoToken : NSObject <Token>
-
-- (instancetype)initWith:(id<Token>)val;
+@interface GotoToken : TokenSingle
 
 @end

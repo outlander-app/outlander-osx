@@ -98,6 +98,16 @@ typedef BOOL (^tokenFilterBlock) (id token);
     [_parser.tokens addObject:var];
 }
 
+- (void)parser:(PKParser *)p didMatchMoveStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    id rh = [a pop];
+    rh = [self tokenOrAtom:rh];
+    
+    MoveToken *var = [[MoveToken alloc] initWith:rh];
+    [_parser.tokens addObject:var];
+}
+
 - (void)parser:(PKParser *)p didMatchPutStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     

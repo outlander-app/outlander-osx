@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "BasicToken.h"
+#import "TokenSingle.h"
 
-@interface MoveToken : BasicToken
+@interface MoveToken : TokenSingle
 
 @end
