@@ -10,6 +10,8 @@
 #import "AssignmentToken.h"
 #import "Atom.h"
 #import "EchoToken.h"
+#import "GotoToken.h"
+#import "IdToken.h"
 #import "LabelToken.h"
 #import "PauseToken.h"
 #import "PutToken.h"

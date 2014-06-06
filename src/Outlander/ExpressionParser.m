@@ -8,6 +8,7 @@
 @property (nonatomic, retain) NSMutableDictionary *stmts_memo;
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *label_memo;
@@ -37,6 +38,7 @@
         self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
         self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
+        self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
         self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
@@ -48,6 +50,7 @@
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
@@ -58,6 +61,7 @@
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
         self.echoStmt_memo = [NSMutableDictionary dictionary];
+        self.gotoStmt_memo = [NSMutableDictionary dictionary];
         self.pause_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
         self.label_memo = [NSMutableDictionary dictionary];
@@ -78,6 +82,7 @@
     [_stmts_memo removeAllObjects];
     [_stmt_memo removeAllObjects];
     [_echoStmt_memo removeAllObjects];
+    [_gotoStmt_memo removeAllObjects];
     [_pause_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
     [_label_memo removeAllObjects];
@@ -159,6 +164,8 @@
         [self putStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_ECHO, 0]) {
         [self echoStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_GOTO, 0]) {
+        [self gotoStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -182,6 +189,24 @@
 
 - (void)echoStmt_ {
     [self parseRule:@selector(__echoStmt) withMemo:_echoStmt_memo];
+}
+
+- (void)__gotoStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_GOTO discard:YES]; 
+    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+        [self id_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, 0]) {
+        [self localVar_]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'gotoStmt'."];
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchGotoStmt:)];
+}
+
+- (void)gotoStmt_ {
+    [self parseRule:@selector(__gotoStmt) withMemo:_gotoStmt_memo];
 }
 
 - (void)__pause {
@@ -216,10 +241,7 @@
 - (void)__label {
     
     [self tryAndRecover:EXPRESSIONPARSER_TOKEN_KIND_COLON block:^{ 
-        [self identifier_]; 
-        while ([self speculate:^{ [self refinement_]; }]) {
-            [self refinement_]; 
-        }
+        [self id_]; 
         [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:YES]; 
     } completion:^{ 
         [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:YES]; 
@@ -303,9 +325,16 @@
 
 - (void)__id {
     
-    [self identifier_]; 
-    while ([self speculate:^{ [self refinement_]; }]) {
+    if ([self speculate:^{ [self identifier_]; [self refinement_]; while ([self speculate:^{ [self refinement_]; }]) {[self refinement_]; }}]) {
+        [self identifier_]; 
         [self refinement_]; 
+        while ([self speculate:^{ [self refinement_]; }]) {
+            [self refinement_]; 
+        }
+    } else if ([self speculate:^{ [self identifier_]; }]) {
+        [self identifier_]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'id'."];
     }
 
     [self fireDelegateSelector:@selector(parser:didMatchId:)];

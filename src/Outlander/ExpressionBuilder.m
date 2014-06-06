@@ -10,7 +10,7 @@
 #import <PEGKit/PEGKit.h>
 #import "ExpressionParser.h"
 
-typedef BOOL (^tokenFilterBlock) (PKToken *token);
+typedef BOOL (^tokenFilterBlock) (id token);
 
 @interface ExpressionBuilder () {
     ExpressionParser *_parser;
@@ -45,13 +45,16 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
 - (void)parser:(PKParser *)p didMatchLocalVar:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSArray *ids = @[@"$", @"%"];
-    
-    NSString *tokens = [self popTokensToString:a until:^BOOL(PKToken *token) {
-        return [ids containsObject:token.stringValue];
+    NSString *str = [self popTokensToString:a until:^BOOL(id token) {
+        return [token isKindOfClass:[PKToken class]];
     }];
     
-    VarToken *var = [[VarToken alloc] initWith:tokens];
+    if([str length] == 0) {
+        IdToken *idTok = [a pop];
+        str = [idTok eval];
+    }
+    
+    VarToken *var = [[VarToken alloc] initWith:str];
     [a push:var];
 }
 
@@ -59,24 +62,39 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
     id rh = [a pop];
-    NSString *lh = [self popTokensToString:a until:^BOOL(PKToken *token) {
-        return false;
-    }];
-
-    rh = [self tokenOrAtom:rh];
+    id lh = [a pop];
     
-    AssignmentToken *token = [[AssignmentToken alloc] initWith:rh and:[[Atom alloc] initWith:lh]];
+    AssignmentToken *token = [[AssignmentToken alloc] initWith:rh and:lh];
     [_parser.tokens addObject:token];
 }
 
 - (void)parser:(PKParser *)p didMatchLabel:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSString *tokens = [self popTokensToString:a until:^BOOL(PKToken *token) {
-        return false;
-    }];
+    IdToken *idtoken = [a pop];
     
-    LabelToken *var = [[LabelToken alloc] initWith:tokens];
+    LabelToken *var = [[LabelToken alloc] initWith:[idtoken eval]];
+    [_parser.tokens addObject:var];
+}
+
+- (void)parser:(PKParser *)p didMatchId:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    NSString *str = [self popTokensToString:a until:^BOOL(id token) {
+        return [token isKindOfClass:[PKToken class]];
+    }];
+   
+    IdToken *idToken = [[IdToken alloc] initWith:str];
+    [a push:idToken];
+}
+
+- (void)parser:(PKParser *)p didMatchGotoStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    id rh = [a pop];
+    rh = [self tokenOrAtom:rh];
+    
+    GotoToken *var = [[GotoToken alloc] initWith:rh];
     [_parser.tokens addObject:var];
 }
 
@@ -135,6 +153,14 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
 
 - (void)parser:(PKParser *)p didMatchAtom:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    id token = [a pop];
+    
+    if([token isKindOfClass:[PKToken class]]) {
+        token = [[Atom alloc] initWith:[token stringValue]];
+    }
+    
+    [a push:token];
 }
 
 - (id)tokenOrAtom:(id)item {
@@ -151,15 +177,19 @@ typedef BOOL (^tokenFilterBlock) (PKToken *token);
     
     NSMutableString *str = [[NSMutableString alloc] init];
     
-    PKToken *token = [a pop];
+    id token = [a pop];
     
     while(token) {
-        BOOL stop = block(token);
+        BOOL valid = block(token);
         
-        [str insertString:token.stringValue atIndex:0];
-        
-        if(stop) break;
-        token = [a pop];
+        if(valid) {
+            [str insertString:[token stringValue] atIndex:0];
+            token = [a pop];
+        }
+        else {
+            [a push:token];
+            break;
+        }
     }
     
     return str;

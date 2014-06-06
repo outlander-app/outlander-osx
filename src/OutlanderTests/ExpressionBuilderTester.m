@@ -158,6 +158,23 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"%one_two $two"];
         });
     });
+    
+    context(@"goto", ^{
+      
+        it(@"creates goto", ^{
+            NSArray *a = [_builder build:@"goto one.two\n"];
+            GotoToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"one.two"];
+        });
+        
+        it(@"creates goto", ^{
+            NSArray *a = [_builder build:@"goto one_two"];
+            GotoToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"one_two"];
+        });
+    });
 });
 
 SPEC_END
