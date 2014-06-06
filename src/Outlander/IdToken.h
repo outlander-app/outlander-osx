@@ -7,9 +7,8 @@
 //
 
 #import "Token.h"
+#import "BasicToken.h"
 
-@interface IdToken : NSObject <Token>
-
-- (instancetype)initWith:(NSString *)val;
+@interface IdToken : BasicToken <Token>
 
 @end

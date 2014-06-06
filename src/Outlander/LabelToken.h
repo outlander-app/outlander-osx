@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Token.h"
+#import "BasicToken.h"
 
-@interface LabelToken : NSObject <Token>
-
-- (instancetype)initWith:(NSString *)val;
+@interface LabelToken : BasicToken
 
 @end

@@ -9,8 +9,10 @@
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *moveStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *pause_memo;
 @property (nonatomic, retain) NSMutableDictionary *putStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *waitStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *label_memo;
 @property (nonatomic, retain) NSMutableDictionary *assignmentPrefix_memo;
 @property (nonatomic, retain) NSMutableDictionary *assignment_memo;
@@ -33,37 +35,45 @@
         self.startRuleName = @"program";
         self.enableAutomaticErrorRecovery = YES;
 
-        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
-        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
-        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
-        self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
-        self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
-        self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
-        self.tokenKindTab[@"echo"] = @(EXPRESSIONPARSER_TOKEN_KIND_ECHO);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
+        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
+        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
+        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
+        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"echo"] = @(EXPRESSIONPARSER_TOKEN_KIND_ECHO);
+        self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
+        self.tokenKindTab[@"move"] = @(EXPRESSIONPARSER_TOKEN_KIND_MOVE);
+        self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
+        self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
+        self.tokenKindTab[@"waitfor"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFOR);
+        self.tokenKindTab[@"waitforre"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE);
 
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ECHO] = @"echo";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON] = @";";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ECHO] = @"echo";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MOVE] = @"move";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFOR] = @"waitfor";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE] = @"waitforre";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
         self.echoStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
+        self.moveStmt_memo = [NSMutableDictionary dictionary];
         self.pause_memo = [NSMutableDictionary dictionary];
         self.putStmt_memo = [NSMutableDictionary dictionary];
+        self.waitStmt_memo = [NSMutableDictionary dictionary];
         self.label_memo = [NSMutableDictionary dictionary];
         self.assignmentPrefix_memo = [NSMutableDictionary dictionary];
         self.assignment_memo = [NSMutableDictionary dictionary];
@@ -83,8 +93,10 @@
     [_stmt_memo removeAllObjects];
     [_echoStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
+    [_moveStmt_memo removeAllObjects];
     [_pause_memo removeAllObjects];
     [_putStmt_memo removeAllObjects];
+    [_waitStmt_memo removeAllObjects];
     [_label_memo removeAllObjects];
     [_assignmentPrefix_memo removeAllObjects];
     [_assignment_memo removeAllObjects];
@@ -166,6 +178,10 @@
         [self echoStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_GOTO, 0]) {
         [self gotoStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_MOVE, 0]) {
+        [self moveStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR, EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE, 0]) {
+        [self waitStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -209,6 +225,18 @@
     [self parseRule:@selector(__gotoStmt) withMemo:_gotoStmt_memo];
 }
 
+- (void)__moveStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_MOVE discard:YES]; 
+    [self atom_]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchMoveStmt:)];
+}
+
+- (void)moveStmt_ {
+    [self parseRule:@selector(__moveStmt) withMemo:_moveStmt_memo];
+}
+
 - (void)__pause {
     
     [self match:EXPRESSIONPARSER_TOKEN_KIND_PAUSE discard:YES]; 
@@ -236,6 +264,27 @@
 
 - (void)putStmt_ {
     [self parseRule:@selector(__putStmt) withMemo:_putStmt_memo];
+}
+
+- (void)__waitStmt {
+    
+    if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR, 0]) {
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR discard:YES]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE, 0]) {
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE discard:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'waitStmt'."];
+    }
+    [self atom_]; 
+    while ([self speculate:^{ [self atom_]; }]) {
+        [self atom_]; 
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchWaitStmt:)];
+}
+
+- (void)waitStmt_ {
+    [self parseRule:@selector(__waitStmt) withMemo:_waitStmt_memo];
 }
 
 - (void)__label {

@@ -8,28 +8,6 @@
 
 #import "Atom.h"
 
-@interface Atom () {
-    NSString *_val;
-}
-@end
-
 @implementation Atom
-
-- (instancetype)initWith:(NSString *)val {
-    self = [super init];
-    if(!self) return nil;
-    
-    _val = val;
-    
-    return self;
-}
-
-- (id)eval {
-    return _val;
-}
-
--(NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@", [super description], _val];
-}
 
 @end

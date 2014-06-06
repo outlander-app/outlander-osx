@@ -1,13 +1,15 @@
 //
-//  IdToken.m
+//  BasicToken.h
 //  Outlander
 //
 //  Created by Joseph McBride on 6/6/14.
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "IdToken.h"
+#import "Token.h"
 
-@implementation IdToken
+@interface BasicToken : NSObject <Token>
+
+- (instancetype)initWith:(NSString *)val;
 
 @end

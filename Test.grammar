@@ -37,6 +37,8 @@ stmt
   | putStmt
   | echoStmt
   | gotoStmt
+  | moveStmt
+  | waitStmt
   ;
 
 echoStmt
@@ -47,12 +49,20 @@ gotoStmt
   = 'goto'! (id | localVar)
   ;
 
+moveStmt
+ = 'move'! atom
+ ;
+
 pause
   = 'pause'! Number?
   ;
 
 putStmt
   = 'put'! atom atom*
+  ;
+
+waitStmt
+  = ('waitfor'! | 'waitforre') atom atom*
   ;
 
 label
