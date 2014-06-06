@@ -123,6 +123,10 @@
 		F98782C8194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
 		F98782CB194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
 		F98782CC194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
+		F98782CF1942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
+		F98782D01942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
+		F98782D3194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
+		F98782D4194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -344,6 +348,10 @@
 		F98782C6194228C000D76231 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicToken.m; sourceTree = "<group>"; };
 		F98782C9194235EF00D76231 /* TokenSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSingle.h; sourceTree = "<group>"; };
 		F98782CA194235EF00D76231 /* TokenSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenSingle.m; sourceTree = "<group>"; };
+		F98782CD1942499300D76231 /* WaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitToken.h; sourceTree = "<group>"; };
+		F98782CE1942499300D76231 /* WaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitToken.m; sourceTree = "<group>"; };
+		F98782D1194249A400D76231 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
+		F98782D2194249A400D76231 /* TokenList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenList.m; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -494,10 +502,14 @@
 				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
 				F9B3AC6B1940686700C081C4 /* PutToken.h */,
 				F9B3AC6C1940686700C081C4 /* PutToken.m */,
+				F98782D1194249A400D76231 /* TokenList.h */,
+				F98782D2194249A400D76231 /* TokenList.m */,
 				F98782C9194235EF00D76231 /* TokenSingle.h */,
 				F98782CA194235EF00D76231 /* TokenSingle.m */,
 				F9772F151940389E00172083 /* VarToken.h */,
 				F9772F161940389E00172083 /* VarToken.m */,
+				F98782CD1942499300D76231 /* WaitToken.h */,
+				F98782CE1942499300D76231 /* WaitToken.m */,
 			);
 			name = Tokens;
 			sourceTree = "<group>";
@@ -1058,6 +1070,7 @@
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
+				F98782D3194249A400D76231 /* TokenList.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
@@ -1089,6 +1102,7 @@
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
+				F98782CF1942499300D76231 /* WaitToken.m in Sources */,
 				F98782BB19420E5D00D76231 /* GotoToken.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
@@ -1140,6 +1154,7 @@
 				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9A34549191A064100920F0E /* GameContext.m in Sources */,
+				F98782D4194249A400D76231 /* TokenList.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
@@ -1170,6 +1185,7 @@
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
+				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
