@@ -17,6 +17,7 @@
 #import "PauseToken.h"
 #import "PutToken.h"
 #import "VarToken.h"
+#import "WaitToken.h"
 
 @interface ExpressionBuilder : NSObject
 

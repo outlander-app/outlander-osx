@@ -62,7 +62,7 @@ putStmt
   ;
 
 waitStmt
-  = ('waitfor'! | 'waitforre') atom atom*
+  = ('waitfor'! | 'waitforre'!) atom atom*
   ;
 
 label

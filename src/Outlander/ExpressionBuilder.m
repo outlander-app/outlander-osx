@@ -124,6 +124,22 @@ typedef BOOL (^tokenFilterBlock) (id token);
     [_parser.tokens addObject:put];
 }
 
+- (void)parser:(PKParser *)p didMatchWaitStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    WaitToken *container = [[WaitToken alloc] init];
+    
+    id token = [a pop];
+    
+    while(token) {
+        token = [self tokenOrAtom:token];
+        [container.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
+    
+    [_parser.tokens addObject:container];
+}
+
 - (void)parser:(PKParser *)p didMatchEchoStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     

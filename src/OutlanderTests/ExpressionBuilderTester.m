@@ -213,6 +213,73 @@ describe(@"ExpressionBuilder", ^{
             [[[var eval] should] equal:@"%1"];
         });
     });
+    
+    context(@"wait", ^{
+        
+        it(@"simple waitfor", ^{
+            NSArray *a = [_builder build:@"waitfor one"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one"];
+        });
+      
+        it(@"simple waitfor", ^{
+            NSArray *a = [_builder build:@"waitfor one $two"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one $two"];
+        });
+        
+        it(@"waitfor", ^{
+            NSArray *a = [_builder build:@"waitfor %one_two $two\n"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        xit(@"waitfor", ^{
+            NSArray *a = [_builder build:@"waitfor %one_two $two \n something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        it(@"simple waitforre", ^{
+            NSArray *a = [_builder build:@"waitforre one"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one"];
+        });
+      
+        it(@"simple waitforre", ^{
+            NSArray *a = [_builder build:@"waitforre one $two"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"one $two"];
+        });
+        
+        it(@"waitforre", ^{
+            NSArray *a = [_builder build:@"waitforre %one_two $two\n"];
+            
+            WaitToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        xit(@"waitforre", ^{
+            NSArray *a = [_builder build:@"waitforre %one_two $two \n something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"%one_two $two"];
+        });
+    });
 });
 
 SPEC_END

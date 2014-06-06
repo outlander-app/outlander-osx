@@ -271,7 +271,7 @@
     if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFOR discard:YES]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE, 0]) {
-        [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE discard:NO]; 
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE discard:YES]; 
     } else {
         [self raise:@"No viable alternative found in rule 'waitStmt'."];
     }
