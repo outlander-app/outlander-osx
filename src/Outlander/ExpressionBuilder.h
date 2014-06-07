@@ -20,6 +20,7 @@
 #import "NextRoomToken.h"
 #import "PauseToken.h"
 #import "PutToken.h"
+#import "RegexToken.h"
 #import "VarToken.h"
 #import "WaitToken.h"
 

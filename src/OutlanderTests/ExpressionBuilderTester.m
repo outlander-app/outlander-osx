@@ -22,6 +22,15 @@ describe(@"ExpressionBuilder", ^{
     
     context(@"vars", ^{
         
+        it(@"creates local var assignment", ^{
+            
+            NSArray *a = [_builder build:@"var one two"];
+            AssignmentToken *token = [a firstObject];
+            
+            [[[token.right eval] should] equal:@"two"];
+            [[[token.left eval] should] equal:@"one"];
+        });
+        
         it(@"creates global var assignment", ^{
             
             NSArray *a = [_builder build:@"var one.three $two"];
@@ -140,6 +149,14 @@ describe(@"ExpressionBuilder", ^{
             EchoToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"one"];
+        });
+        
+        it(@"blank", ^{
+            NSArray *a = [_builder build:@"echo"];
+            
+            EchoToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@""];
         });
       
         it(@"mix vars and text", ^{
@@ -288,6 +305,22 @@ describe(@"ExpressionBuilder", ^{
             MatchToken *match = [[_builder matchTokens] firstObject];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"some text"];
+        });
+        
+        it(@"creates matchre", ^{
+            [_builder build:@"matchre label some|text"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[[match.left eval] should] equal:@"label"];
+            [[[match.right eval] should] equal:@"some|text"];
+        });
+        
+        it(@"creates matchre", ^{
+            [_builder build:@"matchre label \\w"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[[match.left eval] should] equal:@"label"];
+            [[[match.right eval] should] equal:@"some|text"];
         });
         
         it(@"creates matchwait", ^{

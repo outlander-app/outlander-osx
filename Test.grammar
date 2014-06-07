@@ -12,12 +12,14 @@ program
   PKTokenizer *t = self.tokenizer;
 
   // whitespace
-  self.silentlyConsumesWhitespace = YES;
-  t.whitespaceState.reportsWhitespaceTokens = YES;
+  //self.silentlyConsumesWhitespace = YES;
+  //t.whitespaceState.reportsWhitespaceTokens = YES;
   //self.assembly.preservesWhitespaceTokens = YES;
 
   //[t.symbolState add:@"\\n"];
   //[t.whitespaceState setWhitespaceChars:NO from:'\n' to:'\n'];
+
+  [t.wordState setWordChars:YES from:'|' to:'|'];
 
   
   // setup comments
@@ -60,7 +62,7 @@ gotoStmt
   ;
 
 matchStmt
-  = ('match'! | 'matchre'!) (id | localVar) atom+
+  = ('match'! | 'matchre'!) (id | localVar) regex+
   ;
 
 matchWaitStmt
@@ -117,6 +119,10 @@ identifier
 
 refinement
   = ('.' identifier | Number)
+  ;
+
+regex
+  = { MATCHES(@"\\S", LS(1)) }? Word
   ;
 
 atom

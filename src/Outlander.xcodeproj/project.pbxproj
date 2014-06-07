@@ -137,6 +137,11 @@
 		F98782E41942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
 		F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
 		F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
+		F98782EF19427DAB00D76231 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EE19427DAB00D76231 /* Script.m */; };
+		F98782F019427DAB00D76231 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EE19427DAB00D76231 /* Script.m */; };
+		F98782F4194284E300D76231 /* ScriptTokensTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F2194284E300D76231 /* ScriptTokensTester.m */; };
+		F98782F71942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
+		F98782F81942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -372,6 +377,11 @@
 		F98782E21942791B00D76231 /* ExitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExitToken.m; sourceTree = "<group>"; };
 		F98782E919427C3D00D76231 /* NextRoomToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextRoomToken.h; sourceTree = "<group>"; };
 		F98782EA19427C3D00D76231 /* NextRoomToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextRoomToken.m; sourceTree = "<group>"; };
+		F98782ED19427DAB00D76231 /* Script.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
+		F98782EE19427DAB00D76231 /* Script.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Script.m; sourceTree = "<group>"; };
+		F98782F2194284E300D76231 /* ScriptTokensTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptTokensTester.m; sourceTree = "<group>"; };
+		F98782F51942AB6200D76231 /* RegexToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexToken.h; sourceTree = "<group>"; };
+		F98782F61942AB6200D76231 /* RegexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexToken.m; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -526,10 +536,14 @@
 				F98782DE194269CD00D76231 /* MatchWaitToken.m */,
 				F98782C11942288F00D76231 /* MoveToken.h */,
 				F98782C21942288F00D76231 /* MoveToken.m */,
+				F98782E919427C3D00D76231 /* NextRoomToken.h */,
+				F98782EA19427C3D00D76231 /* NextRoomToken.m */,
 				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
 				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
 				F9B3AC6B1940686700C081C4 /* PutToken.h */,
 				F9B3AC6C1940686700C081C4 /* PutToken.m */,
+				F98782F51942AB6200D76231 /* RegexToken.h */,
+				F98782F61942AB6200D76231 /* RegexToken.m */,
 				F98782D1194249A400D76231 /* TokenList.h */,
 				F98782D2194249A400D76231 /* TokenList.m */,
 				F98782C9194235EF00D76231 /* TokenSingle.h */,
@@ -538,8 +552,6 @@
 				F9772F161940389E00172083 /* VarToken.m */,
 				F98782CD1942499300D76231 /* WaitToken.h */,
 				F98782CE1942499300D76231 /* WaitToken.m */,
-				F98782E919427C3D00D76231 /* NextRoomToken.h */,
-				F98782EA19427C3D00D76231 /* NextRoomToken.m */,
 			);
 			name = Tokens;
 			sourceTree = "<group>";
@@ -568,6 +580,8 @@
 				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F96ECDB01934194300787CB9 /* OutlanderParser.h */,
 				F96ECDB11934194300787CB9 /* OutlanderParser.m */,
+				F98782ED19427DAB00D76231 /* Script.h */,
+				F98782EE19427DAB00D76231 /* Script.m */,
 				F96ECDAC1934160200787CB9 /* ScriptOld.h */,
 				F96ECDAD1934160200787CB9 /* ScriptOld.m */,
 				F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */,
@@ -869,6 +883,7 @@
 				F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */,
 				F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */,
 				F96ECDE21936B82E00787CB9 /* ScriptTester.m */,
+				F98782F2194284E300D76231 /* ScriptTokensTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
 				F96ECDCE1934E84D00787CB9 /* VarCommandHandlerTester.m */,
@@ -1101,6 +1116,7 @@
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
+				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
@@ -1131,6 +1147,7 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
+				F98782EF19427DAB00D76231 /* Script.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
@@ -1228,6 +1245,7 @@
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
+				F98782F019427DAB00D76231 /* Script.m in Sources */,
 				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
@@ -1242,6 +1260,7 @@
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
+				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
@@ -1259,6 +1278,7 @@
 				F9772F0F1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
 				F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */,
+				F98782F4194284E300D76231 /* ScriptTokensTester.m in Sources */,
 				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */,
 			);

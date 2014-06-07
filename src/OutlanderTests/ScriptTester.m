@@ -35,7 +35,7 @@ describe(@"Script", ^{
     
     context(@"vars", ^{
        
-        it(@"set local var", ^{
+        xit(@"set local var", ^{
             
             NSString *sample = @"var one two";
             
@@ -48,7 +48,7 @@ describe(@"Script", ^{
             [[one should] equal:@"two"];
         });
         
-        it(@"use local var", ^{
+        xit(@"use local var", ^{
             NSString *sample = @"put %one";
             
             [theScript.localVars setCacheObject:@"two" forKey:@"one"];
@@ -60,7 +60,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"two"];
         });
         
-        it(@"use numbered local var", ^{
+        xit(@"use numbered local var", ^{
             NSString *sample = @"put %1";
             
             [theScript.localVars setCacheObject:@"one" forKey:@"1"];
@@ -72,7 +72,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"one"];
         });
         
-        it(@"use numbered local var", ^{
+        xit(@"use numbered local var", ^{
             NSString *sample = @"put %12";
             
             [theScript.localVars setCacheObject:@"one two three" forKey:@"12"];
@@ -84,7 +84,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"one two three"];
         });
         
-        it(@"use global var", ^{
+        xit(@"use global var", ^{
             NSString *sample = @"put $backpack";
             
             [theContext.globalVars setCacheObject:@"some value" forKey:@"backpack"];
@@ -96,7 +96,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"some value"];
         });
         
-        it(@"use global var within sentence", ^{
+        xit(@"use global var within sentence", ^{
             NSString *sample = @"put put my $righthand in my $backpack";
             
             [theContext.globalVars setCacheObject:@"longsword" forKey:@"righthand"];
@@ -109,7 +109,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"put my longsword in my rucksack"];
         });
         
-        it(@"use global var with dot syntax", ^{
+        xit(@"use global var with dot syntax", ^{
             NSString *sample = @"put put my $righthand in my $primary.container";
             
             [theContext.globalVars setCacheObject:@"longsword" forKey:@"righthand"];
@@ -125,7 +125,7 @@ describe(@"Script", ^{
     
     context(@"goto", ^{
        
-        it(@"goto label", ^{
+        xit(@"goto label", ^{
             
             NSString *sample = @"label.one:\ngoto label.end\nlabel.end:";
             
@@ -139,7 +139,7 @@ describe(@"Script", ^{
     
     context(@"commands", ^{
        
-        it(@"send echo", ^{
+        xit(@"send echo", ^{
             
             NSString *sample = @"echo one two";
             
@@ -150,7 +150,7 @@ describe(@"Script", ^{
             [[theRelay.lastEcho.text should] equal:@"one two\n"];
         });
         
-        it(@"send empty echo", ^{
+        xit(@"send empty echo", ^{
             
             NSString *sample = @"echo";
             
@@ -164,7 +164,7 @@ describe(@"Script", ^{
     
     context(@"commands", ^{
        
-        it(@"send pause script command", ^{
+        xit(@"send pause script command", ^{
             
             NSString *sample = @"#script pause two";
             
@@ -175,7 +175,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"#script pause two"];
         });
         
-        it(@"send abort script command", ^{
+        xit(@"send abort script command", ^{
             
             NSString *sample = @"#script abort one";
             
@@ -186,7 +186,7 @@ describe(@"Script", ^{
             [[theRelay.lastCommand.command should] equal:@"#script abort one"];
         });
         
-        it(@"send resume script command", ^{
+        xit(@"send resume script command", ^{
             
             NSString *sample = @"#script resume one";
             
@@ -199,7 +199,7 @@ describe(@"Script", ^{
     });
     
     context(@"move commands", ^{
-        it(@"send move command", ^{
+        xit(@"send move command", ^{
             
             NSString *sample = @"move ne";
             
@@ -212,9 +212,9 @@ describe(@"Script", ^{
             [[expectFutureValue(theRelay.lastCommand.command) shouldEventually] equal:@"ne"];
         });
         
-        it(@"send nextroom command", ^{
+        xit(@"send nextroom command", ^{
             
-            NSString *sample = @"nextroom ne";
+            NSString *sample = @"nextroom";
             
             [theScript setData:sample];
             
@@ -274,36 +274,6 @@ describe(@"Script", ^{
             [theInfoStream publishSubject:arr];
             
             [[expectFutureValue(theRelay.lastEcho.text) shouldEventuallyBeforeTimingOutAfter(2.0)] equal:@"matched"];
-        });
-    });
-    
-    context(@"match commands", ^{
-        it(@"match", ^{
-            
-            NSString *sample = @"match one a string of characters";
-            
-            [theScript setData:sample];
-            
-            [theScript process];
-            
-            Match *match = theScript.matchList[0];
-            
-            [[match.label should] equal:@"one"];
-            [[match.text should] equal:@"a string of characters"];
-        });
-        
-        it(@"matchre", ^{
-            
-            NSString *sample = @"matchre some.label You feel fully prepared|formation of a targeting pattern";
-            
-            [theScript setData:sample];
-            
-            [theScript process];
-            
-            Match *match = theScript.matchList[0];
-            
-            [[match.label should] equal:@"some.label"];
-            [[match.text should] equal:@"You feel fully prepared|formation of a targeting pattern"];
         });
     });
 });

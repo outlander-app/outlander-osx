@@ -25,6 +25,7 @@
 @property (nonatomic, retain) NSMutableDictionary *id_memo;
 @property (nonatomic, retain) NSMutableDictionary *identifier_memo;
 @property (nonatomic, retain) NSMutableDictionary *refinement_memo;
+@property (nonatomic, retain) NSMutableDictionary *regex_memo;
 @property (nonatomic, retain) NSMutableDictionary *atom_memo;
 @property (nonatomic, retain) NSMutableDictionary *lines_memo;
 @property (nonatomic, retain) NSMutableDictionary *line_memo;
@@ -104,6 +105,7 @@
         self.id_memo = [NSMutableDictionary dictionary];
         self.identifier_memo = [NSMutableDictionary dictionary];
         self.refinement_memo = [NSMutableDictionary dictionary];
+        self.regex_memo = [NSMutableDictionary dictionary];
         self.atom_memo = [NSMutableDictionary dictionary];
         self.lines_memo = [NSMutableDictionary dictionary];
         self.line_memo = [NSMutableDictionary dictionary];
@@ -134,6 +136,7 @@
     [_id_memo removeAllObjects];
     [_identifier_memo removeAllObjects];
     [_refinement_memo removeAllObjects];
+    [_regex_memo removeAllObjects];
     [_atom_memo removeAllObjects];
     [_lines_memo removeAllObjects];
     [_line_memo removeAllObjects];
@@ -158,12 +161,14 @@
   PKTokenizer *t = self.tokenizer;
 
   // whitespace
-  self.silentlyConsumesWhitespace = YES;
-  t.whitespaceState.reportsWhitespaceTokens = YES;
+  //self.silentlyConsumesWhitespace = YES;
+  //t.whitespaceState.reportsWhitespaceTokens = YES;
   //self.assembly.preservesWhitespaceTokens = YES;
 
   //[t.symbolState add:@"\n"];
   //[t.whitespaceState setWhitespaceChars:NO from:'n' to:'n'];
+
+  [t.wordState setWordChars:YES from:'|' to:'|'];
 
   
   // setup comments
@@ -293,8 +298,8 @@
         [self raise:@"No viable alternative found in rule 'matchStmt'."];
     }
     do {
-        [self atom_]; 
-    } while ([self speculate:^{ [self atom_]; }]);
+        [self regex_]; 
+    } while ([self speculate:^{ [self regex_]; }]);
 
     [self fireDelegateSelector:@selector(parser:didMatchMatchStmt:)];
 }
@@ -520,6 +525,18 @@
 
 - (void)refinement_ {
     [self parseRule:@selector(__refinement) withMemo:_refinement_memo];
+}
+
+- (void)__regex {
+    
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
+    [self matchWord:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchRegex:)];
+}
+
+- (void)regex_ {
+    [self parseRule:@selector(__regex) withMemo:_regex_memo];
 }
 
 - (void)__atom {

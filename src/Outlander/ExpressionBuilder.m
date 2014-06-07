@@ -32,10 +32,10 @@ typedef BOOL (^tokenFilterBlock) (id token);
     
     NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
         
         NSError *err;
-        PKAssembly *result = [_parser parseString:data error:&err];
+        PKAssembly *result = [_parser parseString:line error:&err];
         
         if(err) {
             NSLog(@"err: %@", [err localizedDescription]);
@@ -241,6 +241,18 @@ typedef BOOL (^tokenFilterBlock) (id token);
     
     if([token isKindOfClass:[PKToken class]]) {
         token = [[Atom alloc] initWith:[token stringValue]];
+    }
+    
+    [a push:token];
+}
+
+- (void)parser:(PKParser *)p didMatchRegex:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    id token = [a pop];
+    
+    if([token isKindOfClass:[PKToken class]]) {
+        token = [[RegexToken alloc] initWith:[token stringValue]];
     }
     
     [a push:token];

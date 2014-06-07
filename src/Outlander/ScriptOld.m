@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Script.h"
+#import "ScriptOld.h"
 #import "TSMutableDictionary.h"
 #import <PEGKit/PEGKit.h>
 #import "OutlanderParser.h"
@@ -18,7 +18,7 @@
 #import "Match.h"
 #import "NSString+Categories.h"
 
-@interface Script () {
+@interface ScriptOld () {
     id<InfoStream> _gameStream;
     id<CommandRelay> _commandRelay;
     GameContext *_context;
@@ -33,7 +33,7 @@
 
 @end
 
-@implementation Script
+@implementation ScriptOld
 
 - (instancetype)initWith:(GameContext *)context and:(NSString *)data {
     self = [super init];
