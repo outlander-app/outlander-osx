@@ -315,7 +315,7 @@ describe(@"ExpressionBuilder", ^{
             [[[match.right eval] should] equal:@"some|text"];
         });
         
-        it(@"creates matchre", ^{
+        xit(@"creates matchre", ^{
             [_builder build:@"matchre label \\w"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
