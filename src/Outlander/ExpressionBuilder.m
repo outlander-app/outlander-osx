@@ -32,7 +32,12 @@ typedef BOOL (^tokenFilterBlock) (id token);
     
     NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
+    NSUInteger lastCount = 0;
+    
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
+       
+        if([line length] == 0)
+            return;
         
         NSError *err;
         PKAssembly *result = [_parser parseString:line error:&err];
@@ -43,6 +48,13 @@ typedef BOOL (^tokenFilterBlock) (id token);
         }
         
         NSLog(@"Script line result: %@", [result description]);
+        
+        NSUInteger diff = _parser.tokens.count - lastCount;
+        
+        for (NSUInteger i=0; i<diff; i++) {
+            id<Token> token = _parser.tokens[i];
+            token.lineNumber = idx;
+        }
     }];
     
     
@@ -112,10 +124,15 @@ typedef BOOL (^tokenFilterBlock) (id token);
 - (void)parser:(PKParser *)p didMatchMoveStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    id rh = [a pop];
-    rh = [self tokenOrAtom:rh];
+    MoveToken *var = [[MoveToken alloc] init];
     
-    MoveToken *var = [[MoveToken alloc] initWith:rh];
+    id token = [a pop];
+    
+    while(token) {
+        token = [self tokenOrAtom:token];
+        [var.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
     [_parser.tokens addObject:var];
 }
 

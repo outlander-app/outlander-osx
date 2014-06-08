@@ -21,7 +21,6 @@ program
 
   [t.wordState setWordChars:YES from:'|' to:'|'];
 
-  
   // setup comments
   t.commentState.reportsCommentTokens = YES;
   [t.commentState addSingleLineStartMarker:@"//"];
@@ -70,7 +69,7 @@ matchWaitStmt
   ;
 
 moveStmt
-  = 'move'! atom
+  = 'move'! atom+
   ;
 
 nextRoom

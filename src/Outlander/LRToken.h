@@ -10,6 +10,7 @@
 
 @interface LRToken : NSObject <Token>
 
+@property (nonatomic, assign) NSUInteger lineNumber;
 @property (nonatomic, strong) id<Token> right;
 @property (nonatomic, strong) id<Token> left;
 

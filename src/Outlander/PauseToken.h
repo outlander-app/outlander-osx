@@ -10,6 +10,8 @@
 
 @interface PauseToken : NSObject <Token>
 
+@property (nonatomic, assign) NSUInteger lineNumber;
+
 - (instancetype)initWith:(NSNumber *)val;
 
 @end

@@ -10,6 +10,8 @@
 
 @interface TokenSingle : NSObject <Token>
 
+@property (nonatomic, assign) NSUInteger lineNumber;
+
 - (instancetype)initWith:(id<Token>)val;
 
 @end

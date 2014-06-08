@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Token.h"
 #import "BasicToken.h"
 
-@interface IdToken : BasicToken <Token>
+@interface IdToken : BasicToken
 
 @end

@@ -102,19 +102,19 @@
 
 -(void)handleLabelToken:(LabelToken *)token {
     NSString *debug = [NSString stringWithFormat:@"passing label %@", [token eval]];
-    [self sendScriptDebug:debug];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
 }
 
 -(void)handleGotoToken:(GotoToken *)token {
     NSString *label = [self replaceVars:[token eval]];
     
     NSString *debug = [NSString stringWithFormat:@"goto label %@", label];
-    [self sendScriptDebug:debug];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
-    [self gotoLabel:label];
+    [self gotoLabel:label forLineNumber:token.lineNumber];
 }
 
--(void)gotoLabel:(NSString *)label {
+-(void)gotoLabel:(NSString *)label forLineNumber:(NSUInteger)lineNumber {
     
     // get label index from dictionary
     
@@ -122,7 +122,7 @@
     
     if(idx < 0) {
         NSString *debug = [NSString stringWithFormat:@"unknown label %@", label];
-        [self sendScriptDebug:debug];
+        [self sendScriptDebug:debug forLineNumber:lineNumber];
         [self cancel];
     }
     
@@ -142,7 +142,7 @@
     NSTimeInterval interval = [[token eval] doubleValue];
     
     NSString *debug = [NSString stringWithFormat:@"pausing for %#2.2f", interval];
-    [self sendScriptDebug:debug];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
     [NSThread sleepForTimeInterval:interval];
 }
@@ -179,10 +179,10 @@
                         
                         NSString *label = [match.left eval];
                         
-                        [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label]];
+                        [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
                         [_pauseCondition signal];
                         
-                        [self gotoLabel:label];
+                        [self gotoLabel:label forLineNumber:token.lineNumber];
                     }
                 }];
             }];
@@ -195,7 +195,7 @@
         debug = [NSString stringWithFormat:@"matchwait %#2.2f", waitTime];
     }
     
-    [self sendScriptDebug:debug];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
     [_pauseCondition lock];
     
@@ -207,13 +207,63 @@
                 gotSignal = YES;
                 [signal dispose];
                 if(!self.isCancelled) {
-                    [self sendScriptDebug:@"matchwait timed out"];
+                    [self sendScriptDebug:@"matchwait timed out" forLineNumber:token.lineNumber];
                 }
             }
         }
         else {
             [_pauseCondition wait];
         }
+    }
+    
+    [_pauseCondition unlock];
+}
+
+- (void)handleMoveToken:(MoveToken *)token {
+    
+    NSString *direction = [self replaceVars:[token eval]];
+    
+    NSString *debug = [NSString stringWithFormat:@"move %@ - waiting for room description", direction];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    __block BOOL gotRoom = NO;
+    __block RACDisposable *signal = nil;
+    
+    signal = [_gameStream.room.signal subscribeNext:^(id x) {
+        gotRoom = YES;
+        [signal dispose];
+        [_pauseCondition signal];
+    }];
+    
+    [self sendCommand:direction];
+    
+    [_pauseCondition lock];
+    
+    while(!gotRoom) {
+        [_pauseCondition wait];
+    }
+    
+    [_pauseCondition unlock];
+}
+
+- (void)handleNextRoomToken:(NextRoomToken *)token {
+    
+    NSString *debug = @"nextroom - waiting for room description";
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    __block BOOL gotRoom = NO;
+    __block RACDisposable *signal = nil;
+    
+    signal = [_gameStream.room.signal subscribeNext:^(id x) {
+        gotRoom = YES;
+        [signal dispose];
+        [_pauseCondition signal];
+    }];
+    
+    [_pauseCondition lock];
+    
+    while(!gotRoom) {
+        [_pauseCondition wait];
     }
     
     [_pauseCondition unlock];
@@ -236,9 +286,9 @@
     [_commandRelay sendEcho:tag];
 }
 
-- (void)sendScriptDebug:(NSString *)msg {
-//    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (?): %@\n", _name, msg] mono:YES];
+- (void)sendScriptDebug:(NSString *)msg forLineNumber:(NSUInteger)lineNumber {
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)lineNumber, msg] mono:YES];
+//    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (?): %@\n", _name, msg] mono:YES];
     tag.color = @"#0066CC";
     
     [_commandRelay sendEcho:tag];

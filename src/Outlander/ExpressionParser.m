@@ -42,8 +42,6 @@
   _match_tokens = [[NSMutableArray alloc] init];
 
         self.startRuleName = @"program";
-        self.enableAutomaticErrorRecovery = YES;
-
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"matchwait"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHWAIT);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
@@ -145,12 +143,8 @@
 
 - (void)start {
 
-    [self tryAndRecover:TOKEN_KIND_BUILTIN_EOF block:^{
-        [self program_]; 
-        [self matchEOF:YES]; 
-    } completion:^{
-        [self matchEOF:YES];
-    }];
+    [self program_]; 
+    [self matchEOF:YES]; 
 
 }
 
@@ -170,7 +164,6 @@
 
   [t.wordState setWordChars:YES from:'|' to:'|'];
 
-  
   // setup comments
   t.commentState.reportsCommentTokens = YES;
   [t.commentState addSingleLineStartMarker:@"//"];
@@ -325,7 +318,9 @@
 - (void)__moveStmt {
     
     [self match:EXPRESSIONPARSER_TOKEN_KIND_MOVE discard:YES]; 
-    [self atom_]; 
+    do {
+        [self atom_]; 
+    } while ([self speculate:^{ [self atom_]; }]);
 
     [self fireDelegateSelector:@selector(parser:didMatchMoveStmt:)];
 }
@@ -395,12 +390,8 @@
 
 - (void)__label {
     
-    [self tryAndRecover:EXPRESSIONPARSER_TOKEN_KIND_COLON block:^{ 
-        [self id_]; 
-        [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:YES]; 
-    } completion:^{ 
-        [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:YES]; 
-    }];
+    [self id_]; 
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:YES]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchLabel:)];
 }

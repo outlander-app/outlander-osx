@@ -229,6 +229,13 @@ describe(@"ExpressionBuilder", ^{
             
             [[[var eval] should] equal:@"%1"];
         });
+        
+        it(@"with multiple arguments", ^{
+            NSArray *a = [_builder build:@"move go out"];
+            MoveToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"go out"];
+        });
     });
     
     context(@"wait", ^{
