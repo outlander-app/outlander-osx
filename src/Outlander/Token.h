@@ -8,6 +8,8 @@
 
 @protocol Token <NSObject>
 
+@property (nonatomic, assign) NSUInteger lineNumber;
+
 - (id)eval;
 
 @end

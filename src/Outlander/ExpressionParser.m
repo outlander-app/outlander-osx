@@ -529,7 +529,7 @@
 
 - (void)__regex {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegex:)];

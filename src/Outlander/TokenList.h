@@ -10,6 +10,7 @@
 
 @interface TokenList : NSObject <Token>
 
+@property (nonatomic, assign) NSUInteger lineNumber;
 @property (nonatomic, strong) NSMutableArray *tokens;
 
 @end

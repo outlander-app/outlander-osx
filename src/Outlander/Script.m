@@ -8,12 +8,19 @@
 
 #import "Script.h"
 #import "ExpressionBuilder.h"
+#import "GameCommandRelay.h"
+#import "NSString+Categories.h"
+#import "VariableReplacer.h"
 
 @interface Script () {
     id<InfoStream> _gameStream;
     id<CommandRelay> _commandRelay;
     GameContext *_context;
     ExpressionBuilder *_builder;
+    NSUInteger _tokenIndex;
+    VariableReplacer *_varReplacer;
+    NSDictionary *_labels;
+    NSCondition *_pauseCondition;
 }
 @end
 
@@ -25,7 +32,11 @@
     
     _context = context;
     _localVars = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.localvars.%@", self.uuid]];
+    _labels = [[NSDictionary alloc] init];
     _builder = [[ExpressionBuilder alloc] init];
+    _varReplacer = [[VariableReplacer alloc] init];
+    _commandRelay = [[GameCommandRelay alloc] init];
+    _pauseCondition = [[NSCondition alloc] init];
     
     [self setData:data];
     
@@ -42,5 +53,200 @@
 
 - (void)setData:(NSString *)data {
     _syntaxTree = [_builder build:data];
+    
+    _tokenIndex = 0;
 }
+
+- (void)process {
+    if(_tokenIndex >= _syntaxTree.count || self.isCancelled) {
+        NSLog(@"End of script!");
+        if(!self.isCancelled) {
+            [self cancel];
+        }
+        return;
+    }
+    
+    [self processToken:_syntaxTree[_tokenIndex]];
+    
+    _tokenIndex++;
+}
+
+-(void)processToken:(id<Token>)token {
+    NSString *str = [NSString stringWithFormat:@"handle%@:", NSStringFromClass([token class])];
+    NSLog(@"Process Token=%@ with=%@", token, str);
+    SEL sel = NSSelectorFromString(str);
+    [self fireSelector:sel with:token];
+}
+
+- (void)fireSelector:(SEL)sel with:(id)token {
+    if ([self respondsToSelector:sel]) {
+        IMP imp = [self methodForSelector:sel];
+        void (*func)(id, SEL, id<Token>) = (void *)imp;
+        func(self, sel, token);
+    }
+}
+
+-(NSInteger)findLabel:(NSString *)label {
+    
+    __block NSInteger foundIdx = -1;
+    
+    [_syntaxTree enumerateObjectsUsingBlock:^(id<Token> obj, NSUInteger idx, BOOL *stop) {
+        if([obj isKindOfClass:[LabelToken class]] && [[obj eval] isEqualToString:label]) {
+            *stop = YES;
+            foundIdx = idx;
+        }
+    }];
+    
+    return foundIdx;
+}
+
+-(void)handleLabelToken:(LabelToken *)token {
+    NSString *debug = [NSString stringWithFormat:@"passing label %@", [token eval]];
+    [self sendScriptDebug:debug];
+}
+
+-(void)handleGotoToken:(GotoToken *)token {
+    NSString *label = [self replaceVars:[token eval]];
+    
+    NSString *debug = [NSString stringWithFormat:@"goto label %@", label];
+    [self sendScriptDebug:debug];
+    
+    [self gotoLabel:label];
+}
+
+-(void)gotoLabel:(NSString *)label {
+    
+    // get label index from dictionary
+    
+    NSInteger idx = [self findLabel:label];
+    
+    if(idx < 0) {
+        NSString *debug = [NSString stringWithFormat:@"unknown label %@", label];
+        [self sendScriptDebug:debug];
+        [self cancel];
+    }
+    
+    _tokenIndex = --idx;
+}
+
+-(void)handleEchoToken:(EchoToken *)token {
+    [self sendEcho:[self replaceVars:[token eval]]];
+}
+
+-(void)handlePutToken:(PutToken *)token {
+    [self sendCommand:[self replaceVars:[token eval]]];
+}
+
+-(void)handlePauseToken:(PauseToken *)token {
+    
+    NSTimeInterval interval = [[token eval] doubleValue];
+    
+    NSString *debug = [NSString stringWithFormat:@"pausing for %#2.2f", interval];
+    [self sendScriptDebug:debug];
+    
+    [NSThread sleepForTimeInterval:interval];
+}
+
+-(void)handleMatchWaitToken:(MatchWaitToken *) token {
+    
+    __block BOOL gotSignal = NO;
+    __block BOOL timedOut = YES;
+    __block RACDisposable *signal = nil;
+   
+    NSTimeInterval waitTime = 0;
+    if(token.waitTime) {
+        waitTime = [token.waitTime doubleValue];
+    }
+    
+    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+        
+        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+            
+            [token.tokens enumerateObjectsUsingBlock:^(MatchToken *match, NSUInteger idx, BOOL *stop2) {
+                
+                NSString *pattern = [match.right eval];
+                
+                NSArray *matches = [obj.text matchesForPattern:pattern];
+                
+                [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                    if(res.numberOfRanges > 0) {
+                        *stop1 = YES;
+                        *stop2 = YES;
+                        *stop3 = YES;
+                        timedOut = NO;
+                        gotSignal = YES;
+                        [signal dispose];
+                        
+                        NSString *label = [match.left eval];
+                        
+                        [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label]];
+                        [_pauseCondition signal];
+                        
+                        [self gotoLabel:label];
+                    }
+                }];
+            }];
+        }];
+    }];
+    
+    NSString *debug = @"matchwait";
+    
+    if(waitTime > 0) {
+        debug = [NSString stringWithFormat:@"matchwait %#2.2f", waitTime];
+    }
+    
+    [self sendScriptDebug:debug];
+    
+    [_pauseCondition lock];
+    
+    while(!gotSignal) {
+        if(waitTime > 0) {
+            NSDate *date = [NSDate dateWithTimeIntervalSinceNow:waitTime];
+            [_pauseCondition waitUntilDate:date];
+            if(timedOut) {
+                gotSignal = YES;
+                [signal dispose];
+                if(!self.isCancelled) {
+                    [self sendScriptDebug:@"matchwait timed out"];
+                }
+            }
+        }
+        else {
+            [_pauseCondition wait];
+        }
+    }
+    
+    [_pauseCondition unlock];
+}
+
+- (void)sendCommand:(NSString *)command {
+    
+    CommandContext *ctx = [[CommandContext alloc] init];
+    ctx.command = [command trimWhitespaceAndNewline];
+    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
+    ctx.tag.color = @"#0066CC";
+    
+    [_commandRelay sendCommand:ctx];
+}
+
+- (void)sendEcho:(NSString *)echo {
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", [echo trimWhitespaceAndNewline]] mono:YES];
+    tag.color = @"#00FFFF";
+   
+    [_commandRelay sendEcho:tag];
+}
+
+- (void)sendScriptDebug:(NSString *)msg {
+//    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (?): %@\n", _name, msg] mono:YES];
+    tag.color = @"#0066CC";
+    
+    [_commandRelay sendEcho:tag];
+}
+
+- (NSString *)replaceVars:(NSString *)str {
+    NSString *replaced = [_varReplacer replace:str withContext:_context];
+    return [_varReplacer replaceLocalVars:replaced withVars:_localVars];
+}
+
 @end
