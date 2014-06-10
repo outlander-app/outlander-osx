@@ -269,6 +269,47 @@
     [_pauseCondition unlock];
 }
 
+-(void)handleWaitForToken:(WaitForToken *)token {
+    __block BOOL gotSignal = NO;
+    __block BOOL timedOut = YES;
+    __block RACDisposable *signal = nil;
+    
+    NSString *matchText = [token eval];
+   
+    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+        
+        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+            
+            NSArray *matches = [obj.text matchesForPattern:matchText];
+            
+            [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                if(res.numberOfRanges > 0) {
+                    *stop1 = YES;
+                    *stop3 = YES;
+                    timedOut = NO;
+                    gotSignal = YES;
+                    [signal dispose];
+                    
+//                    [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
+                    [_pauseCondition signal];
+                }
+            }];
+        }];
+    }];
+    
+    NSString *debug = [NSString stringWithFormat:@"waitfor %@", matchText];
+    
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    [_pauseCondition lock];
+    
+    while(!gotSignal) {
+        [_pauseCondition wait];
+    }
+    
+    [_pauseCondition unlock];
+}
+
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];

@@ -23,6 +23,7 @@
 #import "RegexToken.h"
 #import "VarToken.h"
 #import "WaitToken.h"
+#import "WaitForToken.h"
 
 @interface ExpressionBuilder : NSObject
 

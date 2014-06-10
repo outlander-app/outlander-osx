@@ -155,7 +155,7 @@ typedef BOOL (^tokenFilterBlock) (id token);
 - (void)parser:(PKParser *)p didMatchWaitForStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    WaitToken *container = [[WaitToken alloc] init];
+    WaitForToken *container = [[WaitForToken alloc] init];
     
     id token = [a pop];
     
