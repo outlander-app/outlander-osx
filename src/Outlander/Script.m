@@ -319,7 +319,7 @@
     CommandContext *ctx = [[CommandContext alloc] init];
     ctx.command = [command trimWhitespaceAndNewline];
     ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
-    ctx.tag.color = @"#0066CC";
+    ctx.tag.color = @"#ACFF2F";
     
     [_commandRelay sendCommand:ctx];
 }

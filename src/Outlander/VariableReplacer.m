@@ -41,6 +41,10 @@
     return [self replaceVars:data withDict:dict andPattern:@"\\%([a-zA-z0-9\\.]+)"];
 }
 
+- (NSString *)replaceLocalArgumentVars:(NSString *)data withVars:(TSMutableDictionary *)dict {
+    return [self replaceVars:data withDict:dict andPattern:@"\\$([0-9\\.]+)"];
+}
+
 - (NSString *)replaceVars:(NSString *)data withDict:(TSMutableDictionary *)dict andPattern:(NSString *)pattern {
     NSMutableString *str = [data mutableCopy];
     

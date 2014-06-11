@@ -87,6 +87,76 @@ describe(@"Variable Replacer", ^{
                 [[result should] equal:@"$does_not_exist"];
             });
         });
+        
+        context(@"local vars", ^{
+            
+            __block TSMutableDictionary *_localVars;
+            
+            beforeEach(^{
+                _localVars = [[TSMutableDictionary alloc] initWithName:@"localvars"];
+            });
+            
+            
+            it(@"should replace local variable", ^{
+                
+                [_localVars setCacheObject:@"longsword" forKey:@"lefthand"];
+                
+                NSString *result = [_replacer replaceLocalVars:@"%lefthand" withVars:_localVars];
+                
+                [[result should] equal:@"longsword"];
+            });
+            
+            it(@"should replace multiple global variables within text", ^{
+                
+                [_localVars setCacheObject:@"longsword" forKey:@"lefthand"];
+                [_localVars setCacheObject:@"backpack" forKey:@"primary.container"];
+                
+                NSString *result = [_replacer replaceLocalVars:@"stow my %lefthand in my %primary.container" withVars:_localVars];
+                
+                [[result should] equal:@"stow my longsword in my backpack"];
+            });
+            
+            it(@"should handle unfound vars", ^{
+                NSString *result = [_replacer replaceLocalVars:@"$does_not_exist" withVars:_localVars];
+                
+                [[result should] equal:@"$does_not_exist"];
+            });
+        });
+        
+        context(@"local argument vars", ^{
+            
+            __block TSMutableDictionary *_localVars;
+            
+            beforeEach(^{
+                _localVars = [[TSMutableDictionary alloc] initWithName:@"argumentvars"];
+            });
+            
+            
+            it(@"should replace local variable", ^{
+                
+                [_localVars setCacheObject:@"longsword" forKey:@"0"];
+                
+                NSString *result = [_replacer replaceLocalArgumentVars:@"$0" withVars:_localVars];
+                
+                [[result should] equal:@"longsword"];
+            });
+            
+            it(@"should replace multiple global variables within text", ^{
+                
+                [_localVars setCacheObject:@"longsword" forKey:@"1"];
+                [_localVars setCacheObject:@"backpack" forKey:@"2"];
+                
+                NSString *result = [_replacer replaceLocalArgumentVars:@"stow my $1 in my $2" withVars:_localVars];
+                
+                [[result should] equal:@"stow my longsword in my backpack"];
+            });
+            
+            it(@"should handle unfound vars", ^{
+                NSString *result = [_replacer replaceLocalArgumentVars:@"$0" withVars:_localVars];
+                
+                [[result should] equal:@"$0"];
+            });
+        });
     });
 });
 
