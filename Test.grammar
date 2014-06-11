@@ -19,8 +19,6 @@ program
   //[t.symbolState add:@"\\n"];
   //[t.whitespaceState setWhitespaceChars:NO from:'\n' to:'\n'];
 
-  [t.wordState setWordChars:YES from:'|' to:'|'];
-
   // setup comments
   t.commentState.reportsCommentTokens = YES;
   [t.commentState addSingleLineStartMarker:@"//"];
@@ -61,7 +59,7 @@ gotoStmt
   ;
 
 matchStmt
-  = ('match'! | 'matchre'!) (id | localVar) regex+
+  = ('match'! | 'matchre'!) (id | localVar) regexLiteral
   ;
 
 matchWaitStmt
@@ -85,7 +83,7 @@ putStmt
   ;
 
 waitForStmt
-  = ('waitfor'! | 'waitforre'!) atom+
+  = ('waitfor'! | 'waitforre'!) (atom+|regexLiteral)
   ;
 
 label
@@ -120,8 +118,28 @@ refinement
   = ('.' identifier | Number)
   ;
 
+regexLiteral
+  = regexBodyWith regexMods? | regex
+  ;
+
+regexBodyWith
+  = '/' regex '/'
+  ;
+
+regexMods
+  = { MATCHES_IGNORE_CASE(@"[imxs]+", LS(1)) }? Word
+  ;
+
 regex
+  = '^'? (regexSymbol|regexWord)+ '$'?
+  ;
+
+regexWord
   = { MATCHES(@"\\S", LS(1)) }? Word
+  ;
+
+regexSymbol
+  = Symbol | ':' | '|'
   ;
 
 atom

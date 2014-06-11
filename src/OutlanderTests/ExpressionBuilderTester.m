@@ -238,12 +238,12 @@ describe(@"ExpressionBuilder", ^{
         });
     });
     
-    context(@"wait", ^{
+    context(@"waitfor", ^{
         
         it(@"simple waitfor", ^{
             NSArray *a = [_builder build:@"waitfor one"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"one"];
         });
@@ -251,7 +251,7 @@ describe(@"ExpressionBuilder", ^{
         it(@"simple waitfor", ^{
             NSArray *a = [_builder build:@"waitfor one $two"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"one $two"];
         });
@@ -259,7 +259,7 @@ describe(@"ExpressionBuilder", ^{
         it(@"waitfor", ^{
             NSArray *a = [_builder build:@"waitfor %one_two $two\n"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"%one_two $two"];
         });
@@ -267,7 +267,7 @@ describe(@"ExpressionBuilder", ^{
         xit(@"waitfor", ^{
             NSArray *a = [_builder build:@"waitfor %one_two $two \n something"];
             
-            PutToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"%one_two $two"];
         });
@@ -275,7 +275,7 @@ describe(@"ExpressionBuilder", ^{
         it(@"simple waitforre", ^{
             NSArray *a = [_builder build:@"waitforre one"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"one"];
         });
@@ -283,7 +283,7 @@ describe(@"ExpressionBuilder", ^{
         it(@"simple waitforre", ^{
             NSArray *a = [_builder build:@"waitforre one $two"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"one $two"];
         });
@@ -291,9 +291,17 @@ describe(@"ExpressionBuilder", ^{
         it(@"waitforre", ^{
             NSArray *a = [_builder build:@"waitforre %one_two $two\n"];
             
-            WaitToken *put = [a firstObject];
+            WaitForToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        it(@"waitforre", ^{
+            NSArray *a = [_builder build:@"waitforre ^TEST END"];
+            
+            WaitForToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"^TEST END"];
         });
         
         xit(@"waitforre", ^{
@@ -322,12 +330,28 @@ describe(@"ExpressionBuilder", ^{
             [[[match.right eval] should] equal:@"some|text"];
         });
         
-        xit(@"creates matchre", ^{
+        it(@"creates matchre with regex", ^{
             [_builder build:@"matchre label \\w"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
             [[[match.left eval] should] equal:@"label"];
-            [[[match.right eval] should] equal:@"some|text"];
+            [[[match.right eval] should] equal:@"\\w"];
+        });
+        
+        it(@"creates matchre with regex capture group", ^{
+            [_builder build:@"matchre label (\\w)"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[[match.left eval] should] equal:@"label"];
+            [[[match.right eval] should] equal:@"(\\w)"];
+        });
+        
+        it(@"creates matchre with complex regex", ^{
+            [_builder build:@"matchre label ^Circle:\\s+(\\d+)$"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[[match.left eval] should] equal:@"label"];
+            [[[match.right eval] should] equal:@"^Circle:\\s+(\\d+)$"];
         });
         
         it(@"creates matchwait", ^{

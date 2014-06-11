@@ -11,6 +11,7 @@
 #import "ExpressionParser.h"
 
 typedef BOOL (^tokenFilterBlock) (id token);
+typedef void (^tokenActionBlock) (NSMutableString *str, id token);
 
 @interface ExpressionBuilder () {
     ExpressionParser *_parser;
@@ -263,16 +264,41 @@ typedef BOOL (^tokenFilterBlock) (id token);
     [a push:token];
 }
 
-- (void)parser:(PKParser *)p didMatchRegex:(PKAssembly *)a {
+- (void)parser:(PKParser *)p didMatchRegexLiteral:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    id token = [a pop];
+    __block BOOL lastWasSymbol = NO;
     
-    if([token isKindOfClass:[PKToken class]]) {
-        token = [[RegexToken alloc] initWith:[token stringValue]];
+    NSMutableString *tokens = [self popTokensToString:a until:^BOOL(id token) {
+        return [token isKindOfClass:[PKToken class]];
+    } with:^(NSMutableString *str, PKToken *token) {
+        if(token.isSymbol) {
+            [str insertString:token.stringValue atIndex:0];
+            lastWasSymbol = YES;
+        } else {
+            NSString *pattern = @"%@ ";
+            if(lastWasSymbol) {
+                pattern = @"%@";
+            }
+            [str insertString:[NSString stringWithFormat:pattern, token.stringValue] atIndex:0];
+            lastWasSymbol = NO;
+        }
+    }];
+    
+    if([tokens hasSuffix:@" "]) {
+        [tokens replaceCharactersInRange:NSMakeRange(tokens.length-1, 1) withString:@""];
     }
     
+    RegexToken *token = [[RegexToken alloc] initWith:tokens];
     [a push:token];
+    
+//    id token = [a pop];
+//    
+//    if([token isKindOfClass:[PKToken class]]) {
+//        token = [[RegexToken alloc] initWith:[token stringValue]];
+//    }
+//    
+//    [items insertObject:token atIndex:0];
 }
 
 - (id)tokenOrAtom:(id)item {
@@ -299,16 +325,26 @@ typedef BOOL (^tokenFilterBlock) (id token);
 }
 
 - (NSMutableString *)popTokensToString:(PKAssembly *)a until:(tokenFilterBlock)block {
+    return [self popTokensToString:a until:block with:nil];
+}
+
+- (NSMutableString *)popTokensToString:(PKAssembly *)a until:(tokenFilterBlock)until with:(tokenActionBlock)action {
+    
+    if(!action) {
+        action = ^(NSMutableString *str, id token){
+            [str insertString:[token stringValue] atIndex:0];
+        };
+    }
     
     NSMutableString *str = [[NSMutableString alloc] init];
     
     id token = [a pop];
     
     while(token) {
-        BOOL valid = block(token);
+        BOOL valid = until(token);
         
         if(valid) {
-            [str insertString:[token stringValue] atIndex:0];
+            action(str, token);
             token = [a pop];
         }
         else {
