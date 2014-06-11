@@ -264,7 +264,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     [a push:token];
 }
 
-- (void)parser:(PKParser *)p didMatchRegexLiteral:(PKAssembly *)a {
+- (void)parser:(PKParser *)p didMatchRegex:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
     __block BOOL lastWasSymbol = NO;

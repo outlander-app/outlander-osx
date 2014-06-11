@@ -66,7 +66,6 @@
         self.tokenKindTab[@"matchre"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHRE);
         self.tokenKindTab[@"^"] = @(EXPRESSIONPARSER_TOKEN_KIND_CARET);
         self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"|"] = @(EXPRESSIONPARSER_TOKEN_KIND_PIPE);
         self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
         self.tokenKindTab[@"match"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCH);
 
@@ -89,7 +88,6 @@
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_CARET] = @"^";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PIPE] = @"|";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCH] = @"match";
 
@@ -182,6 +180,8 @@
 
   //[t.symbolState add:@"\n"];
   //[t.whitespaceState setWhitespaceChars:NO from:'n' to:'n'];
+
+  [t.wordState setWordChars:YES from:'|' to:'|'];
 
   // setup comments
   t.commentState.reportsCommentTokens = YES;
@@ -310,8 +310,8 @@
         [self raise:@"No viable alternative found in rule 'matchStmt'."];
     }
     do {
-        [self regexLiteral_]; 
-    } while ([self speculate:^{ [self regexLiteral_]; }]);
+        [self regex_]; 
+    } while ([self speculate:^{ [self regex_]; }]);
 
     [self fireDelegateSelector:@selector(parser:didMatchMatchStmt:)];
 }
@@ -399,12 +399,12 @@
     do {
         if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_WORD, 0]) {
             [self atom_]; 
-        } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_CARET, EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH, 0]) {
-            [self regexLiteral_]; 
+        } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_CARET, 0]) {
+            [self regex_]; 
         } else {
             [self raise:@"No viable alternative found in rule 'waitForStmt'."];
         }
-    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_WORD, 0]) {[self atom_]; } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_CARET, EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH, 0]) {[self regexLiteral_]; } else {[self raise:@"No viable alternative found in rule 'waitForStmt'."];}}]);
+    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, TOKEN_KIND_BUILTIN_NUMBER, TOKEN_KIND_BUILTIN_WORD, 0]) {[self atom_]; } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_CARET, 0]) {[self regex_]; } else {[self raise:@"No viable alternative found in rule 'waitForStmt'."];}}]);
 
     [self fireDelegateSelector:@selector(parser:didMatchWaitForStmt:)];
 }
@@ -594,14 +594,14 @@
         [self match:EXPRESSIONPARSER_TOKEN_KIND_CARET discard:NO]; 
     }
     do {
-        if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, EXPRESSIONPARSER_TOKEN_KIND_PIPE, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {
+        if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {
             [self regexSymbol_]; 
         } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
             [self regexWord_]; 
         } else {
             [self raise:@"No viable alternative found in rule 'regex'."];
         }
-    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, EXPRESSIONPARSER_TOKEN_KIND_PIPE, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {[self regexSymbol_]; } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {[self regexWord_]; } else {[self raise:@"No viable alternative found in rule 'regex'."];}}]);
+    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {[self regexSymbol_]; } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {[self regexWord_]; } else {[self raise:@"No viable alternative found in rule 'regex'."];}}]);
     if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR discard:NO]; 
     }
@@ -615,7 +615,7 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\S", LS(1)); }]; 
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];
@@ -631,8 +631,6 @@
         [self matchSymbol:NO]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_COLON discard:NO]; 
-    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PIPE, 0]) {
-        [self match:EXPRESSIONPARSER_TOKEN_KIND_PIPE discard:NO]; 
     } else {
         [self raise:@"No viable alternative found in rule 'regexSymbol'."];
     }
