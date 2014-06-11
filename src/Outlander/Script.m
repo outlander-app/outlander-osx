@@ -308,6 +308,12 @@
     [_pauseCondition unlock];
 }
 
+- (void)handleExitToken:(ExitToken *)token {
+    NSString *debug = @"exit";
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    [self cancel];
+}
+
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];
@@ -326,8 +332,7 @@
 }
 
 - (void)sendScriptDebug:(NSString *)msg forLineNumber:(NSUInteger)lineNumber {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)lineNumber, msg] mono:YES];
-//    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (?): %@\n", _name, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@(%lu): %@\n", _name, (unsigned long)lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     
     [_commandRelay sendEcho:tag];

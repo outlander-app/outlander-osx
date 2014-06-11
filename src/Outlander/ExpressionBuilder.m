@@ -33,7 +33,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     
     NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     
-    NSUInteger lastCount = 0;
+    __block NSUInteger lastCount = 0;
     
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
        
@@ -52,10 +52,12 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
         
         NSUInteger diff = _parser.tokens.count - lastCount;
         
-        for (NSUInteger i=0; i<diff; i++) {
+        for (NSUInteger i=lastCount; i<(lastCount + diff); i++) {
             id<Token> token = _parser.tokens[i];
-            token.lineNumber = idx;
+            token.lineNumber = idx + 1;
         }
+        
+        lastCount = idx;
     }];
     
     
