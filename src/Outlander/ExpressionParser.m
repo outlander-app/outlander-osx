@@ -218,10 +218,10 @@
   //[t.whitespaceState setWhitespaceChars:NO from:'n' to:'n'];
 
   [t.wordState setWordChars:YES from:'|' to:'|'];
-  [t setTokenizerState:t.commentState from:'#' to:'#'];
+  //[t setTokenizerState:t.commentState from:'#' to:'#'];
 
   // setup comments
-  t.commentState.reportsCommentTokens = NO;
+  t.commentState.reportsCommentTokens = YES;
   [t.commentState addSingleLineStartMarker:@"//"];
   [t.commentState addSingleLineStartMarker:@"#"];
   [t.commentState addMultiLineStartMarker:@"/*" endMarker:@"*/"];
