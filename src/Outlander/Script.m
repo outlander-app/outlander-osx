@@ -346,6 +346,17 @@
     _tokenIndex = last.stackIndex;
 }
 
+- (void)handleAssignmentToken:(AssignmentToken *)token {
+    NSString *name = [token.left eval];
+    NSString *val = [token.right eval];
+    val = [self replaceVars:val];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"setvariable %@ %@", name, val]
+            forLineNumber:token.lineNumber];
+    
+    [_localVars setCacheObject:val forKey:name];
+}
+
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];
