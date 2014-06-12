@@ -80,9 +80,23 @@ pause
   = 'pause'! Number?
   ;
 
-putStmt
-  = 'put'! atom+
+putCmds
+  = commandsExpr | atom
   ;
+
+putStmt
+  = 'put'! putCmds+
+  ;
+
+scriptAbort = 'script' 'abort';
+scriptPause = 'script' 'pause';
+scriptResume = 'script' 'resume';
+
+commands = scriptResume | scriptAbort | scriptPause;
+
+commandsExpr
+    = '#' commands atom+
+    ;
 
 waitForStmt
   = ('waitfor'! | 'waitforre'!) (atom|regex)+

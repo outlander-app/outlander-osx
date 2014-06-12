@@ -17,6 +17,14 @@
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
 		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
+		F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
+		F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
+		F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
+		F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
+		F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
+		F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
+		F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
+		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F96ECDAA193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAB193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* ScriptOld.m */; };
@@ -253,6 +261,14 @@
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
 		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
+		F94A3FC81948AE0500D6B35D /* GosubToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GosubToken.m; sourceTree = "<group>"; };
+		F94A3FCB1948AE6700D6B35D /* ActionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionToken.h; sourceTree = "<group>"; };
+		F94A3FCC1948AE6700D6B35D /* ActionToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionToken.m; sourceTree = "<group>"; };
+		F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnToken.h; sourceTree = "<group>"; };
+		F94A3FD01948AE9F00D6B35D /* ReturnToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnToken.m; sourceTree = "<group>"; };
+		F94A3FD31948DBC500D6B35D /* CommandsToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandsToken.h; sourceTree = "<group>"; };
+		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F96ECDA8193404BB00787CB9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
 		F96ECDA9193404BB00787CB9 /* Actor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actor.m; sourceTree = "<group>"; };
 		F96ECDAC1934160200787CB9 /* ScriptOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptOld.h; sourceTree = "<group>"; };
@@ -516,16 +532,22 @@
 			isa = PBXGroup;
 			children = (
 				F9772F19194038D900172083 /* Token.h */,
+				F94A3FCB1948AE6700D6B35D /* ActionToken.h */,
+				F94A3FCC1948AE6700D6B35D /* ActionToken.m */,
 				F9B3AC63194058EE00C081C4 /* AssignmentToken.h */,
 				F9B3AC64194058EE00C081C4 /* AssignmentToken.m */,
 				F9B3AC6719405BD700C081C4 /* Atom.h */,
 				F9B3AC6819405BD700C081C4 /* Atom.m */,
 				F98782C5194228C000D76231 /* BasicToken.h */,
 				F98782C6194228C000D76231 /* BasicToken.m */,
+				F94A3FD31948DBC500D6B35D /* CommandsToken.h */,
+				F94A3FD41948DBC500D6B35D /* CommandsToken.m */,
 				F98782B519420CB500D76231 /* EchoToken.h */,
 				F98782B619420CB500D76231 /* EchoToken.m */,
 				F98782E11942791B00D76231 /* ExitToken.h */,
 				F98782E21942791B00D76231 /* ExitToken.m */,
+				F94A3FC71948AE0500D6B35D /* GosubToken.h */,
+				F94A3FC81948AE0500D6B35D /* GosubToken.m */,
 				F98782B919420E5D00D76231 /* GotoToken.h */,
 				F98782BA19420E5D00D76231 /* GotoToken.m */,
 				F98782BD1942128F00D76231 /* IdToken.h */,
@@ -548,6 +570,8 @@
 				F9B3AC6C1940686700C081C4 /* PutToken.m */,
 				F98782F51942AB6200D76231 /* RegexToken.h */,
 				F98782F61942AB6200D76231 /* RegexToken.m */,
+				F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */,
+				F94A3FD01948AE9F00D6B35D /* ReturnToken.m */,
 				F98782D1194249A400D76231 /* TokenList.h */,
 				F98782D2194249A400D76231 /* TokenList.m */,
 				F98782C9194235EF00D76231 /* TokenSingle.h */,
@@ -1095,6 +1119,7 @@
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
+				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
@@ -1112,6 +1137,7 @@
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
+				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
@@ -1122,12 +1148,14 @@
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
+				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
+				F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
@@ -1204,7 +1232,9 @@
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
+				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
+				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
@@ -1226,6 +1256,7 @@
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
+				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
@@ -1266,6 +1297,7 @@
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
+				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,

@@ -90,12 +90,20 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"one $two"];
         });
         
-        it(@"put", ^{
+        it(@"put with local and global args", ^{
             NSArray *a = [_builder build:@"put %one_two $two\n"];
             
             PutToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        it(@"put with command", ^{
+            NSArray *a = [_builder build:@"put #script abort something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#script abort something"];
         });
         
         xit(@"put", ^{

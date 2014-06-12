@@ -269,38 +269,19 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
 - (void)parser:(PKParser *)p didMatchRegex:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    __block BOOL lastWasSymbol = NO;
-    
-    NSMutableString *tokens = [self popTokensToString:a until:^BOOL(id token) {
-        return [token isKindOfClass:[PKToken class]];
-    } with:^(NSMutableString *str, PKToken *token) {
-        if(token.isSymbol) {
-            [str insertString:token.stringValue atIndex:0];
-            lastWasSymbol = YES;
-        } else {
-            NSString *pattern = @"%@ ";
-            if(lastWasSymbol) {
-                pattern = @"%@";
-            }
-            [str insertString:[NSString stringWithFormat:pattern, token.stringValue] atIndex:0];
-            lastWasSymbol = NO;
-        }
-    }];
-    
-    if([tokens hasSuffix:@" "]) {
-        [tokens replaceCharactersInRange:NSMakeRange(tokens.length-1, 1) withString:@""];
-    }
+    NSString *tokens = [self popTokensToStringWithWordSpaces:a];
     
     RegexToken *token = [[RegexToken alloc] initWith:tokens];
     [a push:token];
+}
+
+- (void)parser:(PKParser *)p didMatchCommands:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-//    id token = [a pop];
-//    
-//    if([token isKindOfClass:[PKToken class]]) {
-//        token = [[RegexToken alloc] initWith:[token stringValue]];
-//    }
-//    
-//    [items insertObject:token atIndex:0];
+    NSString *tokens = [self popTokensToStringWithWordSpaces:a];
+    
+    CommandsToken *token = [[CommandsToken alloc] initWith:tokens];
+    [a push:token];
 }
 
 - (id)tokenOrAtom:(id)item {
@@ -324,6 +305,32 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     }
     
     return tl;
+}
+
+- (NSMutableString *)popTokensToStringWithWordSpaces:(PKAssembly *)a {
+    __block BOOL lastWasSymbol = NO;
+    
+    NSMutableString *tokens = [self popTokensToString:a until:^BOOL(id token) {
+        return [token isKindOfClass:[PKToken class]];
+    } with:^(NSMutableString *str, PKToken *token) {
+        if(token.isSymbol) {
+            [str insertString:token.stringValue atIndex:0];
+            lastWasSymbol = YES;
+        } else {
+            NSString *pattern = @"%@ ";
+            if(lastWasSymbol) {
+                pattern = @"%@";
+            }
+            [str insertString:[NSString stringWithFormat:pattern, token.stringValue] atIndex:0];
+            lastWasSymbol = NO;
+        }
+    }];
+    
+    if([tokens hasSuffix:@" "]) {
+        [tokens replaceCharactersInRange:NSMakeRange(tokens.length-1, 1) withString:@""];
+    }
+    
+    return tokens;
 }
 
 - (NSMutableString *)popTokensToString:(PKAssembly *)a until:(tokenFilterBlock)block {
