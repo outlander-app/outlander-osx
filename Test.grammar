@@ -97,7 +97,7 @@ putCmds
   ;
 
 putStmt
-  = 'put'! putCmds+
+  = 'put'! 'put'? putCmds+
   ;
 
 scriptAbort = 'script' 'abort';

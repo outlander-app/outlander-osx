@@ -90,6 +90,14 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"one $two"];
         });
         
+        it(@"put with put game command", ^{
+            NSArray *a = [_builder build:@"put put one $two"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"put one $two"];
+        });
+        
         it(@"put with local and global args", ^{
             NSArray *a = [_builder build:@"put %one_two $two\n"];
             

@@ -145,7 +145,7 @@
         
         NSTimeInterval since = [script.started timeIntervalSinceNow];
         
-        [self sendEcho:[NSString stringWithFormat:@"[Script finished (%#2.2f seconds): %@]", since*-1, scriptName]];
+        [self sendEcho:[NSString stringWithFormat:@"[Script finished (run time was %#2.2f seconds): %@]", since*-1, scriptName]];
         [_scripts removeObjectForKey:scriptName];
         
         if(![script isCancelled]) {
@@ -163,7 +163,7 @@
 
 - (void)sendEcho:(NSString *)echo {
     TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", echo] mono:YES];
-    tag.color = @"#0066CC";
+    tag.color = @"#ffffff";
     
     NSDictionary *userInfo = @{@"tag": tag};
     

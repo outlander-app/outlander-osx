@@ -467,6 +467,9 @@
 - (void)__putStmt {
     
     [self match:EXPRESSIONPARSER_TOKEN_KIND_PUT discard:YES]; 
+    if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PUT, 0]) {
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_PUT discard:NO]; 
+    }
     do {
         [self putCmds_]; 
     } while ([self speculate:^{ [self putCmds_]; }]);
@@ -776,7 +779,7 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];

@@ -72,9 +72,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
 - (void)parser:(PKParser *)p didMatchLocalVar:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSString *str = [self popTokensToString:a until:^BOOL(id token) {
-        return [token isKindOfClass:[PKToken class]];
-    }];
+    NSString *str = [self popTokensToStringWithWordSpaces:a];
     
     if([str length] == 0) {
         IdToken *idTok = [a pop];
@@ -107,10 +105,8 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
 - (void)parser:(PKParser *)p didMatchId:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
-    NSString *str = [self popTokensToString:a until:^BOOL(id token) {
-        return [token isKindOfClass:[PKToken class]];
-    }];
-   
+    NSString *str = [self popTokensToStringWithWordSpaces:a];
+    
     IdToken *idToken = [[IdToken alloc] initWith:str];
     [a push:idToken];
 }
@@ -333,7 +329,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     NSMutableString *tokens = [self popTokensToString:a until:^BOOL(id token) {
         return [token isKindOfClass:[PKToken class]];
     } with:^(NSMutableString *str, PKToken *token) {
-        if(token.isSymbol) {
+        if(token.isSymbol || token.isNumber) {
             [str insertString:token.stringValue atIndex:0];
             lastWasSymbol = YES;
         } else {
