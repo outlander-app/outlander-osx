@@ -32,17 +32,18 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
 
 -(NSArray *)build:(NSString *)data {
     
-    NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSArray *lines = [data componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n"]];
     
     __block NSUInteger lastCount = 0;
     
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
        
-        if([line length] == 0 || [[line trimWhitespaceAndNewline] hasPrefix:@"#"])
+        NSString *trimmed = [line trimWhitespaceAndNewline];
+        if(!trimmed || [trimmed length] == 0 || [trimmed hasPrefix:@"#"])
             return;
         
         NSError *err;
-        PKAssembly *result = [_parser parseString:line error:&err];
+        PKAssembly *result = [_parser parseString:trimmed error:&err];
         
         if(err) {
             NSLog(@"err: %@", [err localizedDescription]);
