@@ -17,7 +17,7 @@
     _cache = [[NSMutableDictionary alloc] init];
     _queue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_CONCURRENT);
     _changed = [RACReplaySubject subject];
-
+    
     return self;
 }
 
@@ -85,6 +85,12 @@
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id obj, BOOL *stop))block {
     dispatch_sync(_queue, ^{
         [_cache enumerateKeysAndObjectsUsingBlock:block];
+    });
+}
+
+- (void)removeAllObjects {
+    dispatch_barrier_async(_queue, ^{
+        [_cache removeAllObjects];
     });
 }
 

@@ -32,6 +32,8 @@
     
     _context = context;
     _localVars = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.localvars.%@", self.uuid]];
+    _currentVars = [[TSMutableDictionary alloc] initWithName:[NSString stringWithFormat:@"com.outlander.script.currentvars.%@", self.uuid]];
+    _gosubStack = [[SimpleStack alloc] init];
     _labels = [[NSDictionary alloc] init];
     _builder = [[ExpressionBuilder alloc] init];
     _varReplacer = [[VariableReplacer alloc] init];
@@ -111,12 +113,12 @@
     NSString *debug = [NSString stringWithFormat:@"goto label %@", label];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
+    [_currentVars removeAllObjects];
+    
     [self gotoLabel:label forLineNumber:token.lineNumber];
 }
 
 -(void)gotoLabel:(NSString *)label forLineNumber:(NSUInteger)lineNumber {
-    
-    // get label index from dictionary
     
     NSInteger idx = [self findLabel:label];
     
@@ -314,6 +316,36 @@
     [self cancel];
 }
 
+- (void)handleGosubToken:(GosubToken *)token {
+    NSString *label = [token.left eval];
+    NSString *debug = [NSString stringWithFormat:@"gosub %@", label];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    token.stackIndex = _tokenIndex;
+    
+    [_gosubStack push:token];
+    
+    // clear all current vars
+    [_currentVars removeAllObjects];
+    
+    // set current args
+    TokenList *args = token.right;
+    [_currentVars setCacheObject:[args eval] forKey:@"0"];
+    [args.tokens enumerateObjectsUsingBlock:^(id<Token> obj, NSUInteger idx, BOOL *stop) {
+        [_currentVars setCacheObject:[obj eval] forKey:[NSString stringWithFormat:@"%lu", idx+1]];
+    }];
+    
+    [self gotoLabel:label forLineNumber:token.lineNumber];
+}
+
+- (void)handleReturnToken:(ReturnToken *)token {
+    NSString *debug = @"return";
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    GosubToken *last = [_gosubStack pop];
+    _tokenIndex = last.stackIndex;
+}
+
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];
@@ -339,7 +371,8 @@
 }
 
 - (NSString *)replaceVars:(NSString *)str {
-    NSString *replaced = [_varReplacer replace:str withContext:_context];
+    NSString *replaced = [_varReplacer replaceLocalArgumentVars:str withVars:_currentVars];
+    replaced = [_varReplacer replace:replaced withContext:_context];
     return [_varReplacer replaceLocalVars:replaced withVars:_localVars];
 }
 

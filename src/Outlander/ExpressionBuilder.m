@@ -57,7 +57,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
             token.lineNumber = idx + 1;
         }
         
-        lastCount = idx;
+        lastCount = _parser.tokens.count;
     }];
     
     
@@ -282,6 +282,25 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     
     CommandsToken *token = [[CommandsToken alloc] initWith:tokens];
     [a push:token];
+}
+
+- (void)parser:(PKParser *)p didMatchGosubStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    TokenList *tl = [self popTokensToList:a];
+   
+    id label = [tl.tokens objectAtIndex:0];
+    [tl.tokens removeObjectAtIndex:0];
+    
+    GosubToken *token = [[GosubToken alloc] initWith:tl and:label];
+    [_parser.tokens addObject:token];
+}
+
+- (void)parser:(PKParser *)p didMatchReturnStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    ReturnToken *token = [[ReturnToken alloc] initWith:@""];
+    [_parser.tokens addObject:token];
 }
 
 - (id)tokenOrAtom:(id)item {

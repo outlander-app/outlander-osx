@@ -39,6 +39,8 @@ stmt
   | assignment
   | putStmt
   | echoStmt
+  | gosubStmt
+  | returnStmt
   | gotoStmt
   | moveStmt
   | nextRoom
@@ -54,6 +56,14 @@ echoStmt
 
 exitStmt
   = 'exit'!
+  ;
+
+gosubStmt
+  = 'gosub'! id (id | localVar)*
+  ;
+
+returnStmt
+  = 'return'
   ;
 
 gotoStmt

@@ -10,11 +10,14 @@
 #import "GameContext.h"
 #import "GameStream.h"
 #import "CommandRelay.h"
+#import "SimpleStack.h"
 
 @interface Script : Actor
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) TSMutableDictionary *localVars;
+@property (nonatomic, strong) TSMutableDictionary *currentVars;
+@property (nonatomic, strong) SimpleStack *gosubStack;
 @property (nonatomic, strong) NSArray *syntaxTree;
 
 - (instancetype)initWith:(GameContext *)context and:(NSString *)data;

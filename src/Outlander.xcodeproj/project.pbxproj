@@ -25,6 +25,8 @@
 		F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
 		F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
+		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F96ECDAA193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAB193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* ScriptOld.m */; };
@@ -269,6 +271,8 @@
 		F94A3FD01948AE9F00D6B35D /* ReturnToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnToken.m; sourceTree = "<group>"; };
 		F94A3FD31948DBC500D6B35D /* CommandsToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandsToken.h; sourceTree = "<group>"; };
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
+		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
+		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F96ECDA8193404BB00787CB9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
 		F96ECDA9193404BB00787CB9 /* Actor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actor.m; sourceTree = "<group>"; };
 		F96ECDAC1934160200787CB9 /* ScriptOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptOld.h; sourceTree = "<group>"; };
@@ -669,17 +673,19 @@
 				F97A5C911895086C00E2C318 /* NSColor+Categories.m */,
 				F97A5C721893562800E2C318 /* NSString+Categories.h */,
 				F97A5C731893562800E2C318 /* NSString+Categories.m */,
-				F97A5C5D1891AB7D00E2C318 /* SignalSocket.h */,
-				F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */,
-				F97A5C6918924D3700E2C318 /* Shared.h */,
-				F97A5C9818957A5D00E2C318 /* TSMutableDictionary.h */,
-				F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */,
 				F97A5CB91895EEF500E2C318 /* NSTextField+Categories.h */,
 				F97A5CBA1895EEF500E2C318 /* NSTextField+Categories.m */,
 				F9FD07EE18977A380087D813 /* NSView+Categories.h */,
 				F9FD07EF18977A380087D813 /* NSView+Categories.m */,
 				F96ECDD719356A6C00787CB9 /* OLMutableArray.h */,
 				F96ECDD819356A6C00787CB9 /* OLMutableArray.m */,
+				F97A5C6918924D3700E2C318 /* Shared.h */,
+				F97A5C5D1891AB7D00E2C318 /* SignalSocket.h */,
+				F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */,
+				F94A3FD71949495E00D6B35D /* SimpleStack.h */,
+				F94A3FD81949495E00D6B35D /* SimpleStack.m */,
+				F97A5C9818957A5D00E2C318 /* TSMutableDictionary.h */,
+				F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -1143,6 +1149,7 @@
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F96ECDAA193404BB00787CB9 /* Actor.m in Sources */,
+				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
@@ -1293,6 +1300,7 @@
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
+				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,

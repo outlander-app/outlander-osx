@@ -29,6 +29,6 @@
 }
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@", [super description], _val];
+    return [NSString stringWithFormat:@"%@ Val=%@ LineNumber=%lu", [super description], _val, _lineNumber];
 }
 @end

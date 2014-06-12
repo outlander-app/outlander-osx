@@ -25,7 +25,7 @@
 }
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"%@ Left=%@ Right=%@", [super description], [_left eval], [_right eval]];
+    return [NSString stringWithFormat:@"%@ Left=%@ Right=%@ LineNumber=%lu", [super description], [_left eval], [_right eval], _lineNumber];
 }
 
 @end

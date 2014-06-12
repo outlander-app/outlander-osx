@@ -98,12 +98,28 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"%one_two $two"];
         });
         
-        it(@"put with command", ^{
+        it(@"put with script abort command", ^{
             NSArray *a = [_builder build:@"put #script abort something"];
             
             PutToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"#script abort something"];
+        });
+        
+        it(@"put with script resume command", ^{
+            NSArray *a = [_builder build:@"put #script resume something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#script resume something"];
+        });
+        
+        it(@"put with script pause command", ^{
+            NSArray *a = [_builder build:@"put #script pause something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#script pause something"];
         });
         
         xit(@"put", ^{
@@ -181,6 +197,14 @@ describe(@"ExpressionBuilder", ^{
             EchoToken *put = [a firstObject];
             
             [[[put eval] should] equal:@"%one_two $two"];
+        });
+        
+        it(@"with gosub argument vars", ^{
+            NSArray *a = [_builder build:@"echo $1 $2"];
+            
+            EchoToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"$1 $2"];
         });
     });
     
@@ -407,6 +431,35 @@ describe(@"ExpressionBuilder", ^{
             
             NextRoomToken *tok = [a firstObject];
             [[tok should] beNonNil];
+        });
+    });
+    
+    context(@"gosub", ^{
+        it(@"creates gosub token", ^{
+            NSArray *a = [_builder build:@"gosub one"];
+            
+            GosubToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok.left eval] should] equal:@"one"];
+            [[[tok.right eval] should] equal:@""];
+        });
+        
+        it(@"creates gosub token with args", ^{
+            NSArray *a = [_builder build:@"gosub one two three"];
+            
+            GosubToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok.left eval] should] equal:@"one"];
+            [[[tok.right eval] should] equal:@"two three"];
+        });
+        
+        it(@"creates gosub token with var args", ^{
+            NSArray *a = [_builder build:@"gosub one %two $three"];
+            
+            GosubToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok.left eval] should] equal:@"one"];
+            [[[tok.right eval] should] equal:@"%two $three"];
         });
     });
 });

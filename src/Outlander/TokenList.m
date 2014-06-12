@@ -27,4 +27,7 @@
     }].array componentsJoinedByString:@" "];
 }
 
+-(NSString *)description {
+    return [NSString stringWithFormat:@"%@ LineNumber=%lu", [super description], _lineNumber];
+}
 @end

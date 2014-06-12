@@ -9,6 +9,8 @@
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *exitStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *gosubStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *returnStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *matchStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *matchWaitStmt_memo;
@@ -55,6 +57,7 @@
         self.startRuleName = @"program";
         self.tokenKindTab[@"move"] = @(EXPRESSIONPARSER_TOKEN_KIND_MOVE);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"return"] = @(EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT);
         self.tokenKindTab[@"abort"] = @(EXPRESSIONPARSER_TOKEN_KIND_ABORT);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
         self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
@@ -76,11 +79,13 @@
         self.tokenKindTab[@"matchre"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHRE);
         self.tokenKindTab[@"^"] = @(EXPRESSIONPARSER_TOKEN_KIND_CARET);
         self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
-        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
+        self.tokenKindTab[@"gosub"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOSUB);
         self.tokenKindTab[@"match"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCH);
+        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
 
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MOVE] = @"move";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT] = @"return";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ABORT] = @"abort";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON] = @";";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
@@ -102,14 +107,17 @@
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_CARET] = @"^";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOSUB] = @"gosub";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCH] = @"match";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
         self.stmt_memo = [NSMutableDictionary dictionary];
         self.echoStmt_memo = [NSMutableDictionary dictionary];
         self.exitStmt_memo = [NSMutableDictionary dictionary];
+        self.gosubStmt_memo = [NSMutableDictionary dictionary];
+        self.returnStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
         self.matchStmt_memo = [NSMutableDictionary dictionary];
         self.matchWaitStmt_memo = [NSMutableDictionary dictionary];
@@ -152,6 +160,8 @@
     [_stmt_memo removeAllObjects];
     [_echoStmt_memo removeAllObjects];
     [_exitStmt_memo removeAllObjects];
+    [_gosubStmt_memo removeAllObjects];
+    [_returnStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
     [_matchStmt_memo removeAllObjects];
     [_matchWaitStmt_memo removeAllObjects];
@@ -251,6 +261,10 @@
         [self putStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_ECHO, 0]) {
         [self echoStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_GOSUB, 0]) {
+        [self gosubStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT, 0]) {
+        [self returnStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_GOTO, 0]) {
         [self gotoStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_MOVE, 0]) {
@@ -299,6 +313,38 @@
 
 - (void)exitStmt_ {
     [self parseRule:@selector(__exitStmt) withMemo:_exitStmt_memo];
+}
+
+- (void)__gosubStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_GOSUB discard:YES]; 
+    [self id_]; 
+    while ([self speculate:^{ if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {[self id_]; } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, 0]) {[self localVar_]; } else {[self raise:@"No viable alternative found in rule 'gosubStmt'."];}}]) {
+        if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+            [self id_]; 
+        } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, EXPRESSIONPARSER_TOKEN_KIND_PERCENT, 0]) {
+            [self localVar_]; 
+        } else {
+            [self raise:@"No viable alternative found in rule 'gosubStmt'."];
+        }
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchGosubStmt:)];
+}
+
+- (void)gosubStmt_ {
+    [self parseRule:@selector(__gosubStmt) withMemo:_gosubStmt_memo];
+}
+
+- (void)__returnStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchReturnStmt:)];
+}
+
+- (void)returnStmt_ {
+    [self parseRule:@selector(__returnStmt) withMemo:_returnStmt_memo];
 }
 
 - (void)__gotoStmt {
