@@ -30,6 +30,10 @@ Script arguments become local variables:
 * echo
 * exit
 * goto
+* gosub
+    * gosub &lt;label&gt; &lt;argument1, argument2, etc.&gt;
+    * Move to a label with the supplied arguments.  Arguments are referenced by $1, $2, etc.  Use $0 to reference all arguments.
+    * Use 'return' to return to the line directly after the gosub.
 * match
 	* match &lt;label&gt; &lt;text&gt;
 	* match start You see
