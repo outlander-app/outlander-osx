@@ -9,6 +9,7 @@
 #import "ExpressionBuilder.h"
 #import <PEGKit/PEGKit.h>
 #import "ExpressionParser.h"
+#import "NSString+Categories.h"
 
 typedef BOOL (^tokenFilterBlock) (id token);
 typedef void (^tokenActionBlock) (NSMutableString *str, id token);
@@ -37,7 +38,7 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     
     [lines enumerateObjectsUsingBlock:^(NSString *line, NSUInteger idx, BOOL *stop) {
        
-        if([line length] == 0)
+        if([line length] == 0 || [[line trimWhitespaceAndNewline] hasPrefix:@"#"])
             return;
         
         NSError *err;
