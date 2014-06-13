@@ -13,6 +13,8 @@
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
 		F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
+		F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
+		F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -259,6 +261,8 @@
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
 		F91A399E1949FF31006144F8 /* DebugLevelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLevelToken.h; sourceTree = "<group>"; };
 		F91A399F1949FF31006144F8 /* DebugLevelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLevelToken.m; sourceTree = "<group>"; };
+		F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerStatusIndicator.h; sourceTree = "<group>"; };
+		F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStatusIndicator.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -703,6 +707,8 @@
 				F9762F77192E4EEB00B873D7 /* Alias.m */,
 				F97A5C611891F2C400E2C318 /* AuthenticationServer.h */,
 				F97A5C621891F2C400E2C318 /* AuthenticationServer.m */,
+				F96ECDC51934E23A00787CB9 /* CommandContext.h */,
+				F96ECDC61934E23A00787CB9 /* CommandContext.m */,
 				F96ECDC01934586900787CB9 /* CommandHandler.h */,
 				F9ACB135192ECD00006D3548 /* CommandProcessor.h */,
 				F98F22D81926654D008175FD /* Commands.h */,
@@ -725,6 +731,8 @@
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
 				F989E1F7192C27AD00562E32 /* LocalFileSystem.h */,
 				F989E1F8192C27AD00562E32 /* LocalFileSystem.m */,
+				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
+				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
 				F9A79E561927FDA0000AF892 /* Roundtime.m */,
 				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
@@ -739,8 +747,6 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
-				F96ECDC51934E23A00787CB9 /* CommandContext.h */,
-				F96ECDC61934E23A00787CB9 /* CommandContext.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1186,6 +1192,7 @@
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F98782D71942649600D76231 /* LRToken.m in Sources */,
 				F98782FB1946873500D76231 /* WaitForToken.m in Sources */,
+				F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
@@ -1248,6 +1255,7 @@
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
+				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,

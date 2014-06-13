@@ -7,14 +7,8 @@
 //
 
 #import "GameParser.h"
-#import "Shared.h"
 #import "HTMLNode.h"
 #import "HTMLParser.h"
-#import "TextTag.h"
-#import "Vitals.h"
-#import "SkillExp.h"
-#import "LearningRate.h"
-#import "Roundtime.h"
 #import "NSString+Categories.h"
 
 @implementation GameParser {
@@ -30,6 +24,7 @@
     
     _subject = [RACSubject subject];
     _vitals = [RACSubject subject];
+    _indicators = [RACSubject subject];
     _room = [RACSubject subject];
     _exp = [RACSubject subject];
     _thoughts = [RACSubject subject];
@@ -314,6 +309,18 @@
             }
         }
         else if([tagName isEqualToString:@"indicator"]) {
+            
+            NSString *name = [[[node getAttributeNamed:@"id"] substringFromIndex:4] lowercaseString];
+            NSString *val = [[node getAttributeNamed:@"visible"] isEqualToString:@"n"] ? @"0" : @"1";
+            
+            [_gameContext.globalVars setCacheObject:val forKey:name];
+            
+            PlayerStatusIndicator *ind = [[PlayerStatusIndicator alloc] init];
+            ind.name = name;
+            ind.value = val;
+            
+            [_indicators sendNext:ind];
+            
             if([self isNextNodeNewline:children index:i]) {
                 i++;
             }

@@ -10,6 +10,12 @@
 #import "TSMutableDictionary.h"
 #import "Shared.h"
 #import "GameContext.h"
+#import "LearningRate.h"
+#import "PlayerStatusIndicator.h"
+#import "Roundtime.h"
+#import "SkillExp.h"
+#import "TextTag.h"
+#import "Vitals.h"
 
 @interface GameParser : NSObject {
     NSMutableArray *_currenList;
@@ -27,6 +33,7 @@
 @property (atomic, strong) RACSubject *subject;
 
 @property (nonatomic, strong) RACSubject *vitals;
+@property (nonatomic, strong) RACSubject *indicators;
 @property (nonatomic, strong) RACSubject *room;
 @property (nonatomic, strong) RACSubject *exp;
 @property (nonatomic, strong) RACSubject *thoughts;

@@ -689,6 +689,52 @@ describe(@"GameParser", ^{
             TextTag *tag = results[0];
             [[tag.text should] equal:@"You yell, \"Hogs!\"\r\n"];
         });
+        
+        it(@"should signal kneeling indicator", ^{
+            NSString *data = @"<indicator id=\"IconKNEELING\" visible=\"y\"/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser.indicators subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            PlayerStatusIndicator *tag = signalResults[0];
+            [[tag.name should] equal:@"kneeling"];
+            [[tag.value should] equal:@"1"];
+            
+            [[[_context.globalVars cacheObjectForKey:@"kneeling"] should] equal:@"1"];
+        });
+        
+        it(@"should signal dead indicator", ^{
+            NSString *data = @"<indicator id=\"IconDEAD\" visible=\"n\"/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser.indicators subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            PlayerStatusIndicator *tag = signalResults[0];
+            [[tag.name should] equal:@"dead"];
+            [[tag.value should] equal:@"0"];
+            
+            [[[_context.globalVars cacheObjectForKey:@"dead"] should] equal:@"0"];
+        });
     });
 });
 

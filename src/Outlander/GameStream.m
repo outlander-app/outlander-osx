@@ -33,6 +33,7 @@
     _gameParser = [[GameParser alloc] initWithContext:context];
     
     _vitals = _gameParser.vitals;
+    _indicators = _gameParser.indicators;
     
     _room = [_gameParser.room multicast:[RACSubject subject]];
     [_room connect];
