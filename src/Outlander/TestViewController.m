@@ -174,6 +174,8 @@
     ctx.command = command;
     
     [_commandProcessor process:ctx];
+    
+    [_roundtimeNotifier set:5];
 }
 
 - (void)clear:(NSString*)key{

@@ -12,6 +12,8 @@
 #import "NSString+Categories.h"
 #import "VariableReplacer.h"
 
+typedef void (^waitActionBlock) ();
+
 @interface Script () {
     id<InfoStream> _gameStream;
     id<CommandRelay> _commandRelay;
@@ -46,6 +48,15 @@
     [self setData:data];
     
     return self;
+}
+
+- (void)cancel {
+  
+    // TODO: wrap pause/signal so the script can truely be canceled
+//    [_pauseCondition signal];
+//    [_pauseCondition unlock];
+    
+    [super cancel];
 }
 
 - (void)setGameStream:(id<InfoStream>)stream {
@@ -140,6 +151,8 @@
 
 -(void)handlePutToken:(PutToken *)token {
     [self sendCommand:[self replaceVars:[token eval]]];
+    
+    [self waitForRoundtime:nil];
 }
 
 -(void)handlePauseToken:(PauseToken *)token {
@@ -366,6 +379,54 @@
     
     NSNumber *level = [token eval];
     _debugLevel = [level integerValue];
+}
+
+- (void)waitForRoundtime:(waitActionBlock)wait {
+    
+    NSString *rtString = [_context.globalVars cacheObjectForKey:@"roundtime"];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"Checking roundtime: %@", rtString] forLineNumber:0];
+    
+    if([rtString doubleValue] > 0) {
+        
+        [self sendScriptDebug:@"Waiting for roundtime" forLineNumber:0];
+        
+        __block BOOL gotSignal = NO;
+        __block RACDisposable *signal = nil;
+        
+        signal = [_context.globalVars.changed subscribeNext:^(NSDictionary *changed) {
+            
+            if([[changed.allKeys firstObject] isEqualToString:@"roundtime"]) {
+                
+                double roundtime = [changed[@"roundtime"] doubleValue];
+                
+                NSLog(@"rt: %f", roundtime);
+                
+                if(roundtime <= 0) {
+                    gotSignal = YES;
+                    [_pauseCondition signal];
+                    [signal dispose];
+                    NSLog(@"rt done: %f", roundtime);
+                }
+            }
+        }];
+        
+        [_pauseCondition lock];
+        
+        while(!gotSignal) {
+            [_pauseCondition wait];
+        }
+        
+        [_pauseCondition unlock];
+        if(wait) {
+            wait();
+        }
+    }
+    else {
+        if(wait) {
+            wait();
+        }
+    }
 }
 
 - (void)sendCommand:(NSString *)command {

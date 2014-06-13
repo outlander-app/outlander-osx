@@ -16,7 +16,7 @@
 
     _cache = [[NSMutableDictionary alloc] init];
     _queue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_CONCURRENT);
-    _changed = [RACReplaySubject subject];
+    _changed = [RACSubject subject];
     
     return self;
 }
