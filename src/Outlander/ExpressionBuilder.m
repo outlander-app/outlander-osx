@@ -301,6 +301,21 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     [_parser.tokens addObject:token];
 }
 
+- (void)parser:(PKParser *)p didMatchDebuglevelStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    double level = 0.0;
+    
+    PKToken *levelToken = [a pop];
+    if(levelToken) {
+        level = [levelToken doubleValue];
+    }
+    
+    NSNumber *number = [NSNumber numberWithDouble:level];
+    DebugLevelToken *token = [[DebugLevelToken alloc] initWith:number];
+    [_parser.tokens addObject:token];
+}
+
 - (id)tokenOrAtom:(id)item {
     
     if(![item conformsToProtocol:@protocol(Token)]) {

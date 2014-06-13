@@ -50,6 +50,7 @@ stmt
   | matchWaitStmt
   | waitForStmt
   | exitStmt
+  | debuglevelStmt
   ;
 
 echoStmt
@@ -58,6 +59,10 @@ echoStmt
 
 exitStmt
   = 'exit'!
+  ;
+
+debuglevelStmt
+  = 'debuglevel' Number?
   ;
 
 gosubStmt

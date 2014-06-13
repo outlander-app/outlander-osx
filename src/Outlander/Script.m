@@ -21,6 +21,7 @@
     VariableReplacer *_varReplacer;
     NSDictionary *_labels;
     NSCondition *_pauseCondition;
+    NSUInteger _debugLevel;
 }
 @end
 
@@ -39,6 +40,8 @@
     _varReplacer = [[VariableReplacer alloc] init];
     _commandRelay = [[GameCommandRelay alloc] init];
     _pauseCondition = [[NSCondition alloc] init];
+    
+    _debugLevel = 0;
     
     [self setData:data];
     
@@ -357,6 +360,14 @@
     [_localVars setCacheObject:val forKey:name];
 }
 
+- (void)handleDebugLevelToken:(DebugLevelToken *)token {
+    NSString *debug = [NSString stringWithFormat:@"debuglevel %@", [token eval]];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    NSNumber *level = [token eval];
+    _debugLevel = [level integerValue];
+}
+
 - (void)sendCommand:(NSString *)command {
     
     CommandContext *ctx = [[CommandContext alloc] init];
@@ -375,6 +386,9 @@
 }
 
 - (void)sendScriptDebug:(NSString *)msg forLineNumber:(NSUInteger)lineNumber {
+    
+    if(_debugLevel < 1) return;
+    
     TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@(%lu): %@\n", _name, (unsigned long)lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     

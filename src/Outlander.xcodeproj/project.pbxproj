@@ -11,6 +11,8 @@
 		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
+		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
+		F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -255,6 +257,8 @@
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
+		F91A399E1949FF31006144F8 /* DebugLevelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLevelToken.h; sourceTree = "<group>"; };
+		F91A399F1949FF31006144F8 /* DebugLevelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLevelToken.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -546,6 +550,8 @@
 				F98782C6194228C000D76231 /* BasicToken.m */,
 				F94A3FD31948DBC500D6B35D /* CommandsToken.h */,
 				F94A3FD41948DBC500D6B35D /* CommandsToken.m */,
+				F91A399E1949FF31006144F8 /* DebugLevelToken.h */,
+				F91A399F1949FF31006144F8 /* DebugLevelToken.m */,
 				F98782B519420CB500D76231 /* EchoToken.h */,
 				F98782B619420CB500D76231 /* EchoToken.m */,
 				F98782E11942791B00D76231 /* ExitToken.h */,
@@ -1210,6 +1216,7 @@
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
+				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F9772F0E1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
@@ -1266,6 +1273,7 @@
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
+				F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9772F181940389E00172083 /* VarToken.m in Sources */,

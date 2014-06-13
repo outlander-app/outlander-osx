@@ -9,6 +9,7 @@
 @property (nonatomic, retain) NSMutableDictionary *stmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *echoStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *exitStmt_memo;
+@property (nonatomic, retain) NSMutableDictionary *debuglevelStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gosubStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *returnStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *gotoStmt_memo;
@@ -55,6 +56,7 @@
   _match_tokens = [[NSMutableArray alloc] init];
 
         self.startRuleName = @"program";
+        self.tokenKindTab[@"debuglevel"] = @(EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL);
         self.tokenKindTab[@"move"] = @(EXPRESSIONPARSER_TOKEN_KIND_MOVE);
         self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
         self.tokenKindTab[@"return"] = @(EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT);
@@ -83,6 +85,7 @@
         self.tokenKindTab[@"match"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCH);
         self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
 
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL] = @"debuglevel";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MOVE] = @"move";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT] = @"return";
@@ -116,6 +119,7 @@
         self.stmt_memo = [NSMutableDictionary dictionary];
         self.echoStmt_memo = [NSMutableDictionary dictionary];
         self.exitStmt_memo = [NSMutableDictionary dictionary];
+        self.debuglevelStmt_memo = [NSMutableDictionary dictionary];
         self.gosubStmt_memo = [NSMutableDictionary dictionary];
         self.returnStmt_memo = [NSMutableDictionary dictionary];
         self.gotoStmt_memo = [NSMutableDictionary dictionary];
@@ -160,6 +164,7 @@
     [_stmt_memo removeAllObjects];
     [_echoStmt_memo removeAllObjects];
     [_exitStmt_memo removeAllObjects];
+    [_debuglevelStmt_memo removeAllObjects];
     [_gosubStmt_memo removeAllObjects];
     [_returnStmt_memo removeAllObjects];
     [_gotoStmt_memo removeAllObjects];
@@ -281,6 +286,8 @@
         [self waitForStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_EXITSTMT, 0]) {
         [self exitStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL, 0]) {
+        [self debuglevelStmt_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'stmt'."];
     }
@@ -315,6 +322,20 @@
 
 - (void)exitStmt_ {
     [self parseRule:@selector(__exitStmt) withMemo:_exitStmt_memo];
+}
+
+- (void)__debuglevelStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL discard:NO]; 
+    if ([self predicts:TOKEN_KIND_BUILTIN_NUMBER, 0]) {
+        [self matchNumber:NO]; 
+    }
+
+    [self fireDelegateSelector:@selector(parser:didMatchDebuglevelStmt:)];
+}
+
+- (void)debuglevelStmt_ {
+    [self parseRule:@selector(__debuglevelStmt) withMemo:_debuglevelStmt_memo];
 }
 
 - (void)__gosubStmt {
@@ -779,7 +800,7 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];

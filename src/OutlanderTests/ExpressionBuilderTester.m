@@ -442,6 +442,24 @@ describe(@"ExpressionBuilder", ^{
         });
     });
     
+    context(@"debug level", ^{
+        it(@"creates token", ^{
+            NSArray *a = [_builder build:@"debuglevel"];
+            
+            DebugLevelToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok eval] should] equal:@(0)];
+        });
+        
+        it(@"creates token with number", ^{
+            NSArray *a = [_builder build:@"debuglevel 5"];
+            
+            DebugLevelToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok eval] should] equal:@(5)];
+        });
+    });
+    
     context(@"gosub", ^{
         it(@"creates gosub token", ^{
             NSArray *a = [_builder build:@"gosub one"];

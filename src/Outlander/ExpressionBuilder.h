@@ -14,6 +14,7 @@
 #import "ExitToken.h"
 #import "GosubToken.h"
 #import "GotoToken.h"
+#import "DebugLevelToken.h"
 #import "IdToken.h"
 #import "LabelToken.h"
 #import "MatchToken.h"
