@@ -153,6 +153,22 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     [_parser.tokens addObject:put];
 }
 
+- (void)parser:(PKParser *)p didMatchSendStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    SendToken *put = [[SendToken alloc] init];
+    
+    id token = [a pop];
+    
+    while(token) {
+        token = [self tokenOrAtom:token];
+        [put.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
+    
+    [_parser.tokens addObject:put];
+}
+
 - (void)parser:(PKParser *)p didMatchWaitForStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     

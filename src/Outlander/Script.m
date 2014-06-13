@@ -381,6 +381,12 @@ typedef void (^waitActionBlock) ();
     _debugLevel = [level integerValue];
 }
 
+- (void)handleSendToken:(SendToken *)token {
+    NSString *val = [self replaceVars:[token eval]];
+    NSString *debug = [NSString stringWithFormat:@"send %@", val];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+}
+
 - (void)waitForRoundtime:(waitActionBlock)wait {
     
     NSString *rtString = [_context.globalVars cacheObjectForKey:@"roundtime"];

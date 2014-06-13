@@ -40,6 +40,7 @@ stmt
   | pause
   | assignment
   | putStmt
+  | sendStmt
   | echoStmt
   | gosubStmt
   | returnStmt
@@ -174,6 +175,10 @@ regexWord
 regexSymbol
   = Symbol | ':'
   ;
+
+sendStmt
+ = 'send'! atom+
+ ;
 
 atom
   = localVar

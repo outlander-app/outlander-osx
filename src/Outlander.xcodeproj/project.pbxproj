@@ -15,6 +15,8 @@
 		F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
 		F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
 		F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
+		F91A39A8194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
+		F91A39A9194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -263,6 +265,8 @@
 		F91A399F1949FF31006144F8 /* DebugLevelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLevelToken.m; sourceTree = "<group>"; };
 		F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerStatusIndicator.h; sourceTree = "<group>"; };
 		F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStatusIndicator.m; sourceTree = "<group>"; };
+		F91A39A6194B523E006144F8 /* SendToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToken.h; sourceTree = "<group>"; };
+		F91A39A7194B523E006144F8 /* SendToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToken.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -586,6 +590,8 @@
 				F98782F61942AB6200D76231 /* RegexToken.m */,
 				F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */,
 				F94A3FD01948AE9F00D6B35D /* ReturnToken.m */,
+				F91A39A6194B523E006144F8 /* SendToken.h */,
+				F91A39A7194B523E006144F8 /* SendToken.m */,
 				F98782D1194249A400D76231 /* TokenList.h */,
 				F98782D2194249A400D76231 /* TokenList.m */,
 				F98782C9194235EF00D76231 /* TokenSingle.h */,
@@ -1221,6 +1227,7 @@
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
+				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
@@ -1251,6 +1258,7 @@
 				F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
+				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,

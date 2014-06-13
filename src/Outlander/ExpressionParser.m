@@ -40,6 +40,7 @@
 @property (nonatomic, retain) NSMutableDictionary *regex_memo;
 @property (nonatomic, retain) NSMutableDictionary *regexWord_memo;
 @property (nonatomic, retain) NSMutableDictionary *regexSymbol_memo;
+@property (nonatomic, retain) NSMutableDictionary *sendStmt_memo;
 @property (nonatomic, retain) NSMutableDictionary *atom_memo;
 @property (nonatomic, retain) NSMutableDictionary *lines_memo;
 @property (nonatomic, retain) NSMutableDictionary *line_memo;
@@ -77,6 +78,7 @@
         self.tokenKindTab[@"resume"] = @(EXPRESSIONPARSER_TOKEN_KIND_RESUME);
         self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
         self.tokenKindTab[@"script"] = @(EXPRESSIONPARSER_TOKEN_KIND_SCRIPT);
+        self.tokenKindTab[@"send"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEND);
         self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"matchre"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHRE);
         self.tokenKindTab[@"^"] = @(EXPRESSIONPARSER_TOKEN_KIND_CARET);
@@ -106,6 +108,7 @@
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RESUME] = @"resume";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SCRIPT] = @"script";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEND] = @"send";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_CARET] = @"^";
@@ -150,6 +153,7 @@
         self.regex_memo = [NSMutableDictionary dictionary];
         self.regexWord_memo = [NSMutableDictionary dictionary];
         self.regexSymbol_memo = [NSMutableDictionary dictionary];
+        self.sendStmt_memo = [NSMutableDictionary dictionary];
         self.atom_memo = [NSMutableDictionary dictionary];
         self.lines_memo = [NSMutableDictionary dictionary];
         self.line_memo = [NSMutableDictionary dictionary];
@@ -195,6 +199,7 @@
     [_regex_memo removeAllObjects];
     [_regexWord_memo removeAllObjects];
     [_regexSymbol_memo removeAllObjects];
+    [_sendStmt_memo removeAllObjects];
     [_atom_memo removeAllObjects];
     [_lines_memo removeAllObjects];
     [_line_memo removeAllObjects];
@@ -266,6 +271,8 @@
         [self assignment_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PUT, 0]) {
         [self putStmt_]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SEND, 0]) {
+        [self sendStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_ECHO, 0]) {
         [self echoStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_GOSUB, 0]) {
@@ -800,7 +807,7 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];
@@ -825,6 +832,20 @@
 
 - (void)regexSymbol_ {
     [self parseRule:@selector(__regexSymbol) withMemo:_regexSymbol_memo];
+}
+
+- (void)__sendStmt {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_SEND discard:YES]; 
+    do {
+        [self atom_]; 
+    } while ([self speculate:^{ [self atom_]; }]);
+
+    [self fireDelegateSelector:@selector(parser:didMatchSendStmt:)];
+}
+
+- (void)sendStmt_ {
+    [self parseRule:@selector(__sendStmt) withMemo:_sendStmt_memo];
 }
 
 - (void)__atom {

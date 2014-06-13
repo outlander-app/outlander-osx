@@ -442,6 +442,24 @@ describe(@"ExpressionBuilder", ^{
         });
     });
     
+    context(@"send", ^{
+        it(@"creates send token", ^{
+            NSArray *a = [_builder build:@"send one two"];
+            
+            SendToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok eval] should] equal:@"one two"];
+        });
+        
+        it(@"creates send token with vars", ^{
+            NSArray *a = [_builder build:@"send %one.other $righthand"];
+            
+            SendToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok eval] should] equal:@"%one.other $righthand"];
+        });
+    });
+    
     context(@"debug level", ^{
         it(@"creates token", ^{
             NSArray *a = [_builder build:@"debuglevel"];
