@@ -24,8 +24,9 @@ describe(@"Variables Loader", ^{
         theContext = [[GameContext alloc] init];
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[VariablesLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
-        
-        originalCount = [theContext.globalVars count];
+       
+        // +1 is roundtime
+        originalCount = [theContext.globalVars count] + 1;
     });
     
     context(@"load", ^{
