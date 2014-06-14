@@ -15,6 +15,5 @@
 - (void)cancel;
 - (void)signal;
 - (ExecuteBlock *)wait;
-- (ExecuteBlock *)waitUntilTimeInterval:(NSTimeInterval)interval;
 
 @end

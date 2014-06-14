@@ -58,24 +58,7 @@
 }
 
 - (ExecuteBlock *)wait {
-    return [self execute:^{
-        [_condition wait];
-    }];
-}
-
-- (ExecuteBlock *)waitUntilTimeInterval:(NSTimeInterval)interval {
-    return [self execute:^{
-        _timedOut = YES;
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:interval];
-        [_condition waitUntilDate:date];
-        if(_timedOut) {
-            _signaled = YES;
-        }
-    }];
-}
-
-- (ExecuteBlock *)execute:(void(^)())block {
-    return [[ExecuteBlock alloc] initWith:^(ExecuteBlock *eblock) {
+    return [[ExecuteBlock alloc] initWith:^(ExecuteBlock *eblock, NSTimeInterval interval) {
         _paused = YES;
         _signaled = NO;
         [_condition lock];
@@ -83,7 +66,17 @@
         eblock.doExecute(self);
         
         while(!_signaled){
-            block();
+            if(interval > 0) {
+                _timedOut = YES;
+                NSDate *date = [NSDate dateWithTimeIntervalSinceNow:interval];
+                [_condition waitUntilDate:date];
+                if(_timedOut) {
+                    _signaled = YES;
+                }
+            }
+            else {
+                [_condition wait];
+            }
         }
         
         [_condition unlock];

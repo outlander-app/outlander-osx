@@ -201,8 +201,6 @@ typedef void (^waitActionBlock) ();
                             [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
                             
                             [self gotoLabel:label forLineNumber:token.lineNumber];
-                            
-                            [self waitForRoundtime:nil];
                         }
                     }];
                 }];
@@ -210,22 +208,16 @@ typedef void (^waitActionBlock) ();
         }];
     };
     doneBlock done = ^{
-        if (_waitPauseCondition.isTimedOut && !self.isCancelled) {
-            [self sendScriptDebug:@"matchwait timed out" forLineNumber:token.lineNumber];
-            [signal dispose];
-            [self waitForRoundtime:nil];
+        if(!self.isCancelled) {
+            if (_waitPauseCondition.isTimedOut) {
+                [self sendScriptDebug:@"matchwait timed out" forLineNumber:token.lineNumber];
+                [signal dispose];
+            }
+            [self waitForRoundtime];
         }
     };
     
-    ExecuteBlock *block = nil;
-    
-    if(waitTime > 0) {
-        block = [_waitPauseCondition waitUntilTimeInterval:waitTime];
-    } else {
-        block = [_waitPauseCondition wait];
-    }
-    
-    [[block execute:execute with:done] run];
+    [[[_waitPauseCondition wait] execute:execute done:done] runUntil:waitTime];
 }
 
 - (void)handleMoveToken:(MoveToken *)token {
@@ -240,6 +232,7 @@ typedef void (^waitActionBlock) ();
         signal = [_gameStream.room.signal subscribeNext:^(id x) {
             [signal dispose];
             [context signal];
+            [self waitForRoundtime];
         }];
     }];
     
@@ -257,6 +250,8 @@ typedef void (^waitActionBlock) ();
         signal = [_gameStream.room.signal subscribeNext:^(id x) {
             [signal dispose];
             [context signal];
+            
+            [self waitForRoundtime];
         }];
     }] run];
 }
@@ -287,7 +282,7 @@ typedef void (^waitActionBlock) ();
 //                        [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
                         [context signal];
                         
-                        [self waitForRoundtime:nil];
+                        [self waitForRoundtime];
                     }
                 }];
             }];
@@ -356,6 +351,10 @@ typedef void (^waitActionBlock) ();
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
 }
 
+- (void)waitForRoundtime {
+    [self waitForRoundtime:nil];
+}
+
 - (void)waitForRoundtime:(waitActionBlock)done {
     NSString *rtString = [_context.globalVars cacheObjectForKey:@"roundtime"];
     
@@ -381,12 +380,12 @@ typedef void (^waitActionBlock) ();
                 double roundtime = [changed[@"roundtime"] doubleValue];
                 
                 if(roundtime <= 0) {
-                    [context signal];
                     [signal dispose];
+                    [context signal];
                 }
             }
         }];
-    } with:^{
+    } done:^{
         if(done){
             done();
         }

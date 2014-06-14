@@ -9,13 +9,13 @@
 #import "ExecuteBlock.h"
 
 @interface ExecuteBlock () {
-    void(^_run)(id block);
+    void(^_run)(id block, NSTimeInterval interval);
 }
 @end
 
 @implementation ExecuteBlock
 
-- (instancetype)initWith:(void(^)(id block))runBlock {
+- (instancetype)initWith:(void(^)(id block, NSTimeInterval interval))runBlock {
     self = [super init];
     if(!self) return nil;
     
@@ -25,7 +25,11 @@
 }
 
 - (void)run {
-    _run(self);
+    [self runUntil:0];
+}
+
+- (void)runUntil:(NSTimeInterval)interval {
+    _run(self, interval);
 }
 
 -(ExecuteBlock *)execute:(executeBlock)block {
@@ -33,7 +37,7 @@
     return self;
 }
 
--(ExecuteBlock *)execute:(executeBlock)block with:(doneBlock)done {
+-(ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done {
     _doExecute = block;
     _doDone = done;
     

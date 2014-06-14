@@ -14,10 +14,11 @@ typedef void (^doneBlock) ();
 @property (nonatomic, strong) executeBlock doExecute;
 @property (nonatomic, strong) doneBlock doDone;
 
-- (instancetype)initWith:(void(^)(id block))runBlock;
+- (instancetype)initWith:(void(^)(id block, NSTimeInterval interval))runBlock;
 
 - (void)run;
+- (void)runUntil:(NSTimeInterval)interval;
 - (ExecuteBlock *)execute:(executeBlock)block;
-- (ExecuteBlock *)execute:(executeBlock)block with:(doneBlock)done;
+- (ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done;
 
 @end

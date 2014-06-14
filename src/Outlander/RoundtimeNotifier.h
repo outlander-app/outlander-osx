@@ -11,7 +11,7 @@
 
 @interface RoundtimeNotifier : NSObject
 
-@property (nonatomic, strong) RACReplaySubject *notification;
+@property (nonatomic, strong) RACSubject *notification;
 
 - (instancetype)initWith:(GameContext *)context;
 - (void)set:(NSInteger)value;

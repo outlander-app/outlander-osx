@@ -24,7 +24,7 @@
     if(!self)return nil;
     
     _gameContext = context;
-    _notification = [RACReplaySubject subject];
+    _notification = [RACSubject subject];
     _roundtime = 0;
     
     return self;
