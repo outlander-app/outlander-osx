@@ -9,6 +9,7 @@
 #import "Script.h"
 #import "ExpressionBuilder.h"
 #import "GameCommandRelay.h"
+#import "OLPauseCondition.h"
 #import "NSString+Categories.h"
 #import "VariableReplacer.h"
 
@@ -22,8 +23,8 @@ typedef void (^waitActionBlock) ();
     NSUInteger _tokenIndex;
     VariableReplacer *_varReplacer;
     NSDictionary *_labels;
-    NSCondition *_pauseCondition;
     NSUInteger _debugLevel;
+    OLPauseCondition *_waitPauseCondition;
 }
 @end
 
@@ -41,7 +42,7 @@ typedef void (^waitActionBlock) ();
     _builder = [[ExpressionBuilder alloc] init];
     _varReplacer = [[VariableReplacer alloc] init];
     _commandRelay = [[GameCommandRelay alloc] init];
-    _pauseCondition = [[NSCondition alloc] init];
+    _waitPauseCondition = [[OLPauseCondition alloc] init];
     
     _debugLevel = 0;
     
@@ -51,11 +52,7 @@ typedef void (^waitActionBlock) ();
 }
 
 - (void)cancel {
-  
-    // TODO: wrap pause/signal so the script can truely be canceled
-//    [_pauseCondition signal];
-//    [_pauseCondition unlock];
-    
+    [_waitPauseCondition cancel];
     [super cancel];
 }
 
@@ -151,8 +148,6 @@ typedef void (^waitActionBlock) ();
 
 -(void)handlePutToken:(PutToken *)token {
     [self sendCommand:[self replaceVars:[token eval]]];
-    
-    [self waitForRoundtime:nil];
 }
 
 -(void)handlePauseToken:(PauseToken *)token {
@@ -167,45 +162,12 @@ typedef void (^waitActionBlock) ();
 
 -(void)handleMatchWaitToken:(MatchWaitToken *) token {
     
-    __block BOOL gotSignal = NO;
-    __block BOOL timedOut = YES;
     __block RACDisposable *signal = nil;
    
     NSTimeInterval waitTime = 0;
     if(token.waitTime) {
         waitTime = [token.waitTime doubleValue];
     }
-    
-    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
-        
-        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
-            
-            [token.tokens enumerateObjectsUsingBlock:^(MatchToken *match, NSUInteger idx, BOOL *stop2) {
-                
-                NSString *pattern = [match.right eval];
-                
-                NSArray *matches = [obj.text matchesForPattern:pattern];
-                
-                [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
-                    if(res.numberOfRanges > 0) {
-                        *stop1 = YES;
-                        *stop2 = YES;
-                        *stop3 = YES;
-                        timedOut = NO;
-                        gotSignal = YES;
-                        [signal dispose];
-                        
-                        NSString *label = [match.left eval];
-                        
-                        [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
-                        [_pauseCondition signal];
-                        
-                        [self gotoLabel:label forLineNumber:token.lineNumber];
-                    }
-                }];
-            }];
-        }];
-    }];
     
     NSString *debug = @"matchwait";
     
@@ -215,26 +177,55 @@ typedef void (^waitActionBlock) ();
     
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
-    [_pauseCondition lock];
+    executeBlock execute = ^(OLPauseCondition *context) {
+        signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+            
+            [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+                
+                [token.tokens enumerateObjectsUsingBlock:^(MatchToken *match, NSUInteger idx, BOOL *stop2) {
+                    
+                    NSString *pattern = [match.right eval];
+                    
+                    NSArray *matches = [obj.text matchesForPattern:pattern];
+                    
+                    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                        if(res.numberOfRanges > 0) {
+                            *stop1 = YES;
+                            *stop2 = YES;
+                            *stop3 = YES;
+                            [signal dispose];
+                            
+                            [context signal];
+                            
+                            NSString *label = [match.left eval];
+                            [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
+                            
+                            [self gotoLabel:label forLineNumber:token.lineNumber];
+                            
+                            [self waitForRoundtime:nil];
+                        }
+                    }];
+                }];
+            }];
+        }];
+    };
+    doneBlock done = ^{
+        if (_waitPauseCondition.isTimedOut && !self.isCancelled) {
+            [self sendScriptDebug:@"matchwait timed out" forLineNumber:token.lineNumber];
+            [signal dispose];
+            [self waitForRoundtime:nil];
+        }
+    };
     
-    while(!gotSignal) {
-        if(waitTime > 0) {
-            NSDate *date = [NSDate dateWithTimeIntervalSinceNow:waitTime];
-            [_pauseCondition waitUntilDate:date];
-            if(timedOut) {
-                gotSignal = YES;
-                [signal dispose];
-                if(!self.isCancelled) {
-                    [self sendScriptDebug:@"matchwait timed out" forLineNumber:token.lineNumber];
-                }
-            }
-        }
-        else {
-            [_pauseCondition wait];
-        }
+    ExecuteBlock *block = nil;
+    
+    if(waitTime > 0) {
+        block = [_waitPauseCondition waitUntilTimeInterval:waitTime];
+    } else {
+        block = [_waitPauseCondition wait];
     }
     
-    [_pauseCondition unlock];
+    [[block execute:execute with:done] run];
 }
 
 - (void)handleMoveToken:(MoveToken *)token {
@@ -244,24 +235,16 @@ typedef void (^waitActionBlock) ();
     NSString *debug = [NSString stringWithFormat:@"move %@ - waiting for room description", direction];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
-    __block BOOL gotRoom = NO;
-    __block RACDisposable *signal = nil;
-    
-    signal = [_gameStream.room.signal subscribeNext:^(id x) {
-        gotRoom = YES;
-        [signal dispose];
-        [_pauseCondition signal];
+    ExecuteBlock *block = [[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
+        __block RACDisposable *signal = nil;
+        signal = [_gameStream.room.signal subscribeNext:^(id x) {
+            [signal dispose];
+            [context signal];
+        }];
     }];
     
     [self sendCommand:direction];
-    
-    [_pauseCondition lock];
-    
-    while(!gotRoom) {
-        [_pauseCondition wait];
-    }
-    
-    [_pauseCondition unlock];
+    [block run];
 }
 
 - (void)handleNextRoomToken:(NextRoomToken *)token {
@@ -269,61 +252,47 @@ typedef void (^waitActionBlock) ();
     NSString *debug = @"nextroom - waiting for room description";
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
-    __block BOOL gotRoom = NO;
-    __block RACDisposable *signal = nil;
-    
-    signal = [_gameStream.room.signal subscribeNext:^(id x) {
-        gotRoom = YES;
-        [signal dispose];
-        [_pauseCondition signal];
-    }];
-    
-    [_pauseCondition lock];
-    
-    while(!gotRoom) {
-        [_pauseCondition wait];
-    }
-    
-    [_pauseCondition unlock];
+    [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
+        __block RACDisposable *signal = nil;
+        signal = [_gameStream.room.signal subscribeNext:^(id x) {
+            [signal dispose];
+            [context signal];
+        }];
+    }] run];
 }
 
 -(void)handleWaitForToken:(WaitForToken *)token {
-    __block BOOL gotSignal = NO;
-    __block RACDisposable *signal = nil;
     
     NSString *matchText = [token eval];
-   
-    signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
-        
-        [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
-            
-            NSArray *matches = [obj.text matchesForPattern:matchText];
-            
-            [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
-                if(res.numberOfRanges > 0) {
-                    *stop1 = YES;
-                    *stop3 = YES;
-                    gotSignal = YES;
-                    [signal dispose];
-                    
-//                    [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
-                    [_pauseCondition signal];
-                }
-            }];
-        }];
-    }];
     
     NSString *debug = [NSString stringWithFormat:@"waitfor %@", matchText];
-    
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
-    [_pauseCondition lock];
-    
-    while(!gotSignal) {
-        [_pauseCondition wait];
-    }
-    
-    [_pauseCondition unlock];
+    [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
+        
+        __block RACDisposable *signal = nil;
+       
+        signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
+            
+            [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
+                
+                NSArray *matches = [obj.text matchesForPattern:matchText];
+                
+                [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                    if(res.numberOfRanges > 0) {
+                        *stop1 = YES;
+                        *stop3 = YES;
+                        [signal dispose];
+                        
+//                        [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
+                        [context signal];
+                        
+                        [self waitForRoundtime:nil];
+                    }
+                }];
+            }];
+        }];
+    }] run];
 }
 
 - (void)handleExitToken:(ExitToken *)token {
@@ -387,17 +356,22 @@ typedef void (^waitActionBlock) ();
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
 }
 
-- (void)waitForRoundtime:(waitActionBlock)wait {
-    
+- (void)waitForRoundtime:(waitActionBlock)done {
     NSString *rtString = [_context.globalVars cacheObjectForKey:@"roundtime"];
     
     [self sendScriptDebug:[NSString stringWithFormat:@"Checking roundtime: %@", rtString] forLineNumber:0];
     
-    if([rtString doubleValue] > 0) {
+    if([rtString doubleValue] <= 0) {
+        if(done) {
+            done();
+        }
+        return;
+    }
+    
+    [self sendScriptDebug:@"Waiting for roundtime" forLineNumber:0];
+    
+    [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
         
-        [self sendScriptDebug:@"Waiting for roundtime" forLineNumber:0];
-        
-        __block BOOL gotSignal = NO;
         __block RACDisposable *signal = nil;
         
         signal = [_context.globalVars.changed subscribeNext:^(NSDictionary *changed) {
@@ -406,33 +380,17 @@ typedef void (^waitActionBlock) ();
                 
                 double roundtime = [changed[@"roundtime"] doubleValue];
                 
-                NSLog(@"rt: %f", roundtime);
-                
                 if(roundtime <= 0) {
-                    gotSignal = YES;
-                    [_pauseCondition signal];
+                    [context signal];
                     [signal dispose];
-                    NSLog(@"rt done: %f", roundtime);
                 }
             }
         }];
-        
-        [_pauseCondition lock];
-        
-        while(!gotSignal) {
-            [_pauseCondition wait];
+    } with:^{
+        if(done){
+            done();
         }
-        
-        [_pauseCondition unlock];
-        if(wait) {
-            wait();
-        }
-    }
-    else {
-        if(wait) {
-            wait();
-        }
-    }
+    }] run];
 }
 
 - (void)sendCommand:(NSString *)command {

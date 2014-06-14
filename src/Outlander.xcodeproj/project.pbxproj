@@ -17,6 +17,10 @@
 		F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
 		F91A39A8194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
 		F91A39A9194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
+		F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
+		F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
+		F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
+		F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -267,6 +271,10 @@
 		F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStatusIndicator.m; sourceTree = "<group>"; };
 		F91A39A6194B523E006144F8 /* SendToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToken.h; sourceTree = "<group>"; };
 		F91A39A7194B523E006144F8 /* SendToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToken.m; sourceTree = "<group>"; };
+		F91A39AA194BD706006144F8 /* OLPauseCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLPauseCondition.h; sourceTree = "<group>"; };
+		F91A39AB194BD706006144F8 /* OLPauseCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLPauseCondition.m; sourceTree = "<group>"; };
+		F91A39AE194BDE83006144F8 /* ExecuteBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecuteBlock.h; sourceTree = "<group>"; };
+		F91A39AF194BDE83006144F8 /* ExecuteBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecuteBlock.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -616,6 +624,8 @@
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 				F971EFD31938806C008AF6A8 /* CommandRelay.h */,
 				F9BF6AEF193A90880075A12F /* EventRelay.h */,
+				F91A39AE194BDE83006144F8 /* ExecuteBlock.h */,
+				F91A39AF194BDE83006144F8 /* ExecuteBlock.m */,
 				F9772F0C1940358600172083 /* ExpressionBuilder.h */,
 				F9772F0D1940358600172083 /* ExpressionBuilder.m */,
 				F9772F05194032FB00172083 /* ExpressionParser.h */,
@@ -628,6 +638,8 @@
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
 				F93A1A3E193AEF9F00ED5C2E /* Match.h */,
 				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
+				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
+				F91A39AB194BD706006144F8 /* OLPauseCondition.m */,
 				F96ECDB01934194300787CB9 /* OutlanderParser.h */,
 				F96ECDB11934194300787CB9 /* OutlanderParser.m */,
 				F98782ED19427DAB00D76231 /* Script.h */,
@@ -1147,6 +1159,7 @@
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
+				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
@@ -1233,6 +1246,7 @@
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F9772F0E1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
+				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1261,6 +1275,7 @@
 				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
+				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
@@ -1303,6 +1318,7 @@
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
+				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
