@@ -129,7 +129,7 @@
     if(script) {
         NSTimeInterval since = [script.started timeIntervalSinceNow];
         
-        [self sendEcho:[NSString stringWithFormat:@"[Script aborted! (%#2.2f seconds): %@]", since*-1, scriptName]];
+        [self sendEcho:[NSString stringWithFormat:@"[Script aborted! (run time was %#2.2f seconds): %@]", since*-1, scriptName]];
         [_scripts removeObjectForKey:scriptName];
         
         if(![script isCancelled]) {

@@ -102,6 +102,8 @@
                                      maxY)
                   display:YES
                   animate:NO];
+    
+    self.window.delegate = self;
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {
@@ -143,5 +145,13 @@
     self.sheet.contentView = nil;
 }
 
+- (BOOL)windowShouldClose:(id)sender {
+    [self command:@"saveProfile"];
+    [self command:@"saveConfig"];
+    return YES;
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+}
 
 @end

@@ -43,6 +43,9 @@
             [_context.globalVars setCacheObject:value forKey:key];
         }
     }];
+   
+    // ensure that roundtime is always zero when reloaded
+    [_context.globalVars setCacheObject:@"0" forKey:@"roundtime"];
 }
 
 - (void)save {

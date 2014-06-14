@@ -15,9 +15,6 @@
 
 @implementation AppDelegate
 
-- (void)awakeFromNib {
-}
-
 - (IBAction)newAction:(id)sender {
 }
 
@@ -27,12 +24,16 @@
 
 - (IBAction)saveProfileAction:(id)sender {
     [self.mainWindowController command:@"saveProfile"];
+    [self.mainWindowController command:@"saveConfig"];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
 	self.mainWindowController = [[MainWindowController alloc] init];
 	[self.mainWindowController.window makeKeyAndOrderFront:nil];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
 }
 
 @end

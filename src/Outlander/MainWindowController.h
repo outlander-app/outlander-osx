@@ -8,7 +8,7 @@
 
 #import "Commands.h"
 
-@interface MainWindowController : NSWindowController <Commands>
+@interface MainWindowController : NSWindowController <Commands, NSWindowDelegate>
 
 - (id)init;
 - (void)command:(NSString *)command;

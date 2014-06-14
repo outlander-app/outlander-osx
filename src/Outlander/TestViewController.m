@@ -98,7 +98,7 @@
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
     }];
     
-    [_roundtimeNotifier.notification subscribeNext:^(Roundtime *rt) {
+    [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
         
         self._CommandTextField.progress = rt.percent;
         
@@ -112,18 +112,6 @@
     
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
-    }];
-    
-    [[_gameContext.globalVars.changed throttle:1.5] subscribeNext:^(id x) {
-        [_appSettingsLoader saveVariables];
-    }];
-    
-    [[_gameContext.highlights.changed throttle:1.0] subscribeNext:^(id x) {
-        [_appSettingsLoader saveHighlights];
-    }];
-    
-    [[_gameContext.aliases.changed throttle:1.0] subscribeNext:^(id x) {
-        [_appSettingsLoader saveAliases];
     }];
 }
 
@@ -155,6 +143,11 @@
     
     if([command isEqualToString:@"saveProfile"]) {
         [self writeWindowJson];
+    } else if ([command isEqualToString:@"saveConfig"]) {
+        [_appSettingsLoader saveVariables];
+        [_appSettingsLoader saveHighlights];
+        [_appSettingsLoader saveAliases];
+        
     } else if([command isEqualToString:@"connect"]) {
         [self connect:nil];
     }
@@ -320,8 +313,7 @@
     flattenMap:^RACStream *(GameConnection *connection) {
         NSLog(@"Connection: %@", connection);
         RACMulticastConnection *conn = [_gameStream connect:connection];
-        [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
-        return conn.signal;
+        return [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
     }]
     subscribeNext:^(NSArray *tags) {
         
