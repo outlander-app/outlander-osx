@@ -20,6 +20,7 @@ program
   //[t.whitespaceState setWhitespaceChars:NO from:'\n' to:'\n'];
 
   [t.wordState setWordChars:YES from:'|' to:'|'];
+  [t.wordState setWordChars:YES from:'.' to:'.'];
   //[t setTokenizerState:t.commentState from:'#' to:'#'];
 
   // setup comments
@@ -48,8 +49,10 @@ stmt
   | moveStmt
   | nextRoom
   | matchStmt
+  | matchreStmt
   | matchWaitStmt
   | waitForStmt
+  | saveStmt
   | exitStmt
   | debuglevelStmt
   ;
@@ -79,7 +82,11 @@ gotoStmt
   ;
 
 matchStmt
-  = ('match'! | 'matchre'!) (id | localVar) regex+
+  = 'match'! (id | localVar) (atom | '.')+
+  ;
+
+matchreStmt
+  = 'matchre'! (id | localVar) regex+
   ;
 
 matchWaitStmt
@@ -145,11 +152,11 @@ id
   ;
 
 identifier
-  = Word
+  = { MATCHES(@"[a-zA-Z_]+[a-zA-Z0-9\\._]+", LS(1)) }? Word
   ;
 
 refinement
-  = ('.' identifier | Number)
+  = ('.' identifier)
   ;
 
 regexLiteral
@@ -174,6 +181,10 @@ regexWord
 
 regexSymbol
   = Symbol | ':'
+  ;
+
+saveStmt
+  = 'save'! atom+
   ;
 
 sendStmt

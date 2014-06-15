@@ -31,6 +31,15 @@ describe(@"ExpressionBuilder", ^{
             [[[token.left eval] should] equal:@"one"];
         });
         
+        it(@"creates local var assignment with number", ^{
+            
+            NSArray *a = [_builder build:@"var one 25"];
+            AssignmentToken *token = [a firstObject];
+            
+            [[[token.right eval] should] equal:@"25"];
+            [[[token.left eval] should] equal:@"one"];
+        });
+        
         it(@"creates global var assignment", ^{
             
             NSArray *a = [_builder build:@"var one.three $two"];
@@ -170,6 +179,20 @@ describe(@"ExpressionBuilder", ^{
             PauseToken *var = [a firstObject];
             
             [[[var eval] should] equal:[NSNumber numberWithDouble:3.0]];
+        });
+        
+        it(@"creates with fractional number", ^{
+            NSArray *a = [_builder build:@"pause .5"];
+            PauseToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:[NSNumber numberWithDouble:0.5]];
+        });
+        
+        it(@"creates with fractional number", ^{
+            NSArray *a = [_builder build:@"pause 1.7"];
+            PauseToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:[NSNumber numberWithDouble:1.7]];
         });
     });
 
@@ -358,14 +381,25 @@ describe(@"ExpressionBuilder", ^{
             [_builder build:@"match label some text"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(NO)];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"some text"];
+        });
+        
+        it(@"creates match", ^{
+            [_builder build:@"match wait ...wait"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(NO)];
+            [[[match.left eval] should] equal:@"wait"];
+            [[[match.right eval] should] equal:@"...wait"];
         });
         
         it(@"creates matchre", ^{
             [_builder build:@"matchre label some|text"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(YES)];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"some|text"];
         });
@@ -374,6 +408,7 @@ describe(@"ExpressionBuilder", ^{
             [_builder build:@"matchre label \\w"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(YES)];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"\\w"];
         });
@@ -382,6 +417,7 @@ describe(@"ExpressionBuilder", ^{
             [_builder build:@"matchre label (\\w)"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(YES)];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"(\\w)"];
         });
@@ -390,6 +426,7 @@ describe(@"ExpressionBuilder", ^{
             [_builder build:@"matchre label ^Circle:\\s+(\\d+)$"];
             
             MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(YES)];
             [[[match.left eval] should] equal:@"label"];
             [[[match.right eval] should] equal:@"^Circle:\\s+(\\d+)$"];
         });
@@ -439,6 +476,16 @@ describe(@"ExpressionBuilder", ^{
             
             NextRoomToken *tok = [a firstObject];
             [[tok should] beNonNil];
+        });
+    });
+    
+    context(@"save", ^{
+        it(@"creates save token", ^{
+            NSArray *a = [_builder build:@"save one two"];
+            
+            SaveToken *tok = [a firstObject];
+            [[tok should] beNonNil];
+            [[[tok eval] should] equal:@"one two"];
         });
     });
     

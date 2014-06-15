@@ -184,25 +184,42 @@ typedef void (^waitActionBlock) ();
                 
                 [token.tokens enumerateObjectsUsingBlock:^(MatchToken *match, NSUInteger idx, BOOL *stop2) {
                     
-                    NSString *pattern = [match.right eval];
+                    NSString *pattern = [self replaceVars:[match.right eval]];
                     
-                    NSArray *matches = [obj.text matchesForPattern:pattern];
-                    
-                    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
-                        if(res.numberOfRanges > 0) {
+                    if(!match.isRegex) {
+                        if([obj.text containsString:pattern]) {
                             *stop1 = YES;
                             *stop2 = YES;
-                            *stop3 = YES;
-                            [signal dispose];
                             
+                            [signal dispose];
                             [context signal];
                             
-                            NSString *label = [match.left eval];
+                            NSString *label = [self replaceVars:[match.left eval]];
                             [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
                             
                             [self gotoLabel:label forLineNumber:token.lineNumber];
                         }
-                    }];
+                    }
+                    else {
+                    
+                        NSArray *matches = [obj.text matchesForPattern:pattern];
+                        
+                        [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop3) {
+                            if(res.numberOfRanges > 0) {
+                                *stop1 = YES;
+                                *stop2 = YES;
+                                *stop3 = YES;
+                                
+                                [signal dispose];
+                                [context signal];
+                                
+                                NSString *label = [self replaceVars:[match.left eval]];
+                                [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
+                                
+                                [self gotoLabel:label forLineNumber:token.lineNumber];
+                            }
+                        }];
+                    }
                 }];
             }];
         }];
@@ -335,6 +352,16 @@ typedef void (^waitActionBlock) ();
             forLineNumber:token.lineNumber];
     
     [_localVars setCacheObject:val forKey:name];
+}
+
+- (void)handleSaveToken:(SaveToken *)token {
+    NSString *val = [token eval];
+    val = [self replaceVars:val];
+    
+    [self sendScriptDebug:[NSString stringWithFormat:@"save %@", val]
+            forLineNumber:token.lineNumber];
+    
+    [_localVars setCacheObject:val forKey:@"s"];
 }
 
 - (void)handleDebugLevelToken:(DebugLevelToken *)token {

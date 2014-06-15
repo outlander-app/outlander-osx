@@ -10,4 +10,6 @@
 
 @interface MatchToken : LRToken
 
+@property (nonatomic, assign) BOOL isRegex;
+
 @end

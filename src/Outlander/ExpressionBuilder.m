@@ -169,6 +169,22 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     [_parser.tokens addObject:put];
 }
 
+- (void)parser:(PKParser *)p didMatchSaveStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    SaveToken *put = [[SaveToken alloc] init];
+    
+    id token = [a pop];
+    
+    while(token) {
+        token = [self tokenOrAtom:token];
+        [put.tokens insertObject:token atIndex:0];
+        token = [a pop];
+    }
+    
+    [_parser.tokens addObject:put];
+}
+
 - (void)parser:(PKParser *)p didMatchWaitForStmt:(PKAssembly *)a {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
     
@@ -227,6 +243,19 @@ typedef void (^tokenActionBlock) (NSMutableString *str, id token);
     [tl.tokens removeObjectAtIndex:0];
     
     MatchToken *match = [[MatchToken alloc] initWith:tl and:label];
+    [_parser.match_tokens addObject:match];
+}
+
+- (void)parser:(PKParser *)p didMatchMatchreStmt:(PKAssembly *)a {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, a);
+    
+    TokenList *tl = [self popTokensToList:a];
+   
+    id label = [tl.tokens objectAtIndex:0];
+    [tl.tokens removeObjectAtIndex:0];
+    
+    MatchToken *match = [[MatchToken alloc] initWith:tl and:label];
+    match.isRegex = YES;
     [_parser.match_tokens addObject:match];
 }
 
