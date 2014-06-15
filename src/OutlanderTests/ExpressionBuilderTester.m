@@ -261,6 +261,13 @@ describe(@"ExpressionBuilder", ^{
             
             [[[var eval] should] equal:@"$one_two"];
         });
+        
+        it(@"creates goto", ^{
+            NSArray *a = [_builder build:@"goto %s"];
+            GotoToken *var = [a firstObject];
+            
+            [[[var eval] should] equal:@"%s"];
+        });
     });
     
     context(@"move", ^{

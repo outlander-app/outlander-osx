@@ -73,17 +73,17 @@ Global variables are prefixed with a $.
     * ex: Shield_Usage.Ranks, Outdoorsmanship.Ranks, etc.
 * $&lt;skill_name&gt;.LearningRate
 * $&lt;skill_name&gt;.LearningRateName
-* coming - $bleeding (0/1)
-* coming - $kneeling (0/1)
-* coming - $prone (0/1)
-* coming - $sitting (0/1)
-* coming - $standing (0/1)
-* coming - $stunned (0/1)
-* coming - $hidden (0/1)
-* coming - $invisible (0/1)
-* coming - $dead (0/1)
-* coming - $webbed (0/1)
-* coming - $joined (0/1)
+* $bleeding (0/1)
+* $kneeling (0/1)
+* $prone (0/1)
+* $sitting (0/1)
+* $standing (0/1)
+* $stunned (0/1)
+* $hidden (0/1)
+* $invisible (0/1)
+* $dead (0/1)
+* $webbed (0/1)
+* $joined (0/1)
 * $lefthand
 * $lefthandnoun
 * $lefthandnounid

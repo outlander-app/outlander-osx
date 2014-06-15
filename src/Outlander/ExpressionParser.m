@@ -742,7 +742,6 @@
 
 - (void)__identifier {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"[a-zA-Z_]+[a-zA-Z0-9\\._]+", LS(1)); }];
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchIdentifier:)];
@@ -836,7 +835,7 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
+    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
     [self matchWord:NO]; 
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];

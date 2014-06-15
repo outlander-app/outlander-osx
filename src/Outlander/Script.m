@@ -355,8 +355,7 @@ typedef void (^waitActionBlock) ();
 }
 
 - (void)handleSaveToken:(SaveToken *)token {
-    NSString *val = [token eval];
-    val = [self replaceVars:val];
+    NSString *val = [self replaceVars:[token eval]];
     
     [self sendScriptDebug:[NSString stringWithFormat:@"save %@", val]
             forLineNumber:token.lineNumber];
