@@ -139,6 +139,46 @@ describe(@"ExpressionBuilder", ^{
             [[[put eval] should] equal:@"#script pause something"];
         });
         
+        it(@"put with parse command", ^{
+            NSArray *a = [_builder build:@"put #parse something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#parse something"];
+        });
+        
+        it(@"put with var command", ^{
+            NSArray *a = [_builder build:@"put #var something another"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#var something another"];
+        });
+        
+        it(@"put with send command", ^{
+            NSArray *a = [_builder build:@"put #send %something $another"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#send %something $another"];
+        });
+        
+        it(@"put with script vars command", ^{
+            NSArray *a = [_builder build:@"put #script vars something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#script vars something"];
+        });
+        
+        xit(@"put with script debug command", ^{
+            NSArray *a = [_builder build:@"put #script debug 5 something"];
+            
+            PutToken *put = [a firstObject];
+            
+            [[[put eval] should] equal:@"#script debug 5 something"];
+        });
+        
         xit(@"put", ^{
             NSArray *a = [_builder build:@"put %one_two $two \n something"];
             
@@ -398,6 +438,15 @@ describe(@"ExpressionBuilder", ^{
             
             MatchToken *match = [[_builder matchTokens] firstObject];
             [[theValue(match.isRegex) should] equal:theValue(NO)];
+            [[[match.left eval] should] equal:@"wait"];
+            [[[match.right eval] should] equal:@"...wait"];
+        });
+        
+        it(@"creates matchre", ^{
+            [_builder build:@"matchre wait ...wait"];
+            
+            MatchToken *match = [[_builder matchTokens] firstObject];
+            [[theValue(match.isRegex) should] equal:theValue(YES)];
             [[[match.left eval] should] equal:@"wait"];
             [[[match.right eval] should] equal:@"...wait"];
         });

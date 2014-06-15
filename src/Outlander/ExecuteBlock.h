@@ -13,6 +13,7 @@ typedef void (^doneBlock) ();
 
 @property (nonatomic, strong) executeBlock doExecute;
 @property (nonatomic, strong) doneBlock doDone;
+@property (nonatomic, strong) doneBlock doCancel;
 
 - (instancetype)initWith:(void(^)(id block, NSTimeInterval interval))runBlock;
 
@@ -20,5 +21,6 @@ typedef void (^doneBlock) ();
 - (void)runUntil:(NSTimeInterval)interval;
 - (ExecuteBlock *)execute:(executeBlock)block;
 - (ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done;
+- (ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done cancel:(doneBlock)cancel;
 
 @end

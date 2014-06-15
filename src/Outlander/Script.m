@@ -10,8 +10,10 @@
 #import "ExpressionBuilder.h"
 #import "GameCommandRelay.h"
 #import "OLPauseCondition.h"
+#import "SimpleQueue.h"
 #import "NSString+Categories.h"
 #import "VariableReplacer.h"
+#import "RACEXTScope.h"
 
 typedef void (^waitActionBlock) ();
 
@@ -25,6 +27,7 @@ typedef void (^waitActionBlock) ();
     NSDictionary *_labels;
     NSUInteger _debugLevel;
     OLPauseCondition *_waitPauseCondition;
+    SimpleQueue *_messageQueue;
 }
 @end
 
@@ -43,6 +46,7 @@ typedef void (^waitActionBlock) ();
     _varReplacer = [[VariableReplacer alloc] init];
     _commandRelay = [[GameCommandRelay alloc] init];
     _waitPauseCondition = [[OLPauseCondition alloc] init];
+    _messageQueue = [[SimpleQueue alloc] init];
     
     _debugLevel = 0;
     
@@ -53,6 +57,8 @@ typedef void (^waitActionBlock) ();
 
 - (void)cancel {
     [_waitPauseCondition cancel];
+    [_messageQueue clear];
+    [_messageQueue queue:[[CompleteMessage alloc] init]];
     [super cancel];
 }
 
@@ -81,6 +87,20 @@ typedef void (^waitActionBlock) ();
     
     [self processToken:_syntaxTree[_tokenIndex]];
     
+    while(![_messageQueue hasObjectType:[CompleteMessage class]]) {
+    }
+    
+    NSLog(@"Msg Count: %lu", _messageQueue.count);
+    
+    id objMessage = nil;
+    
+    while((objMessage = [_messageQueue dequeue])) {
+        if([objMessage isKindOfClass:[GotoMessage class]]) {
+            GotoMessage *gotoMsg = objMessage;
+            _tokenIndex = --gotoMsg.gotoIndex;
+        }
+    }
+    
     _tokenIndex++;
 }
 
@@ -97,6 +117,10 @@ typedef void (^waitActionBlock) ();
         void (*func)(id, SEL, id<Token>) = (void *)imp;
         func(self, sel, token);
     }
+}
+
+- (void)sendCompleteMessage {
+    [_messageQueue queue:[[CompleteMessage alloc] init]];
 }
 
 -(NSInteger)findLabel:(NSString *)label {
@@ -116,6 +140,7 @@ typedef void (^waitActionBlock) ();
 -(void)handleLabelToken:(LabelToken *)token {
     NSString *debug = [NSString stringWithFormat:@"passing label %@", [token eval]];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    [self sendCompleteMessage];
 }
 
 -(void)handleGotoToken:(GotoToken *)token {
@@ -127,6 +152,7 @@ typedef void (^waitActionBlock) ();
     [_currentVars removeAllObjects];
     
     [self gotoLabel:label forLineNumber:token.lineNumber];
+    [self sendCompleteMessage];
 }
 
 -(void)gotoLabel:(NSString *)label forLineNumber:(NSUInteger)lineNumber {
@@ -139,15 +165,19 @@ typedef void (^waitActionBlock) ();
         [self cancel];
     }
     
-    _tokenIndex = --idx;
+    GotoMessage *msg = [[GotoMessage alloc] init];
+    msg.gotoIndex = idx;
+    [_messageQueue queue:msg];
 }
 
 -(void)handleEchoToken:(EchoToken *)token {
     [self sendEcho:[self replaceVars:[token eval]]];
+    [self sendCompleteMessage];
 }
 
 -(void)handlePutToken:(PutToken *)token {
     [self sendCommand:[self replaceVars:[token eval]]];
+    [self sendCompleteMessage];
 }
 
 -(void)handlePauseToken:(PauseToken *)token {
@@ -158,6 +188,7 @@ typedef void (^waitActionBlock) ();
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
     [NSThread sleepForTimeInterval:interval];
+    [self sendCompleteMessage];
 }
 
 -(void)handleMatchWaitToken:(MatchWaitToken *) token {
@@ -177,7 +208,10 @@ typedef void (^waitActionBlock) ();
     
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
+    @weakify(_gameStream);
+    
     executeBlock execute = ^(OLPauseCondition *context) {
+        @strongify(_gameStream);
         signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
             
             [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
@@ -210,8 +244,8 @@ typedef void (^waitActionBlock) ();
                                 *stop2 = YES;
                                 *stop3 = YES;
                                 
-                                [signal dispose];
                                 [context signal];
+                                [signal dispose];
                                 
                                 NSString *label = [self replaceVars:[match.left eval]];
                                 [self sendScriptDebug:[NSString stringWithFormat:@"match goto %@", label] forLineNumber:token.lineNumber];
@@ -234,7 +268,11 @@ typedef void (^waitActionBlock) ();
         }
     };
     
-    [[[_waitPauseCondition wait] execute:execute done:done] runUntil:waitTime];
+    doneBlock cancel = ^{
+        [signal dispose];
+    };
+    
+    [[[_waitPauseCondition wait] execute:execute done:done cancel:cancel] runUntil:waitTime];
 }
 
 - (void)handleMoveToken:(MoveToken *)token {
@@ -244,13 +282,19 @@ typedef void (^waitActionBlock) ();
     NSString *debug = [NSString stringWithFormat:@"move %@ - waiting for room description", direction];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
+    __block RACDisposable *signal = nil;
+    
+    @weakify(_gameStream);
+    
     ExecuteBlock *block = [[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
-        __block RACDisposable *signal = nil;
-        signal = [_gameStream.room.signal subscribeNext:^(id x) {
+        @strongify(_gameStream);
+        signal = [[_gameStream.room.signal throttle:0.02] subscribeNext:^(id x) {
             [signal dispose];
             [context signal];
             [self waitForRoundtime];
         }];
+    } done:nil cancel:^{
+        [signal dispose];
     }];
     
     [self sendCommand:direction];
@@ -262,14 +306,19 @@ typedef void (^waitActionBlock) ();
     NSString *debug = @"nextroom - waiting for room description";
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
+    __block RACDisposable *signal = nil;
+    
+    @weakify(_gameStream);
+    
     [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
-        __block RACDisposable *signal = nil;
-        signal = [_gameStream.room.signal subscribeNext:^(id x) {
+        @strongify(_gameStream);
+        signal = [[_gameStream.room.signal throttle:0.02] subscribeNext:^(id x) {
             [signal dispose];
             [context signal];
-            
             [self waitForRoundtime];
         }];
+    } done:nil cancel:^{
+        [signal dispose];
     }] run];
 }
 
@@ -280,10 +329,12 @@ typedef void (^waitActionBlock) ();
     NSString *debug = [NSString stringWithFormat:@"waitfor %@", matchText];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     
+    __block RACDisposable *signal = nil;
+    
+    @weakify(_gameStream);
+    
     [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
-        
-        __block RACDisposable *signal = nil;
-       
+        @strongify(_gameStream);
         signal = [_gameStream.subject.signal subscribeNext:^(NSArray *arr) {
             
             [arr enumerateObjectsUsingBlock:^(TextTag *obj, NSUInteger idx, BOOL *stop1) {
@@ -295,15 +346,15 @@ typedef void (^waitActionBlock) ();
                         *stop1 = YES;
                         *stop3 = YES;
                         [signal dispose];
-                        
-//                        [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
                         [context signal];
-                        
                         [self waitForRoundtime];
+//                        [self sendScriptDebug:[NSString stringWithFormat:@"matched",] forLineNumber:token.lineNumber];
                     }
                 }];
             }];
         }];
+    } done:nil cancel:^{
+        [signal dispose];
     }] run];
 }
 
@@ -311,6 +362,7 @@ typedef void (^waitActionBlock) ();
     NSString *debug = @"exit";
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
     [self cancel];
+    [self sendCompleteMessage];
 }
 
 - (void)handleGosubToken:(GosubToken *)token {
@@ -333,6 +385,7 @@ typedef void (^waitActionBlock) ();
     }];
     
     [self gotoLabel:label forLineNumber:token.lineNumber];
+    [self sendCompleteMessage];
 }
 
 - (void)handleReturnToken:(ReturnToken *)token {
@@ -341,6 +394,8 @@ typedef void (^waitActionBlock) ();
     
     GosubToken *last = [_gosubStack pop];
     _tokenIndex = last.stackIndex;
+    
+    [self sendCompleteMessage];
 }
 
 - (void)handleAssignmentToken:(AssignmentToken *)token {
@@ -352,6 +407,7 @@ typedef void (^waitActionBlock) ();
             forLineNumber:token.lineNumber];
     
     [_localVars setCacheObject:val forKey:name];
+    [self sendCompleteMessage];
 }
 
 - (void)handleSaveToken:(SaveToken *)token {
@@ -361,6 +417,7 @@ typedef void (^waitActionBlock) ();
             forLineNumber:token.lineNumber];
     
     [_localVars setCacheObject:val forKey:@"s"];
+    [self sendCompleteMessage];
 }
 
 - (void)handleDebugLevelToken:(DebugLevelToken *)token {
@@ -369,12 +426,15 @@ typedef void (^waitActionBlock) ();
     
     NSNumber *level = [token eval];
     _debugLevel = [level integerValue];
+    
+    [self sendCompleteMessage];
 }
 
 - (void)handleSendToken:(SendToken *)token {
     NSString *val = [self replaceVars:[token eval]];
     NSString *debug = [NSString stringWithFormat:@"send %@", val];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    [self sendCompleteMessage];
 }
 
 - (void)waitForRoundtime {
@@ -390,15 +450,17 @@ typedef void (^waitActionBlock) ();
         if(done) {
             done();
         }
+        [self sendCompleteMessage];
         return;
     }
     
     [self sendScriptDebug:@"Waiting for roundtime" forLineNumber:0];
     
+    __block RACDisposable *signal = nil;
+    
+    @weakify(_context);
     [[[_waitPauseCondition wait] execute:^(OLPauseCondition *context) {
-        
-        __block RACDisposable *signal = nil;
-        
+        @strongify(_context);
         signal = [_context.globalVars.changed subscribeNext:^(NSDictionary *changed) {
             
             if([[changed.allKeys firstObject] isEqualToString:@"roundtime"]) {
@@ -415,6 +477,9 @@ typedef void (^waitActionBlock) ();
         if(done){
             done();
         }
+        [self sendCompleteMessage];
+    } cancel:^{
+        [signal dispose];
     }] run];
 }
 

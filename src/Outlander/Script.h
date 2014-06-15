@@ -11,6 +11,9 @@
 #import "GameStream.h"
 #import "CommandRelay.h"
 #import "SimpleStack.h"
+#import "NoOpMessage.h"
+#import "GotoMessage.h"
+#import "CompleteMessage.h"
 
 @interface Script : Actor
 

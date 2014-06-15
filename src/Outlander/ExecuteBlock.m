@@ -33,13 +33,17 @@
 }
 
 -(ExecuteBlock *)execute:(executeBlock)block {
-    _doExecute = block;
-    return self;
+    return [self execute:block done:nil cancel:nil];
 }
 
--(ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done {
+- (ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done {
+    return [self execute:block done:done cancel:nil];
+}
+
+- (ExecuteBlock *)execute:(executeBlock)block done:(doneBlock)done cancel:(doneBlock)cancel {
     _doExecute = block;
     _doDone = done;
+    _doCancel = cancel;
     
     return self;
 }

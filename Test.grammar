@@ -116,8 +116,13 @@ putStmt
 scriptAbort = 'script' 'abort';
 scriptPause = 'script' 'pause';
 scriptResume = 'script' 'resume';
+scriptVars = 'script' 'vars';
+scriptDebug = 'script' 'debug' Number;
+parse = 'parse';
+varCmd = 'var';
+sendCmd = 'send';
 
-commands = scriptResume | scriptAbort | scriptPause;
+commands = scriptResume | scriptAbort | scriptPause | scriptVars | scriptDebug | parse | varCmd | sendCmd;
 
 commandsExpr
     = '#' commands atom+
@@ -176,7 +181,7 @@ regex
   ;
 
 regexWord
-  = { MATCHES(@"\\S", LS(1)) }? Word
+  = { MATCHES(@"\\S", LS(1)) }? Word | '.'
   ;
 
 regexSymbol

@@ -23,6 +23,14 @@
 		F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
 		F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
 		F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
+		F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39BC194DEF25006144F8 /* NoOpMessage.m */; };
+		F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39BC194DEF25006144F8 /* NoOpMessage.m */; };
+		F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C0194DF073006144F8 /* GotoMessage.m */; };
+		F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C0194DF073006144F8 /* GotoMessage.m */; };
+		F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C5194DFF25006144F8 /* CompleteMessage.m */; };
+		F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C5194DFF25006144F8 /* CompleteMessage.m */; };
+		F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
+		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -279,6 +287,14 @@
 		F91A39AF194BDE83006144F8 /* ExecuteBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecuteBlock.m; sourceTree = "<group>"; };
 		F91A39B2194D2AA2006144F8 /* SaveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToken.h; sourceTree = "<group>"; };
 		F91A39B3194D2AA2006144F8 /* SaveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToken.m; sourceTree = "<group>"; };
+		F91A39BB194DEF25006144F8 /* NoOpMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoOpMessage.h; sourceTree = "<group>"; };
+		F91A39BC194DEF25006144F8 /* NoOpMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoOpMessage.m; sourceTree = "<group>"; };
+		F91A39BF194DF073006144F8 /* GotoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoMessage.h; sourceTree = "<group>"; };
+		F91A39C0194DF073006144F8 /* GotoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoMessage.m; sourceTree = "<group>"; };
+		F91A39C4194DFF25006144F8 /* CompleteMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteMessage.h; sourceTree = "<group>"; };
+		F91A39C5194DFF25006144F8 /* CompleteMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteMessage.m; sourceTree = "<group>"; };
+		F91A39C8194DFFA9006144F8 /* SimpleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleQueue.h; sourceTree = "<group>"; };
+		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -556,6 +572,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F91A39BA194DEF04006144F8 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				F91A39C4194DFF25006144F8 /* CompleteMessage.h */,
+				F91A39C5194DFF25006144F8 /* CompleteMessage.m */,
+				F91A39BF194DF073006144F8 /* GotoMessage.h */,
+				F91A39C0194DF073006144F8 /* GotoMessage.m */,
+				F91A39BB194DEF25006144F8 /* NoOpMessage.h */,
+				F91A39BC194DEF25006144F8 /* NoOpMessage.m */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		F9772F101940383500172083 /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +652,7 @@
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
+				F91A39BA194DEF04006144F8 /* Messages */,
 				F9772F101940383500172083 /* Tokens */,
 				F96ECDA8193404BB00787CB9 /* Actor.h */,
 				F96ECDA9193404BB00787CB9 /* Actor.m */,
@@ -718,6 +748,8 @@
 				F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */,
 				F94A3FD71949495E00D6B35D /* SimpleStack.h */,
 				F94A3FD81949495E00D6B35D /* SimpleStack.m */,
+				F91A39C8194DFFA9006144F8 /* SimpleQueue.h */,
+				F91A39C9194DFFA9006144F8 /* SimpleQueue.m */,
 				F97A5C9818957A5D00E2C318 /* TSMutableDictionary.h */,
 				F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */,
 			);
@@ -1155,6 +1187,8 @@
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
+				F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */,
+				F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
@@ -1228,6 +1262,7 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
+				F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */,
 				F98782EF19427DAB00D76231 /* Script.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
@@ -1254,6 +1289,7 @@
 				F9772F0E1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
+				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1347,20 +1383,24 @@
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
+				F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
+				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
+				F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
+				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F9772F0B1940332200172083 /* ExpressionBuilderTester.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,

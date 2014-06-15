@@ -87,6 +87,10 @@
             if(eblock.doDone) {
                 eblock.doDone();
             }
+        } else {
+            if(eblock.doCancel) {
+                eblock.doCancel();
+            }
         }
     }];
 }

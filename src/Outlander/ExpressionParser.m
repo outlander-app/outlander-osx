@@ -24,6 +24,11 @@
 @property (nonatomic, retain) NSMutableDictionary *scriptAbort_memo;
 @property (nonatomic, retain) NSMutableDictionary *scriptPause_memo;
 @property (nonatomic, retain) NSMutableDictionary *scriptResume_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptVars_memo;
+@property (nonatomic, retain) NSMutableDictionary *scriptDebug_memo;
+@property (nonatomic, retain) NSMutableDictionary *parse_memo;
+@property (nonatomic, retain) NSMutableDictionary *varCmd_memo;
+@property (nonatomic, retain) NSMutableDictionary *sendCmd_memo;
 @property (nonatomic, retain) NSMutableDictionary *commands_memo;
 @property (nonatomic, retain) NSMutableDictionary *commandsExpr_memo;
 @property (nonatomic, retain) NSMutableDictionary *waitForStmt_memo;
@@ -59,67 +64,73 @@
   _match_tokens = [[NSMutableArray alloc] init];
 
         self.startRuleName = @"program";
-        self.tokenKindTab[@"debuglevel"] = @(EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL);
-        self.tokenKindTab[@"move"] = @(EXPRESSIONPARSER_TOKEN_KIND_MOVE);
-        self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"debug"] = @(EXPRESSIONPARSER_TOKEN_KIND_DEBUG);
+        self.tokenKindTab[@"exit"] = @(EXPRESSIONPARSER_TOKEN_KIND_EXITSTMT);
+        self.tokenKindTab[@"matchwait"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHWAIT);
         self.tokenKindTab[@"return"] = @(EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT);
-        self.tokenKindTab[@"abort"] = @(EXPRESSIONPARSER_TOKEN_KIND_ABORT);
+        self.tokenKindTab[@"resume"] = @(EXPRESSIONPARSER_TOKEN_KIND_RESUME);
+        self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"save"] = @(EXPRESSIONPARSER_TOKEN_KIND_SAVE);
+        self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
+        self.tokenKindTab[@"match"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCH);
+        self.tokenKindTab[@"waitfor"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFOR);
+        self.tokenKindTab[@":"] = @(EXPRESSIONPARSER_TOKEN_KIND_COLON);
+        self.tokenKindTab[@"#"] = @(EXPRESSIONPARSER_TOKEN_KIND_POUND);
         self.tokenKindTab[@";"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON);
+        self.tokenKindTab[@"script"] = @(EXPRESSIONPARSER_TOKEN_KIND_SCRIPT);
+        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
+        self.tokenKindTab[@"matchre"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHRE);
+        self.tokenKindTab[@"waitforre"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE);
+        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
+        self.tokenKindTab[@"abort"] = @(EXPRESSIONPARSER_TOKEN_KIND_ABORT);
+        self.tokenKindTab[@"debuglevel"] = @(EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL);
+        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VARCMD);
+        self.tokenKindTab[@"nextroom"] = @(EXPRESSIONPARSER_TOKEN_KIND_NEXTROOM);
+        self.tokenKindTab[@"parse"] = @(EXPRESSIONPARSER_TOKEN_KIND_PARSE);
+        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
         self.tokenKindTab[@"."] = @(EXPRESSIONPARSER_TOKEN_KIND_DOT);
         self.tokenKindTab[@"echo"] = @(EXPRESSIONPARSER_TOKEN_KIND_ECHO);
-        self.tokenKindTab[@"pause"] = @(EXPRESSIONPARSER_TOKEN_KIND_PAUSE);
-        self.tokenKindTab[@"/"] = @(EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH);
-        self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
-        self.tokenKindTab[@"waitforre"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE);
-        self.tokenKindTab[@"#"] = @(EXPRESSIONPARSER_TOKEN_KIND_POUND);
-        self.tokenKindTab[@"matchwait"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHWAIT);
-        self.tokenKindTab[@"nextroom"] = @(EXPRESSIONPARSER_TOKEN_KIND_NEXTROOM);
-        self.tokenKindTab[@"exit"] = @(EXPRESSIONPARSER_TOKEN_KIND_EXITSTMT);
-        self.tokenKindTab[@"$"] = @(EXPRESSIONPARSER_TOKEN_KIND_DOLLAR);
-        self.tokenKindTab[@"waitfor"] = @(EXPRESSIONPARSER_TOKEN_KIND_WAITFOR);
-        self.tokenKindTab[@"resume"] = @(EXPRESSIONPARSER_TOKEN_KIND_RESUME);
-        self.tokenKindTab[@"%"] = @(EXPRESSIONPARSER_TOKEN_KIND_PERCENT);
-        self.tokenKindTab[@"script"] = @(EXPRESSIONPARSER_TOKEN_KIND_SCRIPT);
-        self.tokenKindTab[@"send"] = @(EXPRESSIONPARSER_TOKEN_KIND_SEND);
-        self.tokenKindTab[@"setvariable"] = @(EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE);
-        self.tokenKindTab[@"matchre"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCHRE);
         self.tokenKindTab[@"^"] = @(EXPRESSIONPARSER_TOKEN_KIND_CARET);
-        self.tokenKindTab[@"goto"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOTO);
+        self.tokenKindTab[@"/"] = @(EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH);
+        self.tokenKindTab[@"move"] = @(EXPRESSIONPARSER_TOKEN_KIND_MOVE);
+        self.tokenKindTab[@"send"] = @(EXPRESSIONPARSER_TOKEN_KIND_SENDCMD);
         self.tokenKindTab[@"gosub"] = @(EXPRESSIONPARSER_TOKEN_KIND_GOSUB);
-        self.tokenKindTab[@"save"] = @(EXPRESSIONPARSER_TOKEN_KIND_SAVE);
-        self.tokenKindTab[@"match"] = @(EXPRESSIONPARSER_TOKEN_KIND_MATCH);
-        self.tokenKindTab[@"var"] = @(EXPRESSIONPARSER_TOKEN_KIND_VAR);
+        self.tokenKindTab[@"vars"] = @(EXPRESSIONPARSER_TOKEN_KIND_VARS);
+        self.tokenKindTab[@"put"] = @(EXPRESSIONPARSER_TOKEN_KIND_PUT);
 
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL] = @"debuglevel";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MOVE] = @"move";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DEBUG] = @"debug";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_EXITSTMT] = @"exit";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHWAIT] = @"matchwait";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RETURNSTMT] = @"return";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ABORT] = @"abort";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RESUME] = @"resume";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SAVE] = @"save";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCH] = @"match";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFOR] = @"waitfor";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_COLON] = @":";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_POUND] = @"#";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEMI_COLON] = @";";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SCRIPT] = @"script";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE] = @"waitforre";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ABORT] = @"abort";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DEBUGLEVEL] = @"debuglevel";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VARCMD] = @"var";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PARSE] = @"parse";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOT] = @".";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_ECHO] = @"echo";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PAUSE] = @"pause";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH] = @"/";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFORRE] = @"waitforre";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_POUND] = @"#";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHWAIT] = @"matchwait";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_NEXTROOM] = @"nextroom";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_EXITSTMT] = @"exit";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_DOLLAR] = @"$";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_WAITFOR] = @"waitfor";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_RESUME] = @"resume";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PERCENT] = @"%";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SCRIPT] = @"script";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SEND] = @"send";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE] = @"setvariable";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCHRE] = @"matchre";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_CARET] = @"^";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOTO] = @"goto";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_FORWARD_SLASH] = @"/";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MOVE] = @"move";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SENDCMD] = @"send";
         self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_GOSUB] = @"gosub";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_SAVE] = @"save";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_MATCH] = @"match";
-        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VAR] = @"var";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_VARS] = @"vars";
+        self.tokenKindNameTab[EXPRESSIONPARSER_TOKEN_KIND_PUT] = @"put";
 
         self.program_memo = [NSMutableDictionary dictionary];
         self.stmts_memo = [NSMutableDictionary dictionary];
@@ -141,6 +152,11 @@
         self.scriptAbort_memo = [NSMutableDictionary dictionary];
         self.scriptPause_memo = [NSMutableDictionary dictionary];
         self.scriptResume_memo = [NSMutableDictionary dictionary];
+        self.scriptVars_memo = [NSMutableDictionary dictionary];
+        self.scriptDebug_memo = [NSMutableDictionary dictionary];
+        self.parse_memo = [NSMutableDictionary dictionary];
+        self.varCmd_memo = [NSMutableDictionary dictionary];
+        self.sendCmd_memo = [NSMutableDictionary dictionary];
         self.commands_memo = [NSMutableDictionary dictionary];
         self.commandsExpr_memo = [NSMutableDictionary dictionary];
         self.waitForStmt_memo = [NSMutableDictionary dictionary];
@@ -189,6 +205,11 @@
     [_scriptAbort_memo removeAllObjects];
     [_scriptPause_memo removeAllObjects];
     [_scriptResume_memo removeAllObjects];
+    [_scriptVars_memo removeAllObjects];
+    [_scriptDebug_memo removeAllObjects];
+    [_parse_memo removeAllObjects];
+    [_varCmd_memo removeAllObjects];
+    [_sendCmd_memo removeAllObjects];
     [_commands_memo removeAllObjects];
     [_commandsExpr_memo removeAllObjects];
     [_waitForStmt_memo removeAllObjects];
@@ -276,11 +297,11 @@
         [self label_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PAUSE, 0]) {
         [self pause_]; 
-    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE, EXPRESSIONPARSER_TOKEN_KIND_VAR, 0]) {
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE, EXPRESSIONPARSER_TOKEN_KIND_VARCMD, 0]) {
         [self assignment_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_PUT, 0]) {
         [self putStmt_]; 
-    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SEND, 0]) {
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SENDCMD, 0]) {
         [self sendStmt_]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_ECHO, 0]) {
         [self echoStmt_]; 
@@ -579,6 +600,64 @@
     [self parseRule:@selector(__scriptResume) withMemo:_scriptResume_memo];
 }
 
+- (void)__scriptVars {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_VARS discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptVars:)];
+}
+
+- (void)scriptVars_ {
+    [self parseRule:@selector(__scriptVars) withMemo:_scriptVars_memo];
+}
+
+- (void)__scriptDebug {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_SCRIPT discard:NO]; 
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_DEBUG discard:NO]; 
+    [self matchNumber:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchScriptDebug:)];
+}
+
+- (void)scriptDebug_ {
+    [self parseRule:@selector(__scriptDebug) withMemo:_scriptDebug_memo];
+}
+
+- (void)__parse {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_PARSE discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchParse:)];
+}
+
+- (void)parse_ {
+    [self parseRule:@selector(__parse) withMemo:_parse_memo];
+}
+
+- (void)__varCmd {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_VARCMD discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchVarCmd:)];
+}
+
+- (void)varCmd_ {
+    [self parseRule:@selector(__varCmd) withMemo:_varCmd_memo];
+}
+
+- (void)__sendCmd {
+    
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_SENDCMD discard:NO]; 
+
+    [self fireDelegateSelector:@selector(parser:didMatchSendCmd:)];
+}
+
+- (void)sendCmd_ {
+    [self parseRule:@selector(__sendCmd) withMemo:_sendCmd_memo];
+}
+
 - (void)__commands {
     
     if ([self speculate:^{ [self scriptResume_]; }]) {
@@ -587,6 +666,16 @@
         [self scriptAbort_]; 
     } else if ([self speculate:^{ [self scriptPause_]; }]) {
         [self scriptPause_]; 
+    } else if ([self speculate:^{ [self scriptVars_]; }]) {
+        [self scriptVars_]; 
+    } else if ([self speculate:^{ [self scriptDebug_]; }]) {
+        [self scriptDebug_]; 
+    } else if ([self speculate:^{ [self parse_]; }]) {
+        [self parse_]; 
+    } else if ([self speculate:^{ [self varCmd_]; }]) {
+        [self varCmd_]; 
+    } else if ([self speculate:^{ [self sendCmd_]; }]) {
+        [self sendCmd_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'commands'."];
     }
@@ -653,8 +742,8 @@
 
 - (void)__assignmentPrefix {
     
-    if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_VAR, 0]) {
-        [self match:EXPRESSIONPARSER_TOKEN_KIND_VAR discard:YES]; 
+    if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_VARCMD, 0]) {
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_VARCMD discard:YES]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_SETVARIABLE discard:YES]; 
     } else {
@@ -816,12 +905,12 @@
     do {
         if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {
             [self regexSymbol_]; 
-        } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+        } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOT, TOKEN_KIND_BUILTIN_WORD, 0]) {
             [self regexWord_]; 
         } else {
             [self raise:@"No viable alternative found in rule 'regex'."];
         }
-    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {[self regexSymbol_]; } else if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {[self regexWord_]; } else {[self raise:@"No viable alternative found in rule 'regex'."];}}]);
+    } while ([self speculate:^{ if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_COLON, TOKEN_KIND_BUILTIN_SYMBOL, 0]) {[self regexSymbol_]; } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOT, TOKEN_KIND_BUILTIN_WORD, 0]) {[self regexWord_]; } else {[self raise:@"No viable alternative found in rule 'regex'."];}}]);
     if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_DOLLAR discard:NO]; 
     }
@@ -835,8 +924,14 @@
 
 - (void)__regexWord {
     
-    [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
-    [self matchWord:NO]; 
+    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+        [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
+        [self matchWord:NO]; 
+    } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOT, 0]) {
+        [self match:EXPRESSIONPARSER_TOKEN_KIND_DOT discard:NO]; 
+    } else {
+        [self raise:@"No viable alternative found in rule 'regexWord'."];
+    }
 
     [self fireDelegateSelector:@selector(parser:didMatchRegexWord:)];
 }
@@ -878,7 +973,7 @@
 
 - (void)__sendStmt {
     
-    [self match:EXPRESSIONPARSER_TOKEN_KIND_SEND discard:YES]; 
+    [self match:EXPRESSIONPARSER_TOKEN_KIND_SENDCMD discard:YES]; 
     do {
         [self atom_]; 
     } while ([self speculate:^{ [self atom_]; }]);
