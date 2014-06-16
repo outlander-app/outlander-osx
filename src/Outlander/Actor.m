@@ -83,7 +83,7 @@
             [_condition unlock];
         }
         
-        NSLog(@"%@ :: Script completed: %hhd", [self description], self.isCancelled);
+        NSLog(@"%@ :: actor completed: %hhd", [self description], self.isCancelled);
     }
 }
 

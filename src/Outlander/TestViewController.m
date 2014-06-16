@@ -60,7 +60,7 @@
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
     _scriptRunner = [[ScriptRunner alloc] initWith:_gameContext and:[[LocalFileSystem alloc] init]];
     
-    [_commandProcessor.processed subscribeNext:^(CommandContext *x) {
+    [[_commandProcessor.processed subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(CommandContext *x) {
         [_gameStream sendCommand:x.command];
         
         TextTag *tag = x.tag;

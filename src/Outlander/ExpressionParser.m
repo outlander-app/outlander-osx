@@ -925,7 +925,7 @@
 - (void)__regexWord {
     
     if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
-        [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }]; 
+        [self testAndThrow:(id)^{ return MATCHES(@"\\S", LS(1)); }];
         [self matchWord:NO]; 
     } else if ([self predicts:EXPRESSIONPARSER_TOKEN_KIND_DOT, 0]) {
         [self match:EXPRESSIONPARSER_TOKEN_KIND_DOT discard:NO]; 

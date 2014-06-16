@@ -443,6 +443,9 @@ typedef void (^waitActionBlock) ();
     NSString *val = [self replaceVars:[token eval]];
     NSString *debug = [NSString stringWithFormat:@"send %@", val];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    [self sendCommand:[NSString stringWithFormat:@"#send %@", val]];
+    
     [self sendCompleteMessage];
 }
 

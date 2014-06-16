@@ -33,6 +33,8 @@
 		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
 		F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
+		F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
+		F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -299,6 +301,8 @@
 		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F91A39CC194E7135006144F8 /* SendCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCommandHandler.h; sourceTree = "<group>"; };
 		F91A39CD194E7135006144F8 /* SendCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCommandHandler.m; sourceTree = "<group>"; };
+		F91A39D0194E8916006144F8 /* SendQueueProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendQueueProcessor.h; sourceTree = "<group>"; };
+		F91A39D1194E8916006144F8 /* SendQueueProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQueueProcessor.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -694,6 +698,8 @@
 				F96ECDB519343F5B00787CB9 /* ScriptLoader.m */,
 				F96ECDB81934445000787CB9 /* ScriptRunner.h */,
 				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
+				F91A39D0194E8916006144F8 /* SendQueueProcessor.h */,
+				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F91A39CC194E7135006144F8 /* SendCommandHandler.h */,
 				F91A39CD194E7135006144F8 /* SendCommandHandler.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
@@ -1233,6 +1239,7 @@
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
+				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
@@ -1329,6 +1336,7 @@
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
+				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
