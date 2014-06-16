@@ -171,12 +171,21 @@ typedef void (^waitActionBlock) ();
 }
 
 -(void)handleEchoToken:(EchoToken *)token {
-    [self sendEcho:[self replaceVars:[token eval]]];
+    NSString *str = [self replaceVars:[token eval]];
+    NSString *debug = [NSString stringWithFormat:@"echo %@", str];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    [self sendEcho:str];
     [self sendCompleteMessage];
 }
 
 -(void)handlePutToken:(PutToken *)token {
-    [self sendCommand:[self replaceVars:[token eval]]];
+    
+    NSString *str = [self replaceVars:[token eval]];
+    NSString *debug = [NSString stringWithFormat:@"put %@", str];
+    [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    [self sendCommand:str];
     [self sendCompleteMessage];
 }
 

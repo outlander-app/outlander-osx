@@ -14,6 +14,7 @@
 #import "HighlightCommandHandler.h"
 #import "VarCommandHandler.h"
 #import "AliasCommandHandler.h"
+#import "SendCommandHandler.h"
 #import "GameEventRelay.h"
 
 @interface GameCommandProcessor (){
@@ -44,6 +45,7 @@
     [_handlers addObject:[[VarCommandHandler alloc] init]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
+    [_handlers addObject:[[SendCommandHandler alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)
