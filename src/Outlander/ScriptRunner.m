@@ -158,6 +158,13 @@
     Script *script = [_scripts cacheObjectForKey:scriptName];
    
     if(script) {
+        [self sendEcho:[NSString stringWithFormat:@"\n[Script variables for %@]:", scriptName]];
+        [script.localVars.allKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
+            [self sendEcho:[NSString stringWithFormat:@"%@=%@", key, [script.localVars cacheObjectForKey:key]]];
+        }];
+        
+        NSTimeInterval since = [script.started timeIntervalSinceNow];
+        [self sendEcho:[NSString stringWithFormat:@"[Script run time is %#2.2f seconds: %@]\n", since*-1, scriptName]];
     }
 }
 
