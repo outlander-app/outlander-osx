@@ -138,8 +138,12 @@ typedef void (^waitActionBlock) ();
 }
 
 -(void)handleLabelToken:(LabelToken *)token {
-    NSString *debug = [NSString stringWithFormat:@"passing label %@", [token eval]];
+    NSString *label = [token eval];
+    NSString *debug = [NSString stringWithFormat:@"passing label %@", label];
     [self sendScriptDebug:debug forLineNumber:token.lineNumber];
+    
+    [_localVars setCacheObject:label forKey:@"lastlabel"];
+    
     [self sendCompleteMessage];
 }
 

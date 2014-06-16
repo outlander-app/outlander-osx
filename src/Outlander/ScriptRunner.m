@@ -95,6 +95,7 @@
     
     Script *script = [[Script alloc] initWith:_context and:data];
     script.name = scriptName;
+    [script.localVars setCacheObject:scriptName forKey:@"scriptname"];
     [script setGameStream:_gameStream];
    
     [self setArgs:args and:allArgs forScript:script];
@@ -187,6 +188,8 @@
         NSString *key = [NSString stringWithFormat:@"%lu", idx + 1];
         [script.localVars setCacheObject:obj forKey:key];
     }];
+    
+    [script.localVars setCacheObject:[NSString stringWithFormat:@"%lu", args.count] forKey:@"argcount"];
 }
 
 @end

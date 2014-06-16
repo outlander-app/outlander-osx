@@ -22,10 +22,12 @@
    
 Script arguments become local variables:
 	
+    %scriptname = myscript
 	%0 = one two "three four"
 	%1 = one
 	%2 = two
 	%3 = three four
+    %argcount = 3
 
 * echo
 * exit
@@ -50,6 +52,7 @@ Script arguments become local variables:
  	* put &lt;command&gt;
 	* put collect rock
 * label:
+    * use %lastlabel to know the last label passed
 * setvariable
 * var
 * wait
