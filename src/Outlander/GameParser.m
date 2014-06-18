@@ -13,6 +13,7 @@
 
 @implementation GameParser {
     NSArray *_roomTags;
+    NSDictionary *_directionNames;
     GameContext *_gameContext;
 }
 
@@ -43,6 +44,19 @@
     _mono = NO;
     
     _roomTags = @[@"roomdesc", @"roomobjs", @"roomplayers", @"roomexits"];
+    _directionNames = @{
+                        @"n": @"north",
+                        @"s": @"south",
+                        @"e": @"east",
+                        @"w": @"west",
+                        @"ne": @"northeast",
+                        @"nw": @"northwest",
+                        @"se": @"southeast",
+                        @"sw": @"southwest",
+                        @"up": @"up",
+                        @"down": @"down",
+                        @"out": @"out",
+                        };
     
     return self;
 }
@@ -202,6 +216,29 @@
                 [_currenList addObject:tag];
             }
             _bold = NO;
+        }
+        else if([tagName isEqualToString:@"compass"]) {
+            
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"north"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"south"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"east"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"west"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"northeast"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"northwest"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"southeast"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"southwest"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"up"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"down"];
+            [_gameContext.globalVars setCacheObject:@"0" forKey:@"out"];
+            
+            [node.children enumerateObjectsUsingBlock:^(HTMLNode *obj, NSUInteger idx, BOOL *stop) {
+                NSString *val = [obj getAttributeNamed:@"value"];
+                [_gameContext.globalVars setCacheObject:@"1" forKey:_directionNames[val]];
+            }];
+            
+            if([self isNextNodeNewline:children index:i]) {
+                i++;
+            }
         }
         else if([tagName isEqualToString:@"component"]) {
             NSString *compId = [node getAttributeNamed:@"id"];

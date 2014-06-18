@@ -736,7 +736,7 @@ describe(@"GameParser", ^{
             [[[_context.globalVars cacheObjectForKey:@"dead"] should] equal:@"0"];
         });
         
-        xit(@"should add directional values", ^{
+        it(@"should add directional values", ^{
             NSString *data = @"<compass><dir value=\"e\"/><dir value=\"w\"/></compass>\r\n";
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             
@@ -756,6 +756,7 @@ describe(@"GameParser", ^{
             [[[_context.globalVars cacheObjectForKey:@"southwest"] should] equal:@"0"];
             [[[_context.globalVars cacheObjectForKey:@"up"] should] equal:@"0"];
             [[[_context.globalVars cacheObjectForKey:@"down"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"out"] should] equal:@"0"];
         });
     });
 });

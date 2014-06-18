@@ -105,3 +105,14 @@ Global variables are prefixed with a $.
 * $roomextra
 * $roundtime
 * $prompt
+* $north (0/1)
+* $south (0/1)
+* $east (0/1)
+* $west (0/1)
+* $northeast (0/1)
+* $northwest (0/1)
+* $southeast (0/1)
+* $southwest (0/1)
+* $up (0/1)
+* $down (0/1)
+* $out (0/01)
