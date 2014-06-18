@@ -9,10 +9,12 @@
 * \#highlight
     * add highlight
     * ex: #highlight #AD0000 a silver clenched fist
-* \#script (abort|pause|resume) \<script name\>
+* \#script (abort|pause|resume|vars) \<script name\>
     * control running scripts
     * ex: #script pause forage
     * ex: #script resume forage
+    * ex: #script vars forage
+        * vars will display the current list of local script variables.
 * coming - \#parse \<text\>
 	* sends the text to be parsed by the scripting engine, as if sent by the game
 
