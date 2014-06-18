@@ -735,6 +735,28 @@ describe(@"GameParser", ^{
             
             [[[_context.globalVars cacheObjectForKey:@"dead"] should] equal:@"0"];
         });
+        
+        xit(@"should add directional values", ^{
+            NSString *data = @"<compass><dir value=\"e\"/><dir value=\"w\"/></compass>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            
+            [[[_context.globalVars cacheObjectForKey:@"north"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"south"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"east"] should] equal:@"1"];
+            [[[_context.globalVars cacheObjectForKey:@"west"] should] equal:@"1"];
+            [[[_context.globalVars cacheObjectForKey:@"northeast"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"northwest"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"southeast"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"southwest"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"up"] should] equal:@"0"];
+            [[[_context.globalVars cacheObjectForKey:@"down"] should] equal:@"0"];
+        });
     });
 });
 

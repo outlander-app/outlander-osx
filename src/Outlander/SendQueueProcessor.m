@@ -51,7 +51,7 @@
     NSString *rtString = [_gameContext.globalVars cacheObjectForKey:@"roundtime"];
     
     if([rtString doubleValue] <= 0) {
-        dispatch_async(dispatch_get_main_queue(), ^(void){
+        dispatch_async(dispatch_get_main_queue(), ^{
             _doneBlock();
         });
         return;
@@ -69,7 +69,7 @@
                 if(roundtime <= 0) {
                     [signal dispose];
                     [context signal];
-                    dispatch_async(dispatch_get_main_queue(), ^(void){
+                    dispatch_async(dispatch_get_main_queue(), ^{
                         _doneBlock();
                     });
                 }
