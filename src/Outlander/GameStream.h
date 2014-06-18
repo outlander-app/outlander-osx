@@ -27,6 +27,7 @@
 @property (atomic, strong) RACSignal *connected;
 @property (atomic, strong) RACSignal *vitals;
 @property (atomic, strong) RACSignal *indicators;
+@property (atomic, strong) RACSignal *directions;
 @property (atomic, strong) RACMulticastConnection *room;
 @property (atomic, strong) RACSignal *exp;
 @property (atomic, strong) RACSignal *thoughts;

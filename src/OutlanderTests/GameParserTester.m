@@ -739,12 +739,18 @@ describe(@"GameParser", ^{
         it(@"should add directional values", ^{
             NSString *data = @"<compass><dir value=\"e\"/><dir value=\"w\"/></compass>\r\n";
             __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser.directions subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
             
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
             
             [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
             
             [[[_context.globalVars cacheObjectForKey:@"north"] should] equal:@"0"];
             [[[_context.globalVars cacheObjectForKey:@"south"] should] equal:@"0"];

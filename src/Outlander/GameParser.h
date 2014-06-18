@@ -35,6 +35,7 @@
 @property (nonatomic, strong) RACSubject *vitals;
 @property (nonatomic, strong) RACSubject *indicators;
 @property (nonatomic, strong) RACSubject *room;
+@property (nonatomic, strong) RACSubject *directions;
 @property (nonatomic, strong) RACSubject *exp;
 @property (nonatomic, strong) RACSubject *thoughts;
 @property (nonatomic, strong) RACSubject *arrivals;

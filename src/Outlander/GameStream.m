@@ -34,6 +34,7 @@
     
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
+    _directions = _gameParser.directions;
     
     _room = [_gameParser.room multicast:[RACSubject subject]];
     [_room connect];

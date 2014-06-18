@@ -27,6 +27,7 @@
     _vitals = [RACSubject subject];
     _indicators = [RACSubject subject];
     _room = [RACSubject subject];
+    _directions = [RACSubject subject];
     _exp = [RACSubject subject];
     _thoughts = [RACSubject subject];
     _arrivals = [RACSubject subject];
@@ -235,6 +236,8 @@
                 NSString *val = [obj getAttributeNamed:@"value"];
                 [_gameContext.globalVars setCacheObject:@"1" forKey:_directionNames[val]];
             }];
+            
+            [_directions sendNext:@""];
             
             if([self isNextNodeNewline:children index:i]) {
                 i++;
