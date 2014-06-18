@@ -29,7 +29,7 @@ describe(@"Script Runner", ^{
     context(@"arguments", ^{
         it(@"sets default arguments", ^{
             
-           theFileSystem.fileContents = @"some script info";
+           theFileSystem.fileContents = @"echo one info";
             
             NSArray *args = @[@"one", @"two"];
             [theRunner run:@"scriptName" withArgs:args and:@"one two"];
