@@ -764,6 +764,21 @@ describe(@"GameParser", ^{
             [[[_context.globalVars cacheObjectForKey:@"down"] should] equal:@"0"];
             [[[_context.globalVars cacheObjectForKey:@"out"] should] equal:@"0"];
         });
+        
+        it(@"sets monstercount and monsterlist global vars", ^{
+           NSString *data = @"<component id='room objs'>You also see <pushBold/>a musk hog<popBold/> and <pushBold/>a musk hog<popBold/>.</component>";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            
+            [[[_context.globalVars cacheObjectForKey:@"monstercount"] should] equal:@"2"];
+            [[[_context.globalVars cacheObjectForKey:@"monsterlist"] should] equal:@"a musk hog,a musk hog"];
+        });
     });
 });
 

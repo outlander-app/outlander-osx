@@ -270,6 +270,10 @@
                 else {
                 
                     [_gameContext.globalVars setCacheObject:raw forKey:compId];
+                    
+                    if([compId hasPrefix:@"roomobjs"]) {
+                        [self parseMonsters:[node rawContents]];
+                    }
                 
                     if([_roomTags containsObject:compId]) {
                         [_room sendNext:@""];
@@ -526,6 +530,22 @@
                          forKey:[NSString stringWithFormat:@"%@.LearningRateName", exp.name]];
     
     [_exp sendNext:exp];
+}
+
+- (void)parseMonsters:(NSString *)data {
+    NSMutableArray *monsters = [[NSMutableArray alloc] init];
+    NSArray *matches = [data matchesForPattern:@"<pushbold><\\/pushbold>(.*?)<popbold><\\/popbold>"];
+    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        if(res.numberOfRanges > 1) {
+            NSString * name = [data substringWithRange:[res rangeAtIndex:1]];
+            [monsters addObject:name];
+        }
+    }];
+    
+    NSString *monsterList = [monsters componentsJoinedByString:@","];
+    
+    [_gameContext.globalVars setCacheObject:monsterList forKey:@"monsterlist"];
+    [_gameContext.globalVars setCacheObject:[NSString stringWithFormat:@"%lu", monsters.count] forKey:@"monstercount"];
 }
 
 -(float) floatFromString:(NSString *)data {

@@ -92,8 +92,8 @@ Global variables are prefixed with a $.
 * $lefthand
 * $lefthandnoun
 * $lefthandnounid
-* coming - $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
-* coming - $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
+* $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
+* $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
 * coming - parse \<text\>
 	* sends the text to be parsed by the scripting engine, as if sent by the game
 * $righthand
