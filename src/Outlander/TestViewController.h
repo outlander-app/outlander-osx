@@ -33,4 +33,5 @@
 - (void)append:(TextTag*)text to:(NSString *)key;
 - (NSString *)textForWindow:(NSString *)key;
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect;
+- (NSArray *)tagsForRoomObjs:(NSString *)data;
 @end

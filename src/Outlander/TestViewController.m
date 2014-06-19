@@ -113,6 +113,8 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
+    
+//    [self updateRoom];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect {
@@ -179,6 +181,12 @@
 - (NSString *)textForWindow:(NSString *)key {
     TextViewController *controller = [_windows cacheObjectForKey:key];
     return controller.text;
+}
+
+- (void)appendAll:(NSArray *)tags to:(NSString *)key {
+    [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self append:obj to:key];
+    }];
 }
 
 - (void)append:(TextTag*)text to:(NSString *)key {
@@ -339,10 +347,10 @@
               to:@"main"];
 }
 
--(void)updateRoom {
+- (void)updateRoom {
     NSString *name = [_gameContext.globalVars cacheObjectForKey:@"roomtitle"];
     NSString *desc = [_gameContext.globalVars cacheObjectForKey:@"roomdesc"];
-    NSString *objects = [_gameContext.globalVars cacheObjectForKey:@"roomobjs"];
+    NSString *objects = [_gameContext.globalVars cacheObjectForKey:@"roomobjsorig"];
     NSString *exits = [_gameContext.globalVars cacheObjectForKey:@"roomexits"];
     NSString *players = [_gameContext.globalVars cacheObjectForKey:@"roomplayers"];
     
@@ -355,18 +363,57 @@
         [self append:nameTag to:@"room"];
         [room appendString:@"\n"];
     }
-    if(desc != nil && desc.length != 0)
+    if(desc != nil && desc.length != 0) {
         [room appendFormat:@"%@\n", desc];
-    if(objects != nil && objects.length != 0)
-        [room appendFormat:@"%@\n", objects];
-    if(players != nil && players.length != 0)
+        TextTag *tag = [TextTag tagFor:[room copy] mono:false];
+        [self append:tag to:@"room"];
+        [room setString:@""];
+    }
+    if(objects != nil && objects.length != 0) {
+//        [room appendFormat:@"%@\n", objects];
+        NSArray *tags = [self tagsForRoomObjs:objects];
+        [self appendAll:tags to:@"room"];
+        [room appendString:@"\n"];
+    }
+    if(players != nil && players.length != 0) {
         [room appendFormat:@"%@\n", players];
-    if(exits != nil && exits.length != 0)
+    }
+    if(exits != nil && exits.length != 0) {
         [room appendFormat:@"%@\n", exits];
-
-
+    }
     TextTag *tag = [TextTag tagFor:room mono:false];
     [self append:tag to:@"room"];
+}
+
+- (NSArray *)tagsForRoomObjs:(NSString *)data {
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    
+    __block NSUInteger loc = 0;
+    
+    NSArray *matches = [data matchesForPattern:@"<pushbold><\\/pushbold>(.*?)<popbold><\\/popbold>"];
+    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        if(res.numberOfRanges > 1) {
+            NSRange rng = [res rangeAtIndex:0];
+            NSRange newRng = NSMakeRange(loc, rng.location - loc);
+            loc = rng.location + rng.length;
+            TextTag *tag = [TextTag tagFor:[data substringWithRange:newRng] mono:false];
+            [arr addObject:tag];
+            
+            NSString * name = [data substringWithRange:[res rangeAtIndex:1]];
+            tag = [TextTag tagFor:name mono:false];
+            tag.color = @"#FFFF00";
+            tag.bold = YES;
+            [arr addObject:tag];
+        }
+    }];
+    
+    if(loc < data.length) {
+        NSRange rng = NSMakeRange(loc, data.length - loc);
+        TextTag *tag = [TextTag tagFor:[data substringWithRange:rng] mono:false];
+        [arr addObject:tag];
+    }
+    
+    return arr;
 }
 
 @end

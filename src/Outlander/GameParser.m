@@ -272,7 +272,14 @@
                     [_gameContext.globalVars setCacheObject:raw forKey:compId];
                     
                     if([compId hasPrefix:@"roomobjs"]) {
-                        [self parseMonsters:[node rawContents]];
+                        
+                        NSMutableString *str = [[NSMutableString alloc] init];
+                        [node.children enumerateObjectsUsingBlock:^(HTMLNode *obj, NSUInteger idx, BOOL *stop) {
+                            [str appendString:[obj rawContents]];
+                        }];
+                        
+                        [self parseMonsters:str];
+                        [_gameContext.globalVars setCacheObject:str forKey:@"roomobjsorig"];
                     }
                 
                     if([_roomTags containsObject:compId]) {

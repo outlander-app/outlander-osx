@@ -35,6 +35,7 @@
 		F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
 		F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
+		F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -303,6 +304,7 @@
 		F91A39CD194E7135006144F8 /* SendCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCommandHandler.m; sourceTree = "<group>"; };
 		F91A39D0194E8916006144F8 /* SendQueueProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendQueueProcessor.h; sourceTree = "<group>"; };
 		F91A39D1194E8916006144F8 /* SendQueueProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQueueProcessor.m; sourceTree = "<group>"; };
+		F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewControllerTests.m; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -1001,6 +1003,7 @@
 				F96ECDE21936B82E00787CB9 /* ScriptTester.m */,
 				F98782F2194284E300D76231 /* ScriptTokensTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
+				F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
 				F96ECDCE1934E84D00787CB9 /* VarCommandHandlerTester.m */,
 				F9A74F0D192ED272008F410A /* VariableReplacerTester.m */,
@@ -1366,6 +1369,7 @@
 				F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
+				F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */,
 				F9772F181940389E00172083 /* VarToken.m in Sources */,
 				F9772F08194032FB00172083 /* ExpressionParser.m in Sources */,
 				F96ECDB31934194300787CB9 /* OutlanderParser.m in Sources */,
