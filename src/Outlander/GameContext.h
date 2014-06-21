@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray *windows;
 @property (nonatomic, strong) OLMutableArray *highlights;
 @property (nonatomic, strong) OLMutableArray *aliases;
+@property (nonatomic, strong) OLMutableArray *macros;
 @property (nonatomic, strong) TSMutableDictionary *globalVars;
 
 @end

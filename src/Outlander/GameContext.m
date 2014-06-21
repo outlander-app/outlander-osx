@@ -18,6 +18,7 @@
     _pathProvider = [[AppPathProvider alloc] initWithSettings:_settings];
     _highlights = [[OLMutableArray alloc] init];
     _aliases = [[OLMutableArray alloc] init];
+    _macros = [[OLMutableArray alloc] init];
     _globalVars = [[TSMutableDictionary alloc] initWithName:@"com.outlander.gobalvars"];
     
     [_globalVars setCacheObject:@">" forKey:@"prompt"];

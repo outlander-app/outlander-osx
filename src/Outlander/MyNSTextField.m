@@ -45,6 +45,13 @@
     [super drawRect:dirtyRect];
 }
 
+- (BOOL)hasFocus {
+    return   [[[self window] firstResponder] isKindOfClass:[NSTextView class]]
+    &&        [[self window] fieldEditor:NO forObject:nil]!=nil
+    && ( (id) [[self window] firstResponder] == self
+        ||  [(id) [[self window] firstResponder] delegate] == self);
+}
+
 -(BOOL)becomeFirstResponder {
     BOOL success = [super becomeFirstResponder];
     if( success ) {

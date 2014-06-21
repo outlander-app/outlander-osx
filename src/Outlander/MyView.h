@@ -7,6 +7,8 @@
 //
 
 #import "TextViewController.h"
+#import "ReactiveCocoa.h"
+#import "KeyHandler.h"
 
 @interface MyView : NSView {
 }
@@ -21,6 +23,8 @@
 @property (nonatomic, assign) BOOL dragging;
 @property (nonatomic, assign) BOOL showBorder;
 @property (nonatomic, strong) NSMutableArray *viewsList;
+@property (nonatomic, strong) RACSignal *keyup;
 
+- (void)setKeyHandler:(id<KeyHandler>)handler;
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
 @end

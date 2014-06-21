@@ -22,9 +22,8 @@
 }
 
 - (void)keyUp:(NSEvent *)theEvent {
-    char val = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
     id<RACSubscriber> sub = (id<RACSubscriber>)self.keyupSignal;
-    [sub sendNext:[NSString stringWithFormat:@"%c", val]];
+    [sub sendNext:theEvent];
 }
 
 @end

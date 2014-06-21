@@ -26,6 +26,23 @@ describe(@"TestViewController", ^{
             NSArray *tags = [theController tagsForRoomObjs:data];
             
             [[tags should] haveCountOf:5];
+            
+            TextTag *tag = tags[0];
+            [[tag.text should] equal:@"You also see "];
+            
+            tag = tags[1];
+            [[tag.text should] equal:@"a musk hog"];
+            [[theValue(tag.bold) should] equal:theValue(YES)];
+            
+            tag = tags[2];
+            [[tag.text should] equal:@" and "];
+            
+            tag = tags[3];
+            [[tag.text should] equal:@"a musk hog"];
+            [[theValue(tag.bold) should] equal:theValue(YES)];
+            
+            tag = tags[4];
+            [[tag.text should] equal:@"."];
         });
     });
 });

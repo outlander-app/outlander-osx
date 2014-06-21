@@ -29,6 +29,8 @@
 #import "LocalFileSystem.h"
 #import "CommandContext.h"
 #import "RACEXTScope.h"
+#import "MacroHandler.h"
+#import "GameCommandRelay.h"
 
 @interface TestViewController ()
 @end
@@ -42,6 +44,7 @@
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
     ScriptRunner *_scriptRunner;
+    MacroHandler *_macroHandler;
 }
 
 - (id)init {
@@ -59,6 +62,7 @@
     _variablesReplacer = [[VariableReplacer alloc] init];
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
     _scriptRunner = [[ScriptRunner alloc] initWith:_gameContext and:[[LocalFileSystem alloc] init]];
+    _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
     
     [[_commandProcessor.processed subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(CommandContext *x) {
         [_gameStream sendCommand:x.command];
@@ -94,6 +98,11 @@
     
     [_appSettingsLoader load];
     
+//    Macro *m = [[Macro alloc] init];
+//    m.action = @"hello";
+//    m.keys = @97;
+//    [_gameContext.macros addObject:m];
+    
     [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
     }];
@@ -114,6 +123,18 @@
         _viewModel.spell = val;
     }];
     
+    MyView *view = (MyView *)self.view;
+    [view setKeyHandler:_macroHandler];
+    [view.keyup subscribeNext:^(NSEvent *theEvent) {
+
+//        unichar val = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+//        NSNumber *number = [NSNumber numberWithUnsignedChar:val];
+//        
+//        NSLog(@"base view: %@, Modifiers=%lu", number, theEvent.modifierFlags);
+//        NSLog(@"base view: %hu, Modifiers=%lu", theEvent.keyCode, theEvent.modifierFlags);
+        
+//        [_macroHandler handle:number with:modifiers];
+    }];
 //    [self updateRoom];
 }
 
@@ -123,10 +144,22 @@
                                                        atLoc:rect
                                                      withKey:key];
     controller.gameContext = _gameContext;
-    [controller.keyup subscribeNext:^(id x) {
-        [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], x]];
-        [__CommandTextField selectText:self];
-        [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
+    [controller.keyup subscribeNext:^(NSEvent *theEvent) {
+        
+        if(![__CommandTextField hasFocus]) {
+        
+            NSString *val = [theEvent charactersIgnoringModifiers];
+//            unichar ch = [val characterAtIndex:0];
+//            NSNumber *num = [NSNumber numberWithUnsignedChar:ch];
+            
+//            BOOL handled = [_macroHandler handle:num with:0];
+//            if(!handled) {
+//                [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
+//            }
+            [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
+            [__CommandTextField selectText:self];
+            [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
+        }
     }];
     [_windows setCacheObject:controller forKey:key];
 }
@@ -149,6 +182,7 @@
         [_appSettingsLoader saveVariables];
         [_appSettingsLoader saveHighlights];
         [_appSettingsLoader saveAliases];
+        [_appSettingsLoader saveMacros];
         
     } else if([command isEqualToString:@"connect"]) {
         [self connect:nil];

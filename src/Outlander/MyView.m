@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     NSSize _maxViewSize;
     NSCursor *_nwseCursor;
     NSCursor *_neswCursor;
+    id<KeyHandler> _keyHandler;
 }
 
 - (id)initWithFrame:(NSRect)frame {
@@ -38,8 +39,22 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         _maxViewSize = NSMakeSize(50, 50);
         _nwseCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nwse"] hotSpot:NSMakePoint(10, 10)];
         _neswCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nesw"] hotSpot:NSMakePoint(10, 10)];
+        
     }
     return self;
+}
+
+- (void)awakeFromNib {
+    _keyup = [RACSubject subject];
+}
+
+- (void)setKeyHandler:(id<KeyHandler>)handler {
+    _keyHandler = handler;
+}
+
+- (void)keyUp:(NSEvent *)theEvent {
+    id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
+    [sub sendNext:theEvent];
 }
 
 - (BOOL)isFlipped {

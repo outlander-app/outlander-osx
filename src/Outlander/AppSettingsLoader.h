@@ -16,5 +16,6 @@
 - (void)saveVariables;
 - (void)saveHighlights;
 - (void)saveAliases;
+- (void)saveMacros;
 
 @end

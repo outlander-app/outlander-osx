@@ -260,6 +260,12 @@
 		F9CF928A1890832800449548 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF92891890832800449548 /* XCTest.framework */; };
 		F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92931890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92911890832800449548 /* InfoPlist.strings */; };
+		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
+		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
+		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
+		F9F3D82D1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
+		F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8331953C384005B9D68 /* MacroHandler.m */; };
+		F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8331953C384005B9D68 /* MacroHandler.m */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -554,6 +560,13 @@
 		F9CF92891890832800449548 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F9CF92901890832800449548 /* OutlanderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OutlanderTests-Info.plist"; sourceTree = "<group>"; };
 		F9CF92921890832800449548 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
+		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
+		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
+		F9F3D82B1953364F005B9D68 /* Macro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Macro.m; sourceTree = "<group>"; };
+		F9F3D8321953C384005B9D68 /* MacroHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroHandler.h; sourceTree = "<group>"; };
+		F9F3D8331953C384005B9D68 /* MacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroHandler.m; sourceTree = "<group>"; };
+		F9F3D83619541308005B9D68 /* KeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyHandler.h; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -801,6 +814,10 @@
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
 				F989E1F7192C27AD00562E32 /* LocalFileSystem.h */,
 				F989E1F8192C27AD00562E32 /* LocalFileSystem.m */,
+				F9F3D82A1953364F005B9D68 /* Macro.h */,
+				F9F3D82B1953364F005B9D68 /* Macro.m */,
+				F9F3D8321953C384005B9D68 /* MacroHandler.h */,
+				F9F3D8331953C384005B9D68 /* MacroHandler.m */,
 				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
 				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
@@ -817,6 +834,7 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
+				F9F3D83619541308005B9D68 /* KeyHandler.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -886,6 +904,8 @@
 		F9A345391919CC0500920F0E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F9762F7A192E4F8700B873D7 /* AliasLoader.h */,
+				F9762F7B192E4F8700B873D7 /* AliasLoader.m */,
 				F9A3454A191C573200920F0E /* AppPathProvider.h */,
 				F9A3454B191C573200920F0E /* AppPathProvider.m */,
 				F9A3453E1919D83900920F0E /* AppSettings.h */,
@@ -896,12 +916,12 @@
 				F9A345431919DADA00920F0E /* ConfigLoader.m */,
 				F9A34546191A064100920F0E /* GameContext.h */,
 				F9A34547191A064100920F0E /* GameContext.m */,
-				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
-				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F989E1EF192C254800562E32 /* HighlightsLoader.h */,
 				F989E1F0192C254800562E32 /* HighlightsLoader.m */,
-				F9762F7A192E4F8700B873D7 /* AliasLoader.h */,
-				F9762F7B192E4F8700B873D7 /* AliasLoader.m */,
+				F9F3D826195335AF005B9D68 /* MacrosLoader.h */,
+				F9F3D827195335AF005B9D68 /* MacrosLoader.m */,
+				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
+				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
 			);
@@ -1234,6 +1254,7 @@
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
+				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F96ECDAA193404BB00787CB9 /* Actor.m in Sources */,
 				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
@@ -1280,6 +1301,7 @@
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */,
+				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F98782EF19427DAB00D76231 /* Script.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
@@ -1297,6 +1319,7 @@
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
+				F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
@@ -1386,6 +1409,7 @@
 				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
+				F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
@@ -1395,6 +1419,7 @@
 				F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
+				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F98782F019427DAB00D76231 /* Script.m in Sources */,
 				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
@@ -1430,6 +1455,7 @@
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
+				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 				F9772F0F1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F98782C41942288F00D76231 /* MoveToken.m in Sources */,

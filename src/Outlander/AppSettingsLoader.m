@@ -13,6 +13,7 @@
 #import "LocalFileSystem.h"
 #import "AliasLoader.h"
 #import "VariablesLoader.h"
+#import "MacrosLoader.h"
 
 @interface AppSettingsLoader () {
     GameContext *_context;
@@ -21,6 +22,7 @@
     HighlightsLoader *_highlightsLoader;
     AliasLoader *_aliasLoader;
     VariablesLoader *_variablesLoader;
+    MacrosLoader *_macrosLoader;
 }
 @end
 
@@ -37,6 +39,7 @@
     _highlightsLoader = [[HighlightsLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _aliasLoader = [[AliasLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _variablesLoader = [[VariablesLoader alloc] initWithContext:_context andFileSystem:fileSystem];
+    _macrosLoader = [[MacrosLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     
     return self;
 }
@@ -52,6 +55,7 @@
     [self loadHighlights];
     [self loadVariables];
     [self loadAliases];
+    [self loadMacros];
 }
 
 - (void)loadConfig {
@@ -92,6 +96,14 @@
 
 - (void)saveAliases {
     [_aliasLoader save];
+}
+
+- (void)loadMacros {
+    [_macrosLoader load];
+}
+
+- (void)saveMacros {
+    [_macrosLoader save];
 }
 
 - (void)writeConfigFolders {

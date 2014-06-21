@@ -14,5 +14,6 @@
 - (void)commitHistory;
 - (void)previousHistory;
 - (void)nextHistory;
+- (BOOL)hasFocus;
 
 @end
