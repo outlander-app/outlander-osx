@@ -27,6 +27,10 @@
     [self.mainWindowController command:@"saveConfig"];
 }
 
+- (IBAction)preferencesAction:(id)sender {
+    [self.mainWindowController command:@"preferences"];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
 	self.mainWindowController = [[MainWindowController alloc] init];

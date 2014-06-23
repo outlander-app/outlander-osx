@@ -266,6 +266,14 @@
 		F9F3D82D1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
 		F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8331953C384005B9D68 /* MacroHandler.m */; };
 		F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8331953C384005B9D68 /* MacroHandler.m */; };
+		F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8381956721C005B9D68 /* MacrosViewController.m */; };
+		F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8381956721C005B9D68 /* MacrosViewController.m */; };
+		F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8391956721C005B9D68 /* MacrosViewController.xib */; };
+		F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8391956721C005B9D68 /* MacrosViewController.xib */; };
+		F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
+		F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
+		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
+		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -567,6 +575,13 @@
 		F9F3D8321953C384005B9D68 /* MacroHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroHandler.h; sourceTree = "<group>"; };
 		F9F3D8331953C384005B9D68 /* MacroHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroHandler.m; sourceTree = "<group>"; };
 		F9F3D83619541308005B9D68 /* KeyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyHandler.h; sourceTree = "<group>"; };
+		F9F3D8371956721C005B9D68 /* MacrosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosViewController.h; sourceTree = "<group>"; };
+		F9F3D8381956721C005B9D68 /* MacrosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosViewController.m; sourceTree = "<group>"; };
+		F9F3D8391956721C005B9D68 /* MacrosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MacrosViewController.xib; sourceTree = "<group>"; };
+		F9F3D8451957BA92005B9D68 /* SettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsWindowController.h; sourceTree = "<group>"; };
+		F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
+		F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
+		F9F3D84C1957D123005B9D68 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -733,26 +748,33 @@
 		F97A5C1C1890A4E400E2C318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F97A5C211890A6B600E2C318 /* MainWindowController.h */,
-				F97A5C221890A6B600E2C318 /* MainWindowController.m */,
-				F97A5C231890A6B600E2C318 /* MainWindowController.xib */,
-				F97A5C4D1890DFB400E2C318 /* TestViewController.h */,
-				F97A5C4E1890DFB400E2C318 /* TestViewController.m */,
-				F97A5C4F1890DFB400E2C318 /* TestViewController.xib */,
 				F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */,
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
-				F97A5CC11896C21600E2C318 /* TextViewController.h */,
-				F97A5CC21896C21600E2C318 /* TextViewController.m */,
-				F97A5CC31896C21600E2C318 /* TextViewController.xib */,
-				F9AE6A9518A0001300A11EE9 /* ProgressBarViewController.h */,
-				F9AE6A9618A0001300A11EE9 /* ProgressBarViewController.m */,
-				F9AE6A9718A0001300A11EE9 /* ProgressBarViewController.xib */,
-				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
-				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
-				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
 				F98F22D119248506008175FD /* LoginViewController.h */,
 				F98F22D219248506008175FD /* LoginViewController.m */,
 				F98F22D319248506008175FD /* LoginViewController.xib */,
+				F9F3D8371956721C005B9D68 /* MacrosViewController.h */,
+				F9F3D8381956721C005B9D68 /* MacrosViewController.m */,
+				F9F3D8391956721C005B9D68 /* MacrosViewController.xib */,
+				F97A5C211890A6B600E2C318 /* MainWindowController.h */,
+				F97A5C221890A6B600E2C318 /* MainWindowController.m */,
+				F97A5C231890A6B600E2C318 /* MainWindowController.xib */,
+				F9AE6A9518A0001300A11EE9 /* ProgressBarViewController.h */,
+				F9AE6A9618A0001300A11EE9 /* ProgressBarViewController.m */,
+				F9AE6A9718A0001300A11EE9 /* ProgressBarViewController.xib */,
+				F9F3D8451957BA92005B9D68 /* SettingsWindowController.h */,
+				F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */,
+				F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */,
+				F97A5C4D1890DFB400E2C318 /* TestViewController.h */,
+				F97A5C4E1890DFB400E2C318 /* TestViewController.m */,
+				F97A5C4F1890DFB400E2C318 /* TestViewController.xib */,
+				F97A5CC11896C21600E2C318 /* TextViewController.h */,
+				F97A5CC21896C21600E2C318 /* TextViewController.m */,
+				F97A5CC31896C21600E2C318 /* TextViewController.xib */,
+				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
+				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
+				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
+				F9F3D84C1957D123005B9D68 /* SettingsView.h */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1123,6 +1145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
+				F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
 				F9CF92831890832800449548 /* Images.xcassets in Resources */,
 				F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */,
@@ -1131,6 +1154,7 @@
 				F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */,
 				F9CF92811890832800449548 /* MainMenu.xib in Resources */,
 				F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */,
+				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
 			);
@@ -1140,9 +1164,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
 				F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9CF92931890832800449548 /* InfoPlist.strings in Resources */,
+				F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5CC71896C21600E2C318 /* TextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1263,6 +1289,7 @@
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
+				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
@@ -1282,6 +1309,7 @@
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
+				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F9772F07194032FB00172083 /* ExpressionParser.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
@@ -1358,6 +1386,7 @@
 				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
+				F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
@@ -1401,6 +1430,7 @@
 				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
+				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,

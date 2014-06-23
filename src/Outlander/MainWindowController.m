@@ -13,12 +13,14 @@
 #import "LoginViewController.h"
 #import "ReactiveCocoa.h"
 #import "RACEXTScope.h"
+#import "SettingsWindowController.h"
 
 #define START_WIDTH 900
 #define START_HEIGHT 615
 
 @interface MainWindowController ()
     @property (nonatomic, strong) LoginViewController *loginViewController;
+    @property (nonatomic, strong) SettingsWindowController *settingsWindowController;
     @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
 @end
@@ -46,6 +48,8 @@
         return [RACSignal empty];
     }];
     
+    _settingsWindowController = [[SettingsWindowController alloc] init];
+    
 	return self;
 }
 
@@ -56,7 +60,8 @@
 //    [self.window setFrameAutosaveName:[self.window representedFilename]];
 //
     TestViewController *vc = [[TestViewController alloc]init];
-    
+   
+    [_settingsWindowController setContext:vc.gameContext];
     
     [self setCurrentViewController:vc];
     
@@ -114,7 +119,14 @@
 }
 
 - (void)command:(NSString *)command {
-    if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
+    
+    if([command isEqualToString:@"preferences"]){
+        
+        [_settingsWindowController.window setParentWindow:self.window];
+        
+        [_settingsWindowController.window makeKeyAndOrderFront:self];
+        
+    }else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;
         [vc command:command];
     }

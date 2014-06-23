@@ -98,11 +98,6 @@
     
     [_appSettingsLoader load];
     
-//    Macro *m = [[Macro alloc] init];
-//    m.action = @"hello";
-//    m.keys = @97;
-//    [_gameContext.macros addObject:m];
-    
     [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
     }];
