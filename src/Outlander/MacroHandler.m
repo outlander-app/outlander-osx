@@ -39,16 +39,16 @@
     __block BOOL handled = NO;
     
     [_context.macros enumerateObjectsUsingBlock:^(Macro *obj, NSUInteger idx, BOOL *stop) {
-        if([obj.keys isEqualToNumber:key]) {
-            handled = YES;
-            
-            CommandContext *ctx = [[CommandContext alloc] init];
-            ctx.command = obj.action;
-            ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", obj.action] mono:YES];
-            ctx.tag.color = @"#ACFF2F";
-            
-            [_commandRelay sendCommand:ctx];
-        }
+//        if([obj.keys isEqualToNumber:key]) {
+//            handled = YES;
+//            
+//            CommandContext *ctx = [[CommandContext alloc] init];
+//            ctx.command = obj.action;
+//            ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", obj.action] mono:YES];
+//            ctx.tag.color = @"#ACFF2F";
+//            
+//            [_commandRelay sendCommand:ctx];
+//        }
     }];
     
     return handled;

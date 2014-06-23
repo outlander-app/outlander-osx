@@ -274,6 +274,10 @@
 		F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
+		F9F3D8541957E52F005B9D68 /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */; };
+		F9F3D8561957E52F005B9D68 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */; };
+		F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */; };
+		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -582,6 +586,13 @@
 		F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
 		F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
 		F9F3D84C1957D123005B9D68 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		F9F3D84E1957E52F005B9D68 /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyCenter.h; sourceTree = "<group>"; };
+		F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyCenter.m; sourceTree = "<group>"; };
+		F9F3D8501957E52F005B9D68 /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyTextField.h; sourceTree = "<group>"; };
+		F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
+		F9F3D8521957E52F005B9D68 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
+		F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
+		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -591,6 +602,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */,
@@ -973,6 +985,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
 				F97A5C5A18919ED100E2C318 /* libPods-CocoaAsyncSocket.a */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
@@ -1003,6 +1016,7 @@
 				F9CF927F1890832800449548 /* MainMenu.xib */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
+				F9F3D84D1957E4FD005B9D68 /* DDHotKey */,
 				F97A5C761893808F00E2C318 /* HTML */,
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
@@ -1062,6 +1076,19 @@
 				F9CF92911890832800449548 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9F3D84D1957E4FD005B9D68 /* DDHotKey */ = {
+			isa = PBXGroup;
+			children = (
+				F9F3D84E1957E52F005B9D68 /* DDHotKeyCenter.h */,
+				F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */,
+				F9F3D8501957E52F005B9D68 /* DDHotKeyTextField.h */,
+				F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */,
+				F9F3D8521957E52F005B9D68 /* DDHotKeyUtilities.h */,
+				F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */,
+			);
+			name = DDHotKey;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1258,10 +1285,12 @@
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
+				F9F3D8561957E52F005B9D68 /* DDHotKeyTextField.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
+				F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
@@ -1340,6 +1369,7 @@
 				F98782BB19420E5D00D76231 /* GotoToken.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
+				F9F3D8541957E52F005B9D68 /* DDHotKeyCenter.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,

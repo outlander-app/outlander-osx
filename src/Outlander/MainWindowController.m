@@ -123,7 +123,6 @@
     if([command isEqualToString:@"preferences"]){
         
         [_settingsWindowController.window setParentWindow:self.window];
-        
         [_settingsWindowController.window makeKeyAndOrderFront:self];
         
     }else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {

@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MacrosViewController">
             <connections>
+                <outlet property="actionTextField" destination="b7A-nl-Fn8" id="kKR-cY-TB6"/>
+                <outlet property="macroTextField" destination="Ill-9O-b8Z" id="gOA-UU-9Wd"/>
                 <outlet property="tableView" destination="fBH-TA-xqa" id="NLs-rn-vsG"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -31,7 +33,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="macro" width="116" minWidth="40" maxWidth="1000" id="E9W-4R-643">
+                                    <tableColumn identifier="macro" editable="NO" width="116" minWidth="40" maxWidth="1000" id="E9W-4R-643">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Macro">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +46,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="action" width="410" minWidth="40" maxWidth="1000" id="ONx-xD-gRe">
+                                    <tableColumn identifier="action" editable="NO" width="410" minWidth="40" maxWidth="1000" id="ONx-xD-gRe">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Action">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -79,16 +81,25 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ill-9O-b8Z">
+                <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ill-9O-b8Z" customClass="DDHotKeyTextField">
                     <rect key="frame" x="126" y="53" width="428" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hNC-Ao-LBz">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hNC-Ao-LBz" customClass="DDHotKeyTextFieldCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.selectedMacro.keys" id="xj4-rE-b7S"/>
+                        <binding destination="-2" name="editable" keyPath="self.selectedMacro" id="h5W-Wy-9Ra">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="self.selectedMacro.keys" id="Hju-T1-lgr">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b7A-nl-Fn8">
@@ -100,7 +111,16 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.selectedMacro.action" id="YMM-XJ-RkR"/>
+                        <binding destination="-2" name="editable" keyPath="self.selectedMacro" id="ibW-c3-9vv">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="self.selectedMacro.action" id="6PD-bi-NuX">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X7w-U6-1e6">

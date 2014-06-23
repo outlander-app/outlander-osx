@@ -8,11 +8,15 @@
 
 #import "MacrosViewController.h"
 #import "Macro.h"
+#import "DDHotKeyTextField.h"
+#import "ReactiveCocoa.h"
 
 @interface MacrosViewController () {
     GameContext *_context;
 }
 @property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet DDHotKeyTextField *macroTextField;
+@property (weak) IBOutlet NSTextField *actionTextField;
 @end
 
 @implementation MacrosViewController
@@ -22,6 +26,27 @@
     if (!self) return nil;
     
     return self;
+}
+
+- (void)awakeFromNib {
+    [_actionTextField.rac_textSignal subscribeNext:^(NSString *val) {
+        if(_selectedMacro) {
+            _selectedMacro.action = val;
+            [_tableView reloadData];
+        }
+    }];
+    
+    [_macroTextField.hotkeyChanged subscribeNext:^(NSString *val) {
+        if(_selectedMacro) {
+            _selectedMacro.keys = val;
+            [_tableView reloadData];
+        }
+    }];
+    
+    if(_context.macros.count > 0) {
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+        [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
+    }
 }
 
 - (void)setContext:(GameContext *)context {
@@ -48,8 +73,12 @@
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification {
-    NSLog(@"selection changed");
-    _selectedMacro = [_context.macros objectAtIndex:_tableView.selectedRow];
+    if(_tableView.selectedRow >-1 && _tableView.selectedRow < _context.macros.count) {
+        self.selectedMacro = [_context.macros objectAtIndex:_tableView.selectedRow];
+    }
+    else {
+        self.selectedMacro = nil;
+    }
 }
 
 @end
