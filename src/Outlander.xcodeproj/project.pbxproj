@@ -278,6 +278,7 @@
 		F9F3D8561957E52F005B9D68 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */; };
 		F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */; };
 		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
+		F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -593,6 +594,7 @@
 		F9F3D8521957E52F005B9D68 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
 		F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKeyCodesFromStringTester.m; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1048,6 +1050,7 @@
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
+				F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */,
 				F9772F0A1940332200172083 /* ExpressionBuilderTester.m */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
@@ -1484,6 +1487,7 @@
 				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,

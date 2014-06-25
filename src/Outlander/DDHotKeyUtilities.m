@@ -63,32 +63,60 @@ static NSDictionary *DDKeyCodeToCharacterMap(void) {
                        @(kVK_RightArrow) : @"→",
                        @(kVK_DownArrow) : @"↓",
                        @(kVK_UpArrow) : @"↑",
+                       
+                       @(kVK_ANSI_A) : @"A",
+                       @(kVK_ANSI_B) : @"B",
                        };
     });
     return keyCodeMap;
 }
 
-unsigned short DDKeyCodesFromString(NSString *keys) {
+
+DDKeyCodes DDKeyCodesFromString(NSString *keys) {
     NSDictionary *characterMap = DDKeyCodeToCharacterMap();
     
     __block unsigned short keyCode = 0;
-    
+    __block NSArray *modifierChars = @[characterMap[@(kVK_Control)], characterMap[@(kVK_Option)], characterMap[@(kVK_Shift)], characterMap[@(kVK_Command)]];
+    __block NSMutableString *str = [[NSMutableString alloc] init];
+    __block NSUInteger mods = 0;
+    __block NSUInteger offset = 0;
+    NSUInteger keyStart = 0;
+    NSRange keyRange;
+
     for (NSUInteger i=0; i<keys.length; i++) {
-        NSString *character = [NSString stringWithFormat:@"%c", [keys characterAtIndex:i]];
-        [characterMap enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            unsigned short kc = (unsigned short)key;
-            if([obj isEqualToString:character]) {
-                if (kc == kVK_Control || kc == kVK_Option || kc == kVK_Shift || kc == kVK_Command) {
-                }
-                else {
-                    *stop = YES;
-                    keyCode = kc;
-                }
+        if(i+1 >= keys.length) break;
+        
+        keyRange = NSMakeRange(offset, i+1);
+        [str setString:[keys substringWithRange:keyRange]];
+        if([modifierChars containsObject:str]) {
+            keyStart++;
+            offset++;
+            
+            if([str isEqualToString:characterMap[@(kVK_Control)]]) {
+                mods = mods | NSControlKeyMask;
             }
-        }];
+            if([str isEqualToString:characterMap[@(kVK_Option)]]) {
+                mods = mods | NSAlternateKeyMask;
+            }
+            if([str isEqualToString:characterMap[@(kVK_Shift)]]) {
+                mods = mods | NSShiftKeyMask;
+            }
+            if([str isEqualToString:characterMap[@(kVK_Command)]]) {
+                mods = mods | NSCommandKeyMask;
+            }
+        }
     }
+   
+    [str setString:[keys substringWithRange:NSMakeRange(keyStart, keys.length-keyStart)]];
+    [characterMap enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *obj, BOOL *stop) {
+        if([obj isEqualToString:str]) {
+            keyCode = key.shortValue;
+            *stop = YES;
+        }
+    }];
     
-    return keyCode;
+    DDKeyCodes result = DDMakeKeyCodes(keyCode, mods);
+    return result;
 }
 
 NSString *DDStringFromKeyCode(unsigned short keyCode, NSUInteger modifiers) {

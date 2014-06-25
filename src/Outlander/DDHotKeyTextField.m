@@ -111,9 +111,6 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
     if ((event.type == NSKeyDown || (event.type == NSFlagsChanged && _hasSeenKeyDown == NO))) {
         self.hotKeyField.hotKey = [DDHotKey hotKeyWithKeyCode:event.keyCode modifierFlags:flags task:_originalHotKey.task];
         NSString *str = DDStringFromKeyCode(event.keyCode, flags);
-        NSLog(@"%hu, %lu", event.keyCode, (unsigned long)flags);
-        unsigned short code = DDKeyCodesFromString(str);
-        NSLog(@"code: %hu", code);
         [self.textStorage.mutableString setString:[str uppercaseString]];
         [_hotKeyField signalChange:self.textStorage.string];
     }

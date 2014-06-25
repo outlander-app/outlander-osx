@@ -39,6 +39,9 @@
     [_macroTextField.hotkeyChanged subscribeNext:^(NSString *val) {
         if(_selectedMacro) {
             _selectedMacro.keys = val;
+            _selectedMacro.keyCode = _macroTextField.hotKey.keyCode;
+            _selectedMacro.modifiers = _macroTextField.hotKey.modifierFlags;
+            NSLog(@"Macro: %@ %hu %lu", val, _selectedMacro.keyCode, _selectedMacro.modifiers);
             [_tableView reloadData];
         }
     }];

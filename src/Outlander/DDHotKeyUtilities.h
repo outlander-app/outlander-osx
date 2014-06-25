@@ -10,7 +10,21 @@
 
 #import <Foundation/Foundation.h>
 
+typedef struct _DDKeyCodes {
+    unsigned short keyCode;
+    NSUInteger modifiers;
+} DDKeyCodes;
+
+typedef DDKeyCodes *DDKeyCodesPointer;
+
+NS_INLINE DDKeyCodes DDMakeKeyCodes(unsigned short keyCode, NSUInteger modifiers) {
+    DDKeyCodes k;
+    k.keyCode = keyCode;
+    k.modifiers = modifiers;
+    return k;
+}
+
 static NSDictionary *DDKeyCodeToCharacterMap(void);
 extern NSString *DDStringFromKeyCode(unsigned short keyCode, NSUInteger modifiers);
 extern UInt32 DDCarbonModifierFlagsFromCocoaModifiers(NSUInteger flags);
-extern unsigned short DDKeyCodesFromString(NSString *keys);
+extern DDKeyCodes DDKeyCodesFromString(NSString *keys);

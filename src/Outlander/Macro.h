@@ -9,7 +9,7 @@
 @interface Macro : NSObject
 
 @property (nonatomic, copy) NSString *keys;
-@property (nonatomic, strong) NSNumber *keyCode;
+@property (nonatomic, assign) unsigned short keyCode;
 @property (nonatomic, assign) NSUInteger modifiers;
 @property (nonatomic, copy) NSString *action;
 
