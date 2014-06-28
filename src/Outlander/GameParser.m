@@ -425,6 +425,18 @@
             NSLog(@"raw: %@", [node rawContents]);
             [_currentResult appendString:val];
         }
+        else if([tagName isEqualToString:@"dynastream"]){
+            if([self isNextNodeNewline:children index:i]) {
+                i++;
+            }
+            continue;
+        }
+        else if([tagName isEqualToString:@"exposedialog"]){
+            if([self isNextNodeNewline:children index:i]) {
+                i++;
+            }
+            continue;
+        }
         else if([tagName isEqualToString:@"pre"]){
             if(!_publishStream) {
                 if([self isNextNodeNewline:children index:i]) {
