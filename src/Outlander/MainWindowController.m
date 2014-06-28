@@ -11,9 +11,11 @@
 #import "ProgressBarViewController.h"
 #import "NSView+Categories.h"
 #import "LoginViewController.h"
-#import "ReactiveCocoa.h"
-#import "RACEXTScope.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import <ReactiveCocoa/EXTScope.h>
 #import "SettingsWindowController.h"
+#import "ApplicationUpdateViewController.h"
+#import <Squirrel/Squirrel.h>
 
 #define START_WIDTH 900
 #define START_HEIGHT 615
@@ -23,6 +25,8 @@
     @property (nonatomic, strong) SettingsWindowController *settingsWindowController;
     @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
+    @property (nonatomic, strong) ApplicationUpdateViewController *appUpdateController;
+    @property (nonatomic, strong) SQRLUpdater *updater;
 @end
 
 @implementation MainWindowController
@@ -42,13 +46,25 @@
     _loginViewController.connectCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         
         [self endSheet];
-        
         [self command:@"connect"];
-        
         return [RACSignal empty];
     }];
     
     _settingsWindowController = [[SettingsWindowController alloc] init];
+    
+    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
+    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        return [RACSignal empty];
+    }];
+    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
+            NSLog(@"Error preparing update: %@", error);
+        }];
+        
+        return [RACSignal empty];
+    }];
     
 	return self;
 }
@@ -85,6 +101,8 @@
     
     [self.window makeFirstResponder:vc._CommandTextField];
     [vc._CommandTextField becomeFirstResponder];
+    
+    [self checkForUpdates];
 }
 
 - (void)awakeFromNib {
@@ -135,8 +153,8 @@
     [self showSheet:_loginViewController.view];
 }
 
-- (void)dismissLogin {
-    [self endSheet];
+- (void)showAppUpdate {
+    [self showSheet:_appUpdateController.view];
 }
 
 - (void)showSheet:(NSView *)view {
@@ -163,6 +181,34 @@
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
+}
+
+- (void)checkForUpdates {
+    
+    NSURLComponents *components = [[NSURLComponents alloc] init];
+    
+    components.scheme = @"http";
+    components.host = @"localhost";
+    components.port = @(5000);
+    components.path = @"/version";
+    
+    NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
+    NSString *version = dict[@"CFBundleShortVersionString"];
+    
+    components.query = [[NSString stringWithFormat:@"version=v%@", version] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    
+    NSLog(@"%@", components.URL);
+    
+    self.updater = [[SQRLUpdater alloc] initWithUpdateRequest:[NSURLRequest requestWithURL:components.URL]];
+    
+    [self.updater.updates subscribeNext:^(SQRLDownloadedUpdate *downloadedUpdate) {
+        NSLog(@"An update is ready to install: %@", downloadedUpdate);
+        [self showAppUpdate];
+    }];
+    
+    // Check for updates immediately on launch, then every 4 hours.
+    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
+    [self.updater startAutomaticChecksWithInterval:60 * 60 * 4];
 }
 
 @end

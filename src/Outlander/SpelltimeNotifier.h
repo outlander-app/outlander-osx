@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "GameContext.h"
 
 @interface SpelltimeNotifier : NSObject
 
-- (instancetype)initWith:(GameContext *)context;
+@property (nonatomic, strong) RACSubject *notification;
 
-@property (nonatomic, strong) RACReplaySubject *notification;
+- (instancetype)initWith:(GameContext *)context;
 - (void)set:(NSString *)value;
 
 @end

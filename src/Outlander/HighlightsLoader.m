@@ -7,7 +7,7 @@
 //
 
 #import "HighlightsLoader.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
 
 @interface HighlightsLoader () {

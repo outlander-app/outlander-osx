@@ -16,6 +16,7 @@
 @implementation AppDelegate
 
 - (IBAction)newAction:(id)sender {
+    [self.mainWindowController showAppUpdate];
 }
 
 - (IBAction)connectAction:(id)sender {
@@ -23,21 +24,24 @@
 }
 
 - (IBAction)saveProfileAction:(id)sender {
-    [self.mainWindowController command:@"saveProfile"];
-    [self.mainWindowController command:@"saveConfig"];
+    [self sendCommand:@"saveProfile"];
+    [self sendCommand:@"saveConfig"];
 }
 
 - (IBAction)preferencesAction:(id)sender {
-    [self.mainWindowController command:@"preferences"];
+    [self sendCommand:@"preferences"];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    
 	self.mainWindowController = [[MainWindowController alloc] init];
 	[self.mainWindowController.window makeKeyAndOrderFront:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
+}
+
+- (void)sendCommand:(NSString *)command {
+    [_mainWindowController command:command];
 }
 
 @end

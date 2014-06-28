@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DDHotKeyCenter.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface DDHotKeyTextField : NSTextField
 

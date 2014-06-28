@@ -7,7 +7,7 @@
 //
 
 #import "GCDAsyncSocket.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "Shared.h"
 #import "GameContext.h"
 

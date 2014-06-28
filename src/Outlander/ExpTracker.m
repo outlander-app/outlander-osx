@@ -8,7 +8,6 @@
 
 #import "ExpTracker.h"
 #import "TSMutableDictionary.h"
-#import "ReactiveCocoa.h"
 
 @implementation ExpTracker {
     TSMutableDictionary *_skills;

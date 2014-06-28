@@ -279,6 +279,19 @@
 		F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */; };
 		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */; };
+		F9F3D897195C01E6005B9D68 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
+		F9F3D898195C01E6005B9D68 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
+		F9F3D89A195D1EE6005B9D68 /* Mantle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
+		F9F3D89B195D1EF2005B9D68 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
+		F9F3D89F195D2089005B9D68 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
+		F9F3D8A0195D2095005B9D68 /* Squirrel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
+		F9F3D8A1195D213C005B9D68 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
+		F9F3D8A2195D213C005B9D68 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
+		F9F3D8A3195D213C005B9D68 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
+		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
+		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
+		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
+		F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -291,6 +304,21 @@
 			remoteInfo = Outlander;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F9F3D899195CA499005B9D68 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F9F3D8A0195D2095005B9D68 /* Squirrel.framework in CopyFiles */,
+				F9F3D89B195D1EF2005B9D68 /* ReactiveCocoa.framework in CopyFiles */,
+				F9F3D89A195D1EE6005B9D68 /* Mantle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OutlanderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -595,6 +623,12 @@
 		F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKeyCodesFromStringTester.m; sourceTree = "<group>"; };
+		F9F3D895195C01E6005B9D68 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/Mantle.framework"; sourceTree = "<group>"; };
+		F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/ReactiveCocoa.framework"; sourceTree = "<group>"; };
+		F9F3D89E195D2089005B9D68 /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/Squirrel.framework"; sourceTree = "<group>"; };
+		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
+		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
+		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -604,10 +638,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D89F195D2089005B9D68 /* Squirrel.framework in Frameworks */,
+				F9F3D898195C01E6005B9D68 /* ReactiveCocoa.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */,
+				F9F3D897195C01E6005B9D68 /* Mantle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +652,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D8A1195D213C005B9D68 /* Mantle.framework in Frameworks */,
+				F9F3D8A2195D213C005B9D68 /* ReactiveCocoa.framework in Frameworks */,
+				F9F3D8A3195D213C005B9D68 /* Squirrel.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9CF928A1890832800449548 /* XCTest.framework in Frameworks */,
 				1B16717B043E46E09978A26F /* libPods-OutlanderTests.a in Frameworks */,
@@ -762,6 +802,9 @@
 		F97A5C1C1890A4E400E2C318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */,
+				F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */,
+				F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */,
 				F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */,
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
 				F98F22D119248506008175FD /* LoginViewController.h */,
@@ -776,6 +819,7 @@
 				F9AE6A9518A0001300A11EE9 /* ProgressBarViewController.h */,
 				F9AE6A9618A0001300A11EE9 /* ProgressBarViewController.m */,
 				F9AE6A9718A0001300A11EE9 /* ProgressBarViewController.xib */,
+				F9F3D84C1957D123005B9D68 /* SettingsView.h */,
 				F9F3D8451957BA92005B9D68 /* SettingsWindowController.h */,
 				F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */,
 				F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */,
@@ -788,7 +832,6 @@
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
-				F9F3D84C1957D123005B9D68 /* SettingsView.h */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -987,6 +1030,9 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9F3D89E195D2089005B9D68 /* Squirrel.framework */,
+				F9F3D895195C01E6005B9D68 /* Mantle.framework */,
+				F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
 				F97A5C5A18919ED100E2C318 /* libPods-CocoaAsyncSocket.a */,
@@ -1104,6 +1150,7 @@
 				302E9CBC367A4D4DB47B5D65 /* Check Pods Manifest.lock */,
 				F9CF92631890832800449548 /* Sources */,
 				F9CF92641890832800449548 /* Frameworks */,
+				F9F3D899195CA499005B9D68 /* CopyFiles */,
 				F9CF92651890832800449548 /* Resources */,
 				90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */,
 			);
@@ -1174,6 +1221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
@@ -1194,6 +1242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
 				F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */,
@@ -1359,6 +1408,7 @@
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
+				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
@@ -1503,6 +1553,7 @@
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */,
+				F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
@@ -1652,7 +1703,15 @@
 			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Joe McBride";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Squirrel.Mac/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
+					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
+					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1663,13 +1722,16 @@
 					"\"${PODS_ROOT}/Headers/ReactiveCocoa\"",
 					"\"${PODS_ROOT}/Headers/ReactiveCocoa/ReactiveCocoa\"",
 					"\"/usr/include/libxml2\"",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1690,7 +1752,15 @@
 			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Joe McBride";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Squirrel.Mac/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
+					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
+					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1701,13 +1771,16 @@
 					"\"${PODS_ROOT}/Headers/ReactiveCocoa\"",
 					"\"${PODS_ROOT}/Headers/ReactiveCocoa/ReactiveCocoa\"",
 					"\"/usr/include/libxml2\"",
+					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1732,6 +1805,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1771,6 +1845,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";

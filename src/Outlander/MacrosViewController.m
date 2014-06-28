@@ -9,7 +9,7 @@
 #import "MacrosViewController.h"
 #import "Macro.h"
 #import "DDHotKeyTextField.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface MacrosViewController () {
     GameContext *_context;

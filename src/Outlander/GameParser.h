@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "TSMutableDictionary.h"
 #import "Shared.h"
 #import "GameContext.h"

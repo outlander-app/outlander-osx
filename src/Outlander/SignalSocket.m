@@ -7,10 +7,6 @@
 //
 
 #import "SignalSocket.h"
-#import "RACDisposable.h"
-#import "RACReplaySubject.h"
-#import "RACSignal.h"
-#import "RACMulticastConnection.h"
 #import "GCDAsyncSocket.h"
 
 @implementation SignalSocket
@@ -29,7 +25,7 @@
 }
 
 - (RACSignal *) connect: (NSString *)host port:(UInt16)port {
-	subject = [RACReplaySubject subject];
+	subject = [RACSubject subject];
     [asyncSocket connectToHost:host onPort:port error:nil];
     return subject;
 }

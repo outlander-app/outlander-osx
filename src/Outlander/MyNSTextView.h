@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface MyNSTextView : NSTextView 
 

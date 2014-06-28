@@ -28,7 +28,7 @@
 #import "ScriptRunner.h"
 #import "LocalFileSystem.h"
 #import "CommandContext.h"
-#import "RACEXTScope.h"
+#import <ReactiveCocoa/EXTScope.h>
 #import "MacroHandler.h"
 #import "GameCommandRelay.h"
 

@@ -7,7 +7,7 @@
 //
 
 #import "ProfileLoader.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface ProfileLoader () {
     GameContext *_context;

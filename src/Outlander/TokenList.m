@@ -7,7 +7,7 @@
 //
 
 #import "TokenList.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
 
 @implementation TokenList

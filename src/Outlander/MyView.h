@@ -7,7 +7,7 @@
 //
 
 #import "TextViewController.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "KeyHandler.h"
 
 @interface MyView : NSView {

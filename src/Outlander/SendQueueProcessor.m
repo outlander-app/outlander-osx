@@ -9,7 +9,7 @@
 #import "SendQueueProcessor.h"
 #import "CommandRelay.h"
 #import "GameCommandRelay.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
 
 @interface SendQueueProcessor () {

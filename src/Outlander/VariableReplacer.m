@@ -7,7 +7,7 @@
 //
 
 #import "VariableReplacer.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "Alias.h"
 #import "NSString+Categories.h"
 

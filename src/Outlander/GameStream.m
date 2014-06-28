@@ -11,7 +11,7 @@
 #import "GameParser.h"
 #import "GameConnection.h"
 #import "TextTag.h"
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface GameStream () {
     RACSignal *_connection;

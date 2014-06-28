@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "GCDAsyncSocket.h"
-#import "RACMulticastConnection.h"
-#import "RACReplaySubject.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface SignalSocket : NSObject {
     GCDAsyncSocket *asyncSocket;
-	RACReplaySubject *subject;
+	RACSubject *subject;
 }
 
 - (RACSignal *) connect: (NSString *)host port:(UInt16)port;

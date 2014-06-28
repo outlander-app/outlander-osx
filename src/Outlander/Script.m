@@ -13,7 +13,7 @@
 #import "SimpleQueue.h"
 #import "NSString+Categories.h"
 #import "VariableReplacer.h"
-#import "RACEXTScope.h"
+#import <ReactiveCocoa/EXTScope.h>
 
 typedef void (^waitActionBlock) ();
 

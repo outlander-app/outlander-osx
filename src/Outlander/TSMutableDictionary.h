@@ -7,7 +7,8 @@
 //
 // https://mikeash.com/pyblog/friday-qa-2011-10-14-whats-new-in-gcd.html
 
-#import "ReactiveCocoa.h"
+#import <ReactiveCocoa/EXTScope.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface TSMutableDictionary : NSObject {
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Mantle.h"
+#import <Mantle/Mantle.h>
 #import "WindowData.h"
 #import "GameContext.h"
 

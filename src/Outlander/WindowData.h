@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Mantle.h"
+#import <Mantle/Mantle.h>
 
 @interface WindowData : MTLModel <MTLJSONSerializing>
 
