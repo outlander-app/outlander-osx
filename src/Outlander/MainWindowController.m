@@ -188,8 +188,9 @@
     NSURLComponents *components = [[NSURLComponents alloc] init];
     
     components.scheme = @"http";
-    components.host = @"localhost";
-    components.port = @(5000);
+//    components.host = @"localhost";
+//    components.port = @(5000);
+    components.host = @"outlanderapp.com";
     components.path = @"/version";
     
     NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
