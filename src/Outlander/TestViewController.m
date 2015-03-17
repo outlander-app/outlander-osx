@@ -278,6 +278,12 @@
         [self append:tag to:@"thoughts"];
     }];
     
+    [_gameStream.chatter subscribeNext:^(TextTag *tag) {
+        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
+        tag.text = [NSString stringWithFormat:@"[%@]: %@\n", timeStamp, tag.text];
+        [self append:tag to:@"thoughts"];
+    }];
+    
     [_gameStream.arrivals subscribeNext:^(TextTag *tag) {
         NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
         tag.text = [NSString stringWithFormat:@"[%@]:%@\n", timeStamp, tag.text];

@@ -58,7 +58,7 @@
 +(LearningRate *)fromDescription:(NSString *)desc {
     __block LearningRate *rate = nil;
     [[LearningRate learningRates] enumerateKeysAndObjectsUsingBlock:^(NSString *key, LearningRate *obj, BOOL *stop) {
-        if([obj.description isEqualToString:desc]){
+        if([obj.desc isEqualToString:desc]){
             rate = obj;
             *stop = YES;
         }
@@ -80,7 +80,7 @@
     if(!self) return nil;
     
     _rateId = rateId;
-    _description = description;
+    _desc = description;
     
     return self;
 }
@@ -89,7 +89,7 @@
     if(!rate)
         return NO;
     
-    return self.rateId == rate.rateId && [self.description isEqualToString:rate.description];
+    return self.rateId == rate.rateId && [self.desc isEqualToString:rate.desc];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -105,7 +105,7 @@
 }
 
 - (NSUInteger)hash {
-    return self.rateId ^ [self.description hash];
+    return self.rateId ^ [self.desc hash];
 }
 
 @end

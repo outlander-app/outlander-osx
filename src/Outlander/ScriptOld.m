@@ -438,7 +438,7 @@
     
     CommandContext *ctx = [[CommandContext alloc] init];
     ctx.command = [command trimWhitespaceAndNewline];
-    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
+    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", self.name, command] mono:YES];
     ctx.tag.color = @"#0066CC";
     
     [_commandRelay sendCommand:ctx];
@@ -452,7 +452,7 @@
 }
 
 - (void)sendScriptDebug:(NSString *)msg {
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", _name, (unsigned long)_lineNumber, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ (%lu): %@\n", self.name, (unsigned long)_lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     
     [_commandRelay sendEcho:tag];

@@ -42,6 +42,7 @@
     [_spell connect];
     _exp = _gameParser.exp;
     _thoughts = _gameParser.thoughts;
+    _chatter = _gameParser.chatter;
     _arrivals = _gameParser.arrivals;
     _deaths = _gameParser.deaths;
     _familiar = _gameParser.familiar;

@@ -38,6 +38,7 @@
 @property (nonatomic, strong) RACSubject *directions;
 @property (nonatomic, strong) RACSubject *exp;
 @property (nonatomic, strong) RACSubject *thoughts;
+@property (nonatomic, strong) RACSubject *chatter;
 @property (nonatomic, strong) RACSubject *arrivals;
 @property (nonatomic, strong) RACSubject *deaths;
 @property (nonatomic, strong) RACSubject *familiar;

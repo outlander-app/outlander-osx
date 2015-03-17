@@ -503,7 +503,7 @@ typedef void (^waitActionBlock) ();
     
     CommandContext *ctx = [[CommandContext alloc] init];
     ctx.command = [command trimWhitespaceAndNewline];
-    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", _name, command] mono:YES];
+    ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"[%@]: %@\n", self.name, command] mono:YES];
     ctx.tag.color = @"#ACFF2F";
     
     [_commandRelay sendCommand:ctx];
@@ -520,7 +520,7 @@ typedef void (^waitActionBlock) ();
     
     if(_debugLevel < 1) return;
     
-    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@(%lu): %@\n", _name, (unsigned long)lineNumber, msg] mono:YES];
+    TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@(%lu): %@\n", self.name, (unsigned long)lineNumber, msg] mono:YES];
     tag.color = @"#0066CC";
     
     [_commandRelay sendEcho:tag];

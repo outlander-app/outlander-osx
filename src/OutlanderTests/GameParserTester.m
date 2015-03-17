@@ -380,6 +380,27 @@ describe(@"GameParser", ^{
             [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
         });
         
+        it(@"should signal chatter", ^{
+            NSString *data = @"<pushStream id=\"chatter\"/><preset id='thought'>Chatter[Mentor Isharon]</preset> Effects of charisma (detailed list):\n<popStream/>\r\n";
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            __block NSMutableArray *signalResults = [[NSMutableArray alloc] init];
+            
+            [_parser.chatter subscribeNext:^(id x) {
+                [signalResults addObject:x];
+            }];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            [[signalResults should] haveCountOf:1];
+            
+            TextTag *tag = signalResults[0];
+            
+            [[tag.text should] equal:@"Chatter[Mentor Isharon] Effects of charisma (detailed list):"];
+        });
+        
         it(@"should set roomtitle component", ^{
             NSString *data = @"<streamWindow id='room' title='Room' subtitle=\" - [Ranger Guild, Longhouse]\" location='center' target='drop' ifClosed='' resident='true'/>\r\n";
             __block NSMutableArray *results = [[NSMutableArray alloc] init];

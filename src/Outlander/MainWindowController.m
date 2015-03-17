@@ -107,8 +107,8 @@
 
 - (void)awakeFromNib {
     
-    int maxX = NSMaxX([[NSScreen mainScreen] frame]);
-    int maxY = NSMaxY([[NSScreen mainScreen] frame]);
+    int maxX = NSMaxX([[NSScreen mainScreen] visibleFrame]);
+    int maxY = NSMaxY([[NSScreen mainScreen] visibleFrame]);
     
 //    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
 //                                     (maxY / 2.0) - (START_HEIGHT / 2.0),

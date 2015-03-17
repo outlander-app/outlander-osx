@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B16717B043E46E09978A26F /* libPods-OutlanderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */; };
 		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
@@ -52,6 +51,18 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
+		F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
+		F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
+		F94B645E1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */; };
+		F94B64601AB7ED54002D70FD /* libPods-PEGKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */; };
+		F94B646C1AB7F31C002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */; };
+		F94B646D1AB7F31C002D70FD /* libPods-PEGKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */; };
+		F94B646E1AB7F31C002D70FD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
+		F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
+		F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
+		F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
+		F94B64741AB7FC97002D70FD /* libPods-OutlanderTests-Kiwi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */; };
 		F96ECDAA193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAB193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
 		F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* ScriptOld.m */; };
@@ -257,7 +268,6 @@
 		F9CF927E1890832800449548 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CF927D1890832800449548 /* AppDelegate.m */; };
 		F9CF92811890832800449548 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9CF927F1890832800449548 /* MainMenu.xib */; };
 		F9CF92831890832800449548 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92821890832800449548 /* Images.xcassets */; };
-		F9CF928A1890832800449548 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF92891890832800449548 /* XCTest.framework */; };
 		F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92931890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92911890832800449548 /* InfoPlist.strings */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
@@ -279,15 +289,6 @@
 		F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */; };
 		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */; };
-		F9F3D897195C01E6005B9D68 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
-		F9F3D898195C01E6005B9D68 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
-		F9F3D89A195D1EE6005B9D68 /* Mantle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
-		F9F3D89B195D1EF2005B9D68 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
-		F9F3D89F195D2089005B9D68 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
-		F9F3D8A0195D2095005B9D68 /* Squirrel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
-		F9F3D8A1195D213C005B9D68 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D895195C01E6005B9D68 /* Mantle.framework */; };
-		F9F3D8A2195D213C005B9D68 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */; };
-		F9F3D8A3195D213C005B9D68 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D89E195D2089005B9D68 /* Squirrel.framework */; };
 		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
@@ -306,24 +307,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F9F3D899195CA499005B9D68 /* CopyFiles */ = {
+		F9F3D899195CA499005B9D68 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F9F3D8A0195D2095005B9D68 /* Squirrel.framework in CopyFiles */,
-				F9F3D89B195D1EF2005B9D68 /* ReactiveCocoa.framework in CopyFiles */,
-				F9F3D89A195D1EE6005B9D68 /* Mantle.framework in CopyFiles */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OutlanderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		47A161DB5E5C4325AE50C012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7070212539B84865B2217628 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -370,6 +371,14 @@
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
+		F94B64571AB78056002D70FD /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/ReactiveCocoa.framework"; sourceTree = "<group>"; };
+		F94B64581AB78056002D70FD /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Squirrel.framework"; sourceTree = "<group>"; };
+		F94B645B1AB78071002D70FD /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Mantle.framework"; sourceTree = "<group>"; };
+		F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaAsyncSocket.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
+		F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PEGKit.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-PEGKit.a"; sourceTree = "<group>"; };
+		F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OutlanderTests-Kiwi.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-OutlanderTests-Kiwi.a"; sourceTree = "<group>"; };
+		F94B64671AB7F041002D70FD /* libPods-OutlanderTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OutlanderTests.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-OutlanderTests.a"; sourceTree = "<group>"; };
+		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		F96ECDA8193404BB00787CB9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
 		F96ECDA9193404BB00787CB9 /* Actor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actor.m; sourceTree = "<group>"; };
 		F96ECDAC1934160200787CB9 /* ScriptOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptOld.h; sourceTree = "<group>"; };
@@ -424,7 +433,6 @@
 		F97A5C4D1890DFB400E2C318 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		F97A5C4E1890DFB400E2C318 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		F97A5C4F1890DFB400E2C318 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
-		F97A5C5A18919ED100E2C318 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaAsyncSocket.a"; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug/libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
 		F97A5C5D1891AB7D00E2C318 /* SignalSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalSocket.h; sourceTree = "<group>"; };
 		F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignalSocket.m; sourceTree = "<group>"; };
 		F97A5C611891F2C400E2C318 /* AuthenticationServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationServer.h; sourceTree = "<group>"; };
@@ -598,7 +606,6 @@
 		F9CF92801890832800449548 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F9CF92821890832800449548 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F9CF92881890832800449548 /* OutlanderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OutlanderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F9CF92891890832800449548 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F9CF92901890832800449548 /* OutlanderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OutlanderTests-Info.plist"; sourceTree = "<group>"; };
 		F9CF92921890832800449548 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
@@ -623,9 +630,6 @@
 		F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKeyCodesFromStringTester.m; sourceTree = "<group>"; };
-		F9F3D895195C01E6005B9D68 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/Mantle.framework"; sourceTree = "<group>"; };
-		F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/ReactiveCocoa.framework"; sourceTree = "<group>"; };
-		F9F3D89E195D2089005B9D68 /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug/Squirrel.framework"; sourceTree = "<group>"; };
 		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
 		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
 		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
@@ -638,13 +642,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F3D89F195D2089005B9D68 /* Squirrel.framework in Frameworks */,
-				F9F3D898195C01E6005B9D68 /* ReactiveCocoa.framework in Frameworks */,
+				F94B64601AB7ED54002D70FD /* libPods-PEGKit.a in Frameworks */,
+				F94B645E1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */,
+				F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */,
+				F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */,
+				F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */,
-				F9F3D897195C01E6005B9D68 /* Mantle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,18 +658,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F3D8A1195D213C005B9D68 /* Mantle.framework in Frameworks */,
-				F9F3D8A2195D213C005B9D68 /* ReactiveCocoa.framework in Frameworks */,
-				F9F3D8A3195D213C005B9D68 /* Squirrel.framework in Frameworks */,
+				F94B64741AB7FC97002D70FD /* libPods-OutlanderTests-Kiwi.a in Frameworks */,
+				F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */,
+				F94B646C1AB7F31C002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */,
+				F94B646D1AB7F31C002D70FD /* libPods-PEGKit.a in Frameworks */,
+				F94B646E1AB7F31C002D70FD /* libPods.a in Frameworks */,
+				F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */,
+				F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
-				F9CF928A1890832800449548 /* XCTest.framework in Frameworks */,
-				1B16717B043E46E09978A26F /* libPods-OutlanderTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DFBD5CB6EC1C07B0976E2FFC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */,
+				31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */,
+				66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */,
+				7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F91A39BA194DEF04006144F8 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,7 +1033,7 @@
 				F9CF928E1890832800449548 /* OutlanderTests */,
 				F9CF92691890832800449548 /* Frameworks */,
 				F9CF92681890832800449548 /* Products */,
-				7070212539B84865B2217628 /* Pods.xcconfig */,
+				DFBD5CB6EC1C07B0976E2FFC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1030,17 +1049,19 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F9F3D89E195D2089005B9D68 /* Squirrel.framework */,
-				F9F3D895195C01E6005B9D68 /* Mantle.framework */,
-				F9F3D896195C01E6005B9D68 /* ReactiveCocoa.framework */,
+				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
+				F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */,
+				F94B64671AB7F041002D70FD /* libPods-OutlanderTests.a */,
+				F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */,
+				F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */,
+				F94B645B1AB78071002D70FD /* Mantle.framework */,
+				F94B64571AB78056002D70FD /* ReactiveCocoa.framework */,
+				F94B64581AB78056002D70FD /* Squirrel.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
-				F97A5C5A18919ED100E2C318 /* libPods-CocoaAsyncSocket.a */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
-				F9CF92891890832800449548 /* XCTest.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
 				47A161DB5E5C4325AE50C012 /* libPods.a */,
-				35E06892C5724F8E9E152435 /* libPods-OutlanderTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1150,7 +1171,7 @@
 				302E9CBC367A4D4DB47B5D65 /* Check Pods Manifest.lock */,
 				F9CF92631890832800449548 /* Sources */,
 				F9CF92641890832800449548 /* Frameworks */,
-				F9F3D899195CA499005B9D68 /* CopyFiles */,
+				F9F3D899195CA499005B9D68 /* Copy Files */,
 				F9CF92651890832800449548 /* Resources */,
 				90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */,
 			);
@@ -1297,7 +1318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Pods-OutlanderTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */ = {
@@ -1312,7 +1333,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1629,7 +1650,6 @@
 /* Begin XCBuildConfiguration section */
 		F9CF92961890832800449548 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1667,7 +1687,6 @@
 		};
 		F9CF92971890832800449548 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1700,10 +1719,10 @@
 		};
 		F9CF92991890832800449548 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
+			baseConfigurationReference = 5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Joe McBride";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1711,6 +1730,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1729,9 +1749,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1749,10 +1771,10 @@
 		};
 		F9CF929A1890832800449548 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
+			baseConfigurationReference = 31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Joe McBride";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1760,6 +1782,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1778,9 +1801,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
@@ -1798,14 +1823,16 @@
 		};
 		F9CF929C1890832800449548 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
+			baseConfigurationReference = 66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1813,23 +1840,18 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/CocoaAsyncSocket\"",
-					"\"${PODS_ROOT}/Headers/Kiwi\"",
-					"\"${PODS_ROOT}/Headers/ReactiveCocoa\"",
-					"\"${PODS_ROOT}/Headers/ReactiveCocoa/ReactiveCocoa\"",
-					"\"/usr/include/libxml2\"",
-				);
+				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					XCTest,
 					"-lxml2",
+					"-ObjC",
 				);
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1838,7 +1860,7 @@
 		};
 		F9CF929D1890832800449548 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7070212539B84865B2217628 /* Pods.xcconfig */;
+			baseConfigurationReference = 7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1846,26 +1868,23 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/CocoaAsyncSocket\"",
-					"\"${PODS_ROOT}/Headers/Kiwi\"",
-					"\"${PODS_ROOT}/Headers/ReactiveCocoa\"",
-					"\"${PODS_ROOT}/Headers/ReactiveCocoa/ReactiveCocoa\"",
-					"\"/usr/include/libxml2\"",
-				);
+				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-framework",
-					XCTest,
 					"-lxml2",
+					"-ObjC",
 				);
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

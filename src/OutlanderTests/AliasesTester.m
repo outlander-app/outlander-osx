@@ -32,7 +32,7 @@ describe(@"Alias Loader", ^{
             theFileSystem.fileContents = @"#alias {l2} {load arrows}";
             
             [theLoader load];
-            [[theContext.aliases should] haveCountOf:1];
+            [[[theContext should] have:1] aliases];
             
             Alias *alias = [theContext.aliases objectAtIndex:0];
             [[alias.pattern should] equal:@"l2"];

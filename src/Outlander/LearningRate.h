@@ -9,7 +9,7 @@
 @interface LearningRate : NSObject
 
 @property (nonatomic, assign) UInt16 rateId;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *desc;
 
 +(NSDictionary*)learningRates;
 +(LearningRate *)fromRate:(UInt16)rate;

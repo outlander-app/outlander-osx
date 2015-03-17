@@ -7,5 +7,5 @@ pod 'CocoaAsyncSocket', '7.3.3'
 pod 'PEGKit', '~> 0.4'
 
 target :OutlanderTests, :exclusive => true do
-	pod 'Kiwi/XCTest'
+	pod 'Kiwi', '2.3.1'
 end

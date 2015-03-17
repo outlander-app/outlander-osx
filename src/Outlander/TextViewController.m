@@ -72,10 +72,10 @@
         }
         
         [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
-        NSString *fontName = @"Verdana";
-        int fontSize = 12;
+        NSString *fontName = @"Helvetica";
+        int fontSize = 14;
         if(text.mono){
-            fontName = @"Courier New";
+            fontName = @"Menlo";
             fontSize = 13;
         }
         [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];

@@ -30,6 +30,7 @@
     _directions = [RACSubject subject];
     _exp = [RACSubject subject];
     _thoughts = [RACSubject subject];
+    _chatter = [RACSubject subject];
     _arrivals = [RACSubject subject];
     _deaths = [RACSubject subject];
     _familiar = [RACSubject subject];
@@ -156,6 +157,11 @@
             else if([_streamId isEqual: @"thoughts"]) {
                 TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
                 [_thoughts sendNext:tag];
+                [_currentResult setString:@""];
+            }
+            else if([_streamId isEqual: @"chatter"]) {
+                TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
+                [_chatter sendNext:tag];
                 [_currentResult setString:@""];
             }
             
@@ -545,7 +551,7 @@
                          forKey:[NSString stringWithFormat:@"%@.Ranks", exp.name]];
     [_gameContext.globalVars setCacheObject:[NSString stringWithFormat:@"%hu", exp.mindState.rateId]
                          forKey:[NSString stringWithFormat:@"%@.LearningRate", exp.name]];
-    [_gameContext.globalVars setCacheObject:exp.mindState.description
+    [_gameContext.globalVars setCacheObject:exp.mindState.desc
                          forKey:[NSString stringWithFormat:@"%@.LearningRateName", exp.name]];
     
     [_exp sendNext:exp];
