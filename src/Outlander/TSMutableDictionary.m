@@ -34,6 +34,9 @@
     if (obj == nil) {
         obj = @"";
     }
+    if(key == nil) {
+        NSLog(@"WAT");
+    }
     dispatch_barrier_async(_queue, ^{
         [_cache setObject: obj forKey: key];
         

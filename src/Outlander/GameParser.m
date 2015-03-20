@@ -68,13 +68,19 @@
     
     if(data == nil) return;
     
+    data = [self replace:data withPattern:@"(<\\/?d( cmd=['\"].*?['\"])?>)" andTemplate:@""];
+    data = [self replace:data withPattern:@"<\\/?b>" andTemplate:@""];
+    if(!_inStream){
+        data = [self replace:data withPattern:@"^\\s+" andTemplate:@"<white>$0</white>"];
+        //data = [self replace:data withPattern:@"(<\\/\\w+>)( +)" andTemplate:@"$1<white>$2</white>"];
+        //data = [self replace:data withPattern:@"(<\\/\\w+>)( +)(?![ +\\r\\n]|$)" andTemplate:@"$1<white>$2</white>"];
+    }
+    
     NSMutableString *str = [[NSMutableString alloc] initWithString:data];
     
     [str replaceOccurrencesOfString:@"<style id=\"\"/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
-    [str replaceOccurrencesOfString:@"<d>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
-    [str replaceOccurrencesOfString:@"<d/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
-    [str replaceOccurrencesOfString:@"<b>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
-    [str replaceOccurrencesOfString:@"<b/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    //[str replaceOccurrencesOfString:@"<b>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
+    //[str replaceOccurrencesOfString:@"<b/>" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [str length])];
     
     if([str hasPrefix:@"&lt;"] || [str hasPrefix:@"*"]) {
         NSRange range = [data rangeOfString:@"<pushBold"];
@@ -160,6 +166,7 @@
                 [_currentResult setString:@""];
             }
             else if([_streamId isEqual: @"chatter"]) {
+                [_currentResult replaceOccurrencesOfString:@"]" withString:@"]:" options:NSLiteralSearch range:NSMakeRange(0, [_currentResult length])];
                 TextTag *tag = [TextTag tagFor:[_currentResult trimNewLine] mono:_mono];
                 [_chatter sendNext:tag];
                 [_currentResult setString:@""];
@@ -442,6 +449,22 @@
                 i++;
             }
             continue;
+        }
+        else if([tagName isEqualToString:@"a"]){
+            NSString *val = [node contents];
+            NSString *href = [node getAttributeNamed:@"href"];
+            
+            TextTag *tag = [TextTag tagFor:val mono:YES];
+            tag.href = href;
+            [_currenList addObject:tag];
+        }
+        else if([tagName isEqualToString:@"white"]){
+            NSString *val = [node contents];
+            
+            if(val != nil && [val length] > 0) {
+                TextTag *tag = [TextTag tagFor:val mono:_mono];
+                [_currenList addObject:tag];
+            }
         }
         else if([tagName isEqualToString:@"pre"]){
             if(!_publishStream) {

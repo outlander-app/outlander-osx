@@ -118,6 +118,10 @@
         _viewModel.spell = val;
     }];
     
+    TextTag *tag = [TextTag tagFor:@"Google" mono:YES];
+    tag.href = @"http://google.com";
+    [self append:tag to:@"main"];
+    
     MyView *view = (MyView *)self.view;
     [view setKeyHandler:_macroHandler];
     [view.keyup subscribeNext:^(NSEvent *theEvent) {

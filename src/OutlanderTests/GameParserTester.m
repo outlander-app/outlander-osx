@@ -91,12 +91,12 @@ describe(@"GameParser", ^{
                 }];
             }
             
-            [[results should] haveCountOf:11];
+            [[results should] haveCountOf:13];
             TextTag *tag = results[1];
             [[theValue([tag mono]) should] beYes];
             
-            tag = results[4];
-            [[tag.text should] equal:@"          SKILL: Rank/Percent towards next rank/Amount learning/Mindstate Fraction\r\n"];
+            tag = results[5];
+            [[tag.text should] equal:@"SKILL: Rank/Percent towards next rank/Amount learning/Mindstate Fraction\r\n"];
         });
         
         it(@"should ignore component tag newline", ^{
@@ -398,7 +398,7 @@ describe(@"GameParser", ^{
             
             TextTag *tag = signalResults[0];
             
-            [[tag.text should] equal:@"Chatter[Mentor Isharon] Effects of charisma (detailed list):"];
+            [[tag.text should] equal:@"Chatter[Mentor Isharon]: Effects of charisma (detailed list):"];
         });
         
         it(@"should set roomtitle component", ^{
@@ -813,6 +813,128 @@ describe(@"GameParser", ^{
             [[parseResults should] haveCountOf:0];
             
             [[[_context.globalVars cacheObjectForKey:@"roomobjsorig"] should] equal:@"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>."];
+        });
+        
+        it(@"sets roomexits global var", ^{
+           NSString *data = @"<component id='room exits'>Obvious paths: <d>north</d>, <d>west</d>, <d>northwest</d>.";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:0];
+            
+            [[[_context.globalVars cacheObjectForKey:@"roomexits"] should] equal:@"Obvious paths: north, west, northwest."];
+        });
+        
+        it(@"parses <d/> items", ^{
+           NSString *data = @"1) <d cmd='choose 1'>blue</d>              2) <d cmd='choose 2'>gold</d>              3) <d cmd='choose 3'>crystal blue</d>";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            TextTag *tag = parseResults[0];
+            [[[tag text] should] equal:@"1) blue              2) gold              3) crystal blue"];
+        });
+        
+        it(@"parses direction help <d/> items", ^{
+           NSString *data = @"Directions towards Barana's Shipyard: <d cmd=\"North\">North</d>.";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            TextTag *tag = parseResults[0];
+            [[[tag text] should] equal:@"Directions towards Barana's Shipyard: North."];
+        });
+
+        it(@"parses direction help <d/> items", ^{
+           NSString *data = @"Directions towards Barana's Shipyard: <d cmd=\"North\">North</d>.";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            TextTag *tag = parseResults[0];
+            [[[tag text] should] equal:@"Directions towards Barana's Shipyard: North."];
+        });
+        
+        it(@"parses <d/> with multiple attributes", ^{
+           NSString *data = @"[You can use <d cmd='dir mentors' annotate='15'>DIR MENTORS</d> for directions to get there!]";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            TextTag *tag = parseResults[0];
+            [[[tag text] should] equal:@"[You can use DIR MENTORS for directions to get there!]"];
+        });
+        
+        it(@"parses hyperlinks", ^{
+           NSString *data = @"<a href='https://store.play.net/store/purchase/dr'>Simucoin Store</a>";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:1];
+            TextTag *tag = parseResults[0];
+            [[[tag text] should] equal:@"Simucoin Store"];
+            [[[tag href] should] equal:@"https://store.play.net/store/purchase/dr"];
+        });
+        
+        it(@"keeps whitespace with hyperlinks", ^{
+           NSString *data = @"                       <a href='http://www.topmudsites.com/vote-DragonRealms.html'>Visit Top Mud Sites!</a>";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:2];
+            
+            TextTag *whitespace = parseResults[0];
+            [[[whitespace text] should] equal:@"                       "];
+            
+            TextTag *tag = parseResults[1];
+            [[[tag text] should] equal:@"Visit Top Mud Sites!"];
+            [[[tag href] should] equal:@"http://www.topmudsites.com/vote-DragonRealms.html"];
+        });
+        
+        it(@"keeps whitespace between tags", ^{
+           NSString *data = @"     <a href='https://store.play.net/store/purchase/dr'>Simucoin Store</a>    <a href='http://forums.play.net/calendar?game=dragonrealms'>Events Calendar</a>     <a href='https://drwiki.play.net/mediawiki/index.php/Category:New_player_guides'>Starter Guides</a>";
+            
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
+            
+            [_parser parse:data then:^(NSArray* res) {
+                [parseResults addObjectsFromArray:res];
+            }];
+            
+            [[parseResults should] haveCountOf:6];
+            
+            TextTag *whitespace = parseResults[0];
+            [[[whitespace text] should] equal:@"     "];
+            
+            TextTag *tag = parseResults[2];
+            [[[tag text] should] equal:@"    "];
         });
     });
 });

@@ -26,7 +26,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"TextTag: text='%@' mono='%hhd' color='%@'", _text, _mono, _color];
+    return [NSString stringWithFormat:@"TextTag: text='%@' mono='%hhd' color='%@' href='%@' command='%@'", _text, _mono, _color, _href, _command];
 }
 
 @end

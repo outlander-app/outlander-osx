@@ -26,4 +26,8 @@
     [sub sendNext:theEvent];
 }
 
+//- (void)clickedOnLink:(id)link atIndex:(NSUInteger)charIndex {
+//    NSLog(@"Clicked on link %@ %lu", link, (unsigned long)charIndex);
+//}
+
 @end

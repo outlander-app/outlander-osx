@@ -33,6 +33,11 @@
     }];
     
     [_TextView.textStorage setDelegate:self];
+    [_TextView setLinkTextAttributes:@{
+                                       NSForegroundColorAttributeName: [NSColor colorWithHexString:@"#cccccc"],
+                                       NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSSingleUnderlineStyle],
+                                       NSCursorAttributeName: [NSCursor pointingHandCursor]
+                                       }];
 }
 
 - (NSString *)text {
@@ -61,6 +66,10 @@
         
         NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
         NSRange range = [[attr string] rangeOfString:text.text];
+
+        if(text.href) {
+            [attr addAttribute:NSLinkAttributeName value:text.href range:range];
+        }
         
         NSColor *color = nil;
         
