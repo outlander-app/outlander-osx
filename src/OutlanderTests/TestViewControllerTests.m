@@ -7,18 +7,18 @@
 //
 
 #import "Kiwi.h"
-#import "TestViewController.h"
+#import "RoomObjsTags.h"
 
-SPEC_BEGIN(TestViewControllerTests)
+SPEC_BEGIN(RoomObjsTagsTests)
 
-describe(@"TestViewController", ^{
+describe(@"RoomObjcsTags", ^{
    
     context(@"room objs tags builder", ^{
        
-        __block TestViewController *theController;
+        __block RoomObjsTags *theController;
         
         beforeEach(^{
-            theController = [[TestViewController alloc] init];
+            theController = [[RoomObjsTags alloc] init];
         });
         
         it(@"should create monster bold tags", ^{

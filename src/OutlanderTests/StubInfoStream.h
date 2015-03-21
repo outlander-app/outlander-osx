@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameStream.h"
+#import "Shared.h"
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface StubInfoStream : NSObject <InfoStream>
 

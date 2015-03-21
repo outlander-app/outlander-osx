@@ -35,7 +35,7 @@
     [_TextView.textStorage setDelegate:self];
     [_TextView setLinkTextAttributes:@{
                                        NSForegroundColorAttributeName: [NSColor colorWithHexString:@"#cccccc"],
-                                       NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSSingleUnderlineStyle],
+                                       NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle],
                                        NSCursorAttributeName: [NSCursor pointingHandCursor]
                                        }];
 }

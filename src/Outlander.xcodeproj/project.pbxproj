@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
+		DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -54,25 +54,11 @@
 		F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
 		F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
 		F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
-		F94B645E1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */; };
-		F94B64601AB7ED54002D70FD /* libPods-PEGKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */; };
-		F94B646C1AB7F31C002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */; };
-		F94B646D1AB7F31C002D70FD /* libPods-PEGKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */; };
-		F94B646E1AB7F31C002D70FD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47A161DB5E5C4325AE50C012 /* libPods.a */; };
 		F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
 		F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
 		F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
-		F94B64741AB7FC97002D70FD /* libPods-OutlanderTests-Kiwi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */; };
-		F96ECDAA193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
-		F96ECDAB193404BB00787CB9 /* Actor.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDA9193404BB00787CB9 /* Actor.m */; };
-		F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* ScriptOld.m */; };
-		F96ECDAF1934160200787CB9 /* ScriptOld.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDAD1934160200787CB9 /* ScriptOld.m */; };
-		F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB11934194300787CB9 /* OutlanderParser.m */; };
-		F96ECDB31934194300787CB9 /* OutlanderParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB11934194300787CB9 /* OutlanderParser.m */; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
-		F96ECDBA1934445000787CB9 /* ScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB91934445000787CB9 /* ScriptRunner.m */; };
-		F96ECDBB1934445000787CB9 /* ScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB91934445000787CB9 /* ScriptRunner.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
 		F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
 		F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDC219345CAA00787CB9 /* ScriptHandler.m */; };
@@ -89,7 +75,6 @@
 		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
-		F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDE21936B82E00787CB9 /* ScriptTester.m */; };
 		F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
@@ -99,25 +84,16 @@
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7E192E50EF00B873D7 /* AliasesTester.m */; };
-		F9772F07194032FB00172083 /* ExpressionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F06194032FB00172083 /* ExpressionParser.m */; };
-		F9772F08194032FB00172083 /* ExpressionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F06194032FB00172083 /* ExpressionParser.m */; };
-		F9772F0B1940332200172083 /* ExpressionBuilderTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F0A1940332200172083 /* ExpressionBuilderTester.m */; };
-		F9772F0E1940358600172083 /* ExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F0D1940358600172083 /* ExpressionBuilder.m */; };
-		F9772F0F1940358600172083 /* ExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F0D1940358600172083 /* ExpressionBuilder.m */; };
 		F9772F171940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
 		F9772F181940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
-		F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
 		F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
 		F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C231890A6B600E2C318 /* MainWindowController.xib */; };
 		F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C4E1890DFB400E2C318 /* TestViewController.m */; };
 		F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5C4F1890DFB400E2C318 /* TestViewController.xib */; };
 		F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */; };
-		F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C5E1891AB7D00E2C318 /* SignalSocket.m */; };
 		F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C621891F2C400E2C318 /* AuthenticationServer.m */; };
-		F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C621891F2C400E2C318 /* AuthenticationServer.m */; };
 		F97A5C671892388D00E2C318 /* GameServer.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C661892388D00E2C318 /* GameServer.m */; };
-		F97A5C681892388D00E2C318 /* GameServer.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C661892388D00E2C318 /* GameServer.m */; };
 		F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C6F1892CE1400E2C318 /* GameConnection.m */; };
 		F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C6F1892CE1400E2C318 /* GameConnection.m */; };
 		F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C731893562800E2C318 /* NSString+Categories.m */; };
@@ -133,7 +109,6 @@
 		F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C891893AFDF00E2C318 /* TextTag.m */; };
 		F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C891893AFDF00E2C318 /* TextTag.m */; };
 		F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C8D1894918F00E2C318 /* GameStream.m */; };
-		F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C8D1894918F00E2C318 /* GameStream.m */; };
 		F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C911895086C00E2C318 /* NSColor+Categories.m */; };
 		F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C911895086C00E2C318 /* NSColor+Categories.m */; };
 		F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */; };
@@ -183,9 +158,6 @@
 		F98782E41942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
 		F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
 		F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
-		F98782EF19427DAB00D76231 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EE19427DAB00D76231 /* Script.m */; };
-		F98782F019427DAB00D76231 /* Script.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EE19427DAB00D76231 /* Script.m */; };
-		F98782F4194284E300D76231 /* ScriptTokensTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F2194284E300D76231 /* ScriptTokensTester.m */; };
 		F98782F71942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
 		F98782F81942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
 		F98782FB1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
@@ -250,8 +222,17 @@
 		F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
 		F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
 		F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
-		F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */; };
-		F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */; };
+		F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
+		F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
+		F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
+		F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
+		F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE71ABD5DA000CB44B6 /* Node.swift */; };
+		F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE71ABD5DA000CB44B6 /* Node.swift */; };
+		F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */; };
+		F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */; };
+		F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
+		F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
+		F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */; };
 		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
@@ -293,6 +274,13 @@
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
 		F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
+		F9F446971ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */; };
+		F9F446981ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */; };
+		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
+		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
+		F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */; };
+		F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; };
+		F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446A51ABD8733003ECAD2 /* Kiwi.framework */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -321,10 +309,11 @@
 
 /* Begin PBXFileReference section */
 		31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		47A161DB5E5C4325AE50C012 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutlanderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
+		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -374,21 +363,9 @@
 		F94B64571AB78056002D70FD /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/ReactiveCocoa.framework"; sourceTree = "<group>"; };
 		F94B64581AB78056002D70FD /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Squirrel.framework"; sourceTree = "<group>"; };
 		F94B645B1AB78071002D70FD /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Mantle.framework"; sourceTree = "<group>"; };
-		F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaAsyncSocket.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
-		F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PEGKit.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-PEGKit.a"; sourceTree = "<group>"; };
-		F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OutlanderTests-Kiwi.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-OutlanderTests-Kiwi.a"; sourceTree = "<group>"; };
-		F94B64671AB7F041002D70FD /* libPods-OutlanderTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-OutlanderTests.a"; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/libPods-OutlanderTests.a"; sourceTree = "<group>"; };
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		F96ECDA8193404BB00787CB9 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
-		F96ECDA9193404BB00787CB9 /* Actor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Actor.m; sourceTree = "<group>"; };
-		F96ECDAC1934160200787CB9 /* ScriptOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptOld.h; sourceTree = "<group>"; };
-		F96ECDAD1934160200787CB9 /* ScriptOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptOld.m; sourceTree = "<group>"; };
-		F96ECDB01934194300787CB9 /* OutlanderParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutlanderParser.h; sourceTree = "<group>"; };
-		F96ECDB11934194300787CB9 /* OutlanderParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutlanderParser.m; sourceTree = "<group>"; };
 		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
 		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
-		F96ECDB81934445000787CB9 /* ScriptRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptRunner.h; sourceTree = "<group>"; };
-		F96ECDB91934445000787CB9 /* ScriptRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptRunner.m; sourceTree = "<group>"; };
 		F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptCommandHandler.m; sourceTree = "<group>"; };
 		F96ECDC01934586900787CB9 /* CommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandHandler.h; sourceTree = "<group>"; };
@@ -406,7 +383,6 @@
 		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
 		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
-		F96ECDE21936B82E00787CB9 /* ScriptTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptTester.m; sourceTree = "<group>"; };
 		F971EFD31938806C008AF6A8 /* CommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandRelay.h; sourceTree = "<group>"; };
 		F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandRelay.h; sourceTree = "<group>"; };
 		F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandRelay.m; sourceTree = "<group>"; };
@@ -419,11 +395,6 @@
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
 		F9762F7B192E4F8700B873D7 /* AliasLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasLoader.m; sourceTree = "<group>"; };
 		F9762F7E192E50EF00B873D7 /* AliasesTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasesTester.m; sourceTree = "<group>"; };
-		F9772F05194032FB00172083 /* ExpressionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionParser.h; sourceTree = "<group>"; };
-		F9772F06194032FB00172083 /* ExpressionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionParser.m; sourceTree = "<group>"; };
-		F9772F0A1940332200172083 /* ExpressionBuilderTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionBuilderTester.m; sourceTree = "<group>"; };
-		F9772F0C1940358600172083 /* ExpressionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpressionBuilder.h; sourceTree = "<group>"; };
-		F9772F0D1940358600172083 /* ExpressionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpressionBuilder.m; sourceTree = "<group>"; };
 		F9772F151940389E00172083 /* VarToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VarToken.h; sourceTree = "<group>"; };
 		F9772F161940389E00172083 /* VarToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VarToken.m; sourceTree = "<group>"; };
 		F9772F19194038D900172083 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
@@ -504,9 +475,6 @@
 		F98782E21942791B00D76231 /* ExitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExitToken.m; sourceTree = "<group>"; };
 		F98782E919427C3D00D76231 /* NextRoomToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextRoomToken.h; sourceTree = "<group>"; };
 		F98782EA19427C3D00D76231 /* NextRoomToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextRoomToken.m; sourceTree = "<group>"; };
-		F98782ED19427DAB00D76231 /* Script.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
-		F98782EE19427DAB00D76231 /* Script.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Script.m; sourceTree = "<group>"; };
-		F98782F2194284E300D76231 /* ScriptTokensTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptTokensTester.m; sourceTree = "<group>"; };
 		F98782F51942AB6200D76231 /* RegexToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexToken.h; sourceTree = "<group>"; };
 		F98782F61942AB6200D76231 /* RegexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexToken.m; sourceTree = "<group>"; };
 		F98782F91946873500D76231 /* WaitForToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitForToken.h; sourceTree = "<group>"; };
@@ -578,8 +546,14 @@
 		F9B3AC6C1940686700C081C4 /* PutToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutToken.m; sourceTree = "<group>"; };
 		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
 		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
-		F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptRunnerTester.m; sourceTree = "<group>"; };
-		F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptHandlerTester.m; sourceTree = "<group>"; };
+		F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Outlander-Bridging-Header.h"; sourceTree = "<group>"; };
+		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
+		F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizer.swift; sourceTree = "<group>"; };
+		F9B9BFE71ABD5DA000CB44B6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
+		F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizerTests.swift; sourceTree = "<group>"; };
 		F9BF6AEF193A90880075A12F /* EventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF0193A914B0075A12F /* GameEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF1193A914B0075A12F /* GameEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEventRelay.m; sourceTree = "<group>"; };
@@ -633,6 +607,13 @@
 		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
 		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
 		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
+		F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaAsyncSocket.a"; path = "../../../.Trash/libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
+		F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PEGKit.a"; path = "../../../.Trash/libPods-PEGKit.a"; sourceTree = "<group>"; };
+		F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomObjsTags.h; sourceTree = "<group>"; };
+		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
+		F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = /Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods/CocoaAsyncSocket.framework; sourceTree = "<absolute>"; };
+		F9F446A01ABD865C003ECAD2 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
+		F9F446A51ABD8733003ECAD2 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -642,15 +623,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F94B64601AB7ED54002D70FD /* libPods-PEGKit.a in Frameworks */,
-				F94B645E1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */,
+				F9F446971ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */,
 				F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */,
 				F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
-				AF00C6A715154F0390B92D90 /* libPods.a in Frameworks */,
+				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,11 +638,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F94B64741AB7FC97002D70FD /* libPods-OutlanderTests-Kiwi.a in Frameworks */,
+				F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */,
+				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
+				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
+				F9F446981ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */,
-				F94B646C1AB7F31C002D70FD /* libPods-CocoaAsyncSocket.a in Frameworks */,
-				F94B646D1AB7F31C002D70FD /* libPods-PEGKit.a in Frameworks */,
-				F94B646E1AB7F31C002D70FD /* libPods.a in Frameworks */,
 				F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */,
 				F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -765,18 +745,12 @@
 			children = (
 				F91A39BA194DEF04006144F8 /* Messages */,
 				F9772F101940383500172083 /* Tokens */,
-				F96ECDA8193404BB00787CB9 /* Actor.h */,
-				F96ECDA9193404BB00787CB9 /* Actor.m */,
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 				F971EFD31938806C008AF6A8 /* CommandRelay.h */,
 				F9BF6AEF193A90880075A12F /* EventRelay.h */,
 				F91A39AE194BDE83006144F8 /* ExecuteBlock.h */,
 				F91A39AF194BDE83006144F8 /* ExecuteBlock.m */,
-				F9772F0C1940358600172083 /* ExpressionBuilder.h */,
-				F9772F0D1940358600172083 /* ExpressionBuilder.m */,
-				F9772F05194032FB00172083 /* ExpressionParser.h */,
-				F9772F06194032FB00172083 /* ExpressionParser.m */,
 				F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */,
 				F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */,
 				F9BF6AF0193A914B0075A12F /* GameEventRelay.h */,
@@ -787,20 +761,12 @@
 				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
 				F91A39AB194BD706006144F8 /* OLPauseCondition.m */,
-				F96ECDB01934194300787CB9 /* OutlanderParser.h */,
-				F96ECDB11934194300787CB9 /* OutlanderParser.m */,
-				F98782ED19427DAB00D76231 /* Script.h */,
-				F98782EE19427DAB00D76231 /* Script.m */,
-				F96ECDAC1934160200787CB9 /* ScriptOld.h */,
-				F96ECDAD1934160200787CB9 /* ScriptOld.m */,
 				F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */,
 				F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */,
 				F96ECDC119345CAA00787CB9 /* ScriptHandler.h */,
 				F96ECDC219345CAA00787CB9 /* ScriptHandler.m */,
 				F96ECDB419343F5B00787CB9 /* ScriptLoader.h */,
 				F96ECDB519343F5B00787CB9 /* ScriptLoader.m */,
-				F96ECDB81934445000787CB9 /* ScriptRunner.h */,
-				F96ECDB91934445000787CB9 /* ScriptRunner.m */,
 				F91A39D0194E8916006144F8 /* SendQueueProcessor.h */,
 				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F91A39CC194E7135006144F8 /* SendCommandHandler.h */,
@@ -814,6 +780,10 @@
 		F97A5C1B1890A08400E2C318 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */,
+				F9B9BFE71ABD5DA000CB44B6 /* Node.swift */,
+				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
+				F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -904,10 +874,12 @@
 				F97A5C821893962E00E2C318 /* GameParser.m */,
 				F97A5C651892388D00E2C318 /* GameServer.h */,
 				F97A5C661892388D00E2C318 /* GameServer.m */,
+				F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */,
 				F97A5C8C1894918F00E2C318 /* GameStream.h */,
 				F97A5C8D1894918F00E2C318 /* GameStream.m */,
 				F989E203192C2E6200562E32 /* Highlight.h */,
 				F989E204192C2E6200562E32 /* Highlight.m */,
+				F9F3D83619541308005B9D68 /* KeyHandler.h */,
 				F9CB311219032EDE004587A5 /* LearningRate.h */,
 				F9CB311319032EDE004587A5 /* LearningRate.m */,
 				F989E1F7192C27AD00562E32 /* LocalFileSystem.h */,
@@ -916,6 +888,8 @@
 				F9F3D82B1953364F005B9D68 /* Macro.m */,
 				F9F3D8321953C384005B9D68 /* MacroHandler.h */,
 				F9F3D8331953C384005B9D68 /* MacroHandler.m */,
+				F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */,
+				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
 				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
@@ -932,7 +906,8 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
-				F9F3D83619541308005B9D68 /* KeyHandler.h */,
+				F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */,
+				F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1026,6 +1001,14 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		F9B9BFF01ABD724600CB44B6 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */,
+			);
+			name = Text;
+			sourceTree = "<group>";
+		};
 		F9CF925E1890832800449548 = {
 			isa = PBXGroup;
 			children = (
@@ -1049,11 +1032,12 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9F446A51ABD8733003ECAD2 /* Kiwi.framework */,
+				F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */,
+				F9F446A01ABD865C003ECAD2 /* Kiwi.framework */,
+				F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */,
+				F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */,
 				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
-				F94B64661AB7F041002D70FD /* libPods-OutlanderTests-Kiwi.a */,
-				F94B64671AB7F041002D70FD /* libPods-OutlanderTests.a */,
-				F94B645F1AB7ED54002D70FD /* libPods-PEGKit.a */,
-				F94B645D1AB7ED34002D70FD /* libPods-CocoaAsyncSocket.a */,
 				F94B645B1AB78071002D70FD /* Mantle.framework */,
 				F94B64571AB78056002D70FD /* ReactiveCocoa.framework */,
 				F94B64581AB78056002D70FD /* Squirrel.framework */,
@@ -1061,7 +1045,8 @@
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
-				47A161DB5E5C4325AE50C012 /* libPods.a */,
+				B26C7DA750198A8239EB3C35 /* Pods.framework */,
+				594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1114,20 +1099,16 @@
 		F9CF928E1890832800449548 /* OutlanderTests */ = {
 			isa = PBXGroup;
 			children = (
+				F9B9BFF01ABD724600CB44B6 /* Text */,
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
 				F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */,
-				F9772F0A1940332200172083 /* ExpressionBuilderTester.m */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
-				F9BF6AE9193A8D9E0075A12F /* ScriptHandlerTester.m */,
-				F9BF6AE6193A69A80075A12F /* ScriptRunnerTester.m */,
-				F96ECDE21936B82E00787CB9 /* ScriptTester.m */,
-				F98782F2194284E300D76231 /* ScriptTokensTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
@@ -1174,6 +1155,7 @@
 				F9F3D899195CA499005B9D68 /* Copy Files */,
 				F9CF92651890832800449548 /* Resources */,
 				90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */,
+				0BD0B33C5C541E23C0B14342 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1193,6 +1175,7 @@
 				F9CF92851890832800449548 /* Frameworks */,
 				F9CF92861890832800449548 /* Resources */,
 				6A1D0D83916E4B5B894CA214 /* Copy Pods Resources */,
+				2BBF27BEE1318C35A566CFF2 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1276,6 +1259,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0BD0B33C5C541E23C0B14342 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2BBF27BEE1318C35A566CFF2 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		302E9CBC367A4D4DB47B5D65 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1345,6 +1358,7 @@
 			files = (
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
+				F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
@@ -1352,7 +1366,6 @@
 				F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
-				F96ECDAE1934160200787CB9 /* ScriptOld.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
@@ -1365,6 +1378,7 @@
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
+				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
 				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
@@ -1372,10 +1386,10 @@
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
-				F96ECDBA1934445000787CB9 /* ScriptRunner.m in Sources */,
 				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
+				F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
@@ -1384,7 +1398,6 @@
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
-				F96ECDAA193404BB00787CB9 /* Actor.m in Sources */,
 				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
@@ -1396,7 +1409,6 @@
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
-				F96ECDB21934194300787CB9 /* OutlanderParser.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
@@ -1412,10 +1424,10 @@
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
-				F9772F07194032FB00172083 /* ExpressionParser.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
 				F9772F171940389E00172083 /* VarToken.m in Sources */,
+				F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F98782D71942649600D76231 /* LRToken.m in Sources */,
@@ -1432,8 +1444,8 @@
 				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */,
+				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
-				F98782EF19427DAB00D76231 /* Script.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
@@ -1458,7 +1470,7 @@
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
-				F9772F0E1940358600172083 /* ExpressionBuilder.m in Sources */,
+				F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
@@ -1473,13 +1485,12 @@
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
+				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98782D81942649600D76231 /* LRToken.m in Sources */,
-				F9BF6AEA193A8D9E0075A12F /* ScriptHandlerTester.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
-				F96ECDAF1934160200787CB9 /* ScriptOld.m in Sources */,
 				F989E206192C2E6200562E32 /* Highlight.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
@@ -1489,7 +1500,6 @@
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
-				F97A5C681892388D00E2C318 /* GameServer.m in Sources */,
 				F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
@@ -1501,7 +1511,6 @@
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F9762F79192E4EEB00B873D7 /* Alias.m in Sources */,
-				F96ECDBB1934445000787CB9 /* ScriptRunner.m in Sources */,
 				F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
@@ -1512,26 +1521,22 @@
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
-				F97A5C641891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */,
-				F96ECDAB193404BB00787CB9 /* Actor.m in Sources */,
+				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
-				F97A5C251890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
+				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
 				F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */,
 				F9772F181940389E00172083 /* VarToken.m in Sources */,
-				F9772F08194032FB00172083 /* ExpressionParser.m in Sources */,
-				F96ECDB31934194300787CB9 /* OutlanderParser.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
-				F97A5C8F1894918F00E2C318 /* GameStream.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
@@ -1544,6 +1549,7 @@
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
 				F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */,
+				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
@@ -1554,8 +1560,7 @@
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
-				F98782F019427DAB00D76231 /* Script.m in Sources */,
-				F9BF6AE7193A69A80075A12F /* ScriptRunnerTester.m in Sources */,
+				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */,
@@ -1564,12 +1569,13 @@
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
 				F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */,
-				F97A5C601891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
+				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTests.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
+				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
@@ -1582,7 +1588,6 @@
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
-				F9772F0B1940332200172083 /* ExpressionBuilderTester.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
@@ -1593,12 +1598,9 @@
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
-				F9772F0F1940358600172083 /* ExpressionBuilder.m in Sources */,
 				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
 				F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */,
-				F98782F4194284E300D76231 /* ScriptTokensTester.m in Sources */,
 				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
-				F96ECDE31936B82E00787CB9 /* ScriptTester.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1664,6 +1666,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1679,7 +1683,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1702,6 +1706,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1711,7 +1717,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
@@ -1722,6 +1728,7 @@
 			baseConfigurationReference = 5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1731,6 +1738,7 @@
 					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1751,8 +1759,9 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
+					/Users/jomc/.Trash,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1765,6 +1774,8 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1774,6 +1785,7 @@
 			baseConfigurationReference = 31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1783,6 +1795,7 @@
 					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
 					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1803,8 +1816,9 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
+					/Users/jomc/.Trash,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1817,6 +1831,7 @@
 					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1826,6 +1841,7 @@
 			baseConfigurationReference = 66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1833,6 +1849,8 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1842,17 +1860,21 @@
 				);
 				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/.Trash,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1863,6 +1885,7 @@
 			baseConfigurationReference = 7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1870,22 +1893,27 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
+					/Users/jomc/.Trash,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

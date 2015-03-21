@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "SignalSocket.h"
 #import "AuthenticationServer.h"
 #import "GameStream.h"
 #import "CharacterViewModel.h"
@@ -17,7 +16,6 @@
 #import "Commands.h"
 
 @interface TestViewController : NSViewController <Commands> {
-    SignalSocket *signalSocket;
     AuthenticationServer *_server;
     GameStream *_gameStream;
     TSMutableDictionary *_windows;

@@ -7,17 +7,14 @@
 //
 
 #import "Kiwi.h"
-#import "TestViewController.h"
 #import "TextTag.h"
 
 SPEC_BEGIN(TestViewControllerTester)
 
 describe(@"TestViewControllerTester", ^{
     
-    __block TestViewController *controller;
     
     beforeEach(^{
-        controller = [[TestViewController alloc] init];
     });
     
     it(@"should not append prompt multiple times", ^{

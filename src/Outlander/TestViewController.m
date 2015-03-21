@@ -25,12 +25,13 @@
 #import "CommandProcessor.h"
 #import "GameCommandProcessor.h"
 #import "VariableReplacer.h"
-#import "ScriptRunner.h"
 #import "LocalFileSystem.h"
 #import "CommandContext.h"
 #import <ReactiveCocoa/EXTScope.h>
 #import "MacroHandler.h"
 #import "GameCommandRelay.h"
+#import "RoomObjsTags.h"
+#import "Outlander-Swift.h"
 
 @interface TestViewController ()
 @end
@@ -43,7 +44,6 @@
     SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
-    ScriptRunner *_scriptRunner;
     MacroHandler *_macroHandler;
 }
 
@@ -61,7 +61,6 @@
     _spelltimeNotifier = [[SpelltimeNotifier alloc] initWith:_gameContext];
     _variablesReplacer = [[VariableReplacer alloc] init];
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
-    _scriptRunner = [[ScriptRunner alloc] initWith:_gameContext and:[[LocalFileSystem alloc] init]];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
     
     [[_commandProcessor.processed subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(CommandContext *x) {
@@ -117,10 +116,6 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
-    
-    TextTag *tag = [TextTag tagFor:@"Google" mono:YES];
-    tag.href = @"http://google.com";
-    [self append:tag to:@"main"];
     
     MyView *view = (MyView *)self.view;
     [view setKeyHandler:_macroHandler];
@@ -249,8 +244,6 @@
     }
     
     _gameStream = [[GameStream alloc] initWithContext:_gameContext];
-    
-    [_scriptRunner setGameStream:_gameStream];
     
     [_gameStream.connected subscribeNext:^(NSString *message) {
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
@@ -410,7 +403,8 @@
     }
     if(objects != nil && objects.length != 0) {
 //        [room appendFormat:@"%@\n", objects];
-        NSArray *tags = [self tagsForRoomObjs:objects];
+        RoomObjsTags *builder = [[RoomObjsTags alloc] init];
+        NSArray *tags = [builder tagsForRoomObjs:objects];
         [self appendAll:tags to:@"room"];
         [room appendString:@"\n"];
     }
@@ -422,37 +416,6 @@
     }
     TextTag *tag = [TextTag tagFor:room mono:false];
     [self append:tag to:@"room"];
-}
-
-- (NSArray *)tagsForRoomObjs:(NSString *)data {
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    
-    __block NSUInteger loc = 0;
-    
-    NSArray *matches = [data matchesForPattern:@"<pushbold><\\/pushbold>(.*?)<popbold><\\/popbold>"];
-    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
-        if(res.numberOfRanges > 1) {
-            NSRange rng = [res rangeAtIndex:0];
-            NSRange newRng = NSMakeRange(loc, rng.location - loc);
-            loc = rng.location + rng.length;
-            TextTag *tag = [TextTag tagFor:[data substringWithRange:newRng] mono:false];
-            [arr addObject:tag];
-            
-            NSString * name = [data substringWithRange:[res rangeAtIndex:1]];
-            tag = [TextTag tagFor:name mono:false];
-            tag.color = @"#FFFF00";
-            tag.bold = YES;
-            [arr addObject:tag];
-        }
-    }];
-    
-    if(loc < data.length) {
-        NSRange rng = NSMakeRange(loc, data.length - loc);
-        TextTag *tag = [TextTag tagFor:[data substringWithRange:rng] mono:false];
-        [arr addObject:tag];
-    }
-    
-    return arr;
 }
 
 @end

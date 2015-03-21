@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Actor.h"
 #import "GameContext.h"
 #import "OLPauseCondition.h"
 #import "SimpleQueue.h"

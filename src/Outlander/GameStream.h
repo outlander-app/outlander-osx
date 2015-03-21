@@ -5,19 +5,12 @@
 //  Created by Joseph McBride on 1/25/14.
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "GameServer.h"
 #import "GameParser.h"
 #import "GameConnection.h"
 #import "GameContext.h"
-
-@protocol InfoStream <NSObject>
-
-@property (atomic, strong) RACMulticastConnection *subject;
-@property (atomic, strong) RACMulticastConnection *room;
-@property (atomic, strong) RACMulticastConnection *spell;
-
-@end
+#import "Shared.h"
+#import "Outlander-Swift.h"
 
 @interface GameStream : NSObject <InfoStream> {
     GameServer *_gameServer;
