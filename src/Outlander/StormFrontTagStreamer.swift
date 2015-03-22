@@ -40,8 +40,18 @@ public class StormFrontTagStreamer {
         "switchquickbar"
     ]
     
+    private let roomTags = [
+        "roomdesc",
+        "roomobjs",
+        "roomplayers",
+        "roomexits"
+    ]
+    
     public var isSetup = true
     public var emitSetting : ((String,String)->Void)?
+    public var emitExp : ((SkillExp)->Void)?
+    public var emitRoundtime : ((Roundtime)->Void)?
+    public var emitRoom : (()->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -75,6 +85,38 @@ public class StormFrontTagStreamer {
         case _ where node.name == "prompt":
             emitSetting?("prompt", node.value?.replace("&gt;", withString: ">") ?? "")
             emitSetting?("gametime", node.attr("time") ?? "")
+            
+            let today = NSDate().timeIntervalSince1970
+            emitSetting?("gametimeupdate", "\(today)")
+            
+        case _ where node.name == "roundtime":
+            var roundtime = Roundtime()
+            roundtime.time = NSDate(timeIntervalSince1970: NSTimeInterval(node.attr("value")!.toInt()!))
+            emitRoundtime?(roundtime)
+            
+        case _ where node.name == "component":
+            var compId = node.attr("id")?.replace(" ", withString: "_") ?? ""
+            
+            if !compId.hasPrefix("exp") {
+                compId = compId.replace("_", withString: "")
+                emitSetting?(compId, node.value ?? "")
+                
+                if contains(roomTags, compId) {
+                    emitRoom?()
+                }
+                
+            } else if !compId.hasPrefix("exp_tdp") {
+                if let val = node.children.count > 0 ? node.children[0].value : node.value {
+                    parseExp(compId, data: val, isNew: node.children.count > 0)
+                }
+            }
+            
+        case _ where node.name == "left" || node.name == "right":
+            emitSetting?("\(node.name)hand", node.value ?? "Empty")
+            emitSetting?("\(node.name)handnoun", node.attr("noun") ?? "")
+            
+        case _ where node.name == "spell":
+            emitSetting?("spell", node.value ?? "")
             
         default:
             // do nothing
@@ -187,6 +229,38 @@ public class StormFrontTagStreamer {
         default:
             return "main"
         }
+    }
+    
+    public func parseExp(compId:String, data:String, isNew:Bool) {
+        
+        if countElements(data) == 0 {
+            return
+        }
+        
+        let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s(\\w.*)?.*";
+        
+        var trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+      
+        var ranks = RegexMutable(trimmed)
+        ranks[pattern] ~= "$1.$2"
+        
+        var mindstate = RegexMutable(trimmed)
+        mindstate[pattern] ~= "$3"
+        
+        let rate = LearningRate.fromDescription(mindstate)
+        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
+        
+        let skill = SkillExp()
+        skill.name = expName
+        skill.ranks = NSDecimalNumber(string:ranks)
+        skill.mindState = rate
+        skill.isNew = isNew
+        
+        emitSetting?("\(expName).Ranks", ranks)
+        emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+        emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
+        
+        emitExp?(skill)
     }
     
     func emitTag(node:Node) -> TextTag? {

@@ -12,9 +12,30 @@ import Nimble
 
 class StormFrontTagStreamerTester: QuickSpec {
     
+    let streamer = StormFrontTagStreamer()
+    var nodes = [Node]()
+    var tags = [TextTag]()
+    var exp = [SkillExp]()
+    var settings = [String: String]()
+    
     override func spec() {
         
+        streamer.emitSetting = { (key,value) in
+            self.settings[key] = value
+        }
+        
+        streamer.emitExp = { (exp) in
+            self.exp.append(exp)
+        }
+        
         describe("streamer", {
+            
+            beforeEach({
+                self.nodes = []
+                self.tags = []
+                self.exp = []
+                self.settings = [String: String]()
+            })
             
             it("excludes extra line breaks", {
                 let data = [
@@ -48,9 +69,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 ""
                 ]
               
-                let result = self.streamData(data)
+                self.streamData(data)
                 
-                expect(result.count).to(equal(2))
+                expect(self.tags.count).to(equal(2))
             })
             
             it("excludes extra line breaks - inv stream", {
@@ -64,37 +85,120 @@ class StormFrontTagStreamerTester: QuickSpec {
                 "<popStream/>"
                 ]
               
-                let result = self.streamData(data)
+                self.streamData(data)
                 
-                expect(result.count).to(equal(0))
+                expect(self.tags.count).to(equal(0))
             })
 
-            it("streams login tag to logons", {
+            it("streams login tag to arrivals", {
                 let data = [
                     "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
                 ]
               
-                let result = self.streamData(data)
+                self.streamData(data)
                 
-                expect(result.count).to(equal(1))
-                expect(result[0].text).to(equal(" * Arneson joins the adventure.\n"))
-                expect(result[0].targetWindow).to(equal("arrivals"))
+                expect(self.tags.count).to(equal(1))
+                expect(self.tags[0].text).to(equal(" * Arneson joins the adventure.\n"))
+                expect(self.tags[0].targetWindow).to(equal("arrivals"))
+            })
+            
+            it("streams exp into settings", {
+                let data = [
+                "<component id='exp Scholarship'>     Scholarship:    4 23% thoughtful   </component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["Scholarship.Ranks"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.Ranks"]).to(equal("4.23"))
+                
+                expect(self.settings["Scholarship.LearningRate"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.LearningRate"]).to(equal("4"))
+                
+                expect(self.settings["Scholarship.LearningRateName"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.LearningRateName"]).to(equal("thoughtful"))
+            })
+            
+            it("streams new exp into settings", {
+                let data = [
+                "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["Athletics.Ranks"]).toNot(equal(nil))
+                expect(self.settings["Athletics.Ranks"]).to(equal("50.33"))
+                
+                expect(self.settings["Athletics.LearningRate"]).toNot(equal(nil))
+                let rate = LearningRate.fromDescription("deliberative")
+                expect(self.settings["Athletics.LearningRate"]).to(equal("\(rate.rateId)"))
+                
+                expect(self.settings["Athletics.LearningRateName"]).toNot(equal(nil))
+                expect(self.settings["Athletics.LearningRateName"]).to(equal("deliberative"))
+            })
+            
+            it("streams new exp into exp", {
+                let data = [
+                "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.exp.count).to(equal(1))
+                
+                expect(self.exp[0].name).to(equal("Athletics"))
+                expect(self.exp[0].ranks).to(equal(50.33))
+                expect(self.exp[0].isNew).to(equal(true))
+                expect(self.exp[0].mindState).to(equal(LearningRate.fromDescription("deliberative")))
+            })
+            
+            it("streams exp into exp", {
+                let data = [
+                "<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.exp.count).to(equal(1))
+                
+                expect(self.exp[0].name).to(equal("Athletics"))
+                expect(self.exp[0].ranks).to(equal(50.33))
+                expect(self.exp[0].isNew).to(equal(false))
+                expect(self.exp[0].mindState).to(equal(LearningRate.fromDescription("deliberative")))
+            })
+            
+            it("streams room exists into settings", {
+                let data = [
+                "<component id='room exits'>Obvious paths: <d>north</d>.<compass></compass></component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings.count).to(equal(1))
+                
+                expect(self.settings["roomexits"]).toNot(equal(nil))
+                expect(self.settings["roomexits"]).to(equal("Obvious paths: north."))
             })
         })
     }
     
-    func streamData(data:[String]) -> Array<TextTag>{
-        var nodes = [Node]()
+    func streamData(data:[String]) {
         let tokenizer = StormFrontTokenizer()
         
         for line in data {
             tokenizer.tokenize(line, tokenReceiver: { (node:Node) -> (Bool) in
-                nodes.append(node)
+                self.nodes.append(node)
                 return true
             })
         }
-        let streamer = StormFrontTagStreamer()
-        let result = streamer.stream(nodes)
-        return result
+        
+        self.tags = self.streamer.stream(nodes)
     }
 }

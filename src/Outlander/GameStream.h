@@ -22,14 +22,14 @@
 @property (atomic, strong) RACSignal *indicators;
 @property (atomic, strong) RACSignal *directions;
 @property (atomic, strong) RACMulticastConnection *room;
-@property (atomic, strong) RACSignal *exp;
+@property (atomic, strong) RACSubject *exp;
 @property (atomic, strong) RACSignal *thoughts;
 @property (atomic, strong) RACSignal *chatter;
 @property (atomic, strong) RACSignal *arrivals;
 @property (atomic, strong) RACSignal *deaths;
 @property (atomic, strong) RACSignal *familiar;
 @property (atomic, strong) RACSignal *log;
-@property (atomic, strong) RACSignal *roundtime;
+@property (atomic, strong) RACSubject *roundtime;
 @property (atomic, strong) RACMulticastConnection *spell;
 
 -(id) initWithContext:(GameContext *)context;

@@ -5,3 +5,6 @@
 @import Foundation;
 
 #import "TextTag.h"
+#import "LearningRate.h"
+#import "SkillExp.h"
+#import "Roundtime.h"

@@ -40,6 +40,18 @@
         [_gameContext.globalVars setCacheObject:value forKey:key];
     };
     
+    _tagStreamer.emitExp = ^(SkillExp *exp) {
+        [_exp sendNext:exp];
+    };
+    
+    _tagStreamer.emitRoundtime = ^(Roundtime *rt) {
+        [_roundtime sendNext:rt];
+    };
+    
+    _tagStreamer.emitRoom = ^{
+        [_gameParser.room sendNext:@""];
+    };
+    
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
     _directions = _gameParser.directions;
