@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *backgroundColor;
 @property (nonatomic, copy) NSString *href;
 @property (nonatomic, copy) NSString *command;
+@property (nonatomic, copy) NSString *targetWindow;
 @property (nonatomic, assign) BOOL mono;
 @property (nonatomic, assign) BOOL bold;
 

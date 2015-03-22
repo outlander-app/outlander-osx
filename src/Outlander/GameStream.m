@@ -36,6 +36,10 @@
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
     
+    _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
+        [_gameContext.globalVars setCacheObject:value forKey:key];
+    };
+    
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
     _directions = _gameParser.directions;

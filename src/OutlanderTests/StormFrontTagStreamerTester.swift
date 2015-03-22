@@ -47,18 +47,8 @@ class StormFrontTagStreamerTester: QuickSpec {
                 "<output class=\"mono\"/>",
                 ""
                 ]
-               
-                var nodes = [Node]()
-                let tokenizer = StormFrontTokenizer()
-                
-                for line in data {
-                    tokenizer.tokenize(line, tokenReceiver: { (node:Node) -> (Bool) in
-                       nodes.append(node)
-                        return true
-                    })
-                }
-                let streamer = StormFrontTagStreamer()
-                let result = streamer.stream(nodes)
+              
+                let result = self.streamData(data)
                 
                 expect(result.count).to(equal(2))
             })
@@ -73,21 +63,38 @@ class StormFrontTagStreamerTester: QuickSpec {
                 "  a canvas miner's backpack",
                 "<popStream/>"
                 ]
-               
-                var nodes = [Node]()
-                let tokenizer = StormFrontTokenizer()
-                
-                for line in data {
-                    tokenizer.tokenize(line, tokenReceiver: { (node:Node) -> (Bool) in
-                       nodes.append(node)
-                        return true
-                    })
-                }
-                let streamer = StormFrontTagStreamer()
-                let result = streamer.stream(nodes)
+              
+                let result = self.streamData(data)
                 
                 expect(result.count).to(equal(0))
             })
+
+            it("streams login tag to logons", {
+                let data = [
+                    "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
+                ]
+              
+                let result = self.streamData(data)
+                
+                expect(result.count).to(equal(1))
+                expect(result[0].text).to(equal(" * Arneson joins the adventure.\n"))
+                expect(result[0].targetWindow).to(equal("arrivals"))
+            })
         })
+    }
+    
+    func streamData(data:[String]) -> Array<TextTag>{
+        var nodes = [Node]()
+        let tokenizer = StormFrontTokenizer()
+        
+        for line in data {
+            tokenizer.tokenize(line, tokenReceiver: { (node:Node) -> (Bool) in
+                nodes.append(node)
+                return true
+            })
+        }
+        let streamer = StormFrontTagStreamer()
+        let result = streamer.stream(nodes)
+        return result
     }
 }

@@ -41,6 +41,7 @@ public class StormFrontTagStreamer {
     ]
     
     public var isSetup = true
+    public var emitSetting : ((String,String)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -65,6 +66,20 @@ public class StormFrontTagStreamer {
     }
     
     public func processNode(node:Node) {
+        if emitSetting == nil {
+            return
+        }
+        
+        switch node.name {
+            
+        case _ where node.name == "prompt":
+            emitSetting?("prompt", node.value?.replace("&gt;", withString: ">") ?? "")
+            emitSetting?("gametime", node.attr("time") ?? "")
+            
+        default:
+            // do nothing
+            if 1 > 2 {}
+        }
     }
     
     public func tagForNode(node:Node) -> TextTag? {
@@ -86,6 +101,15 @@ public class StormFrontTagStreamer {
             }
             
             tag = emitTag(node)
+            tag?.targetWindow = self.streamIdToWindow(lastStreamId)
+            if inStream {
+                tag?.text = "\(tag!.text!)\n"
+            }
+            
+            if lastNode?.name == "preset" && countElements(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
+                var text = tag!.text!.trimPrefix("  ")
+                tag?.text = "\n\(text)"
+            }
             
         case _ where node.name == "eot":
             if inStream || lastNode != nil && contains(ignoredEot, lastNode!.name) {
@@ -102,6 +126,7 @@ public class StormFrontTagStreamer {
                 break
             }
             tag = emitTag(node)
+            tag?.targetWindow = self.streamIdToWindow(lastStreamId)
             //let id = node.attr("id")
             
         case _ where node.name == "pushbold":
@@ -151,9 +176,24 @@ public class StormFrontTagStreamer {
         return tag
     }
     
+    public func streamIdToWindow(streamId:String) -> String {
+        switch(streamId) {
+        case _ where streamId == "logons":
+            return "arrivals"
+        case _ where streamId == "thoughts" || streamId == "chatter":
+            return "thoughts"
+        case _ where streamId == "death":
+            return "deaths"
+        default:
+            return "main"
+        }
+    }
+    
     func emitTag(node:Node) -> TextTag? {
         let tag:TextTag? = TextTag()
-        tag?.text = node.value
+        var text = node.value?.replace("&gt;", withString: ">")
+        text = text?.replace("&lt;", withString: "<")
+        tag?.text = text
         tag?.bold = self.bold
         tag?.mono = self.mono
         return tag

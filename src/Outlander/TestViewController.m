@@ -217,6 +217,10 @@
     }];
 }
 
+- (BOOL)hasWindow:(NSString *)window {
+    return [_windows cacheDoesContain:window];
+}
+
 - (void)append:(TextTag*)text to:(NSString *)key {
     NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
     
@@ -361,7 +365,11 @@
         _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
         
         for (TextTag *tag in tags) {
-            [self append:tag to:@"main"];
+            if (tag.targetWindow != nil && [self hasWindow:tag.targetWindow]) {
+                [self append:tag to:tag.targetWindow];
+            } else {
+                [self append:tag to:@"main"];
+            }
         }
         
     } completed:^{

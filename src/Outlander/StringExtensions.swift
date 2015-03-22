@@ -32,6 +32,11 @@ extension String {
         return self
     }
     
+    public func replace(target: String, withString: String) -> String
+    {
+        return self.stringByReplacingOccurrencesOfString(target, withString: withString, options: NSStringCompareOptions.LiteralSearch, range: nil)
+    }
+    
     subscript (i: Int) -> Character {
         return self[advance(self.startIndex, i)]
     }

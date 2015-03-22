@@ -65,7 +65,6 @@
             return;
         }
         
-       
         if(text.bold) {
             text.color = @"#FFFF00";
         }
