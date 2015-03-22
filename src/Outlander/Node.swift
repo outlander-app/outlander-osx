@@ -8,7 +8,8 @@
 
 import Foundation
 
-@objc public class Node {
+@objc
+public class Node {
     var name:String
     var value:String?
     var attributes:[String: String]? {

@@ -13,6 +13,7 @@
 
 @property (atomic, strong) RACMulticastConnection *subject;
 @property (atomic, strong) RACMulticastConnection *room;
+@property (atomic, strong) RACMulticastConnection *spell;
 @property (nonatomic, strong) id lastSubject;
 
 - (void)publishRoom;

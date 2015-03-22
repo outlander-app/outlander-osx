@@ -10,7 +10,7 @@ import Cocoa
 import Quick
 import Nimble
 
-class StormFrontTokenizerTests: QuickSpec {
+class StormFrontTokenizerTester: QuickSpec {
     
     override func spec() {
         describe("tokenizer", {
@@ -120,9 +120,9 @@ class StormFrontTokenizerTests: QuickSpec {
                 
                 expect(results.count).to(equal(4))
                 
-                expect(results[0].name).to(equal("pushBold"))
+                expect(results[0].name).to(equal("pushbold"))
                 expect(results[1].name).to(equal("text"))
-                expect(results[2].name).to(equal("popBold"))
+                expect(results[2].name).to(equal("popbold"))
             })
             
             it("tokenizes self closing tag with attributes", {
@@ -137,7 +137,7 @@ class StormFrontTokenizerTests: QuickSpec {
                 
                 expect(results.count).to(equal(3))
                 
-                expect(results[0].name).to(equal("pushStream"))
+                expect(results[0].name).to(equal("pushstream"))
                 expect(results[0].hasAttr("id")).to(equal(true))
                 expect(results[0].attr("id")).to(equal("logons"))
             })
@@ -182,6 +182,26 @@ class StormFrontTokenizerTests: QuickSpec {
                 expect(results[0].children[1].attr("value")).to(equal("w"))
             })
             
+            it("tokenizes compass + prompt", {
+                let tokenizer = StormFrontTokenizer()
+                var results = Array<Node>()
+                let data = "<compass><dir value=\"n\"/></compass><prompt time=\"1426818091\">&gt;</prompt>\r\n"
+                
+                tokenizer.tokenize(data){(token:Node)->Bool in
+                    results.append(token)
+                    return true
+                }
+                
+                expect(results.count).to(equal(3))
+                
+                expect(results[0].children.count).to(equal(1))
+                
+                expect(results[0].children[0].name).to(equal("dir"))
+                expect(results[0].children[0].attr("value")).to(equal("n"))
+            
+                expect(results[1].name).to(equal("prompt"))
+            })
+            
             it("tokenizes element with attributes and children", {
                 let tokenizer = StormFrontTokenizer()
                 var results = Array<Node>()
@@ -217,10 +237,10 @@ class StormFrontTokenizerTests: QuickSpec {
                 
                 expect(results.count).to(equal(2))
                 
-                expect(results[0].name).to(equal("openDialog"))
+                expect(results[0].name).to(equal("opendialog"))
                 expect(results[0].attr("title")).to(equal("Information"))
                 
-                expect(results[0].children.first!.name).to(equal("dialogData"))
+                expect(results[0].children.first!.name).to(equal("dialogdata"))
                 expect(results[0].children.first!.attr("id")).to(equal("quick-simu"))
                 expect(results[0].children.first!.children.count).to(equal(12))
                 
@@ -244,6 +264,27 @@ class StormFrontTokenizerTests: QuickSpec {
                 expect(results.count).to(equal(2))
                 expect(results[0].value).to(equal("   Last login :  Tuesday, March 17, 2015 at 00:51:53"))
                 expect(results[1].name).to(equal("eot"))
+            })
+            
+            it("tokenizes pushStream", {
+                let tokenizer = StormFrontTokenizer()
+                var results = Array<Node>()
+                let data = "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
+                
+                tokenizer.tokenize(data){(token:Node)->Bool in
+                    results.append(token)
+                    return true
+                }
+                
+                expect(results.count).to(equal(3))
+                
+                expect(results[0].name).to(equal("pushstream"))
+                expect(results[0].attr("id")).to(equal("logons"))
+                
+                expect(results[1].name).to(equal("text"))
+                expect(results[1].value).to(equal(" * Arneson joins the adventure."))
+                
+                expect(results[2].name).to(equal("eot"))
             })
             
             it("tokenizes roomDesc", {

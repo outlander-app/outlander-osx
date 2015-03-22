@@ -18,6 +18,7 @@
     GameContext *_gameContext;
     RACSubject *_mainSubject;
     StormFrontTokenizer *_tokenizer;
+    StormFrontTagStreamer *_tagStreamer;
 }
 
 @end
@@ -33,6 +34,7 @@
     _gameServer = [[GameServer alloc] initWithContext:context];
     _gameParser = [[GameParser alloc] initWithContext:context];
     _tokenizer = [StormFrontTokenizer newInstance];
+    _tagStreamer = [StormFrontTagStreamer newInstance];
     
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
@@ -87,13 +89,16 @@
                   toHost:connection.host
                   onPort:connection.port]
      subscribeNext:^(id result) {
+         
          [_tokenizer tokenize:(NSString *)result tokenReceiver:^BOOL(Node *node){
-             NSLog(@"token: %@", node);
+             NSArray *tags = [_tagStreamer streamSingle:node];
+             [_mainSubject sendNext:tags];
              return YES;
          }];
-        [_gameParser parse:result then:^(NSArray *result) {
-            [_mainSubject sendNext:result];
-        }];
+         
+//         [_gameParser parse:result then:^(NSArray *result) {
+//             [_mainSubject sendNext:result];
+//         }];
      } completed:^{
         [_mainSubject sendCompleted];
      }];

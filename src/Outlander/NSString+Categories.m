@@ -63,4 +63,14 @@
     NSArray *matches = [regex matchesInString:self options:NSMatchingWithTransparentBounds range:NSMakeRange(0, [self length])];
     return matches;
 }
+
+-(NSString *) replaceWithPattern:(NSString *)pattern andTemplate:(NSString *)template {
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:nil];
+    return [regex stringByReplacingMatchesInString:self
+                                           options:0
+                                             range:NSMakeRange(0, [self length])
+                                      withTemplate:template];
+}
 @end

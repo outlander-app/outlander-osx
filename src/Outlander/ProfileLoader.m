@@ -34,21 +34,21 @@
     
     if(!data || error) return;
     
-    NSString *gameMatch = [self matchFor:data pattern:@"Game: (\\w+)"];
+    NSString *gameMatch = [self matchFor:data pattern:@"Game: (.+)"];
     if(gameMatch && gameMatch.length > 0) {
         _context.settings.game = gameMatch;
     }
-    NSString *character = [self matchFor:data pattern:@"Character: (\\w+)"];
+    NSString *character = [self matchFor:data pattern:@"Character: (.+)"];
     if(character && character.length > 0) {
         _context.settings.character = character;
     }
     
-    NSString *account = [self matchFor:data pattern:@"Account: (\\w+)"];
+    NSString *account = [self matchFor:data pattern:@"Account: (.+)"];
     if(account && account.length > 0) {
         _context.settings.account = account;
     }
     
-    NSString *pw = [self matchFor:data pattern:@"Password: (\\w+)"];
+    NSString *pw = [self matchFor:data pattern:@"Password: (.+)"];
     if(pw && pw.length > 0) {
         _context.settings.password = pw;
     }

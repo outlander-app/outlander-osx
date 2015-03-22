@@ -18,7 +18,7 @@ import Foundation
         return StormFrontTokenizer()
     }
     
-    private class Context : Printable {
+    public class Context : Printable {
         var nodes = [Node]()
         var consumedCharacters : String {
             let substring = __sourceString[__startIndex..<__currentIndex]
@@ -73,13 +73,13 @@ import Foundation
             tagName = ""
         }
         
-        internal func flushConsumedCharacters(){
+        func flushConsumedCharacters(){
             __startIndex = __currentIndex
             startPosition = currentPosition
         }
         
-        internal func createNode(_ children:[Node]? = nil) {
-            let node = Node(tagName, value, attributes)
+        func createNode(_ children:[Node]? = nil) {
+            let node = Node(tagName.lowercaseString, value, attributes)
             
             if let c = children {
                 node.children = c
@@ -111,10 +111,10 @@ import Foundation
         
         public func advanceTo(match:(Character)->Bool) {
             while !complete {
-                advance()
                 if match(current) {
                     return
                 }
+                advance()
             }
         }
         
@@ -159,7 +159,6 @@ import Foundation
     
     private func scanContext(ctx:Context) -> [Node] {
         while !ctx.complete {
-            println("scanning", ctx.description)
             scanTag(ctx)
         }
         return ctx.nodes
@@ -183,14 +182,13 @@ import Foundation
                 context.nodes.append(token)
             }
         }
-        println(context.description)
+        
         context.advance()
         context.flushConsumedCharacters()
         context.advanceTo { (char:Character) -> Bool in
             return char == " " || char == ">" || (char == "/" && context.next == ">")
         }
         context.tagName = context.consumedCharacters
-        println(context.description)
         context.flushConsumedCharacters()
         
         if context.current == "/" && context.next == ">" {
@@ -206,7 +204,6 @@ import Foundation
             context.advanceTo({ (char:Character) -> Bool in
                 return char == ">" || (char == "/" && context.next == ">")
             })
-            println(context.description)
             context.attributes = context.consumedCharacters["(\\w+)=('[^']*'|[^\n]*)"].dictionary()
             
             if context.current == "/" && context.next == ">" {
@@ -230,7 +227,6 @@ import Foundation
         context.advanceTo { (char:Character) -> Bool in
             return char == "<"
         }
-        println(context.description)
         
         if context.complete {
             return
@@ -238,25 +234,15 @@ import Foundation
         
         if context.next != "/" && context.next != context.tagName[0] {
             // new tag
-            println("\n\n****new tag!****\n")
-            //pushContext()
+            //println("\n\n****new tag!****\n")
             let checker = "</\(context.tagName)>"
             let endRange = context.__sourceString.rangeOfString(checker)
-            println("checker=\(checker) range=\(endRange)\n\n")
             let childNodes = pushContext(context, range: Range(start: context.__startIndex, end: endRange!.startIndex))
-            println(context.description)
-            println("children!", childNodes)
             context.createNode(childNodes)
             
             // advance to end of closing tag
             context.advanceToIndex(endRange!.endIndex)
-            
-            println(context.description)
-            
             context.flushConsumedCharacters()
-            
-            println(context.description)
-            
             return
         }
         
@@ -265,7 +251,6 @@ import Foundation
         context.advanceTo { (char:Character) -> Bool in
             return char == ">"
         }
-        println(context.description)
         context.createNode()
         
         // consume '>' char

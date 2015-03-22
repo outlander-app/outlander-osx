@@ -79,6 +79,13 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
+		F97466A81ABD8BE20075AC77 /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97466A91ABD8BE20075AC77 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97466AA1ABD8BE20075AC77 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
+		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
+		F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */; };
 		F9762F78192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F79192E4EEB00B873D7 /* Alias.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F77192E4EEB00B873D7 /* Alias.m */; };
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
@@ -232,7 +239,7 @@
 		F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */; };
 		F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
 		F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
-		F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */; };
+		F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */; };
 		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
@@ -297,13 +304,17 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		F9F3D899195CA499005B9D68 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
+				F97466A81ABD8BE20075AC77 /* Mantle.framework in Copy Files */,
+				F97466A91ABD8BE20075AC77 /* ReactiveCocoa.framework in Copy Files */,
+				F97466AA1ABD8BE20075AC77 /* Squirrel.framework in Copy Files */,
 			);
 			name = "Copy Files";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -390,6 +401,8 @@
 		F971EFD91938830D008AF6A8 /* StubCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubCommandRelay.m; sourceTree = "<group>"; };
 		F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubInfoStream.h; sourceTree = "<group>"; };
 		F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubInfoStream.m; sourceTree = "<group>"; };
+		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
+		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
 		F9762F77192E4EEB00B873D7 /* Alias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alias.m; sourceTree = "<group>"; };
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
@@ -553,7 +566,7 @@
 		F9B9BFE71ABD5DA000CB44B6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizerTests.swift; sourceTree = "<group>"; };
+		F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizerTester.swift; sourceTree = "<group>"; };
 		F9BF6AEF193A90880075A12F /* EventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF0193A914B0075A12F /* GameEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF1193A914B0075A12F /* GameEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEventRelay.m; sourceTree = "<group>"; };
@@ -784,6 +797,7 @@
 				F9B9BFE71ABD5DA000CB44B6 /* Node.swift */,
 				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
 				F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */,
+				F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1004,7 +1018,8 @@
 		F9B9BFF01ABD724600CB44B6 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTests.swift */,
+				F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */,
+				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1383,6 +1398,7 @@
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
 				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
+				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
@@ -1487,6 +1503,7 @@
 				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */,
 				F98782D81942649600D76231 /* LRToken.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
@@ -1509,6 +1526,7 @@
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
+				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F9762F79192E4EEB00B873D7 /* Alias.m in Sources */,
 				F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */,
@@ -1571,7 +1589,7 @@
 				F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
-				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTests.swift in Sources */,
+				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,

@@ -61,11 +61,23 @@
 - (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        if(text.text == nil || text.text.length == 0) {
+            return;
+        }
+        
+       
+        if(text.bold) {
+            text.color = @"#FFFF00";
+        }
+        
         NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
         BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
         
-        NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:[text text]];
-        NSRange range = [[attr string] rangeOfString:text.text];
+        NSString *escaped = [text.text replaceWithPattern:@"&gt;" andTemplate:@">"];
+        escaped = [escaped replaceWithPattern:@"&lt;" andTemplate:@">"];
+        
+        NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:escaped];
+        NSRange range = [[attr string] rangeOfString:escaped];
 
         if(text.href) {
             [attr addAttribute:NSLinkAttributeName value:text.href range:range];
@@ -81,6 +93,11 @@
         }
         
         [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
+        
+        if(text.backgroundColor != nil) {
+            [attr addAttribute:NSBackgroundColorAttributeName value:text.backgroundColor range:range];
+        }
+        
         NSString *fontName = @"Helvetica";
         int fontSize = 14;
         if(text.mono){
@@ -88,6 +105,7 @@
             fontSize = 13;
         }
         [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
+        
         [[textView textStorage] appendAttributedString:attr];
         
         if(shouldScrollToBottom) {
