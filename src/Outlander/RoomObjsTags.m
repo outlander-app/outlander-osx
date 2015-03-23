@@ -16,7 +16,7 @@
     
     __block NSUInteger loc = 0;
     
-    NSArray *matches = [data matchesForPattern:@"<pushbold><\\/pushbold>(.*?)<popbold><\\/popbold>"];
+    NSArray *matches = [data matchesForPattern:@"<pushbold\\/>(.*?)<popbold\\/>"];
     [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {
             NSRange rng = [res rangeAtIndex:0];

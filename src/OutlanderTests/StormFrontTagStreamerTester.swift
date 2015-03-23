@@ -104,7 +104,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams exp into settings", {
                 let data = [
-                "<component id='exp Scholarship'>     Scholarship:    4 23% thoughtful   </component>\r\n"
+                    "<component id='exp Scholarship'>     Scholarship:    4 23% thoughtful   </component>\r\n"
                 ]
               
                 self.streamData(data)
@@ -123,7 +123,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams new exp into settings", {
                 let data = [
-                "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
+                    "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
                 ]
               
                 self.streamData(data)
@@ -143,7 +143,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams new exp into exp", {
                 let data = [
-                "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
+                    "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
                 ]
               
                 self.streamData(data)
@@ -159,7 +159,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams exp into exp", {
                 let data = [
-                "<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n"
+                    "<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n"
                 ]
               
                 self.streamData(data)
@@ -175,7 +175,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams room exists into settings", {
                 let data = [
-                "<component id='room exits'>Obvious paths: <d>north</d>.<compass></compass></component>\r\n"
+                    "<component id='room exits'>Obvious paths: <d>north</d>, <d>west</d>, <d>northwest</d>.<compass></compass></component>\r\n",
                 ]
               
                 self.streamData(data)
@@ -184,7 +184,35 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.settings.count).to(equal(1))
                 
                 expect(self.settings["roomexits"]).toNot(equal(nil))
-                expect(self.settings["roomexits"]).to(equal("Obvious paths: north."))
+                expect(self.settings["roomexits"]).to(equal("Obvious paths: north, west, northwest."))
+            })
+            
+            it("streams room objs into settings", {
+                let data = [
+                    "<component id='room objs'>You also see a rock and <pushBold/>a journeyman<popBold/>.</component>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings.count).to(equal(2))
+                
+                expect(self.settings["roomobjs"]).toNot(equal(nil))
+                expect(self.settings["roomobjs"]).to(equal("You also see a rock and a journeyman."))
+            })
+            
+            it("streams room objs 'original' into settings (for monster bold)", {
+                let data = [
+                    "<component id='room objs'>You also see a rock and <pushBold/>a journeyman<popBold/>.</component>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings.count).to(equal(2))
+                
+                expect(self.settings["roomobjsorig"]).toNot(equal(nil))
+                expect(self.settings["roomobjsorig"]).to(equal("You also see a rock and <pushbold/>a journeyman<popbold/>."))
             })
         })
     }

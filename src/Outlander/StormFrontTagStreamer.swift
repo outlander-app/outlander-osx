@@ -99,7 +99,24 @@ public class StormFrontTagStreamer {
             
             if !compId.hasPrefix("exp") {
                 compId = compId.replace("_", withString: "")
-                emitSetting?(compId, node.value ?? "")
+                
+                var value = node.value ?? ""
+                
+                if compId == "roomexits" {
+                    value = nodeChildValues(node)
+                }
+                
+                if compId == "roomobjs" {
+                    var origValues = value
+                    if node.children.count > 0 {
+                        value = nodeChildValues(node)
+                        origValues = nodeChildValuesWithBold(node)
+                    }
+                    
+                    emitSetting?("roomobjsorig", origValues)
+                }
+                
+                emitSetting?(compId, value)
                 
                 if contains(roomTags, compId) {
                     emitRoom?()
@@ -229,6 +246,40 @@ public class StormFrontTagStreamer {
         default:
             return "main"
         }
+    }
+    
+    public func nodeChildValues(node:Node) -> String {
+        
+        var result = ""
+       
+        for child in node.children {
+            if child.name == "text" || child.name == "d" {
+                result += child.value ?? ""
+            }
+        }
+        
+        return result
+    }
+
+    public func nodeChildValuesWithBold(node:Node) -> String {
+        
+        var result = ""
+       
+        for child in node.children {
+            if child.name == "text" || child.name == "d" {
+                result += child.value ?? ""
+            }
+            
+            if child.name == "pushbold" {
+                result += "<pushbold/>"
+            }
+            
+            if child.name == "popbold" {
+                result += "<popbold/>"
+            }
+        }
+        
+        return result
     }
     
     public func parseExp(compId:String, data:String, isNew:Bool) {

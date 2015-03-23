@@ -22,7 +22,7 @@ describe(@"RoomObjcsTags", ^{
         });
         
         it(@"should create monster bold tags", ^{
-            NSString *data = @"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>.";
+            NSString *data = @"You also see <pushbold/>a musk hog<popbold/> and <pushbold/>a musk hog<popbold/>.";
             NSArray *tags = [theController tagsForRoomObjs:data];
             
             [[tags should] haveCountOf:5];

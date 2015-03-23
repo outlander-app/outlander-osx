@@ -27,6 +27,7 @@ import Foundation
         }
         
         private let __sourceString : String
+        let sourceLength:Int
         
         var current : Character
         var next : Character?
@@ -58,6 +59,7 @@ import Foundation
             __startIndex = withMarker
             __currentIndex = __startIndex
             __sourceString = forString
+            sourceLength = countElements(__sourceString)
             
             current = eot
             
@@ -171,6 +173,17 @@ import Foundation
     }
     
     private func scanTag(context:Context) {
+        
+        if context.startPosition == context.currentPosition
+            && context.currentPosition == context.sourceLength - 1
+            && context.current !=  "\r\n" {
+            let length = context.sourceLength - 1
+            let data = context.__sourceString.substringFromIndex(advance(context.__sourceString.startIndex, length))
+            let token = Node("text", data, nil)
+            context.nodes.append(token)
+            context.advance()
+            return
+        }
         
         if context.current != "<" {
             context.advanceTo({ (char:Character) -> Bool in
