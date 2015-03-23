@@ -3,6 +3,8 @@ Outlander
 
 [![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
 
+![](http://i.imgur.com/NsK0LOT.png)
+
 Players
 ==========
 Read the client [documentation](commands.md).
