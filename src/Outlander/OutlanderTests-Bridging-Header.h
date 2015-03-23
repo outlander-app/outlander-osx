@@ -8,3 +8,4 @@
 #import "LearningRate.h"
 #import "SkillExp.h"
 #import "Roundtime.h"
+#import "Vitals.h"

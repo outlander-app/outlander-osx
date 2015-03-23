@@ -20,6 +20,9 @@
 @property (unsafe_unretained) IBOutlet MyNSTextView *TextView;
 
 - (NSString *)text;
+- (void)setWithTags:(NSArray *)tags;
+- (void)beginEdit;
+- (void)endEdit;
 - (void)clear;
 - (BOOL)endsWith:(NSString*)value;
 - (void)append:(TextTag*)text;

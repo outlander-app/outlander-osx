@@ -52,6 +52,7 @@ public class StormFrontTagStreamer {
     public var emitExp : ((SkillExp)->Void)?
     public var emitRoundtime : ((Roundtime)->Void)?
     public var emitRoom : (()->Void)?
+    public var emitVitals : ((Vitals)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -103,7 +104,9 @@ public class StormFrontTagStreamer {
                 var value = node.value ?? ""
                 
                 if compId == "roomexits" {
-                    value = nodeChildValues(node)
+                    if node.children.count > 0 {
+                        value = nodeChildValues(node)
+                    }
                 }
                 
                 if compId == "roomobjs" {
@@ -134,6 +137,28 @@ public class StormFrontTagStreamer {
             
         case _ where node.name == "spell":
             emitSetting?("spell", node.value ?? "")
+            
+        case _ where node.name == "streamwindow":
+            var subtitle = node.attr("subtitle")
+            if subtitle != nil && countElements(subtitle!) > 3 {
+                subtitle = subtitle!.substringFromIndex(advance(subtitle!.startIndex, 3))
+            }
+            emitSetting?("roomtitle", subtitle ?? "")
+            
+        case _ where node.name == "dialogdata" && node.attr("id") == "minivitals":
+            let vitals = node.children
+                            .filter {$0.name == "progressbar" && $0.hasAttr("id")}
+            
+            for vital in vitals {
+                let name = vital.attr("id")!
+                let value = vital.attr("value") ?? "0"
+                emitSetting?(name, value)
+               
+                let send = Vitals()
+                send.name = name
+                send.value = UInt16(value.toInt()!)
+                emitVitals?(send)
+            }
             
         default:
             // do nothing
@@ -170,6 +195,11 @@ public class StormFrontTagStreamer {
                 tag?.text = "\n\(text)"
             }
             
+            // room name
+            if lastNode?.name == "style" && lastNode?.attr("id") == "roomName" {
+                tag?.color = "#0000FF"
+            }
+            
         case _ where node.name == "eot":
             if inStream || lastNode != nil && contains(ignoredEot, lastNode!.name) {
                 break
@@ -186,7 +216,10 @@ public class StormFrontTagStreamer {
             }
             tag = emitTag(node)
             tag?.targetWindow = self.streamIdToWindow(lastStreamId)
-            //let id = node.attr("id")
+            let id = node.attr("id")
+            if id == "speech" {
+                tag?.color = "#33FF08"
+            }
             
         case _ where node.name == "pushbold":
             self.bold = true

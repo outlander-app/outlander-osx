@@ -217,7 +217,7 @@ import Foundation
             context.advanceTo({ (char:Character) -> Bool in
                 return char == ">" || (char == "/" && context.next == ">")
             })
-            context.attributes = context.consumedCharacters["(\\w+)=('[^']*'|[^\n]*)"].dictionary()
+            context.attributes = context.consumedCharacters["(\\w+)=(['\"][^['\"]]*['\"]|[^\n]*)"].dictionary()
             
             if context.current == "/" && context.next == ">" {
                 // self closing tag

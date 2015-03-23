@@ -201,6 +201,22 @@
 //    [_roundtimeNotifier set:5];
 }
 
+
+- (void)beginEdit:(NSString*)key {
+    TextViewController *controller = [_windows cacheObjectForKey:key];
+    [controller beginEdit];
+}
+
+- (void)endEdit:(NSString*)key {
+    TextViewController *controller = [_windows cacheObjectForKey:key];
+    [controller endEdit];
+}
+
+- (void)set:(NSString*)key withTags:(NSArray *)tags {
+    TextViewController *controller = [_windows cacheObjectForKey:key];
+    [controller setWithTags:tags];
+}
+
 - (void)clear:(NSString*)key{
     TextViewController *controller = [_windows cacheObjectForKey:key];
     [controller clear];
@@ -297,7 +313,7 @@
         [self append:tag to:@"deaths"];
     }];
     
-    [[_gameStream.room.signal throttle:0.15] subscribeNext:^(id x) {
+    [_gameStream.room.signal subscribeNext:^(id x) {
         [self updateRoom];
     }];
     
@@ -318,12 +334,12 @@
             return tag;
         }].array;
         
-        [self clear:@"exp"];
-        [result enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop) {
-            [self append:item to:@"exp"];
-        }];
-        [self append:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES] to:@"exp"];
-        [self append:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES] to:@"exp"];
+        NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
+       
+        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES]];
+        [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
+        
+        [self set:@"exp" withTags:tags];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
@@ -394,26 +410,25 @@
     NSString *exits = [_gameContext.globalVars cacheObjectForKey:@"roomexits"];
     NSString *players = [_gameContext.globalVars cacheObjectForKey:@"roomplayers"];
     
-    [self clear:@"room"];
+    NSMutableArray *tags = [[NSMutableArray alloc] init];
     
     NSMutableString *room = [[NSMutableString alloc] init];
     if(name != nil && name.length != 0) {
         TextTag *nameTag = [TextTag tagFor:name mono:false];
         nameTag.color = @"#0000FF";
-        [self append:nameTag to:@"room"];
+        [tags addObject:nameTag];
         [room appendString:@"\n"];
     }
     if(desc != nil && desc.length != 0) {
         [room appendFormat:@"%@\n", desc];
         TextTag *tag = [TextTag tagFor:[room copy] mono:false];
-        [self append:tag to:@"room"];
+        [tags addObject:tag];
         [room setString:@""];
     }
     if(objects != nil && objects.length != 0) {
-//        [room appendFormat:@"%@\n", objects];
         RoomObjsTags *builder = [[RoomObjsTags alloc] init];
-        NSArray *tags = [builder tagsForRoomObjs:objects];
-        [self appendAll:tags to:@"room"];
+        NSArray *roomObjs = [builder tagsForRoomObjs:objects];
+        [tags addObjectsFromArray:roomObjs];
         [room appendString:@"\n"];
     }
     if(players != nil && players.length != 0) {
@@ -422,8 +437,11 @@
     if(exits != nil && exits.length != 0) {
         [room appendFormat:@"%@\n", exits];
     }
+    
     TextTag *tag = [TextTag tagFor:room mono:false];
-    [self append:tag to:@"room"];
+    [tags addObject:tag];
+    
+    [self set:@"room" withTags:tags];
 }
 
 @end

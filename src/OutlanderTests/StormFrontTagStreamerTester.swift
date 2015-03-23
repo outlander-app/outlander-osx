@@ -111,13 +111,13 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.tags.count).to(equal(0))
                 
-                expect(self.settings["Scholarship.Ranks"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.Ranks"]).toNot(beNil())
                 expect(self.settings["Scholarship.Ranks"]).to(equal("4.23"))
                 
-                expect(self.settings["Scholarship.LearningRate"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.LearningRate"]).toNot(beNil())
                 expect(self.settings["Scholarship.LearningRate"]).to(equal("4"))
                 
-                expect(self.settings["Scholarship.LearningRateName"]).toNot(equal(nil))
+                expect(self.settings["Scholarship.LearningRateName"]).toNot(beNil())
                 expect(self.settings["Scholarship.LearningRateName"]).to(equal("thoughtful"))
             })
             
@@ -130,14 +130,14 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.tags.count).to(equal(0))
                 
-                expect(self.settings["Athletics.Ranks"]).toNot(equal(nil))
+                expect(self.settings["Athletics.Ranks"]).toNot(beNil())
                 expect(self.settings["Athletics.Ranks"]).to(equal("50.33"))
                 
-                expect(self.settings["Athletics.LearningRate"]).toNot(equal(nil))
+                expect(self.settings["Athletics.LearningRate"]).toNot(beNil())
                 let rate = LearningRate.fromDescription("deliberative")
                 expect(self.settings["Athletics.LearningRate"]).to(equal("\(rate.rateId)"))
                 
-                expect(self.settings["Athletics.LearningRateName"]).toNot(equal(nil))
+                expect(self.settings["Athletics.LearningRateName"]).toNot(beNil())
                 expect(self.settings["Athletics.LearningRateName"]).to(equal("deliberative"))
             })
             
@@ -183,7 +183,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 expect(self.settings.count).to(equal(1))
                 
-                expect(self.settings["roomexits"]).toNot(equal(nil))
+                expect(self.settings["roomexits"]).toNot(beNil())
                 expect(self.settings["roomexits"]).to(equal("Obvious paths: north, west, northwest."))
             })
             
@@ -197,7 +197,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 expect(self.settings.count).to(equal(2))
                 
-                expect(self.settings["roomobjs"]).toNot(equal(nil))
+                expect(self.settings["roomobjs"]).toNot(beNil())
                 expect(self.settings["roomobjs"]).to(equal("You also see a rock and a journeyman."))
             })
             
@@ -211,8 +211,69 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 expect(self.settings.count).to(equal(2))
                 
-                expect(self.settings["roomobjsorig"]).toNot(equal(nil))
+                expect(self.settings["roomobjsorig"]).toNot(beNil())
                 expect(self.settings["roomobjsorig"]).to(equal("You also see a rock and <pushbold/>a journeyman<popbold/>."))
+            })
+            
+            it("streams colored room name", {
+                let data = [
+                    "<style id=\"roomName\" />[The Crossing, Truffenyi Place]"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(1))
+                
+                expect(self.tags[0].color).to(equal("#0000FF"))
+            })
+            
+            it("streams room exits when none", {
+                let data = [
+                    "<component id='room exits'>Obvious exits: none.<compass></compass></component>",
+                    "<streamWindow id='room' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["roomexits"]).to(equal("Obvious exits: none."))
+            })
+            
+            it("streams room titles with quotes", {
+                let data = [
+                    "<streamWindow id='room' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["roomtitle"]).to(equal("[Barana's Shipyard, Receiving yard]"))
+            })
+            
+            it("streams vitals - health", {
+                let data = [
+                    "<dialogData id='minivitals'><skin id='healthSkin' name='healthBar' controls='health' left='0%' top='0%' width='25%' height='100%'/><progressBar id='health' value='42' text='health 100%' left='0%' customText='t' top='0%' width='25%' height='100%'/></dialogData>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["health"]).to(equal("42"))
+            })
+            
+            it("streams vitals - concentration", {
+                let data = [
+                    "<dialogData id='minivitals'><progressBar id='concentration' value='42' text='concentration 100%' left='75%' customText='t' top='0%' width='25%' height='100%'/></dialogData>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                
+                expect(self.settings["concentration"]).to(equal("42"))
             })
         })
     }

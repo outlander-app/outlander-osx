@@ -52,6 +52,10 @@
         [_gameParser.room sendNext:@""];
     };
     
+    _tagStreamer.emitVitals = ^(Vitals *vital){
+        [_vitals sendNext:vital];
+    };
+    
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
     _directions = _gameParser.directions;

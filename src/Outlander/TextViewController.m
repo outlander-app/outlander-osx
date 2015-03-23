@@ -50,6 +50,14 @@
     return [val isEqualToString:value];
 }
 
+- (void)beginEdit {
+    [_TextView.textStorage beginEditing];
+}
+
+- (void)endEdit {
+    [_TextView.textStorage endEditing];
+}
+
 - (void)clear {
     [_TextView setString:@""];
 }
@@ -58,52 +66,74 @@
     [self append:text toTextView:_TextView];
 }
 
-- (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
+- (void)setWithTags:(NSArray *)tags {
+    NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
+    
+    for (TextTag *tag in tags){
+        
+        if(tag.text == nil || tag.text.length == 0) {
+            continue;
+        }
+        
+        [target appendAttributedString:[self stringFromTag:tag]];
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if(text.text == nil || text.text.length == 0) {
-            return;
-        }
-        
-        if(text.bold) {
-            text.color = @"#FFFF00";
-        }
+        [_TextView.textStorage setAttributedString:target];
+    });
+}
+
+- (NSAttributedString *)stringFromTag:(TextTag *)text {
+    if(text.bold) {
+        text.color = @"#FFFF00";
+    }
+
+    NSString *escaped = [text.text replaceWithPattern:@"&gt;" andTemplate:@">"];
+    escaped = [escaped replaceWithPattern:@"&lt;" andTemplate:@">"];
+    
+    NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:escaped];
+    NSRange range = [[attr string] rangeOfString:escaped];
+
+    if(text.href) {
+        [attr addAttribute:NSLinkAttributeName value:text.href range:range];
+    }
+    
+    NSColor *color = nil;
+    
+    if(text.color != nil && [text.color length] > 0){
+        color = [NSColor colorWithHexString:text.color];
+    }
+    else {
+        color = [NSColor colorWithHexString:@"#cccccc"];
+    }
+    
+    [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
+    
+    if(text.backgroundColor != nil) {
+        [attr addAttribute:NSBackgroundColorAttributeName value:text.backgroundColor range:range];
+    }
+    
+    NSString *fontName = @"Helvetica";
+    int fontSize = 14;
+    if(text.mono){
+        fontName = @"Menlo";
+        fontSize = 13;
+    }
+    [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
+    
+    return attr;
+}
+
+- (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
+    if(text.text == nil || text.text.length == 0) {
+        return;
+    }
+    NSAttributedString *attr = [self stringFromTag:text];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
         
         NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
         BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
-        
-        NSString *escaped = [text.text replaceWithPattern:@"&gt;" andTemplate:@">"];
-        escaped = [escaped replaceWithPattern:@"&lt;" andTemplate:@">"];
-        
-        NSMutableAttributedString* attr = [[NSMutableAttributedString alloc] initWithString:escaped];
-        NSRange range = [[attr string] rangeOfString:escaped];
-
-        if(text.href) {
-            [attr addAttribute:NSLinkAttributeName value:text.href range:range];
-        }
-        
-        NSColor *color = nil;
-        
-        if(text.color != nil && [text.color length] > 0){
-            color = [NSColor colorWithHexString:text.color];
-        }
-        else {
-            color = [NSColor colorWithHexString:@"#cccccc"];
-        }
-        
-        [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
-        
-        if(text.backgroundColor != nil) {
-            [attr addAttribute:NSBackgroundColorAttributeName value:text.backgroundColor range:range];
-        }
-        
-        NSString *fontName = @"Helvetica";
-        int fontSize = 14;
-        if(text.mono){
-            fontName = @"Menlo";
-            fontSize = 13;
-        }
-        [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
         
         [[textView textStorage] appendAttributedString:attr];
         
