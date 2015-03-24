@@ -154,9 +154,7 @@ public class StormFrontTagStreamer {
                 let value = vital.attr("value") ?? "0"
                 emitSetting?(name, value)
                
-                let send = Vitals()
-                send.name = name
-                send.value = UInt16(value.toInt()!)
+                let send = Vitals(with: name, value: UInt16(value.toInt()!))
                 emitVitals?(send)
             }
             
@@ -201,14 +199,18 @@ public class StormFrontTagStreamer {
             }
             
         case _ where node.name == "eot":
-            if inStream || lastNode != nil && contains(ignoredEot, lastNode!.name) {
+            if inStream || lastNode != nil && (contains(ignoredEot, lastNode!.name) || lastNode!.name == "prompt") {
                 break
             }
             tag = TextTag()
-            tag?.text = "\n"
+            tag?.text = "\r\n"
             
         case _ where node.name == "prompt":
+            if lastNode != nil && lastNode!.name == "popstream" {
+                break
+            }
             tag = emitTag(node)
+            tag?.text = tag!.text! + "\r\n"
             
         case _ where node.name == "preset":
             if inStream && lastStreamId == "talk" {

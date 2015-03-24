@@ -12,128 +12,130 @@ import Foundation
     func didRecieveToken(token:Node)
 }
 
+@objc public class ParseContext : Printable {
+    var nodes = [Node]()
+    var consumedCharacters : String {
+        let substring = __sourceString[__startIndex..<__currentIndex]
+        
+        return substring
+    }
+    
+    private let __sourceString : String
+    let sourceLength:Int
+    
+    var current : Character
+    var next : Character?
+    let eot : Character = "\u{04}"
+    
+    var scanAdvanced = false
+    
+    private var __marker : String.Generator {
+        didSet {
+            scanAdvanced = true
+        }
+    }
+    
+    var complete : Bool {
+        return current == eot
+    }
+    
+    private var __startIndex : String.Index
+    private var __currentIndex : String.Index
+    
+    var startPosition : Int
+    var currentPosition : Int
+    
+    var tagName:String
+    var value:String?
+    var attributes:[String:String]?
+    
+    public init(atPosition:Int, withMarker:String.Index, forString:String){
+        __startIndex = withMarker
+        __currentIndex = __startIndex
+        __sourceString = forString
+        sourceLength = countElements(__sourceString)
+        
+        current = eot
+        
+        __marker = __sourceString.generate()
+        if let first = __marker.next() {
+            current = first
+            next = __marker.next()
+        }
+        
+        startPosition = atPosition
+        currentPosition = atPosition
+        
+        tagName = ""
+    }
+    
+    func flushConsumedCharacters(){
+        __startIndex = __currentIndex
+        startPosition = currentPosition
+    }
+    
+    func createNode(_ children:[Node]? = nil) {
+        let node = Node(tagName.lowercaseString, value, attributes)
+        
+        if let c = children {
+            node.children = c
+        }
+        
+        nodes.append(node)
+        
+        tagName = ""
+        value = nil
+        attributes = nil
+    }
+    
+    //
+    // Moves forward in the supplied string
+    //
+    public func advance(){
+        if next != nil {
+            current = next!
+            next = __marker.next()
+        } else {
+            current = eot
+        }
+        
+        if(!complete) {
+            __currentIndex++
+            currentPosition++
+        }
+    }
+    
+    public func advanceTo(match:(Character)->Bool) {
+        while !complete {
+            if match(current) {
+                return
+            }
+            advance()
+        }
+    }
+    
+    public func advanceToIndex(index:String.Index) {
+        while(!complete && __currentIndex < index) {
+            advance()
+            //println("(\(complete)) adanceToIdx: \(index)  cur=\(__currentIndex)")
+        }
+    }
+    
+    public var description : String {
+        return "Started at: \(startPosition), now at: \(currentPosition), having consumed \(consumedCharacters) and holding \(nodes)"
+    }
+}
+
 @objc public class StormFrontTokenizer : NSObject {
     
     class func newInstance() -> StormFrontTokenizer {
         return StormFrontTokenizer()
     }
     
-    public class Context : Printable {
-        var nodes = [Node]()
-        var consumedCharacters : String {
-            let substring = __sourceString[__startIndex..<__currentIndex]
-            
-            return substring
-        }
-        
-        private let __sourceString : String
-        let sourceLength:Int
-        
-        var current : Character
-        var next : Character?
-        let eot : Character = "\u{04}"
-        
-        var scanAdvanced = false
-        
-        private var __marker : String.Generator {
-            didSet {
-                scanAdvanced = true
-            }
-        }
-        
-        var complete : Bool {
-            return current == eot
-        }
-        
-        private var __startIndex : String.Index
-        private var __currentIndex : String.Index
-        
-        var startPosition : Int
-        var currentPosition : Int
-        
-        var tagName:String
-        var value:String?
-        var attributes:[String:String]?
-        
-        private init(atPosition:Int, withMarker:String.Index, forString:String){
-            __startIndex = withMarker
-            __currentIndex = __startIndex
-            __sourceString = forString
-            sourceLength = countElements(__sourceString)
-            
-            current = eot
-            
-            __marker = __sourceString.generate()
-            if let first = __marker.next() {
-                current = first
-                next = __marker.next()
-            }
-            
-            startPosition = atPosition
-            currentPosition = atPosition
-            
-            tagName = ""
-        }
-        
-        func flushConsumedCharacters(){
-            __startIndex = __currentIndex
-            startPosition = currentPosition
-        }
-        
-        func createNode(_ children:[Node]? = nil) {
-            let node = Node(tagName.lowercaseString, value, attributes)
-            
-            if let c = children {
-                node.children = c
-            }
-            
-            nodes.append(node)
-            
-            tagName = ""
-            value = nil
-            attributes = nil
-        }
-        
-        //
-        // Moves forward in the supplied string
-        //
-        public func advance(){
-            if next != nil {
-                current = next!
-                next = __marker.next()
-            } else {
-                current = eot
-            }
-            
-            if(!complete) {
-                __currentIndex++
-                currentPosition++
-            }
-        }
-        
-        public func advanceTo(match:(Character)->Bool) {
-            while !complete {
-                if match(current) {
-                    return
-                }
-                advance()
-            }
-        }
-        
-        public func advanceToIndex(index:String.Index) {
-            while(!complete && __currentIndex < index) {
-                advance()
-                //println("(\(complete)) adanceToIdx: \(index)  cur=\(__currentIndex)")
-            }
-        }
-        
-        public var description : String {
-            return "Started at: \(startPosition), now at: \(currentPosition), having consumed \(consumedCharacters) and holding \(nodes)"
-        }
-    }
+    private let attrTokenizer = AttributesTokenizer()
     
     private var __tokenHandler : (Node)->Bool
-    private var  __contextStack = [Context]()
+    private var  __contextStack = [ParseContext]()
     
     override init(){
         __tokenHandler = {(token:Node)->Bool in
@@ -148,7 +150,7 @@ import Foundation
         
         __tokenHandler = tokenReceiver
         
-        let context = Context(atPosition: 0, withMarker:input.startIndex, forString:input)
+        let context = ParseContext(atPosition: 0, withMarker:input.startIndex, forString:input)
         
         let nodes = scanContext(context)
         
@@ -159,20 +161,20 @@ import Foundation
         __tokenHandler(Node("eot"))
     }
     
-    private func scanContext(ctx:Context) -> [Node] {
+    private func scanContext(ctx:ParseContext) -> [Node] {
         while !ctx.complete {
             scanTag(ctx)
         }
         return ctx.nodes
     }
     
-    private func pushContext(context:Context, range:Range<String.Index>) -> [Node] {
+    private func pushContext(context:ParseContext, range:Range<String.Index>) -> [Node] {
         let newStr = context.__sourceString[range]
-        let newContext = Context(atPosition: 0, withMarker:newStr.startIndex, forString:newStr)
+        let newContext = ParseContext(atPosition: 0, withMarker:newStr.startIndex, forString:newStr)
         return scanContext(newContext)
     }
     
-    private func scanTag(context:Context) {
+    private func scanTag(context:ParseContext) {
         
         if context.startPosition == context.currentPosition
             && context.currentPosition == context.sourceLength - 1
@@ -217,7 +219,7 @@ import Foundation
             context.advanceTo({ (char:Character) -> Bool in
                 return char == ">" || (char == "/" && context.next == ">")
             })
-            context.attributes = context.consumedCharacters["(\\w+)=(['\"][^['\"]]*['\"]|[^\n]*)"].dictionary()
+            context.attributes = attrTokenizer.tokenize(context.consumedCharacters)
             
             if context.current == "/" && context.next == ">" {
                 // self closing tag

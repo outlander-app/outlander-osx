@@ -230,7 +230,6 @@ class StormFrontTagStreamerTester: QuickSpec {
             it("streams room exits when none", {
                 let data = [
                     "<component id='room exits'>Obvious exits: none.<compass></compass></component>",
-                    "<streamWindow id='room' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
                 ]
               
                 self.streamData(data)
@@ -249,7 +248,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.tags.count).to(equal(0))
                 
-                expect(self.settings["roomtitle"]).to(equal("[Barana's Shipyard, Receiving yard]"))
+                expect(self.settings["roomtitle"]).to(equal("[Barana's Shipyard, Receiving Yard]"))
             })
             
             it("streams vitals - health", {

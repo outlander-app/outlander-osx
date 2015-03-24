@@ -204,6 +204,9 @@
 		F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
 		F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
 		F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
+		F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
+		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
+		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -530,6 +533,8 @@
 		F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundtimeNotifier.m; sourceTree = "<group>"; };
 		F9A79E551927FDA0000AF892 /* Roundtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roundtime.h; sourceTree = "<group>"; };
 		F9A79E561927FDA0000AF892 /* Roundtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roundtime.m; sourceTree = "<group>"; };
+		F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizer.swift; sourceTree = "<group>"; };
+		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -798,6 +803,7 @@
 				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
 				F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */,
 				F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */,
+				F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1020,6 +1026,7 @@
 			children = (
 				F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */,
 				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
+				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1427,6 +1434,7 @@
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
+				F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
 				F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
@@ -1596,6 +1604,7 @@
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
+				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */,
 				F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
@@ -1603,6 +1612,7 @@
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
+				F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
