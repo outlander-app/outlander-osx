@@ -24,8 +24,7 @@
 }
 
 - (IBAction)saveProfileAction:(id)sender {
-    [self sendCommand:@"saveProfile"];
-    [self sendCommand:@"saveConfig"];
+    [self sendCommand:@"saveSettings"];
 }
 
 - (IBAction)preferencesAction:(id)sender {

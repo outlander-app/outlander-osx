@@ -12,7 +12,7 @@
 
 @interface WindowDataService : NSObject
 
-- (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location;
+//- (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location;
 - (WindowData *)dataFor:(NSDictionary *)json;
 - (NSArray *)readWindowJson:(GameContext *)context;
 - (void)write:(GameContext *)context WindowJson:(NSArray *)windows;

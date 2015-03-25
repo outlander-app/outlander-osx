@@ -175,8 +175,7 @@
 }
 
 - (BOOL)windowShouldClose:(id)sender {
-    [self command:@"saveProfile"];
-    [self command:@"saveConfig"];
+    [self command:@"saveSettings"];
     return YES;
 }
 

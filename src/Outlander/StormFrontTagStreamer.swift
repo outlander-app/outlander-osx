@@ -220,7 +220,7 @@ public class StormFrontTagStreamer {
             tag?.targetWindow = self.streamIdToWindow(lastStreamId)
             let id = node.attr("id")
             if id == "speech" {
-                tag?.color = "#33FF08"
+                tag?.color = "#99FFFF"
             }
             
         case _ where node.name == "pushbold":

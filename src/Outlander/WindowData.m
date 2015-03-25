@@ -10,10 +10,10 @@
 
 @implementation WindowData
 
-+ (id)windowWithName:(NSString *)name atLoc:(NSRect)loc {
-    return [[self alloc] initWithName:name atLoc:loc];
++ (id)windowWithName:(NSString *)name atLoc:(NSRect)loc andTimestamp:(BOOL)timestamp {
+    return [[self alloc] initWithName:name atLoc:loc andTimestamp:timestamp];
 }
-- (id)initWithName:(NSString *)name atLoc:(NSRect)loc {
+- (id)initWithName:(NSString *)name atLoc:(NSRect)loc andTimestamp:(BOOL)timestamp {
     self = [super init];
     if(!self) return nil;
     
@@ -22,6 +22,7 @@
     _y = loc.origin.y;
     _height = loc.size.height;
     _width = loc.size.width;
+    _timestamp = timestamp;
     
     return self;
 }

@@ -11,6 +11,7 @@
 #import "Highlight.h"
 
 @interface TextViewController () {
+    NSDateFormatter *_dateFormatter;
 }
 @end
 
@@ -21,6 +22,9 @@
 	if(self == nil) return nil;
     
     _keyup = [RACSubject subject];
+    
+    _dateFormatter = [[NSDateFormatter alloc] init];
+    [_dateFormatter setDateFormat:@"HH:mm"];
     
     return self;
 }
@@ -38,6 +42,14 @@
                                        NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle],
                                        NSCursorAttributeName: [NSCursor pointingHandCursor]
                                        }];
+}
+
+- (BOOL)displayTimestamp {
+    return _TextView.displayTimestamp;
+}
+
+- (void)setDisplayTimestamp:(BOOL)timestamp {
+    _TextView.displayTimestamp = timestamp;
 }
 
 - (NSString *)text {
@@ -69,10 +81,23 @@
 - (void)setWithTags:(NSArray *)tags {
     NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    for (TextTag *tag in tags){
+    BOOL timestamp = _TextView.displayTimestamp && (_TextView.textStorage.length == 0 || [self endsWithNewline:_TextView]);
+    
+    
+    BOOL first = YES;
+    
+    for (TextTag *tag in tags) {
         
         if(tag.text == nil || tag.text.length == 0) {
             continue;
+        }
+        
+        if (first && timestamp) {
+            [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
+            first = NO;
+        }
+        else if (_TextView.displayTimestamp && [self hasNewlineSuffix:target.string]) {
+            [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
         }
         
         [target appendAttributedString:[self stringFromTag:tag]];
@@ -81,6 +106,24 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_TextView.textStorage setAttributedString:target];
     });
+}
+
+- (BOOL)endsWithNewline:(NSTextView *)textView {
+    NSString *str = textView.textStorage.string;
+    return [self hasNewlineSuffix:str];
+}
+
+- (BOOL)hasNewlineSuffix:(NSString *)str {
+    NSRange r = [str rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]
+                                      options:NSBackwardsSearch];
+    BOOL foundChar = r.location != NSNotFound;
+    BOOL isLineFinal = foundChar && (r.location + r.length == [str length]);
+    return isLineFinal;
+}
+
+- (TextTag *)timestampTag {
+    NSString *str = [NSString stringWithFormat:@"[%@] ", [_dateFormatter stringFromDate:[NSDate date]]];
+    return [TextTag tagFor:str mono: YES];
 }
 
 - (NSAttributedString *)stringFromTag:(TextTag *)text {
@@ -124,16 +167,32 @@
     return attr;
 }
 
-- (void)append:(TextTag*)text toTextView:(NSTextView *) textView {
+- (void)append:(TextTag*)text toTextView:(MyNSTextView *) textView {
     if(text.text == nil || text.text.length == 0) {
         return;
     }
-    NSAttributedString *attr = [self stringFromTag:text];
-    
+   
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        BOOL endswithNewline = [self endsWithNewline:textView];
+        BOOL timestamp = textView.displayTimestamp && (textView.textStorage.length == 0 || endswithNewline);
+        
+        NSAttributedString *attr = [self stringFromTag:text];
+       
         NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
-        BOOL shouldScrollToBottom = [scroller doubleValue] == 1.0;
+        
+        double autoScrollToleranceLineCount = 3.0;
+        
+        unsigned long lines = [self countLines:[textView string]];
+        double scrolled = [scroller doubleValue];
+        double scrollDiff = 1.0 - scrolled;
+        double percentScrolled = autoScrollToleranceLineCount / lines;
+        
+        BOOL shouldScrollToBottom = scrollDiff <= percentScrolled;
+        
+        if (timestamp) {
+            [[textView textStorage] appendAttributedString:[self stringFromTag:[self timestampTag]]];
+        }
         
         [[textView textStorage] appendAttributedString:attr];
         
@@ -141,6 +200,17 @@
             [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
     });
+}
+
+- (unsigned long)countLines:(NSString *)s {
+    
+    unsigned long numberOfLines, index, stringLength = [s length];
+    
+    for (index = 0, numberOfLines = 0; index < stringLength;
+         numberOfLines++) {
+        index = NSMaxRange([s lineRangeForRange:NSMakeRange(index, 0)]);
+    }
+    return numberOfLines;
 }
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification {

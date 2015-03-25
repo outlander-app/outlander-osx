@@ -98,7 +98,7 @@
     [_appSettingsLoader load];
     
     [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
-        [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height)];
+        [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height) andTimestamp:obj.timestamp];
     }];
     
     [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
@@ -130,13 +130,39 @@
 //        [_macroHandler handle:number with:modifiers];
     }];
 //    [self updateRoom];
+   
+    NSMutableArray *tags = [[NSMutableArray alloc] init];
+    
+    TextTag *tag = [TextTag tagFor:@"\r\n" mono:NO];
+    tag.color = @"#565656";
+    [self append:tag to:@"main"];
+    [tags addObject:tag];
+
+    tag = [TextTag tagFor:@"123" mono:NO];
+    tag.color = @"#565656";
+    [self append:tag to:@"main"];
+    [tags addObject:tag];
+    
+    tag = [TextTag tagFor:@"456\n" mono:NO];
+    tag.color = @"#565656";
+    [self append:tag to:@"main"];
+    [tags addObject:tag];
+    
+    tag = [TextTag tagFor:@"789" mono:NO];
+    tag.color = @"#565656";
+    [self append:tag to:@"main"];
+    [tags addObject:tag];
+    
+    [self set:@"room" withTags:tags];
+    [self set:@"thoughts" withTags:tags];
 }
 
-- (void)addWindow:(NSString *)key withRect:(NSRect)rect {
+- (void)addWindow:(NSString *)key withRect:(NSRect)rect andTimestamp:(BOOL)timestamp {
     
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                        atLoc:rect
                                                      withKey:key];
+    [controller setDisplayTimestamp:timestamp];
     controller.gameContext = _gameContext;
     [controller.keyup subscribeNext:^(NSEvent *theEvent) {
         
@@ -160,7 +186,8 @@
 
 - (void)writeWindowJson {
     NSArray *items = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
-        return [WindowData windowWithName:value.key atLoc:value.frame];
+        TextViewController *controller = [_windows cacheObjectForKey:value.key];
+        return [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
     }].array;
     
     _gameContext.windows = items;
@@ -170,13 +197,16 @@
 
 - (void)command:(NSString *)command {
     
-    if([command isEqualToString:@"saveProfile"]) {
+    if([command isEqualToString:@"saveSettings"]) {
         [self writeWindowJson];
-    } else if ([command isEqualToString:@"saveConfig"]) {
         [_appSettingsLoader saveVariables];
         [_appSettingsLoader saveHighlights];
         [_appSettingsLoader saveAliases];
         [_appSettingsLoader saveMacros];
+        
+        [self append:[TextTag tagFor:[@"[%@ settings saved]\n" stringFromDateFormat:@"HH:mm"]
+                                mono:true]
+                  to:@"main"];
         
     } else if([command isEqualToString:@"connect"]) {
         [self connect:nil];
@@ -227,11 +257,11 @@
     return controller.text;
 }
 
-- (void)appendAll:(NSArray *)tags to:(NSString *)key {
-    [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self append:obj to:key];
-    }];
-}
+//- (void)appendAll:(NSArray *)tags to:(NSString *)key {
+//    [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        [self append:obj to:key];
+//    }];
+//}
 
 - (BOOL)hasWindow:(NSString *)window {
     return [_windows cacheDoesContain:window];
@@ -393,6 +423,8 @@
                                 mono:true]
                   to:@"main"];
         _gameStream = nil;
+        
+        [self command:@"saveSettings"];
     }];
 }
 

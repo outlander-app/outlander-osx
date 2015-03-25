@@ -19,6 +19,7 @@
 @property (nonatomic, copy) NSString *key;
 @property (unsafe_unretained) IBOutlet MyNSTextView *TextView;
 
+- (void)setDisplayTimestamp:(BOOL)timestamp;
 - (NSString *)text;
 - (void)setWithTags:(NSArray *)tags;
 - (void)beginEdit;
@@ -26,4 +27,5 @@
 - (void)clear;
 - (BOOL)endsWith:(NSString*)value;
 - (void)append:(TextTag*)text;
+- (BOOL)displayTimestamp;
 @end

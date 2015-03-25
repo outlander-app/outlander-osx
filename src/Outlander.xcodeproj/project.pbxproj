@@ -207,6 +207,10 @@
 		F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
+		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
+		F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
+		F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
+		F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -284,8 +288,6 @@
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
 		F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
-		F9F446971ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */; };
-		F9F446981ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */; };
 		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */; };
@@ -311,6 +313,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
 				F97466A81ABD8BE20075AC77 /* Mantle.framework in Copy Files */,
 				F97466A91ABD8BE20075AC77 /* ReactiveCocoa.framework in Copy Files */,
@@ -535,6 +538,9 @@
 		F9A79E561927FDA0000AF892 /* Roundtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roundtime.m; sourceTree = "<group>"; };
 		F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizer.swift; sourceTree = "<group>"; };
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
+		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
+		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
+		F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -625,7 +631,6 @@
 		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
 		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
 		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
-		F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaAsyncSocket.a"; path = "../../../.Trash/libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
 		F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PEGKit.a"; path = "../../../.Trash/libPods-PEGKit.a"; sourceTree = "<group>"; };
 		F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomObjsTags.h; sourceTree = "<group>"; };
 		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
@@ -641,7 +646,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F446971ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */,
 				F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */,
 				F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */,
@@ -649,6 +653,7 @@
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
+				F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,11 +664,11 @@
 				F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */,
 				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
 				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
-				F9F446981ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */,
 				F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */,
 				F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
+				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,6 +872,8 @@
 				F91A39C9194DFFA9006144F8 /* SimpleQueue.m */,
 				F97A5C9818957A5D00E2C318 /* TSMutableDictionary.h */,
 				F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */,
+				F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */,
+				F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -1054,10 +1061,10 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */,
 				F9F446A51ABD8733003ECAD2 /* Kiwi.framework */,
 				F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */,
 				F9F446A01ABD865C003ECAD2 /* Kiwi.framework */,
-				F9F446951ABD8045003ECAD2 /* libPods-CocoaAsyncSocket.a */,
 				F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */,
 				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
 				F94B645B1AB78071002D70FD /* Mantle.framework */,
@@ -1448,6 +1455,7 @@
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
 				F9772F171940389E00172083 /* VarToken.m in Sources */,
@@ -1788,6 +1796,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
 					/Users/jomc/.Trash,
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1845,6 +1854,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug,
 					/Users/jomc/.Trash,
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1893,6 +1903,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/.Trash,
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (
@@ -1933,6 +1944,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/.Trash,
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = (

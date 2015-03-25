@@ -10,6 +10,7 @@
 
 @interface MyNSTextView : NSTextView 
 
+@property (nonatomic, assign) BOOL displayTimestamp;
 @property (nonatomic, strong) RACSignal *keyupSignal;
 
 @end

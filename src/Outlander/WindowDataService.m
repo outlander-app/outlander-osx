@@ -11,10 +11,10 @@
 
 @implementation WindowDataService
 
-- (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location {
-    WindowData *data = [WindowData windowWithName:windowName atLoc:location];
-    return [self jsonFor:data];
-}
+//- (NSDictionary *)jsonFor:(NSString *) windowName Window:(NSRect) location {
+//    WindowData *data = [WindowData windowWithName:windowName atLoc:location];
+//    return [self jsonFor:data];
+//}
 
 - (NSDictionary *)jsonFor:(WindowData *)data {
    
@@ -30,12 +30,12 @@
 - (NSArray *)defaultData {
     NSMutableArray *items = [[NSMutableArray alloc] init];
     
-    [items addObject:[WindowData windowWithName:@"main" atLoc:NSMakeRect(0, 100, 574, 377)]];
-    [items addObject:[WindowData windowWithName:@"thoughts" atLoc:NSMakeRect(0, 0, 361, 101)]];
-    [items addObject:[WindowData windowWithName:@"arrivals" atLoc:NSMakeRect(360, 0, 214, 101)]];
-    [items addObject:[WindowData windowWithName:@"deaths" atLoc:NSMakeRect(573, 0, 275, 101)]];
-    [items addObject:[WindowData windowWithName:@"room" atLoc:NSMakeRect(573, 100, 275, 177)]];
-    [items addObject:[WindowData windowWithName:@"exp" atLoc:NSMakeRect(573, 276, 275, 201)]];
+    [items addObject:[WindowData windowWithName:@"main" atLoc:NSMakeRect(0, 100, 574, 377) andTimestamp:NO]];
+    [items addObject:[WindowData windowWithName:@"thoughts" atLoc:NSMakeRect(0, 0, 361, 101) andTimestamp:YES]];
+    [items addObject:[WindowData windowWithName:@"arrivals" atLoc:NSMakeRect(360, 0, 214, 101) andTimestamp:YES]];
+    [items addObject:[WindowData windowWithName:@"deaths" atLoc:NSMakeRect(573, 0, 275, 101) andTimestamp:YES]];
+    [items addObject:[WindowData windowWithName:@"room" atLoc:NSMakeRect(573, 100, 275, 177) andTimestamp:NO]];
+    [items addObject:[WindowData windowWithName:@"exp" atLoc:NSMakeRect(573, 276, 275, 201) andTimestamp:NO]];
     
     return items;
 }
