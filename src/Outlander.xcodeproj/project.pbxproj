@@ -51,12 +51,6 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
-		F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
-		F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
-		F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
-		F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; };
-		F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; };
-		F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
@@ -79,9 +73,6 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
-		F97466A81ABD8BE20075AC77 /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B645B1AB78071002D70FD /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97466A91ABD8BE20075AC77 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B64571AB78056002D70FD /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97466AA1ABD8BE20075AC77 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F94B64581AB78056002D70FD /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
@@ -210,7 +201,19 @@
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
 		F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
 		F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
-		F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
+		F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
+		F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
+		F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; };
+		F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; };
+		F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; };
+		F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; };
+		F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; };
+		F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; };
+		F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -279,11 +282,7 @@
 		F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
-		F9F3D8541957E52F005B9D68 /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */; };
-		F9F3D8561957E52F005B9D68 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */; };
-		F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */; };
 		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
-		F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */; };
 		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
@@ -309,18 +308,19 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		F9F3D899195CA499005B9D68 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
+				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
+				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
+				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
 				F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
-				F97466A81ABD8BE20075AC77 /* Mantle.framework in Copy Files */,
-				F97466A91ABD8BE20075AC77 /* ReactiveCocoa.framework in Copy Files */,
-				F97466AA1ABD8BE20075AC77 /* Squirrel.framework in Copy Files */,
 			);
 			name = "Copy Files";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -377,9 +377,6 @@
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
-		F94B64571AB78056002D70FD /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/ReactiveCocoa.framework"; sourceTree = "<group>"; };
-		F94B64581AB78056002D70FD /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Squirrel.framework"; sourceTree = "<group>"; };
-		F94B645B1AB78071002D70FD /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = "../../../Library/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Mantle.framework"; sourceTree = "<group>"; };
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
 		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
@@ -541,6 +538,10 @@
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
 		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
 		F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
+		F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
+		F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
+		F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
+		F9A8DD311AC299EC009A2F67 /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Squirrel.framework; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -620,14 +621,7 @@
 		F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsWindowController.m; sourceTree = "<group>"; };
 		F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
 		F9F3D84C1957D123005B9D68 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
-		F9F3D84E1957E52F005B9D68 /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyCenter.h; sourceTree = "<group>"; };
-		F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyCenter.m; sourceTree = "<group>"; };
-		F9F3D8501957E52F005B9D68 /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyTextField.h; sourceTree = "<group>"; };
-		F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
-		F9F3D8521957E52F005B9D68 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
-		F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDKeyCodesFromStringTester.m; sourceTree = "<group>"; };
 		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
 		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
 		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
@@ -646,14 +640,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F94B645C1AB78071002D70FD /* Mantle.framework in Frameworks */,
-				F94B64591AB78056002D70FD /* ReactiveCocoa.framework in Frameworks */,
-				F94B645A1AB78056002D70FD /* Squirrel.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
+				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
+				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
+				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
+				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,12 +658,13 @@
 			files = (
 				F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */,
 				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
-				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
-				F94B64731AB7FA59002D70FD /* Squirrel.framework in Frameworks */,
-				F94B646F1AB7F31C002D70FD /* Mantle.framework in Frameworks */,
-				F94B64701AB7F31C002D70FD /* ReactiveCocoa.framework in Frameworks */,
+				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
+				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
+				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
+				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
+				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1061,15 +1057,16 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */,
+				F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */,
+				F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */,
+				F9A8DD311AC299EC009A2F67 /* Squirrel.framework */,
 				F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */,
 				F9F446A51ABD8733003ECAD2 /* Kiwi.framework */,
 				F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */,
 				F9F446A01ABD865C003ECAD2 /* Kiwi.framework */,
 				F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */,
 				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
-				F94B645B1AB78071002D70FD /* Mantle.framework */,
-				F94B64571AB78056002D70FD /* ReactiveCocoa.framework */,
-				F94B64581AB78056002D70FD /* Squirrel.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
@@ -1099,7 +1096,6 @@
 				F9CF927F1890832800449548 /* MainMenu.xib */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
-				F9F3D84D1957E4FD005B9D68 /* DDHotKey */,
 				F97A5C761893808F00E2C318 /* HTML */,
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
@@ -1132,7 +1128,6 @@
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
-				F9F3D85D19590997005B9D68 /* DDKeyCodesFromStringTester.m */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
@@ -1156,19 +1151,6 @@
 				F9CF92911890832800449548 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F9F3D84D1957E4FD005B9D68 /* DDHotKey */ = {
-			isa = PBXGroup;
-			children = (
-				F9F3D84E1957E52F005B9D68 /* DDHotKeyCenter.h */,
-				F9F3D84F1957E52F005B9D68 /* DDHotKeyCenter.m */,
-				F9F3D8501957E52F005B9D68 /* DDHotKeyTextField.h */,
-				F9F3D8511957E52F005B9D68 /* DDHotKeyTextField.m */,
-				F9F3D8521957E52F005B9D68 /* DDHotKeyUtilities.h */,
-				F9F3D8531957E52F005B9D68 /* DDHotKeyUtilities.m */,
-			);
-			name = DDHotKey;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1400,12 +1382,10 @@
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
-				F9F3D8561957E52F005B9D68 /* DDHotKeyTextField.m in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
-				F9F3D8581957E52F005B9D68 /* DDHotKeyUtilities.m in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
@@ -1487,7 +1467,6 @@
 				F98782BB19420E5D00D76231 /* GotoToken.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
-				F9F3D8541957E52F005B9D68 /* DDHotKeyCenter.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
@@ -1597,7 +1576,6 @@
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
-				F9F3D85E19590997005B9D68 /* DDKeyCodesFromStringTester.m in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
@@ -1764,17 +1742,16 @@
 			baseConfigurationReference = 5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Squirrel.Mac/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
-					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
-					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1822,17 +1799,16 @@
 			baseConfigurationReference = 31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Squirrel.Mac/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
-					"$(PROJECT_DIR)/Squirrel.Mac/External/Mantle/build/Debug",
-					"$(PROJECT_DIR)/Squirrel.Mac/External/ReactiveCocoa/ReactiveCocoaFramework/build/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1889,6 +1865,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1934,6 +1911,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";

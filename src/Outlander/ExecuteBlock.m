@@ -7,6 +7,7 @@
 //
 
 #import "ExecuteBlock.h"
+#import <Squirrel/Squirrel.h>
 
 @interface ExecuteBlock () {
     void(^_run)(id block, NSTimeInterval interval);

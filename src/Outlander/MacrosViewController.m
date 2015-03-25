@@ -8,14 +8,13 @@
 
 #import "MacrosViewController.h"
 #import "Macro.h"
-#import "DDHotKeyTextField.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface MacrosViewController () {
     GameContext *_context;
 }
 @property (weak) IBOutlet NSTableView *tableView;
-@property (weak) IBOutlet DDHotKeyTextField *macroTextField;
+//@property (weak) IBOutlet DDHotKeyTextField *macroTextField;
 @property (weak) IBOutlet NSTextField *actionTextField;
 @end
 
@@ -36,15 +35,15 @@
         }
     }];
     
-    [_macroTextField.hotkeyChanged subscribeNext:^(NSString *val) {
-        if(_selectedMacro) {
-            _selectedMacro.keys = val;
-            _selectedMacro.keyCode = _macroTextField.hotKey.keyCode;
-            _selectedMacro.modifiers = _macroTextField.hotKey.modifierFlags;
-            NSLog(@"Macro: %@ %hu %lu", val, _selectedMacro.keyCode, _selectedMacro.modifiers);
-            [_tableView reloadData];
-        }
-    }];
+//    [_macroTextField.hotkeyChanged subscribeNext:^(NSString *val) {
+//        if(_selectedMacro) {
+//            _selectedMacro.keys = val;
+//            _selectedMacro.keyCode = _macroTextField.hotKey.keyCode;
+//            _selectedMacro.modifiers = _macroTextField.hotKey.modifierFlags;
+//            NSLog(@"Macro: %@ %hu %lu", val, _selectedMacro.keyCode, _selectedMacro.modifiers);
+//            [_tableView reloadData];
+//        }
+//    }];
     
     if(_context.macros.count > 0) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
