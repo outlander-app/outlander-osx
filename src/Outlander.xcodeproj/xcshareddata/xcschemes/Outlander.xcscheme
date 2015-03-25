@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B13A155E79D1E53821D8A18"
+               BuildableName = "Pods.framework"
+               BlueprintName = "Pods"
+               ReferencedContainer = "container:../Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "F9CF92661890832800449548"
                BuildableName = "Outlander.app"
                BlueprintName = "Outlander"
