@@ -16,7 +16,6 @@ import Foundation
     var nodes = [Node]()
     var consumedCharacters : String {
         let substring = __sourceString[__startIndex..<__currentIndex]
-        
         return substring
     }
     

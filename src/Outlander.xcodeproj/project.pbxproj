@@ -35,12 +35,17 @@
 		F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */; };
+		F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
+		F93462591AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
+		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
+		F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AE91AC3B0630035B2F5 /* Kiwi.framework */; };
+		F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */; };
 		F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
 		F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
 		F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
@@ -199,9 +204,7 @@
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
-		F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
 		F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
-		F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
 		F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
 		F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; };
@@ -291,7 +294,6 @@
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */; };
 		F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; };
-		F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F446A51ABD8733003ECAD2 /* Kiwi.framework */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -312,11 +314,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */,
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
-				F9A8DD2D1AC25F6F009A2F67 /* libPods-CocoaAsyncSocket.a in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
 			);
 			name = "Copy Files";
@@ -365,8 +367,12 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
+		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
+		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		F9423AE91AC3B0630035B2F5 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
+		F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = /Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods/CocoaAsyncSocket.framework; sourceTree = "<absolute>"; };
 		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
 		F94A3FC81948AE0500D6B35D /* GosubToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GosubToken.m; sourceTree = "<group>"; };
 		F94A3FCB1948AE6700D6B35D /* ActionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionToken.h; sourceTree = "<group>"; };
@@ -625,12 +631,8 @@
 		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
 		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
 		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
-		F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PEGKit.a"; path = "../../../.Trash/libPods-PEGKit.a"; sourceTree = "<group>"; };
 		F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomObjsTags.h; sourceTree = "<group>"; };
 		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
-		F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = /Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods/CocoaAsyncSocket.framework; sourceTree = "<absolute>"; };
-		F9F446A01ABD865C003ECAD2 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
-		F9F446A51ABD8733003ECAD2 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -640,6 +642,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -647,7 +650,6 @@
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
-				F9A8DD2B1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,14 +658,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F446A61ABD8733003ECAD2 /* Kiwi.framework in Frameworks */,
-				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
+				F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */,
 				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
+				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
 				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1020,6 +1022,8 @@
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
+				F93462571AC3DB7700B10ADF /* Layout.h */,
+				F93462581AC3DB7700B10ADF /* Layout.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1057,15 +1061,13 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
+				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,
 				F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */,
 				F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */,
 				F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */,
 				F9A8DD311AC299EC009A2F67 /* Squirrel.framework */,
 				F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */,
-				F9F446A51ABD8733003ECAD2 /* Kiwi.framework */,
-				F9F4469F1ABD865C003ECAD2 /* CocoaAsyncSocket.framework */,
-				F9F446A01ABD865C003ECAD2 /* Kiwi.framework */,
-				F9F446961ABD8045003ECAD2 /* libPods-PEGKit.a */,
 				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
@@ -1448,6 +1450,7 @@
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
+				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
@@ -1538,6 +1541,7 @@
 				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
+				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
@@ -1748,10 +1752,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
-					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Pods",
 					"$(PROJECT_DIR)",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1805,10 +1809,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
-					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Release/Pods",
 					"$(PROJECT_DIR)",
+					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1861,11 +1865,11 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-bkdtkdjxkwdqyxfnovuvmmighawl/Build/Products/Debug",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug",
-					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
-					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Pods",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Pods-OutlanderTests",
 					"$(PROJECT_DIR)",
+					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";

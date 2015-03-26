@@ -54,11 +54,16 @@
     id msg = nil;
     
     while ((msg = [_queue dequeue])) {
-        CommandContext *ctx = [[CommandContext alloc] init];
-        ctx.command = [msg trimWhitespaceAndNewline];
-        ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
-        ctx.tag.color = @"#ACFF2F";
-        [_commandRelay sendCommand:ctx];
+        
+        NSArray *commands = [msg componentsSeparatedByString:@";"];
+        
+        [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
+            CommandContext *ctx = [[CommandContext alloc] init];
+            ctx.command = [command trimWhitespaceAndNewline];
+            ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
+            ctx.tag.color = @"#ACFF2F";
+            [_commandRelay sendCommand:ctx];
+        }];
     }
 }
 

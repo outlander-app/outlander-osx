@@ -63,15 +63,14 @@
 
 - (void)loadProfile {
     
-    _context.windows = [_windowDataService readWindowJson:_context];
+    _context.layout = [_windowDataService readLayoutJson:_context];
     [_profileLoader load];
 }
 
 - (void)saveProfile {
     
-    [_windowDataService write:_context WindowJson:_context.windows];
+    [_windowDataService write:_context LayoutJson:_context.layout];
     [_profileLoader save];
-    [_highlightsLoader save];
 }
 
 - (void)loadHighlights {

@@ -20,16 +20,19 @@
     GameStream *_gameStream;
     TSMutableDictionary *_windows;
 }
-@property (nonatomic, strong) GameContext *gameContext;
+
+-(id)initWithContext:(GameContext *)context;
+
 @property (strong) IBOutlet MyView *VitalsView;
 @property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;
 @property (unsafe_unretained) IBOutlet NSTextView *MainTextView;
+
+- (NSArray *)getWindows;
 - (IBAction)commandSubmit:(id)sender;
 - (IBAction)connect:(id)sender;
 - (void)append:(TextTag*)text to:(NSString *)key;
 - (NSString *)textForWindow:(NSString *)key;
-- (void)addWindow:(NSString *)key withRect:(NSRect)rect;
-- (NSArray *)tagsForRoomObjs:(NSString *)data;
+- (void)addWindow:(NSString *)key withRect:(NSRect)rect andTimestamp:(BOOL)timestamp;
 @end

@@ -186,8 +186,11 @@ public class StormFrontTagStreamer {
             tag?.targetWindow = self.streamIdToWindow(lastStreamId)
             if inStream {
                 tag?.text = "\(tag!.text!)\n"
+                if lastStreamId == "logons" || lastStreamId == "death" {
+                    tag?.text = tag?.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                }
             }
-            
+           
             if lastNode?.name == "preset" && countElements(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
                 var text = tag!.text!.trimPrefix("  ")
                 tag?.text = "\n\(text)"

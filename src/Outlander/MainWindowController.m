@@ -15,6 +15,11 @@
 #import <ReactiveCocoa/EXTScope.h>
 #import "SettingsWindowController.h"
 #import "ApplicationUpdateViewController.h"
+#import "AppSettingsLoader.h"
+#import "TextTag.h"
+#import "NSString+Categories.h"
+#import "MacroHandler.h"
+#import "GameCommandRelay.h"
 #import <Squirrel/Squirrel.h>
 
 #define START_WIDTH 900
@@ -27,13 +32,21 @@
     @property (nonatomic, strong) NSViewController *currentViewController;
     @property (nonatomic, strong) ApplicationUpdateViewController *appUpdateController;
     @property (nonatomic, strong) SQRLUpdater *updater;
+    @property (nonatomic, strong) GameContext *gameContext;
 @end
 
-@implementation MainWindowController
+@implementation MainWindowController {
+    AppSettingsLoader *_appSettingsLoader;
+    MacroHandler *_macroHandler;
+}
 
 - (id)init {
 	self = [super initWithWindowNibName:NSStringFromClass([self class]) owner:self];
 	if(self == nil) return nil;
+    
+    _gameContext = [[GameContext alloc] init];
+    _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
+    _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
     
     _loginViewController = [[LoginViewController alloc] init];
     
@@ -69,27 +82,44 @@
 	return self;
 }
 
+- (TestViewController *)currentVC {
+    return (TestViewController *)_currentViewController;
+}
+
+- (void)windowDidMove:(NSNotification *)notification {
+    [self updateWindowLayout];
+}
+
+- (void)windowDidResize:(NSNotification *)notification {
+    [self updateWindowLayout];
+}
+
+- (void)updateWindowLayout {
+    Layout *layout = _gameContext.layout;
+    layout.primaryWindow.x = self.window.frame.origin.x;
+    layout.primaryWindow.y = self.window.frame.origin.y;
+    layout.primaryWindow.height = self.window.frame.size.height;
+    layout.primaryWindow.width = self.window.frame.size.width;
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-//    [[self.window windowController] setShouldCascadeWindows:NO];
-//    [self.window setFrameAutosaveName:[self.window representedFilename]];
-//
-    TestViewController *vc = [[TestViewController alloc]init];
+    NSLog(@"***DID LOAD***");
+    
+    TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
    
-    [_settingsWindowController setContext:vc.gameContext];
+    [_settingsWindowController setContext:_gameContext];
     
     [self setCurrentViewController:vc];
     
     @weakify(self);
-    @weakify(vc);
     
-    [[vc.gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
+    [[_gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
         
         @strongify(self);
-        @strongify(vc);
-        NSString *game = [vc.gameContext.globalVars cacheObjectForKey:@"game"];
-        NSString *character = [vc.gameContext.globalVars cacheObjectForKey:@"charactername"];
+        NSString *game = [_gameContext.globalVars cacheObjectForKey:@"game"];
+        NSString *character = [_gameContext.globalVars cacheObjectForKey:@"charactername"];
         
         NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
         NSString *version = dict[@"CFBundleShortVersionString"];
@@ -97,32 +127,22 @@
         [self.window setTitle:[NSString stringWithFormat:@"%@: %@ - Outlander %@ Alpha", game, character, version]];
     }];
     
-    _loginViewController.context = vc.gameContext;
+    _loginViewController.context = _gameContext;
     
     [self.window makeFirstResponder:vc._CommandTextField];
     [vc._CommandTextField becomeFirstResponder];
     
-    [self checkForUpdates];
+    //[self checkForUpdates];
 }
 
 - (void)awakeFromNib {
     
-    int maxX = NSMaxX([[NSScreen mainScreen] visibleFrame]);
-    int maxY = NSMaxY([[NSScreen mainScreen] visibleFrame]);
+    [_appSettingsLoader load];
     
-//    [self.window setFrame:NSMakeRect((maxX / 2.0) - (START_WIDTH / 2.0),
-//                                     (maxY / 2.0) - (START_HEIGHT / 2.0),
-//                                     maxX,
-//                                     maxY)
-//                  display:YES
-//                  animate:NO];
-    
-    maxX = maxX < START_WIDTH ? START_WIDTH : maxX;
-    
-    [self.window setFrame:NSMakeRect(0,
-                                     0,
-                                     maxX,
-                                     maxY)
+    [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
+                                     _gameContext.layout.primaryWindow.y,
+                                     _gameContext.layout.primaryWindow.width,
+                                     _gameContext.layout.primaryWindow.height)
                   display:YES
                   animate:NO];
     
@@ -136,14 +156,34 @@
 	self.window.contentView = _currentViewController.view;
 }
 
+- (void) saveSettings {
+    TestViewController *vc = [self currentVC];
+    
+    _gameContext.layout.windows = [vc getWindows];
+    
+    [_appSettingsLoader saveProfile];
+    [_appSettingsLoader saveVariables];
+    [_appSettingsLoader saveHighlights];
+    [_appSettingsLoader saveAliases];
+    [_appSettingsLoader saveMacros];
+    
+    [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
+                            mono:true]
+              to:@"main"];
+}
+
 - (void)command:(NSString *)command {
     
-    if([command isEqualToString:@"preferences"]){
+    if([command isEqualToString:@"saveSettings"]) {
+        
+        [self saveSettings];
+        
+    } else if([command isEqualToString:@"preferences"]){
         
         [_settingsWindowController.window setParentWindow:self.window];
         [_settingsWindowController.window makeKeyAndOrderFront:self];
         
-    }else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
+    } else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;
         [vc command:command];
     }

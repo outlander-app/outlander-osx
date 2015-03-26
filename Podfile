@@ -3,7 +3,6 @@ use_frameworks!
 
 xcodeproj 'src/Outlander.xcodeproj'
 
-pod 'AFNetworking', '2.1.0'
 pod 'CocoaAsyncSocket', '7.3.3'
 pod 'PEGKit', '~> 0.4'
 

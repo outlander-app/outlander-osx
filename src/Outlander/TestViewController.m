@@ -28,47 +28,46 @@
 #import "LocalFileSystem.h"
 #import "CommandContext.h"
 #import <ReactiveCocoa/EXTScope.h>
-#import "MacroHandler.h"
-#import "GameCommandRelay.h"
 #import "RoomObjsTags.h"
 #import "Outlander-Swift.h"
+#import <MASShortcut/MASShortcut.h>
+#import <MASShortcut/MASShortcutMonitor.h>
 
 @interface TestViewController ()
 @end
 
 @implementation TestViewController {
+    GameContext *_gameContext;
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
-    AppSettingsLoader *_appSettingsLoader;
     RoundtimeNotifier *_roundtimeNotifier;
     SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
-    MacroHandler *_macroHandler;
+    BOOL _isApplicationActive;
 }
 
-- (id)init {
+-(id)initWithContext:(GameContext *)gameContext {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
+    
+    _gameContext = gameContext;
     
     _vitalsViewController = [[VitalsViewController alloc] init];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
     _expTracker = [[ExpTracker alloc] init];
-    _gameContext = [[GameContext alloc] init];
-    _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _roundtimeNotifier = [[RoundtimeNotifier alloc] initWith:_gameContext];
     _spelltimeNotifier = [[SpelltimeNotifier alloc] initWith:_gameContext];
     _variablesReplacer = [[VariableReplacer alloc] init];
     _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
-    _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
     
     [[_commandProcessor.processed subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(CommandContext *x) {
         [_gameStream sendCommand:x.command];
         
         TextTag *tag = x.tag;
         if(!tag) {
-            NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
+            NSString *prompt = [gameContext.globalVars cacheObjectForKey:@"prompt"];
             prompt = prompt ? prompt : @">";
             tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x.command] mono:NO];
         }
@@ -95,9 +94,7 @@
     [_vitalsViewController.view fixWidth:NO];
     [_vitalsViewController.view fixHeight:NO];
     
-    [_appSettingsLoader load];
-    
-    [_gameContext.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
+    [_gameContext.layout.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height) andTimestamp:obj.timestamp];
     }];
     
@@ -116,45 +113,31 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
-    
-    MyView *view = (MyView *)self.view;
-    [view setKeyHandler:_macroHandler];
-    [view.keyup subscribeNext:^(NSEvent *theEvent) {
-
-//        unichar val = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
-//        NSNumber *number = [NSNumber numberWithUnsignedChar:val];
-//        
-//        NSLog(@"base view: %@, Modifiers=%lu", number, theEvent.modifierFlags);
-//        NSLog(@"base view: %hu, Modifiers=%lu", theEvent.keyCode, theEvent.modifierFlags);
-        
-//        [_macroHandler handle:number with:modifiers];
-    }];
-//    [self updateRoom];
    
-    NSMutableArray *tags = [[NSMutableArray alloc] init];
-    
-    TextTag *tag = [TextTag tagFor:@"\r\n" mono:NO];
-    tag.color = @"#565656";
-    [self append:tag to:@"main"];
-    [tags addObject:tag];
-
-    tag = [TextTag tagFor:@"123" mono:NO];
-    tag.color = @"#565656";
-    [self append:tag to:@"main"];
-    [tags addObject:tag];
-    
-    tag = [TextTag tagFor:@"456\n" mono:NO];
-    tag.color = @"#565656";
-    [self append:tag to:@"main"];
-    [tags addObject:tag];
-    
-    tag = [TextTag tagFor:@"789" mono:NO];
-    tag.color = @"#565656";
-    [self append:tag to:@"main"];
-    [tags addObject:tag];
-    
-    [self set:@"room" withTags:tags];
-    [self set:@"thoughts" withTags:tags];
+//    NSMutableArray *tags = [[NSMutableArray alloc] init];
+//    
+//    TextTag *tag = [TextTag tagFor:@"\r\n" mono:NO];
+//    tag.color = @"#565656";
+//    [self append:tag to:@"main"];
+//    [tags addObject:tag];
+//
+//    tag = [TextTag tagFor:@"123" mono:NO];
+//    tag.color = @"#565656";
+//    [self append:tag to:@"main"];
+//    [tags addObject:tag];
+//    
+//    tag = [TextTag tagFor:@"456\n" mono:NO];
+//    tag.color = @"#565656";
+//    [self append:tag to:@"main"];
+//    [tags addObject:tag];
+//    
+//    tag = [TextTag tagFor:@"789" mono:NO];
+//    tag.color = @"#565656";
+//    [self append:tag to:@"main"];
+//    [tags addObject:tag];
+//    
+//    [self set:@"room" withTags:tags];
+//    [self set:@"thoughts" withTags:tags];
 }
 
 - (void)addWindow:(NSString *)key withRect:(NSRect)rect andTimestamp:(BOOL)timestamp {
@@ -169,13 +152,7 @@
         if(![__CommandTextField hasFocus]) {
         
             NSString *val = [theEvent charactersIgnoringModifiers];
-//            unichar ch = [val characterAtIndex:0];
-//            NSNumber *num = [NSNumber numberWithUnsignedChar:ch];
             
-//            BOOL handled = [_macroHandler handle:num with:0];
-//            if(!handled) {
-//                [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
-//            }
             [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
             [__CommandTextField selectText:self];
             [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
@@ -184,31 +161,18 @@
     [_windows setCacheObject:controller forKey:key];
 }
 
-- (void)writeWindowJson {
-    NSArray *items = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
+- (NSArray *)getWindows {
+    
+    NSArray *windows = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
         TextViewController *controller = [_windows cacheObjectForKey:value.key];
         return [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
     }].array;
     
-    _gameContext.windows = items;
-    
-    [_appSettingsLoader saveProfile];
+    return windows;
 }
 
 - (void)command:(NSString *)command {
-    
-    if([command isEqualToString:@"saveSettings"]) {
-        [self writeWindowJson];
-        [_appSettingsLoader saveVariables];
-        [_appSettingsLoader saveHighlights];
-        [_appSettingsLoader saveAliases];
-        [_appSettingsLoader saveMacros];
-        
-        [self append:[TextTag tagFor:[@"[%@ settings saved]\n" stringFromDateFormat:@"HH:mm"]
-                                mono:true]
-                  to:@"main"];
-        
-    } else if([command isEqualToString:@"connect"]) {
+    if([command isEqualToString:@"connect"]) {
         [self connect:nil];
     }
 }
@@ -224,13 +188,9 @@
     [sender setStringValue:@""];
     
     CommandContext *ctx = [[CommandContext alloc] init];
-    ctx.command = command;
-    
+    ctx.command = [command trimWhitespaceAndNewline];
     [_commandProcessor process:ctx];
-    
-//    [_roundtimeNotifier set:5];
 }
-
 
 - (void)beginEdit:(NSString*)key {
     TextViewController *controller = [_windows cacheObjectForKey:key];
@@ -297,7 +257,7 @@
     
     [_gameStream.connected subscribeNext:^(NSString *message) {
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
-        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, message]
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, message]
                                 mono:true]
                   to:@"main"];
     }];
@@ -377,7 +337,7 @@
     [authSignal
      subscribeNext:^(id x) {
          NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
-        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, x]
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, x]
                                 mono:true]
                   to:@"main"];
      }
@@ -391,7 +351,7 @@
          }
      }
      completed:^{
-        [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
+        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
     }];
@@ -419,7 +379,7 @@
         }
         
     } completed:^{
-        [self append:[TextTag tagFor:[@"[%@ disconnected]\n" stringFromDateFormat:@"HH:mm"]
+        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
         _gameStream = nil;

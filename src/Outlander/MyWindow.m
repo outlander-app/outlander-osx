@@ -10,16 +10,16 @@
 
 @implementation MyWindow
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
-    
+//- (BOOL)performKeyEquivalent:(NSEvent *)theEvent {
+
 //    unichar pressed = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
 //    unichar f1 = NSF1FunctionKey;
 //    
 //    NSString *str = [NSString stringWithCharacters:&f1 length:1];
     
-    NSLog(@"performKeyEquivalent: %@ %hu", [theEvent charactersIgnoringModifiers], theEvent.keyCode);
-    
-    return [super performKeyEquivalent:theEvent];
-}
+//    NSLog(@"performKeyEquivalent: %@ %hu", [theEvent charactersIgnoringModifiers], theEvent.keyCode);
+
+//    return [super performKeyEquivalent:theEvent];
+//}
 
 @end

@@ -8,12 +8,10 @@
 
 #import "CommandRelay.h"
 #import "GameContext.h"
-#import "KeyHandler.h"
 #import "Macro.h"
 
-@interface MacroHandler : NSObject <KeyHandler>
+@interface MacroHandler : NSObject
 
 - (instancetype)initWith:(GameContext *)context and:(id<CommandRelay>)commandRelay;
-- (BOOL)handle:(NSNumber *)key with:(NSUInteger)modifiers;
 
 @end

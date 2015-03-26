@@ -9,3 +9,4 @@
 #import "SkillExp.h"
 #import "Roundtime.h"
 #import "Vitals.h"
+#import "WindowData.h"
