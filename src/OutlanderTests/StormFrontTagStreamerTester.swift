@@ -254,7 +254,7 @@ class StormFrontTagStreamerTester: QuickSpec {
             
             it("streams room titles with quotes", {
                 let data = [
-                    "<streamWindow id='room' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
+                    "<streamWindow id='main' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
                 ]
               
                 self.streamData(data)
