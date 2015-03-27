@@ -325,8 +325,20 @@
         }].array;
         
         NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
-       
+        
+        if(_expTracker.startOfTracking == nil) {
+            _expTracker.startOfTracking = [NSDate date];
+        }
+        
+        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
+        
+        unsigned int seconds = (unsigned int)round(secondsBetween);
+        NSLog(@"seconds: %u", seconds);
+        NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
+                            seconds / 3600, (seconds / 60) % 60, seconds % 60];
+        
         [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES]];
+        [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
         [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
         
         [self set:@"exp" withTags:tags];

@@ -13,7 +13,7 @@
     TSMutableDictionary *_skills;
 }
 
--(id)init {
+-(instancetype)init {
     self = [super init];
     if(!self) return nil;
     

@@ -10,4 +10,9 @@
 
 @implementation Layout
 
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{
+             };
+}
+
 @end

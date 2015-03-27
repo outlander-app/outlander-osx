@@ -10,6 +10,8 @@
 
 @interface ExpTracker : NSObject
 
+@property (nonatomic, strong) NSDate *startOfTracking;
+
 -(void) update:(SkillExp *)exp;
 -(NSArray *) skills;
 -(NSArray *) skillsWithExp;

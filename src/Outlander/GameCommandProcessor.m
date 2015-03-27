@@ -49,12 +49,12 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)
-                                                 name:@"command"
+                                                 name:@"OL-command"
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveEchoNotification:)
-                                                 name:@"echo"
+                                                 name:@"OL-echo"
                                                object:nil];
     
     return self;

@@ -16,7 +16,7 @@
 @implementation AppDelegate
 
 - (IBAction)newAction:(id)sender {
-    [self.mainWindowController showAppUpdate];
+    //[self.mainWindowController showAppUpdate];
 }
 
 - (IBAction)connectAction:(id)sender {

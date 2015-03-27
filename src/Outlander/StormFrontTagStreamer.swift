@@ -52,6 +52,7 @@ public class StormFrontTagStreamer {
     public var emitExp : ((SkillExp)->Void)?
     public var emitRoundtime : ((Roundtime)->Void)?
     public var emitRoom : (()->Void)?
+    public var emitSpell : ((String)->Void)?
     public var emitVitals : ((Vitals)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
@@ -136,14 +137,20 @@ public class StormFrontTagStreamer {
             emitSetting?("\(node.name)handnoun", node.attr("noun") ?? "")
             
         case _ where node.name == "spell":
-            emitSetting?("spell", node.value ?? "")
+            if let spell = node.value {
+                emitSetting?("spell", spell)
+                emitSpell?(spell)
+            }
             
         case _ where node.name == "streamwindow":
+            var id = node.attr("id")
             var subtitle = node.attr("subtitle")
-            if subtitle != nil && countElements(subtitle!) > 3 {
+            if id == "main" && subtitle != nil && countElements(subtitle!) > 3 {
                 subtitle = subtitle!.substringFromIndex(advance(subtitle!.startIndex, 3))
+                if let t = subtitle {
+                    emitSetting?("roomtitle", t)
+                }
             }
-            emitSetting?("roomtitle", subtitle ?? "")
             
         case _ where node.name == "dialogdata" && node.attr("id") == "minivitals":
             let vitals = node.children

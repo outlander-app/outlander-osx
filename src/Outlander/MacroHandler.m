@@ -39,12 +39,7 @@
 }
 
 -(void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSApplicationDidBecomeActiveNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSApplicationDidResignActiveNotification
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)registerMacros {

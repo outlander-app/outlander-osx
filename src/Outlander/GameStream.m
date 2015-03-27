@@ -52,8 +52,12 @@
         [_gameParser.room sendNext:@""];
     };
     
-    _tagStreamer.emitVitals = ^(Vitals *vital){
+    _tagStreamer.emitVitals = ^(Vitals *vital) {
         [_vitals sendNext:vital];
+    };
+    
+    _tagStreamer.emitSpell = ^(NSString *spell) {
+        [_gameParser.spell sendNext:spell];
     };
     
     _vitals = _gameParser.vitals;
@@ -116,9 +120,6 @@
              return YES;
          }];
          
-//         [_gameParser parse:result then:^(NSArray *result) {
-//             [_mainSubject sendNext:result];
-//         }];
      } completed:^{
         [_mainSubject sendCompleted];
      }];

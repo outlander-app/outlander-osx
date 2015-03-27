@@ -9,6 +9,7 @@
 #import "TextViewController.h"
 #import "NSString+Categories.h"
 #import "Highlight.h"
+#import "MyView.h"
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
@@ -42,6 +43,24 @@
                                        NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle],
                                        NSCursorAttributeName: [NSCursor pointingHandCursor]
                                        }];
+    
+    [_TextView setSelectedTextAttributes:
+        [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSColor colorWithHexString:@"#252729"], NSBackgroundColorAttributeName,
+            [NSColor colorWithHexString:@"#cccccc"], NSForegroundColorAttributeName,
+        nil]];
+    
+    NSMenu *menu = _TextView.menu;
+    NSMenuItem *item = [menu itemWithTitle:@"Show Border"];
+    if(item == nil) {
+        [menu insertItemWithTitle:@"Show Border" action:@selector(toggleShowBorder:) keyEquivalent:@"" atIndex:0];
+    }
+}
+
+- (void)toggleShowBorder:(id)sender {
+    MyView *parent = (MyView *)[[self view] superview];
+    parent.showBorder = !parent.showBorder;
+    parent.needsDisplay = YES;
 }
 
 - (BOOL)displayTimestamp {

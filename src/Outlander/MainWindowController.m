@@ -22,9 +22,6 @@
 #import "GameCommandRelay.h"
 #import <Squirrel/Squirrel.h>
 
-#define START_WIDTH 900
-#define START_HEIGHT 615
-
 @interface MainWindowController ()
     @property (nonatomic, strong) LoginViewController *loginViewController;
     @property (nonatomic, strong) SettingsWindowController *settingsWindowController;
@@ -104,8 +101,6 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
-    NSLog(@"***DID LOAD***");
     
     TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
    
