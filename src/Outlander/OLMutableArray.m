@@ -20,7 +20,8 @@
     if(!self) return nil;
     
     _cache = [[NSMutableArray alloc] init];
-    _changed = [RACReplaySubject subject];
+    _changed = [RACSubject subject];
+    _removed = [RACSubject subject];
     
     return self;
 }
@@ -38,12 +39,22 @@
     return _cache[index];
 }
 
+- (void)removeObject:(id)item {
+    [_cache removeObject:item];
+    [self signalRemoval:item];
+}
+
 - (void)enumerateObjectsUsingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block {
     [_cache enumerateObjectsUsingBlock:block];
 }
 
 - (void)signalChange:(id)item {
     id<RACSubscriber> sub = (id<RACSubscriber>)_changed;
+    [sub sendNext:item];
+}
+
+- (void)signalRemoval:(id)item {
+    id<RACSubscriber> sub = (id<RACSubscriber>)_removed;
     [sub sendNext:item];
 }
 

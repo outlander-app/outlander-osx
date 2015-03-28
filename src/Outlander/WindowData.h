@@ -19,5 +19,6 @@
 @property (nonatomic, assign) double height;
 @property (nonatomic, assign) double width;
 @property (nonatomic, assign) BOOL timestamp;
+@property (nonatomic, assign) BOOL showBorder;
 
 @end

@@ -30,11 +30,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidBecomeActive:)
                                                  name:NSApplicationDidBecomeActiveNotification
-                                               object:nil ];
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidResignActive:)
                                                  name:NSApplicationDidResignActiveNotification
-                                               object:nil ];
+                                               object:nil];
+    
+    [_context.macros.removed subscribeNext:^(Macro *macro) {
+        MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:[macro.keys integerValue] modifierFlags:0];
+        [[MASShortcutMonitor sharedMonitor] unregisterShortcut:shortcut];
+    }];
+    
     return self;
 }
 
@@ -44,14 +50,18 @@
 
 -(void)registerMacros {
     [_context.macros enumerateObjectsUsingBlock:^(Macro *macro, NSUInteger idx, BOOL *stop) {
-        MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:[macro.keys integerValue] modifierFlags:0];
-        [[MASShortcutMonitor sharedMonitor] registerShortcut:shortcut withAction:^{
-            if(_isApplicationActive && macro != nil){
-                CommandContext *ctx = [[CommandContext alloc] init];
-                ctx.command = macro.action;
-                [_commandRelay sendCommand:ctx];
-            }
-        }];
+        [self registerMacro:macro];
+    }];
+}
+
+-(void)registerMacro:(Macro *)macro {
+    MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:[macro.keys integerValue] modifierFlags:0];
+    [[MASShortcutMonitor sharedMonitor] registerShortcut:shortcut withAction:^{
+        if(_isApplicationActive && macro != nil){
+            CommandContext *ctx = [[CommandContext alloc] init];
+            ctx.command = macro.action;
+            [_commandRelay sendCommand:ctx];
+        }
     }];
 }
 

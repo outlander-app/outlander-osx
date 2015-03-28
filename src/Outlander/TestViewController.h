@@ -34,5 +34,5 @@
 - (IBAction)connect:(id)sender;
 - (void)append:(TextTag*)text to:(NSString *)key;
 - (NSString *)textForWindow:(NSString *)key;
-- (void)addWindow:(NSString *)key withRect:(NSRect)rect andTimestamp:(BOOL)timestamp;
+- (void)addWindow:(WindowData *)window;
 @end

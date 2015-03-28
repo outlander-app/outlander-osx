@@ -84,6 +84,10 @@ public class StormFrontTagStreamer {
         
         switch node.name {
             
+        case _ where node.name == "app":
+            emitSetting?("charactername", node.attr("char") ?? "")
+            emitSetting?("game", node.attr("game") ?? "")
+            
         case _ where node.name == "prompt":
             emitSetting?("prompt", node.value?.replace("&gt;", withString: ">") ?? "")
             emitSetting?("gametime", node.attr("time") ?? "")
@@ -271,6 +275,9 @@ public class StormFrontTagStreamer {
             
         case _ where node.name == "d":
             tag = emitTag(node)
+            if let cmd = node.attr("cmd") {
+                tag?.command = cmd
+            }
             
         default:
            tag = nil

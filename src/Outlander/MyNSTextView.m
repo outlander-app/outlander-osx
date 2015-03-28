@@ -7,14 +7,19 @@
 //
 
 #import "MyNSTextView.h"
+#import "GameCommandRelay.h"
+#import "CommandContext.h"
 
 @interface MyNSTextView () {
+    GameCommandRelay *_commandRelay;
 }
 @end
 
 @implementation MyNSTextView
 
 - (void)awakeFromNib {
+    
+    _commandRelay = [[GameCommandRelay alloc] init];
     
     NSMenu *menu = [self menu];
     
@@ -65,8 +70,25 @@
     return YES;
 }
 
-//- (void)clickedOnLink:(id)link atIndex:(NSUInteger)charIndex {
-//    NSLog(@"Clicked on link %@ %lu", link, (unsigned long)charIndex);
-//}
+- (void)clickedOnLink:(id)link atIndex:(NSUInteger)charIndex {
+    if([link hasPrefix:@"command:"]) {
+        [self executeCommand:link];
+    } else {
+        [self openLink:[NSURLRequest requestWithURL:[NSURL URLWithString:link]]];
+    }
+}
+
+- (void)executeCommand:(NSString *)command {
+    CommandContext *ctx = [[CommandContext alloc] init];
+    ctx.command = [command substringFromIndex:@"command:".length];
+    [_commandRelay sendCommand:ctx];
+}
+
+- (void)openLink:(NSURLRequest *)request {
+    NSString *scheme = [[request URL] scheme];
+    if ([scheme isEqualToString:@"http"]) {
+        [[NSWorkspace sharedWorkspace] openURL:[request URL]];
+    }
+}
 
 @end

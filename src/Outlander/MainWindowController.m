@@ -21,6 +21,7 @@
 #import "MacroHandler.h"
 #import "GameCommandRelay.h"
 #import <Squirrel/Squirrel.h>
+#import "Outlander-Swift.h"
 
 @interface MainWindowController ()
     @property (nonatomic, strong) LoginViewController *loginViewController;
@@ -102,10 +103,12 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     
-    TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
-   
     [_settingsWindowController setContext:_gameContext];
     
+//    GameViewController *gv = [[GameViewController alloc] initWithNibName:@"GameViewController" bundle:nil];
+//    [self setCurrentViewController:gv];
+    
+    TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
     [self setCurrentViewController:vc];
     
     @weakify(self);
@@ -124,8 +127,8 @@
     
     _loginViewController.context = _gameContext;
     
-    [self.window makeFirstResponder:vc._CommandTextField];
-    [vc._CommandTextField becomeFirstResponder];
+    //[self.window makeFirstResponder:vc._CommandTextField];
+    //[vc._CommandTextField becomeFirstResponder];
     
     //[self checkForUpdates];
 }

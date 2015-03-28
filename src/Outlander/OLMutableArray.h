@@ -11,9 +11,11 @@
 @interface OLMutableArray : NSObject
 
 @property (nonatomic, strong) RACSignal *changed;
+@property (nonatomic, strong) RACSignal *removed;
 
 - (NSInteger)count;
 - (void)addObject:(id)item;
+- (void)removeObject:(id)item;
 - (id)objectAtIndex:(NSInteger)index;
 - (void)enumerateObjectsUsingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block;
 - (void)signalChange:(id)item;

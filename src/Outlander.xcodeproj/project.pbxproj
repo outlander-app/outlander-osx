@@ -56,6 +56,10 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
+		F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
+		F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
+		F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
@@ -384,6 +388,8 @@
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		F959D3CF1AC6897000B2A659 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		F959D3D01AC6897000B2A659 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
 		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
 		F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCommandHandler.h; sourceTree = "<group>"; };
@@ -844,6 +850,8 @@
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
+				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
+				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1252,6 +1260,7 @@
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
+				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1259,6 +1268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
@@ -1488,6 +1498,7 @@
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
+				F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1580,6 +1591,7 @@
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,

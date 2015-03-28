@@ -287,6 +287,30 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["concentration"]).to(equal("42"))
             })
+            
+            it("creates command for d tags", {
+                let data = [
+                    "<d cmd=\"HELP search stealing\">help search stealing</d>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(1))
+                expect(self.tags[0].text).to(equal("help search stealing"))
+                expect(self.tags[0].command).to(equal("HELP search stealing"))
+            })
+            
+            it("creates command for d tags", {
+                let data = [
+                    "<app char=\"Arneson\" game=\"DR\" title=\"[DR: Arneson] StormFront\"/>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings["charactername"]).to(equal("Arneson"))
+                expect(self.settings["game"]).to(equal("DR"))
+            })
         })
     }
     

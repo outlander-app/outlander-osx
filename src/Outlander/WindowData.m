@@ -23,6 +23,7 @@
     _height = loc.size.height;
     _width = loc.size.width;
     _timestamp = timestamp;
+    _showBorder = YES;
     
     return self;
 }

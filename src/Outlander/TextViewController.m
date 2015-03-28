@@ -13,6 +13,7 @@
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
+    BOOL _displayBorder;
 }
 @end
 
@@ -53,13 +54,38 @@
     NSMenu *menu = _TextView.menu;
     NSMenuItem *item = [menu itemWithTitle:@"Show Border"];
     if(item == nil) {
-        [menu insertItemWithTitle:@"Show Border" action:@selector(toggleShowBorder:) keyEquivalent:@"" atIndex:0];
+        [menu insertItemWithTitle:@"Show Border" action:@selector(toggleShowBorder:) keyEquivalent:@"" atIndex:2];
     }
+}
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item {
+    if ([item action] == @selector(toggleShowBorder:)) {
+        NSMenuItem *menuItem = (NSMenuItem *)item;
+        MyView *parent = (MyView *)[[self view] superview];
+        if(parent.showBorder) {
+            [menuItem setState:NSOnState];
+        } else {
+            [menuItem setState:NSOffState];
+        }
+    }
+    
+    return YES;
 }
 
 - (void)toggleShowBorder:(id)sender {
     MyView *parent = (MyView *)[[self view] superview];
     parent.showBorder = !parent.showBorder;
+    parent.needsDisplay = YES;
+}
+
+- (BOOL)showBorder {
+    MyView *parent = (MyView *)[[self view] superview];
+    return parent.showBorder;
+}
+
+- (void)setShowBorder:(BOOL)show {
+    MyView *parent = (MyView *)[[self view] superview];
+    parent.showBorder = show;
     parent.needsDisplay = YES;
 }
 
@@ -158,6 +184,10 @@
 
     if(text.href) {
         [attr addAttribute:NSLinkAttributeName value:text.href range:range];
+    }
+    
+    if(text.command) {
+        [attr addAttribute:NSLinkAttributeName value:[NSString stringWithFormat:@"command:%@", text.command] range:range];
     }
     
     NSColor *color = nil;

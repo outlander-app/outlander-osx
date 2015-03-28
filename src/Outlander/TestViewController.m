@@ -95,7 +95,7 @@
     [_vitalsViewController.view fixHeight:NO];
     
     [_gameContext.layout.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
-        [self addWindow:obj.name withRect:NSMakeRect(obj.x, obj.y, obj.width, obj.height) andTimestamp:obj.timestamp];
+        [self addWindow:obj];
     }];
     
     [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
@@ -116,16 +116,18 @@
    
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
 //    
-//    TextTag *tag = [TextTag tagFor:@"\r\n" mono:NO];
+//    TextTag *tag = [TextTag tagFor:@"test\r\n" mono:NO];
 //    tag.color = @"#565656";
+//    tag.href = @"http://google.com";
 //    [self append:tag to:@"main"];
-//    [tags addObject:tag];
+    //[tags addObject:tag];
 //
 //    tag = [TextTag tagFor:@"123" mono:NO];
 //    tag.color = @"#565656";
+//    tag.command = @"command:something";
 //    [self append:tag to:@"main"];
 //    [tags addObject:tag];
-//    
+//
 //    tag = [TextTag tagFor:@"456\n" mono:NO];
 //    tag.color = @"#565656";
 //    [self append:tag to:@"main"];
@@ -140,12 +142,15 @@
 //    [self set:@"thoughts" withTags:tags];
 }
 
-- (void)addWindow:(NSString *)key withRect:(NSRect)rect andTimestamp:(BOOL)timestamp {
+- (void)addWindow:(WindowData *)window {
+    
+    NSRect rect = NSMakeRect(window.x, window.y, window.width, window.height);
     
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                        atLoc:rect
-                                                     withKey:key];
-    [controller setDisplayTimestamp:timestamp];
+                                                     withKey:window.name];
+    [controller setDisplayTimestamp:window.timestamp];
+    [controller setShowBorder:window.showBorder];
     controller.gameContext = _gameContext;
     [controller.keyup subscribeNext:^(NSEvent *theEvent) {
         
@@ -158,14 +163,16 @@
             [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
         }
     }];
-    [_windows setCacheObject:controller forKey:key];
+    [_windows setCacheObject:controller forKey:window.name];
 }
 
 - (NSArray *)getWindows {
     
     NSArray *windows = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
         TextViewController *controller = [_windows cacheObjectForKey:value.key];
-        return [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
+        WindowData *data = [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
+        data.showBorder = value.showBorder;
+        return data;
     }].array;
     
     return windows;
