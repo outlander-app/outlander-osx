@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="actionTextField" destination="b7A-nl-Fn8" id="kKR-cY-TB6"/>
                 <outlet property="buttonGroup" destination="smG-bC-oOI" id="mlB-QQ-NB4"/>
-                <outlet property="macroTextField" destination="Ill-9O-b8Z" id="gOA-UU-9Wd"/>
+                <outlet property="macroShortcutView" destination="rzz-Ri-aFG" id="H4Y-Ut-wWp"/>
                 <outlet property="tableView" destination="fBH-TA-xqa" id="NLs-rn-vsG"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -20,6 +20,61 @@
             <rect key="frame" x="0.0" y="0.0" width="604" height="434"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b7A-nl-Fn8">
+                    <rect key="frame" x="126" y="21" width="428" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vbj-K0-Lds">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="editable" keyPath="self.selectedMacro" id="ibW-c3-9vv">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="self.selectedMacro.action" id="6PD-bi-NuX">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X7w-U6-1e6">
+                    <rect key="frame" x="20" y="55" width="100" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="vQw-eZ-dAF"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Macro" id="h7b-Ga-elM">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wph-oS-qL3">
+                    <rect key="frame" x="20" y="24" width="100" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="Ewe-Rm-Xre"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Action" id="HxZ-eR-NPV">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="smG-bC-oOI">
+                    <rect key="frame" x="18" y="85" width="71" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="w6C-dV-BfS">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment image="NSAddTemplate" width="32"/>
+                            <segment image="NSRemoveTemplate" width="32" tag="1"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="addRemove:" target="-2" id="XcR-rp-95D"/>
+                    </connections>
+                </segmentedControl>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nFT-6l-ymk">
                     <rect key="frame" x="20" y="116" width="564" height="298"/>
                     <clipView key="contentView" misplaced="YES" id="0RR-m6-mNH">
@@ -68,6 +123,10 @@
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="7Je-VI-3np"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="dg9-5S-kFR"/>
+                    </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="pOA-e8-cuG">
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -79,91 +138,28 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ill-9O-b8Z" customClass="DDHotKeyTextField">
-                    <rect key="frame" x="126" y="53" width="428" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hNC-Ao-LBz" customClass="DDHotKeyTextFieldCell">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <binding destination="-2" name="editable" keyPath="self.selectedMacro" id="h5W-Wy-9Ra">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="value" keyPath="self.selectedMacro.keys" id="Hju-T1-lgr">
-                            <dictionary key="options">
-                                <bool key="NSValidatesImmediately" value="YES"/>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </textField>
-                <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b7A-nl-Fn8">
-                    <rect key="frame" x="126" y="21" width="428" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vbj-K0-Lds">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <binding destination="-2" name="editable" keyPath="self.selectedMacro" id="ibW-c3-9vv">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="value" keyPath="self.selectedMacro.action" id="6PD-bi-NuX">
-                            <dictionary key="options">
-                                <bool key="NSValidatesImmediately" value="YES"/>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X7w-U6-1e6">
-                    <rect key="frame" x="20" y="55" width="100" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Macro" id="h7b-Ga-elM">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wph-oS-qL3">
-                    <rect key="frame" x="20" y="24" width="100" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Action" id="HxZ-eR-NPV">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="smG-bC-oOI">
-                    <rect key="frame" x="18" y="85" width="71" height="24"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="w6C-dV-BfS">
-                        <font key="font" metaFont="system"/>
-                        <segments>
-                            <segment image="NSAddTemplate" width="32"/>
-                            <segment image="NSRemoveTemplate" width="32" tag="1"/>
-                        </segments>
-                    </segmentedCell>
-                    <connections>
-                        <action selector="addRemove:" target="-2" id="XcR-rp-95D"/>
-                    </connections>
-                </segmentedControl>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="rzz-Ri-aFG" customClass="OLShortcutView">
+                    <rect key="frame" x="126" y="48" width="100" height="27"/>
+                </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="smG-bC-oOI" firstAttribute="top" secondItem="nFT-6l-ymk" secondAttribute="bottom" constant="8" id="9Rc-hu-JE7"/>
-                <constraint firstItem="X7w-U6-1e6" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="Dfn-iI-zYt"/>
-                <constraint firstItem="X7w-U6-1e6" firstAttribute="top" secondItem="smG-bC-oOI" secondAttribute="bottom" constant="15" id="Lp7-k3-Ioo"/>
-                <constraint firstAttribute="trailing" secondItem="b7A-nl-Fn8" secondAttribute="trailing" constant="20" id="Ndt-tM-UoK"/>
-                <constraint firstItem="nFT-6l-ymk" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="UmV-1z-SAn"/>
-                <constraint firstItem="smG-bC-oOI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Unb-gy-5FD"/>
-                <constraint firstAttribute="trailing" secondItem="nFT-6l-ymk" secondAttribute="trailing" constant="20" id="Vgd-8L-1tY"/>
-                <constraint firstItem="nFT-6l-ymk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="a4i-WU-kyM"/>
-                <constraint firstAttribute="trailing" secondItem="Ill-9O-b8Z" secondAttribute="trailing" constant="20" id="bl4-2O-WHx"/>
-                <constraint firstAttribute="bottom" secondItem="b7A-nl-Fn8" secondAttribute="bottom" constant="21" id="j4y-pU-Kz3"/>
-                <constraint firstItem="Wph-oS-qL3" firstAttribute="top" secondItem="X7w-U6-1e6" secondAttribute="bottom" constant="14" id="ltI-Ea-5X4"/>
-                <constraint firstItem="b7A-nl-Fn8" firstAttribute="top" secondItem="Ill-9O-b8Z" secondAttribute="bottom" constant="10" id="rAp-VN-vEe"/>
-                <constraint firstItem="Wph-oS-qL3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="sgr-GZ-Qmt"/>
-                <constraint firstAttribute="bottom" secondItem="Wph-oS-qL3" secondAttribute="bottom" constant="24" id="vue-dC-PHR"/>
+                <constraint firstItem="rzz-Ri-aFG" firstAttribute="leading" secondItem="X7w-U6-1e6" secondAttribute="trailing" constant="8" id="0b9-iU-ull"/>
+                <constraint firstItem="b7A-nl-Fn8" firstAttribute="top" secondItem="rzz-Ri-aFG" secondAttribute="bottom" constant="5" id="3g9-mR-THO"/>
+                <constraint firstAttribute="trailing" secondItem="b7A-nl-Fn8" secondAttribute="trailing" constant="50" id="Cg9-Jc-nXB"/>
+                <constraint firstItem="Wph-oS-qL3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="PO3-2N-Ilq"/>
+                <constraint firstItem="X7w-U6-1e6" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="RfO-VQ-t4o"/>
+                <constraint firstItem="rzz-Ri-aFG" firstAttribute="top" secondItem="nFT-6l-ymk" secondAttribute="bottom" constant="41" id="UDj-t9-XSe"/>
+                <constraint firstAttribute="trailing" secondItem="nFT-6l-ymk" secondAttribute="trailing" constant="20" id="UJf-4e-tmc"/>
+                <constraint firstAttribute="bottom" secondItem="b7A-nl-Fn8" secondAttribute="bottom" constant="21" id="XbZ-6V-aet"/>
+                <constraint firstItem="smG-bC-oOI" firstAttribute="top" secondItem="nFT-6l-ymk" secondAttribute="bottom" constant="8" symbolic="YES" id="YsZ-np-vUa"/>
+                <constraint firstAttribute="trailing" secondItem="rzz-Ri-aFG" secondAttribute="trailing" constant="378" id="emd-3R-Isg"/>
+                <constraint firstAttribute="bottom" secondItem="Wph-oS-qL3" secondAttribute="bottom" constant="24" id="fAL-u1-vgI"/>
+                <constraint firstItem="b7A-nl-Fn8" firstAttribute="leading" secondItem="Wph-oS-qL3" secondAttribute="trailing" constant="8" id="o68-eF-zr0"/>
+                <constraint firstItem="nFT-6l-ymk" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="p2w-dn-DJA"/>
+                <constraint firstItem="X7w-U6-1e6" firstAttribute="top" secondItem="smG-bC-oOI" secondAttribute="bottom" constant="15" id="qgH-wF-w40"/>
+                <constraint firstItem="Wph-oS-qL3" firstAttribute="top" secondItem="X7w-U6-1e6" secondAttribute="bottom" constant="14" id="u3J-gs-aDS"/>
+                <constraint firstItem="nFT-6l-ymk" firstAttribute="leading" secondItem="smG-bC-oOI" secondAttribute="leading" id="vMj-ee-Ckx"/>
+                <constraint firstItem="nFT-6l-ymk" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="yoP-YM-rex"/>
             </constraints>
             <point key="canvasLocation" x="429" y="241"/>
         </customView>

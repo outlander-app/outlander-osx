@@ -14,7 +14,7 @@
     
     NSDictionary *userInfo = @{@"command": ctx};
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL-command"
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:command"
                                                         object:nil
                                                       userInfo:userInfo];
 }
@@ -23,7 +23,7 @@
     
     NSDictionary *userInfo = @{@"tag": tag};
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL-echo"
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:echo"
                                                         object:nil
                                                       userInfo:userInfo];
 }

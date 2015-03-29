@@ -36,8 +36,18 @@
                                                  name:NSApplicationDidResignActiveNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveCommandUnregisterMacros:)
+                                                 name:@"OL:unregisterMacros"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveCommandRegisterMacros:)
+                                                 name:@"OL:registerMacros"
+                                               object:nil];
+    
     [_context.macros.removed subscribeNext:^(Macro *macro) {
-        MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:[macro.keys integerValue] modifierFlags:0];
+        MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:macro.keyCode modifierFlags:0];
         [[MASShortcutMonitor sharedMonitor] unregisterShortcut:shortcut];
     }];
     
@@ -48,6 +58,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) receiveCommandUnregisterMacros:(NSNotification *) notification {
+    NSLog(@"OL:unregisterMacros");
+    [self unRegisterMacros];
+}
+
+- (void) receiveCommandRegisterMacros:(NSNotification *) notification {
+    NSLog(@"OL:registerMacros");
+    [self registerMacros];
+}
+
 -(void)registerMacros {
     [_context.macros enumerateObjectsUsingBlock:^(Macro *macro, NSUInteger idx, BOOL *stop) {
         [self registerMacro:macro];
@@ -55,7 +75,7 @@
 }
 
 -(void)registerMacro:(Macro *)macro {
-    MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:[macro.keys integerValue] modifierFlags:0];
+    MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:macro.keyCode modifierFlags:macro.modifiers];
     [[MASShortcutMonitor sharedMonitor] registerShortcut:shortcut withAction:^{
         if(_isApplicationActive && macro != nil){
             CommandContext *ctx = [[CommandContext alloc] init];

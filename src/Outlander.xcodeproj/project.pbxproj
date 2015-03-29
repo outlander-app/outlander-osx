@@ -60,6 +60,11 @@
 		F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
 		F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
 		F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
+		F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D51AC7264300B2A659 /* MacroTester.m */; };
+		F959D3D81AC8757F00B2A659 /* OLShortcutView.h in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D71AC8757F00B2A659 /* OLShortcutView.h */; };
+		F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D91AC8759500B2A659 /* OLShortcutView.m */; };
+		F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */; };
+		F959D3DE1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
@@ -390,6 +395,11 @@
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		F959D3CF1AC6897000B2A659 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		F959D3D01AC6897000B2A659 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
+		F959D3D51AC7264300B2A659 /* MacroTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroTester.m; sourceTree = "<group>"; };
+		F959D3D71AC8757F00B2A659 /* OLShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLShortcutView.h; sourceTree = "<group>"; };
+		F959D3D91AC8759500B2A659 /* OLShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLShortcutView.m; sourceTree = "<group>"; };
+		F959D3DB1AC8AC5100B2A659 /* MASShortcut+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASShortcut+Categories.h"; sourceTree = "<group>"; };
+		F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MASShortcut+Categories.m"; sourceTree = "<group>"; };
 		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
 		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
 		F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCommandHandler.h; sourceTree = "<group>"; };
@@ -880,6 +890,8 @@
 				F97A5C9918957A5D00E2C318 /* TSMutableDictionary.m */,
 				F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */,
 				F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */,
+				F959D3DB1AC8AC5100B2A659 /* MASShortcut+Categories.h */,
+				F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -977,6 +989,8 @@
 				F92A4FC0192B3484006C71F9 /* MyWindow.m */,
 				F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */,
 				F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */,
+				F959D3D71AC8757F00B2A659 /* OLShortcutView.h */,
+				F959D3D91AC8759500B2A659 /* OLShortcutView.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -1142,6 +1156,7 @@
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
+				F959D3D51AC7264300B2A659 /* MacroTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
 				F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */,
@@ -1416,6 +1431,7 @@
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
+				F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
 				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
@@ -1464,7 +1480,9 @@
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
+				F959D3D81AC8757F00B2A659 /* OLShortcutView.h in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
+				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
@@ -1562,6 +1580,7 @@
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */,
+				F959D3DE1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
 				F9772F181940389E00172083 /* VarToken.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
@@ -1604,6 +1623,7 @@
 				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
+				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,

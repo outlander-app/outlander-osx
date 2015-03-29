@@ -10,6 +10,7 @@
 
 @protocol SettingsView <NSObject>
 
+- (void)save;
 - (void)setContext:(GameContext *)context;
 
 @end
