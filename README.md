@@ -3,7 +3,11 @@ Outlander
 
 [![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
 
-![](http://i.imgur.com/NsK0LOT.png)
+![](http://i.imgur.com/Q3t3QYG.png)
+
+>You can remove window borders for a true text-only experience.
+
+![](http://i.imgur.com/ZBtaUUR.png)
 
 Players
 ==========
