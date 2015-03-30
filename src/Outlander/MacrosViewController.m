@@ -66,7 +66,6 @@
     if(_context.macros.count > 0) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
         [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
-        [_tableView reloadData];
     }
 }
 
@@ -85,7 +84,6 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
     [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
     [_tableView scrollRowToVisible:indexSet.firstIndex];
-    [_tableView reloadData];
     
     // filter out empty macros
     __block NSMutableArray *remove = [[NSMutableArray alloc] init];
@@ -99,6 +97,8 @@
         [_context.macros removeObject:obj];
     }];
     
+    [_tableView reloadData];
+    
     [_appsettingsLoader saveMacros];
 }
 
@@ -108,7 +108,6 @@
     
     switch (selectedSeg) {
         case 0: {
-            NSLog(@"Add");
             Macro *macro = [[Macro alloc] init];
             [_context.macros addObject:macro];
             
@@ -118,11 +117,10 @@
             [_tableView scrollRowToVisible:indexSet.firstIndex];
             
             [_tableView reloadData];
-        }
             break;
+        }
             
-        case 1:
-            NSLog(@"Remove: %ld", (long)_tableView.selectedRow);
+        case 1: {
             if(_tableView.selectedRow < 0 || _tableView.selectedRow >= _context.macros.count) {
                 break;
             }
@@ -134,6 +132,7 @@
             
             [_tableView reloadData];
             break;
+        }
     }
 }
 

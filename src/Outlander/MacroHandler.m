@@ -59,12 +59,10 @@
 }
 
 - (void) receiveCommandUnregisterMacros:(NSNotification *) notification {
-    NSLog(@"OL:unregisterMacros");
     [self unRegisterMacros];
 }
 
 - (void) receiveCommandRegisterMacros:(NSNotification *) notification {
-    NSLog(@"OL:registerMacros");
     [self registerMacros];
 }
 

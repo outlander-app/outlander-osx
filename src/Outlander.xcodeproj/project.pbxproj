@@ -65,6 +65,10 @@
 		F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D91AC8759500B2A659 /* OLShortcutView.m */; };
 		F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */; };
 		F959D3DE1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */; };
+		F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */; };
+		F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */; };
+		F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */; };
+		F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
@@ -400,6 +404,8 @@
 		F959D3D91AC8759500B2A659 /* OLShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLShortcutView.m; sourceTree = "<group>"; };
 		F959D3DB1AC8AC5100B2A659 /* MASShortcut+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASShortcut+Categories.h"; sourceTree = "<group>"; };
 		F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MASShortcut+Categories.m"; sourceTree = "<group>"; };
+		F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliasesViewController.swift; sourceTree = "<group>"; };
+		F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AliasesViewController.xib; sourceTree = "<group>"; };
 		F96ECDB419343F5B00787CB9 /* ScriptLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptLoader.h; sourceTree = "<group>"; };
 		F96ECDB519343F5B00787CB9 /* ScriptLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptLoader.m; sourceTree = "<group>"; };
 		F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCommandHandler.h; sourceTree = "<group>"; };
@@ -862,6 +868,8 @@
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
 				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
 				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
+				F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */,
+				F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1272,6 +1280,7 @@
 				F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */,
 				F9CF92811890832800449548 /* MainMenu.xib in Resources */,
 				F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */,
+				F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
@@ -1283,6 +1292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
@@ -1490,6 +1500,7 @@
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
+				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
@@ -1634,6 +1645,7 @@
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
+				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,

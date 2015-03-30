@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsWindowController">
             <connections>
+                <outlet property="toolbar" destination="VrF-aZ-UIa" id="0UF-RU-9ct"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -15,11 +16,31 @@
         <window title="Outlander Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="196" y="240" width="700" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="700" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="D38D4EB8-6999-446C-8AA3-558C5CA9EB3A" displayMode="iconAndLabel" sizeMode="regular" id="VrF-aZ-UIa">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="P1G-9v-ZWW"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="YGl-uY-vyo"/>
+                    <toolbarItem implicitItemIdentifier="4A16E737-B758-4314-93EC-63FB461D22DD" explicitItemIdentifier="macro" label="Macros" paletteLabel="Macros" selectable="YES" id="8c1-Cg-eyQ">
+                        <connections>
+                            <action selector="selectSection:" target="-2" id="APb-p9-lNf"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="F211403A-53ED-48A3-A34F-25D03ED55111" explicitItemIdentifier="alias" label="Aliases" paletteLabel="Aliases" tag="1" selectable="YES" id="sHp-zo-Kdh">
+                        <connections>
+                            <action selector="selectSection:" target="-2" id="PEF-s7-DyQ"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="sHp-zo-Kdh"/>
+                    <toolbarItem reference="8c1-Cg-eyQ"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
