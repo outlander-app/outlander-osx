@@ -133,31 +133,20 @@ import Foundation
     
     private let attrTokenizer = AttributesTokenizer()
     
-    private var __tokenHandler : (Node)->Bool
     private var  __contextStack = [ParseContext]()
     
     override init(){
-        __tokenHandler = {(token:Node)->Bool in
-            println("No token handler specified")
-            return false
-        }
-        
         super.init()
     }
     
-    public func tokenize(input:String, tokenReceiver : (Node)->(Bool)) {
-        
-        __tokenHandler = tokenReceiver
+    public func tokenize(input:String) -> [Node] {
         
         let context = ParseContext(atPosition: 0, withMarker:input.startIndex, forString:input)
         
-        let nodes = scanContext(context)
+        var nodes = scanContext(context)
+        nodes.append(Node("eot"))
         
-        for node in nodes {
-            __tokenHandler(node)
-        }
-        
-        __tokenHandler(Node("eot"))
+        return nodes
     }
     
     private func scanContext(ctx:ParseContext) -> [Node] {

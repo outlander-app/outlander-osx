@@ -11,6 +11,7 @@ import Cocoa
 public class AliasesViewController: NSViewController, SettingsView, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var aliasTextField: NSTextField!
     private var _context:GameContext?
     private var _appSettingsLoader:AppSettingsLoader?
     
@@ -37,6 +38,18 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    public override func controlTextDidChange(obj: NSNotification) {
+        if let item = self.selectedItem {
+            var textField = obj.object as NSTextField
+            if(textField.tag == 1) {
+                item.pattern = textField.stringValue
+            } else {
+                item.replace = textField.stringValue
+            }
+            self.tableView.reloadData()
+        }
     }
     
     public func save() {
@@ -91,6 +104,7 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     }
     
     public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+        
         
         if (row >= _context!.aliases.count()){
             return "";

@@ -93,6 +93,12 @@
     }
 }
 
+- (NSDictionary *)copyValues {
+    @synchronized(self) {
+        return [_cache copy];
+    }
+}
+
 - (void)removeAllObjects {
     @synchronized(self) {
         [_cache removeAllObjects];

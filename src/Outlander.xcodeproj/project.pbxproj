@@ -35,6 +35,10 @@
 		F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */; };
+		F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */; };
+		F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */; };
+		F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
+		F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
 		F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
@@ -295,7 +299,6 @@
 		F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8391956721C005B9D68 /* MacrosViewController.xib */; };
 		F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8391956721C005B9D68 /* MacrosViewController.xib */; };
 		F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
-		F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
@@ -374,6 +377,8 @@
 		F91A39D0194E8916006144F8 /* SendQueueProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendQueueProcessor.h; sourceTree = "<group>"; };
 		F91A39D1194E8916006144F8 /* SendQueueProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQueueProcessor.m; sourceTree = "<group>"; };
 		F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewControllerTests.m; sourceTree = "<group>"; };
+		F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesViewController.swift; sourceTree = "<group>"; };
+		F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VariablesViewController.xib; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -836,11 +841,15 @@
 		F97A5C1C1890A4E400E2C318 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */,
+				F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */,
 				F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */,
 				F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */,
 				F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */,
 				F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */,
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
+				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
+				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
 				F98F22D119248506008175FD /* LoginViewController.h */,
 				F98F22D219248506008175FD /* LoginViewController.m */,
 				F98F22D319248506008175FD /* LoginViewController.xib */,
@@ -863,13 +872,11 @@
 				F97A5CC11896C21600E2C318 /* TextViewController.h */,
 				F97A5CC21896C21600E2C318 /* TextViewController.m */,
 				F97A5CC31896C21600E2C318 /* TextViewController.xib */,
+				F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */,
+				F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */,
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
-				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
-				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
-				F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */,
-				F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1283,6 +1290,7 @@
 				F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */,
+				F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
 				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
 			);
@@ -1292,6 +1300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
@@ -1424,6 +1433,7 @@
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
+				F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
@@ -1555,7 +1565,6 @@
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
-				F9F3D8491957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
@@ -1598,6 +1607,7 @@
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,

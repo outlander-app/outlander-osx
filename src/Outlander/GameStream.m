@@ -112,19 +112,31 @@
     [[_gameServer connect:connection.key
                   toHost:connection.host
                   onPort:connection.port]
-     subscribeNext:^(id result) {
+     subscribeNext:^(NSString *rawXml) {
          
-         [_tokenizer tokenize:(NSString *)result tokenReceiver:^BOOL(Node *node){
-             NSArray *tags = [_tagStreamer streamSingle:node];
-             [_mainSubject sendNext:tags];
-             return YES;
-         }];
+         NSArray *nodes = [_tokenizer tokenize:rawXml];
+         NSArray *tags = [_tagStreamer stream:nodes];
+         
+         //NSString *rawText = [self textForTagList:tags];
+         //NSLog(@"text: %@", rawText);
+         
+         [_mainSubject sendNext:tags];
          
      } completed:^{
         [_mainSubject sendCompleted];
      }];
     
     return _subject;
+}
+
+-(NSString *)textForTagList:(NSArray *)tags {
+    NSMutableString *text = [[NSMutableString alloc] init];
+
+    for(TextTag *tag in tags){
+        [text appendString:tag.text];
+    }
+    
+    return text;
 }
 
 @end

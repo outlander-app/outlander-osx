@@ -318,10 +318,10 @@ class StormFrontTagStreamerTester: QuickSpec {
         let tokenizer = StormFrontTokenizer()
         
         for line in data {
-            tokenizer.tokenize(line, tokenReceiver: { (node:Node) -> (Bool) in
-                self.nodes.append(node)
-                return true
-            })
+            let tokens = tokenizer.tokenize(line)
+            for token in tokens {
+                self.nodes.append(token)
+            }
         }
         
         self.tags = self.streamer.stream(nodes)

@@ -15,13 +15,13 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Outlander Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
-            <rect key="contentRect" x="196" y="240" width="700" height="400"/>
+            <rect key="contentRect" x="196" y="240" width="700" height="450"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="700" height="400"/>
+                <rect key="frame" x="0.0" y="0.0" width="700" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="D38D4EB8-6999-446C-8AA3-558C5CA9EB3A" displayMode="iconAndLabel" sizeMode="regular" id="VrF-aZ-UIa">
+            <toolbar key="toolbar" implicitIdentifier="D38D4EB8-6999-446C-8AA3-558C5CA9EB3A" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="VrF-aZ-UIa">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="P1G-9v-ZWW"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="YGl-uY-vyo"/>
@@ -35,15 +35,22 @@
                             <action selector="selectSection:" target="-2" id="PEF-s7-DyQ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="1ED038C8-A015-4444-8EFC-F9B2EEC58F3E" explicitItemIdentifier="variable" label="Variables" paletteLabel="Variables" tag="2" selectable="YES" id="Kcl-M4-42Y">
+                        <connections>
+                            <action selector="selectSection:" target="-2" id="4HE-t2-tPO"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="sHp-zo-Kdh"/>
                     <toolbarItem reference="8c1-Cg-eyQ"/>
+                    <toolbarItem reference="Kcl-M4-42Y"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
+            <point key="canvasLocation" x="364" y="1"/>
         </window>
     </objects>
 </document>

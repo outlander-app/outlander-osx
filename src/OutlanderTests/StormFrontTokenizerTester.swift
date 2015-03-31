@@ -17,13 +17,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes tag with attributes", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<prompt time=\"1390623788\">&gt;</prompt>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 expect(results[0].name).to(equal("prompt"))
@@ -34,13 +30,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes tag with single-tic attributes", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<d cmd='choose 1'>blue</d>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 expect(results[0].name).to(equal("d"))
@@ -51,13 +43,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes tag without attributes", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<prompt>value</prompt>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 expect(results[0].name).to(equal("prompt"))
@@ -66,13 +54,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes text and tag", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = " 1) <d cmd='choose 1'>blue</d>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(3))
                 
@@ -85,13 +69,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes multiple tags", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = " 1) <d cmd='choose 1'>blue</d>              2) <d cmd='choose 2'>gold</d>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(5))
                 
@@ -110,13 +90,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes self closing tags", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<pushBold/>a journeyman<popBold/>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(4))
                 
@@ -127,13 +103,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes self closing tag with attributes", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<pushStream id=\"logons\"/> * Arneson joins the adventure."
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(3))
                 
@@ -144,13 +116,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes attributes with slashes", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<link id='1' value='Game Info' cmd='url:/dr/info/' />"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 
@@ -163,13 +131,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes compass directions", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<compass><dir value=\"e\"/><dir value=\"w\"/></compass>\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 
@@ -184,13 +148,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes compass + prompt", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<compass><dir value=\"n\"/></compass><prompt time=\"1426818091\">&gt;</prompt>\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(3))
                 
@@ -204,13 +164,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes element with attributes and children", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<compass id='test'><dir value=\"e\"/><dir value=\"w\"/></compass>\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 
@@ -227,13 +183,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes crazy openDialog", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<openDialog id='quick-simu' location='quickBar' title='Information'><dialogData id='quick-simu' clear='true'><link id='1' value='Game Info' cmd='url:/dr/info/' /><link id='2' value='Calendar' cmd='url:/bounce/redirect.asp?URL=http://forums.play.net/calendar?game=dragonrealms' /><link id='3' value='Forums' cmd='bbs' echo='bbs' /><link id='4' value='News' cmd='news' echo='news' /><link id='5' value='Policy' cmd='policy' echo='policy' /><link id='6' value='Premium' cmd='url:/dr/premium/' /><link id='7' value='Platinum' cmd='url:/dr/platinum/' /><link id='8' value='SimuCon' cmd='url:/bounce/redirect.asp?URL=http://www.simucon.com' /><link id='9' value='Box Office' cmd='url:/dr/boxoffice.asp' /><link id='10' value='Vote for DR!' cmd='url:/bounce/redirect.asp?URL=http://www.topmudsites.com/vote-DragonRealms.html' /><link id='11' value='Elanthipedia' cmd='url:/bounce/redirect.asp?URL=https://elanthipedia.play.net/mediawiki/index.php/Main_Page' /><link id='12' value='Simucoins Store' cmd='url:/bounce/redirect.asp?URL=https://store.play.net/store/purchase/dr' /></dialogData></openDialog>"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 
@@ -253,13 +205,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes plain text and newlines", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "   Last login :  Tuesday, March 17, 2015 at 00:51:53\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(2))
                 expect(results[0].value).to(equal("   Last login :  Tuesday, March 17, 2015 at 00:51:53"))
@@ -268,13 +216,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes pushStream", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(3))
                 
@@ -289,13 +233,9 @@ class StormFrontTokenizerTester: QuickSpec {
             
             it("tokenizes roomDesc", {
                 let tokenizer = StormFrontTokenizer()
-                var results = Array<Node>()
                 let data = "<style id=\"\"/><preset id='roomDesc'>A well-trod path leads from a small open gateway in the town wall and heads into a grove of whispering pine.  Lean, muscular figures stride by briskly, some carrying longbows, others staves, and all garbed in muted tones of earth and forest.</preset>  You also see <pushBold/>a journeyman<popBold/>.\r\n"
                 
-                tokenizer.tokenize(data){(token:Node)->Bool in
-                    results.append(token)
-                    return true
-                }
+                let results = tokenizer.tokenize(data);
                 
                 expect(results.count).to(equal(8))
             })
