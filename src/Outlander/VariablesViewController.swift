@@ -76,7 +76,6 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
     }
     
     public func save() {
-        _appSettingsLoader!.saveAliases()
     }
     
     public func setContext(context:GameContext) {

@@ -16,7 +16,7 @@
         <window title="Outlander Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="196" y="240" width="700" height="450"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="700" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -40,11 +40,17 @@
                             <action selector="selectSection:" target="-2" id="4HE-t2-tPO"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="AD081FA2-8B44-46D3-B6D6-5DB656DA627B" explicitItemIdentifier="highlight" label="Highlights" paletteLabel="Highlights" tag="3" selectable="YES" id="fxC-fS-Pe8">
+                        <connections>
+                            <action selector="selectSection:" target="-2" id="UYG-ja-zE9"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="fxC-fS-Pe8"/>
+                    <toolbarItem reference="Kcl-M4-42Y"/>
                     <toolbarItem reference="sHp-zo-Kdh"/>
                     <toolbarItem reference="8c1-Cg-eyQ"/>
-                    <toolbarItem reference="Kcl-M4-42Y"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>

@@ -288,6 +288,12 @@
 		F9CF92831890832800449548 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92821890832800449548 /* Images.xcassets */; };
 		F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92931890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92911890832800449548 /* InfoPlist.strings */; };
+		F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
+		F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
+		F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
+		F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
+		F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
+		F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
@@ -640,6 +646,9 @@
 		F9CF92881890832800449548 /* OutlanderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OutlanderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9CF92901890832800449548 /* OutlanderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OutlanderTests-Info.plist"; sourceTree = "<group>"; };
 		F9CF92921890832800449548 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightsViewController.swift; sourceTree = "<group>"; };
+		F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightsViewController.xib; sourceTree = "<group>"; };
+		F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
 		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
 		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
@@ -877,6 +886,8 @@
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
+				F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */,
+				F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -907,6 +918,7 @@
 				F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */,
 				F959D3DB1AC8AC5100B2A659 /* MASShortcut+Categories.h */,
 				F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */,
+				F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -1293,6 +1305,7 @@
 				F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
 				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
+				F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1315,7 @@
 			files = (
 				F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
+				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
@@ -1479,6 +1493,7 @@
 				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
+				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
@@ -1530,6 +1545,7 @@
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
+				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
@@ -1590,6 +1606,7 @@
 				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
+				F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
@@ -1613,6 +1630,7 @@
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
+				F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,

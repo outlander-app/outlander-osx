@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
     SettingsOptionMacros = 0,
     SettingsOptionAliases = 1,
     SettingsOptionVariables = 2,
+    SettingsOptionHighlights = 3,
 };
 
 @interface SettingsWindowController () {
@@ -40,7 +41,7 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
 }
 
 - (void)awakeFromNib {
-    [self setSection:SettingsOptionVariables];
+    [self setSection:SettingsOptionHighlights];
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
@@ -88,6 +89,11 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
         case SettingsOptionVariables:
             identifier = @"variable";
             vc = [[VariablesViewController alloc] initWithNibName:@"VariablesViewController" bundle:[NSBundle mainBundle]];
+            break;
+            
+        case SettingsOptionHighlights:
+            identifier = @"highlight";
+            vc = [[HighlightsViewController alloc] initWithNibName:@"HighlightsViewController" bundle:[NSBundle mainBundle]];
             break;
     }
     

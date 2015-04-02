@@ -13,4 +13,6 @@
 #import "SettingsView.h"
 #import "GameContext.h"
 #import "Alias.h"
+#import "Highlight.h"
 #import "AppSettingsLoader.h"
+
