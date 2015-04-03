@@ -31,6 +31,10 @@
     [self sendCommand:@"preferences"];
 }
 
+- (IBAction)autoMapperAction:(id)sender {
+    [self sendCommand:@"showAutoMapper"];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	self.mainWindowController = [[MainWindowController alloc] init];
 	[self.mainWindowController.window makeKeyAndOrderFront:nil];

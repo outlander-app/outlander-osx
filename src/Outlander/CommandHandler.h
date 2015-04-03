@@ -8,7 +8,7 @@
 
 #import "GameContext.h"
 
-@protocol CommandHandler <NSObject>
+@protocol CommandHandler
 
 - (BOOL)canHandle:(NSString *)command;
 - (void)handle:(NSString *)command withContext:(GameContext *)context;

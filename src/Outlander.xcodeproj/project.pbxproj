@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
+		F90CEC0E1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
+		F90CEC0F1ACE711300204243 /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
+		F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
+		F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
+		F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57E1ACD27D3007E5804 /* MapArc.swift */; };
+		F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5811ACD27D3007E5804 /* MapPosition.swift */; };
+		F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5831ACD27D3007E5804 /* Pathfinder.swift */; };
+		F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5841ACD27D3007E5804 /* TreeNode.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -147,6 +157,23 @@
 		F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5CC21896C21600E2C318 /* TextViewController.m */; };
 		F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5CC31896C21600E2C318 /* TextViewController.xib */; };
 		F97A5CC71896C21600E2C318 /* TextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97A5CC31896C21600E2C318 /* TextViewController.xib */; };
+		F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57E1ACD27D3007E5804 /* MapArc.swift */; };
+		F97CD5861ACD27D3007E5804 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
+		F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
+		F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5811ACD27D3007E5804 /* MapPosition.swift */; };
+		F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
+		F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5831ACD27D3007E5804 /* Pathfinder.swift */; };
+		F97CD58B1ACD27D3007E5804 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5841ACD27D3007E5804 /* TreeNode.swift */; };
+		F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */; };
+		F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */; };
+		F97CD5911ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD58F1ACD9813007E5804 /* AutoMapperWindowController.swift */; };
+		F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD58F1ACD9813007E5804 /* AutoMapperWindowController.swift */; };
+		F97CD5931ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97CD5901ACD9813007E5804 /* AutoMapperWindowController.xib */; };
+		F97CD5941ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F97CD5901ACD9813007E5804 /* AutoMapperWindowController.xib */; };
+		F97CD5961ACDC814007E5804 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5951ACDC814007E5804 /* Threading.swift */; };
+		F97CD5971ACDC814007E5804 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5951ACDC814007E5804 /* Threading.swift */; };
+		F97CD5991ACDD8C6007E5804 /* SimpleDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */; };
+		F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */; };
 		F9818D561908CA0200137896 /* ExpTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D551908CA0200137896 /* ExpTracker.m */; };
 		F9818D571908CA0200137896 /* ExpTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D551908CA0200137896 /* ExpTracker.m */; };
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
@@ -336,6 +363,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F90CEC0F1ACE711300204243 /* GlimpseXML.framework in Copy Files */,
 				F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */,
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
@@ -355,6 +383,7 @@
 		66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
 		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -499,6 +528,18 @@
 		F97A5CC11896C21600E2C318 /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		F97A5CC21896C21600E2C318 /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		F97A5CC31896C21600E2C318 /* TextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextViewController.xib; sourceTree = "<group>"; };
+		F97CD57E1ACD27D3007E5804 /* MapArc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapArc.swift; sourceTree = "<group>"; };
+		F97CD57F1ACD27D3007E5804 /* MapLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLoader.swift; sourceTree = "<group>"; };
+		F97CD5801ACD27D3007E5804 /* MapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapNode.swift; sourceTree = "<group>"; };
+		F97CD5811ACD27D3007E5804 /* MapPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPosition.swift; sourceTree = "<group>"; };
+		F97CD5821ACD27D3007E5804 /* MapZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapZone.swift; sourceTree = "<group>"; };
+		F97CD5831ACD27D3007E5804 /* Pathfinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
+		F97CD5841ACD27D3007E5804 /* TreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeNode.swift; sourceTree = "<group>"; };
+		F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapperCommandHandler.swift; sourceTree = "<group>"; };
+		F97CD58F1ACD9813007E5804 /* AutoMapperWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMapperWindowController.swift; sourceTree = "<group>"; };
+		F97CD5901ACD9813007E5804 /* AutoMapperWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoMapperWindowController.xib; sourceTree = "<group>"; };
+		F97CD5951ACDC814007E5804 /* Threading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Threading.swift; path = AutoMapper/Threading.swift; sourceTree = "<group>"; };
+		F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleDiff.swift; sourceTree = "<group>"; };
 		F9818D541908CA0200137896 /* ExpTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpTracker.h; sourceTree = "<group>"; };
 		F9818D551908CA0200137896 /* ExpTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTracker.m; sourceTree = "<group>"; };
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
@@ -678,6 +719,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
@@ -694,6 +736,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90CEC0E1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
 				F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */,
 				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -814,6 +857,7 @@
 				F9BF6AF1193A914B0075A12F /* GameEventRelay.m */,
 				F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */,
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
+				F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */,
 				F93A1A3E193AEF9F00ED5C2E /* Match.h */,
 				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
@@ -824,10 +868,10 @@
 				F96ECDC219345CAA00787CB9 /* ScriptHandler.m */,
 				F96ECDB419343F5B00787CB9 /* ScriptLoader.h */,
 				F96ECDB519343F5B00787CB9 /* ScriptLoader.m */,
-				F91A39D0194E8916006144F8 /* SendQueueProcessor.h */,
-				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F91A39CC194E7135006144F8 /* SendCommandHandler.h */,
 				F91A39CD194E7135006144F8 /* SendCommandHandler.m */,
+				F91A39D0194E8916006144F8 /* SendQueueProcessor.h */,
+				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
 			);
@@ -1022,6 +1066,24 @@
 			name = Controls;
 			sourceTree = "<group>";
 		};
+		F97CD5731ACD2598007E5804 /* AutoMapper */ = {
+			isa = PBXGroup;
+			children = (
+				F97CD58F1ACD9813007E5804 /* AutoMapperWindowController.swift */,
+				F97CD5901ACD9813007E5804 /* AutoMapperWindowController.xib */,
+				F97CD57E1ACD27D3007E5804 /* MapArc.swift */,
+				F97CD57F1ACD27D3007E5804 /* MapLoader.swift */,
+				F97CD5801ACD27D3007E5804 /* MapNode.swift */,
+				F97CD5811ACD27D3007E5804 /* MapPosition.swift */,
+				F97CD5821ACD27D3007E5804 /* MapZone.swift */,
+				F97CD5831ACD27D3007E5804 /* Pathfinder.swift */,
+				F97CD5841ACD27D3007E5804 /* TreeNode.swift */,
+				F97CD5951ACDC814007E5804 /* Threading.swift */,
+				F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */,
+			);
+			name = AutoMapper;
+			sourceTree = "<group>";
+		};
 		F989E202192C2BA700562E32 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,6 +1172,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */,
 				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
 				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,
 				F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */,
@@ -1145,6 +1208,7 @@
 				F9CF927D1890832800449548 /* AppDelegate.m */,
 				F9CF92821890832800449548 /* Images.xcassets */,
 				F9CF927F1890832800449548 /* MainMenu.xib */,
+				F97CD5731ACD2598007E5804 /* AutoMapper */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
 				F97A5C761893808F00E2C318 /* HTML */,
@@ -1298,6 +1362,7 @@
 				F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */,
 				F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */,
 				F9CF92811890832800449548 /* MainMenu.xib in Resources */,
+				F97CD5931ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */,
 				F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */,
 				F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
@@ -1322,6 +1387,7 @@
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
 				F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9CF92931890832800449548 /* InfoPlist.strings in Resources */,
+				F97CD5941ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */,
 				F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
 				F97A5CC71896C21600E2C318 /* TextViewController.xib in Resources */,
 			);
@@ -1434,6 +1500,8 @@
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
+				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
+				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
@@ -1442,6 +1510,7 @@
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
+				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
@@ -1460,11 +1529,13 @@
 				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
+				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
 				F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
+				F97CD5991ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
 				F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
 				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
@@ -1479,6 +1550,7 @@
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
+				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
@@ -1516,7 +1588,9 @@
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F959D3D81AC8757F00B2A659 /* OLShortcutView.h in Sources */,
+				F97CD5961ACDC814007E5804 /* Threading.swift in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
+				F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
@@ -1525,6 +1599,7 @@
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
+				F97CD5861ACD27D3007E5804 /* MapLoader.swift in Sources */,
 				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
@@ -1549,6 +1624,8 @@
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
+				F97CD5911ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
+				F97CD58B1ACD27D3007E5804 /* TreeNode.swift in Sources */,
 				F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */,
 				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
@@ -1593,11 +1670,14 @@
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F9762F79192E4EEB00B873D7 /* Alias.m in Sources */,
 				F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */,
+				F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9A34549191A064100920F0E /* GameContext.m in Sources */,
+				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
+				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
 				F98782D4194249A400D76231 /* TokenList.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
@@ -1622,6 +1702,7 @@
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
@@ -1644,6 +1725,8 @@
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
+				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
+				F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
@@ -1657,17 +1740,21 @@
 				F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
+				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
 				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
+				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
 				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
+				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */,
+				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
@@ -1684,6 +1771,7 @@
 				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
+				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
@@ -1830,6 +1918,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Pods",
 					"$(PROJECT_DIR)",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(PROJECT_DIR)/OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1890,6 +1979,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Release/Pods",
 					"$(PROJECT_DIR)",
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
+					"$(PROJECT_DIR)/OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1948,6 +2038,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-ftfztlimyxwpkeehnskfoccenter/Build/Products/Debug/Pods-OutlanderTests",
 					"$(PROJECT_DIR)",
 					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
+					"$(PROJECT_DIR)/OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -1994,6 +2085,7 @@
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 					"/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/OutlanderTests",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";

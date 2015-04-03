@@ -26,6 +26,7 @@
 @interface MainWindowController ()
     @property (nonatomic, strong) LoginViewController *loginViewController;
     @property (nonatomic, strong) SettingsWindowController *settingsWindowController;
+    @property (nonatomic, strong) AutoMapperWindowController *autoMapperWindowController;
     @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
     @property (nonatomic, strong) ApplicationUpdateViewController *appUpdateController;
@@ -62,6 +63,9 @@
     }];
     
     _settingsWindowController = [[SettingsWindowController alloc] init];
+    
+    _autoMapperWindowController = [[AutoMapperWindowController alloc] initWithWindowNibName:@"AutoMapperWindowController"];
+    [_autoMapperWindowController setContext:_gameContext];
     
     _appUpdateController = [[ApplicationUpdateViewController alloc] init];
     _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -180,6 +184,11 @@
         
         [_settingsWindowController.window setParentWindow:self.window];
         [_settingsWindowController.window makeKeyAndOrderFront:self];
+        
+    } else if([command isEqualToString:@"showAutoMapper"]){
+        
+        [_autoMapperWindowController.window setParentWindow:self.window];
+        [_autoMapperWindowController.window makeKeyAndOrderFront:self];
         
     } else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;

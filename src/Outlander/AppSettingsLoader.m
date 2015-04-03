@@ -109,6 +109,7 @@
     [self writeProfileFolders:@"Default"];
     [self ensurePath:[_context.pathProvider logsFolder]];
     [self ensurePath:[_context.pathProvider scriptsFolder]];
+    [self ensurePath:[_context.pathProvider mapsFolder]];
 }
 
 - (void)writeProfileFolders:(NSString *)profile {

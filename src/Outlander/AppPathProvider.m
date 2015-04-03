@@ -44,6 +44,10 @@
     return [[self rootFolder] stringByAppendingPathComponent:_settings.scriptsFolder];
 }
 
+- (NSString *)mapsFolder {
+    return [[self rootFolder] stringByAppendingPathComponent:_settings.mapsFolder];
+}
+
 - (NSString *)profileFolder {
     return [self folderForProfile:_settings.profile];
 }

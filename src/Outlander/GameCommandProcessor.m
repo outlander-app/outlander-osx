@@ -16,6 +16,7 @@
 #import "AliasCommandHandler.h"
 #import "SendCommandHandler.h"
 #import "GameEventRelay.h"
+#import "Outlander-Swift.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;
@@ -46,6 +47,8 @@
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
     [_handlers addObject:[[SendCommandHandler alloc] init]];
+    [_handlers addObject:[MapperCommandHandler newInstance]];
+    [_handlers addObject:[MapperGotoCommandHandler newInstance]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)

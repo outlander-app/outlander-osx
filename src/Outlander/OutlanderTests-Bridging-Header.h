@@ -15,3 +15,7 @@
 #import "Alias.h"
 #import "Highlight.h"
 #import "AppSettingsLoader.h"
+#import "CommandHandler.h"
+#import "CommandRelay.h"
+#import "CommandContext.h"
+#import "GameCommandRelay.h"

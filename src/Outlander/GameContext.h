@@ -12,11 +12,14 @@
 #import "OLMutableArray.h"
 #import "Layout.h"
 
+@class MapZone;
+
 @interface GameContext : NSObject
 
 @property (nonatomic, strong) AppPathProvider *pathProvider;
 @property (nonatomic, strong) AppSettings *settings;
 @property (nonatomic, strong) Layout *layout;
+@property (nonatomic, strong) MapZone *mapZone;
 @property (nonatomic, strong) OLMutableArray *highlights;
 @property (nonatomic, strong) OLMutableArray *aliases;
 @property (nonatomic, strong) OLMutableArray *macros;

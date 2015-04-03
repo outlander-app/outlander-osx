@@ -7,6 +7,7 @@
 //
 
 #import "GameContext.h"
+#import "Outlander-Swift.h"
 
 @implementation GameContext
 
