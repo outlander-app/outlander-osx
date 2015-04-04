@@ -45,16 +45,16 @@
     [[NSColor colorWithHexString:@"#999999"] setFill];
     NSRectFill(NSMakeRect(0, 0, width, height));
     
-    [[NSColor whiteColor] setStroke];
-    
-    NSBezierPath* thePath = [NSBezierPath bezierPath];
-    [thePath appendBezierPathWithRect:self.bounds];
-    [thePath setLineWidth:strokeWidth];
-    [thePath setLineCapStyle:NSRoundLineCapStyle];
-    [thePath stroke];
+//    [[NSColor whiteColor] setStroke];
+//    
+//    NSBezierPath* thePath = [NSBezierPath bezierPath];
+//    [thePath appendBezierPathWithRect:self.bounds];
+//    [thePath setLineWidth:strokeWidth];
+//    [thePath setLineCapStyle:NSRoundLineCapStyle];
+//    [thePath stroke];
     
     [self.backgroundColor setFill];
-    NSRectFill(NSMakeRect(strokeWidth, 0, calcValue-(strokeWidth * 2), height - strokeWidth));
+    NSRectFill(NSMakeRect(strokeWidth, strokeWidth, calcValue-(strokeWidth * 2), height - (strokeWidth * 2)));
     
 	[super drawRect:self.bounds];
     

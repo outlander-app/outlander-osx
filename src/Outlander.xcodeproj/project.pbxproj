@@ -18,6 +18,8 @@
 		F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5811ACD27D3007E5804 /* MapPosition.swift */; };
 		F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5831ACD27D3007E5804 /* Pathfinder.swift */; };
 		F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5841ACD27D3007E5804 /* TreeNode.swift */; };
+		F90CEC181AD037CE00204243 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC171AD037CE00204243 /* MapView.swift */; };
+		F90CEC191AD037CE00204243 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC171AD037CE00204243 /* MapView.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -384,6 +386,7 @@
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
 		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
+		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -1075,11 +1078,12 @@
 				F97CD57F1ACD27D3007E5804 /* MapLoader.swift */,
 				F97CD5801ACD27D3007E5804 /* MapNode.swift */,
 				F97CD5811ACD27D3007E5804 /* MapPosition.swift */,
+				F90CEC171AD037CE00204243 /* MapView.swift */,
 				F97CD5821ACD27D3007E5804 /* MapZone.swift */,
 				F97CD5831ACD27D3007E5804 /* Pathfinder.swift */,
-				F97CD5841ACD27D3007E5804 /* TreeNode.swift */,
-				F97CD5951ACDC814007E5804 /* Threading.swift */,
 				F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */,
+				F97CD5951ACDC814007E5804 /* Threading.swift */,
+				F97CD5841ACD27D3007E5804 /* TreeNode.swift */,
 			);
 			name = AutoMapper;
 			sourceTree = "<group>";
@@ -1570,6 +1574,7 @@
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F90CEC181AD037CE00204243 /* MapView.swift in Sources */,
 				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
@@ -1772,6 +1777,7 @@
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
+				F90CEC191AD037CE00204243 /* MapView.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,

@@ -12,6 +12,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     @IBOutlet weak var mapsComboBox: NSComboBox!
     @IBOutlet weak var nodesLabel: NSTextField!
+    @IBOutlet weak var scrollView: NSScrollView!
+    var mapView: MapView?
     
     private var context:GameContext?
     private var maps:[MapInfo] = []
@@ -19,6 +21,15 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     override func windowDidLoad() {
         super.windowDidLoad()
+        
+        mapView = MapView()
+//        mapView?.setFrameSize(NSSize(width: 1000, height: 1000))
+//        mapView?.setFrameOrigin(NSPoint(x: 0, y: 0))
+        
+        //self.scrollView.setBoundsSize(NSSize(width: 500, height: 500))
+        //self.scrollView.setBoundsOrigin(NSPoint(x: 0, y: 0))
+        
+        self.scrollView.addSubview(self.mapView!)
         
         if let mapsFolder = context?.pathProvider.mapsFolder() {
             self.nodesLabel.stringValue = "Loading Maps ..."
@@ -85,9 +96,14 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     
                     self.context?.mapZone = zone
                     
+                    var rect = zone.mapSize(0)
+                    
+                    self.mapView?.setFrameSize(rect.size)
+                    self.mapView?.setZone(zone, rect: rect)
+                    
                     let roomCount = zone.rooms.count
                     
-                    self.nodesLabel.stringValue = "Map Nodes: \(roomCount)"
+                    self.nodesLabel.stringValue = "Map Rooms: \(roomCount)"
                     
                 case let .Error(error):
                     self.nodesLabel.stringValue = "Error loading map: \(error)"

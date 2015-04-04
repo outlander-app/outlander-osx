@@ -19,6 +19,42 @@ public class MapZone {
         rooms = []
     }
     
+    public func mapSize(z:Int) -> NSRect {
+        
+        var maxX:Double = 0
+        var minX:Double = 0
+        var maxY:Double = 0
+        var minY:Double = 0
+        
+        for room in rooms {
+            
+            if Double(room.position.x) > maxX {
+                maxX = Double(room.position.x)
+            }
+            
+            if Double(room.position.x) < minX {
+                minX = Double(room.position.x)
+            }
+            
+            if Double(room.position.y) > maxY {
+                maxY = Double(room.position.y)
+            }
+            
+            if Double(room.position.y) < minY {
+                minY = Double(room.position.y)
+            }
+        }
+        
+        var padding:Double = 100.0
+        
+        var width:Double = abs(maxX) + abs(minX) + padding
+        var height:Double = abs(maxY) + abs(minY) + padding
+        
+        println("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
+        
+        return NSRect(x: width - maxX - (padding / 2.0), y: height - maxY - (padding / 2.0), width: width*1.0, height: height*1.0)
+    }
+    
     public func roomWithId(id:String) -> MapNode? {
         return rooms.filter { $0.id == id }.first
     }
