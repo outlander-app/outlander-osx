@@ -7,6 +7,7 @@
 //
 // http://dinhviethoa.tumblr.com/post/6138273608/ios-style-scrollbars-for-nsscrollview
 
+IB_DESIGNABLE
 @interface MMScroller : NSScroller {
 	int _animationStep;
 	float _oldValue;
@@ -16,6 +17,8 @@
 }
 
 @property (nonatomic, assign) BOOL shouldClearBackground;
+
+@property (nonatomic, strong) IBInspectable NSColor *backgroundColor;
 
 - (void) showScroller;
 

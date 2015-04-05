@@ -30,7 +30,7 @@
 	
 	_oldValue = -1;
     _shouldClearBackground = YES;
-	
+    
 	return self;
 }
 
@@ -72,7 +72,7 @@
         NSEraseRect([self bounds]);
     }
    
-    [[NSColor blackColor] set];
+    [self.backgroundColor set];
     NSRectFill([self bounds]);
     
 	[self drawKnob];

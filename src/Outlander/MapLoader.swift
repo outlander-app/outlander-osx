@@ -91,11 +91,12 @@ public class MapLoader {
             var mapZone = MapZone(id, name)
             
             if let roomNodes = doc.xpath("/zone/node").value {
-                var rooms = roomNodes.map { (n: GlimpseXML.Node) -> MapNode in
+                
+                for n in roomNodes {
                     var desc = self.descriptions(n.children)
                     var position = self.position(n.children)
                     var arcs = self.arcs(n.children)
-                    return MapNode(
+                    var room =  MapNode(
                         id: n.attributeValue("id")!,
                         name: n.attributeValue("name")!,
                         descriptions: desc,
@@ -103,9 +104,9 @@ public class MapLoader {
                         color: n.attributeValue("color"),
                         position: position,
                         arcs: arcs)
+                    
+                    mapZone.addRoom(room)
                 }
-                
-                mapZone.rooms = rooms
             }
             
             return MapLoadResult.Success(mapZone)

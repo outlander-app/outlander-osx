@@ -12,14 +12,21 @@ public class MapZone {
     var id:String
     var name:String
     var rooms:[MapNode]
+    var roomIdLookup:[String:MapNode]
     
     init(_ id:String, _ name:String) {
         self.id = id
         self.name = name
         rooms = []
+        roomIdLookup = [:]
     }
     
-    public func mapSize(z:Int) -> NSRect {
+    public func addRoom(room:MapNode) {
+        rooms.append(room)
+        roomIdLookup[room.id] = room
+    }
+    
+    public func mapSize(z:Int, padding:Double) -> NSRect {
         
         var maxX:Double = 0
         var minX:Double = 0
@@ -45,8 +52,6 @@ public class MapZone {
             }
         }
         
-        var padding:Double = 100.0
-        
         var width:Double = abs(maxX) + abs(minX) + padding
         var height:Double = abs(maxY) + abs(minY) + padding
         
@@ -56,7 +61,7 @@ public class MapZone {
     }
     
     public func roomWithId(id:String) -> MapNode? {
-        return rooms.filter { $0.id == id }.first
+        return roomIdLookup[id]
     }
     
     public func findRoom(name:String, description:String) -> MapNode? {

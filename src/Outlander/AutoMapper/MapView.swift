@@ -12,6 +12,8 @@ class MapView: NSView {
     
     private var mapZone:MapZone?
     private var rect:NSRect?
+
+    var currentRoomId:String? = "162"
     
     func setZone(mapZone:MapZone, rect:NSRect) {
         self.mapZone = mapZone
@@ -26,13 +28,36 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        NSColor(hex: "#ffcc66").setFill()
-        
-        NSRectFill(NSMakeRect(0, 0, self.frame.width, self.frame.height));
+//        NSColor(hex: "#ffcc66").setFill()
+//        
+//        NSRectFill(NSMakeRect(0, 0, self.frame.width, self.frame.height));
         
         if let zone = self.mapZone {
             
-            for room in zone.rooms {
+            var strokeWidth:CGFloat = 1.0
+            
+            NSBezierPath.setDefaultLineWidth(strokeWidth)
+            NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
+            
+            var rooms = zone.rooms.filter { $0.position.z == 0 }
+            
+            for room in rooms {
+                
+                let point = self.translatePosition(room.position)
+                
+                NSColor(hex: "#000000").setStroke()
+                
+                var hasDest = room.arcs.filter { countElements($0.destination) > 0 }
+                
+                for dest in hasDest {
+                    var arc = zone.roomWithId(dest.destination)!
+                    let arcPoint = self.translatePosition(arc.position)
+                    
+                    NSBezierPath.strokeLineFromPoint(point, toPoint: arcPoint)
+                }
+            }
+            
+            for room in rooms {
                 
                 if room.position.z == 0 {
                     
@@ -41,12 +66,7 @@ class MapView: NSView {
                     println("(\(room.position.x), \(room.position.y)) to \(point)")
                     
                     NSColor(hex: "#000000").setStroke()
-                    
-                    var strokeWidth:CGFloat = 1.0
-                    
-                    NSBezierPath.setDefaultLineWidth(strokeWidth)
-                    NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
-                    
+
                     var size:CGFloat = 7.0
                     
                     var rect = NSMakeRect(point.x-(size/2), point.y-(size/2), size, size)
@@ -55,7 +75,10 @@ class MapView: NSView {
                     border.appendBezierPathWithRect(rect)
                     border.stroke()
                     
-                    if room.color != nil && room.color!.hasPrefix("#") {
+                    if room.id == self.currentRoomId {
+                        NSColor(hex: "#00ffff").setFill()
+                    }
+                    else if room.color != nil && room.color!.hasPrefix("#") {
         
                         NSColor(hex: room.color!).setFill()
                         
