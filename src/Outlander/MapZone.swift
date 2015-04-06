@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 public class MapZone {
     var id:String
     var name:String
@@ -56,7 +57,9 @@ public class MapZone {
         var height:Double = abs(maxY) + abs(minY) + padding
         
         println("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
-        
+       
+        // set origin x,y to the point on screen where were the most points can fit on screen
+        // between maxX and maxY
         return NSRect(x: width - maxX - (padding / 2.0), y: height - maxY - (padding / 2.0), width: width*1.0, height: height*1.0)
     }
     
@@ -64,24 +67,53 @@ public class MapZone {
         return roomIdLookup[id]
     }
     
+    public func findRoomFrom(id:String, name:String, description:String) -> MapNode? {
+        
+        var last = roomIdLookup[id]
+        
+        let filtered = last?.arcs.filter { countElements($0.destination) > 0 }
+ 
+        for arc in filtered! {
+            
+            if let room = roomIdLookup[arc.destination] {
+            
+                if room.name == name {
+                
+                    for desc in room.descriptions {
+                        let res = diff([Character](desc), [Character](description))
+                            .filter { $0.type == OperationType.Insert || $0.type == OperationType.Delete }
+                        if res.count <= 5 {
+                            return room
+                        }
+                    }
+                }
+            }
+        }
+       
+        return nil
+    }
+    
     public func findRoom(name:String, description:String) -> MapNode? {
-        return rooms.filter { room in
+        
+        for room in rooms {
             if room.name == name {
                 
                 for desc in room.descriptions {
                     let res = diff([Character](desc), [Character](description))
                         .filter { $0.type == OperationType.Insert || $0.type == OperationType.Delete }
                     if res.count <= 5 {
-                        return true
+                        return room
                     }
                 }
             }
-            return false
-        }.first
+        }
+        
+        return nil
     }
     
     public func roomsWithNote(note:String) -> [MapNode] {
-        return rooms.filter {
+        
+        return self.rooms.filter {
             
             if let notes = $0.notes {
                 let split = notes.lowercaseString.componentsSeparatedByString("|")

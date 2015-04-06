@@ -52,6 +52,7 @@ public class StormFrontTagStreamer {
     public var emitExp : ((SkillExp)->Void)?
     public var emitRoundtime : ((Roundtime)->Void)?
     public var emitRoom : (()->Void)?
+    public var emitProcessNode : ((Node)->Void)?
     public var emitSpell : ((String)->Void)?
     public var emitVitals : ((Vitals)->Void)?
     
@@ -67,6 +68,9 @@ public class StormFrontTagStreamer {
         return nodes
             .map {
                 self.processNode($0)
+                
+                self.emitProcessNode?($0)
+                
                 return self.tagForNode($0)
             }
             .filter { $0 != nil }

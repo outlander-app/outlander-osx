@@ -20,6 +20,8 @@
 		F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5841ACD27D3007E5804 /* TreeNode.swift */; };
 		F90CEC181AD037CE00204243 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC171AD037CE00204243 /* MapView.swift */; };
 		F90CEC191AD037CE00204243 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC171AD037CE00204243 /* MapView.swift */; };
+		F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
+		F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -387,6 +389,7 @@
 		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
+		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -1084,6 +1087,7 @@
 				F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */,
 				F97CD5951ACDC814007E5804 /* Threading.swift */,
 				F97CD5841ACD27D3007E5804 /* TreeNode.swift */,
+				F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */,
 			);
 			name = AutoMapper;
 			sourceTree = "<group>";
@@ -1622,6 +1626,7 @@
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
 				F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */,
+				F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
@@ -1669,6 +1674,7 @@
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
+				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,

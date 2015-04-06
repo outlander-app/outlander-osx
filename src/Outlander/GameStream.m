@@ -12,6 +12,7 @@
 #import "GameConnection.h"
 #import "TextTag.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "Outlander-Swift.h"
 
 @interface GameStream () {
     RACSignal *_connection;
@@ -50,6 +51,11 @@
     
     _tagStreamer.emitRoom = ^{
         [_gameParser.room sendNext:@""];
+    };
+    
+    _tagStreamer.emitProcessNode = ^(Node *node) {
+        RoomChangeHandler *handler = [RoomChangeHandler newInstance];
+        [handler handle:node context:_gameContext];
     };
     
     _tagStreamer.emitVitals = ^(Vitals *vital) {

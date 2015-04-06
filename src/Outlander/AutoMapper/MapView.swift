@@ -12,13 +12,34 @@ class MapView: NSView {
     
     private var mapZone:MapZone?
     private var rect:NSRect?
+    
+    var mapLevel:Int = 0 {
+        didSet {
+            if oldValue != self.mapLevel {
+                self.needsDisplay = true
+            }
+        }
+    }
 
-    var currentRoomId:String? = "162"
+    var roomSize:CGFloat = 7.0
+
+    var currentRoomId:String? = "162" {
+        didSet {
+            if oldValue != self.currentRoomId {
+                self.needsDisplay = true
+            }
+        }
+    }
+    
+    var currentRoomColor:NSColor = NSColor(hex:"#00ffff")
+    
+    var defaultRoomColor:NSColor = NSColor(hex:"#ffffff")
+    var defaultPathColor:NSColor = NSColor(hex:"#000000")
     
     func setZone(mapZone:MapZone, rect:NSRect) {
         self.mapZone = mapZone
-        self.needsDisplay = true
         self.rect = rect
+        self.needsDisplay = true
     }
     
     override var flipped:Bool {
@@ -28,6 +49,7 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
+        println("****redraw****")
 //        NSColor(hex: "#ffcc66").setFill()
 //        
 //        NSRectFill(NSMakeRect(0, 0, self.frame.width, self.frame.height));
@@ -39,13 +61,13 @@ class MapView: NSView {
             NSBezierPath.setDefaultLineWidth(strokeWidth)
             NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
             
-            var rooms = zone.rooms.filter { $0.position.z == 0 }
+            var rooms = zone.rooms.filter { $0.position.z == self.mapLevel }
             
             for room in rooms {
                 
                 let point = self.translatePosition(room.position)
                 
-                NSColor(hex: "#000000").setStroke()
+                self.defaultPathColor.setStroke()
                 
                 var hasDest = room.arcs.filter { countElements($0.destination) > 0 }
                 
@@ -59,24 +81,22 @@ class MapView: NSView {
             
             for room in rooms {
                 
-                if room.position.z == 0 {
+                if room.position.z == self.mapLevel {
                     
                     let point = self.translatePosition(room.position)
                     
-                    println("(\(room.position.x), \(room.position.y)) to \(point)")
+                    //println("(\(room.position.x), \(room.position.y)) to \(point)")
                     
-                    NSColor(hex: "#000000").setStroke()
+                    self.defaultPathColor.setStroke()
 
-                    var size:CGFloat = 7.0
-                    
-                    var rect = NSMakeRect(point.x-(size/2), point.y-(size/2), size, size)
+                    var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
                     
                     var border = NSBezierPath()
-                    border.appendBezierPathWithRect(rect)
+                    border.appendBezierPathWithRect(outlineRect)
                     border.stroke()
                     
                     if room.id == self.currentRoomId {
-                        NSColor(hex: "#00ffff").setFill()
+                        self.currentRoomColor.setFill()
                     }
                     else if room.color != nil && room.color!.hasPrefix("#") {
         
@@ -84,14 +104,14 @@ class MapView: NSView {
                         
                     } else {
                         
-                        NSColor(hex: "#ffffff").setFill()
+                        self.defaultRoomColor.setFill()
                     }
                     
                     NSRectFill(NSMakeRect(
-                        rect.origin.x + (strokeWidth / 2.0),
-                        rect.origin.y + (strokeWidth / 2.0),
-                        rect.width - (strokeWidth/2.0 * 2.0),
-                        rect.height - (strokeWidth/2.0 * 2.0)
+                        outlineRect.origin.x + (strokeWidth / 2.0),
+                        outlineRect.origin.y + (strokeWidth / 2.0),
+                        outlineRect.width - (strokeWidth/2.0 * 2.0),
+                        outlineRect.height - (strokeWidth/2.0 * 2.0)
                     ));
                 }
             }

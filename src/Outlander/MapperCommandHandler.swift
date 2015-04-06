@@ -27,6 +27,8 @@ class MapperCommandHandler : CommandHandler {
 @objc
 class MapperGotoCommandHandler : CommandHandler {
     
+    var startDate = NSDate()
+    
     class func newInstance() -> MapperGotoCommandHandler {
         return MapperGotoCommandHandler()
     }
@@ -46,6 +48,8 @@ class MapperGotoCommandHandler : CommandHandler {
     func gotoArea(area:String, context:GameContext) {
         
         { () -> [String] in
+            
+            self.startDate = NSDate()
             
             if let zone = context.mapZone {
                 var name = context.globalVars.cacheObjectForKey("roomtitle") as String
@@ -73,6 +77,9 @@ class MapperGotoCommandHandler : CommandHandler {
         } ~> { (moves) -> () in
             
             let walk = ", ".join(moves)
+            
+            let diff = NSDate().timeIntervalSinceDate(self.startDate)
+            self.sendMessage("Diff: \(diff)")
             
             self.sendMessage("Map path: \(walk)")
         }

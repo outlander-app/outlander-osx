@@ -14,10 +14,26 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     @IBOutlet weak var nodesLabel: NSTextField!
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var mapView: MapView!
+    @IBOutlet weak var mapLevelLabel: NSTextField!
     
     private var context:GameContext?
     private var maps:[MapInfo] = []
     private let mapLoader:MapLoader = MapLoader()
+    
+    var mapLevel:Int = 0 {
+        didSet {
+            self.mapView.mapLevel = self.mapLevel
+            self.mapLevelLabel.stringValue = "Level: \(self.mapLevel)"
+        }
+    }
+    
+    var mapZoom:CGFloat = 1.0 {
+        didSet {
+            if self.mapZoom == 0 {
+                self.mapZoom = 0.5
+            }
+        }
+    }
     
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -30,6 +46,28 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     func setContext(context:GameContext) {
         self.context = context
+        
+//        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+//            
+//            if self.mapView == nil {
+//                return
+//            }
+//            
+//            if let changed = obj as? Dictionary<String, String> {
+//                if changed.keys.first == "roomid" {
+//                    
+//                    var roomId = changed["roomid"]
+//                    
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        self.mapView.currentRoomId = roomId
+//                    })
+//                }
+//            }
+//        }
+    }
+    
+    func findCurrentRoom(){
+        
     }
     
     func loadMaps(mapsFolder:String) {
@@ -61,6 +99,31 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
     
+    @IBAction func mapLevelAction(sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.mapLevel++
+        } else {
+            self.mapLevel--
+        }
+    }
+    
+    @IBAction func mapZoomAction(sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            self.mapZoom += 0.5
+        } else {
+            self.mapZoom -= 0.5
+        }
+        
+        var clipView = self.scrollView.contentView
+        var clipViewBounds = clipView.bounds
+        var clipViewSize = clipView.frame.size
+        
+        clipViewBounds.size.width = clipViewSize.width / self.mapZoom
+        clipViewBounds.size.height = clipViewSize.height / self.mapZoom
+        
+        clipView.setBoundsSize(clipViewBounds.size)
+    }
+    
     func comboBoxSelectionDidChange(notification: NSNotification) {
         let idx = self.mapsComboBox.indexOfSelectedItem
         let selectedMap = self.maps[idx]
@@ -86,6 +149,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 case let .Success(zone):
                     
                     self.context?.mapZone = zone
+                    
+                    self.findCurrentRoom()
                     
                     var rect = zone.mapSize(0, padding: 100.0)
                     
@@ -116,7 +181,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     func loadMap <R> (
         backgroundClosure: () -> R,
-        _ mainClosure:       (result: R) -> ())
+        _ mainClosure: (result: R) -> ())
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             let result = backgroundClosure()
