@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public protocol NodeHandler {
-    func handle(node:Node, context:GameContext)
+    func handle(nodes:[Node], context:GameContext)
 }
 
 @objc
@@ -22,14 +22,13 @@ class RoomChangeHandler : NodeHandler {
         return RoomChangeHandler()
     }
     
-    func handle(node:Node, context:GameContext) {
+    func handle(nodes:[Node], context:GameContext) {
         
         if let zone = context.mapZone {
+            
+            for node in nodes {
         
-            if node.name == "component" {
-                var compId = node.attr("id")?.replace(" ", withString: "") ?? ""
-                
-                if compId == "roomdesc" {
+                if node.name == "compass" {
                     
                     var title = context.globalVars.cacheObjectForKey("roomtitle") as String
                     var desc = context.globalVars.cacheObjectForKey("roomdesc") as String
@@ -45,30 +44,18 @@ class RoomChangeHandler : NodeHandler {
     }
     
     func findRoom(context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) {
-//        { () -> Void in
+        
+        { () -> Void in
             let start = NSDate()
-            
-            if let prevId = previousRoomId {
+        
+            if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
+                let diff = NSDate().timeIntervalSinceDate(start)
                 
-                if let room = zone.findRoomFrom(prevId, name: name, description: description) {
-                    
-                    let diff = NSDate().timeIntervalSinceDate(start)
-                    
-                    self.send(context, room: room, diff: diff)
-                }
-                
-            } else {
-                if let room = zone.findRoom(name, description: description) {
-                    
-                    let diff = NSDate().timeIntervalSinceDate(start)
-                    
-                    self.send(context, room: room, diff: diff)
-                }
+                self.send(context, room: room, diff: diff)
             }
             
-//        } ~> { () -> Void in
-//            
-//        }
+        } ~> { () -> Void in
+        }
     }
     
     func send(context:GameContext, room:MapNode, diff:Double) {

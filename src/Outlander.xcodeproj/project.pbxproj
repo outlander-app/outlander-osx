@@ -1932,6 +1932,7 @@
 					/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods,
 					"$(PROJECT_DIR)/OutlanderTests",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

@@ -49,7 +49,7 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        println("****redraw****")
+        println("****redraw**** \(dirtyRect)")
 //        NSColor(hex: "#ffcc66").setFill()
 //        
 //        NSRectFill(NSMakeRect(0, 0, self.frame.width, self.frame.height));

@@ -41,7 +41,6 @@ class MapperGotoCommandHandler : CommandHandler {
         
         let area = command.substringFromIndex(advance(command.startIndex, 5)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
-        self.sendMessage("Routing path ...")
         self.gotoArea(area, context: withContext)
     }
 
@@ -56,7 +55,11 @@ class MapperGotoCommandHandler : CommandHandler {
                 name = name.substringWithRange(Range<String.Index>(start: advance(name.startIndex, 1), end: advance(name.endIndex, -1) ))
                 
                 let description = context.globalVars.cacheObjectForKey("roomdesc") as String
-                if let currentRoom = zone.findRoom(name, description: description) {
+             
+                var roomId = context.globalVars.cacheObjectForKey("roomid") as String
+                
+                if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
+                
                     println("currentRoomId: \(currentRoom.id)")
                     
                     if let toRoom = zone.roomsWithNote(area).last {

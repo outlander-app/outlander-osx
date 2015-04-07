@@ -47,4 +47,17 @@ public class MapNode {
     func nonCardinalExists() -> [MapArc] {
         return arcs.filter { !contains(self.cardinalDirs,$0.exit) }
     }
+    
+    func hasMatchingDescription(description:String) -> Bool {
+
+        for desc in descriptions {
+            
+            if desc.hasPrefix(description) {
+                return true
+            }
+            
+        }
+        
+        return false
+    }
 }

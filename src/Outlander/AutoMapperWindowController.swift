@@ -58,9 +58,10 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
 //                    
 //                    var roomId = changed["roomid"]
 //                    
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.mapView.currentRoomId = roomId
-//                    })
+//                    self.mapView.currentRoomId = roomId
+//                    
+////                    dispatch_async(dispatch_get_main_queue(), {
+////                    })
 //                }
 //            }
 //        }

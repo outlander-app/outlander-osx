@@ -53,11 +53,6 @@
         [_gameParser.room sendNext:@""];
     };
     
-    _tagStreamer.emitProcessNode = ^(Node *node) {
-        RoomChangeHandler *handler = [RoomChangeHandler newInstance];
-        [handler handle:node context:_gameContext];
-    };
-    
     _tagStreamer.emitVitals = ^(Vitals *vital) {
         [_vitals sendNext:vital];
     };
@@ -127,6 +122,9 @@
          //NSLog(@"text: %@", rawText);
          
          [_mainSubject sendNext:tags];
+         
+         RoomChangeHandler *handler = [RoomChangeHandler newInstance];
+         [handler handle:nodes context:_gameContext];
          
      } completed:^{
         [_mainSubject sendCompleted];

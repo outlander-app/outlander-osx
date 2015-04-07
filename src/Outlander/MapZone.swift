@@ -64,6 +64,11 @@ public class MapZone {
     }
     
     public func roomWithId(id:String) -> MapNode? {
+        
+        if countElements(id) == 0 {
+            return nil
+        }
+        
         return roomIdLookup[id]
     }
     
@@ -71,21 +76,16 @@ public class MapZone {
         
         var last = roomIdLookup[id]
         
+        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        
         let filtered = last?.arcs.filter { countElements($0.destination) > 0 }
  
         for arc in filtered! {
             
             if let room = roomIdLookup[arc.destination] {
-            
-                if room.name == name {
                 
-                    for desc in room.descriptions {
-                        let res = diff([Character](desc), [Character](description))
-                            .filter { $0.type == OperationType.Insert || $0.type == OperationType.Delete }
-                        if res.count <= 5 {
-                            return room
-                        }
-                    }
+                if room.name == name && room.hasMatchingDescription(trimmed) {
+                    return room
                 }
             }
         }
@@ -93,18 +93,27 @@ public class MapZone {
         return nil
     }
     
+    
+    func findRoomFuzyFrom(currentRoomId:String?, name:String, description:String) -> MapNode? {
+        
+        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        
+        var currentRoom = roomWithId(currentRoomId ?? "")
+        
+        if currentRoom != nil && (currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed)) {
+            return self.findRoom(name, description: description)
+        }
+        
+        return currentRoom
+    }
+    
     public func findRoom(name:String, description:String) -> MapNode? {
         
+        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        
         for room in rooms {
-            if room.name == name {
-                
-                for desc in room.descriptions {
-                    let res = diff([Character](desc), [Character](description))
-                        .filter { $0.type == OperationType.Insert || $0.type == OperationType.Delete }
-                    if res.count <= 5 {
-                        return room
-                    }
-                }
+            if room.name == name && room.hasMatchingDescription(trimmed) {
+               return room
             }
         }
         
