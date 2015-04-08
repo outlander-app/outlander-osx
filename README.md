@@ -1,4 +1,4 @@
-Outlander
+Outlander - OSX 10.9+
 ==========
 
 [![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
