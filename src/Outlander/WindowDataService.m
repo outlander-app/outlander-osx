@@ -9,6 +9,7 @@
 #import "WindowDataService.h"
 #import <Mantle/Mantle.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "Outlander-Swift.h"
 
 @implementation WindowDataService
 

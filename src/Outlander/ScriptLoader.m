@@ -8,6 +8,7 @@
 
 #import "ScriptLoader.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @interface ScriptLoader () {
     GameContext *_context;

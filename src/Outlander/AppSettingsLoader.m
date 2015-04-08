@@ -14,6 +14,7 @@
 #import "AliasLoader.h"
 #import "VariablesLoader.h"
 #import "MacrosLoader.h"
+#import "Outlander-Swift.h"
 
 @interface AppSettingsLoader () {
     GameContext *_context;

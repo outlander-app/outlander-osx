@@ -30,12 +30,12 @@ class RoomChangeHandler : NodeHandler {
         
                 if node.name == "compass" {
                     
-                    var title = context.globalVars.cacheObjectForKey("roomtitle") as String
-                    var desc = context.globalVars.cacheObjectForKey("roomdesc") as String
+                    var title = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+                    var desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
                     
-                    title = title.substringWithRange(Range<String.Index>(start: advance(title.startIndex, 1), end: advance(title.endIndex, -1) ))
+                    title = title.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
                     
-                    var roomId = context.globalVars.cacheObjectForKey("roomid") as String?
+                    var roomId = context.globalVars.cacheObjectForKey("roomid") as? String
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
                 }
@@ -60,10 +60,16 @@ class RoomChangeHandler : NodeHandler {
     
     func send(context:GameContext, room:MapNode, diff:Double) {
         
+        context.globalVars.setCacheObject(room.id, forKey: "roomid")
+        
         var tag = TextTag()
-        tag.text = "\(room.id) - \(diff)\n"
-        tag.color = "#00ffff"
-        self.commandRelay.sendEcho(tag)
+        
+        if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+        
+            tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
+            tag.color = "#00ffff"
+            self.commandRelay.sendEcho(tag)
+        }
         
         var exits = ", ".join(room.nonCardinalExists().map { $0.move })
         
@@ -75,7 +81,5 @@ class RoomChangeHandler : NodeHandler {
             self.commandRelay.sendEcho(tag)
             
         }
-        
-        context.globalVars.setCacheObject(room.id, forKey: "roomid")
     }
 }

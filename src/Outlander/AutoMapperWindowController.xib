@@ -19,10 +19,10 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="AutoMapper" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="196" y="240" width="704" height="350"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="contentRect" x="196" y="240" width="689" height="350"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="704" height="350"/>
+                <rect key="frame" x="0.0" y="0.0" width="689" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FaR-DC-wpy">
@@ -36,12 +36,14 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </comboBoxCell>
                         <connections>
-                            <outlet property="dataSource" destination="-2" id="jST-LJ-IvA"/>
                             <outlet property="delegate" destination="-2" id="HqM-io-iMs"/>
                         </connections>
                     </comboBox>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0O-LT-V0y">
-                        <rect key="frame" x="20" y="285" width="666" height="17"/>
+                        <rect key="frame" x="20" y="285" width="349" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="345" id="fbP-p5-utn"/>
+                        </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Map Nodes" id="v31-Dd-HtQ">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -49,7 +51,7 @@
                         </textFieldCell>
                     </textField>
                     <scrollView canDrawConcurrently="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-me-1Bp">
-                        <rect key="frame" x="20" y="20" width="664" height="257"/>
+                        <rect key="frame" x="20" y="20" width="649" height="257"/>
                         <clipView key="contentView" canDrawConcurrently="YES" id="lRT-rG-1jD">
                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,6 +61,9 @@
                                 </view>
                             </subviews>
                         </clipView>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="525" id="FvC-E8-8gn"/>
+                        </constraints>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Wlu-hT-kfy" customClass="MMScroller">
                             <rect key="frame" x="1" y="80" width="166" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -78,36 +83,26 @@
                             </userDefinedRuntimeAttributes>
                         </scroller>
                     </scrollView>
-                    <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFm-kz-I8q">
-                        <rect key="frame" x="615" y="308" width="71" height="24"/>
-                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="af4-8i-v9K">
-                            <font key="font" metaFont="system"/>
-                            <segments>
-                                <segment width="32"/>
-                                <segment width="32" tag="1"/>
-                            </segments>
-                        </segmentedCell>
-                        <connections>
-                            <action selector="mapZoomAction:" target="-2" id="vG9-ND-cbR"/>
-                        </connections>
-                    </segmentedControl>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EWZ-MZ-8UJ">
-                        <rect key="frame" x="465" y="312" width="71" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWZ-MZ-8UJ">
+                        <rect key="frame" x="525" y="313" width="71" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="67" id="0xU-WJ-Be5"/>
+                        </constraints>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Level: 0" id="IvR-Jn-5X1">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bM6-CM-9Co">
-                        <rect key="frame" x="540" y="308" width="71" height="24"/>
+                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bM6-CM-9Co">
+                        <rect key="frame" x="600" y="308" width="71" height="24"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="4ke-hd-0UO">
                             <font key="font" metaFont="system"/>
                             <segments>
-                                <segment width="32">
+                                <segment image="NSAddTemplate" width="32">
                                     <nil key="label"/>
                                 </segment>
-                                <segment width="32" tag="1">
+                                <segment image="NSRemoveTemplate" width="32" tag="1">
                                     <nil key="label"/>
                                 </segment>
                             </segments>
@@ -116,23 +111,59 @@
                             <action selector="mapLevelAction:" target="-2" id="SUE-UD-FET"/>
                         </connections>
                     </segmentedControl>
+                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CFm-kz-I8q">
+                        <rect key="frame" x="600" y="282" width="71" height="24"/>
+                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="af4-8i-v9K">
+                            <font key="font" metaFont="system"/>
+                            <segments>
+                                <segment image="NSAddTemplate" width="32"/>
+                                <segment image="NSRemoveTemplate" width="32" tag="1"/>
+                            </segments>
+                        </segmentedCell>
+                        <connections>
+                            <action selector="mapZoomAction:" target="-2" id="vG9-ND-cbR"/>
+                        </connections>
+                    </segmentedControl>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Skw-cT-lgG">
+                        <rect key="frame" x="527" y="288" width="69" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="9hu-dd-nyk"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Zoom" id="GET-zZ-xpj">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="b7v-me-1Bp" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="8it-vm-B2L"/>
-                    <constraint firstAttribute="trailing" secondItem="r0O-LT-V0y" secondAttribute="trailing" constant="20" id="PnK-aE-v3S"/>
+                    <constraint firstItem="EWZ-MZ-8UJ" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="CV7-EU-0sZ"/>
+                    <constraint firstItem="b7v-me-1Bp" firstAttribute="top" secondItem="Skw-cT-lgG" secondAttribute="bottom" constant="11" id="HKf-ZO-uXF"/>
+                    <constraint firstItem="bM6-CM-9Co" firstAttribute="leading" secondItem="EWZ-MZ-8UJ" secondAttribute="trailing" constant="8" id="LbS-8h-xW6"/>
+                    <constraint firstItem="bM6-CM-9Co" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="19" id="LoS-iZ-ogp"/>
+                    <constraint firstItem="Skw-cT-lgG" firstAttribute="top" secondItem="EWZ-MZ-8UJ" secondAttribute="bottom" constant="8" id="P6M-ap-Jv1"/>
                     <constraint firstItem="r0O-LT-V0y" firstAttribute="top" secondItem="FaR-DC-wpy" secondAttribute="bottom" constant="8" id="Twc-vY-U0Q"/>
+                    <constraint firstItem="CFm-kz-I8q" firstAttribute="top" secondItem="bM6-CM-9Co" secondAttribute="bottom" constant="5" id="XhO-nx-lbd"/>
                     <constraint firstItem="r0O-LT-V0y" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="22" id="b97-N2-yPx"/>
+                    <constraint firstAttribute="trailing" secondItem="CFm-kz-I8q" secondAttribute="trailing" constant="20" id="bZq-64-P41"/>
                     <constraint firstAttribute="bottom" secondItem="b7v-me-1Bp" secondAttribute="bottom" constant="20" id="con-fV-OZe"/>
+                    <constraint firstAttribute="trailing" secondItem="bM6-CM-9Co" secondAttribute="trailing" constant="20" id="gLg-mH-whg"/>
                     <constraint firstItem="FaR-DC-wpy" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" id="m9s-hD-k1n"/>
                     <constraint firstItem="b7v-me-1Bp" firstAttribute="top" secondItem="r0O-LT-V0y" secondAttribute="bottom" constant="8" id="nc7-hb-CoK"/>
                     <constraint firstAttribute="trailing" secondItem="b7v-me-1Bp" secondAttribute="trailing" constant="20" id="r8f-Id-xM6"/>
+                    <constraint firstItem="CFm-kz-I8q" firstAttribute="leading" secondItem="Skw-cT-lgG" secondAttribute="trailing" constant="8" id="wbm-QB-SaW"/>
                     <constraint firstItem="FaR-DC-wpy" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="xTt-YD-nS7"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="481" y="257"/>
+            <point key="canvasLocation" x="473.5" y="257"/>
         </window>
     </objects>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
+    </resources>
 </document>

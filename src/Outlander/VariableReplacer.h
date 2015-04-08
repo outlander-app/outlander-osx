@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
+#import "TSMutableDictionary.h"
+
+@class GameContext;
 
 @interface VariableReplacer : NSObject
 

@@ -10,6 +10,7 @@
 #import "HTMLNode.h"
 #import "HTMLParser.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @implementation GameParser {
     NSArray *_roomTags;

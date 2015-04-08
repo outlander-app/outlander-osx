@@ -8,8 +8,8 @@
 
 #import "Kiwi.h"
 #import "VariablesLoader.h"
-#import "GameContext.h"
 #import "StubFileSystem.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(VariblesLoaderTester)
 
@@ -21,7 +21,7 @@ describe(@"Variables Loader", ^{
     __block NSUInteger originalCount;
     
     beforeEach(^{
-        theContext = [[GameContext alloc] init];
+        theContext = [GameContext newInstance];
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[VariablesLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
        

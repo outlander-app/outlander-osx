@@ -9,6 +9,7 @@
 #import "HighlightCommandHandler.h"
 #import "Highlight.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @implementation HighlightCommandHandler
 

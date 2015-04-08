@@ -23,7 +23,7 @@ class MapView: NSView {
 
     var roomSize:CGFloat = 7.0
 
-    var currentRoomId:String? = "162" {
+    var currentRoomId:String? = "" {
         didSet {
             if oldValue != self.currentRoomId {
                 self.needsDisplay = true
@@ -31,7 +31,7 @@ class MapView: NSView {
         }
     }
     
-    var currentRoomColor:NSColor = NSColor(hex:"#00ffff")
+    var currentRoomColor:NSColor = NSColor(hex:"#990099")
     
     var defaultRoomColor:NSColor = NSColor(hex:"#ffffff")
     var defaultPathColor:NSColor = NSColor(hex:"#000000")
@@ -56,7 +56,7 @@ class MapView: NSView {
         
         if let zone = self.mapZone {
             
-            var strokeWidth:CGFloat = 1.0
+            var strokeWidth:CGFloat = 0.5
             
             NSBezierPath.setDefaultLineWidth(strokeWidth)
             NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)

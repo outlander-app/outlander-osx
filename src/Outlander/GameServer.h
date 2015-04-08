@@ -9,7 +9,8 @@
 #import "GCDAsyncSocket.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "Shared.h"
-#import "GameContext.h"
+
+@class GameContext;
 
 @interface GameServer : NSObject {
     NSString *_host;

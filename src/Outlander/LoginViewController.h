@@ -7,7 +7,8 @@
 //
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import "GameContext.h"
+
+@class GameContext;
 
 @interface LoginViewController : NSViewController <NSComboBoxDelegate>
 

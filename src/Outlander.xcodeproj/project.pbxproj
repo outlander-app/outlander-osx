@@ -22,6 +22,8 @@
 		F90CEC191AD037CE00204243 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC171AD037CE00204243 /* MapView.swift */; };
 		F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
 		F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
+		F90CEC211AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
+		F90CEC221AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -234,8 +236,6 @@
 		F9A345411919D83900920F0E /* AppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3453F1919D83900920F0E /* AppSettings.m */; };
 		F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345431919DADA00920F0E /* ConfigLoader.m */; };
 		F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345431919DADA00920F0E /* ConfigLoader.m */; };
-		F9A34548191A064100920F0E /* GameContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A34547191A064100920F0E /* GameContext.m */; };
-		F9A34549191A064100920F0E /* GameContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A34547191A064100920F0E /* GameContext.m */; };
 		F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
 		F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
 		F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
@@ -390,6 +390,7 @@
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
+		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -605,8 +606,6 @@
 		F9A3453F1919D83900920F0E /* AppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettings.m; sourceTree = "<group>"; };
 		F9A345421919DADA00920F0E /* ConfigLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigLoader.h; sourceTree = "<group>"; };
 		F9A345431919DADA00920F0E /* ConfigLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigLoader.m; sourceTree = "<group>"; };
-		F9A34546191A064100920F0E /* GameContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameContext.h; sourceTree = "<group>"; };
-		F9A34547191A064100920F0E /* GameContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameContext.m; sourceTree = "<group>"; };
 		F9A3454A191C573200920F0E /* AppPathProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppPathProvider.h; sourceTree = "<group>"; };
 		F9A3454B191C573200920F0E /* AppPathProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPathProvider.m; sourceTree = "<group>"; };
 		F9A3454E191C59D500920F0E /* ProfileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLoader.h; sourceTree = "<group>"; };
@@ -992,6 +991,7 @@
 				F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */,
 				F97A5C6E1892CE1400E2C318 /* GameConnection.h */,
 				F97A5C6F1892CE1400E2C318 /* GameConnection.m */,
+				F90CEC201AD4322600204243 /* GameContext.swift */,
 				F97A5C811893962E00E2C318 /* GameParser.h */,
 				F97A5C821893962E00E2C318 /* GameParser.m */,
 				F97A5C651892388D00E2C318 /* GameServer.h */,
@@ -1014,6 +1014,8 @@
 				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
 				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
+				F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */,
+				F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
 				F9A79E561927FDA0000AF892 /* Roundtime.m */,
 				F9A79E511927F7D6000AF892 /* RoundtimeNotifier.h */,
@@ -1028,8 +1030,6 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
-				F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */,
-				F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1131,18 +1131,16 @@
 				F9A3453B1919CC1300920F0E /* AppSettingsLoader.m */,
 				F9A345421919DADA00920F0E /* ConfigLoader.h */,
 				F9A345431919DADA00920F0E /* ConfigLoader.m */,
-				F9A34546191A064100920F0E /* GameContext.h */,
-				F9A34547191A064100920F0E /* GameContext.m */,
 				F989E1EF192C254800562E32 /* HighlightsLoader.h */,
 				F989E1F0192C254800562E32 /* HighlightsLoader.m */,
+				F93462571AC3DB7700B10ADF /* Layout.h */,
+				F93462581AC3DB7700B10ADF /* Layout.m */,
 				F9F3D826195335AF005B9D68 /* MacrosLoader.h */,
 				F9F3D827195335AF005B9D68 /* MacrosLoader.m */,
 				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
-				F93462571AC3DB7700B10ADF /* Layout.h */,
-				F93462581AC3DB7700B10ADF /* Layout.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1586,6 +1584,7 @@
 				F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
+				F90CEC211AD4322600204243 /* GameContext.swift in Sources */,
 				F98782D71942649600D76231 /* LRToken.m in Sources */,
 				F98782FB1946873500D76231 /* WaitForToken.m in Sources */,
 				F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
@@ -1637,7 +1636,6 @@
 				F97CD5911ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F97CD58B1ACD27D3007E5804 /* TreeNode.swift in Sources */,
 				F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */,
-				F9A34548191A064100920F0E /* GameContext.m in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */,
@@ -1649,6 +1647,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F90CEC221AD4322600204243 /* GameContext.swift in Sources */,
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
@@ -1686,7 +1685,6 @@
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
-				F9A34549191A064100920F0E /* GameContext.m in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
 				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
 				F98782D4194249A400D76231 /* TokenList.m in Sources */,
@@ -2059,7 +2057,10 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/include/libxml2\"",
+					"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources",
+				);
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2102,7 +2103,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/include/libxml2\"",
+					"$(CONFIGURATION_TEMP_DIR)/$(PROJECT_NAME).build/DerivedSources",
+				);
 				INFOPLIST_FILE = "OutlanderTests/OutlanderTests-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (

@@ -8,8 +8,8 @@
 
 #import "Kiwi.h"
 #import "HighlightsLoader.h"
-#import "GameContext.h"
 #import "StubFileSystem.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(HighlightsLoaderTester)
 
@@ -20,7 +20,7 @@ describe(@"Highlights Loader", ^{
     __block StubFileSystem *theFileSystem = nil;
     
     beforeEach(^{
-        theContext = [[GameContext alloc] init];
+        theContext = [GameContext newInstance];
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[HighlightsLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
     });

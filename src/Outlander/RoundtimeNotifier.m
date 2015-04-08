@@ -8,6 +8,7 @@
 
 #import "RoundtimeNotifier.h"
 #import "Roundtime.h"
+#import "Outlander-Swift.h"
 
 @interface RoundtimeNotifier () {
     NSInteger _roundtime;

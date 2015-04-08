@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
+#import "Outlander-Swift.h"
 #import "LoginViewController.h"
-#import "GameContext.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface LoginViewController () {

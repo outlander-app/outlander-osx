@@ -7,7 +7,8 @@
 //
 
 #import "FileSystem.h"
-#import "GameContext.h"
+
+@class GameContext;
 
 @interface ScriptLoader : NSObject
 

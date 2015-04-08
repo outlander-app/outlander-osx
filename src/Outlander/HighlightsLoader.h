@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
 #import "FileSystem.h"
 #import "Highlight.h"
+
+@class GameContext;
 
 @interface HighlightsLoader : NSObject
 

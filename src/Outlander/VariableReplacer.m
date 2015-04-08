@@ -10,6 +10,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "Alias.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @implementation VariableReplacer
 

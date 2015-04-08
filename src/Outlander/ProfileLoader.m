@@ -8,6 +8,7 @@
 
 #import "ProfileLoader.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "Outlander-Swift.h"
 
 @interface ProfileLoader () {
     GameContext *_context;

@@ -7,8 +7,9 @@
 //
 
 #import "CommandRelay.h"
-#import "GameContext.h"
 #import "Macro.h"
+
+@class GameContext;
 
 @interface MacroHandler : NSObject
 

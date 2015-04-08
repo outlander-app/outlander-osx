@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
 #import "SettingsView.h"
 #import "Macro.h"
 

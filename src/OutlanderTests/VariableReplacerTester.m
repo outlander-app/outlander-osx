@@ -9,6 +9,7 @@
 #import "Kiwi.h"
 #import "VariableReplacer.h"
 #import "Alias.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(VariableReplacerTester)
 
@@ -19,7 +20,7 @@ describe(@"Variable Replacer", ^{
     
     beforeEach(^{
         _replacer = [[VariableReplacer alloc] init];
-        _context = [[GameContext alloc] init];
+        _context = [GameContext newInstance];
     });
     
     context(@"replace", ^{

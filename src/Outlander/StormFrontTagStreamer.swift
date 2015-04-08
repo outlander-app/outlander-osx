@@ -193,7 +193,7 @@ public class StormFrontTagStreamer {
             isSetup = false
             
         case _ where node.name == "text":
-            if inStream && (lastStreamId == "inv" || lastStreamId == "talk") {
+            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
                 break
             }
             
@@ -231,13 +231,13 @@ public class StormFrontTagStreamer {
             tag?.text = tag!.text! + "\r\n"
             
         case _ where node.name == "preset":
-            if inStream && lastStreamId == "talk" {
+            if inStream && (lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
                 break
             }
             tag = emitTag(node)
             tag?.targetWindow = self.streamIdToWindow(lastStreamId)
             let id = node.attr("id")
-            if id == "speech" {
+            if id == "speech" || id == "whisper" {
                 tag?.color = "#99FFFF"
             }
             
@@ -299,6 +299,10 @@ public class StormFrontTagStreamer {
             return "thoughts"
         case _ where streamId == "death":
             return "deaths"
+        case _ where streamId == "whispers":
+            return "whispers"
+        case _ where streamId == "ooc":
+            return "ooc"
         default:
             return "main"
         }

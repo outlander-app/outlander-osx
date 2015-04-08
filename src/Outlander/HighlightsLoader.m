@@ -9,6 +9,7 @@
 #import "HighlightsLoader.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @interface HighlightsLoader () {
     GameContext *_context;

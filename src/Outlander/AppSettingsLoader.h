@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
+@class GameContext;
 
 @interface AppSettingsLoader : NSObject
 

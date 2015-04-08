@@ -7,8 +7,9 @@
 //
 
 #import "CommandProcessor.h"
-#import "GameContext.h"
 #import "VariableReplacer.h"
+
+@class GameContext;
 
 @interface GameCommandProcessor : NSObject <CommandProcessor>
 

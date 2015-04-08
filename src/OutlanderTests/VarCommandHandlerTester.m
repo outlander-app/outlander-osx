@@ -8,7 +8,7 @@
 
 #import "Kiwi.h"
 #import "VarCommandHandler.h"
-#import "GameContext.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(VarCommandHandlerTester)
 
@@ -20,7 +20,7 @@ describe(@"var command handler", ^{
     
     beforeEach(^{
         theHandler = [[VarCommandHandler alloc] init];
-        theContext = [[GameContext alloc] init];
+        theContext = [GameContext newInstance];
         
         originalCount = theContext.globalVars.count;
     });

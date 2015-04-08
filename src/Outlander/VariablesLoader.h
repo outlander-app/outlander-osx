@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
 #import "FileSystem.h"
+
+@class GameContext;
 
 @interface VariablesLoader : NSObject
 

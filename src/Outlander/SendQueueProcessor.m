@@ -11,6 +11,7 @@
 #import "GameCommandRelay.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @interface SendQueueProcessor () {
     OLPauseCondition *_pauseCondition;

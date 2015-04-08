@@ -311,6 +311,18 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.settings["charactername"]).to(equal("Arneson"))
                 expect(self.settings["game"]).to(equal("DR"))
             })
+            
+            it("creates whisper tags", {
+                let data = [
+                    "<pushStream id=\"whispers\"/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\"",
+                    "<popStream/><pushStream id=\"ooc\"/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\"",
+                    "<popStream/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\""
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(3))
+            })
         })
     }
     
@@ -324,6 +336,6 @@ class StormFrontTagStreamerTester: QuickSpec {
             }
         }
         
-        self.tags = self.streamer.stream(nodes)
+        self.tags = self.streamer.stream(self.nodes)
     }
 }

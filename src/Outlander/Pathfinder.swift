@@ -89,8 +89,10 @@ public class Pathfinder {
             }
             step = step?.parent
         } while step?.parent != nil
-        
-        shortestPath.insert(step!.id, atIndex: 0)
+       
+        if step != nil {
+            shortestPath.insert(step!.id, atIndex: 0)
+        }
         
         return shortestPath
     }

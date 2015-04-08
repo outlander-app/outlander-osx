@@ -7,8 +7,9 @@
 //
 
 #import "Alias.h"
-#import "GameContext.h"
 #import "FileSystem.h"
+
+@class GameContext;
 
 @interface AliasLoader : NSObject
 

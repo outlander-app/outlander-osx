@@ -9,13 +9,14 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "TSMutableDictionary.h"
 #import "Shared.h"
-#import "GameContext.h"
 #import "LearningRate.h"
 #import "PlayerStatusIndicator.h"
 #import "Roundtime.h"
 #import "SkillExp.h"
 #import "TextTag.h"
 #import "Vitals.h"
+
+@class GameContext;
 
 @interface GameParser : NSObject {
     NSMutableArray *_currenList;

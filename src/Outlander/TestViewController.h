@@ -12,7 +12,6 @@
 #import "MyView.h"
 #import "TSMutableDictionary.h"
 #import "MyNSTextField.h"
-#import "GameContext.h"
 #import "Commands.h"
 
 @interface TestViewController : NSViewController <Commands> {

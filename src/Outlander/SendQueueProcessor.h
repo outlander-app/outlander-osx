@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "GameContext.h"
 #import "OLPauseCondition.h"
 #import "SimpleQueue.h"
+
+@class GameContext;
 
 @interface SendQueueProcessor : NSObject
 

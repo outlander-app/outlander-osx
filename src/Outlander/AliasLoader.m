@@ -8,6 +8,7 @@
 
 #import "AliasLoader.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @interface AliasLoader () {
     GameContext *_context;

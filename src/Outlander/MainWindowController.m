@@ -43,7 +43,7 @@
 	self = [super initWithWindowNibName:NSStringFromClass([self class]) owner:self];
 	if(self == nil) return nil;
     
-    _gameContext = [[GameContext alloc] init];
+    _gameContext = [GameContext newInstance];
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
     
@@ -66,6 +66,7 @@
     
     _autoMapperWindowController = [[AutoMapperWindowController alloc] initWithWindowNibName:@"AutoMapperWindowController"];
     [_autoMapperWindowController setContext:_gameContext];
+    [_autoMapperWindowController loadMaps];
     
     _appUpdateController = [[ApplicationUpdateViewController alloc] init];
     _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -120,13 +121,27 @@
     [[_gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
         
         @strongify(self);
+       
+        NSString *charInfo = @"";
         NSString *game = [_gameContext.globalVars cacheObjectForKey:@"game"];
         NSString *character = [_gameContext.globalVars cacheObjectForKey:@"charactername"];
+        
+        if (game == nil) {
+            game = @"";
+        }
+        
+        if (character == nil) {
+           character = @"";
+        }
+        
+        if (game.length > 0 && character.length > 0) {
+            charInfo = [NSString stringWithFormat:@"%@: %@ - ", game, character];
+        }
         
         NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
         NSString *version = dict[@"CFBundleShortVersionString"];
         
-        [self.window setTitle:[NSString stringWithFormat:@"%@: %@ - Outlander %@ Alpha", game, character, version]];
+        [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Alpha", charInfo, version]];
     }];
     
     _loginViewController.context = _gameContext;
@@ -189,6 +204,10 @@
         
         [_autoMapperWindowController.window setParentWindow:self.window];
         [_autoMapperWindowController.window makeKeyAndOrderFront:self];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            [_autoMapperWindowController setSelectedZone];
+        });
         
     } else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;

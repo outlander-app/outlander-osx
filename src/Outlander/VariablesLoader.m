@@ -8,6 +8,7 @@
 
 #import "VariablesLoader.h"
 #import "NSString+Categories.h"
+#import "Outlander-Swift.h"
 
 @interface VariablesLoader () {
     GameContext *_context;

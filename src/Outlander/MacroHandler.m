@@ -10,6 +10,7 @@
 #import "TextTag.h"
 #import <MASShortcut/MASShortcut.h>
 #import <MASShortcut/MASShortcutMonitor.h>
+#import "Outlander-Swift.h"
 
 @interface MacroHandler () {
     GameContext *_context;

@@ -8,8 +8,8 @@
 
 #import "Kiwi.h"
 #import "AliasLoader.h"
-#import "GameContext.h"
 #import "StubFileSystem.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(AliasesLoaderTester)
 
@@ -20,7 +20,7 @@ describe(@"Alias Loader", ^{
     __block StubFileSystem *theFileSystem = nil;
     
     beforeEach(^{
-        theContext = [[GameContext alloc] init];
+        theContext = [GameContext newInstance];
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[AliasLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
     });
@@ -32,7 +32,7 @@ describe(@"Alias Loader", ^{
             theFileSystem.fileContents = @"#alias {l2} {load arrows}";
             
             [theLoader load];
-            [[[theContext should] have:1] aliases];
+            [[[theContext.aliases should] have:1] aliases];
             
             Alias *alias = [theContext.aliases objectAtIndex:0];
             [[alias.pattern should] equal:@"l2"];

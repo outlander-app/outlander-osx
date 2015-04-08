@@ -10,6 +10,7 @@
 #import "NSString+Categories.h"
 #import "Highlight.h"
 #import "MyView.h"
+#import "Outlander-Swift.h"
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;

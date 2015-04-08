@@ -7,6 +7,7 @@
 //
 
 #import "SpelltimeNotifier.h"
+#import "Outlander-Swift.h"
 
 @interface SpelltimeNotifier () {
     NSString *_spell;

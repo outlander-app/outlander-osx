@@ -9,7 +9,7 @@
 #import "Kiwi.h"
 #import "HighlightCommandHandler.h"
 #import "Highlight.h"
-#import "GameContext.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(HighlightCommandHandlerTester)
 
@@ -20,7 +20,7 @@ describe(@"highlight command handler", ^{
     
     beforeEach(^{
         theHandler = [[HighlightCommandHandler alloc] init];
-        theContext = [[GameContext alloc] init];
+        theContext = [GameContext newInstance];
     });
     
     context(@"can handle", ^{

@@ -51,40 +51,77 @@ class MapperGotoCommandHandler : CommandHandler {
             self.startDate = NSDate()
             
             if let zone = context.mapZone {
-                var name = context.globalVars.cacheObjectForKey("roomtitle") as String
-                name = name.substringWithRange(Range<String.Index>(start: advance(name.startIndex, 1), end: advance(name.endIndex, -1) ))
+                var name = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+                name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
                 
-                let description = context.globalVars.cacheObjectForKey("roomdesc") as String
+                let description = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
              
-                var roomId = context.globalVars.cacheObjectForKey("roomid") as String
+                var roomId = context.globalVars.cacheObjectForKey("roomid") as? String ?? ""
                 
                 if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
                     println("currentRoomId: \(currentRoom.id)")
                     
-                    if let toRoom = zone.roomsWithNote(area).last {
-                        println("gotoId: \(toRoom.id)")
+                    var toRoom:MapNode?
+                    
+                    var matches = zone.roomsWithNote(area)
+                    
+                    for match in matches {
+                        toRoom = match
+                        self.sendMessage("[\(match.name)] (\(match.id)) - \(match.notes!)")
+                    }
+                    
+                    if toRoom == nil {
+                        toRoom = zone.roomWithId(area)
+                    }
+                    
+                    if toRoom != nil {
                         
-                        var pathfinder = Pathfinder()
-                        let path = pathfinder.findPath(currentRoom.id, target: toRoom.id, zone: zone)
+                        if toRoom!.id == currentRoom.id {
+                            
+                            self.sendMessage("You are already here!")
+                            
+                            return []
+                        }
+                        else {
                         
-                        let moves = pathfinder.getMoves(path, zone: zone)
-                        
-                        return moves
+                            if matches.count == 0 {
+                                self.sendMessage("[\(toRoom!.name)] (\(toRoom!.id))")
+                            }
+                            
+                            var pathfinder = Pathfinder()
+                            let path = pathfinder.findPath(currentRoom.id, target: toRoom!.id, zone: zone)
+                            
+                            let moves = pathfinder.getMoves(path, zone: zone)
+                                
+                            
+                            return moves
+                        }
                     }
                 }
             }
             
-            return ["no path found"]
+            if context.mapZone == nil {
+                self.sendMessage("no map data loaded")
+                return []
+            }
+            
+            return ["no path found for \"\(area)\""]
             
         } ~> { (moves) -> () in
             
             let walk = ", ".join(moves)
             
             let diff = NSDate().timeIntervalSinceDate(self.startDate)
-            self.sendMessage("Diff: \(diff)")
             
-            self.sendMessage("Map path: \(walk)")
+            if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+                self.sendMessage("Debug: path found in \(diff) seconds")
+            }
+            
+            if countElements(walk) > 0 {
+            
+                self.sendMessage("Map path: \(walk)")
+            }
         }
     }
     

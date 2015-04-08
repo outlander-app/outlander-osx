@@ -7,8 +7,9 @@
 //
 
 #import "WindowData.h"
-#import "GameContext.h"
 #import "Layout.h"
+
+@class GameContext;
 
 @interface WindowDataService : NSObject
 

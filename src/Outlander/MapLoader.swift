@@ -32,6 +32,14 @@ public class MapInfo {
     }
 }
 
+extension MapInfo: Equatable {}
+
+// MARK: Equatable
+
+public func ==(lhs: MapInfo, rhs: MapInfo) -> Bool {
+    return lhs.id == rhs.id
+}
+
 public class MapLoader {
     
     func loadFolder(folder: String) -> [MapMetaResult] {

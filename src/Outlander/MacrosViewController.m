@@ -13,6 +13,7 @@
 #import <MASShortcut/MASShortcut.h>
 #import "MASShortcut+Categories.h"
 #import "AppSettingsLoader.h"
+#import "Outlander-Swift.h"
 
 @interface MacrosViewController () {
     GameContext *_context;

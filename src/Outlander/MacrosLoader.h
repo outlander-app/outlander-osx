@@ -7,8 +7,9 @@
 //
 
 #import "FileSystem.h"
-#import "GameContext.h"
 #import "Macro.h"
+
+@class GameContext;
 
 @interface MacrosLoader : NSObject
 

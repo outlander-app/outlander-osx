@@ -10,7 +10,8 @@
 #import "NSColor+Categories.h"
 #import "MyNSTextView.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import "GameContext.h"
+
+@class GameContext;
 
 @interface TextViewController : NSViewController <NSTextStorageDelegate>
 

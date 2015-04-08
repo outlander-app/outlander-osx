@@ -12,7 +12,7 @@
 #import "Vitals.h"
 #import "SkillExp.h"
 #import "Roundtime.h"
-#import "GameContext.h"
+#import "Outlander-Swift.h"
 
 SPEC_BEGIN(GameParserTester)
 
@@ -22,7 +22,7 @@ describe(@"GameParser", ^{
     __block GameContext *_context = nil;
     
     beforeEach(^{
-        _context = [[GameContext alloc] init];
+        _context = [GameContext newInstance];
         _parser = [[GameParser alloc] initWithContext:_context];
     });
     

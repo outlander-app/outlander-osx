@@ -76,7 +76,11 @@ public class MapZone {
         
         var last = roomIdLookup[id]
         
-        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        var trimmed = description
+       
+        if countElements(description) > 10 {
+            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        }
         
         let filtered = last?.arcs.filter { countElements($0.destination) > 0 }
  
@@ -96,11 +100,15 @@ public class MapZone {
     
     func findRoomFuzyFrom(currentRoomId:String?, name:String, description:String) -> MapNode? {
         
-        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        var trimmed = description
+       
+        if countElements(description) > 10 {
+            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        }
         
         var currentRoom = roomWithId(currentRoomId ?? "")
         
-        if currentRoom != nil && (currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed)) {
+        if currentRoom == nil || currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed) {
             return self.findRoom(name, description: description)
         }
         
@@ -109,7 +117,11 @@ public class MapZone {
     
     public func findRoom(name:String, description:String) -> MapNode? {
         
-        var trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        var trimmed = description
+       
+        if countElements(description) > 10 {
+            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        }
         
         for room in rooms {
             if room.name == name && room.hasMatchingDescription(trimmed) {
