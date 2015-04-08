@@ -5,6 +5,10 @@ Outlander
 
 ![](http://i.imgur.com/Q3t3QYG.png)
 
+> Maps! (use genie map files)
+
+![](http://i.imgur.com/GSVFrmf.png)
+
 >You can remove window borders for a true text-only experience.
 
 ![](http://i.imgur.com/ZBtaUUR.png)
