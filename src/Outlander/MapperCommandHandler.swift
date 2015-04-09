@@ -118,7 +118,7 @@ class MapperGotoCommandHandler : CommandHandler {
                 self.sendMessage("Debug: path found in \(diff) seconds")
             }
             
-            if countElements(walk) > 0 {
+            if count(walk) > 0 {
             
                 self.sendMessage("Map path: \(walk)")
             }

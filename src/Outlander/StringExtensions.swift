@@ -17,7 +17,7 @@ extension String {
     public func trimPrefix(prefix:String) -> String {
         
         if(self.hasPrefix(prefix)) {
-            return self.substringFromIndex(advance(self.startIndex, countElements(prefix)))
+            return self.substringFromIndex(advance(self.startIndex, count(prefix)))
         }
         
         return self
@@ -26,7 +26,7 @@ extension String {
     public func trimSuffix(suffix:String) -> String {
         
         if(self.hasSuffix(suffix)) {
-            return self.substringWithRange(Range<String.Index>(start:self.startIndex, end:advance(self.endIndex, -1*countElements(suffix))))
+            return self.substringWithRange(Range<String.Index>(start:self.startIndex, end:advance(self.endIndex, -1*count(suffix))))
         }
         
         return self

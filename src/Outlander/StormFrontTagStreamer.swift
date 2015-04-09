@@ -153,7 +153,7 @@ public class StormFrontTagStreamer {
         case _ where node.name == "streamwindow":
             var id = node.attr("id")
             var subtitle = node.attr("subtitle")
-            if id == "main" && subtitle != nil && countElements(subtitle!) > 3 {
+            if id == "main" && subtitle != nil && count(subtitle!) > 3 {
                 subtitle = subtitle!.substringFromIndex(advance(subtitle!.startIndex, 3))
                 if let t = subtitle {
                     emitSetting?("roomtitle", t)
@@ -206,7 +206,7 @@ public class StormFrontTagStreamer {
                 }
             }
            
-            if lastNode?.name == "preset" && countElements(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
+            if lastNode?.name == "preset" && count(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
                 var text = tag!.text!.trimPrefix("  ")
                 tag?.text = "\n\(text)"
             }
@@ -344,7 +344,7 @@ public class StormFrontTagStreamer {
     
     public func parseExp(compId:String, data:String, isNew:Bool) {
         
-        if countElements(data) == 0 {
+        if count(data) == 0 {
             return
         }
         
@@ -358,16 +358,16 @@ public class StormFrontTagStreamer {
         var mindstate = RegexMutable(trimmed)
         mindstate[pattern] ~= "$3"
         
-        let rate = LearningRate.fromDescription(mindstate)
+        let rate = LearningRate.fromDescription(mindstate as String)
         let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
         
         let skill = SkillExp()
         skill.name = expName
-        skill.ranks = NSDecimalNumber(string:ranks)
+        skill.ranks = NSDecimalNumber(string:ranks as String)
         skill.mindState = rate
         skill.isNew = isNew
         
-        emitSetting?("\(expName).Ranks", ranks)
+        emitSetting?("\(expName).Ranks", ranks as String)
         emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
         emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
         

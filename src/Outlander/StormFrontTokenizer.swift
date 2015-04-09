@@ -52,7 +52,7 @@ import Foundation
         __startIndex = withMarker
         __currentIndex = __startIndex
         __sourceString = forString
-        sourceLength = countElements(__sourceString)
+        sourceLength = count(__sourceString)
         
         current = eot
         
@@ -180,7 +180,7 @@ import Foundation
                 return char == "<"
             })
             
-            if countElements(context.consumedCharacters) > 0 {
+            if count(context.consumedCharacters) > 0 {
                 let token = Node("text", context.consumedCharacters, nil)
                 context.nodes.append(token)
             }

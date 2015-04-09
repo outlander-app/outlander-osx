@@ -306,6 +306,8 @@
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
+		F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
+		F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CB31101903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB31111903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB311419032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
@@ -671,6 +673,7 @@
 		F9BF6AF5193A941B0075A12F /* StubEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubEventRelay.m; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
+		F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBuilder.swift; sourceTree = "<group>"; };
 		F9CB310E1903238B004587A5 /* SkillExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillExp.h; sourceTree = "<group>"; };
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
 		F9CB311219032EDE004587A5 /* LearningRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearningRate.h; sourceTree = "<group>"; };
@@ -1030,6 +1033,7 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
+				F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1536,6 +1540,7 @@
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
+				F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
@@ -1740,6 +1745,7 @@
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
+				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,

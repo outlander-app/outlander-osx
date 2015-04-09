@@ -73,7 +73,7 @@ class RoomChangeHandler : NodeHandler {
         
         var exits = ", ".join(room.nonCardinalExists().map { $0.move })
         
-        if countElements(exits) > 0 {
+        if count(exits) > 0 {
         
             tag = TextTag()
             tag.text = "Mapped exits: \(exits)\n"

@@ -65,7 +65,7 @@ public class MapZone {
     
     public func roomWithId(id:String) -> MapNode? {
         
-        if countElements(id) == 0 {
+        if count(id) == 0 {
             return nil
         }
         
@@ -78,11 +78,11 @@ public class MapZone {
         
         var trimmed = description
        
-        if countElements(description) > 10 {
+        if count(description) > 10 {
             trimmed = description.substringToIndex(advance(description.startIndex, 10))
         }
         
-        let filtered = last?.arcs.filter { countElements($0.destination) > 0 }
+        let filtered = last?.arcs.filter { count($0.destination) > 0 }
  
         for arc in filtered! {
             
@@ -102,7 +102,7 @@ public class MapZone {
         
         var trimmed = description
        
-        if countElements(description) > 10 {
+        if count(description) > 10 {
             trimmed = description.substringToIndex(advance(description.startIndex, 10))
         }
         
@@ -119,7 +119,7 @@ public class MapZone {
         
         var trimmed = description
        
-        if countElements(description) > 10 {
+        if count(description) > 10 {
             trimmed = description.substringToIndex(advance(description.startIndex, 10))
         }
         

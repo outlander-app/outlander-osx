@@ -18,22 +18,22 @@ public class GlobalVariable : NSObject {
         }
     }
     
-    var value:String {
+    var val:String {
         willSet {
-            self.willChangeValueForKey("value")
+            self.willChangeValueForKey("val")
         }
         didSet {
-            self.didChangeValueForKey("value")
+            self.didChangeValueForKey("val")
         }
     }
     
-    init(_ name:String, _ value:String){
+    init(_ name:String, _ val:String){
         self.name = name
-        self.value = value
+        self.val = val
     }
     
     public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
-        if key == "name" || key == "value" {
+        if key == "name" || key == "val" {
             return true
         } else {
             return super.automaticallyNotifiesObserversForKey(key)
@@ -89,7 +89,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
         _globalVars = []
         
         for key in vars {
-            var global = GlobalVariable(key.0 as String, key.1 as String)
+            var global = GlobalVariable(key.0 as! String, key.1 as! String)
             _globalVars.append(global)
         }
         
@@ -163,6 +163,6 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
             return item.name
         }
         
-        return item.value
+        return item.val
     }
 }

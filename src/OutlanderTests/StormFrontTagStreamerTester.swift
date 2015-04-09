@@ -37,7 +37,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.settings = [String: String]()
             })
             
-            it("excludes extra line breaks", {
+            it("excludes extra line breaks") {
                 let data = [
                 "<clearStream id='inv' ifClosed=''/><pushStream id='inv'/>Your worn items are:",
                 "  a divine charm",
@@ -72,9 +72,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(2))
-            })
+            }
             
-            it("excludes extra line breaks - inv stream", {
+            it("excludes extra line breaks - inv stream") {
                 let data = [
                 "<clearStream id='inv' ifClosed=''/><pushStream id='inv'/>Your worn items are:",
                 "  a divine charm",
@@ -88,9 +88,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(0))
-            })
+            }
 
-            it("streams login tag to arrivals", {
+            it("streams login tag to arrivals") {
                 let data = [
                     "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
                 ]
@@ -100,9 +100,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(1))
                 expect(self.tags[0].text).to(equal("* Arneson joins the adventure.\n"))
                 expect(self.tags[0].targetWindow).to(equal("arrivals"))
-            })
+            }
             
-            it("streams death tag to deaths", {
+            it("streams death tag to deaths") {
                 let data = [
                     "<pushStream id=\"death\"/> * A fiery phoenix soars into the heavens\r\n"
                 ]
@@ -113,9 +113,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 let tag = self.tags[0]
                 expect(tag.text).to(equal("* A fiery phoenix soars into the heavens\n"))
                 expect(tag.targetWindow).to(equal("deaths"))
-            })
+            }
             
-            it("streams exp into settings", {
+            it("streams exp into settings") {
                 let data = [
                     "<component id='exp Scholarship'>     Scholarship:    4 23% thoughtful   </component>\r\n"
                 ]
@@ -132,9 +132,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["Scholarship.LearningRateName"]).toNot(beNil())
                 expect(self.settings["Scholarship.LearningRateName"]).to(equal("thoughtful"))
-            })
+            }
             
-            it("streams new exp into settings", {
+            it("streams new exp into settings") {
                 let data = [
                     "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
                 ]
@@ -152,9 +152,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["Athletics.LearningRateName"]).toNot(beNil())
                 expect(self.settings["Athletics.LearningRateName"]).to(equal("deliberative"))
-            })
+            }
             
-            it("streams new exp into exp", {
+            it("streams new exp into exp") {
                 let data = [
                     "<component id='exp Athletics'><preset id='whisper'>       Athletics:   50 33% deliberative </preset></component>\r\n"
                 ]
@@ -168,9 +168,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.exp[0].ranks).to(equal(50.33))
                 expect(self.exp[0].isNew).to(equal(true))
                 expect(self.exp[0].mindState).to(equal(LearningRate.fromDescription("deliberative")))
-            })
+            }
             
-            it("streams exp into exp", {
+            it("streams exp into exp") {
                 let data = [
                     "<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n"
                 ]
@@ -184,9 +184,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.exp[0].ranks).to(equal(50.33))
                 expect(self.exp[0].isNew).to(equal(false))
                 expect(self.exp[0].mindState).to(equal(LearningRate.fromDescription("deliberative")))
-            })
+            }
             
-            it("streams room exists into settings", {
+            it("streams room exists into settings") {
                 let data = [
                     "<component id='room exits'>Obvious paths: <d>north</d>, <d>west</d>, <d>northwest</d>.<compass></compass></component>\r\n",
                 ]
@@ -198,9 +198,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["roomexits"]).toNot(beNil())
                 expect(self.settings["roomexits"]).to(equal("Obvious paths: north, west, northwest."))
-            })
+            }
             
-            it("streams room objs into settings", {
+            it("streams room objs into settings") {
                 let data = [
                     "<component id='room objs'>You also see a rock and <pushBold/>a journeyman<popBold/>.</component>"
                 ]
@@ -212,9 +212,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["roomobjs"]).toNot(beNil())
                 expect(self.settings["roomobjs"]).to(equal("You also see a rock and a journeyman."))
-            })
+            }
             
-            it("streams room objs 'original' into settings (for monster bold)", {
+            it("streams room objs 'original' into settings (for monster bold)") {
                 let data = [
                     "<component id='room objs'>You also see a rock and <pushBold/>a journeyman<popBold/>.</component>"
                 ]
@@ -226,9 +226,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["roomobjsorig"]).toNot(beNil())
                 expect(self.settings["roomobjsorig"]).to(equal("You also see a rock and <pushbold/>a journeyman<popbold/>."))
-            })
+            }
             
-            it("streams colored room name", {
+            it("streams colored room name") {
                 let data = [
                     "<style id=\"roomName\" />[The Crossing, Truffenyi Place]"
                 ]
@@ -238,9 +238,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(1))
                 
                 expect(self.tags[0].color).to(equal("#0000FF"))
-            })
+            }
             
-            it("streams room exits when none", {
+            it("streams room exits when none") {
                 let data = [
                     "<component id='room exits'>Obvious exits: none.<compass></compass></component>",
                 ]
@@ -250,9 +250,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 
                 expect(self.settings["roomexits"]).to(equal("Obvious exits: none."))
-            })
+            }
             
-            it("streams room titles with quotes", {
+            it("streams room titles with quotes") {
                 let data = [
                     "<streamWindow id='main' title='Room' subtitle=\" - [Barana's Shipyard, Receiving Yard]\" location='center' target='drop' ifClosed='' resident='true'/>"
                 ]
@@ -262,9 +262,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 
                 expect(self.settings["roomtitle"]).to(equal("[Barana's Shipyard, Receiving Yard]"))
-            })
+            }
             
-            it("streams vitals - health", {
+            it("streams vitals - health") {
                 let data = [
                     "<dialogData id='minivitals'><skin id='healthSkin' name='healthBar' controls='health' left='0%' top='0%' width='25%' height='100%'/><progressBar id='health' value='42' text='health 100%' left='0%' customText='t' top='0%' width='25%' height='100%'/></dialogData>"
                 ]
@@ -274,9 +274,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 
                 expect(self.settings["health"]).to(equal("42"))
-            })
+            }
             
-            it("streams vitals - concentration", {
+            it("streams vitals - concentration") {
                 let data = [
                     "<dialogData id='minivitals'><progressBar id='concentration' value='42' text='concentration 100%' left='75%' customText='t' top='0%' width='25%' height='100%'/></dialogData>"
                 ]
@@ -286,9 +286,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 
                 expect(self.settings["concentration"]).to(equal("42"))
-            })
+            }
             
-            it("creates command for d tags", {
+            it("creates command for d tags") {
                 let data = [
                     "<d cmd=\"HELP search stealing\">help search stealing</d>"
                 ]
@@ -298,9 +298,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(1))
                 expect(self.tags[0].text).to(equal("help search stealing"))
                 expect(self.tags[0].command).to(equal("HELP search stealing"))
-            })
+            }
             
-            it("creates command for d tags", {
+            it("creates command for d tags") {
                 let data = [
                     "<app char=\"Arneson\" game=\"DR\" title=\"[DR: Arneson] StormFront\"/>"
                 ]
@@ -310,9 +310,9 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 expect(self.settings["charactername"]).to(equal("Arneson"))
                 expect(self.settings["game"]).to(equal("DR"))
-            })
+            }
             
-            it("creates whisper tags", {
+            it("creates whisper tags") {
                 let data = [
                     "<pushStream id=\"whispers\"/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\"",
                     "<popStream/><pushStream id=\"ooc\"/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\"",
@@ -322,7 +322,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(3))
-            })
+            }
         })
     }
     

@@ -88,6 +88,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     @IBOutlet weak var scrollView: NSScrollView!
     @IBOutlet weak var mapView: MapView!
     @IBOutlet weak var mapLevelLabel: NSTextField!
+    @IBOutlet weak var nodeNameLabel: NSTextField!
     
     private var mapsDataSource: MapsDataSource = MapsDataSource()
     
@@ -112,7 +113,20 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     override func windowDidLoad() {
         super.windowDidLoad()
         
+        self.nodeNameLabel.stringValue = ""
+        
         self.mapsComboBox.dataSource = self.mapsDataSource
+        self.mapView.nodeHover = { node in
+            if let room = node {
+                var notes = ""
+                if room.notes != nil {
+                    notes = "(\(room.notes!))"
+                }
+                self.nodeNameLabel.stringValue = "#\(room.id) - \(room.name) \(notes)"
+            } else {
+                self.nodeNameLabel.stringValue = ""
+            }
+        }
     }
     
     func setSelectedZone() {
@@ -132,24 +146,20 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     func setContext(context:GameContext) {
         self.context = context
         
-//        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
-//            
-//            if self.mapView == nil {
-//                return
-//            }
-//            
-//            if let changed = obj as? Dictionary<String, String> {
-//                if changed.keys.first == "roomid" {
-//                    
-//                    var roomId = changed["roomid"]
-//                    
-//                    self.mapView.currentRoomId = roomId
-//                    
-////                    dispatch_async(dispatch_get_main_queue(), {
-////                    })
-//                }
-//            }
-//        }
+        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+            
+            if self.mapView == nil {
+                return
+            }
+            
+            if let changed = obj as? Dictionary<String, String> {
+                if changed.keys.first == "roomid" {
+                    
+                    var roomId = changed["roomid"]
+                    self.mapView.currentRoomId = roomId
+                }
+            }
+        }
     }
     
     func findCurrentRoom(zone:MapZone) -> MapNode? {

@@ -38,7 +38,7 @@ public class Pathfinder {
             var currentMapNode = zone.roomWithId(current.id)!
             
             let sorted = currentMapNode.arcs
-                .filter { countElements($0.destination) > 0 }
+                .filter { count($0.destination) > 0 }
                 .sorted { $0.destination.toInt()! < $1.destination.toInt()! }
             
             for arc in sorted {

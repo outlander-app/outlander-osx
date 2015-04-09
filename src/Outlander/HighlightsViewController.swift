@@ -23,7 +23,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             self.didChangeValueForKey("selectedItem")
             
             if let item = selectedItem {
-                if countElements(item.color) > 0 {
+                if count(item.color) > 0 {
                     colorWell.color = NSColor(hex: item.color)
                 }
             }
@@ -59,7 +59,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     public override func controlTextDidChange(obj: NSNotification) {
         if let item = self.selectedItem {
             
-            var textField = obj.object as NSTextField
+            var textField = obj.object as! NSTextField
             
             if(textField.tag == 1) {
                 
@@ -69,7 +69,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                 
                 item.color = textField.stringValue
                 
-                if countElements(item.color) > 0 {
+                if count(item.color) > 0 {
                     colorWell.color = NSColor(hex: item.color)
                 }
             }
@@ -97,7 +97,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             
             self.selectedItem = nil;
             
-            var item: Highlight = _context!.highlights.objectAtIndex(self.tableView.selectedRow) as Highlight
+            var item: Highlight = _context!.highlights.objectAtIndex(self.tableView.selectedRow) as! Highlight
             _context!.highlights.removeObject(item)
             
             self.tableView.reloadData()
@@ -129,7 +129,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             return "";
         }
         
-        var item = _context!.highlights.objectAtIndex(row) as Highlight
+        var item = _context!.highlights.objectAtIndex(row) as! Highlight
         
         if(tableColumn!.identifier == "color") {
             return item.color
