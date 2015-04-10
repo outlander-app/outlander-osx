@@ -56,6 +56,8 @@
 		F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
 		F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
 		F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9269A9B1AD7A5D900E35690 /* MapLabel.swift */; };
+		F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9269A9B1AD7A5D900E35690 /* MapLabel.swift */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
@@ -185,6 +187,10 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
+		F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
+		F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
+		F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
 		F98782B719420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
 		F98782B819420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
 		F98782BB19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
@@ -423,6 +429,7 @@
 		F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewControllerTests.m; sourceTree = "<group>"; };
 		F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesViewController.swift; sourceTree = "<group>"; };
 		F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VariablesViewController.xib; sourceTree = "<group>"; };
+		F9269A9B1AD7A5D900E35690 /* MapLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapLabel.swift; path = AutoMapper/MapLabel.swift; sourceTree = "<group>"; };
 		F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextFieldTester.m; sourceTree = "<group>"; };
 		F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsTester.m; sourceTree = "<group>"; };
 		F92A4FBF192B3484006C71F9 /* MyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindow.h; sourceTree = "<group>"; };
@@ -554,6 +561,8 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsViewController.swift; sourceTree = "<group>"; };
+		F982CF601AD7834200BB9574 /* WindowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WindowsViewController.xib; sourceTree = "<group>"; };
 		F98782B519420CB500D76231 /* EchoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoToken.h; sourceTree = "<group>"; };
 		F98782B619420CB500D76231 /* EchoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoToken.m; sourceTree = "<group>"; };
 		F98782B919420E5D00D76231 /* GotoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoToken.h; sourceTree = "<group>"; };
@@ -940,6 +949,8 @@
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
 				F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */,
 				F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */,
+				F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */,
+				F982CF601AD7834200BB9574 /* WindowsViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1082,16 +1093,17 @@
 				F97CD58F1ACD9813007E5804 /* AutoMapperWindowController.swift */,
 				F97CD5901ACD9813007E5804 /* AutoMapperWindowController.xib */,
 				F97CD57E1ACD27D3007E5804 /* MapArc.swift */,
+				F9269A9B1AD7A5D900E35690 /* MapLabel.swift */,
 				F97CD57F1ACD27D3007E5804 /* MapLoader.swift */,
 				F97CD5801ACD27D3007E5804 /* MapNode.swift */,
 				F97CD5811ACD27D3007E5804 /* MapPosition.swift */,
 				F90CEC171AD037CE00204243 /* MapView.swift */,
 				F97CD5821ACD27D3007E5804 /* MapZone.swift */,
 				F97CD5831ACD27D3007E5804 /* Pathfinder.swift */,
+				F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */,
 				F97CD5981ACDD8C6007E5804 /* SimpleDiff.swift */,
 				F97CD5951ACDC814007E5804 /* Threading.swift */,
 				F97CD5841ACD27D3007E5804 /* TreeNode.swift */,
-				F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */,
 			);
 			name = AutoMapper;
 			sourceTree = "<group>";
@@ -1366,6 +1378,7 @@
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
+				F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9CF92831890832800449548 /* Images.xcassets in Resources */,
 				F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */,
 				F9CF927B1890832800449548 /* Credits.rtf in Resources */,
@@ -1390,6 +1403,7 @@
 			files = (
 				F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
+				F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
@@ -1510,6 +1524,7 @@
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
+				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */,
@@ -1575,6 +1590,7 @@
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
+				F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
@@ -1716,6 +1732,7 @@
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
@@ -1764,6 +1781,7 @@
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
 				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
+				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,

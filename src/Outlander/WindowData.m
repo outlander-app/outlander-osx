@@ -24,6 +24,10 @@
     _width = loc.size.width;
     _timestamp = timestamp;
     _showBorder = YES;
+    _fontName = @"Helvetica";
+    _fontSize = 14;
+    _monoFontName = @"Menlo";
+    _monoFontSize = 13;
     
     return self;
 }

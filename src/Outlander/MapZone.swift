@@ -13,12 +13,14 @@ public class MapZone {
     var id:String
     var name:String
     var rooms:[MapNode]
+    var labels:[MapLabel]
     var roomIdLookup:[String:MapNode]
     
     init(_ id:String, _ name:String) {
         self.id = id
         self.name = name
         rooms = []
+        labels = []
         roomIdLookup = [:]
     }
     

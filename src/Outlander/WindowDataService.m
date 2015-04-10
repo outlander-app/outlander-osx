@@ -19,9 +19,21 @@
 }
 
 - (WindowData *)dataFor:(NSDictionary *)json {
-    return [MTLJSONAdapter modelOfClass:[WindowData class]
+    WindowData *data = [MTLJSONAdapter modelOfClass:[WindowData class]
                      fromJSONDictionary:json
                                   error:nil];
+    
+    if (!data.fontName) {
+        data.fontName = @"Helvetica";
+        data.fontSize = 14;
+    }
+    
+    if (!data.monoFontName) {
+        data.monoFontName = @"Menlo";
+        data.monoFontSize = 13;
+    }
+    
+    return data;
 }
 
 - (Layout *)readLayoutJson:(GameContext *)context {

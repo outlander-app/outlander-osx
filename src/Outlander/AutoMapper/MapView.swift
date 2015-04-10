@@ -40,6 +40,8 @@ class MapView: NSView {
     var defaultRoomColor:NSColor = NSColor(hex:"#ffffff")
     var defaultPathColor:NSColor = NSColor(hex:"#000000")
     
+    var zoneExitPathColor:NSColor = NSColor(hex:"#0000ff")
+    
     var nodeHover:((MapNode?)->Void)?
     
     
@@ -118,7 +120,6 @@ class MapView: NSView {
         }
         
         dispatch_async(dispatch_get_main_queue(), {
-            println("********lookup room********* \(room?.name)")
             self.nodeHover?(room)
         })
     }
@@ -139,10 +140,6 @@ class MapView: NSView {
     }
     
     override func drawRect(dirtyRect: NSRect) {
-        println("****redraw**** \(dirtyRect)")
-//        NSColor(hex: "#ffcc66").setFill()
-//        
-//        NSRectFill(NSMakeRect(0, 0, self.frame.width, self.frame.height));
         
         if let zone = self.mapZone {
             
@@ -159,7 +156,7 @@ class MapView: NSView {
                 
                 self.defaultPathColor.setStroke()
                 
-                var hasDest = room.arcs.filter { count($0.destination) > 0 }
+                var hasDest = room.arcs.filter { count($0.destination) > 0 && !$0.hidden }
                 
                 for dest in hasDest {
                     var arc = zone.roomWithId(dest.destination)!
@@ -177,7 +174,16 @@ class MapView: NSView {
                     
                     //println("(\(room.position.x), \(room.position.y)) to \(point)")
                     
-                    self.defaultPathColor.setStroke()
+                    if let notes = room.notes where notes.rangeOfString(".xml") != nil {
+                        strokeWidth = 1.5
+                        NSBezierPath.setDefaultLineWidth(strokeWidth)
+                        self.zoneExitPathColor.setStroke()
+                    }
+                    else {
+                        strokeWidth = 0.5
+                        NSBezierPath.setDefaultLineWidth(strokeWidth)
+                        self.defaultPathColor.setStroke()
+                    }
 
                     var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
                     
@@ -196,9 +202,14 @@ class MapView: NSView {
         
                         NSColor(hex: room.color!).setFill()
                         
+                    } else if let color = KnownColors.find(room.color) {
+                        
+                        color.setFill()
+                        
                     } else {
                         
                         self.defaultRoomColor.setFill()
+                        
                     }
                     
                     NSRectFill(NSMakeRect(
@@ -208,6 +219,16 @@ class MapView: NSView {
                         outlineRect.height - (strokeWidth/2.0 * 2.0)
                     ));
                 }
+            }
+            
+            let labels = zone.labels.filter { $0.position.z == self.mapLevel }
+            
+            for label in labels {
+                
+                let point = self.translatePosition(label.position)
+                
+                var storage = NSTextStorage(string: label.text)
+                storage.drawAtPoint(point)
             }
             
         }
@@ -227,5 +248,30 @@ class MapView: NSView {
         var resY = CGFloat(y) + centerY
         
         return CGPoint(x: resX, y: resY)
+    }
+}
+
+public class KnownColors {
+    
+    static var colors:[String:String] = [
+        "Aqua": "#00ffff",
+        "Blue": "#0000ff",
+        "Fuchsia": "#ff00cc",
+        "Lime": "#00ff00",
+        "Olive": "#999900",
+        "Red": "#ff3300",
+        "Yellow": "#ffff00"]
+
+    static func find(color:String?) -> NSColor? {
+        
+        if color == nil {
+            return nil
+        }
+        
+        if let val = colors[color!] {
+            return NSColor(hex: val)
+        }
+        
+        return nil
     }
 }

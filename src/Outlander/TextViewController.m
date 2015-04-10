@@ -206,11 +206,11 @@
         [attr addAttribute:NSBackgroundColorAttributeName value:text.backgroundColor range:range];
     }
     
-    NSString *fontName = @"Helvetica";
-    int fontSize = 14;
+    NSString *fontName = self.fontName;
+    double fontSize = self.fontSize;
     if(text.mono){
-        fontName = @"Menlo";
-        fontSize = 13;
+        fontName = self.monoFontName;
+        fontSize = self.monoFontSize;
     }
     [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
     

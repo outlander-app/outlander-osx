@@ -149,6 +149,12 @@
     TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
                                                        atLoc:rect
                                                      withKey:window.name];
+
+    controller.fontName = window.fontName;
+    controller.fontSize = window.fontSize;
+    controller.monoFontName = window.monoFontName;
+    controller.monoFontSize = window.monoFontSize;
+
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];
     controller.gameContext = _gameContext;
@@ -172,6 +178,10 @@
         TextViewController *controller = [_windows cacheObjectForKey:value.key];
         WindowData *data = [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
         data.showBorder = value.showBorder;
+        data.fontName = controller.fontName;
+        data.fontSize = controller.fontSize;
+        data.monoFontName = controller.monoFontName;
+        data.monoFontSize = controller.monoFontSize;
         return data;
     }].array;
     

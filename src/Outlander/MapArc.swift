@@ -12,10 +12,12 @@ public class MapArc {
     var exit:String
     var move:String
     var destination:String
+    var hidden:Bool
     
-    init(exit:String, move:String, destination:String){
+    init(exit:String, move:String, destination:String, hidden:Bool){
         self.exit = exit
         self.move = move
         self.destination = destination
+        self.hidden = hidden
     }
 }

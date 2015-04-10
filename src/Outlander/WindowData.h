@@ -20,5 +20,9 @@
 @property (nonatomic, assign) double width;
 @property (nonatomic, assign) BOOL timestamp;
 @property (nonatomic, assign) BOOL showBorder;
+@property (nonatomic, copy) NSString *fontName;
+@property (nonatomic, assign) double fontSize;
+@property (nonatomic, copy) NSString *monoFontName;
+@property (nonatomic, assign) double monoFontSize;
 
 @end

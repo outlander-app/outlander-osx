@@ -117,6 +117,15 @@ public class MapLoader {
                 }
             }
             
+            if let labelNodes = doc.xpath("/zone/label").value {
+                mapZone.labels = labelNodes.map {
+                    var text = $0.attributeValue("text") ?? ""
+                    var position = self.position($0.children)
+                    
+                    return MapLabel(text: text, position: position)
+                }
+            }
+            
             return MapLoadResult.Success(mapZone)
         }
     }
@@ -136,7 +145,8 @@ public class MapLoader {
                 MapArc(
                     exit: $0.attributeValue("exit") ?? "",
                     move: $0.attributeValue("move") ?? "",
-                    destination: $0.attributeValue("destination") ?? "")
+                    destination: $0.attributeValue("destination") ?? "",
+                    hidden: $0.attributeValue("hidden") == "True")
         }
     }
     

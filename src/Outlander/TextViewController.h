@@ -20,6 +20,11 @@
 @property (nonatomic, copy) NSString *key;
 @property (unsafe_unretained) IBOutlet MyNSTextView *TextView;
 
+@property (nonatomic, copy) NSString *fontName;
+@property (nonatomic, assign) double fontSize;
+@property (nonatomic, copy) NSString *monoFontName;
+@property (nonatomic, assign) double monoFontSize;
+
 - (void)setShowBorder:(BOOL)show;
 - (void)setDisplayTimestamp:(BOOL)timestamp;
 - (NSString *)text;
