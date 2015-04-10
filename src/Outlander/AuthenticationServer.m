@@ -63,18 +63,18 @@
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     NSLog(@"socket:didReadData:withTag: %ld", tag);
     
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    NSData *pwData = [_password dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    //NSData *pwData = [_password dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     
     NSLog(@"Response: %@", response);
     
     if(tag == AuthStatePasswordHash) {
-        char* hash = sge_encrypt_password((char*)[pwData bytes], (char*)[data bytes]);
-        //NSData *data = [[NSString stringWithFormat:@"A\t%@\t%s\r\n", _account, hash] dataUsingEncoding:NSUTF8StringEncoding];
+        char* hash = sge_encrypt_password((char*)[_password UTF8String], (char*)[response UTF8String]);
+        NSData *data = [[NSString stringWithFormat:@"A\t%@\t%s\r\n", _account, hash] dataUsingEncoding:NSUTF8StringEncoding];
         
-        AuthBuilder *builder = [AuthBuilder newInstance];
-        NSData *data = [builder build:_account hash:[NSData dataWithBytes:hash length:sizeof(hash)]];
+        //AuthBuilder *builder = [AuthBuilder newInstance];
+        //NSData *data = [builder build:_account hash:[NSData dataWithBytes:hash length:sizeof(hash)]];
         
         [asyncSocket writeData:data withTimeout:-1 tag:-1];
         [asyncSocket readDataWithTimeout:-1 tag:AuthStateAuthenticate];
