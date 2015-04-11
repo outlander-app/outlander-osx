@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class MapNode {
+final class MapNode {
     var id:String
     var name:String
     var descriptions:[String]

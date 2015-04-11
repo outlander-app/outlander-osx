@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class MapArc {
+final class MapArc {
     var exit:String
     var move:String
     var destination:String

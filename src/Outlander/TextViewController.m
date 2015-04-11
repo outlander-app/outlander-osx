@@ -193,7 +193,7 @@
     
     NSColor *color = nil;
     
-    if(text.color != nil && [text.color length] > 0){
+    if(text.color != nil && text.color.length > 0){
         color = [NSColor colorWithHexString:text.color];
     }
     else {
@@ -202,8 +202,9 @@
     
     [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
     
-    if(text.backgroundColor != nil) {
-        [attr addAttribute:NSBackgroundColorAttributeName value:text.backgroundColor range:range];
+    if(text.backgroundColor != nil && text.backgroundColor.length > 0) {
+        NSColor *backgroundColor = [NSColor colorWithHexString:text.backgroundColor];
+        [attr addAttribute:NSBackgroundColorAttributeName value:backgroundColor range:range];
     }
     
     NSString *fontName = self.fontName;

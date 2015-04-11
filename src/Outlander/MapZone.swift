@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class MapZone {
+public final class MapZone {
     var id:String
     var name:String
     var rooms:[MapNode]
@@ -24,12 +24,12 @@ public class MapZone {
         roomIdLookup = [:]
     }
     
-    public func addRoom(room:MapNode) {
+    func addRoom(room:MapNode) {
         rooms.append(room)
         roomIdLookup[room.id] = room
     }
     
-    public func mapSize(z:Int, padding:Double) -> NSRect {
+    func mapSize(z:Int, padding:Double) -> NSRect {
         
         var maxX:Double = 0
         var minX:Double = 0
@@ -65,7 +65,7 @@ public class MapZone {
         return NSRect(x: width - maxX - (padding / 2.0), y: height - maxY - (padding / 2.0), width: width*1.0, height: height*1.0)
     }
     
-    public func roomWithId(id:String) -> MapNode? {
+    func roomWithId(id:String) -> MapNode? {
         
         if count(id) == 0 {
             return nil
@@ -74,7 +74,7 @@ public class MapZone {
         return roomIdLookup[id]
     }
     
-    public func findRoomFrom(id:String, name:String, description:String) -> MapNode? {
+    func findRoomFrom(id:String, name:String, description:String) -> MapNode? {
         
         var last = roomIdLookup[id]
         
@@ -117,7 +117,7 @@ public class MapZone {
         return currentRoom
     }
     
-    public func findRoom(name:String, description:String) -> MapNode? {
+    func findRoom(name:String, description:String) -> MapNode? {
         
         var trimmed = description
        
@@ -134,7 +134,7 @@ public class MapZone {
         return nil
     }
     
-    public func roomsWithNote(note:String) -> [MapNode] {
+    func roomsWithNote(note:String) -> [MapNode] {
         
         return self.rooms.filter {
             
@@ -150,14 +150,14 @@ public class MapZone {
         }
     }
     
-    public func moveCostForNode(node: MapNode, toNode: MapNode) -> Int {
+    func moveCostForNode(node: MapNode, toNode: MapNode) -> Int {
         let index = node.position
         let toIndex = toNode.position
         
         return ((abs(index.x - toIndex.x) > 0 && abs(index.y - toIndex.y) > 0) ? 10 : 14)
     }
     
-    public func hValueForNode(node: MapNode, endNode: MapNode) -> Int {
+    func hValueForNode(node: MapNode, endNode: MapNode) -> Int {
         let coord1 = node.position
         let coord2 = endNode.position
         

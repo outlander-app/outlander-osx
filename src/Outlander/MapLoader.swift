@@ -9,17 +9,17 @@
 import Foundation
 import GlimpseXML
 
-public enum MapLoadResult {
+enum MapLoadResult {
     case Success(MapZone)
     case Error(XMLError)
 }
 
-public enum MapMetaResult {
+enum MapMetaResult {
     case Success(MapInfo)
     case Error(XMLError)
 }
 
-public class MapInfo {
+final class MapInfo {
     var id:String
     var name:String
     var file:String
@@ -36,11 +36,11 @@ extension MapInfo: Equatable {}
 
 // MARK: Equatable
 
-public func ==(lhs: MapInfo, rhs: MapInfo) -> Bool {
+func ==(lhs: MapInfo, rhs: MapInfo) -> Bool {
     return lhs.id == rhs.id
 }
 
-public class MapLoader {
+final class MapLoader {
     
     func loadFolder(folder: String) -> [MapMetaResult] {
         
