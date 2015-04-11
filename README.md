@@ -5,9 +5,9 @@ Outlander - OSX 10.9+
 
 ![](http://i.imgur.com/Q3t3QYG.png)
 
-> Maps! (use genie map files)
+> Maps! See your current location on the map.  Get directions to named locations or room numbers.  Compatible with Genie map files.
 
-![](http://i.imgur.com/GSVFrmf.png)
+![](http://i.imgur.com/tVivgNn.png)
 
 >You can remove window borders for a true text-only experience.
 
