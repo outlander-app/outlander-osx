@@ -1,0 +1,10 @@
+framework module OysterKit {
+  umbrella header "OysterKit.h"
+
+  export *
+  module * { export * }
+}
+
+module OysterKit.Swift {
+    header "OysterKit-Swift.h"
+}

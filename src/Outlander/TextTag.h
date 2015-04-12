@@ -17,6 +17,12 @@
 @property (nonatomic, assign) BOOL mono;
 @property (nonatomic, assign) BOOL bold;
 
+@property (nonatomic, copy) NSString *scriptName;
+@property (nonatomic, assign) int scriptLine;
+@property (nonatomic, assign) int scriptColumn;
+
+@property (nonatomic, copy) NSString *preset;
+
 - initWith:(NSString*)text mono:(BOOL)mono;
 + tagFor:(NSString*)text mono:(BOOL)mono;
 

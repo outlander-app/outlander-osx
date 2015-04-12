@@ -38,12 +38,6 @@
 		F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
 		F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
 		F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
-		F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39BC194DEF25006144F8 /* NoOpMessage.m */; };
-		F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39BC194DEF25006144F8 /* NoOpMessage.m */; };
-		F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C0194DF073006144F8 /* GotoMessage.m */; };
-		F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C0194DF073006144F8 /* GotoMessage.m */; };
-		F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C5194DFF25006144F8 /* CompleteMessage.m */; };
-		F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C5194DFF25006144F8 /* CompleteMessage.m */; };
 		F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
@@ -62,6 +56,18 @@
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
+		F9316D191AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
+		F9316D1A1AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
+		F9316D1B1AD9D04300880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
+		F9316D1C1AD9D04300880149 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
+		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
+		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
+		F9316D251AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
+		F9316D261AD9E1D400880149 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D211AD9E1D400880149 /* Actor.swift */; };
+		F9316D271AD9E1D400880149 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D211AD9E1D400880149 /* Actor.swift */; };
+		F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
+		F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
 		F93462591AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
@@ -380,6 +386,7 @@
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
+				F9316D1C1AD9D04300880149 /* OysterKit.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
 			);
@@ -414,12 +421,6 @@
 		F91A39AF194BDE83006144F8 /* ExecuteBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecuteBlock.m; sourceTree = "<group>"; };
 		F91A39B2194D2AA2006144F8 /* SaveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToken.h; sourceTree = "<group>"; };
 		F91A39B3194D2AA2006144F8 /* SaveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToken.m; sourceTree = "<group>"; };
-		F91A39BB194DEF25006144F8 /* NoOpMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoOpMessage.h; sourceTree = "<group>"; };
-		F91A39BC194DEF25006144F8 /* NoOpMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoOpMessage.m; sourceTree = "<group>"; };
-		F91A39BF194DF073006144F8 /* GotoMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoMessage.h; sourceTree = "<group>"; };
-		F91A39C0194DF073006144F8 /* GotoMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoMessage.m; sourceTree = "<group>"; };
-		F91A39C4194DFF25006144F8 /* CompleteMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteMessage.h; sourceTree = "<group>"; };
-		F91A39C5194DFF25006144F8 /* CompleteMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteMessage.m; sourceTree = "<group>"; };
 		F91A39C8194DFFA9006144F8 /* SimpleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleQueue.h; sourceTree = "<group>"; };
 		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F91A39CC194E7135006144F8 /* SendCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCommandHandler.h; sourceTree = "<group>"; };
@@ -436,6 +437,11 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
+		F9316D181AD9D02B00880149 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
+		F9316D1F1AD9E1D400880149 /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
+		F9316D201AD9E1D400880149 /* OutlanderStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderStandard.swift; sourceTree = "<group>"; };
+		F9316D211AD9E1D400880149 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		F9316D281AD9E65000880149 /* ScriptRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
@@ -737,11 +743,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
+				F9316D1B1AD9D04300880149 /* OysterKit.framework in Frameworks */,
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
+				F9316D191AD9D02B00880149 /* OysterKit.framework in Frameworks */,
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
@@ -759,6 +767,7 @@
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
+				F9316D1A1AD9D02B00880149 /* OysterKit.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
@@ -780,17 +789,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F91A39BA194DEF04006144F8 /* Messages */ = {
+		F9316D1E1AD9E19E00880149 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				F91A39C4194DFF25006144F8 /* CompleteMessage.h */,
-				F91A39C5194DFF25006144F8 /* CompleteMessage.m */,
-				F91A39BF194DF073006144F8 /* GotoMessage.h */,
-				F91A39C0194DF073006144F8 /* GotoMessage.m */,
-				F91A39BB194DEF25006144F8 /* NoOpMessage.h */,
-				F91A39BC194DEF25006144F8 /* NoOpMessage.m */,
+				F9316D1F1AD9E1D400880149 /* ScriptContext.swift */,
+				F9316D201AD9E1D400880149 /* OutlanderStandard.swift */,
+				F9316D211AD9E1D400880149 /* Actor.swift */,
+				F9316D281AD9E65000880149 /* ScriptRunner.swift */,
 			);
-			name = Messages;
+			name = Engine;
+			path = Scripting;
 			sourceTree = "<group>";
 		};
 		F9772F101940383500172083 /* Tokens */ = {
@@ -860,7 +868,7 @@
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
-				F91A39BA194DEF04006144F8 /* Messages */,
+				F9316D1E1AD9E19E00880149 /* Engine */,
 				F9772F101940383500172083 /* Tokens */,
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
@@ -1194,6 +1202,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9316D181AD9D02B00880149 /* OysterKit.framework */,
 				F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */,
 				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
 				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,
@@ -1519,6 +1528,7 @@
 			files = (
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
+				F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */,
 				F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
@@ -1527,12 +1537,11 @@
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
-				F91A39BD194DEF25006144F8 /* NoOpMessage.m in Sources */,
-				F91A39C6194DFF25006144F8 /* CompleteMessage.m in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
+				F9316D261AD9E1D400880149 /* Actor.swift in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
 				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
@@ -1549,6 +1558,7 @@
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
+				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
 				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
@@ -1597,6 +1607,7 @@
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F90CEC181AD037CE00204243 /* MapView.swift in Sources */,
 				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
@@ -1624,7 +1635,6 @@
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
-				F91A39C1194DF073006144F8 /* GotoMessage.m in Sources */,
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
@@ -1717,6 +1727,7 @@
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
+				F9316D251AD9E1D400880149 /* OutlanderStandard.swift in Sources */,
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
@@ -1739,6 +1750,7 @@
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
+				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
@@ -1748,6 +1760,7 @@
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
 				F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */,
 				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
+				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
@@ -1765,17 +1778,16 @@
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
+				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
-				F91A39BE194DEF25006144F8 /* NoOpMessage.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
 				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
-				F91A39C7194DFF26006144F8 /* CompleteMessage.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
@@ -1786,7 +1798,6 @@
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
-				F91A39C2194DF073006144F8 /* GotoMessage.m in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
@@ -1968,7 +1979,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",
@@ -2029,7 +2040,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Outlander-gekybexymzgilhctsaczwgzxdxwx/Build/Products/Debug",

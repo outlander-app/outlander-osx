@@ -38,6 +38,8 @@
 
 @implementation TestViewController {
     GameContext *_gameContext;
+    ScriptRunner *_scriptRunner;
+    NotifyMessage *_notifier;
     VitalsViewController *_vitalsViewController;
     ExpTracker *_expTracker;
     RoundtimeNotifier *_roundtimeNotifier;
@@ -52,6 +54,21 @@
 	if(self == nil) return nil;
     
     _gameContext = gameContext;
+    
+    @weakify(self)
+    
+    _notifier = [NotifyMessage newInstance];
+    _notifier.messageBlock = ^(TextTag *tag){
+        @strongify(self)
+        [self append:tag to:@"main"];
+    };
+    _notifier.commandBlock = ^(NSString *command){
+        CommandContext *ctx = [[CommandContext alloc] init];
+        ctx.command = [command trimWhitespaceAndNewline];
+        [_commandProcessor process:ctx];
+    };
+    
+    _scriptRunner = [ScriptRunner newInstance: _gameContext notifier: _notifier];
     
     _vitalsViewController = [[VitalsViewController alloc] init];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];

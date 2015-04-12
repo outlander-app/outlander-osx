@@ -7,6 +7,7 @@
 //
 
 #import "ScriptHandler.h"
+#import <PEGKit/PEGKit.h>
 
 @interface ScriptHandler () {
     id<EventRelay> _relay;
@@ -39,14 +40,14 @@
         allArgs = [command substringFromIndex:range.location + 1];
     }
     
-//    PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:command];
-//    [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
-//       
-//        if(tok.tokenType != PKTokenTypeSymbol) {
-//            NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-//            [tokens addObject:val];
-//        }
-//    }];
+    PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:command];
+    [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
+       
+        if(tok.tokenType != PKTokenTypeSymbol) {
+            NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            [tokens addObject:val];
+        }
+    }];
     
     NSString *target = tokens[0];
     [tokens removeObjectAtIndex:0];

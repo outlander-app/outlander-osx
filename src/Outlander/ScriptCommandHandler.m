@@ -19,7 +19,7 @@
     NSMutableArray *commands = (NSMutableArray *)[[command substringFromIndex:7] componentsSeparatedByString:@" "];
     [commands removeObject:@""];
     
-    if(commands && commands.count > 0) {
+    if(commands && commands.count > 1) {
         
         NSString *target = commands[1];
         NSString *action = commands[0];
