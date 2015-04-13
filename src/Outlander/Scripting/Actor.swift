@@ -46,9 +46,9 @@ public class OperationComplete : Message {
 }
 
 public class PauseMessage : Message {
-    var seconds:Int = 0
+    var seconds:Double = 0
     
-    public init(_ seconds:Int) {
+    public init(_ seconds:Double) {
         self.seconds = seconds
         super.init("pause")
     }
@@ -358,7 +358,7 @@ public class TokenToMessage {
                 
             case "pause":
                 var lengthStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                msg = PauseMessage(lengthStr.toInt()!)
+                msg = PauseMessage(lengthStr.toDouble()!)
                 
             case "var", "setvariable":
                 
@@ -381,9 +381,9 @@ public class TokenToMessage {
 public class PauseOp : BaseOp {
     
     var actor:IScript
-    var seconds:Int
+    var seconds:Double
     
-    init(_ actor:IScript, seconds:Int) {
+    init(_ actor:IScript, seconds:Double) {
         self.actor = actor
         self.seconds = seconds
     }
@@ -396,9 +396,17 @@ public class PauseOp : BaseOp {
             txtMsg.backgroundColor = "#ff3300"
             self.actor.notify(txtMsg)
             
-            sleep(UInt32(self.seconds))
-            
-            self.actor.sendMessage(OperationComplete("pause", msg: ""))
+            self.after(self.seconds) {
+                self.actor.sendMessage(OperationComplete("pause", msg: ""))
+            }
+        }
+    }
+    
+    private func after(seconds:Double, _ complete:()->Void) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC))),
+            dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+                
+            complete()
         }
     }
 }
