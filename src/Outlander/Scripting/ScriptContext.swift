@@ -87,6 +87,10 @@ public class ScriptContext {
         return found
     }
     
+    public func roundtime() -> Double? {
+        return self.globalVars?()["roundtime"]?.toDouble()
+    }
+    
     public func next() -> Token? {
         var nextToken = self.current.next()
         

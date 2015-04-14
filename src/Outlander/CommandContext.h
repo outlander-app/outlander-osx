@@ -13,4 +13,8 @@
 @property (nonatomic, copy) NSString *command;
 @property (nonatomic, strong) TextTag *tag;
 
+@property (nonatomic, copy) NSString *scriptName;
+@property (nonatomic, assign) int scriptLine;
+@property (nonatomic, assign) int scriptColumn;
+
 @end

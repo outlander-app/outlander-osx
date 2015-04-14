@@ -62,10 +62,15 @@
         @strongify(self)
         [self append:tag to:@"main"];
     };
-    _notifier.commandBlock = ^(NSString *command){
-        CommandContext *ctx = [[CommandContext alloc] init];
-        ctx.command = [command trimWhitespaceAndNewline];
-        [_commandProcessor process:ctx];
+    _notifier.commandBlock = ^(CommandContext *command){
+        command.command = [command.command trimWhitespaceAndNewline];
+        [_commandProcessor process:command];
+    };
+    _notifier.echoBlock = ^(NSString *echo){
+        @strongify(self)
+        TextTag *tag = [TextTag tagFor:echo mono:YES];
+        tag.color = @"00ffff";
+        [self append:tag to:@"main"];
     };
     
     _scriptRunner = [ScriptRunner newInstance: _gameContext notifier: _notifier];
@@ -84,9 +89,12 @@
         
         TextTag *tag = x.tag;
         if(!tag) {
+            NSString *script = x.scriptName.length > 0 ? [NSString stringWithFormat:@"[%@](%d): ", x.scriptName, x.scriptLine] : @"";
+            
             NSString *prompt = [gameContext.globalVars cacheObjectForKey:@"prompt"];
             prompt = prompt ? prompt : @">";
-            tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ %@\n", prompt, x.command] mono:NO];
+            tag = [TextTag tagFor:[NSString stringWithFormat:@"%@%@ %@\n",script, prompt, x.command]
+                             mono: script.length > 0 ? YES : NO];
         }
         [self append:tag to:@"main"];
     }];

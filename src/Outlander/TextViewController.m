@@ -172,6 +172,17 @@
     return [TextTag tagFor:str mono: YES];
 }
 
+- (TextTag *)scriptTag:(TextTag *)tag {
+    NSString *lines = tag.scriptLine > -1 ? [NSString stringWithFormat:@"%d", tag.scriptLine] : @"";
+    NSString *str = [NSString stringWithFormat:@"[%@](%@): ", tag.scriptName, lines];
+    
+    TextTag *newTag = [TextTag tagFor:str mono: YES];
+    newTag.color = tag.color;
+    newTag.backgroundColor = tag.backgroundColor;
+    
+    return newTag;
+}
+
 - (NSAttributedString *)stringFromTag:(TextTag *)text {
     if(text.bold) {
         text.color = @"#FFFF00";
@@ -243,6 +254,10 @@
         
         if (timestamp) {
             [[textView textStorage] appendAttributedString:[self stringFromTag:[self timestampTag]]];
+        }
+        
+        if ([text.scriptName length] > 0 &&  text.scriptLine > -1) {
+            [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
         }
         
         [[textView textStorage] appendAttributedString:attr];

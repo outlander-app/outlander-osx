@@ -20,6 +20,8 @@
     RACSubject *_mainSubject;
     StormFrontTokenizer *_tokenizer;
     StormFrontTagStreamer *_tagStreamer;
+    ScriptStreamHandler *_scriptStreamHandler;
+    RoomChangeHandler *_roomChangeHandler;
 }
 
 @end
@@ -36,6 +38,8 @@
     _gameParser = [[GameParser alloc] initWithContext:context];
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
+    _scriptStreamHandler = [ScriptStreamHandler newInstance];
+    _roomChangeHandler = [RoomChangeHandler newInstance];
     
     _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
         [_gameContext.globalVars setCacheObject:value forKey:key];
@@ -118,13 +122,11 @@
          NSArray *nodes = [_tokenizer tokenize:rawXml];
          NSArray *tags = [_tagStreamer stream:nodes];
          
-         //NSString *rawText = [self textForTagList:tags];
-         //NSLog(@"text: %@", rawText);
-         
          [_mainSubject sendNext:tags];
          
-         RoomChangeHandler *handler = [RoomChangeHandler newInstance];
-         [handler handle:nodes context:_gameContext];
+         NSString *rawText = [self textForTagList:tags];
+         [_roomChangeHandler handle:nodes text: rawText context:_gameContext];
+         [_scriptStreamHandler handle:nodes text: rawText context:_gameContext];
          
      } completed:^{
         [_mainSubject sendCompleted];

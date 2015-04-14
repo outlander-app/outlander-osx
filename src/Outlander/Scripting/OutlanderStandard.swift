@@ -113,7 +113,7 @@ public class ScriptTokenizer : Tokenizer {
         self.branch(
             OKStandard.whiteSpaces,
             Keywords(
-                validStrings: ["action", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
+                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -155,7 +155,7 @@ public class OutlanderScriptParser : StackParser {
     var ifStack = [BranchToken]()
     
     var lineCommandStack = [String]()
-    var lineCommands = ["echo", "gosub", "goto", "match", "matchre", "matchwait", "pause", "put", "setvariable", "var", "waitfor", "waitforre"]
+    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "pause", "put", "setvariable", "var", "waitfor", "waitforre"]
     
     var validLabelTokens = ["globalvar", "variable", "localvar", "word"]
     

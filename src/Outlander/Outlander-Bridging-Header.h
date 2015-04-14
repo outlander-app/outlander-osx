@@ -25,3 +25,4 @@
 #import "OLMutableArray.h"
 #import "ScriptLoader.h"
 #import "LocalFileSystem.h"
+#import <PEGKit/PEGKit.h>

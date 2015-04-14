@@ -34,30 +34,48 @@ class ScriptRunner {
         NSNotificationCenter
             .defaultCenter()
             .addObserver(self, selector:Selector("manage:"), name: "script", object: nil)
+        
+        NSNotificationCenter
+            .defaultCenter()
+            .addObserver(self, selector:Selector("stream:"), name: "ol:game-stream", object: nil)
     }
     
-    func start(notification:NSNotification) {
+    func start(notification: NSNotification) {
         
         if let dict = notification.userInfo as? Dictionary<String, AnyObject> {
             var scriptName = dict["target"] as! String
+            var tokens = dict["args"] as? NSArray;
+            
             if let scriptText = self.scriptLoader.load(scriptName) {
+                
+                var params = self.argsToParams(tokens)
                 
                 var script = Script(scriptName, self.notifier, self.thread)
                 
                 self.thread.addOperation(script)
                 
-//                script.run(script: "", globalVars: { () -> [String : String] in
-//                    
-//                }, params: <#[String]#>)
-                
                 script.run(scriptText, globalVars: { () -> [String:String] in
                     return self.context.globalVars.copyValues() as! [String:String]
-                }, params: [])
+                }, params: params)
             }
         }
     }
     
-    func manage(notification:NSNotification) {
+    func argsToParams(args:NSArray?) -> [String] {
+        if let input = args {
+            var params:[String] = []
+            
+            for item in input {
+                params.append(item as! String)
+            }
+            
+            return params
+        }
+        
+        return []
+    }
+    
+    func manage(notification: NSNotification) {
         if let dict = notification.userInfo as? [String:String] {
             var scriptName = dict["target"]!
             var action = dict["action"]!
@@ -77,9 +95,23 @@ class ScriptRunner {
         }
     }
     
+    func stream(notification: NSNotification) {
+        if let dict = notification.userInfo as? [String:AnyObject] {
+            var nodes = dict["nodes"] as! [Node]
+            var text = dict["text"] as! String
+            
+            for (index, q) in enumerate(self.thread.queue.operations) {
+                if let script = q as? IScript {
+                    script.stream(text, nodes: nodes)
+                    break
+                }
+            }
+        }
+    }
+    
     private func abort(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? Script where script.scriptName == name {
+            if let script = q as? IScript where script.scriptName == name {
                 script.cancel()
                 break
             }
@@ -88,7 +120,7 @@ class ScriptRunner {
     
     private func pause(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? Script where script.scriptName == name {
+            if let script = q as? IScript where script.scriptName == name {
                 script.pause()
                 break
             }
@@ -97,7 +129,7 @@ class ScriptRunner {
     
     private func resume(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? Script where script.scriptName == name {
+            if let script = q as? IScript where script.scriptName == name {
                 script.resume()
                 break
             }
@@ -106,7 +138,7 @@ class ScriptRunner {
     
     private func vars(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? Script where script.scriptName == name {
+            if let script = q as? IScript where script.scriptName == name {
                 script.vars()
                 break
             }

@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public protocol NodeHandler {
-    func handle(nodes:[Node], context:GameContext)
+    func handle(nodes:[Node], text:String, context:GameContext)
 }
 
 @objc
@@ -18,17 +18,26 @@ class RoomChangeHandler : NodeHandler {
     
     var commandRelay = GameCommandRelay()
     
+    private var showAfterPrompt = false
+    
     class func newInstance() -> RoomChangeHandler {
         return RoomChangeHandler()
     }
     
-    func handle(nodes:[Node], context:GameContext) {
+    func handle(nodes:[Node], text:String, context:GameContext) {
         
         if let zone = context.mapZone {
             
             for node in nodes {
-        
+                
                 if node.name == "compass" {
+                    
+                    self.showAfterPrompt = true
+                }
+                
+                if node.name == "prompt" && self.showAfterPrompt {
+                    
+                    self.showAfterPrompt = false
                     
                     var title = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
                     var desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
@@ -38,6 +47,7 @@ class RoomChangeHandler : NodeHandler {
                     var roomId = context.globalVars.cacheObjectForKey("roomid") as? String
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
+                    
                 }
             }
         }

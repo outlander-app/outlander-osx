@@ -17,6 +17,7 @@
 #import "SendCommandHandler.h"
 #import "GameEventRelay.h"
 #import "Outlander-Swift.h"
+#import "NSString+Categories.h"
 
 @interface GameCommandProcessor (){
     GameContext *_gameContext;

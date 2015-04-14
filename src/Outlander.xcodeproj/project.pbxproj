@@ -292,6 +292,8 @@
 		F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9718A0001300A11EE9 /* ProgressBarViewController.xib */; };
 		F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */; };
 		F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */; };
+		F9B2C7B11ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
+		F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
 		F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
 		F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
 		F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
@@ -663,6 +665,7 @@
 		F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VitalsViewController.h; sourceTree = "<group>"; };
 		F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VitalsViewController.m; sourceTree = "<group>"; };
 		F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VitalsViewController.xib; sourceTree = "<group>"; };
+		F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptStreamHandler.swift; sourceTree = "<group>"; };
 		F9B3AC5F194046E400C081C4 /* LabelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelToken.h; sourceTree = "<group>"; };
 		F9B3AC60194046E400C081C4 /* LabelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelToken.m; sourceTree = "<group>"; };
 		F9B3AC63194058EE00C081C4 /* AssignmentToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignmentToken.h; sourceTree = "<group>"; };
@@ -796,6 +799,7 @@
 				F9316D201AD9E1D400880149 /* OutlanderStandard.swift */,
 				F9316D211AD9E1D400880149 /* Actor.swift */,
 				F9316D281AD9E65000880149 /* ScriptRunner.swift */,
+				F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1539,6 +1543,7 @@
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
+				F9B2C7B11ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F9316D261AD9E1D400880149 /* Actor.swift in Sources */,
@@ -1752,6 +1757,7 @@
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
+				F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,

@@ -21,6 +21,8 @@
     _text = text;
     _mono = mono;
     _bold = NO;
+    _scriptLine = -1;
+    _scriptColumn = -1;
     
     return self;
 }
