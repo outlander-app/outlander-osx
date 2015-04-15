@@ -9,127 +9,6 @@
 import Foundation
 import OysterKit
 
-public class Message {
-    var name:String
-    
-    public init(_ name:String) {
-        self.name = name
-    }
-
-    public var description : String {
-        return self.name;
-    }
-}
-
-public class UnknownMessage : Message {
-}
-
-public class ScriptInfoMessage : Message {
-    public override init(_ msg:String) {
-        super.init(msg)
-    }
-}
-
-public class OperationComplete : Message {
-    var operation:String
-    var msg:String
-    
-    public init(_ operation:String, msg:String) {
-        self.operation = operation
-        self.msg = msg
-        super.init("operation-complete")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.operation)";
-    }
-}
-
-public class DebugLevelMessage : Message {
-    var level:ScriptLogLevel
-    
-    public init(_ level:Int) {
-        self.level = ScriptLogLevel(rawValue: level) ?? ScriptLogLevel.None
-        super.init("debug-level")
-    }
-}
-
-public class PauseMessage : Message {
-    var seconds:Double = 0
-    
-    public init(_ seconds:Double) {
-        self.seconds = seconds
-        super.init("pause")
-    }
-}
-
-public class PutMessage : Message {
-    var message:String
-    
-    public override init(_ message:String) {
-        self.message = message
-        super.init("put")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.message)";
-    }
-}
-
-public class EchoMessage : Message {
-    var message:String
-    
-    public override init(_ message:String) {
-        self.message = message
-        super.init("echo")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.message)";
-    }
-}
-
-public class LabelMessage : Message {
-    var label:String
-    
-    public override init(_ label:String) {
-        self.label = label
-        super.init("label")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.label)";
-    }
-}
-
-public class GotoMessage : Message {
-    var label:String
-    
-    public override init(_ label:String) {
-        self.label = label
-        super.init("goto")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.label)";
-    }
-}
-
-public class VarMessage : Message {
-    var identifier:String
-    var value:String
-    
-    public init(_ identifier:String, _ value:String) {
-        self.identifier = identifier
-        self.value = value
-        super.init("var")
-    }
-    
-    public override var description : String {
-        return "\(self.name) - \(self.identifier):\(self.value)";
-    }
-}
-
 @objc
 public protocol INotifyMessage {
     func notify(message:TextTag)
@@ -233,6 +112,8 @@ public class Script : BaseOp, IScript {
     
     private var nextAfterUnpause = false
     private var nextAfterRoundtime = false
+    private var matchStack:[IMatch]
+    private var matchwait:MatchwaitMessage?
     
     let tokenToMessage = TokenToMessage()
     var currentLine:Int?
@@ -242,6 +123,7 @@ public class Script : BaseOp, IScript {
         self.scriptName = scriptName
         self.notifier = notifier
         self.actor = actor
+        self.matchStack = []
     }
     
     public override func main () {
@@ -279,6 +161,36 @@ public class Script : BaseOp, IScript {
         
         if self.nextAfterRoundtime {
             self.doNextAfterRoundtime(nodes)
+        }
+        
+        self.matches(text)
+    }
+    
+    private func matches(text:String) {
+        if let wait = self.matchwait {
+            for match in self.matchStack {
+                if match.isMatch(text) {
+                    self.notify(TextTag(with: "match \(match.label)\n", mono: true))
+                    self.gotoLabel(match.label, params:[])
+                    
+                    self.matchStack.removeAll()
+                    self.matchwait = nil
+                    
+                    self.moveNext()
+                }
+            }
+        }
+    }
+    
+    private func gotoLabel(label:String, params:[String]) {
+        if !self.context!.gotoLabel(label) {
+            
+            var tag = TextTag(with: "label \(label) not found\n", mono: true)
+            
+            tag.color = "#efefef"
+            tag.backgroundColor = "#ff3300"
+            
+            self.notify(tag)
         }
     }
     
@@ -369,6 +281,14 @@ public class Script : BaseOp, IScript {
                 self.moveNext()
             }
         }
+        else if let match = msg as? IMatch {
+            self.matchStack.append(match)
+            self.moveNext()
+        }
+        else if let matchwait = msg as? MatchwaitMessage {
+            self.notify(TextTag(with: "matchwait\n", mono: true))
+            self.matchwait = matchwait
+        }
         else if let pauseMsg = msg as? PauseMessage {
             self.actor.addOperation(PauseOp(self, seconds: pauseMsg.seconds))
         }
@@ -379,24 +299,24 @@ public class Script : BaseOp, IScript {
         }
         else if let putMsg = msg as? PutMessage {
             
-            self.notify(TextTag(with: "put: \(putMsg.message)\n", mono: true))
+            self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true))
             self.sendCommand(putMsg.message)
             self.moveNext()
         }
         else if let echoMsg = msg as? EchoMessage {
             
-            self.notify(TextTag(with: "echo: \(echoMsg.message)\n", mono: true))
+            self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true))
             self.sendEcho(echoMsg.message)
             
             self.moveNext()
         }
         else if let labelMsg = msg as? LabelMessage {
-            self.notify(TextTag(with: "passing label: \(labelMsg.label)\n", mono: true))
+            self.notify(TextTag(with: "passing label \(labelMsg.label)\n", mono: true))
             self.moveNext()
         }
         else if let gotoMsg = msg as? GotoMessage {
-            self.notify(TextTag(with: "goto label: \(gotoMsg.label)\n", mono: true))
-            self.context?.gotoLabel(gotoMsg.label)
+            self.notify(TextTag(with: "goto label \(gotoMsg.label)\n", mono: true))
+            self.gotoLabel(gotoMsg.label, params:[])
             self.moveNext()
         }
         else if let varMsg = msg as? VarMessage {
@@ -473,7 +393,7 @@ public class TokenToMessage {
             switch cmd.name {
                 
             case "echo":
-                msg = EchoMessage(cmd.bodyText())
+                msg = EchoMessage(context.simplifyEach(cmd.body))
                 
             case "goto":
                 msg = GotoMessage(context.simplifyEach(cmd.body))
@@ -483,7 +403,7 @@ public class TokenToMessage {
                 
             case "pause":
                 var lengthStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                msg = PauseMessage(lengthStr.toDouble()!)
+                msg = PauseMessage(lengthStr.toDouble() ?? 1)
                 
             case "debuglevel":
                 var levelStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
@@ -497,6 +417,25 @@ public class TokenToMessage {
                 var value = " ".join(txt)
                 
                 msg = VarMessage(identifier, value)
+
+            case "matchwait":
+                var timeoutStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                msg = MatchwaitMessage(timeoutStr.toDouble())
+
+            case "matchre":
+                var txt = cmd.bodyText().componentsSeparatedByString(" ")
+                
+                var label = txt.removeAtIndex(0)
+                var value = " ".join(txt)
+                msg = MatchReMessage(label, value)
+                
+            case "match":
+                var txt = cmd.bodyText().componentsSeparatedByString(" ")
+                
+                var label = txt.removeAtIndex(0)
+                var value = " ".join(txt)
+                
+                msg = MatchMessage(label, value)
                 
             default:
                 msg = UnknownMessage(token.description)

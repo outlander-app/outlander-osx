@@ -38,6 +38,10 @@ class ScriptRunner {
         NSNotificationCenter
             .defaultCenter()
             .addObserver(self, selector:Selector("stream:"), name: "ol:game-stream", object: nil)
+        
+        NSNotificationCenter
+            .defaultCenter()
+            .addObserver(self, selector:Selector("parse:"), name: "ol:game-parse", object: nil)
     }
     
     func start(notification: NSNotification) {
@@ -103,6 +107,19 @@ class ScriptRunner {
             for (index, q) in enumerate(self.thread.queue.operations) {
                 if let script = q as? IScript {
                     script.stream(text, nodes: nodes)
+                    break
+                }
+            }
+        }
+    }
+    
+    func parse(notification: NSNotification) {
+        if let dict = notification.userInfo as? [String:String] {
+            var text = dict["text"] ?? ""
+            
+            for (index, q) in enumerate(self.thread.queue.operations) {
+                if let script = q as? IScript {
+                    script.stream(text, nodes: [])
                     break
                 }
             }

@@ -125,6 +125,7 @@
          [_mainSubject sendNext:tags];
          
          NSString *rawText = [self textForTagList:tags];
+         NSLog(@"-->%@", rawText);
          [_roomChangeHandler handle:nodes text: rawText context:_gameContext];
          [_scriptStreamHandler handle:nodes text: rawText context:_gameContext];
          

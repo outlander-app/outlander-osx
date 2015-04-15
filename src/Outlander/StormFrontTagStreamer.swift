@@ -64,8 +64,8 @@ public class StormFrontTagStreamer {
         tags = []
     }
     
-    public func stream(nodes:Array<Node>) -> Array<TextTag> {
-        return nodes
+    public func stream(nodes:[Node]) -> [TextTag] {
+        var tags:[TextTag] = nodes
             .map {
                 self.processNode($0)
                 
@@ -75,6 +75,24 @@ public class StormFrontTagStreamer {
             }
             .filter { $0 != nil }
             .map { $0! }
+        
+        return tags
+        
+//        var newTags = [TextTag]
+//        
+//        var tag = TextTag()
+//        tag.text = ""
+//        
+//        for t in tags {
+//            tag.text = tag.text + t.text
+//            tag.color = t.color ?? tag.color
+//            tag.backgroundColor = t.backgroundColor ?? tag.backgroundColor
+//            tag.mono = tag.mono || t.mono
+//            tag.bold = tag.bold || t.bold
+//            tag.targetWindow = t.targetWindow ?? tag.targetWindow
+//        }
+//        
+//        return [tag]
     }
     
     public func streamSingle(node:Node) -> Array<TextTag> {
@@ -175,7 +193,7 @@ public class StormFrontTagStreamer {
             
         default:
             // do nothing
-            if 1 > 2 {}
+            return
         }
     }
     

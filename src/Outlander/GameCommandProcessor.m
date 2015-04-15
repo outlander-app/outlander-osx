@@ -50,6 +50,7 @@
     [_handlers addObject:[[SendCommandHandler alloc] init]];
     [_handlers addObject:[MapperCommandHandler newInstance]];
     [_handlers addObject:[MapperGotoCommandHandler newInstance]];
+    [_handlers addObject:[ParseCommandHandler newInstance]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)

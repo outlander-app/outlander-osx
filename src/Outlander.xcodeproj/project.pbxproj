@@ -294,6 +294,10 @@
 		F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */; };
 		F9B2C7B11ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
 		F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
+		F9B2C7B41ADDBB2800B7E81A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B31ADDBB2800B7E81A /* Messages.swift */; };
+		F9B2C7B51ADDBB2800B7E81A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B31ADDBB2800B7E81A /* Messages.swift */; };
+		F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
+		F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
 		F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
 		F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
 		F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
@@ -666,6 +670,8 @@
 		F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VitalsViewController.m; sourceTree = "<group>"; };
 		F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VitalsViewController.xib; sourceTree = "<group>"; };
 		F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptStreamHandler.swift; sourceTree = "<group>"; };
+		F9B2C7B31ADDBB2800B7E81A /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseCommandHandler.swift; sourceTree = "<group>"; };
 		F9B3AC5F194046E400C081C4 /* LabelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelToken.h; sourceTree = "<group>"; };
 		F9B3AC60194046E400C081C4 /* LabelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelToken.m; sourceTree = "<group>"; };
 		F9B3AC63194058EE00C081C4 /* AssignmentToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignmentToken.h; sourceTree = "<group>"; };
@@ -800,6 +806,7 @@
 				F9316D211AD9E1D400880149 /* Actor.swift */,
 				F9316D281AD9E65000880149 /* ScriptRunner.swift */,
 				F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */,
+				F9B2C7B31ADDBB2800B7E81A /* Messages.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -891,6 +898,7 @@
 				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
 				F91A39AB194BD706006144F8 /* OLPauseCondition.m */,
+				F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */,
 				F96ECDBC1934585400787CB9 /* ScriptCommandHandler.h */,
 				F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */,
 				F96ECDC119345CAA00787CB9 /* ScriptHandler.h */,
@@ -1666,6 +1674,8 @@
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
 				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
+				F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
+				F9B2C7B41ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
 				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
@@ -1736,6 +1746,7 @@
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
+				F9B2C7B51ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
@@ -1826,6 +1837,7 @@
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
+				F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
 				F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */,
