@@ -113,7 +113,7 @@ public class ScriptTokenizer : Tokenizer {
         self.branch(
             OKStandard.whiteSpaces,
             Keywords(
-                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
+                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -155,9 +155,9 @@ public class OutlanderScriptParser : StackParser {
     var ifStack = [BranchToken]()
     
     var lineCommandStack = [String]()
-    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "pause", "put", "setvariable", "var", "waitfor", "waitforre"]
+    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "setvariable", "var", "waitfor", "waitforre"]
     
-    var validLabelTokens = ["globalvar", "variable", "localvar", "word"]
+    var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "punct"]
     
     public func parseString(string:String) -> Array<Token> {
         var str = string
@@ -205,7 +205,7 @@ public class OutlanderScriptParser : StackParser {
             else if(token.characters == "then") {
                 endIf()
             }
-            else if contains(lineCommands, token.characters) {
+            else if lineCommandStack.count == 0 && contains(lineCommands, token.characters) {
                 pushToken(CommandToken(token.characters, token.originalStringIndex!, token.originalStringLine!))
                 lineCommandStack.append(token.characters)
             }
@@ -275,14 +275,23 @@ public class OutlanderScriptParser : StackParser {
     }
     
     func createLabel(token:Token) {
-        if let topToken = topToken() {
-            if !contains(validLabelTokens, topToken.name) {
-                errors.append("No matching label name. (\(token.originalStringIndex),\(lineNumber))")
-            } else {
-                let popped = popToken()!
-                let labelToken = LabelToken(popped.characters, token.originalStringIndex!, token.originalStringLine!)
-                pushToken(labelToken)
-            }
+        var idx = -1
+        var line = -1
+        var chars = ""
+        
+        while topToken() != nil
+            && topToken()!.originalStringLine == token.originalStringLine
+            && contains(validLabelTokens, topToken()!.name) {
+                
+            let popped = popToken()!
+            idx = popped.originalStringIndex!
+            line = token.originalStringLine!
+            chars = popped.characters + chars
+        }
+        
+        if count(chars) > 0 {
+            let labelToken = LabelToken(chars, idx, line)
+            pushToken(labelToken)
         } else {
             errors.append("No matching label name. (\(token.originalStringIndex),\(lineNumber))")
         }
@@ -596,9 +605,12 @@ public class ExpressionEvaluator : StackParser {
 public class SimpleVarReplacer {
     public func eval(key:String, vars:Dictionary<String, String>) -> String {
         var result = key
-        var checkKey = key.substringFromIndex(advance(key.startIndex, 1))
-        if let val = vars[checkKey] {
-            result = val
+        
+        if count(key) > 1 {
+            var checkKey = key.substringFromIndex(advance(key.startIndex, 1))
+            if let val = vars[checkKey] {
+                result = val
+            }
         }
         return result
     }

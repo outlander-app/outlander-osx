@@ -173,7 +173,7 @@
 }
 
 - (TextTag *)scriptTag:(TextTag *)tag {
-    NSString *lines = tag.scriptLine > -1 ? [NSString stringWithFormat:@"%d", tag.scriptLine] : @"";
+    NSString *lines = tag.scriptLine > -1 ? [NSString stringWithFormat:@"%d", tag.scriptLine + 1] : @"";
     NSString *str = [NSString stringWithFormat:@"[%@](%@): ", tag.scriptName, lines];
     
     TextTag *newTag = [TextTag tagFor:str mono: YES];

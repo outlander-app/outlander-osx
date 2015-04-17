@@ -56,6 +56,7 @@ public protocol IScript : IAcceptMessage {
     func vars()
     func notify(message: TextTag)
     func stream(text:String, nodes:[Node])
+    func moveNext()
 }
 
 public protocol Actor {
@@ -115,6 +116,8 @@ public class Script : BaseOp, IScript {
     private var matchStack:[IMatch]
     private var matchwait:MatchwaitMessage?
     
+    private var reactToStream:[IWantStreamInfo]
+    
     let tokenToMessage = TokenToMessage()
     var currentLine:Int?
     var currentColumn:Int?
@@ -124,6 +127,7 @@ public class Script : BaseOp, IScript {
         self.notifier = notifier
         self.actor = actor
         self.matchStack = []
+        self.reactToStream = []
     }
     
     public override func main () {
@@ -164,14 +168,35 @@ public class Script : BaseOp, IScript {
         }
         
         self.matches(text)
+        
+        var handlers = self.reactToStream.filter { x in
+            var res = x.stream(text, nodes: nodes)
+            switch res {
+            case .Match(let x):
+                return true
+            default:
+                return false
+            }
+        }
+        
+        handlers.forEach { handler in
+            var idx = self.reactToStream.find { $0.id == handler.id  }
+            self.reactToStream.removeAtIndex(idx!)
+            handler.execute(self)
+        }
+    }
+    
+    private func addStreamWatcher(watcher:IWantStreamInfo) {
+        self.reactToStream.append(watcher)
     }
     
     private func matches(text:String) {
         if let wait = self.matchwait {
             for match in self.matchStack {
                 if match.isMatch(text) {
-                    self.notify(TextTag(with: "match \(match.label)\n", mono: true))
-                    self.gotoLabel(match.label, params:[])
+                    var label = self.context!.simplify(match.label)
+                    self.notify(TextTag(with: "match \(label)\n", mono: true))
+                    self.gotoLabel(label, params:match.groups, previousLine:-1)
                     
                     self.matchStack.removeAll()
                     self.matchwait = nil
@@ -182,8 +207,8 @@ public class Script : BaseOp, IScript {
         }
     }
     
-    private func gotoLabel(label:String, params:[String]) {
-        if !self.context!.gotoLabel(label) {
+    private func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) {
+        if !self.context!.gotoLabel(label, params: params, previousLine:previousLine, isGosub: isGosub) {
             
             var tag = TextTag(with: "label \(label) not found\n", mono: true)
             
@@ -191,6 +216,22 @@ public class Script : BaseOp, IScript {
             tag.backgroundColor = "#ff3300"
             
             self.notify(tag)
+        }
+    }
+    
+    private func gosubReturn() {
+        if let ctx = self.context!.popGosub() {
+            var tag = TextTag(with: "returning to line \(ctx.returnLine + 1)\n", mono: true)
+            self.notify(tag)
+            self.moveNext()
+        } else {
+            var tag = TextTag(with: "no gosub to return to!\n", mono: true)
+            
+            tag.color = "#efefef"
+            tag.backgroundColor = "#ff3300"
+            
+            self.notify(tag)
+            self.cancel()
         }
     }
     
@@ -217,6 +258,7 @@ public class Script : BaseOp, IScript {
         let tokens = parser.parseString(script)
         
         self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
+        self.context!.marker.currentIdx = -1
         self.moveNext()
     }
     
@@ -294,7 +336,7 @@ public class Script : BaseOp, IScript {
         }
         else if let debugMsg = msg as? DebugLevelMessage {
             self.logLevel = debugMsg.level
-            self.notify(TextTag(with: "debuglevel \(debugMsg.level)\n", mono: true))
+            self.notify(TextTag(with: "debuglevel \(debugMsg.level.rawValue)\n", mono: true))
             self.moveNext()
         }
         else if let putMsg = msg as? PutMessage {
@@ -315,14 +357,56 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let gotoMsg = msg as? GotoMessage {
-            self.notify(TextTag(with: "goto label \(gotoMsg.label)\n", mono: true))
-            self.gotoLabel(gotoMsg.label, params:[])
+            var params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
+            self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true))
+            self.gotoLabel(gotoMsg.label, params:gotoMsg.params, previousLine: self.currentLine!)
             self.moveNext()
         }
-        else if let varMsg = msg as? VarMessage {
-            self.context?.setVariable(varMsg.identifier, value: varMsg.value)
-            self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(varMsg.value)\n", mono: true))
+        else if let gosubMsg = msg as? GosubMessage {
+            var params = gosubMsg.params.count > 0 ? gosubMsg.params[0] : ""
+            self.notify(TextTag(with: "gosub \(gosubMsg.label) \(params)\n", mono: true))
+            self.gotoLabel(gosubMsg.label, params:gosubMsg.params, previousLine: self.currentLine!, isGosub:true)
             self.moveNext()
+        }
+        else if let returnMsg = msg as? ReturnMessage {
+            self.gosubReturn()
+        }
+        else if let varMsg = msg as? VarMessage {
+            var res = self.context!.simplify(varMsg.value)
+            self.context?.setVariable(varMsg.identifier, value: res)
+            self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true))
+            self.moveNext()
+        }
+        else if let waitForMsg = msg as? WaitforMessage {
+            self.notify(TextTag(with: "waitfor \(waitForMsg.pattern)\n", mono: true))
+            self.addStreamWatcher( WaitforOp(waitForMsg.pattern) )
+        }
+        else if let waitForMsg = msg as? WaitforReMessage {
+            self.notify(TextTag(with: "waitforre \(waitForMsg.pattern)\n", mono: true))
+            self.addStreamWatcher( WaitforReOp(waitForMsg.pattern) )
+        }
+        else if let moveMsg = msg as? MoveMessage {
+            self.addStreamWatcher( MoveOp() )
+            
+            self.notify(TextTag(with: "move \(moveMsg.direction)\n", mono: true))
+            self.sendCommand(moveMsg.direction)
+        }
+        else if let moveMsg = msg as? NextRoomMessage {
+            self.addStreamWatcher( NextRoomOp() )
+            self.notify(TextTag(with: "nextroom\n", mono: true))
+        }
+        else if let shiftMsg = msg as? ShiftMessage {
+            var res = self.context!.shiftParamVars()
+            if res {
+                self.notify(TextTag(with: "shift\n", mono: true))
+                self.moveNext()
+            } else {
+                let txtMsg = TextTag(with: "no more params to shift!\n", mono: true)
+                txtMsg.color = "#efefef"
+                txtMsg.backgroundColor = "#ff3300"
+                self.notify(txtMsg)
+                self.cancel()
+            }
         }
         else if let unkownMsg = msg as? UnknownMessage {
             let txtMsg = TextTag(with: "unkown command: \(unkownMsg.description)\n", mono: true)
@@ -393,20 +477,36 @@ public class TokenToMessage {
             switch cmd.name {
                 
             case "echo":
-                msg = EchoMessage(context.simplifyEach(cmd.body))
+                msg = EchoMessage(
+                    context
+                        .simplifyEach(cmd.body)
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                )
                 
             case "goto":
-                msg = GotoMessage(context.simplifyEach(cmd.body))
+                var args = context.simplifyEach(cmd.body)
+                    .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    .componentsSeparatedByString(" ")
+                
+                var label = args.removeAtIndex(0)
+                var allArgs = " ".join(args)
+                args.insert(allArgs, atIndex: 0)
+                
+                msg = GotoMessage(label, args)
                 
             case "put":
-                msg = PutMessage(context.simplifyEach(cmd.body))
+                msg = PutMessage(
+                    context
+                        .simplifyEach(cmd.body)
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                )
                 
             case "pause":
-                var lengthStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                var lengthStr = cmd.bodyText()
                 msg = PauseMessage(lengthStr.toDouble() ?? 1)
                 
             case "debuglevel":
-                var levelStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                var levelStr = cmd.bodyText()
                 msg = DebugLevelMessage(levelStr.toInt()!)
                 
             case "var", "setvariable":
@@ -419,7 +519,7 @@ public class TokenToMessage {
                 msg = VarMessage(identifier, value)
 
             case "matchwait":
-                var timeoutStr = cmd.bodyText().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                var timeoutStr = cmd.bodyText()
                 msg = MatchwaitMessage(timeoutStr.toDouble())
 
             case "matchre":
@@ -436,6 +536,36 @@ public class TokenToMessage {
                 var value = " ".join(txt)
                 
                 msg = MatchMessage(label, value)
+                
+            case "waitforre":
+                msg = WaitforReMessage(cmd.bodyText())
+                
+            case "waitfor":
+                msg = WaitforMessage(cmd.bodyText())
+                
+            case "gosub":
+                var args = context.simplifyEach(cmd.body)
+                    .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    .componentsSeparatedByString(" ")
+                
+                var label = args.removeAtIndex(0)
+                var allArgs = " ".join(args)
+                args.insert(allArgs, atIndex: 0)
+                
+                msg = GosubMessage(label, args)
+            
+            case "return":
+                msg = ReturnMessage()
+                
+            case "nextroom":
+                msg = NextRoomMessage()
+                
+            case "move":
+                var direction = context.simplifyEach(cmd.body)
+                msg = MoveMessage(direction.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
+                
+            case "shift":
+                msg = ShiftMessage()
                 
             default:
                 msg = UnknownMessage(token.description)
@@ -476,6 +606,116 @@ private func after(seconds:Double, complete:()->Void) {
         dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
             
         complete()
+    }
+}
+
+public protocol IWantStreamInfo {
+    
+    var id:String {get set}
+    
+    func stream(text:String, nodes:[Node]) -> CheckStreamResult
+    func execute(script:IScript)
+}
+
+public class MoveOp : IWantStreamInfo {
+    
+    public var id = ""
+    
+    public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
+        for node in nodes {
+            
+            if node.name == "compass" {
+                return CheckStreamResult.Match(result: "")
+            }
+        }
+        
+        return CheckStreamResult.None
+    }
+    
+    public func execute(script:IScript) {
+        script.moveNext()
+    }
+}
+
+public class NextRoomOp : IWantStreamInfo {
+    
+    public var id = ""
+    
+    public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
+        
+        for node in nodes {
+            
+            if node.name == "compass" {
+                return CheckStreamResult.Match(result: "")
+            }
+        }
+        
+        return CheckStreamResult.None
+    }
+    
+    public func execute(script:IScript) {
+        script.moveNext()
+    }
+}
+
+public class WaitforOp : IWantStreamInfo {
+    
+    public var id = ""
+    var target:String
+    
+    public init(_ target:String) {
+        self.id = NSUUID().UUIDString
+        self.target = target
+    }
+    
+    public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
+        return text.rangeOfString(self.target) != nil ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+    }
+    
+    public func execute(script:IScript) {
+        script.moveNext()
+    }
+}
+
+public class WaitforReOp : IWantStreamInfo {
+
+    public var id = ""
+    var pattern:String
+    
+    public init(_ pattern:String) {
+        self.id = NSUUID().UUIDString
+        self.pattern = pattern
+    }
+    
+    public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
+        var groups = text[self.pattern].groups()
+        return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+    }
+    
+    public func execute(script:IScript) {
+        script.moveNext()
+    }
+}
+
+public enum CheckStreamResult {
+    case None
+    case Match(result:String)
+}
+
+extension Array {
+    func forEach(doThis: (element: T) -> Void) {
+        for e in self {
+            doThis(element: e)
+        }
+    }
+    
+    func find(includedElement: T -> Bool) -> Int? {
+        for (idx, element) in enumerate(self) {
+            if includedElement(element) {
+                return idx
+            }
+        }
+        return nil
     }
 }
 

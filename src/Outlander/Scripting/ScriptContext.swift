@@ -30,14 +30,27 @@ public class Stack<T>
     }
 }
 
+public struct GosubContext {
+    var label:LabelToken
+    var labelIndex:Int
+    var returnLine:Int
+    var returnIndex:Int
+    var params:[String]
+    var vars:[String:String]
+}
+
 public class ScriptContext {
     var tree:[Token]
     var marker:TokenSequence
     var results:Array<Token>
     var current:GeneratorOf<Token>
+    var gosubContext:GosubContext?
+    var gosubStack:Stack<GosubContext>
     
     private let varReplacer:SimpleVarReplacer
     private var variables:[String:String] = [:]
+    private var params:[String]
+    private var paramVars:[String:String] = [:]
     
     private var globalVars:(()->[String:String])?
     
@@ -49,11 +62,41 @@ public class ScriptContext {
         self.results = Array<Token>()
         self.varReplacer = SimpleVarReplacer()
         self.globalVars = globalVars
+        self.gosubStack = Stack<GosubContext>()
+       
+        self.params = params
+        self.updateParamVars()
+    }
+    
+    public func shiftParamVars() -> Bool {
+        var res = false
         
-        variables["0"] = " ".join(params)
+        if let first = self.params.first {
+            self.params.removeAtIndex(0)
+            self.updateParamVars()
+            res = true
+        }
         
-        for (index, param) in enumerate(params) {
-            variables["\(index+1)"] = param
+        return res
+    }
+    
+    private func updateParamVars() {
+        self.paramVars = [:]
+        
+        var all = ""
+        
+        for param in self.params {
+            if param.rangeOfString(" ") != nil {
+                all += " \"\(param)\""
+            } else {
+                all += " \(param)"
+            }
+        }
+        
+        self.paramVars["0"] = all
+        
+        for (index, param) in enumerate(self.params) {
+            self.paramVars["\(index+1)"] = param
         }
     }
     
@@ -69,7 +112,8 @@ public class ScriptContext {
         self.variables[identifier] = value
     }
     
-    public func gotoLabel(label:String) -> Bool {
+    public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
+        var returnIdx = self.marker.currentIdx
         self.marker.currentIdx = -1
         var found = false
         
@@ -77,14 +121,48 @@ public class ScriptContext {
         
         while let token = self.current.next() {
             if let labelToken = token as? LabelToken where labelToken.characters == trimmed {
-                //println("Found: \(labelToken.characters) at \(self.marker.currentIdx)")
                 found = true
+                
+                if params.count > 0 || isGosub {
+                    
+                    var gosub = GosubContext(
+                        label: labelToken,
+                        labelIndex: self.marker.currentIdx,
+                        returnLine: previousLine,
+                        returnIndex:returnIdx,
+                        params: params,
+                        vars: [:])
+                    
+                    for (index, param) in enumerate(params) {
+                        gosub.vars["\(index)"] = param
+                    }
+                    
+                    if isGosub && self.gosubContext != nil {
+                        self.gosubStack.push(self.gosubContext!)
+                    }
+                    
+                    self.gosubContext = gosub
+                    
+                    if isGosub {
+                        self.gosubStack.push(gosub)
+                    }
+                }
+                
                 break
             }
         }
         
         self.marker.currentIdx -= 1
         return found
+    }
+    
+    public func popGosub() -> GosubContext? {
+        if self.gosubStack.hasItems() {
+            var last = self.gosubStack.pop()
+            self.marker.currentIdx = last.returnIndex
+            return last
+        }
+        return nil
     }
     
     public func roundtime() -> Double? {
@@ -115,8 +193,11 @@ public class ScriptContext {
     }
     
     private func evalIf(token:BranchToken) -> Bool {
-        // TODO: handle if_1
-        // token.argumentCheck
+        if let count = token.argumentCheck {
+            let result = self.params.count >= count
+            token.lastResult = "\(self.params.count) >= \(count) = \(result)"
+            return result
+        }
         
         var evaluator = ExpressionEvaluator()
         var (result, info) = evaluator.eval(token.expression, self.simplify)
@@ -127,8 +208,13 @@ public class ScriptContext {
     public func simplify(data:String) -> String {
         var text = data
         
+        if let gosub = self.gosubContext where gosub.vars.count > 0 && text.hasPrefix("$") {
+            text = varReplacer.eval(text, vars: gosub.vars)
+        }
+        
         if text.hasPrefix("%") {
             text = varReplacer.eval(text, vars: self.variables)
+            text = varReplacer.eval(text, vars: self.paramVars)
         }
         
         if text.hasPrefix("$") && self.globalVars != nil {

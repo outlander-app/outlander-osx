@@ -103,9 +103,11 @@ public class LabelMessage : Message {
 
 public class GotoMessage : Message {
     var label:String
+    var params:[String]
     
-    public override init(_ label:String) {
+    public init(_ label:String, _ params:[String]) {
         self.label = label
+        self.params = params
         super.init("goto")
     }
     
@@ -132,6 +134,7 @@ public class VarMessage : Message {
 public protocol IMatch {
     var value:String {get}
     var label:String {get}
+    var groups:[String] {get}
     
     func isMatch(text:String) -> Bool
 }
@@ -139,10 +142,12 @@ public protocol IMatch {
 public class MatchMessage : Message, IMatch {
     public var value:String
     public var label:String
+    public var groups:[String]
     
     public init(_ label:String, _ value:String) {
         self.label = label
         self.value = value
+        self.groups = []
         super.init("match")
     }
     
@@ -158,15 +163,18 @@ public class MatchMessage : Message, IMatch {
 public class MatchReMessage : Message, IMatch {
     public var value:String
     public var label:String
+    public var groups:[String]
     
     public init(_ label:String, _ value:String) {
         self.label = label
         self.value = value
+        self.groups = []
         super.init("match")
     }
     
     public func isMatch(text:String) -> Bool {
-        return false
+        self.groups = text[value].groups()
+        return self.groups.count > 0
     }
     
     public override var description : String {
@@ -181,5 +189,65 @@ public class MatchwaitMessage : Message {
     public init(_ timeout:Double?) {
         self.timeout = timeout
         super.init("matchwait")
+    }
+}
+
+public class GosubMessage: Message {
+    var label:String
+    var params:[String]
+    
+    public init(_ label:String, _ params:[String]) {
+        self.label = label
+        self.params = params
+        super.init("gosub")
+    }
+    
+    public override var description : String {
+        return "\(self.name) - \(self.label)";
+    }
+}
+
+public class ReturnMessage : Message {
+    public init() {
+        super.init("return")
+    }
+}
+
+public class MoveMessage : Message {
+    var direction:String
+    
+    override public init(_ direction:String) {
+        self.direction = direction
+        super.init("move")
+    }
+}
+
+public class NextRoomMessage : Message {
+    public init() {
+        super.init("nextroom")
+    }
+}
+
+public class WaitforMessage : Message {
+    var pattern:String
+    
+    override public init(_ pattern:String) {
+        self.pattern = pattern
+        super.init("waitfor")
+    }
+}
+
+public class WaitforReMessage : Message {
+    var pattern:String
+    
+    override public init(_ pattern:String) {
+        self.pattern = pattern
+        super.init("waitforre")
+    }
+}
+
+public class ShiftMessage : Message {
+    public init() {
+        super.init("shift")
     }
 }

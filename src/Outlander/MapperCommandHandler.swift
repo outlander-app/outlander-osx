@@ -121,6 +121,7 @@ class MapperGotoCommandHandler : CommandHandler {
             if count(walk) > 0 {
             
                 self.sendMessage("Map path: \(walk)")
+                self.autoWalk(moves)
             }
         }
     }
@@ -132,5 +133,23 @@ class MapperGotoCommandHandler : CommandHandler {
         tag.text = "[AutoMapper] \(message)\n"
         tag.color = "#00ffff"
         relay.sendEcho(tag)
+    }
+    
+    func autoWalk(moves:[String]) {
+        
+        var walk = ""
+        
+        for move in moves {
+            if move.rangeOfString(" ") != nil {
+                walk += " \"\(move)\""
+            } else {
+                walk += " \(move)"
+            }
+        }
+        
+        let relay = GameCommandRelay()
+        var context = CommandContext()
+        context.command = ".simplemapper " + walk
+        relay.sendCommand(context)
     }
 }

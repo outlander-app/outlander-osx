@@ -73,11 +73,11 @@ public class SwiftRegex: NSObject, BooleanType {
     
     private let noGroup = "_"
     
-    func groupsForMatch(match: NSTextCheckingResult!) -> [String]! {
+    func groupsForMatch(match: NSTextCheckingResult?) -> [String] {
         if match != nil {
             var groups = [String]()
             for groupno in 0...regex.numberOfCaptureGroups {
-                if let group = substring(match.rangeAtIndex(groupno)) {
+                if let group = substring(match!.rangeAtIndex(groupno)) {
                     groups += [group]
                 } else {
                     groups += [noGroup] // avoids bridging problems
@@ -85,7 +85,7 @@ public class SwiftRegex: NSObject, BooleanType {
             }
             return groups
         } else {
-            return nil
+            return []
         }
     }
     

@@ -107,7 +107,6 @@ class ScriptRunner {
             for (index, q) in enumerate(self.thread.queue.operations) {
                 if let script = q as? IScript {
                     script.stream(text, nodes: nodes)
-                    break
                 }
             }
         }
@@ -120,7 +119,6 @@ class ScriptRunner {
             for (index, q) in enumerate(self.thread.queue.operations) {
                 if let script = q as? IScript {
                     script.stream(text, nodes: [])
-                    break
                 }
             }
         }
