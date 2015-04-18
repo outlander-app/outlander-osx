@@ -141,7 +141,11 @@ public class Script : BaseOp, IScript {
             
             self.started = NSDate()
             
-            self.sendMessage(ScriptInfoMessage("Starting \(self.scriptName)\n"))
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "hh:mm a"
+            let formattedDate = dateFormatter.stringFromDate(self.started!)
+            
+            self.sendMessage(ScriptInfoMessage("Starting '\(self.scriptName)' at \(formattedDate)\n"))
             
             while !self.cancelled {
             }
@@ -151,7 +155,7 @@ public class Script : BaseOp, IScript {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
             
-            self.sendMessage(ScriptInfoMessage(String(format: "Script \(self.scriptName) completed after %.02f seconds total run time\n", diff)))
+            self.sendMessage(ScriptInfoMessage(String(format: "Script '\(self.scriptName)' completed after %.02f seconds total run time\n", diff)))
         }
     }
     
@@ -258,24 +262,35 @@ public class Script : BaseOp, IScript {
     }
     
     public func run(script:String, globalVars:(()->[String:String])?, params:[String]) {
-        let parser = OutlanderScriptParser()
-        let tokens = parser.parseString(script)
         
-        if parser.errors.count > 0 {
+        try {
+            let parser = OutlanderScriptParser()
+            let tokens = parser.parseString(script)
             
-            for err in parser.errors {
-                var tag = TextTag(with: "\(err)\n", mono: true)
-                tag.color = "#efefef"
-                tag.backgroundColor = "#ff3300"
-                self.notify(tag)
+            if parser.errors.count > 0 {
+                
+                for err in parser.errors {
+                    var tag = TextTag(with: "\(err)\n", mono: true)
+                    tag.color = "#efefef"
+                    tag.backgroundColor = "#ff3300"
+                    self.notify(tag)
+                }
+                self.cancel()
+                return
             }
-            self.cancel()
-            return
+            
+            self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
+            self.context!.marker.currentIdx = -1
+            self.moveNext()
+            
+        }.catch { e in
+           
+            var tag = TextTag(with: "\(e)\n", mono: true)
+            tag.color = "#efefef"
+            tag.backgroundColor = "#ff3300"
+            self.notify(tag)
         }
         
-        self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
-        self.context!.marker.currentIdx = -1
-        self.moveNext()
     }
     
     public func moveNextAfterRoundtime() {
@@ -331,7 +346,7 @@ public class Script : BaseOp, IScript {
         }
         
         if let opComplete = msg as? OperationComplete {
-            if opComplete.operation == "if" || opComplete.operation == "ifelse" {
+            if opComplete.operation == "if" || opComplete.operation == "elseif" {
                 self.notify(TextTag(with: "\(opComplete.description) - \(opComplete.msg)\n", mono: true), debug:ScriptLogLevel.Method)
             }
             if opComplete.operation == "pause" {
@@ -497,7 +512,7 @@ public class TokenToMessage {
         
         if let branch = token as? BranchToken {
             
-            msg = OperationComplete(branch.name, msg: branch.lastResult ?? "")
+            msg = OperationComplete(branch.name, msg: branch.lastResult?.info ?? "")
             
         }
         else if let label = token as? LabelToken {

@@ -20,6 +20,10 @@
 - (void)awakeFromNib {
     [self configure];
     [self addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+    
+    NSTextView* textField = (NSTextView*) [self currentEditor];
+    if( [textField respondsToSelector: @selector(setInsertionPointColor:)] )
+        [textField setInsertionPointColor: [NSColor whiteColor]];
 }
 
 - (void)configure {

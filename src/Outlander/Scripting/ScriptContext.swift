@@ -48,6 +48,9 @@ public class ScriptContext {
     var gosubContext:GosubContext?
     var gosubStack:Stack<GosubContext>
     
+    private var lastIfResult = false
+    private var lastToken:Token?
+    
     private let varReplacer:SimpleVarReplacer
     private var variables:[String:String] = [:]
     private var params:[String]
@@ -193,6 +196,7 @@ public class ScriptContext {
             evalToken(token)
         }
         
+        self.lastToken = nextToken
         return nextToken
     }
     
@@ -212,14 +216,24 @@ public class ScriptContext {
     private func evalIf(token:BranchToken) -> Bool {
         if let count = token.argumentCheck {
             let result = self.params.count >= count
-            token.lastResult = "\(self.params.count) >= \(count) = \(result)"
+            token.lastResult = ExpressionEvalResult(result:result, info:"\(self.params.count) >= \(count) = \(result)")
             return result
         }
         
-        var evaluator = ExpressionEvaluator()
-        var (result, info) = evaluator.eval(token.expression, self.simplify)
-        token.lastResult = info
-        return result
+        let lastBranchToken = self.lastToken as? BranchToken
+        
+        if token.expression.count > 0 {
+            let evaluator = ExpressionEvaluator()
+            let res = evaluator.eval(token.expression, self.simplify)
+            token.lastResult = res
+            return res.result
+        } else if token.name == "elseif" && lastBranchToken != nil && lastBranchToken!.lastResult?.result == false {
+            token.lastResult = ExpressionEvalResult(result:true, info:"")
+            return true
+        }
+       
+        token.lastResult = ExpressionEvalResult(result:false, info:"false")
+        return false
     }
     
     public func simplify(data:String) -> String {

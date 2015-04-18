@@ -192,6 +192,7 @@
         if(![__CommandTextField hasFocus]) {
         
             NSString *val = [theEvent charactersIgnoringModifiers];
+            val = [val stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@""]];
             
             [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
             [__CommandTextField selectText:self];

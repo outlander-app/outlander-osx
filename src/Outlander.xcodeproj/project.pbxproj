@@ -1021,6 +1021,7 @@
 			children = (
 				F9762F76192E4EEB00B873D7 /* Alias.h */,
 				F9762F77192E4EEB00B873D7 /* Alias.m */,
+				F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */,
 				F97A5C611891F2C400E2C318 /* AuthenticationServer.h */,
 				F97A5C621891F2C400E2C318 /* AuthenticationServer.m */,
 				F96ECDC51934E23A00787CB9 /* CommandContext.h */,
@@ -1068,17 +1069,16 @@
 				F9CB310F1903238B004587A5 /* SkillExp.m */,
 				F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */,
 				F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */,
+				F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */,
 				F97A5C881893AFDF00E2C318 /* TextTag.h */,
 				F97A5C891893AFDF00E2C318 /* TextTag.m */,
+				F90BCF8E1AE17F0000FBD7C4 /* TryCatchFinally.h */,
+				F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */,
+				F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */,
 				F9ACB13E192ECFC3006D3548 /* VariableReplacer.h */,
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
-				F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */,
-				F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */,
-				F90BCF8E1AE17F0000FBD7C4 /* TryCatchFinally.h */,
-				F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */,
-				F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
