@@ -37,6 +37,7 @@ public struct GosubContext {
     var returnIndex:Int
     var params:[String]
     var vars:[String:String]
+    var isGosub:Bool
 }
 
 public class ScriptContext {
@@ -93,11 +94,25 @@ public class ScriptContext {
             }
         }
         
-        self.paramVars["0"] = all
+        self.paramVars["0"] = all.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         for (index, param) in enumerate(self.params) {
             self.paramVars["\(index+1)"] = param
         }
+    }
+    
+    public func varsForDisplay() -> [String] {
+        var vars:[String] = []
+        
+        for (key, value) in self.paramVars {
+            vars.append("\(key): \(value)")
+        }
+        
+        for (key, value) in self.variables {
+            vars.append("\(key): \(value)")
+        }
+        
+        return vars
     }
     
     public func execute() {
@@ -117,10 +132,10 @@ public class ScriptContext {
         self.marker.currentIdx = -1
         var found = false
         
-        var trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        var trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).lowercaseString
         
         while let token = self.current.next() {
-            if let labelToken = token as? LabelToken where labelToken.characters == trimmed {
+            if let labelToken = token as? LabelToken where labelToken.characters.lowercaseString == trimmed {
                 found = true
                 
                 if params.count > 0 || isGosub {
@@ -131,13 +146,14 @@ public class ScriptContext {
                         returnLine: previousLine,
                         returnIndex:returnIdx,
                         params: params,
-                        vars: [:])
+                        vars: [:],
+                        isGosub: isGosub)
                     
                     for (index, param) in enumerate(params) {
                         gosub.vars["\(index)"] = param
                     }
                     
-                    if isGosub && self.gosubContext != nil {
+                    if isGosub && self.gosubContext != nil && self.gosubContext!.isGosub {
                         self.gosubStack.push(self.gosubContext!)
                     }
                     
@@ -160,6 +176,7 @@ public class ScriptContext {
         if self.gosubStack.hasItems() {
             var last = self.gosubStack.pop()
             self.marker.currentIdx = last.returnIndex
+            self.gosubContext = self.gosubStack.lastItem()
             return last
         }
         return nil
@@ -214,7 +231,9 @@ public class ScriptContext {
         
         if text.hasPrefix("%") {
             text = varReplacer.eval(text, vars: self.variables)
-            text = varReplacer.eval(text, vars: self.paramVars)
+            if text.hasPrefix("%") {
+                text = varReplacer.eval(text, vars: self.paramVars)
+            }
         }
         
         if text.hasPrefix("$") && self.globalVars != nil {

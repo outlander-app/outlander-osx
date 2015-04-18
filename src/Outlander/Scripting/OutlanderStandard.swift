@@ -86,6 +86,77 @@ public class CommandToken : Token {
     }
 }
 
+public class FuncToken : Token {
+    
+    public var body = [Token]()
+    
+    public init(_ name:String, _ index:Int, _ lineNumber:Int){
+        super.init(name:name, withCharacters:"", index:index)
+        self.originalStringLine = lineNumber
+    }
+    
+    public func bodyText() -> String {
+    
+        var text = ""
+        
+        for t in body {
+            text += t.characters
+        }
+    
+        return text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+    
+    public override var description : String {
+        if (originalStringIndex != nil && originalStringLine != nil) {
+            return "\(name) '\(self.bodyText())' at \(originalStringLine!),\(originalStringIndex!) "
+        } else if (originalStringIndex != nil) {
+            return "\(name) '\(self.bodyText())' at \(originalStringIndex!)"
+        } else {
+            return "\(name) '\(self.bodyText())'"
+        }
+    }
+}
+
+public class MatchReEvalToken : Token, EvalToken {
+    
+    var token:FuncToken
+    var left:[Token]
+    var right:[Token]
+    
+    public init(_ token:FuncToken) {
+        self.token = token
+        self.left = []
+        self.right = []
+        
+        super.init(name: "matchre-func", withCharacters: "")
+        
+        var appendLeft = true
+        
+        for t in token.body {
+            if t.name == "punct" && t.characters == "," {
+                appendLeft = false
+                continue
+            }
+            
+            if appendLeft {
+                left.append(t)
+            } else {
+                right.append(t)
+            }
+        }
+    }
+    
+    public func eval(simplify: (Array<Token>)->String) -> (Bool, String) {
+        let lh = simplify(left)
+        let rh = simplify(right)
+        
+        var groups = lh[rh].groups()
+        var found = groups.count > 0
+        
+        return (found, "matchre(\(lh), \(rh)) = \(found)")
+    }
+}
+
 public class LabelToken : Token {
     public init(_ withCharacters:String, _ index:Int, _ lineNumber:Int){
         super.init(name:"label", withCharacters:withCharacters, index:index)
@@ -107,13 +178,14 @@ public class OutlanderStandard {
 }
 
 public class ScriptTokenizer : Tokenizer {
+    
     public override init() {
         super.init();
         
         self.branch(
             OKStandard.whiteSpaces,
             Keywords(
-                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
+                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "send", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -138,6 +210,7 @@ public class ScriptTokenizer : Tokenizer {
             Characters(from:"$").branch(
                 OutlanderStandard.word.token("globalvar")
             ),
+            OKStandard.Code.quotedString,
             OKStandard.number,
             OKStandard.word,
             OKStandard.punctuation,
@@ -155,9 +228,12 @@ public class OutlanderScriptParser : StackParser {
     var ifStack = [BranchToken]()
     
     var lineCommandStack = [String]()
-    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "setvariable", "var", "waitfor", "waitforre"]
+    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "send", "setvariable", "var", "waitfor", "waitforre"]
     
     var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "punct"]
+   
+    var funcCommandStack = [String]()
+    var funcCommands = ["matchre"]
     
     public func parseString(string:String) -> Array<Token> {
         var str = string
@@ -220,7 +296,32 @@ public class OutlanderScriptParser : StackParser {
                 pushToken(ifToken)
                 ifStack.append(ifToken)
             }
+            else if token.characters.hasPrefix("#") {
+                createComment(token)
+            }
             else {
+                pushToken(token)
+            }
+        case _ where token.name == "open-paren":
+            if let name = lineCommandStack.last where contains(self.funcCommands, name) {
+                let command = lineCommandStack.removeLast()
+                var tokens = popTo(command)
+                let token = tokens.removeAtIndex(0) as! CommandToken
+                
+                pushToken(FuncToken(token.name, token.originalStringIndex!, token.originalStringLine!))
+                funcCommandStack.append(token.name)
+            } else {
+                pushToken(token)
+            }
+        case _ where token.name == "close-paren":
+            if funcCommandStack.count > 0 {
+                
+                let command = funcCommandStack.removeLast()
+                var tokens = popTo(command)
+                let token = tokens.removeAtIndex(0) as! FuncToken
+                token.body = tokens
+                pushToken(token)
+            } else {
                 pushToken(token)
             }
         case _ where token.name == "open-bracket":
@@ -387,36 +488,36 @@ public class BoolExpressionToken : Token, EvalToken {
         
         if lhNum != nil && rhNum != nil {
             switch characters {
-                case "==", "=":
-                    result = lhNum == rhNum
                 case "!=":
                     result = lhNum != rhNum
-                case ">":
-                    result = lhNum > rhNum
-                case ">=":
-                    result = lhNum >= rhNum
-                case "<":
-                    result = lhNum < rhNum
                 case "<=":
                     result = lhNum <= rhNum
+                case ">=":
+                    result = lhNum >= rhNum
+                case ">":
+                    result = lhNum > rhNum
+                case "<":
+                    result = lhNum < rhNum
+                case "==", "=":
+                    result = lhNum == rhNum
                 default:
                     result = false
             }
             
         } else {
             switch characters {
-                case "==", "=":
-                    result = lh == rh
                 case "!=":
                     result = lh != rh
-                case ">":
-                    result = lh > rh
-                case ">=":
-                    result = lh >= rh
-                case "<":
-                    result = lh < rh
                 case "<=":
                     result = lh <= rh
+                case ">=":
+                    result = lh >= rh
+                case ">":
+                    result = lh > rh
+                case "<":
+                    result = lh < rh
+                case "==", "=":
+                    result = lh == rh
                 default:
                     result = false
             }
@@ -509,6 +610,15 @@ public class ExpressionEvaluator : StackParser {
     
     override public func parse(token: Token) -> Bool {
         
+        if let funcToken = token as? FuncToken {
+            
+            if funcToken.name == "matchre" {
+                pushToken(MatchReEvalToken(funcToken))
+            }
+            
+            return true
+        }
+        
         switch token.name {
         case "whitespace":
             return true
@@ -562,15 +672,21 @@ public class ExpressionEvaluator : StackParser {
     func processEnd() {
         
         var tokens = popTo("bool-expression", includeLast:false)
-        var expr = boolStack.last!
+        if let expr = boolStack.last {
         
-        for t in tokens {
-            expr.right.append(t)
+            for t in tokens {
+                expr.right.append(t)
+            }
+            
+            if(!orStack.isEmpty) {
+                popToken()
+                processOrOperator(expr)
+            }
         }
-        
-        if(!orStack.isEmpty) {
-            popToken()
-            processOrOperator(expr)
+        else {
+            for t in tokens {
+                pushToken(t)
+            }
         }
     }
     

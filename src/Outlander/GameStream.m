@@ -22,6 +22,7 @@
     StormFrontTagStreamer *_tagStreamer;
     ScriptStreamHandler *_scriptStreamHandler;
     RoomChangeHandler *_roomChangeHandler;
+    TDPUpdateHandler *_tdpUpdateHandler;
 }
 
 @end
@@ -40,6 +41,7 @@
     _tagStreamer = [StormFrontTagStreamer newInstance];
     _scriptStreamHandler = [ScriptStreamHandler newInstance];
     _roomChangeHandler = [RoomChangeHandler newInstance];
+    _tdpUpdateHandler = [TDPUpdateHandler newInstance];
     
     _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
         [_gameContext.globalVars setCacheObject:value forKey:key];
@@ -125,9 +127,10 @@
          [_mainSubject sendNext:tags];
          
          NSString *rawText = [self textForTagList:tags];
-         NSLog(@"-->%@", rawText);
-         [_roomChangeHandler handle:nodes text: rawText context:_gameContext];
-         [_scriptStreamHandler handle:nodes text: rawText context:_gameContext];
+         //NSLog(@"-->%@", rawText);
+         [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
+         [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
+         [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
          
      } completed:^{
         [_mainSubject sendCompleted];

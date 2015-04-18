@@ -255,7 +255,8 @@ public class StormFrontTagStreamer {
             tag = emitTag(node)
             tag?.targetWindow = self.streamIdToWindow(lastStreamId)
             let id = node.attr("id")
-            if id == "speech" || id == "whisper" {
+            tag?.preset = id
+            if id == "speech" || id == "whisper" || id == "thought" {
                 tag?.color = "#99FFFF"
             }
             

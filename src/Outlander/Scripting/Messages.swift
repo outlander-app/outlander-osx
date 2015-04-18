@@ -40,7 +40,13 @@ public class OperationComplete : Message {
     }
     
     public override var description : String {
-        return "\(self.name) - \(self.operation)";
+        return "\(self.operation)";
+    }
+}
+
+public class CommentMessage : Message {
+    public init() {
+        super.init("comment")
     }
 }
 
@@ -63,6 +69,19 @@ public class PauseMessage : Message {
 }
 
 public class PutMessage : Message {
+    var message:String
+    
+    public override init(_ message:String) {
+        self.message = message
+        super.init("put")
+    }
+    
+    public override var description : String {
+        return "\(self.name) - \(self.message)";
+    }
+}
+
+public class SendMessage : Message {
     var message:String
     
     public override init(_ message:String) {
@@ -152,7 +171,7 @@ public class MatchMessage : Message, IMatch {
     }
     
     public func isMatch(text:String) -> Bool {
-        return self.value == text
+        return text.rangeOfString(text) != nil
     }
     
     public override var description : String {

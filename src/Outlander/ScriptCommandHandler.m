@@ -23,8 +23,13 @@
         
         NSString *target = commands[1];
         NSString *action = commands[0];
+        NSString *param = @"";
         
-        NSDictionary *dict = @{ @"target": target, @"action": action};
+        if (commands.count > 2) {
+            param = commands[2];
+        }
+        
+        NSDictionary *dict = @{ @"target": target, @"action": action, @"param": param};
         
         [[NSNotificationCenter defaultCenter]
             postNotificationName:@"script"

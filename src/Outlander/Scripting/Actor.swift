@@ -49,12 +49,13 @@ public protocol IAcceptMessage {
 
 public protocol IScript : IAcceptMessage {
     var scriptName:String { get }
+    var logLevel:ScriptLogLevel { get set }
    
     func cancel()
     func pause()
     func resume()
     func vars()
-    func notify(message: TextTag)
+    func notify(message: TextTag, debug:ScriptLogLevel)
     func stream(text:String, nodes:[Node])
     func moveNext()
 }
@@ -99,17 +100,22 @@ public class BaseOp : NSOperation {
 
 public enum ScriptLogLevel : Int {
     case None = 0
+    case One = 1
+    case Two = 2
+    case Three = 3
+    case Four = 4
     case Method = 5
 }
 
 public class Script : BaseOp, IScript {
   
     public var scriptName:String
+    public var logLevel = ScriptLogLevel.None
+    
     var notifier:INotifyMessage
     var actor:Actor
     var context:ScriptContext?
     var started:NSDate?
-    var logLevel = ScriptLogLevel.None
     
     private var nextAfterUnpause = false
     private var nextAfterRoundtime = false
@@ -145,7 +151,7 @@ public class Script : BaseOp, IScript {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
             
-            self.sendMessage(ScriptInfoMessage(String(format: "Script \(self.scriptName) completed - %.02f seconds total run time\n", diff)))
+            self.sendMessage(ScriptInfoMessage(String(format: "Script \(self.scriptName) completed after %.02f seconds total run time\n", diff)))
         }
     }
     
@@ -159,13 +165,21 @@ public class Script : BaseOp, IScript {
     }
     
     public func vars() {
+        if let display = self.context?.varsForDisplay() {
+            
+            let diff = NSDate().timeIntervalSinceDate(self.started!)
+            self.notify(TextTag(with: String(format:"+----- Script Variables (running for %.02f seconds) -----+\n", diff), mono: true))
+            
+            for v in display {
+                var tag = TextTag(with: "|  \(v)\n", mono: true)
+                self.notify(tag)
+            }
+            
+            self.notify(TextTag(with: "+---------------------------------------------------------+\n", mono: true))
+        }
     }
     
     public func stream(text:String, nodes:[Node]) {
-        
-        if self.nextAfterRoundtime {
-            self.doNextAfterRoundtime(nodes)
-        }
         
         self.matches(text)
         
@@ -192,17 +206,25 @@ public class Script : BaseOp, IScript {
     
     private func matches(text:String) {
         if let wait = self.matchwait {
+            
+            var matched = false
+            
             for match in self.matchStack {
                 if match.isMatch(text) {
                     var label = self.context!.simplify(match.label)
-                    self.notify(TextTag(with: "match \(label)\n", mono: true))
-                    self.gotoLabel(label, params:match.groups, previousLine:-1)
+                    self.notify(TextTag(with: "match \(label)\n", mono: true), debug:ScriptLogLevel.Method)
+                    self.gotoLabel(label, params:match.groups, previousLine:-1, isGosub:false)
                     
                     self.matchStack.removeAll()
                     self.matchwait = nil
                     
-                    self.moveNext()
+                    matched = true
+                    break
                 }
+            }
+            
+            if matched {
+                self.moveNextAfterRoundtime()
             }
         }
     }
@@ -222,7 +244,7 @@ public class Script : BaseOp, IScript {
     private func gosubReturn() {
         if let ctx = self.context!.popGosub() {
             var tag = TextTag(with: "returning to line \(ctx.returnLine + 1)\n", mono: true)
-            self.notify(tag)
+            self.notify(tag, debug: ScriptLogLevel.Method)
             self.moveNext()
         } else {
             var tag = TextTag(with: "no gosub to return to!\n", mono: true)
@@ -235,27 +257,21 @@ public class Script : BaseOp, IScript {
         }
     }
     
-    private func doNextAfterRoundtime(nodes:[Node]) {
-        for node in nodes {
-            if node.name == "prompt" {
-                self.nextAfterRoundtime = false
-                if let roundtime = self.context!.roundtime() {
-                    if roundtime > 0 {
-                        after(roundtime) {
-                            self.moveNext()
-                        }
-                        return
-                    }
-                }
-                
-                self.moveNext()
-            }
-        }
-    }
-    
     public func run(script:String, globalVars:(()->[String:String])?, params:[String]) {
         let parser = OutlanderScriptParser()
         let tokens = parser.parseString(script)
+        
+        if parser.errors.count > 0 {
+            
+            for err in parser.errors {
+                var tag = TextTag(with: "\(err)\n", mono: true)
+                tag.color = "#efefef"
+                tag.backgroundColor = "#ff3300"
+                self.notify(tag)
+            }
+            self.cancel()
+            return
+        }
         
         self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
         self.context!.marker.currentIdx = -1
@@ -273,7 +289,7 @@ public class Script : BaseOp, IScript {
             }
         }
         
-        self.nextAfterRoundtime = true
+        self.moveNext()
     }
     
     public func moveNext() {
@@ -315,7 +331,9 @@ public class Script : BaseOp, IScript {
         }
         
         if let opComplete = msg as? OperationComplete {
-            self.notify(TextTag(with: "\(opComplete.description) - \(opComplete.msg)\n", mono: true))
+            if opComplete.operation == "if" || opComplete.operation == "ifelse" {
+                self.notify(TextTag(with: "\(opComplete.description) - \(opComplete.msg)\n", mono: true), debug:ScriptLogLevel.Method)
+            }
             if opComplete.operation == "pause" {
                 self.moveNextAfterRoundtime()
             }
@@ -328,7 +346,7 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let matchwait = msg as? MatchwaitMessage {
-            self.notify(TextTag(with: "matchwait\n", mono: true))
+            self.notify(TextTag(with: "matchwait\n", mono: true), debug:ScriptLogLevel.Method)
             self.matchwait = matchwait
         }
         else if let pauseMsg = msg as? PauseMessage {
@@ -336,35 +354,40 @@ public class Script : BaseOp, IScript {
         }
         else if let debugMsg = msg as? DebugLevelMessage {
             self.logLevel = debugMsg.level
-            self.notify(TextTag(with: "debuglevel \(debugMsg.level.rawValue)\n", mono: true))
+            self.notify(TextTag(with: "debuglevel \(debugMsg.level.rawValue)\n", mono: true), debug:ScriptLogLevel.Method)
             self.moveNext()
         }
         else if let putMsg = msg as? PutMessage {
             
-            self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true))
+            self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true), debug:ScriptLogLevel.Method)
             self.sendCommand(putMsg.message)
+            self.moveNext()
+        }
+        else if let sendMsg = msg as? SendMessage {
+            self.notify(TextTag(with: "send \(sendMsg.message)\n", mono: true), debug:ScriptLogLevel.Method)
+            self.sendCommand("#send \(sendMsg.message)")
             self.moveNext()
         }
         else if let echoMsg = msg as? EchoMessage {
             
-            self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true))
+            self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true), debug:ScriptLogLevel.Method)
             self.sendEcho(echoMsg.message)
             
             self.moveNext()
         }
         else if let labelMsg = msg as? LabelMessage {
-            self.notify(TextTag(with: "passing label \(labelMsg.label)\n", mono: true))
+            self.notify(TextTag(with: "passing label \(labelMsg.label)\n", mono: true), debug:ScriptLogLevel.Method)
             self.moveNext()
         }
         else if let gotoMsg = msg as? GotoMessage {
             var params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
-            self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true))
+            self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Method)
             self.gotoLabel(gotoMsg.label, params:gotoMsg.params, previousLine: self.currentLine!)
             self.moveNext()
         }
         else if let gosubMsg = msg as? GosubMessage {
             var params = gosubMsg.params.count > 0 ? gosubMsg.params[0] : ""
-            self.notify(TextTag(with: "gosub \(gosubMsg.label) \(params)\n", mono: true))
+            self.notify(TextTag(with: "gosub \(gosubMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Method)
             self.gotoLabel(gosubMsg.label, params:gosubMsg.params, previousLine: self.currentLine!, isGosub:true)
             self.moveNext()
         }
@@ -374,31 +397,31 @@ public class Script : BaseOp, IScript {
         else if let varMsg = msg as? VarMessage {
             var res = self.context!.simplify(varMsg.value)
             self.context?.setVariable(varMsg.identifier, value: res)
-            self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true))
+            self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true), debug:ScriptLogLevel.Method)
             self.moveNext()
         }
         else if let waitForMsg = msg as? WaitforMessage {
-            self.notify(TextTag(with: "waitfor \(waitForMsg.pattern)\n", mono: true))
+            self.notify(TextTag(with: "waitfor \(waitForMsg.pattern)\n", mono: true), debug:ScriptLogLevel.Method)
             self.addStreamWatcher( WaitforOp(waitForMsg.pattern) )
         }
         else if let waitForMsg = msg as? WaitforReMessage {
-            self.notify(TextTag(with: "waitforre \(waitForMsg.pattern)\n", mono: true))
+            self.notify(TextTag(with: "waitforre \(waitForMsg.pattern)\n", mono: true), debug:ScriptLogLevel.Method)
             self.addStreamWatcher( WaitforReOp(waitForMsg.pattern) )
         }
         else if let moveMsg = msg as? MoveMessage {
             self.addStreamWatcher( MoveOp() )
             
-            self.notify(TextTag(with: "move \(moveMsg.direction)\n", mono: true))
+            self.notify(TextTag(with: "move \(moveMsg.direction)\n", mono: true), debug:ScriptLogLevel.Method)
             self.sendCommand(moveMsg.direction)
         }
         else if let moveMsg = msg as? NextRoomMessage {
             self.addStreamWatcher( NextRoomOp() )
-            self.notify(TextTag(with: "nextroom\n", mono: true))
+            self.notify(TextTag(with: "nextroom\n", mono: true), debug:ScriptLogLevel.Method)
         }
         else if let shiftMsg = msg as? ShiftMessage {
             var res = self.context!.shiftParamVars()
             if res {
-                self.notify(TextTag(with: "shift\n", mono: true))
+                self.notify(TextTag(with: "shift\n", mono: true), debug:ScriptLogLevel.Method)
                 self.moveNext()
             } else {
                 let txtMsg = TextTag(with: "no more params to shift!\n", mono: true)
@@ -407,6 +430,9 @@ public class Script : BaseOp, IScript {
                 self.notify(txtMsg)
                 self.cancel()
             }
+        }
+        else if let commentMsg = msg as? CommentMessage {
+            self.moveNext()
         }
         else if let unkownMsg = msg as? UnknownMessage {
             let txtMsg = TextTag(with: "unkown command: \(unkownMsg.description)\n", mono: true)
@@ -426,7 +452,11 @@ public class Script : BaseOp, IScript {
         }
     }
     
-    public func notify(message: TextTag) {
+    public func notify(message: TextTag, debug:ScriptLogLevel = ScriptLogLevel.None) {
+        
+        if self.logLevel.rawValue < debug.rawValue {
+            return
+        }
         
         message.scriptName = self.scriptName
         
@@ -436,6 +466,8 @@ public class Script : BaseOp, IScript {
         if message.color == nil {
             message.color = "#0066cc"
         }
+        
+        message.preset = "scriptinput"
         
         self.notifier.notify(message)
     }
@@ -465,7 +497,7 @@ public class TokenToMessage {
         
         if let branch = token as? BranchToken {
             
-            msg = OperationComplete("branch", msg: branch.lastResult ?? "")
+            msg = OperationComplete(branch.name, msg: branch.lastResult ?? "")
             
         }
         else if let label = token as? LabelToken {
@@ -496,6 +528,13 @@ public class TokenToMessage {
                 
             case "put":
                 msg = PutMessage(
+                    context
+                        .simplifyEach(cmd.body)
+                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                )
+                
+            case "send":
+                msg = SendMessage(
                     context
                         .simplifyEach(cmd.body)
                         .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
@@ -570,6 +609,8 @@ public class TokenToMessage {
             default:
                 msg = UnknownMessage(token.description)
             }
+        } else if let comment = token as? CommentToken {
+            msg = CommentMessage()
         }
         
         return msg
@@ -590,9 +631,7 @@ public class PauseOp : BaseOp {
         autoreleasepool() {
             var text = String(format: "pausing for %.02f seconds\n", self.seconds)
             var txtMsg = TextTag(with: text, mono: true)
-            txtMsg.color = "#efefef"
-            txtMsg.backgroundColor = "#ff3300"
-            self.actor.notify(txtMsg)
+            self.actor.notify(txtMsg, debug:ScriptLogLevel.Method)
             
             after(self.seconds) {
                 self.actor.sendMessage(OperationComplete("pause", msg: ""))
@@ -621,6 +660,10 @@ public class MoveOp : IWantStreamInfo {
     
     public var id = ""
     
+    public init() {
+        self.id = NSUUID().UUIDString
+    }
+    
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
         for node in nodes {
             
@@ -640,6 +683,10 @@ public class MoveOp : IWantStreamInfo {
 public class NextRoomOp : IWantStreamInfo {
     
     public var id = ""
+    
+    public init() {
+        self.id = NSUUID().UUIDString
+    }
     
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
         

@@ -50,6 +50,8 @@ class ScriptRunner {
             var scriptName = dict["target"] as! String
             var tokens = dict["args"] as? NSArray;
             
+            self.abort(scriptName)
+            
             if let scriptText = self.scriptLoader.load(scriptName) {
                 
                 var params = self.argsToParams(tokens)
@@ -95,6 +97,9 @@ class ScriptRunner {
             }
             else if action == "vars" {
                 self.vars(scriptName)
+            }
+            else if action == "debug" {
+                self.debug(scriptName, level: dict["param"])
             }
         }
     }
@@ -155,6 +160,16 @@ class ScriptRunner {
         for (index, q) in enumerate(self.thread.queue.operations) {
             if let script = q as? IScript where script.scriptName == name {
                 script.vars()
+                break
+            }
+        }
+    }
+    
+    private func debug(name:String, level:String?) {
+        for (index, q) in enumerate(self.thread.queue.operations) {
+            if var script = q as? IScript where script.scriptName == name {
+                var levelNum = level?.toInt()
+                script.logLevel = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
                 break
             }
         }

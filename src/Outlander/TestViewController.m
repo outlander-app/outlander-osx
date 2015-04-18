@@ -89,12 +89,16 @@
         
         TextTag *tag = x.tag;
         if(!tag) {
-            NSString *script = x.scriptName.length > 0 ? [NSString stringWithFormat:@"[%@](%d): ", x.scriptName, x.scriptLine] : @"";
+            NSString *script = x.scriptName.length > 0 ? [NSString stringWithFormat:@"[%@](%d): ", x.scriptName, x.scriptLine+1] : @"";
             
             NSString *prompt = [gameContext.globalVars cacheObjectForKey:@"prompt"];
             prompt = prompt ? prompt : @">";
             tag = [TextTag tagFor:[NSString stringWithFormat:@"%@%@ %@\n",script, prompt, x.command]
                              mono: script.length > 0 ? YES : NO];
+            
+            if (x.scriptName.length > 0 && tag.color == nil) {
+                tag.color = @"#acff2f";
+            }
         }
         [self append:tag to:@"main"];
     }];
