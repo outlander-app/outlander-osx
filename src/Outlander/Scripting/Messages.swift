@@ -373,3 +373,13 @@ public class MathMessage : Message {
         return result
     }
 }
+
+public class ActionMessage : Message {
+    
+    var token:ActionToken
+    
+    public init(_ token:ActionToken) {
+        self.token = token
+        super.init("action")
+    }
+}

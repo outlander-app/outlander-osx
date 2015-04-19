@@ -65,10 +65,13 @@ public class CommandToken : Token {
     }
     
     public func bodyText() -> String {
+        return textForTokens(body)
+    }
     
+    public func textForTokens(tokens:[Token]) -> String {
         var text = ""
         
-        for t in body {
+        for t in tokens {
             text += t.characters
         }
     
@@ -83,6 +86,17 @@ public class CommandToken : Token {
         } else {
             return "\(name) '\(self.bodyText())'"
         }
+    }
+}
+
+public class ActionToken : CommandToken {
+    
+    public var commands = [Token]()
+    public var when = [Token]()
+    public var whenText:String = ""
+    
+    public init(_ index:Int, _ lineNumber:Int){
+        super.init("action", index, lineNumber);
     }
 }
 
@@ -413,8 +427,13 @@ public class OutlanderScriptParser : StackParser {
         if(lineCommandStack.isEmpty) {return}
         let command = lineCommandStack.removeLast()
         var tokens = popTo(command)
-        let token = tokens.removeAtIndex(0) as! CommandToken
+        var token = tokens.removeAtIndex(0) as! CommandToken
         token.body = tokens
+        
+        if token.name == "action" {
+            token = createAction(token)
+        }
+        
         pushToken(token)
         
         if newLine && !self.inBracket && ifStack.count > 0 {
@@ -484,6 +503,60 @@ public class OutlanderScriptParser : StackParser {
         }
         
         return tokenArray.reverse()
+    }
+    
+    func createAction(token:CommandToken) -> ActionToken {
+        var actionToken = ActionToken(token.originalStringIndex!, token.originalStringLine!)
+        actionToken.body = token.body
+        
+        var action = [Token]()
+        
+        var pastWhen = false
+        
+        for t in token.body {
+            
+            if t.name == "keyword" && t.characters == "when" {
+                pastWhen = true
+                continue
+            }
+            
+            if !pastWhen {
+                action.append(t)
+            } else {
+                actionToken.when.append(t)
+            }
+        }
+        
+        if !pastWhen {
+            errors.append("No when pattern defined for action on line \(token.originalStringLine!+1)")
+        }
+        
+        actionToken.whenText = token.textForTokens(actionToken.when)
+        
+        var cmd:CommandToken?
+        
+        for t in action {
+            
+            if cmd == nil && t.name == "whitespace" {
+                continue
+            }
+            
+            if cmd == nil {
+                cmd = CommandToken(t.characters, t.originalStringIndex!, t.originalStringLine!)
+            } else if t.name == "split" {
+                actionToken.commands.append(cmd!)
+                cmd = nil
+                continue
+            } else {
+                cmd?.body.append(t)
+            }
+        }
+        
+        if cmd != nil {
+            actionToken.commands.append(cmd!)
+        }
+        
+        return actionToken
     }
 }
 
