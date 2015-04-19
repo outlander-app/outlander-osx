@@ -51,7 +51,6 @@ public class ScriptContext {
     private var lastIfResult = false
     private var lastToken:Token?
     
-    private let varReplacer:SimpleVarReplacer
     private var variables:[String:String] = [:]
     private var params:[String]
     private var paramVars:[String:String] = [:]
@@ -64,7 +63,6 @@ public class ScriptContext {
         self.marker.tree = self.tree
         self.current = self.marker.generate()
         self.results = Array<Token>()
-        self.varReplacer = SimpleVarReplacer()
         self.globalVars = globalVars
         self.gosubStack = Stack<GosubContext>()
        
@@ -126,8 +124,16 @@ public class ScriptContext {
         }
     }
     
+    public func getVariable(identifier:String) -> String? {
+        return self.variables[identifier]
+    }
+    
     public func setVariable(identifier:String, value:String) {
         self.variables[identifier] = value
+    }
+    
+    public func removeVariable(identifier:String) {
+        self.variables.removeValueForKey(identifier)
     }
     
     public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
@@ -228,7 +234,7 @@ public class ScriptContext {
             token.lastResult = res
             return res.result
         } else if token.name == "elseif" && lastBranchToken != nil && lastBranchToken!.lastResult?.result == false {
-            token.lastResult = ExpressionEvalResult(result:true, info:"")
+            token.lastResult = ExpressionEvalResult(result:true, info:"true")
             return true
         }
        
@@ -237,24 +243,33 @@ public class ScriptContext {
     }
     
     public func simplify(data:String) -> String {
-        var text = data
         
-        if let gosub = self.gosubContext where gosub.vars.count > 0 && text.hasPrefix("$") {
-            text = varReplacer.eval(text, vars: gosub.vars)
+        var mutable = RegexMutable(data)
+        
+        if let gosub = self.gosubContext where gosub.vars.count > 0 && data.rangeOfString("$") != nil {
+            
+            self.replace("\\$", target: mutable, dict: gosub.vars)
         }
         
-        if text.hasPrefix("%") {
-            text = varReplacer.eval(text, vars: self.variables)
-            if text.hasPrefix("%") {
-                text = varReplacer.eval(text, vars: self.paramVars)
-            }
+        if data.rangeOfString("%") != nil {
+            
+            self.replace("%", target: mutable, dict: self.variables)
+            self.replace("%", target: mutable, dict: self.paramVars)
         }
         
-        if text.hasPrefix("$") && self.globalVars != nil {
-            text = varReplacer.eval(text, vars: self.globalVars!())
+        if data.rangeOfString("$") != nil && self.globalVars != nil {
+            
+            self.replace("\\$", target: mutable, dict: self.globalVars!())
         }
         
-        return text
+        return String(mutable)
+    }
+    
+    private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
+        
+        for key in dict.keys {
+            target["\(prefix)\(key)"] ~= dict[key] ?? ""
+        }
     }
     
     public func simplify(tokens:Array<Token>) -> String {

@@ -39,6 +39,14 @@
         [arr addObject:tag];
     }
     
+    if (arr.count > 0) {
+        TextTag *tag = arr[0];
+        if (![tag.text hasPrefix:@"You also see"]) {
+            TextTag *prefix = [TextTag tagFor:@"You also see" mono:NO];
+            [arr insertObject:prefix atIndex:0];
+        }
+    }
+    
     return arr;
 }
 

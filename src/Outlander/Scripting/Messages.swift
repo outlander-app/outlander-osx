@@ -150,6 +150,34 @@ public class VarMessage : Message {
     }
 }
 
+public class UnVarMessage : Message {
+    var identifier:String
+    
+    override public init(_ identifier:String) {
+        self.identifier = identifier
+        super.init("unvar")
+    }
+    
+    public override var description : String {
+        return "\(self.name) - \(self.identifier)";
+    }
+}
+
+public class RandomMessage : Message {
+    var min:Int
+    var max:Int
+    
+    public init(_ min:Int, _ max:Int) {
+        self.min = min
+        self.max = max
+        super.init("random")
+    }
+    
+    public override var description : String {
+        return "\(self.name) - \(self.min)-\(self.max)";
+    }
+}
+
 public protocol IMatch {
     var value:String {get}
     var label:String {get}
@@ -171,7 +199,7 @@ public class MatchMessage : Message, IMatch {
     }
     
     public func isMatch(text:String) -> Bool {
-        return text.rangeOfString(text) != nil
+        return text.rangeOfString(value) != nil
     }
     
     public override var description : String {
@@ -265,8 +293,83 @@ public class WaitforReMessage : Message {
     }
 }
 
+public class WaitMessage : Message {
+    public init() {
+        super.init("wait")
+    }
+}
+
 public class ShiftMessage : Message {
     public init() {
         super.init("shift")
+    }
+}
+
+public class ExitMessage : Message {
+    public init() {
+        super.init("exit")
+    }
+}
+
+public class SaveMessage : Message {
+    var text:String
+    
+    override public init(_ text:String) {
+        self.text = text
+        super.init("save")
+    }
+}
+
+public class WaitEvalMessage : Message {
+    var token:CommandToken
+    
+    public init(_ token:CommandToken) {
+        self.token = token
+        super.init("waiteval")
+    }
+}
+
+public class MathMessage : Message {
+    var variable:String
+    var operation:String
+    var number:Double
+    
+    public init(_ variable:String, _ operation:String, _ number:Double) {
+        self.variable = variable
+        self.operation = operation
+        self.number = number
+        super.init("math")
+    }
+    
+    func calcResult(start:Double) -> Double {
+        
+        var result:Double = 0
+        
+        switch operation {
+        case "add":
+            result = start + self.number
+            
+        case "subtract":
+            result = start - self.number
+            
+        case "multiply":
+            result = start * self.number
+            
+        case "divide":
+            if self.number != 0 {
+                result = start / self.number
+            }
+            
+        case "modulus":
+            result = start % self.number
+            
+        case "set":
+            result = self.number
+            
+        default:
+            result = start
+        }
+        
+        return result
     }
 }

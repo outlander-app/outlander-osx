@@ -51,6 +51,8 @@
     [_handlers addObject:[MapperCommandHandler newInstance]];
     [_handlers addObject:[MapperGotoCommandHandler newInstance]];
     [_handlers addObject:[ParseCommandHandler newInstance]];
+    [_handlers addObject:[BeepCommandHandler newInstance]];
+    [_handlers addObject:[FlashCommandHandler newInstance]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandNotification:)

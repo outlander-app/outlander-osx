@@ -351,6 +351,10 @@
 		F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
 		F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
 		F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
+		F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */; };
+		F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */; };
+		F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */; };
+		F9E1C8B41AE35A8000458029 /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
@@ -732,6 +736,8 @@
 		F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightsViewController.swift; sourceTree = "<group>"; };
 		F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightsViewController.xib; sourceTree = "<group>"; };
 		F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
+		F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeepCommandHandler.swift; sourceTree = "<group>"; };
+		F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
 		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
 		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
@@ -921,6 +927,7 @@
 				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
+				F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1079,6 +1086,7 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
+				F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1588,6 +1596,7 @@
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
+				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
 				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
@@ -1608,6 +1617,7 @@
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
 				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
+				F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
@@ -1793,6 +1803,7 @@
 				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
+				F9E1C8B41AE35A8000458029 /* RandomNumbers.swift in Sources */,
 				F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */,
 				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
@@ -1826,6 +1837,7 @@
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
+				F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,

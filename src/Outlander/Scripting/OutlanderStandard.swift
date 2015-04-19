@@ -173,7 +173,7 @@ public class CommentToken : Token {
 
 public class OutlanderStandard {
     public class var word:TokenizationState{
-        return LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"_-.").token("word")
+        return LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.").token("word")
     }
 }
 
@@ -183,9 +183,8 @@ public class ScriptTokenizer : Tokenizer {
         super.init();
         
         self.branch(
-            OKStandard.whiteSpaces,
             Keywords(
-                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "send", "setvariable", "then", "var", "waitfor", "waitforre", "when", "#alias", "#highlight", "#script", "#parse", "#var"])
+                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -198,17 +197,19 @@ public class ScriptTokenizer : Tokenizer {
             ),
             Characters(from:"#").token("comment"),
             Characters(from:"\n").token("newline"),
+            Characters(from:"\r\n").token("newline"),
+            OKStandard.whiteSpaces,
             Characters(from:":").token("label"),
             Characters(from:";").token("split"),
             Characters(from:"(").token("open-paren"),
             Characters(from:")").token("close-paren"),
             Characters(from:"{").token("open-bracket"),
             Characters(from:"}").token("close-bracket"),
-            Characters(from:"%").branch(
-                OutlanderStandard.word.token("localvar")
-            ),
             Characters(from:"$").branch(
                 OutlanderStandard.word.token("globalvar")
+            ),
+            Characters(from:"%").branch(
+                OutlanderStandard.word.token("localvar")
             ),
             OKStandard.Code.quotedString,
             OKStandard.number,
@@ -230,7 +231,7 @@ public class OutlanderScriptParser : StackParser {
     var inBracket = false
     
     var lineCommandStack = [String]()
-    var lineCommands = ["debuglevel", "echo", "gosub", "goto", "match", "matchre", "matchwait", "move", "nextroom", "pause", "put", "return", "shift", "send", "setvariable", "var", "waitfor", "waitforre"]
+    var lineCommands = ["action", "debuglevel", "echo", "exit", "gosub", "goto", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre"]
     
     var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "punct"]
    
@@ -746,18 +747,3 @@ public class ExpressionEvaluator : StackParser {
         return tokenArray.reverse()
     }
 }
-
-public class SimpleVarReplacer {
-    public func eval(key:String, vars:Dictionary<String, String>) -> String {
-        var result = key
-        
-        if count(key) > 1 {
-            var checkKey = key.substringFromIndex(advance(key.startIndex, 1))
-            if let val = vars[checkKey] {
-                result = val
-            }
-        }
-        return result
-    }
-}
-

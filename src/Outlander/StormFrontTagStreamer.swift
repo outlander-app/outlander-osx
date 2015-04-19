@@ -164,7 +164,7 @@ public class StormFrontTagStreamer {
             
         case _ where node.name == "spell":
             if let spell = node.value {
-                emitSetting?("spell", spell)
+                emitSetting?("preparedspell", spell)
                 emitSpell?(spell)
             }
             
