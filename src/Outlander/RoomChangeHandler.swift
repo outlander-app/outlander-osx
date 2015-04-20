@@ -59,8 +59,8 @@ class RoomChangeHandler : NodeHandler {
             let start = NSDate()
         
             if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
-                let diff = NSDate().timeIntervalSinceDate(start)
                 
+                let diff = NSDate().timeIntervalSinceDate(start)
                 self.send(context, room: room, diff: diff)
             }
             

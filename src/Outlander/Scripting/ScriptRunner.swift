@@ -100,6 +100,8 @@ class ScriptRunner {
             }
             else if action == "debug" {
                 self.debug(scriptName, level: dict["param"])
+            } else if action == "list" {
+                self.listAll()
             }
         }
     }
@@ -131,27 +133,45 @@ class ScriptRunner {
     
     private func abort(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript where script.scriptName == name {
-                script.cancel()
-                break
+            if let script = q as? IScript {
+                
+                if name == "all" || script.scriptName == name {
+                    script.cancel()
+                }
+                
+                if name != "all" {
+                    break
+                }
             }
         }
     }
     
     private func pause(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript where script.scriptName == name {
-                script.pause()
-                break
+            if let script = q as? IScript {
+                
+                if name == "all" || script.scriptName == name {
+                    script.pause()
+                }
+                
+                if name != "all" {
+                    break
+                }
             }
         }
     }
     
     private func resume(name:String) {
         for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript where script.scriptName == name {
-                script.resume()
-                break
+            if let script = q as? IScript {
+                
+                if name == "all" || script.scriptName == name {
+                    script.resume()
+                }
+                
+                if name != "all" {
+                    break
+                }
             }
         }
     }
@@ -171,6 +191,14 @@ class ScriptRunner {
                 var levelNum = level?.toInt()
                 script.logLevel = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
                 break
+            }
+        }
+    }
+    
+    private func listAll() {
+        for (index, q) in enumerate(self.thread.queue.operations) {
+            if var script = q as? IScript {
+                script.printInfo()
             }
         }
     }

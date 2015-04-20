@@ -45,12 +45,14 @@ public class NotifyMessage : INotifyMessage {
 
 public protocol IAcceptMessage {
     func sendMessage(msg:Message);
+    func sendActionMessage(msg:Message)
 }
 
 public protocol IScript : IAcceptMessage {
     var scriptName:String { get }
     var logLevel:ScriptLogLevel { get set }
-   
+  
+    func printInfo()
     func cancel()
     func pause()
     func resume()
@@ -118,7 +120,6 @@ public class Script : BaseOp, IScript {
     var started:NSDate?
     
     private var nextAfterUnpause = false
-    private var nextAfterRoundtime = false
     private var matchStack:[IMatch]
     private var matchwait:MatchwaitMessage?
     
@@ -159,6 +160,11 @@ public class Script : BaseOp, IScript {
             
             self.sendMessage(ScriptInfoMessage(String(format: "[Script '\(self.scriptName)' completed after %.02f seconds total run time]\n", diff)))
         }
+    }
+    
+    public func printInfo() {
+        let diff = NSDate().timeIntervalSinceDate(self.started!)
+        self.sendMessage(ScriptInfoMessage(String(format: "[Script '\(self.scriptName)' running for %.02f seconds]\n", diff)))
     }
     
     override public func pause() {
@@ -215,6 +221,10 @@ public class Script : BaseOp, IScript {
     
     public func stream(text:String, nodes:[Node]) {
         
+        if self._paused || self.cancelled {
+            return
+        }
+        
         self.matches(text)
         
         var handlers = self.reactToStream.filter { x in
@@ -237,6 +247,7 @@ public class Script : BaseOp, IScript {
             var res = x.stream(text, nodes: nodes)
             switch res {
             case .Match(let x):
+                self.notify(TextTag(with: x, mono: true), debug:ScriptLogLevel.Actions)
                 return true
             default:
                 return false
@@ -384,6 +395,48 @@ public class Script : BaseOp, IScript {
         }
     }
     
+    public func sendActionMessage(msg:Message) {
+        
+        if msg is GotoMessage {
+            self.reactToStream = []
+            self.matchwait = nil
+            self.matchStack = []
+            self.handleGoto(msg as! GotoMessage)
+        }
+            
+        else if msg is PutMessage {
+            self.handlePut(msg as! PutMessage)
+        }
+        
+        else if msg is VarMessage {
+            self.handleVar(msg as! VarMessage)
+        }
+        
+        else if msg is SendMessage {
+            self.handleSend(msg as! SendMessage)
+        }
+        
+        else if msg is EchoMessage {
+            self.handleEcho(msg as! EchoMessage)
+        }
+        
+        else if msg is SaveMessage {
+            self.handleSave(msg as! SaveMessage)
+        }
+            
+        else if msg is MathMessage {
+            self.handleMath(msg as! MathMessage)
+        }
+        
+        else if msg is RandomMessage {
+            self.handleRandom(msg as! RandomMessage)
+        }
+        
+        else if msg is UnVarMessage {
+            self.handleUnVar(msg as! UnVarMessage)
+        }
+    }
+    
     public func sendMessage(msg:Message) {
         
         if self.cancelled && !(msg is ScriptInfoMessage) {
@@ -423,15 +476,12 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let sendMsg = msg as? SendMessage {
-            self.notify(TextTag(with: "send \(sendMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
-            self.sendCommand("#send \(sendMsg.message)")
+            self.handleSend(sendMsg)
             self.moveNext()
         }
         else if let echoMsg = msg as? EchoMessage {
             
-            self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
-            self.sendEcho(echoMsg.message)
-            
+            self.handleEcho(echoMsg)
             self.moveNext()
         }
         else if let labelMsg = msg as? LabelMessage {
@@ -439,10 +489,7 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let gotoMsg = msg as? GotoMessage {
-            var params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
-            self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Gosubs)
-            self.gotoLabel(gotoMsg.label, params:gotoMsg.params, previousLine: self.currentLine!)
-            self.moveNext()
+            self.handleGoto(gotoMsg)
         }
         else if let gosubMsg = msg as? GosubMessage {
             var params = gosubMsg.params.count > 0 ? gosubMsg.params[0] : ""
@@ -474,15 +521,11 @@ public class Script : BaseOp, IScript {
             self.addStreamWatcher( WaitEvalOp(waitEvalMsg.token, context!.simplify) )
         }
         else if let saveMsg = msg as? SaveMessage {
-            var res = self.context!.simplify(saveMsg.text)
-            self.context?.setVariable("s", value: res)
-            self.notify(TextTag(with: "save \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+            self.handleSave(saveMsg)
             self.moveNext()
         }
         else if let unVarMsg = msg as? UnVarMessage {
-            var res = self.context!.simplify(unVarMsg.identifier)
-            self.context?.removeVariable(res)
-            self.notify(TextTag(with: "unvar \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+            self.handleUnVar(unVarMsg)
             self.moveNext()
         }
         else if let moveMsg = msg as? MoveMessage {
@@ -509,24 +552,20 @@ public class Script : BaseOp, IScript {
             }
         }
         else if let randomMsg = msg as? RandomMessage {
-            let diceRoll = randomNumberFrom(randomMsg.min...randomMsg.max)
-            self.notify(TextTag(with: "random (\(randomMsg.min),\(randomMsg.max)) = \(diceRoll)\n", mono: true), debug:ScriptLogLevel.Vars)
-            self.context?.setVariable("r", value: "\(diceRoll)")
+            self.handleRandom(randomMsg)
             self.moveNext()
         }
         else if let mathMsg = msg as? MathMessage {
-            
-            var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
-            var result = mathMsg.calcResult(current)
-            
-            self.context!.setVariable(mathMsg.variable, value: "\(result)")
-            
-            self.notify(TextTag(with: "math \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
+           
+            self.handleMath(mathMsg)
             self.moveNext()
         }
         else if let actionMsg = msg as? ActionMessage {
             self.actions.append(ActionOp(actionMsg.token))
             self.moveNext()
+        }
+        else if let actionInfoMsg = msg as? ActionInfoMessage {
+            self.notify(TextTag(with: "action - \(actionInfoMsg.msg)\n", mono: true), debug:ScriptLogLevel.Actions)
         }
         else if let commentMsg = msg as? CommentMessage {
             self.moveNext()
@@ -598,6 +637,51 @@ public class Script : BaseOp, IScript {
         var res = self.context!.simplify(varMsg.value)
         self.context?.setVariable(varMsg.identifier, value: res)
         self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+    }
+    
+    func handleSend(sendMsg:SendMessage) {
+        self.notify(TextTag(with: "send \(sendMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        self.sendCommand("#send \(sendMsg.message)")
+    }
+    
+    func handleEcho(echoMsg:EchoMessage) {
+        self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        self.sendEcho(echoMsg.message)
+    }
+    
+    func handleGoto(gotoMsg:GotoMessage) {
+        var params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
+        self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        self.gotoLabel(gotoMsg.label, params:gotoMsg.params, previousLine: self.currentLine!)
+        self.moveNext()
+    }
+    
+    func handleSave(saveMsg:SaveMessage) {
+        var res = self.context!.simplify(saveMsg.text)
+        self.context?.setVariable("s", value: res)
+        self.notify(TextTag(with: "save \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+    }
+    
+    func handleUnVar(unVarMsg:UnVarMessage) {
+        var res = self.context!.simplify(unVarMsg.identifier)
+        self.context?.removeVariable(res)
+        self.notify(TextTag(with: "unvar \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+    }
+    
+    func handleRandom(randomMsg:RandomMessage) {
+        let diceRoll = randomNumberFrom(randomMsg.min...randomMsg.max)
+        self.notify(TextTag(with: "random (\(randomMsg.min),\(randomMsg.max)) = \(diceRoll)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.context?.setVariable("r", value: "\(diceRoll)")
+    }
+    
+    func handleMath(mathMsg:MathMessage) {
+        
+        var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
+        var result = mathMsg.calcResult(current)
+        
+        self.context!.setVariable(mathMsg.variable, value: "\(result)")
+        
+        self.notify(TextTag(with: "math \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
 }
 
@@ -968,23 +1052,38 @@ public class ActionOp : IWantStreamInfo {
     public var id = ""
     private var token:ActionToken
     private let tokenToMessage = TokenToMessage()
+    private var lastGroups:[String]
     
     public init(_ token:ActionToken) {
         self.id = NSUUID().UUIDString
         self.token = token
+        self.lastGroups = []
     }
     
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
-        var groups = text[self.token.whenText].groups()
-        return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        self.lastGroups = text[self.token.whenText].groups()
+        return self.lastGroups.count > 0
+            ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!)) triggered by \(text)\n")
+            : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
         
+        var vars:[String:String] = [:]
+        
+        for (index, g) in enumerate(self.lastGroups) {
+            vars["\(index)"] = g
+        }
+        
+        context.actionVars = vars
+        
         for cmd in self.token.commands {
             if let msg = tokenToMessage.toMessage(context, token: cmd) {
+                script.sendActionMessage(msg)
             }
         }
+        
+        context.actionVars = [:]
     }
 }
 

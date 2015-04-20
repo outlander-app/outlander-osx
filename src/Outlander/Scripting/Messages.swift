@@ -383,3 +383,13 @@ public class ActionMessage : Message {
         super.init("action")
     }
 }
+
+public class ActionInfoMessage : Message {
+    
+    var msg:String
+    
+    public override init(_ msg:String) {
+        self.msg = msg
+        super.init("action")
+    }
+}

@@ -47,6 +47,7 @@ public class ScriptContext {
     var current:GeneratorOf<Token>
     var gosubContext:GosubContext?
     var gosubStack:Stack<GosubContext>
+    var actionVars:[String:String] = [:]
     
     private var lastIfResult = false
     private var lastToken:Token?
@@ -246,6 +247,10 @@ public class ScriptContext {
         
         var mutable = RegexMutable(data)
         
+        if self.actionVars.count > 0 && data.rangeOfString("$") != nil {
+            self.replace("\\$", target: mutable, dict: self.actionVars)
+        }
+        
         if let gosub = self.gosubContext where gosub.vars.count > 0 && data.rangeOfString("$") != nil {
             
             self.replace("\\$", target: mutable, dict: gosub.vars)
@@ -276,7 +281,21 @@ public class ScriptContext {
         var text = ""
         
         for t in tokens {
-            text += t.characters
+            
+            if let idx = t as? IndexerToken {
+                
+                var replaced = self.simplify(idx.variable)
+               
+                var options = replaced.componentsSeparatedByString("|")
+                if options.count > idx.indexer {
+                    text += options[idx.indexer]
+                } else {
+                    text += replaced
+                }
+                
+            } else {
+                text += t.characters
+            }
         }
         
         return self.simplify(text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
@@ -289,7 +308,18 @@ public class ScriptContext {
             if t is WhiteSpaceToken {
                 result += t.characters
             }
-            else {
+            else if let idx = t as? IndexerToken {
+                
+                var replaced = self.simplify(idx.variable)
+               
+                var options = replaced.componentsSeparatedByString("|")
+                if options.count > idx.indexer {
+                    result += options[idx.indexer]
+                } else {
+                    result += replaced
+                }
+                
+            } else {
                 result += self.simplify(t.characters)
             }
         }

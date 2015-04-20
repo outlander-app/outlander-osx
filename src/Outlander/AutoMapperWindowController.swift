@@ -20,6 +20,12 @@ func loadMap <R> (
     }
 }
 
+func mainThread(mainClosure: () -> ()) {
+    dispatch_async(dispatch_get_main_queue(), {
+        mainClosure()
+    })
+}
+
 class MapsDataSource : NSObject, NSComboBoxDataSource {
     
     private var maps:[MapInfo] = []
@@ -53,6 +59,10 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     
     func mapForId(id:String) -> MapInfo? {
         return self.maps.filter { $0.id == id }.first
+    }
+    
+    func mapForFile(file:String) -> MapInfo? {
+        return self.maps.filter { $0.file == file }.first
     }
     
     func mapAtIndex(index:Int) -> MapInfo {
@@ -156,7 +166,48 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 if changed.keys.first == "roomid" {
                     
                     var roomId = changed["roomid"]
-                    self.mapView.currentRoomId = roomId
+                    
+                    if let id = roomId {
+                        if let room = self.context!.mapZone?.roomWithId(id) {
+                            
+                            if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                                
+                                let groups = room.notes!["(.+\\.xml)"].groups()
+                                
+                                if groups.count > 1 {
+                                    let mapfile = groups[1]
+                                    
+                                    if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+                                        
+                                        if let idx = self.mapsDataSource.indexOfMap(mapInfo.id) {
+                                            
+                                            mainThread {
+                                            
+                                                if self.mapsComboBox != nil {
+                                                    self.mapsComboBox.selectItemAtIndex(idx)
+                                                }
+                                                else {
+                                                    
+                                                    if mapInfo.zone != nil {
+                                                        
+                                                        self.renderMap(mapInfo.zone!)
+                                                        self.context?.mapZone = mapInfo.zone!
+                                                        
+                                                    } else {
+                                                        self.loadMapFromInfo(mapInfo)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                mainThread {
+                                    self.mapView.currentRoomId = roomId
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -197,9 +248,12 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 
                 if let zoneId = self.context!.globalVars.cacheObjectForKey("zoneid") as? String {
                     
-                    if let info = self.mapsDataSource.mapForId(zoneId) {
-                        
-                        self.loadMapFromInfo(info)
+                    if let idx = self.mapsDataSource.indexOfMap(zoneId) {
+                        if self.mapsComboBox != nil {
+                            self.mapsComboBox.selectItemAtIndex(idx)
+                        } else {
+                            self.loadMapFromInfo(self.mapsDataSource.mapAtIndex(idx))
+                        }
                     }
                 }
             })
@@ -241,21 +295,23 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 
                 let diff = NSDate().timeIntervalSinceDate(start)
                 
-                println("map loaded in: \(diff) seconds")
-                
                 switch result {
                     
                 case let .Success(zone):
+                    
+                    println("map \(zone.name) loaded in: \(diff) seconds")
                     
                     self.context?.mapZone = zone
                     
                     info.zone = zone
                     
                     if self.mapView != nil {
+                        
                         self.renderMap(zone)
                     }
                     
                 case let .Error(error):
+                    println("map loaded with error in: \(diff) seconds")
                     if self.nodesLabel != nil {
                         self.nodesLabel.stringValue = "Error loading map: \(error)"
                     }

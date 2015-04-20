@@ -149,7 +149,7 @@ class MapperGotoCommandHandler : CommandHandler {
         
         let relay = GameCommandRelay()
         var context = CommandContext()
-        context.command = ".simplemapper " + walk
+        context.command = ".automapper " + walk
         relay.sendCommand(context)
     }
 }

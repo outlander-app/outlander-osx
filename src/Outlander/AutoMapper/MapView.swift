@@ -188,9 +188,8 @@ class MapView: NSView {
                     var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
                     
                     let loc = NSValue(rect: outlineRect)
-                    
                     self.nodeLookup[loc] = room.id
-                    
+                   
                     var border = NSBezierPath()
                     border.appendBezierPathWithRect(outlineRect)
                     border.stroke()

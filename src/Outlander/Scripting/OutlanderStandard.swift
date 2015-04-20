@@ -89,6 +89,27 @@ public class CommandToken : Token {
     }
 }
 
+public class IndexerToken : Token {
+   
+    var variable:String
+    var indexer:Int
+    
+    public init(_ characters:String, _ index:Int, _ lineNumber:Int){
+        self.variable = ""
+        self.indexer = -1
+        
+        super.init(name: "indexer", withCharacters:characters, index:index)
+        self.originalStringLine = lineNumber
+        
+        let groups = characters["(.+)\\s*[\\(\\[](\\d+)"].groups()
+        
+        if groups.count > 2 {
+            variable = groups[1]
+            indexer = groups[2].toInt() ?? -1
+        }
+    }
+}
+
 public class ActionToken : CommandToken {
     
     public var commands = [Token]()
@@ -186,8 +207,48 @@ public class CommentToken : Token {
 }
 
 public class OutlanderStandard {
-    public class var word:TokenizationState{
+    public class var word:TokenizationState {
         return LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.").token("word")
+    }
+    
+    public class var localVar:TokenizationState {
+        return Characters(from:"%").branch(
+            OutlanderStandard.word.token("localvar")
+        )
+    }
+    
+    public class var indexer:TokenizationState {
+       
+        var prefix = LoopingCharacters(from:"%$")
+        var word = LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.")
+        let leftParen = Characters(from:"(")
+        let rightParen = Characters(from:")")
+        let leftBracket = Characters(from:"[")
+        let rightBracket = Characters(from:"]")
+        let decimalDigits = LoopingCharacters(from:decimalDigitString)
+        
+        let parens =
+            leftParen.clone().branch(
+                decimalDigits.branch(
+                    rightParen.clone().token("indexer")
+                )
+            )
+        
+        let brackets =
+            leftBracket.clone().branch(
+                decimalDigits.branch(
+                    rightBracket.clone().token("indexer")
+                )
+            )
+    
+        return Branch().branch(
+            prefix.clone().branch( word.clone().branch(
+                parens.clone(),
+                brackets.clone(),
+                Exit().token("globalvar")
+                )
+            )
+        )
     }
 }
 
@@ -215,6 +276,7 @@ public class ScriptTokenizer : Tokenizer {
             OKStandard.whiteSpaces,
             Characters(from:":").token("label"),
             Characters(from:";").token("split"),
+            OutlanderStandard.indexer,
             Characters(from:"(").token("open-paren"),
             Characters(from:")").token("close-paren"),
             Characters(from:"{").token("open-bracket"),
@@ -222,9 +284,7 @@ public class ScriptTokenizer : Tokenizer {
             Characters(from:"$").branch(
                 OutlanderStandard.word.token("globalvar")
             ),
-            Characters(from:"%").branch(
-                OutlanderStandard.word.token("localvar")
-            ),
+            OutlanderStandard.localVar,
             OKStandard.Code.quotedString,
             OKStandard.number,
             OKStandard.word,
@@ -359,6 +419,8 @@ public class OutlanderScriptParser : StackParser {
             createLabel(token)
         case _ where token.name == "comment":
             createComment(token)
+        case _ where token.name == "indexer":
+            createIndexer(token)
         default:
             pushToken(token)
             return true
@@ -421,6 +483,11 @@ public class OutlanderScriptParser : StackParser {
         } else {
             errors.append("No matching label name. (\(token.originalStringIndex),\(lineNumber))")
         }
+    }
+    
+    func createIndexer(token:Token) {
+        var indexer = IndexerToken(token.characters, token.originalStringIndex!, token.originalStringLine!)
+        pushToken(indexer)
     }
     
     func endCommand(newLine:Bool) {
