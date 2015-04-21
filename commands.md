@@ -15,7 +15,7 @@
     * ex: #script resume forage
     * ex: #script vars forage
         * vars will display the current list of local script variables.
-* coming - \#parse \<text\>
+* \#parse \<text\>
 	* sends the text to be parsed by the scripting engine, as if sent by the game
 
 ## Scripting
@@ -31,9 +31,49 @@ Script arguments become local variables:
 	%3 = three four
     %argcount = 3
 
+Use `#` to add comments to your script.
+
+```
+# collect items
+loop:
+  put collect rock
+  pause 2
+  goto loop
+```
+
+* \#beep
+    * performs a system beep
+* \#flash
+    * makes the dock icon bounce if the application is not the currently active application
+* action \<commands\> when \<regex\>
+```
+action put #beep;put #flash when ^(.+) (say|says|asks|exlaims|whispers)
+```
+* debug/debuglevel \<0|1|2|3|4|5\>
 * echo
 * exit
-* goto
+* if/else
+```
+# single line ifs require the use of 'then'
+if $Athletics.LearningRate >= 34 then goto MoveOut
+
+# check number of arguments with if_x
+if_2 {
+  gosub print %2
+} else {
+  echo %0
+}
+goto end
+
+print:
+  echo $0
+  return
+
+end:
+```
+* (planned) include \<filename\>
+    * `include monstervars` include the contents of the given script file in this script
+* goto \<label\>
 * gosub
     * gosub &lt;label&gt; &lt;argument1, argument2, etc.&gt;
     * Move to a label with the supplied arguments.  Arguments are referenced by $1, $2, etc.  Use $0 to reference all arguments.
@@ -54,11 +94,46 @@ Script arguments become local variables:
  	* put &lt;command&gt;
 	* put collect rock
 * label:
-    * use %lastlabel to know the last label passed
+    * (planned) use %lastlabel to know the last label passed
+* math \<variable\> \<add|subtract|multiply|divide|modulus\> \<number\>
+    * math my_count add 1
+* random \<min\> \<max\>
+    *  saves the result of the random to `%r` variable 
+* save \<text\>
+    * Saves the given text to `%s` variable
+* send \<text\>
+    * sends the text after roundtime has completed or immediately if there is none
 * setvariable
-* var
+* unvar \<name\>
+    * removes the script variable 
+* var \<name\> \<value\>
+```
+var weapon katana
+echo %weapon # prints katana
+```
 * wait
-* waitre
+* waiteval \<expression\>
+    * waiteval $mana >= 60 
+* waitfor \<text\>
+    * waits to continue until the given text
+* waitforre \<regex\>
+    * waits for the given regex to match
+
+### Misc
+* `matchre` function - can be used to evaluate to true/false within an `if` expression
+```
+if matchre("$roomobjs", "((which|that) appears dead|\(dead\))") then {
+  # loot, skin
+}
+```
+* variable indexers - variables with `|` delimiters can be used as sudo arrays with indexers
+```
+var weapons sword|longbow|scimitar
+
+echo %weapons(0) # prints sword
+echo %weapons[1] # prints longbow
+echo %weapons(2) # prints scimitar
+```
 
 ##Global Variables
 
@@ -92,10 +167,8 @@ Global variables are prefixed with a $.
 * $lefthand
 * $lefthandnoun
 * $lefthandnounid
-* $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
-* $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
-* coming - parse \<text\>
-	* sends the text to be parsed by the scripting engine, as if sent by the game
+* (planned) $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
+* (planned) $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
 * $righthand
 * $righthandnoun
 * $righthandnounid
