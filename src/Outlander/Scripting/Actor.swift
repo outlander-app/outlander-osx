@@ -50,13 +50,14 @@ public protocol IAcceptMessage {
 
 public protocol IScript : IAcceptMessage {
     var scriptName:String { get }
-    var logLevel:ScriptLogLevel { get set }
+    var logLevel:ScriptLogLevel { get }
   
     func printInfo()
     func cancel()
     func pause()
     func resume()
     func vars()
+    func setLogLevel(level:ScriptLogLevel)
     func notify(message: TextTag, debug:ScriptLogLevel)
     func stream(text:String, nodes:[Node])
     func moveNext()
@@ -208,7 +209,7 @@ public class Script : BaseOp, IScript {
         if let display = self.context?.varsForDisplay() {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
-            self.notify(TextTag(with: String(format:"+----- Script Variables (running for %.02f seconds) -----+\n", diff), mono: true))
+            self.notify(TextTag(with: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
             
             for v in display {
                 var tag = TextTag(with: "|  \(v)\n", mono: true)
@@ -217,6 +218,11 @@ public class Script : BaseOp, IScript {
             
             self.notify(TextTag(with: "+---------------------------------------------------------+\n", mono: true))
         }
+    }
+    
+    public func setLogLevel(level:ScriptLogLevel) {
+        self.logLevel = level
+        self.notify(TextTag(with: "[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n", mono: true))
     }
     
     public func stream(text:String, nodes:[Node]) {
@@ -561,6 +567,7 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let actionMsg = msg as? ActionMessage {
+            self.notify(TextTag(with: "action \(actionMsg.token.commandText()) when \(actionMsg.token.whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
             self.actions.append(ActionOp(actionMsg.token))
             self.moveNext()
         }
@@ -600,8 +607,10 @@ public class Script : BaseOp, IScript {
         
         message.scriptName = self.scriptName
         
-        var line = self.currentLine != nil ? Int32(self.currentLine!) : -1
-        message.scriptLine = line
+        if debug != ScriptLogLevel.None {
+            var line = self.currentLine != nil ? Int32(self.currentLine!) : -1
+            message.scriptLine = line
+        }
         
         if message.color == nil {
             message.color = "#0066cc"
@@ -621,9 +630,7 @@ public class Script : BaseOp, IScript {
         var ctx = CommandContext()
         ctx.command = command
         
-        var line = self.currentLine != nil ? Int32(self.currentLine!) : -1
         ctx.scriptName = self.scriptName
-        ctx.scriptLine = line
         
         self.notifier.sendCommand(ctx)
     }
@@ -740,7 +747,7 @@ public class TokenToMessage {
                 var lengthStr = cmd.bodyText()
                 msg = PauseMessage(lengthStr.toDouble() ?? 1)
                 
-            case "debuglevel":
+            case _ where cmd.name == "debuglevel" || cmd.name == "debug":
                 var levelStr = cmd.bodyText()
                 msg = DebugLevelMessage(levelStr.toInt() ?? ScriptLogLevel.Actions.rawValue)
                 

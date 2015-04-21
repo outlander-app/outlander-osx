@@ -10,4 +10,13 @@
 
 @implementation CommandContext
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.scriptLine = -1;
+        self.scriptColumn = -1;
+    }
+    return self;
+}
+
 @end

@@ -119,6 +119,28 @@ public class ActionToken : CommandToken {
     public init(_ index:Int, _ lineNumber:Int){
         super.init("action", index, lineNumber);
     }
+    
+    public func commandText() -> String {
+    
+        var text = ""
+        
+        for (index, t) in enumerate(commands) {
+            
+            if index > 0 {
+                text += ";"
+            }
+            
+            if t is CommandToken {
+                let cmd = t as! CommandToken
+                text +=  "\(cmd.name) \(cmd.bodyText())"
+            }
+            else {
+                text += t.characters
+            }
+        }
+    
+        return text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
 }
 
 public class FuncToken : Token {
@@ -246,7 +268,8 @@ public class OutlanderStandard {
                 parens.clone(),
                 brackets.clone(),
                 Exit().token("globalvar")
-                )
+                ),
+                Exit().token("punct")
             )
         )
     }
@@ -259,7 +282,7 @@ public class ScriptTokenizer : Tokenizer {
         
         self.branch(
             Keywords(
-                validStrings: ["action", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#script", "#parse", "#var"])
+                validStrings: ["action", "debug", "debuglevel", "echo", "else", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -305,7 +328,7 @@ public class OutlanderScriptParser : StackParser {
     var inBracket = false
     
     var lineCommandStack = [String]()
-    var lineCommands = ["action", "debuglevel", "echo", "exit", "gosub", "goto", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre"]
+    var lineCommands = ["action", "debug", "debuglevel", "echo", "exit", "gosub", "goto", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre"]
     
     var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "punct"]
    
@@ -414,9 +437,16 @@ public class OutlanderScriptParser : StackParser {
             if !ifStack.isEmpty {
                 endIfBody()
             }
+            else if lineCommandStack.count > 0 {
+                pushToken(token)
+            }
             self.inBracket = false
         case _ where token.name == "label":
-            createLabel(token)
+            if lineCommandStack.count == 0 {
+                createLabel(token)
+            } else {
+                pushToken(token)
+            }
         case _ where token.name == "comment":
             createComment(token)
         case _ where token.name == "indexer":

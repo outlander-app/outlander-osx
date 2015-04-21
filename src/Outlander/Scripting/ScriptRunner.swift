@@ -189,7 +189,7 @@ class ScriptRunner {
         for (index, q) in enumerate(self.thread.queue.operations) {
             if var script = q as? IScript where script.scriptName == name {
                 var levelNum = level?.toInt()
-                script.logLevel = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
+                script.setLogLevel(ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None)
                 break
             }
         }

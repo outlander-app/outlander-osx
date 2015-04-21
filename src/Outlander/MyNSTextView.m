@@ -86,7 +86,7 @@
 
 - (void)openLink:(NSURLRequest *)request {
     NSString *scheme = [[request URL] scheme];
-    if ([scheme isEqualToString:@"http"]) {
+    if ([scheme hasPrefix:@"http"]) {
         [[NSWorkspace sharedWorkspace] openURL:[request URL]];
     }
 }
