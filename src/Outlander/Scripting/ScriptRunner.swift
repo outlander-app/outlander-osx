@@ -42,6 +42,13 @@ class ScriptRunner {
         NSNotificationCenter
             .defaultCenter()
             .addObserver(self, selector:Selector("parse:"), name: "ol:game-parse", object: nil)
+        
+        self.context.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+            
+            if let changed = obj as? Dictionary<String, String> {
+                self.notifyVars(changed)
+            }
+        }
     }
     
     func start(notification: NSNotification) {
@@ -51,6 +58,14 @@ class ScriptRunner {
             var tokens = dict["args"] as? NSArray;
             
             self.abort(scriptName)
+           
+            self.loadAsync(scriptName, tokens: tokens)
+        }
+    }
+    
+    func loadAsync(scriptName:String, tokens:NSArray?) {
+        { () -> NSDate in
+            var date = NSDate()
             
             if let scriptText = self.scriptLoader.load(scriptName) {
                 
@@ -64,6 +79,13 @@ class ScriptRunner {
                     return self.context.globalVars.copyValues() as! [String:String]
                 }, params: params)
             }
+            
+            return date
+        } ~> { (start) -> () in
+            
+            let diff = NSDate().timeIntervalSinceDate(start)
+            
+            println("\(scriptName) loaded in \(diff)")
         }
     }
     
@@ -199,6 +221,14 @@ class ScriptRunner {
         for (index, q) in enumerate(self.thread.queue.operations) {
             if var script = q as? IScript {
                 script.printInfo()
+            }
+        }
+    }
+    
+    private func notifyVars(vars:[String:String]) {
+        for (index, q) in enumerate(self.thread.queue.operations) {
+            if var script = q as? IScript {
+                script.varsChanged(vars)
             }
         }
     }

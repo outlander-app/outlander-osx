@@ -60,6 +60,7 @@ public protocol IScript : IAcceptMessage {
     func setLogLevel(level:ScriptLogLevel)
     func notify(message: TextTag, debug:ScriptLogLevel)
     func stream(text:String, nodes:[Node])
+    func varsChanged(vars:[String:String])
     func moveNext()
 }
 
@@ -124,7 +125,7 @@ public class Script : BaseOp, IScript {
     private var matchStack:[IMatch]
     private var matchwait:MatchwaitMessage?
     
-    private var actions:[IWantStreamInfo]
+    private var actions:[IAction]
     private var reactToStream:[IWantStreamInfo]
     
     let tokenToMessage = TokenToMessage()
@@ -225,6 +226,28 @@ public class Script : BaseOp, IScript {
         self.notify(TextTag(with: "[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n", mono: true))
     }
     
+    public func varsChanged(vars:[String:String]) {
+        var actions = self.actions.filter { x in
+            
+            if !x.enabled {
+                return false
+            }
+            
+            var res = x.vars(vars)
+            switch res {
+            case .Match(let x):
+                self.notify(TextTag(with: x, mono: true), debug:ScriptLogLevel.Actions)
+                return true
+            default:
+                return false
+            }
+        }
+        
+        actions.forEach { action in
+            action.execute(self, context: self.context!)
+        }
+    }
+    
     public func stream(text:String, nodes:[Node]) {
         
         if self._paused || self.cancelled {
@@ -250,6 +273,11 @@ public class Script : BaseOp, IScript {
         }
         
         var actions = self.actions.filter { x in
+            
+            if !x.enabled {
+                return false
+            }
+            
             var res = x.stream(text, nodes: nodes)
             switch res {
             case .Match(let x):
@@ -278,7 +306,12 @@ public class Script : BaseOp, IScript {
                 if match.isMatch(text) {
                     var label = self.context!.simplify(match.label)
                     self.notify(TextTag(with: "match \(label)\n", mono: true), debug:ScriptLogLevel.Wait)
-                    self.gotoLabel(label, params:match.groups, previousLine:-1, isGosub:false)
+                    
+                    if label.lowercaseString == "return" {
+                        self.gosubReturn(false)
+                    } else {
+                        self.gotoLabel(label, params:match.groups, previousLine:-1, isGosub:false)
+                    }
                     
                     self.matchStack.removeAll(keepCapacity: true)
                     self.matchwait = nil
@@ -306,11 +339,13 @@ public class Script : BaseOp, IScript {
         }
     }
     
-    private func gosubReturn() {
+    private func gosubReturn(moveNext:Bool) {
         if let ctx = self.context!.popGosub() {
             var tag = TextTag(with: "returning to line \(ctx.returnLine + 1)\n", mono: true)
             self.notify(tag, debug: ScriptLogLevel.Gosubs)
-            self.moveNext()
+            if moveNext {
+                self.moveNext()
+            }
         } else {
             var tag = TextTag(with: "no gosub to return to!\n", mono: true)
             
@@ -352,7 +387,6 @@ public class Script : BaseOp, IScript {
             self.notify(tag)
             self.cancel()
         }
-        
     }
     
     public func moveNextAfterRoundtime() {
@@ -504,7 +538,7 @@ public class Script : BaseOp, IScript {
             self.moveNext()
         }
         else if let returnMsg = msg as? ReturnMessage {
-            self.gosubReturn()
+            self.gosubReturn(true)
         }
         else if let varMsg = msg as? VarMessage {
             self.handleVar(varMsg)
@@ -566,9 +600,20 @@ public class Script : BaseOp, IScript {
             self.handleMath(mathMsg)
             self.moveNext()
         }
+        else if let evalMsg = msg as? EvalMessage {
+            self.handleEval(evalMsg)
+            self.moveNext()
+        }
         else if let actionMsg = msg as? ActionMessage {
-            self.notify(TextTag(with: "action \(actionMsg.token.commandText()) when \(actionMsg.token.whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
-            self.actions.append(ActionOp(actionMsg.token))
+            
+            if let toggle = actionMsg.token.actionToggle {
+                self.toggleAction(actionMsg)
+                self.notify(TextTag(with: "action (\(actionMsg.token.className)) \(actionMsg.token.commandText())\n", mono: true), debug:ScriptLogLevel.Actions)
+            } else {
+                self.notify(TextTag(with: "action \(actionMsg.token.commandText()) when \(actionMsg.token.whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
+                self.actions.append(ActionOp(actionMsg.token, self.context!.simplify))
+            }
+            
             self.moveNext()
         }
         else if let actionInfoMsg = msg as? ActionInfoMessage {
@@ -635,24 +680,67 @@ public class Script : BaseOp, IScript {
         self.notifier.sendCommand(ctx)
     }
     
+    func toggleAction(msg:ActionMessage) {
+        if let toggle = msg.token.actionToggle {
+            
+            var filtered = self.actions.filter { a in
+                
+                return count(a.token.className) > 0 && a.token.className == msg.token.className
+            }
+            
+            if var action = filtered.first {
+            
+                switch toggle {
+                case .Off:
+                  action.enabled = false
+                default:
+                   action.enabled = true
+                }
+            }
+        }
+    }
+    
+    func handleEval(evalMsg:EvalMessage) {
+        self.notify(TextTag(with: "eval \(evalMsg.description)\n", mono: true), debug:ScriptLogLevel.Vars)
+        
+        var newVal = ""
+       
+        if let res = evalMsg.token.lastResult {
+            switch res.result {
+            case .Boolean(let x):
+                newVal = "\(x)"
+            case .Str(let x):
+                newVal = x
+            default:
+                newVal = ""
+            }
+        }
+        
+        self.setVariable(evalMsg.token.variable, value: newVal)
+    }
+    
     func handlePut(putMsg:PutMessage) {
-        self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
-        self.sendCommand(putMsg.message)
+        
+        //self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        let cmds = putMsg.message.componentsSeparatedByString(";")
+        for cmd in cmds {
+            self.sendCommand(cmd)
+        }
     }
     
     func handleVar(varMsg:VarMessage) {
         var res = self.context!.simplify(varMsg.value)
-        self.context?.setVariable(varMsg.identifier, value: res)
+        self.setVariable(varMsg.identifier, value: res)
         self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func handleSend(sendMsg:SendMessage) {
-        self.notify(TextTag(with: "send \(sendMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        //self.notify(TextTag(with: "send \(sendMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
         self.sendCommand("#send \(sendMsg.message)")
     }
     
     func handleEcho(echoMsg:EchoMessage) {
-        self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
+        //self.notify(TextTag(with: "echo \(echoMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
         self.sendEcho(echoMsg.message)
     }
     
@@ -665,7 +753,7 @@ public class Script : BaseOp, IScript {
     
     func handleSave(saveMsg:SaveMessage) {
         var res = self.context!.simplify(saveMsg.text)
-        self.context?.setVariable("s", value: res)
+        self.setVariable("s", value: res)
         self.notify(TextTag(with: "save \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
@@ -678,7 +766,7 @@ public class Script : BaseOp, IScript {
     func handleRandom(randomMsg:RandomMessage) {
         let diceRoll = randomNumberFrom(randomMsg.min...randomMsg.max)
         self.notify(TextTag(with: "random (\(randomMsg.min),\(randomMsg.max)) = \(diceRoll)\n", mono: true), debug:ScriptLogLevel.Vars)
-        self.context?.setVariable("r", value: "\(diceRoll)")
+        self.setVariable("r", value: "\(diceRoll)")
     }
     
     func handleMath(mathMsg:MathMessage) {
@@ -686,9 +774,15 @@ public class Script : BaseOp, IScript {
         var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
         var result = mathMsg.calcResult(current)
         
-        self.context!.setVariable(mathMsg.variable, value: "\(result)")
+        self.setVariable(mathMsg.variable, value: "\(result)")
         
         self.notify(TextTag(with: "math \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
+    }
+    
+    func setVariable(name:String, value:String) {
+        self.context!.setVariable(name, value: value)
+        
+        self.varsChanged(self.context!.localVarsCopy())
     }
 }
 
@@ -717,6 +811,9 @@ public class TokenToMessage {
                         .simplifyEach(cmd.body)
                         .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 )
+                
+            case _ where cmd.name == "eval":
+                msg = EvalMessage(cmd as! EvalCommandToken)
                 
             case "goto":
                 var args = context.simplifyEach(cmd.body)
@@ -908,6 +1005,12 @@ public protocol IWantStreamInfo {
     func execute(script:IScript, context:ScriptContext)
 }
 
+public protocol IAction : IWantStreamInfo {
+    var enabled:Bool {get set}
+    var token:ActionToken {get}
+    func vars(vars:Dictionary<String, String>) -> CheckStreamResult
+}
+
 public class MoveOp : IWantStreamInfo {
     
     public var id = ""
@@ -1040,7 +1143,7 @@ public class WaitEvalOp : IWantStreamInfo {
             if n.name == "prompt" {
                 let res = self.evaluator.eval(self.token.body, self.simplify)
                 println("eval res: \(res.info)")
-                if res.result {
+                if getBoolResult(res.result) {
                     return CheckStreamResult.Match(result: res.info)
                 }
             }
@@ -1052,33 +1155,52 @@ public class WaitEvalOp : IWantStreamInfo {
     public func execute(script:IScript, context:ScriptContext) {
         script.moveNext()
     }
+    
+    private func getBoolResult(result:EvalResult) -> Bool {
+        switch(result) {
+        case .Boolean(let x):
+            return x
+        default:
+            return false
+        }
+    }
 }
 
-public class ActionOp : IWantStreamInfo {
+public class ActionOp : IAction {
 
     public var id = ""
-    private var token:ActionToken
+    public var enabled = true
+    public var token:ActionToken
     private let tokenToMessage = TokenToMessage()
-    private var lastGroups:[String]
+    private var lastGroups:[String]?
+    private var simplify:(Array<Token>)->String
+    private var evaluator:ExpressionEvaluator
+    private var lastResult:Bool?
     
-    public init(_ token:ActionToken) {
+    public init(_ token:ActionToken, _ simplify:(Array<Token>)->String) {
         self.id = NSUUID().UUIDString
         self.token = token
-        self.lastGroups = []
+        self.simplify = simplify
+        self.evaluator = ExpressionEvaluator()
     }
     
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
-        self.lastGroups = text[self.token.whenText].groups()
-        return self.lastGroups.count > 0
-            ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!)) triggered by \(text)\n")
-            : CheckStreamResult.None
+        
+        if count(self.token.whenText) > 0 {
+            self.lastGroups = text[self.token.whenText].groups()
+            return self.lastGroups?.count > 0
+                ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n")
+                : CheckStreamResult.None
+        }
+        
+        return CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
         
         var vars:[String:String] = [:]
         
-        for (index, g) in enumerate(self.lastGroups) {
+        for (index, g) in enumerate(self.lastGroups ?? []) {
             vars["\(index)"] = g
         }
         
@@ -1091,6 +1213,31 @@ public class ActionOp : IWantStreamInfo {
         }
         
         context.actionVars = [:]
+    }
+    
+    public func vars(vars: Dictionary<String, String>) -> CheckStreamResult {
+        
+        if count(self.token.whenText) > 0 {
+            return CheckStreamResult.None
+        }
+        
+        let res = self.evaluator.eval(self.token.when, self.simplify)
+        
+        if getBoolResult(res.result) {
+            self.lastGroups = res.matchGroups
+            return CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(res.info)\n")
+        }
+        
+        return CheckStreamResult.None
+    }
+    
+    private func getBoolResult(result:EvalResult) -> Bool {
+        switch(result) {
+        case .Boolean(let x):
+            return x
+        default:
+            return false
+        }
     }
 }
 

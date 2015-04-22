@@ -81,6 +81,12 @@
     
     __block BOOL handled = NO;
     
+    context.command = [_replacer replace:context.command withContext:_gameContext];
+    
+    if(context.tag) {
+        context.tag.text = [_replacer replace:context.tag.text withContext:_gameContext];
+    }
+    
     [_handlers enumerateObjectsUsingBlock:^(id<CommandHandler> handler, NSUInteger idx, BOOL *stop) {
         if([handler canHandle:context.command]) {
             handled = YES;
@@ -90,12 +96,6 @@
     }];
     
     if(!handled) {
-        context.command = [_replacer replace:context.command withContext:_gameContext];
-        
-        if(context.tag) {
-            context.tag.text = [_replacer replace:context.tag.text withContext:_gameContext];
-        }
-        
         id<RACSubscriber> sub = (id<RACSubscriber>)_processed;
         [sub sendNext:context];
     }

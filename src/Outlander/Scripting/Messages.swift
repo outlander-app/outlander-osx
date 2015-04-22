@@ -393,3 +393,13 @@ public class ActionInfoMessage : Message {
         super.init("action")
     }
 }
+
+public class EvalMessage : Message {
+    
+    var token:EvalCommandToken
+    
+    public init(_ token:EvalCommandToken) {
+        self.token = token
+        super.init("eval")
+    }
+}

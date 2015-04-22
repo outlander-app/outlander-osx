@@ -137,6 +137,11 @@ public class ScriptContext {
         self.variables.removeValueForKey(identifier)
     }
     
+    public func localVarsCopy() -> [String:String] {
+        let copy = self.variables
+        return copy
+    }
+    
     public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
         var returnIdx = self.marker.currentIdx
         self.marker.currentIdx = -1
@@ -214,16 +219,28 @@ public class ScriptContext {
                 self.marker.branchStack.pop()
             }
         }
+        
+        if token is EvalCommandToken {
+           self.evalEvalCommand(token as! EvalCommandToken)
+        }
 
         if !(token.name == "whitespace") {
             self.results.append(token)
         }
     }
     
+    private func evalEvalCommand(token:EvalCommandToken) {
+        let evaluator = ExpressionEvaluator()
+        token.lastResult = evaluator.eval(token.expression, self.simplify)
+    }
+    
     private func evalIf(token:BranchToken) -> Bool {
         if let count = token.argumentCheck {
             let result = self.params.count >= count
-            token.lastResult = ExpressionEvalResult(result:result, info:"\(self.params.count) >= \(count) = \(result)")
+            token.lastResult = ExpressionEvalResult(
+                result:EvalResult.Boolean(val:result),
+                info:"\(self.params.count) >= \(count) = \(result)",
+                matchGroups: nil)
             return result
         }
         
@@ -233,14 +250,23 @@ public class ScriptContext {
             let evaluator = ExpressionEvaluator()
             let res = evaluator.eval(token.expression, self.simplify)
             token.lastResult = res
-            return res.result
-        } else if token.name == "elseif" && lastBranchToken != nil && lastBranchToken!.lastResult?.result == false {
-            token.lastResult = ExpressionEvalResult(result:true, info:"true")
-            return true
+            return getBoolResult(res.result)
+//        } else if token.name == "elseif" && lastBranchToken != nil && lastBranchToken!.lastResult?.result == false {
+//            token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: true), info:"true")
+//            return true
         }
        
-        token.lastResult = ExpressionEvalResult(result:false, info:"false")
+        token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:"false", matchGroups:nil)
         return false
+    }
+    
+    private func getBoolResult(result:EvalResult) -> Bool {
+        switch(result) {
+        case .Boolean(let x):
+            return x
+        default:
+            return false
+        }
     }
     
     public func simplify(data:String) -> String {

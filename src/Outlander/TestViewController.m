@@ -234,9 +234,13 @@
     
     [sender setStringValue:@""];
     
-    CommandContext *ctx = [[CommandContext alloc] init];
-    ctx.command = [command trimWhitespaceAndNewline];
-    [_commandProcessor process:ctx];
+    NSArray *commands = [command componentsSeparatedByString:@";"];
+    
+    [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
+        CommandContext *ctx = [[CommandContext alloc] init];
+        ctx.command = [command trimWhitespaceAndNewline];
+        [_commandProcessor process:ctx];
+    }];
 }
 
 - (void)beginEdit:(NSString*)key {

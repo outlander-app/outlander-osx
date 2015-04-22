@@ -106,9 +106,6 @@ public class StormFrontTagStreamer {
         
         switch node.name {
             
-        case _ where node.name == "app":
-            emitSetting?("charactername", node.attr("char") ?? "")
-            emitSetting?("game", node.attr("game") ?? "")
             
         case _ where node.name == "prompt":
             emitSetting?("prompt", node.value?.replace("&gt;", withString: ">") ?? "")
@@ -190,6 +187,10 @@ public class StormFrontTagStreamer {
                 let send = Vitals(with: name, value: UInt16(value.toInt()!))
                 emitVitals?(send)
             }
+            
+        case _ where node.name == "app":
+            emitSetting?("charactername", node.attr("char") ?? "")
+            emitSetting?("game", node.attr("game") ?? "")
             
         default:
             // do nothing
