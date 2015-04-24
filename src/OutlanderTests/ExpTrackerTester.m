@@ -38,6 +38,29 @@ describe(@"ExpTracker", ^{
             
             [[[_tracker skills] should] haveCountOf:0];
         });
+        
+        
+        it(@"should update existing skill", ^{
+            
+            SkillExp *skill = [[SkillExp alloc] init];
+            skill.name = @"Athletics";
+            skill.ranks = [NSDecimalNumber decimalNumberWithString:@"55.5"];
+            skill.mindState  = [LearningRate fromRate:3];
+            skill.isNew = YES;
+            [_tracker update:skill];
+            
+            skill = [[SkillExp alloc] init];
+            skill.name = @"Athletics";
+            skill.ranks = [NSDecimalNumber decimalNumberWithString:@"0"];
+            skill.mindState  = [LearningRate fromRate:0];
+            skill.isNew = NO;
+            
+            [_tracker update:skill];
+            
+            [[[_tracker skills] should] haveCountOf:1];
+            SkillExp *exp = [[_tracker skills] firstObject];
+            [[exp.ranks should] equal:theValue(55.5)];
+        });
     });
     
     context(@"skillsWithExp", ^{

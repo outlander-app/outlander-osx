@@ -24,18 +24,22 @@
 
 -(void) update:(SkillExp *)exp {
     
-    if(!exp) return;
+    if(exp == nil) return;
     
-    SkillExp *skill = nil;
+    SkillExp *skill = [_skills cacheObjectForKey:exp.name];
     
-    if(!skill) {
+    if(skill == nil) {
         skill = exp;
+        skill.originalRanks = exp.ranks;
         [_skills setCacheObject:exp forKey:exp.name];
-    } else {
-        skill = [_skills cacheObjectForKey:exp.name];
     }
     
-    skill.ranks = exp.ranks;
+    skill.ranks = exp.ranks.doubleValue == 0.0 ? skill.ranks : exp.ranks;
+    
+    if (skill.originalRanks.doubleValue == 0.0) {
+        skill.originalRanks = skill.ranks;
+    }
+    
     skill.isNew = exp.isNew;
     skill.mindState = exp.mindState;
 }

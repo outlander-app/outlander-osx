@@ -186,6 +186,23 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.exp[0].mindState).to(equal(LearningRate.fromDescription("deliberative")))
             }
             
+            it("streams zero exp into exp") {
+                let data = [
+                    "<component id='exp Athletics'>       Athletics:   50 33% deliberative </component>\r\n",
+                    "<component id='exp Athletics'></component>\r\n"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.exp.count).to(equal(2))
+                
+                expect(self.exp[1].name).to(equal("Athletics"))
+                expect(self.exp[1].ranks).to(equal(0.0))
+                expect(self.exp[1].isNew).to(equal(false))
+                expect(self.exp[1].mindState).to(equal(LearningRate.fromRate(0)))
+            }
+            
             it("streams room exists into settings") {
                 let data = [
                     "<component id='room exits'>Obvious paths: <d>north</d>, <d>west</d>, <d>northwest</d>.<compass></compass></component>\r\n",
@@ -208,7 +225,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(0))
-                expect(self.settings.count).to(equal(2))
+                expect(self.settings.count).to(equal(4))
                 
                 expect(self.settings["roomobjs"]).toNot(beNil())
                 expect(self.settings["roomobjs"]).to(equal("You also see a rock and a journeyman."))
@@ -222,10 +239,27 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(0))
-                expect(self.settings.count).to(equal(2))
+                expect(self.settings.count).to(equal(4))
                 
                 expect(self.settings["roomobjsorig"]).toNot(beNil())
                 expect(self.settings["roomobjsorig"]).to(equal("You also see a rock and <pushbold/>a journeyman<popbold/>."))
+            }
+            
+            it("streams monsterlist/monstercount into settings") {
+                let data = [
+                    "<component id='room objs'>You also see a rock and <pushBold/>a journeyman<popBold/>.</component>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings.count).to(equal(4))
+                
+                expect(self.settings["monsterlist"]).toNot(beNil())
+                expect(self.settings["monsterlist"]).to(equal("a journeyman"))
+                
+                expect(self.settings["monstercount"]).toNot(beNil())
+                expect(self.settings["monstercount"]).to(equal("1"))
             }
             
             it("streams colored room name") {
@@ -322,6 +356,63 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(3))
+            }
+            
+            it("sets hidden ON") {
+                let data = [
+                    "<indicator id='IconHIDDEN' visible='y'/>You melt into the background, convinced that your attempt to hide went unobserved."
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(2))
+                expect(self.settings["hidden"]).to(equal("1"))
+            }
+            
+            it("sets hidden OFF") {
+                let data = [
+                    "<indicator id='IconHIDDEN' visible='n'/>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings["hidden"]).to(equal("0"))
+            }
+            
+            it("sets indicator states") {
+                let data = [
+                    "<indicator id=\"IconKNEELING\" visible=\"n\"/><indicator id=\"IconPRONE\" visible=\"n\"/><indicator id=\"IconSITTING\" visible=\"y\"/><indicator id=\"IconSTANDING\" visible=\"n\"/>You sit up."
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(2))
+                expect(self.settings["prone"]).to(equal("0"))
+                expect(self.settings["sitting"]).to(equal("1"))
+                expect(self.settings["kneeling"]).to(equal("0"))
+                expect(self.settings["standing"]).to(equal("0"))
+            }
+            
+            it("sets compass dirs") {
+                let data = [
+                    "<compass><dir value=\"e\"/><dir value=\"sw\"/><dir value=\"nw\"/></compass>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.settings["north"]).to(equal("0"))
+                expect(self.settings["south"]).to(equal("0"))
+                expect(self.settings["east"]).to(equal("1"))
+                expect(self.settings["west"]).to(equal("0"))
+                expect(self.settings["northeast"]).to(equal("0"))
+                expect(self.settings["northwest"]).to(equal("1"))
+                expect(self.settings["southeast"]).to(equal("0"))
+                expect(self.settings["southwest"]).to(equal("1"))
+                expect(self.settings["up"]).to(equal("0"))
+                expect(self.settings["down"]).to(equal("0"))
+                expect(self.settings["out"]).to(equal("0"))
             }
         })
     }

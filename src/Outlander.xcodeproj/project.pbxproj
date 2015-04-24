@@ -355,6 +355,9 @@
 		F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */; };
 		F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */; };
 		F9E1C8B41AE35A8000458029 /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */; };
+		F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */; };
+		F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */; };
+		F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
@@ -738,6 +741,8 @@
 		F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
 		F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeepCommandHandler.swift; sourceTree = "<group>"; };
 		F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
+		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
+		F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandlerTester.swift; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
 		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
 		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
@@ -1038,6 +1043,7 @@
 				F98F22D81926654D008175FD /* Commands.h */,
 				F9818D541908CA0200137896 /* ExpTracker.h */,
 				F9818D551908CA0200137896 /* ExpTracker.m */,
+				F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */,
 				F989E1F6192C278C00562E32 /* FileSystem.h */,
 				F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */,
 				F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */,
@@ -1066,6 +1072,7 @@
 				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
 				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
+				F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */,
 				F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */,
 				F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */,
 				F9A79E551927FDA0000AF892 /* Roundtime.h */,
@@ -1086,7 +1093,6 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
-				F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1209,6 +1215,7 @@
 				F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */,
 				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
+				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1561,6 +1568,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
+				F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
 				F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */,
@@ -1820,6 +1828,7 @@
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
+				F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
@@ -1853,6 +1862,7 @@
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F90BCF941AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */,
 				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
+				F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F90BCF911AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,

@@ -47,6 +47,20 @@ public class StormFrontTagStreamer {
         "roomexits"
     ]
     
+    private let dirMap = [
+        "n": "north",
+        "s": "south",
+        "e": "east",
+        "w": "west",
+        "ne": "northeast",
+        "nw": "northwest",
+        "se": "southeast",
+        "sw": "southwest",
+        "up": "up",
+        "down": "down",
+        "out": "out"
+    ]
+    
     public var isSetup = true
     public var emitSetting : ((String,String)->Void)?
     public var emitExp : ((SkillExp)->Void)?
@@ -135,12 +149,19 @@ public class StormFrontTagStreamer {
                 
                 if compId == "roomobjs" {
                     var origValues = value
+                    var monsters = ""
+                    var monsterCount = 0
                     if node.children.count > 0 {
                         value = nodeChildValues(node)
-                        origValues = nodeChildValuesWithBold(node)
+                        let bolds = nodeChildValuesWithBold(node)
+                        origValues = bolds.0
+                        monsters = bolds.1
+                        monsterCount = bolds.2
                     }
                     
                     emitSetting?("roomobjsorig", origValues)
+                    emitSetting?("monsterlist", monsters)
+                    emitSetting?("monstercount", "\(monsterCount)")
                 }
                 
                 emitSetting?(compId, value)
@@ -163,6 +184,34 @@ public class StormFrontTagStreamer {
             if let spell = node.value {
                 emitSetting?("preparedspell", spell)
                 emitSpell?(spell)
+            }
+            
+        case _ where node.name == "indicator":
+            var id = node.attr("id")?.substringFromIndex(4).lowercaseString ?? ""
+            var visible = node.attr("visible") == "y" ? "1" : "0"
+            
+            if count(id) == 0 {
+                return
+            }
+            
+            emitSetting?(id, visible)
+            
+        case _ where node.name == "compass":
+            let dirs = node.children
+                .filter { $0.name == "dir" && $0.hasAttr("value") }
+            
+            var found:[String] = []
+            
+            for dir in dirs {
+                var mapped = self.dirMap[dir.attr("value")!]!
+                found.append(mapped)
+                emitSetting?(mapped, "1")
+            }
+            
+            var notFound = dirMap.values.filter { !contains(found, $0) }
+            
+            for dir in notFound {
+                emitSetting?(dir, "0")
             }
             
         case _ where node.name == "streamwindow":
@@ -341,9 +390,12 @@ public class StormFrontTagStreamer {
         return result
     }
 
-    public func nodeChildValuesWithBold(node:Node) -> String {
+    public func nodeChildValuesWithBold(node:Node) -> (String, String, Int) {
         
         var result = ""
+        var monsters = ""
+        var monsterCount = 0
+        var lastNode:Node?
        
         for child in node.children {
             if child.name == "text" || child.name == "d" {
@@ -355,16 +407,37 @@ public class StormFrontTagStreamer {
             }
             
             if child.name == "popbold" {
+                monsterCount++
+                if count(monsters) > 0 {
+                    monsters += "|"
+                }
+                monsters += lastNode?.value ?? ""
                 result += "<popbold/>"
             }
+            
+            lastNode = child
         }
         
-        return result
+        return (result, monsters, monsterCount)
     }
     
     public func parseExp(compId:String, data:String, isNew:Bool) {
         
+        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
+        
         if count(data) == 0 {
+            
+            var rate = LearningRate.fromRate(0)
+            let skill = SkillExp()
+            skill.name = expName
+            skill.ranks = NSDecimalNumber(double: 0.0)
+            skill.mindState = rate
+            skill.isNew = isNew
+            
+            emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+            emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
+            
+            emitExp?(skill)
             return
         }
         
@@ -379,7 +452,6 @@ public class StormFrontTagStreamer {
         mindstate[pattern] ~= "$3"
         
         let rate = LearningRate.fromDescription(mindstate as String)
-        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
         
         let skill = SkillExp()
         skill.name = expName

@@ -688,8 +688,8 @@ public class Script : BaseOp, IScript {
                 return count(a.token.className) > 0 && a.token.className == msg.token.className
             }
             
-            if var action = filtered.first {
-            
+            for index in 0..<filtered.count {
+                var action = filtered[index]
                 switch toggle {
                 case .Off:
                   action.enabled = false
@@ -701,7 +701,7 @@ public class Script : BaseOp, IScript {
     }
     
     func handleEval(evalMsg:EvalMessage) {
-        self.notify(TextTag(with: "eval \(evalMsg.description)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.notify(TextTag(with: "\(evalMsg.token.description)\n", mono: true), debug:ScriptLogLevel.Vars)
         
         var newVal = ""
        
@@ -729,9 +729,8 @@ public class Script : BaseOp, IScript {
     }
     
     func handleVar(varMsg:VarMessage) {
-        var res = self.context!.simplify(varMsg.value)
-        self.setVariable(varMsg.identifier, value: res)
-        self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.setVariable(varMsg.identifier, value: varMsg.value)
+        self.notify(TextTag(with: "setvariable \(varMsg.identifier) \(varMsg.value)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func handleSend(sendMsg:SendMessage) {
@@ -752,15 +751,13 @@ public class Script : BaseOp, IScript {
     }
     
     func handleSave(saveMsg:SaveMessage) {
-        var res = self.context!.simplify(saveMsg.text)
-        self.setVariable("s", value: res)
-        self.notify(TextTag(with: "save \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.setVariable("s", value: saveMsg.text)
+        self.notify(TextTag(with: "save \(saveMsg.text)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func handleUnVar(unVarMsg:UnVarMessage) {
-        var res = self.context!.simplify(unVarMsg.identifier)
-        self.context?.removeVariable(res)
-        self.notify(TextTag(with: "unvar \(res)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.context?.removeVariable(unVarMsg.identifier)
+        self.notify(TextTag(with: "unvar \(unVarMsg.identifier)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func handleRandom(randomMsg:RandomMessage) {
@@ -773,10 +770,11 @@ public class Script : BaseOp, IScript {
         
         var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
         var result = mathMsg.calcResult(current)
+        var strResult = String(format:"%.2g", result)
         
-        self.setVariable(mathMsg.variable, value: "\(result)")
+        self.setVariable(mathMsg.variable, value: "\(strResult)")
         
-        self.notify(TextTag(with: "math \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.notify(TextTag(with: "math \(mathMsg.variable): \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func setVariable(name:String, value:String) {
@@ -865,20 +863,20 @@ public class TokenToMessage {
                 msg = MathMessage(variable, operation, number)
                 
             case _ where cmd.name == "unvar":
-                var txt = cmd.bodyText()
+                var txt = context.simplify(cmd.bodyText())
                 msg = UnVarMessage(txt)
                 
             case "var", "setvariable":
                 
                 var txt = cmd.bodyText().componentsSeparatedByString(" ")
                 
-                var identifier = txt.removeAtIndex(0)
-                var value = " ".join(txt)
+                var identifier = context.simplify(txt.removeAtIndex(0))
+                var value = context.simplify(" ".join(txt))
                 
                 msg = VarMessage(identifier, value)
                 
             case "save":
-                var txt = cmd.bodyText()
+                var txt = context.simplify(cmd.bodyText())
                 msg = SaveMessage(txt)
 
             case _ where cmd.name == "matchwait":

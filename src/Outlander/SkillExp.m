@@ -10,9 +10,29 @@
 
 @implementation SkillExp
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _ranks = [NSDecimalNumber decimalNumberWithString:@"0"];
+        _originalRanks = [NSDecimalNumber decimalNumberWithString:@"0"];
+        _mindState = [LearningRate fromRate:0];
+    }
+    return self;
+}
+
 - (NSString *)description {
     NSString *mindstate = [NSString stringWithFormat:@"(%@/34)", @(self.mindState.rateId)];
-    return [NSString stringWithFormat:@"%16s: %4d %02.0f%%  %7s", [[self.name stringByReplacingOccurrencesOfString:@"_" withString:@" "] UTF8String], [self.ranks intValue], fmodf([self.ranks floatValue], 1.0f)*100, [mindstate UTF8String]];
+    double diff = _ranks.doubleValue - _originalRanks.doubleValue;
+    NSString *sign = diff > 0 ? @"+" : @"-";
+    if (diff == 0.0) {
+        sign = @" ";
+    }
+    NSString *diffStr = [NSString stringWithFormat:@"%@%0.2f", sign, diff];
+    return [NSString stringWithFormat:@"%16s: %4d %02.0f%%  %7s %@",
+            [[self.name stringByReplacingOccurrencesOfString:@"_" withString:@" "] UTF8String],
+            [self.ranks intValue], fmodf([self.ranks floatValue], 1.0f)*100,
+            [mindstate UTF8String],
+            diffStr];
 }
 
 @end

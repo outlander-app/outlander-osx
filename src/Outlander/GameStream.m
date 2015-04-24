@@ -23,6 +23,7 @@
     ScriptStreamHandler *_scriptStreamHandler;
     RoomChangeHandler *_roomChangeHandler;
     TDPUpdateHandler *_tdpUpdateHandler;
+    ExpUpdateHandler *_expUpdateHandler;
 }
 
 @end
@@ -42,6 +43,15 @@
     _scriptStreamHandler = [ScriptStreamHandler newInstance];
     _roomChangeHandler = [RoomChangeHandler newInstance];
     _tdpUpdateHandler = [TDPUpdateHandler newInstance];
+    _expUpdateHandler = [ExpUpdateHandler newInstance];
+    
+    _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value){
+        [_gameContext.globalVars setCacheObject:value forKey:key];
+    };
+    
+    _expUpdateHandler.emitExp = ^(SkillExp *exp) {
+        [_exp sendNext:exp];
+    };
     
     _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
         [_gameContext.globalVars setCacheObject:value forKey:key];
@@ -130,6 +140,7 @@
          //NSLog(@"-->%@", rawText);
          [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
          [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
+         [_expUpdateHandler handle:nodes text:rawText context:_gameContext];
          [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
          
      } completed:^{

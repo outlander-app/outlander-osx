@@ -119,6 +119,34 @@ public class EvalCommandToken: CommandToken {
     public init(_ index:Int, _ lineNumber:Int){
         super.init("eval", index, lineNumber);
     }
+    
+    func expressionText() -> String {
+        
+        var text = ""
+        
+        for (index, t) in enumerate(expression) {
+            
+            if t is CommandToken {
+                let cmd = t as! CommandToken
+                text +=  "\(cmd.name) \(cmd.bodyText())"
+            }
+            else {
+                text += t.characters
+            }
+        }
+    
+        return text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    }
+    
+    public override var description : String {
+        if (originalStringIndex != nil && originalStringLine != nil) {
+            return "\(name) '\(self.expressionText())' at \(originalStringLine!),\(originalStringIndex!) "
+        } else if (originalStringIndex != nil) {
+            return "\(name) '\(self.expressionText())' at \(originalStringIndex!)"
+        } else {
+            return "\(name) '\(self.expressionText())'"
+        }
+    }
 }
 
 public enum ActionToggle {
@@ -195,7 +223,6 @@ public class FuncToken : Token {
 public class MatchReEvalToken : FuncEvalToken {
     
     public init(_ token:FuncToken) {
-        
         super.init("matchre-func", token)
     }
     
@@ -216,7 +243,6 @@ public class MatchReEvalToken : FuncEvalToken {
 public class CountSplitEvalToken : FuncEvalToken {
     
     public init(_ token:FuncToken) {
-        
         super.init("countsplit-func", token)
     }
     
@@ -227,6 +253,20 @@ public class CountSplitEvalToken : FuncEvalToken {
         let count = lh.componentsSeparatedByString(rh).count
         
         return ExpressionEvalResult(result: EvalResult.Str(val: "\(count)"), info: "countsplit(\(lh), \(rh)) = \(count)", matchGroups:nil)
+    }
+}
+
+public class DefEvalToken : FuncEvalToken {
+    
+    public init(_ token:FuncToken) {
+        super.init("def-func", token)
+    }
+    
+    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+        let lh = simplify(left)
+        let res = false
+        
+        return ExpressionEvalResult(result: EvalResult.Boolean(val: res), info: "def(\(lh)) = \(res)", matchGroups:nil)
     }
 }
 
@@ -332,7 +372,7 @@ public class ScriptTokenizer : Tokenizer {
         
         self.branch(
             Keywords(
-                validStrings: ["action", "countsplit", "debug", "debuglevel", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
+                validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -354,10 +394,6 @@ public class ScriptTokenizer : Tokenizer {
             Characters(from:")").token("close-paren"),
             Characters(from:"{").token("open-bracket"),
             Characters(from:"}").token("close-bracket"),
-            Characters(from:"$").branch(
-                OutlanderStandard.word.token("globalvar")
-            ),
-            OutlanderStandard.localVar,
             OKStandard.Code.quotedString,
             OKStandard.number,
             OKStandard.word,
@@ -375,7 +411,7 @@ public class OutlanderScriptParser : StackParser {
     var comment = false
     var ifStack = [BranchToken]()
     var trackingExpression = false
-    var inBracket = false
+    var inBracketCount = 0
     
     var lineCommandStack = [String]()
     var lineCommands = ["action", "debug", "debuglevel", "echo", "eval", "exit", "gosub", "goto", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "return", "save", "shift", "send", "setvariable", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre"]
@@ -383,7 +419,7 @@ public class OutlanderScriptParser : StackParser {
     var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "integer", "punct"]
    
     var funcCommandStack = [String]()
-    var funcCommands = ["countsplit", "matchre"]
+    var funcCommands = ["def", "countsplit", "matchre", "replace", "replacere"]
     
     public func parseString(string:String) -> Array<Token> {
         var str = string
@@ -412,7 +448,7 @@ public class OutlanderScriptParser : StackParser {
             if(token.characters == "#") {
                 createComment(token)
             }
-            else if(token.characters == "if") {
+            else if(token.characters == "if" && lineCommandStack.count == 0) {
                 // if there is an elseif token on the stack, ignore this if
                 if let lastToken = ifStack.last {
                     if lastToken.name == "elseif" {
@@ -424,12 +460,12 @@ public class OutlanderScriptParser : StackParser {
                 ifStack.append(ifToken)
                 self.trackingExpression = true
             }
-            else if(token.characters == "else") {
+            else if(token.characters == "else" && lineCommandStack.count == 0) {
                 let elseToken = ElseIfToken(token.originalStringIndex!, token.originalStringLine!)
                 pushToken(elseToken)
                 ifStack.append(elseToken)
             }
-            else if(token.characters == "then") {
+            else if(token.characters == "then" && lineCommandStack.count == 0) {
                 endIf()
                 self.trackingExpression = false
             }
@@ -502,7 +538,7 @@ public class OutlanderScriptParser : StackParser {
                 endIf()
                 self.trackingExpression = false
             }
-            self.inBracket = true
+            self.inBracketCount++
             pushToken(token)
         case _ where token.name == "close-bracket":
             if !ifStack.isEmpty {
@@ -511,7 +547,7 @@ public class OutlanderScriptParser : StackParser {
             else if lineCommandStack.count > 0 {
                 pushToken(token)
             }
-            self.inBracket = false
+            self.inBracketCount--
         case _ where token.name == "label":
             if lineCommandStack.count == 0 {
                 createLabel(token)
@@ -608,7 +644,7 @@ public class OutlanderScriptParser : StackParser {
         
         pushToken(token)
         
-        if newLine && !self.inBracket && ifStack.count > 0 {
+        if newLine && !(self.inBracketCount > 0) && ifStack.count > 0 {
             endIfBodyOneLine()
         }
     }
@@ -901,13 +937,9 @@ public class OrExpressionToken : Token, EvalToken {
         let rh = getBoolResult(rhRes.result)
         
         switch characters {
-//            case "|":
-//                result = lh | rh
-            case "||":
+            case _ where characters == "||":
                 result = lh || rh
-//            case "&":
-//                result = lh & rh
-            case "&&":
+            case _ where characters == "&&":
                 result = lh && rh
             default:
                 result = false
@@ -990,6 +1022,8 @@ public class ExpressionEvaluator : StackParser {
                 pushToken(MatchReEvalToken(funcToken))
             } else if funcToken.name == "countsplit" {
                 pushToken(CountSplitEvalToken(funcToken))
+            } else if funcToken.name == "def" {
+                pushToken(DefEvalToken(funcToken))
             }
             
             return true
@@ -1045,11 +1079,14 @@ public class ExpressionEvaluator : StackParser {
         
         var op = orStack.removeLast()
         
-        var left = popToken() as! EvalToken
+        var left = popToken() as? EvalToken
         
-        var or = OrExpressionToken(left: left, withOperator: op, right: right)
+        if let lh = left {
         
-        pushToken(or)
+            var or = OrExpressionToken(left: lh, withOperator: op, right: right)
+            
+            pushToken(or)
+        }
     }
     
     func processEnd() {

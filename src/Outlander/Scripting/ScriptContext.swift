@@ -38,6 +38,8 @@ public struct GosubContext {
     var params:[String]
     var vars:[String:String]
     var isGosub:Bool
+    var marker:TokenSequence
+    var current:GeneratorOf<Token>
 }
 
 public class ScriptContext {
@@ -49,7 +51,7 @@ public class ScriptContext {
     var gosubStack:Stack<GosubContext>
     var actionVars:[String:String] = [:]
     
-    private var lastIfResult = false
+    private var lastTopIfResult = false
     private var lastToken:Token?
     
     private var variables:[String:String] = [:]
@@ -144,12 +146,16 @@ public class ScriptContext {
     
     public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
         var returnIdx = self.marker.currentIdx
-        self.marker.currentIdx = -1
+        
+        var seq = TokenSequence()
+        seq.tree = self.tree
+        var cur = seq.generate()
+        
         var found = false
         
         var trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).lowercaseString
         
-        while let token = self.current.next() {
+        while let token = cur.next() {
             if let labelToken = token as? LabelToken where labelToken.characters.lowercaseString == trimmed {
                 found = true
                 
@@ -162,7 +168,9 @@ public class ScriptContext {
                         returnIndex:returnIdx,
                         params: params,
                         vars: [:],
-                        isGosub: isGosub)
+                        isGosub: isGosub,
+                        marker: self.marker,
+                        current: self.current)
                     
                     for (index, param) in enumerate(params) {
                         gosub.vars["\(index)"] = param
@@ -183,14 +191,21 @@ public class ScriptContext {
             }
         }
         
-        self.marker.currentIdx -= 1
+        seq.currentIdx -= 1
+        
+        if found {
+            self.marker = seq
+            self.current = cur
+        }
+        
         return found
     }
     
     public func popGosub() -> GosubContext? {
         if self.gosubStack.hasItems() {
             var last = self.gosubStack.pop()
-            self.marker.currentIdx = last.returnIndex
+            self.marker = last.marker
+            self.current = last.current
             self.gosubContext = self.gosubStack.lastItem()
             return last
         }
@@ -216,7 +231,12 @@ public class ScriptContext {
         if(token is BranchToken) {
             var branchToken = token as! BranchToken
             if(!evalIf(branchToken)) {
-                self.marker.branchStack.pop()
+                var last = self.marker.branchStack.lastItem()!
+                if last.sequence.branchStack.hasItems() {
+                    last.sequence.branchStack.pop()
+                } else {
+                    self.marker.branchStack.pop()
+                }
             }
         }
         
@@ -245,23 +265,42 @@ public class ScriptContext {
         }
         
         let lastBranchToken = self.lastToken as? BranchToken
+        var lastBranchResult = false
         
-        if token.expression.count > 0 {
-            let evaluator = ExpressionEvaluator()
+        if let lastBToken = lastBranchToken {
+            lastBranchResult = getBoolResult(lastBToken.lastResult?.result)
+        }
+        
+        let evaluator = ExpressionEvaluator()
+        
+        if token.name == "if" && token.expression.count > 0 {
             let res = evaluator.eval(token.expression, self.simplify)
             token.lastResult = res
-            return getBoolResult(res.result)
-//        } else if token.name == "elseif" && lastBranchToken != nil && lastBranchToken!.lastResult?.result == false {
-//            token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: true), info:"true")
-//            return true
+            lastTopIfResult = getBoolResult(res.result)
+            return lastTopIfResult
+        } else if token.name == "elseif" && !lastTopIfResult && lastBranchToken != nil && !lastBranchResult {
+           
+            if token.expression.count > 0 {
+                let res = evaluator.eval(token.expression, self.simplify)
+                token.lastResult = res
+                return getBoolResult(res.result)
+            }
+            
+            token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: true), info:"true", matchGroups:nil)
+            return true
         }
        
         token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:"false", matchGroups:nil)
         return false
     }
     
-    private func getBoolResult(result:EvalResult) -> Bool {
-        switch(result) {
+    private func getBoolResult(result:EvalResult?) -> Bool {
+        
+        if result == nil {
+            return false
+        }
+        
+        switch(result!) {
         case .Boolean(let x):
             return x
         default:
@@ -354,21 +393,26 @@ public class ScriptContext {
     }
 }
 
+struct BranchContext {
+    var sequence:BranchTokenSequence
+    var generator:GeneratorOf<Token>
+}
+
 class TokenSequence : SequenceType {
     var tree:[Token]
     var currentIdx:Int
-    var branchStack:Stack<GeneratorOf<Token>>
+    var branchStack:Stack<BranchContext>
     
     init () {
         currentIdx = -1
         tree = [Token]()
-        branchStack = Stack<GeneratorOf<Token>>()
+        branchStack = Stack<BranchContext>()
     }
     
     func generate() -> GeneratorOf<Token> {
         return GeneratorOf<Token>({
             if var b = self.branchStack.lastItem() {
-                if let next = b.next() {
+                if let next = b.generator.next() {
                     return next
                 } else {
                     self.branchStack.pop()
@@ -378,8 +422,9 @@ class TokenSequence : SequenceType {
             var bodyToken = self.getNext()
             if let nextToken = bodyToken {
                 if let branchToken = nextToken as? BranchToken {
-                    var seq = BranchTokenSequence(branchToken).generate()
-                    self.branchStack.push(seq)
+                    var seq = BranchTokenSequence(branchToken)
+                    var generator = seq.generate()
+                    self.branchStack.push(BranchContext(sequence: seq, generator: generator))
                 }
                 return nextToken
             } else {
@@ -395,10 +440,8 @@ class TokenSequence : SequenceType {
             token = self.tree[self.currentIdx]
         }
         
-        if let next = token {
-            if next.name == "whitespace" {
-                token = getNext()
-            }
+        if let next = token as? WhiteSpaceToken {
+            token = getNext()
         }
         
         return token
@@ -407,19 +450,19 @@ class TokenSequence : SequenceType {
 
 class BranchTokenSequence : SequenceType {
     var token:BranchToken
-    var branchStack:Stack<GeneratorOf<Token>>
+    var branchStack:Stack<BranchContext>
     var currentIndex:Int
     
     init (_ token:BranchToken) {
         self.token = token
         currentIndex = -1
-        branchStack = Stack<GeneratorOf<Token>>()
+        branchStack = Stack<BranchContext>()
     }
     
     func generate() -> GeneratorOf<Token> {
         return GeneratorOf<Token>({
             if var b = self.branchStack.lastItem() {
-                if let next = b.next() {
+                if let next = b.generator.next() {
                     return next
                 } else {
                     self.branchStack.pop()
@@ -429,8 +472,9 @@ class BranchTokenSequence : SequenceType {
             var bodyToken = self.getNext()
             if let nextToken = bodyToken {
                 if let branchToken = nextToken as? BranchToken {
-                    var seq = BranchTokenSequence(branchToken).generate()
-                    self.branchStack.push(seq)
+                    var seq = BranchTokenSequence(branchToken)
+                    var generator = seq.generate()
+                    self.branchStack.push(BranchContext(sequence: seq, generator: generator))
                     return branchToken
                 }
                 

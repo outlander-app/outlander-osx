@@ -9,18 +9,27 @@
 #import "AppDelegate.h"
 #import "MainWindowController.h"
 
-@interface AppDelegate()
-    @property (nonatomic, strong) MainWindowController *mainWindowController;
+@interface AppDelegate() {
+    NSMutableArray *windows;
+}
 @end
 
 @implementation AppDelegate
 
+- (MainWindowController *)activeWindowController {
+    NSWindow *win = [[NSApplication sharedApplication] keyWindow];
+    return win.windowController;
+}
+
 - (IBAction)newAction:(id)sender {
-    //[self.mainWindowController showAppUpdate];
+    
+	MainWindowController *ctrl = [[MainWindowController alloc] init];
+    [windows addObject:ctrl];
+    [ctrl.window makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)connectAction:(id)sender {
-    [self.mainWindowController showLogin];
+    [[self activeWindowController] showLogin];
 }
 
 - (IBAction)saveProfileAction:(id)sender {
@@ -36,15 +45,18 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	self.mainWindowController = [[MainWindowController alloc] init];
-	[self.mainWindowController.window makeKeyAndOrderFront:nil];
+    windows = [[NSMutableArray alloc] init];
+	MainWindowController *ctrl = [[MainWindowController alloc] init];
+    [windows addObject:ctrl];
+    
+    [ctrl.window makeKeyAndOrderFront:nil];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
 }
 
 - (void)sendCommand:(NSString *)command {
-    [_mainWindowController command:command];
+    [[self activeWindowController] command:command];
 }
 
 @end

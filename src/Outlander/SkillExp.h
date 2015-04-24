@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) LearningRate *mindState;
 @property (nonatomic, strong) NSDecimalNumber *ranks;
+@property (nonatomic, strong) NSDecimalNumber *originalRanks;
 @property (nonatomic, assign) BOOL isNew;
 
 @end

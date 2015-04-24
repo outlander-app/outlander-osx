@@ -108,4 +108,8 @@
     return self.rateId ^ [self.desc hash];
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"LearningRate: %@ (%hu)", self.desc, self.rateId];
+}
+
 @end
