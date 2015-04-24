@@ -164,12 +164,12 @@ Global variables are prefixed with a $.
 * $dead (0/1)
 * $webbed (0/1)
 * $joined (0/1)
-* $lefthand
+* $lefthand - `Empty` when nothing
 * $lefthandnoun
 * $lefthandnounid
-* (planned) $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
-* (planned) $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
-* $righthand
+* $monstercount - the number of monsters in the room you are currently in; requires monsterbold to be set
+* $monsterlist - the names of the monsters in the room you are currently in; requires monsterbold to be set
+* $righthand - `Empty` when nothing
 * $righthandnoun
 * $righthandnounid
 * $roomtitle
