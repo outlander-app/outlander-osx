@@ -33,11 +33,12 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     }
     
     override public func awakeFromNib() {
-        self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
     }
     
     public override func controlTextDidChange(obj: NSNotification) {
@@ -104,7 +105,6 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     }
     
     public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
-        
         
         if (row >= _context!.aliases.count()){
             return "";

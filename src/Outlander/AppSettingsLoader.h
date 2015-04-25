@@ -11,6 +11,7 @@
 @interface AppSettingsLoader : NSObject
 
 - (id)initWithContext:(GameContext *)context;
+- (void)loadProfile:(NSString *)profile;
 - (void)load;
 - (void)saveProfile;
 - (void)saveVariables;

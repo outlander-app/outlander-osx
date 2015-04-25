@@ -36,6 +36,8 @@
     
     if(!data || error) return;
     
+    [_context.globalVars removeAllObjects];
+    
     NSString *pattern = @"^#var \\{(.*)\\} \\{(.*)\\}$";
     [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {

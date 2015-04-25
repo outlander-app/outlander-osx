@@ -32,6 +32,10 @@
     [[self activeWindowController] showLogin];
 }
 
+- (IBAction)connectWithProfile:(id)sender {
+    [[self activeWindowController] showProfiles];
+}
+
 - (IBAction)saveProfileAction:(id)sender {
     [self sendCommand:@"saveSettings"];
 }

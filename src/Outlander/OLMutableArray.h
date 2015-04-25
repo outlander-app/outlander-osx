@@ -15,6 +15,7 @@
 
 - (NSInteger)count;
 - (void)addObject:(id)item;
+- (void)removeAll;
 - (void)removeObject:(id)item;
 - (id)objectAtIndex:(NSInteger)index;
 - (void)enumerateObjectsUsingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block;

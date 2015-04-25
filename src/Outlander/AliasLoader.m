@@ -36,6 +36,8 @@
     
     if(!data || error) return;
     
+    [_context.aliases removeAll];
+    
     NSString *pattern = @"^#alias \\{(.*)\\} \\{(.*)\\}$";
     [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {

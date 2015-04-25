@@ -45,9 +45,18 @@
     return self;
 }
 
+- (void)loadProfile:(NSString *)profile {
+    
+    if (![_context.settings.profile isEqualToString:profile]) {
+        
+        _context.settings.profile = profile;
+        [self load];
+    }
+}
+
 - (void)load {
     
-    [self writeConfigFolders];
+    [self writeConfigFolders:_context.settings.profile];
     [self loadConfig];
     
     [self writeProfileFolders:_context.settings.profile];
@@ -106,8 +115,8 @@
     [_macrosLoader save];
 }
 
-- (void)writeConfigFolders {
-    [self writeProfileFolders:@"Default"];
+- (void)writeConfigFolders:(NSString *)profile {
+    [self writeProfileFolders:profile];
     [self ensurePath:[_context.pathProvider logsFolder]];
     [self ensurePath:[_context.pathProvider scriptsFolder]];
     [self ensurePath:[_context.pathProvider mapsFolder]];

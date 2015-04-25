@@ -44,6 +44,10 @@
     [self signalRemoval:item];
 }
 
+- (void)removeAll {
+    [_cache removeAllObjects];
+}
+
 - (void)enumerateObjectsUsingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block {
     [_cache enumerateObjectsUsingBlock:block];
 }

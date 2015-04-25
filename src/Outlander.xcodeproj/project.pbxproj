@@ -62,6 +62,11 @@
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
+		F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82371AEAE732005BBD2F /* ScriptTester.swift */; };
+		F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
+		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
+		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
+		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F9316D191AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
 		F9316D1A1AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
 		F9316D1B1AD9D04300880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
@@ -460,6 +465,9 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
+		F92A82371AEAE732005BBD2F /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
+		F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseProfileViewController.swift; sourceTree = "<group>"; };
+		F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
 		F9316D181AD9D02B00880149 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9316D1F1AD9E1D400880149 /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
 		F9316D201AD9E1D400880149 /* OutlanderStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderStandard.swift; sourceTree = "<group>"; };
@@ -960,8 +968,12 @@
 				F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */,
 				F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */,
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
+				F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */,
+				F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */,
 				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
 				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
+				F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */,
+				F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */,
 				F98F22D119248506008175FD /* LoginViewController.h */,
 				F98F22D219248506008175FD /* LoginViewController.m */,
 				F98F22D319248506008175FD /* LoginViewController.xib */,
@@ -989,8 +1001,6 @@
 				F9AE6A9D18A07EA600A11EE9 /* VitalsViewController.h */,
 				F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */,
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
-				F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */,
-				F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */,
 				F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */,
 				F982CF601AD7834200BB9574 /* WindowsViewController.xib */,
 			);
@@ -1216,6 +1226,7 @@
 				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
+				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1425,6 +1436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
+				F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */,
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F9CF92751890832800449548 /* InfoPlist.strings in Resources */,
@@ -1452,6 +1464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */,
+				F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */,
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
@@ -1709,6 +1722,7 @@
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
 				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
 				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
+				F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */,
 				F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F9B2C7B41ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
@@ -1761,6 +1775,7 @@
 				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
 				F9762F79192E4EEB00B873D7 /* Alias.m in Sources */,
+				F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */,
 				F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */,
 				F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
@@ -1804,6 +1819,7 @@
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
+				F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */,
 				F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,

@@ -13,6 +13,7 @@
 - (id)init;
 - (void)command:(NSString *)command;
 - (void)showLogin;
+- (void)showProfiles;
 - (void)showAppUpdate;
 - (void)showSheet:(NSView *)view;
 - (void)endSheet;

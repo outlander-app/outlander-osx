@@ -30,6 +30,7 @@
     @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
     @property (nonatomic, strong) ApplicationUpdateViewController *appUpdateController;
+    @property (nonatomic, strong) ChooseProfileViewController *chooseProfileViewController;
     @property (nonatomic, strong) SQRLUpdater *updater;
     @property (nonatomic, strong) GameContext *gameContext;
 @end
@@ -67,6 +68,26 @@
     _autoMapperWindowController = [[AutoMapperWindowController alloc] initWithWindowNibName:@"AutoMapperWindowController"];
     [_autoMapperWindowController setContext:_gameContext];
     [_autoMapperWindowController loadMaps];
+    
+    _chooseProfileViewController = [[ChooseProfileViewController alloc]
+                                    initWithNibName:@"ChooseProfileViewController"
+                                    bundle:nil];
+   
+    _chooseProfileViewController.gameContext = _gameContext;
+    _chooseProfileViewController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        
+        [_appSettingsLoader loadProfile:_chooseProfileViewController.selectedProfile];
+        
+        [self showLogin];
+        
+        return [RACSignal empty];
+    }];
+    
+    _chooseProfileViewController.cancelCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        return [RACSignal empty];
+    }];
     
     _appUpdateController = [[ApplicationUpdateViewController alloc] init];
     _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
@@ -216,16 +237,25 @@
 }
 
 - (void)showLogin {
-    [self showSheet:_loginViewController.view];
+    NSRect viewRect = NSMakeRect(0, 0, 308, 120);
+    [self showSheet:_loginViewController.view withFrame:viewRect];
 }
 
 - (void)showAppUpdate {
-    [self showSheet:_appUpdateController.view];
+//    NSRect viewRect = NSMakeRect(0, 0, 300, 300);
+//    [self showSheet:_appUpdateController.view withFrame:viewRect];
 }
 
-- (void)showSheet:(NSView *)view {
+- (void)showProfiles {
+    NSRect viewRect = NSMakeRect(0, 0, 192, 237);
+    [_chooseProfileViewController loadProfiles:_gameContext.settings.profile];
+    [self showSheet:_chooseProfileViewController.view withFrame:viewRect];
+}
+
+- (void)showSheet:(NSView *)view withFrame:(NSRect)frame {
     self.sheet.contentView = view;
-    [self.sheet setFrame:view.frame display:YES animate:NO];
+    
+    [self.sheet setFrame:frame display:YES animate:NO];
     
     [NSApp beginSheet:self.sheet
        modalForWindow:self.window

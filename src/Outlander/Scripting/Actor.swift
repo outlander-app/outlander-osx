@@ -770,7 +770,7 @@ public class Script : BaseOp, IScript {
         
         var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
         var result = mathMsg.calcResult(current)
-        var strResult = String(format:"%.2g", result)
+        var strResult = String(format:"%g", result)
         
         self.setVariable(mathMsg.variable, value: "\(strResult)")
         
