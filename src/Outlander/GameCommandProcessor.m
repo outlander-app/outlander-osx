@@ -42,7 +42,7 @@
     _echoed = [RACReplaySubject subject];
     
     _handlers = [[NSMutableArray alloc] init];
-    [_handlers addObject:[[ScriptHandler alloc] initWith:[[GameEventRelay alloc] init]]];
+    [_handlers addObject:[[ScriptHandler alloc] initWith:[[GameEventRelay alloc] initWith:context.events]]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
     [_handlers addObject:[[VarCommandHandler alloc] init]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];

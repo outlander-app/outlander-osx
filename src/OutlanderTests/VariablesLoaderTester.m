@@ -25,8 +25,8 @@ describe(@"Variables Loader", ^{
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[VariablesLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
        
-        // +1 is roundtime
-        originalCount = [theContext.globalVars count] + 1;
+        // default vars
+        originalCount = 6;
     });
     
     context(@"load", ^{
@@ -59,6 +59,7 @@ describe(@"Variables Loader", ^{
             
             NSString *result = @"#var {lefthand} {Empty}\n#var {preparedspell} {None}\n#var {prompt} {>}\n#var {righthand} {Empty}\n#var {tdp} {0}\n";
            
+            [theLoader load];
             [theLoader save];
             
             NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"variables.cfg"];

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class ScriptRunner {
+public class ScriptRunner : ISubscriber {
     
     class func newInstance(context:GameContext, notifier:INotifyMessage) -> ScriptRunner {
         return ScriptRunner(context: context, notifier: notifier)
@@ -27,9 +27,7 @@ class ScriptRunner {
         self.notifier = notifier
         self.scriptLoader = ScriptLoader(with: self.context, and: LocalFileSystem())
         
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(self, selector:Selector("start:"), name: "startscript", object: nil)
+        context.events.subscribe(self, token: "startscript")
         
         NSNotificationCenter
             .defaultCenter()
@@ -51,16 +49,20 @@ class ScriptRunner {
         }
     }
     
-    func start(notification: NSNotification) {
-        
-        if let dict = notification.userInfo as? Dictionary<String, AnyObject> {
-            var scriptName = dict["target"] as! String
-            var tokens = dict["args"] as? NSArray;
-            
-            self.abort(scriptName)
-           
-            self.loadAsync(scriptName, tokens: tokens)
+    public func handle(token:String, data:[String:AnyObject]) {
+        if token == "startscript" {
+            self.start(data)
         }
+    }
+    
+    func start(dict:[String:AnyObject]) {
+        
+        var scriptName = dict["target"] as! String
+        var tokens = dict["args"] as? NSArray;
+        
+        self.abort(scriptName)
+       
+        self.loadAsync(scriptName, tokens: tokens)
     }
     
     func loadAsync(scriptName:String, tokens:NSArray?) {

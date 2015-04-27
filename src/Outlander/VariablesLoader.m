@@ -34,9 +34,15 @@
     NSError *error;
     NSString *data = [_fileSystem stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:&error];
     
-    if(!data || error) return;
+    if(!data || error) {
+        if (_context.globalVars.count == 0) {
+            [self setDefaults];
+        }
+        return;
+    }
     
     [_context.globalVars removeAllObjects];
+    [self setDefaults];
     
     NSString *pattern = @"^#var \\{(.*)\\} \\{(.*)\\}$";
     [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
@@ -49,6 +55,14 @@
    
     // ensure that roundtime is always zero when reloaded
     [_context.globalVars setCacheObject:@"0" forKey:@"roundtime"];
+}
+
+- (void)setDefaults {
+    [_context.globalVars setCacheObject:@">" forKey: @"prompt"];
+    [_context.globalVars setCacheObject:@"Empty" forKey: @"lefthand"];
+    [_context.globalVars setCacheObject:@"Empty" forKey: @"righthand"];
+    [_context.globalVars setCacheObject:@"None" forKey: @"preparedspell"];
+    [_context.globalVars setCacheObject:@"0" forKey: @"tdp"];
 }
 
 - (void)save {

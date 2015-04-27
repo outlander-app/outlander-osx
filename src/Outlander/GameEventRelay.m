@@ -8,14 +8,29 @@
 
 #import "GameEventRelay.h"
 
+@interface GameEventRelay() {
+    EventAggregator *_events;
+}
+@end
+
 @implementation GameEventRelay
+
+- (instancetype)initWith:(EventAggregator *)events {
+    self = [super init];
+    if (self) {
+        _events = events;
+    }
+    return self;
+}
 
 - (void)send:(NSString *)event with:(NSDictionary *)data {
     
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:event
-                      object:self
-                    userInfo:data];
+    [_events publish:event data:data];
+    
+//    [[NSNotificationCenter defaultCenter]
+//        postNotificationName:event
+//                      object:self
+//                    userInfo:data];
 }
 
 @end

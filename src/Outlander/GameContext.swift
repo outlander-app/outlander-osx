@@ -37,6 +37,7 @@ public class GameContext {
     public var aliases:OLMutableArray
     public var macros:OLMutableArray
     public var globalVars:TSMutableDictionary
+    public var events:EventAggregator
     
     init() {
         self.settings = AppSettings()
@@ -46,10 +47,6 @@ public class GameContext {
         self.macros = OLMutableArray()
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
         
-        self.globalVars.setCacheObject(">", forKey: "prompt")
-        self.globalVars.setCacheObject("Empty", forKey: "lefthand")
-        self.globalVars.setCacheObject("Empty", forKey: "righthand")
-        self.globalVars.setCacheObject("None", forKey: "preparedspell")
-        self.globalVars.setCacheObject("0", forKey: "tdp")
+        self.events = EventAggregator()
     }
 }

@@ -7,7 +7,10 @@
 //
 
 #import "EventRelay.h"
+#import "Outlander-Swift.h"
 
 @interface GameEventRelay : NSObject <EventRelay>
+
+- (instancetype)initWith:(EventAggregator *)events;
 
 @end
