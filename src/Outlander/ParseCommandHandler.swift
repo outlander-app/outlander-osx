@@ -23,9 +23,7 @@ class ParseCommandHandler : CommandHandler {
         let text = command.substringFromIndex(advance(command.startIndex, 6)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
         var dict = ["text": text]
-       
-        NSNotificationCenter
-            .defaultCenter()
-            .postNotificationName("ol:game-parse", object: nil, userInfo: dict)
+        
+        withContext.events.publish("ol:game-parse", data: dict)
     }
 }

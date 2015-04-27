@@ -28,18 +28,9 @@ public class ScriptRunner : ISubscriber {
         self.scriptLoader = ScriptLoader(with: self.context, and: LocalFileSystem())
         
         context.events.subscribe(self, token: "startscript")
-        
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(self, selector:Selector("manage:"), name: "script", object: nil)
-        
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(self, selector:Selector("stream:"), name: "ol:game-stream", object: nil)
-        
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(self, selector:Selector("parse:"), name: "ol:game-parse", object: nil)
+        context.events.subscribe(self, token: "script")
+        context.events.subscribe(self, token: "ol:game-parse")
+        context.events.subscribe(self, token: "ol:game-stream")
         
         self.context.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
@@ -50,8 +41,14 @@ public class ScriptRunner : ISubscriber {
     }
     
     public func handle(token:String, data:[String:AnyObject]) {
-        if token == "startscript" {
+        if token == "ol:game-stream" {
+            self.stream(data)
+        } else if token == "ol:game-parse" {
+            self.parse(data)
+        } else if token == "startscript" {
             self.start(data)
+        } else if token == "script" {
+            self.manage(data)
         }
     }
     
@@ -105,8 +102,31 @@ public class ScriptRunner : ISubscriber {
         return []
     }
     
-    func manage(notification: NSNotification) {
-        if let dict = notification.userInfo as? [String:String] {
+    func stream(dict:[String:AnyObject]) {
+        var nodes = dict["nodes"] as! [Node]
+        var text = dict["text"] as! String
+        
+        for (index, q) in enumerate(self.thread.queue.operations) {
+            if let script = q as? IScript {
+                script.stream(text, nodes: nodes)
+            }
+        }
+    }
+    
+    func parse(userInfo:[String:AnyObject]) {
+        if let dict = userInfo as? [String:String] {
+            var text = dict["text"] ?? ""
+            
+            for (index, q) in enumerate(self.thread.queue.operations) {
+                if let script = q as? IScript {
+                    script.stream(text, nodes: [])
+                }
+            }
+        }
+    }
+    
+    func manage(userInfo:[String:AnyObject]) {
+        if let dict = userInfo as? [String:String] {
             var scriptName = dict["target"]!
             var action = dict["action"]!
             
@@ -126,31 +146,6 @@ public class ScriptRunner : ISubscriber {
                 self.debug(scriptName, level: dict["param"])
             } else if action == "list" {
                 self.listAll()
-            }
-        }
-    }
-    
-    func stream(notification: NSNotification) {
-        if let dict = notification.userInfo as? [String:AnyObject] {
-            var nodes = dict["nodes"] as! [Node]
-            var text = dict["text"] as! String
-            
-            for (index, q) in enumerate(self.thread.queue.operations) {
-                if let script = q as? IScript {
-                    script.stream(text, nodes: nodes)
-                }
-            }
-        }
-    }
-    
-    func parse(notification: NSNotification) {
-        if let dict = notification.userInfo as? [String:String] {
-            var text = dict["text"] ?? ""
-            
-            for (index, q) in enumerate(self.thread.queue.operations) {
-                if let script = q as? IScript {
-                    script.stream(text, nodes: [])
-                }
             }
         }
     }

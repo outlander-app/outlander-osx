@@ -26,11 +26,13 @@ public class EventAggregator {
         
         var id = NSUUID().UUIDString
         
-        self.handlers.append(EventHandler(
+        var handler = EventHandler(
             id: id,
             subscriber: subscriber,
             token: token
-        ))
+        )
+        
+        self.handlers.append(handler)
        
         return id
     }
@@ -40,6 +42,10 @@ public class EventAggregator {
         if let found = idx {
             self.handlers.removeAtIndex(found)
         }
+    }
+    
+    public func unSubscribeAll() {
+        self.handlers = []
     }
     
     public func publish(token:String, data:Dictionary<String, AnyObject>) {
@@ -55,6 +61,7 @@ public class EventAggregator {
 
 public struct EventHandler {
     var id:String
-    weak var subscriber:ISubscriber?
+    // TODO: this should be weak, though swift sometimes crashes with it
+    var subscriber:ISubscriber?
     var token:String
 }

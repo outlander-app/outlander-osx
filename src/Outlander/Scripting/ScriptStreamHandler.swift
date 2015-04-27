@@ -20,8 +20,6 @@ public class ScriptStreamHandler : NodeHandler {
         dict["nodes"] = nodes
         dict["text"] = text
         
-        NSNotificationCenter
-            .defaultCenter()
-            .postNotificationName("ol:game-stream", object: nil, userInfo: dict)
+        context.events.publish("ol:game-stream", data: dict)
     }
 }

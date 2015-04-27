@@ -7,6 +7,7 @@
 //
 
 #import "ScriptCommandHandler.h"
+#import "Outlander-Swift.h"
 
 @implementation ScriptCommandHandler
 
@@ -30,11 +31,7 @@
         }
         
         NSDictionary *dict = @{ @"target": target, @"action": action, @"param": param};
-        
-        [[NSNotificationCenter defaultCenter]
-            postNotificationName:@"script"
-                          object:self
-                        userInfo:dict];
+        [context.events publish: @"script" data: dict];
     }
 }
 
