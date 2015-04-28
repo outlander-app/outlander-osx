@@ -8,7 +8,6 @@
 
 #import "SendCommandHandler.h"
 #import "CommandContext.h"
-#import "CommandRelay.h"
 #import "GameCommandRelay.h"
 #import "NSString+Categories.h"
 #import "SimpleQueue.h"
@@ -23,12 +22,12 @@
 
 @implementation SendCommandHandler
 
-- (instancetype)init {
+- (instancetype)initWith:(id<CommandRelay>)relay {
     self = [super init];
     if (!self) return nil;
   
     _queue = [[SimpleQueue alloc] init];
-    _commandRelay = [[GameCommandRelay alloc] init];
+    _commandRelay = relay;
     return self;
 }
 
@@ -62,6 +61,7 @@
             ctx.command = [command trimWhitespaceAndNewline];
             ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
             ctx.tag.color = @"#ACFF2F";
+            ctx.tag.preset = @"sendinput";
             [_commandRelay sendCommand:ctx];
         }];
     }

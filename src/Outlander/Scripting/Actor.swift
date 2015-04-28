@@ -51,6 +51,10 @@ public protocol IAcceptMessage {
 public protocol IScript : IAcceptMessage {
     var scriptName:String { get }
     var logLevel:ScriptLogLevel { get }
+    
+    var completed:((String, String?)->Void)? {get set}
+    
+    func run(script:String, globalVars:(()->[String:String])?, params:[String])
   
     func printInfo()
     func cancel()
@@ -64,44 +68,6 @@ public protocol IScript : IAcceptMessage {
     func moveNext()
 }
 
-public protocol Actor {
-    func addOperation(op:NSOperation);
-}
-
-public class Thread : Actor {
-    lazy var queue:NSOperationQueue = {
-        var queue = NSOperationQueue()
-        queue.name = "Script queue"
-//        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-    
-    var notifier:INotifyMessage?
-    
-    public init(_ notifier:INotifyMessage) {
-        self.notifier = notifier
-    }
-    
-    public func addOperation(op:NSOperation) {
-        queue.addOperation(op);
-    }
-}
-
-public class BaseOp : NSOperation {
-    
-    var _paused = false
-    
-    public var uuid = NSUUID()
-    
-    public func pause() {
-        self._paused = true
-    }
-    
-    public func resume() {
-        self._paused = false
-    }
-}
-
 public enum ScriptLogLevel : Int {
     case None = 0
     case Gosubs = 1
@@ -111,16 +77,19 @@ public enum ScriptLogLevel : Int {
     case Actions = 5
 }
 
-public class Script : BaseOp, IScript {
+public class Script : IScript {
   
     public var scriptName:String
     public var logLevel = ScriptLogLevel.None
     
     var notifier:INotifyMessage
-    var actor:Actor
     var context:ScriptContext?
     var started:NSDate?
     
+    public var cancelled = false
+    public var paused = false
+    public var completed:((String, String?)->Void)?
+
     private var nextAfterUnpause = false
     private var matchStack:[IMatch]
     private var matchwait:MatchwaitMessage?
@@ -132,36 +101,12 @@ public class Script : BaseOp, IScript {
     var currentLine:Int?
     var currentColumn:Int?
     
-    public init(_ scriptName:String, _ notifier:INotifyMessage, _ actor:Actor) {
+    public init(_ scriptName:String, _ notifier:INotifyMessage) {
         self.scriptName = scriptName
         self.notifier = notifier
-        self.actor = actor
         self.matchStack = []
         self.actions = []
         self.reactToStream = []
-    }
-    
-    public override func main () {
-        autoreleasepool {
-            
-            self.started = NSDate()
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "hh:mm a"
-            let formattedDate = dateFormatter.stringFromDate(self.started!)
-            
-            self.sendMessage(ScriptInfoMessage("[Starting '\(self.scriptName)' at \(formattedDate)]\n"))
-            
-            while !self.cancelled {
-            }
-            
-            self.currentLine = nil
-            self.currentColumn = nil
-            
-            let diff = NSDate().timeIntervalSinceDate(self.started!)
-            
-            self.sendMessage(ScriptInfoMessage(String(format: "[Script '\(self.scriptName)' completed after %.02f seconds total run time]\n", diff)))
-        }
     }
     
     public func printInfo() {
@@ -169,13 +114,29 @@ public class Script : BaseOp, IScript {
         self.sendMessage(ScriptInfoMessage(String(format: "[Script '\(self.scriptName)' running for %.02f seconds]\n", diff)))
     }
     
-    override public func pause() {
+    public func cancel() {
+        
+        self.cancelled = true
+        
+        self.matchwait = nil
+        self.matchStack.removeAll(keepCapacity: false)
+        self.actions.removeAll(keepCapacity: false)
+        self.reactToStream.removeAll(keepCapacity: false)
+        
+        self.currentLine = nil
+        self.currentColumn = nil
+        
+        let diff = NSDate().timeIntervalSinceDate(self.started!)
+        
+        self.sendMessage(ScriptInfoMessage(String(format: "[Script '\(self.scriptName)' completed after %.02f seconds total run time]\n", diff)))
+    }
+    
+    public func pause() {
        
-        // LLVM BUG: if these two lines are after super.pause(), it causes a segmentation fault when archived
+        self.paused = true
+        
         let line = self.currentLine
         let column = self.currentColumn
-        
-        super.pause()
         
         self.currentLine = nil
         self.currentColumn = nil
@@ -186,7 +147,12 @@ public class Script : BaseOp, IScript {
         self.currentColumn = column
     }
     
-    override public func resume() {
+    public func resume() {
+        
+        if !self.paused {
+            return
+        }
+        
         var line = self.currentLine
         var column = self.currentColumn
         
@@ -197,8 +163,8 @@ public class Script : BaseOp, IScript {
         
         self.currentLine = line
         self.currentColumn = column
-        
-        super.resume()
+       
+        self.paused = false
         
         if nextAfterUnpause {
             nextAfterUnpause = false
@@ -212,7 +178,9 @@ public class Script : BaseOp, IScript {
             let diff = NSDate().timeIntervalSinceDate(self.started!)
             self.notify(TextTag(with: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
             
-            for v in display {
+            var sorted = display.sorted { $0 < $1 }
+            
+            for v in sorted {
                 var tag = TextTag(with: "|  \(v)\n", mono: true)
                 self.notify(tag)
             }
@@ -250,7 +218,7 @@ public class Script : BaseOp, IScript {
     
     public func stream(text:String, nodes:[Node]) {
         
-        if self._paused || self.cancelled {
+        if self.paused || self.cancelled {
             return
         }
         
@@ -354,39 +322,50 @@ public class Script : BaseOp, IScript {
             
             self.notify(tag)
             self.cancel()
+            self.completed?(self.scriptName, "no gosub to return to")
         }
     }
     
     public func run(script:String, globalVars:(()->[String:String])?, params:[String]) {
         
-        try {
+        self.started = NSDate()
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        let formattedDate = dateFormatter.stringFromDate(self.started!)
+        
+        self.sendMessage(ScriptInfoMessage("[Starting '\(self.scriptName)' at \(formattedDate)]\n"))
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            
             let parser = OutlanderScriptParser()
             let tokens = parser.parseString(script)
             
-            if parser.errors.count > 0 {
+            let parseTime = NSDate().timeIntervalSinceDate(self.started!)
+            
+            println("parsed \(self.scriptName) in \(parseTime)")
+            
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                for err in parser.errors {
-                    var tag = TextTag(with: "\(err)\n", mono: true)
-                    tag.color = "#efefef"
-                    tag.backgroundColor = "#ff3300"
-                    self.notify(tag)
+                if parser.errors.count > 0 {
+                    
+                    for err in parser.errors {
+                        var tag = TextTag(with: "\(err)\n", mono: true)
+                        tag.color = "#efefef"
+                        tag.backgroundColor = "#ff3300"
+                        self.notify(tag)
+                    }
+                    self.cancel()
+                    self.completed?(self.scriptName, nil)
+                    return
                 }
-                self.cancel()
-                return
-            }
-            
-            self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
-            self.context!.marker.currentIdx = -1
-            self.moveNext()
-            
-        }.catch { e in
-           
-            var tag = TextTag(with: "\(e)\n", mono: true)
-            tag.color = "#efefef"
-            tag.backgroundColor = "#ff3300"
-            self.notify(tag)
-            self.cancel()
-        }
+                
+                self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
+                self.context!.marker.currentIdx = -1
+                self.moveNext()
+                
+            })
+        })
     }
     
     public func moveNextAfterRoundtime() {
@@ -409,7 +388,7 @@ public class Script : BaseOp, IScript {
             return
         }
         
-        if self._paused {
+        if self.paused {
             self.nextAfterUnpause = true
             return
         }
@@ -424,14 +403,14 @@ public class Script : BaseOp, IScript {
             if let msg = tokenToMessage.toMessage(self.context!, token: nextToken) {
                 self.sendMessage(msg)
             } else {
-                println("canceling with no message")
                 // end of script
                 self.cancel()
+                self.completed?(self.scriptName, "completed with no message")
             }
         } else {
-            println("canceling from iteration")
             // end of script
             self.cancel()
+            self.completed?(self.scriptName, "completed from iteration")
         }
     }
     
@@ -503,7 +482,8 @@ public class Script : BaseOp, IScript {
             self.matchwait = matchwait
         }
         else if let pauseMsg = msg as? PauseMessage {
-            self.actor.addOperation(PauseOp(self, seconds: pauseMsg.seconds))
+            var op = PauseOp(self, seconds: pauseMsg.seconds)
+            op.run()
         }
         else if let debugMsg = msg as? DebugLevelMessage {
             self.logLevel = debugMsg.level
@@ -589,6 +569,7 @@ public class Script : BaseOp, IScript {
                 txtMsg.backgroundColor = "#ff3300"
                 self.notify(txtMsg)
                 self.cancel()
+                self.completed?(self.scriptName, "no more params to shift")
             }
         }
         else if let randomMsg = msg as? RandomMessage {
@@ -625,6 +606,7 @@ public class Script : BaseOp, IScript {
         else if let exitMsg = msg as? ExitMessage {
             self.notify(TextTag(with: "exit\n", mono: true), debug:ScriptLogLevel.Gosubs)
             self.cancel()
+            self.completed?(self.scriptName, "script exit")
         }
         else if let unkownMsg = msg as? UnknownMessage {
             let txtMsg = TextTag(with: "unkown command: \(unkownMsg.description)\n", mono: true)
@@ -964,7 +946,7 @@ public class TokenToMessage {
     }
 }
 
-public class PauseOp : BaseOp {
+public class PauseOp {
     
     var actor:IScript
     var seconds:Double
@@ -974,15 +956,13 @@ public class PauseOp : BaseOp {
         self.seconds = seconds
     }
     
-    public override func main () {
-        autoreleasepool() {
-            var text = String(format: "pausing for %.02f seconds\n", self.seconds)
-            var txtMsg = TextTag(with: text, mono: true)
-            self.actor.notify(txtMsg, debug:ScriptLogLevel.Wait)
-            
-            after(self.seconds) {
-                self.actor.sendMessage(OperationComplete("pause", msg: ""))
-            }
+    public func run() {
+        var text = String(format: "pausing for %.02f seconds\n", self.seconds)
+        var txtMsg = TextTag(with: text, mono: true)
+        self.actor.notify(txtMsg, debug:ScriptLogLevel.Wait)
+        
+        after(self.seconds) {
+            self.actor.sendMessage(OperationComplete("pause", msg: ""))
         }
     }
 }

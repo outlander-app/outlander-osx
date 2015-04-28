@@ -8,6 +8,10 @@
 
 #import "CommandRelay.h"
 
+@class EventAggregator;
+
 @interface GameCommandRelay : NSObject <CommandRelay>
+
+-(instancetype)initWith:(EventAggregator *)aggregator;
 
 @end

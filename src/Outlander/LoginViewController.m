@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Outlander-Swift.h"
 #import "LoginViewController.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "Outlander-Swift.h"
 
 @interface LoginViewController () {
 }
@@ -36,10 +36,7 @@
     self.cancel.rac_command = self.cancelCommand;
     self.connect.rac_command = self.connectCommand;
     
-    [self.account setStringValue:_context.settings.account];
-    [self.password setStringValue:_context.settings.password];
-    [self.character setStringValue:_context.settings.character];
-    [self.game setStringValue:_context.settings.game];
+    [self refreshSettings];
     
     [self.account.rac_textSignal subscribeNext:^(NSString *val) {
         _context.settings.account = val;
@@ -59,8 +56,18 @@
     }];
 }
 
+-(void)viewDidAppear {
+    [self refreshSettings];
+}
+
+- (void)refreshSettings {
+    [self.account setStringValue:_context.settings.account];
+    [self.password setStringValue:_context.settings.password];
+    [self.character setStringValue:_context.settings.character];
+    [self.game setStringValue:_context.settings.game];
+}
+
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
-    NSLog(@"Control End: %@", _game.stringValue);
     _context.settings.game = _game.stringValue;
 }
 

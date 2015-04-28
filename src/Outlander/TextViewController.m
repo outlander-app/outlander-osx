@@ -25,6 +25,7 @@
 	if(self == nil) return nil;
     
     _keyup = [RACSubject subject];
+    _command = [RACSubject subject];
     
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"HH:mm"];
@@ -36,6 +37,12 @@
     _TextView.keyupSignal = [RACSubject subject];
     [_TextView.keyupSignal subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
+        [sub sendNext:x];
+    }];
+    
+    _TextView.commandSignal = [RACSubject subject];
+    [_TextView.commandSignal subscribeNext:^(id x) {
+        id<RACSubscriber> sub = (id<RACSubscriber>)_command;
         [sub sendNext:x];
     }];
     

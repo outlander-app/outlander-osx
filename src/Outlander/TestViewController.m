@@ -149,11 +149,11 @@
 //    tag.color = @"#565656";
 //    tag.href = @"http://google.com";
 //    [self append:tag to:@"main"];
-    //[tags addObject:tag];
+//    [tags addObject:tag];
 //
 //    tag = [TextTag tagFor:@"123" mono:NO];
 //    tag.color = @"#565656";
-//    tag.command = @"command:something";
+//    tag.command = @"something";
 //    [self append:tag to:@"main"];
 //    [tags addObject:tag];
 //
@@ -187,6 +187,9 @@
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];
     controller.gameContext = _gameContext;
+    [controller.command subscribeNext:^(CommandContext *ctx) {
+        [_commandProcessor process:ctx];
+    }];
     [controller.keyup subscribeNext:^(NSEvent *theEvent) {
         
         if(![__CommandTextField hasFocus]) {

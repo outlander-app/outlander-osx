@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) BOOL displayTimestamp;
 @property (nonatomic, strong) RACSignal *keyupSignal;
+@property (nonatomic, strong) RACSignal *commandSignal;
 
 @end

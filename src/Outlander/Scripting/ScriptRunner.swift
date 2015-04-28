@@ -15,17 +15,18 @@ public class ScriptRunner : ISubscriber {
         return ScriptRunner(context: context, notifier: notifier)
     }
     
-    var thread:Thread
     var notifier:INotifyMessage
     var context:GameContext
     var scriptLoader:ScriptLoader
+   
+    private var scripts:[IScript]
     
     init(context:GameContext, notifier:INotifyMessage) {
         
         self.context = context
-        self.thread = Thread(notifier)
         self.notifier = notifier
         self.scriptLoader = ScriptLoader(with: self.context, and: LocalFileSystem())
+        self.scripts = []
         
         context.events.subscribe(self, token: "startscript")
         context.events.subscribe(self, token: "script")
@@ -62,29 +63,56 @@ public class ScriptRunner : ISubscriber {
         self.loadAsync(scriptName, tokens: tokens)
     }
     
+    struct ScriptLoadResult {
+        var script:IScript?
+        var params:[String]
+        var scriptText:String?
+    }
+    
     func loadAsync(scriptName:String, tokens:NSArray?) {
-        { () -> NSDate in
-            var date = NSDate()
+        { () -> ScriptLoadResult in
+            var script:IScript?
+            var params:[String] = []
+            var scriptText:String?
             
-            if let scriptText = self.scriptLoader.load(scriptName) {
+            if let text = self.scriptLoader.load(scriptName) {
                 
-                var params = self.argsToParams(tokens)
-                
-                var script = Script(scriptName, self.notifier, self.thread)
-                
-                self.thread.addOperation(script)
-                
-                script.run(scriptText, globalVars: { () -> [String:String] in
-                    return self.context.globalVars.copyValues() as! [String:String]
-                }, params: params)
+                params = self.argsToParams(tokens)
+                script = Script(scriptName, self.notifier)
+                scriptText = text
             }
             
-            return date
-        } ~> { (start) -> () in
+            return ScriptLoadResult(script: script,  params: params, scriptText: scriptText)
+        } ~> { res -> () in
+          
+            self.runScript(res)
             
-            let diff = NSDate().timeIntervalSinceDate(start)
+//            let diff = NSDate().timeIntervalSinceDate(start)
+//            
+//            println("\(scriptName) loaded in \(diff)")
+        }
+    }
+    
+    private func runScript(res:ScriptLoadResult) {
+        
+        if var script = res.script {
+            self.scripts.append(script)
             
-            println("\(scriptName) loaded in \(diff)")
+            script.completed = { (name, msg) in
+                println(msg)
+                self.remove(name)
+            }
+            
+            script.run(res.scriptText!, globalVars: { () -> [String:String] in
+                return self.context.globalVars.copyValues() as! [String:String]
+            }, params: res.params)
+        }
+    }
+    
+    private func remove(name:String) {
+        var found = self.scripts.find { $0.scriptName == name }
+        if let idx = found {
+            self.scripts.removeAtIndex(idx)
         }
     }
     
@@ -106,10 +134,8 @@ public class ScriptRunner : ISubscriber {
         var nodes = dict["nodes"] as! [Node]
         var text = dict["text"] as! String
         
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript {
-                script.stream(text, nodes: nodes)
-            }
+        for (index, script) in enumerate(self.scripts) {
+            script.stream(text, nodes: nodes)
         }
     }
     
@@ -117,10 +143,8 @@ public class ScriptRunner : ISubscriber {
         if let dict = userInfo as? [String:String] {
             var text = dict["text"] ?? ""
             
-            for (index, q) in enumerate(self.thread.queue.operations) {
-                if let script = q as? IScript {
-                    script.stream(text, nodes: [])
-                }
+            for (index, script) in enumerate(self.scripts) {
+                script.stream(text, nodes: [])
             }
         }
     }
@@ -151,27 +175,32 @@ public class ScriptRunner : ISubscriber {
     }
     
     private func abort(name:String) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript {
-                
-                if name == "all" || script.scriptName == name {
-                    script.cancel()
-                }
+        var names:[String] = []
+        for (index, script) in enumerate(self.scripts) {
+            if name == "all" || script.scriptName == name {
+                script.cancel()
+                names.append(script.scriptName)
                 
                 if name != "all" {
                     break
                 }
             }
         }
+        
+        if name == "all" {
+            self.scripts = []
+        } else {
+            for n in names {
+                self.remove(n)
+            }
+        }
     }
     
     private func pause(name:String) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript {
-                
-                if name == "all" || script.scriptName == name {
-                    script.pause()
-                }
+        for (index, script) in enumerate(self.scripts) {
+            
+            if name == "all" || script.scriptName == name {
+                script.pause()
                 
                 if name != "all" {
                     break
@@ -181,12 +210,10 @@ public class ScriptRunner : ISubscriber {
     }
     
     private func resume(name:String) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript {
-                
-                if name == "all" || script.scriptName == name {
-                    script.resume()
-                }
+        for (index, script) in enumerate(self.scripts) {
+            
+            if name == "all" || script.scriptName == name {
+                script.resume()
                 
                 if name != "all" {
                     break
@@ -196,8 +223,8 @@ public class ScriptRunner : ISubscriber {
     }
     
     private func vars(name:String) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if let script = q as? IScript where script.scriptName == name {
+        for (index, script) in enumerate(self.scripts) {
+            if script.scriptName == name {
                 script.vars()
                 break
             }
@@ -205,8 +232,8 @@ public class ScriptRunner : ISubscriber {
     }
     
     private func debug(name:String, level:String?) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if var script = q as? IScript where script.scriptName == name {
+        for (index, script) in enumerate(self.scripts) {
+            if script.scriptName == name {
                 var levelNum = level?.toInt()
                 script.setLogLevel(ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None)
                 break
@@ -215,18 +242,18 @@ public class ScriptRunner : ISubscriber {
     }
     
     private func listAll() {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if var script = q as? IScript {
-                script.printInfo()
-            }
+        for (index, script) in enumerate(self.scripts) {
+            script.printInfo()
+        }
+        
+        if self.scripts.count == 0 {
+            self.notifier.notify(TextTag(with: "\n[No scripts current running.]\n\n", mono: true))
         }
     }
     
     private func notifyVars(vars:[String:String]) {
-        for (index, q) in enumerate(self.thread.queue.operations) {
-            if var script = q as? IScript {
-                script.varsChanged(vars)
-            }
+        for (index, script) in enumerate(self.scripts) {
+            script.varsChanged(vars)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  EventAggregator.swift
 //  Outlander
 //
 //  Created by Joseph McBride on 4/25/15.
@@ -41,6 +41,17 @@ public class EventAggregator {
         var idx = self.handlers.find { $0.id == id }
         if let found = idx {
             self.handlers.removeAtIndex(found)
+        }
+    }
+    
+    public func unSubscribeListener(subscriber:ISubscriber) {
+        var res = self.handlers.filter { $0.subscriber === subscriber }
+        
+        for sub in res {
+            var idx = self.handlers.find { $0.id == sub.id }
+            if let found = idx {
+                self.handlers.removeAtIndex(found)
+            }
         }
     }
     

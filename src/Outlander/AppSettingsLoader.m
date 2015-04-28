@@ -47,7 +47,7 @@
 
 - (void)loadProfile:(NSString *)profile {
     
-    if (![_context.settings.profile isEqualToString:profile]) {
+    if ([profile length] > 0 && ![_context.settings.profile isEqualToString:profile]) {
         
         _context.settings.profile = profile;
         [self load];

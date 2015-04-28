@@ -7,7 +7,10 @@
 //
 
 #import "CommandHandler.h"
+#import "CommandRelay.h"
 
 @interface SendCommandHandler : NSObject <CommandHandler>
+
+- (instancetype)initWith:(id<CommandRelay>)relay;
 
 @end

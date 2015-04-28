@@ -15,6 +15,8 @@
 #import "VarCommandHandler.h"
 #import "AliasCommandHandler.h"
 #import "SendCommandHandler.h"
+#import "CommandRelay.h"
+#import "GameCommandRelay.h"
 #import "GameEventRelay.h"
 #import "Outlander-Swift.h"
 #import "NSString+Categories.h"
@@ -30,6 +32,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_gameContext.events unSubscribeListener:self];
 }
 
 -(id)initWith:(GameContext *)context and:(VariableReplacer *)replacer {
@@ -41,39 +44,42 @@
     _processed = [RACReplaySubject subject];
     _echoed = [RACReplaySubject subject];
     
+    GameCommandRelay *relay = [[GameCommandRelay alloc] initWith:_gameContext.events];
+    
     _handlers = [[NSMutableArray alloc] init];
     [_handlers addObject:[[ScriptHandler alloc] initWith:[[GameEventRelay alloc] initWith:context.events]]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
     [_handlers addObject:[[VarCommandHandler alloc] init]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
-    [_handlers addObject:[[SendCommandHandler alloc] init]];
+    [_handlers addObject:[[SendCommandHandler alloc] initWith:relay]];
     [_handlers addObject:[MapperCommandHandler newInstance]];
-    [_handlers addObject:[MapperGotoCommandHandler newInstance]];
+    [_handlers addObject:[MapperGotoCommandHandler newInstance:relay]];
     [_handlers addObject:[ParseCommandHandler newInstance]];
     [_handlers addObject:[BeepCommandHandler newInstance]];
     [_handlers addObject:[FlashCommandHandler newInstance]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveCommandNotification:)
-                                                 name:@"OL:command"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveEchoNotification:)
-                                                 name:@"OL:echo"
-                                               object:nil];
+    [context.events subscribe:self token:@"OL:command"];
+    [context.events subscribe:self token:@"OL:echo"];
     
     return self;
 }
 
-- (void) receiveCommandNotification:(NSNotification *) notification {
-    CommandContext *command = notification.userInfo[@"command"];
+- (void)handle:(NSString *)token data:(NSDictionary *)data {
+    if ([token isEqualToString:@"OL:command"]) {
+        [self recieveCommand:data];
+    } else if ([token isEqualToString:@"OL:echo"]) {
+        [self recieveEcho:data];
+    }
+}
+
+- (void)recieveCommand:(NSDictionary *)userInfo {
+    CommandContext *command = userInfo[@"command"];
     [self process:command];
 }
 
-- (void) receiveEchoNotification:(NSNotification *) notification {
-    TextTag *tag = notification.userInfo[@"tag"];
+- (void)recieveEcho:(NSDictionary *)userInfo {
+    TextTag *tag = userInfo[@"tag"];
     [self echo:tag];
 }
 

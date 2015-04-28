@@ -7,25 +7,35 @@
 //
 
 #import "GameCommandRelay.h"
+#import "Outlander-Swift.h"
+
+@interface GameCommandRelay() {
+    EventAggregator *_aggregator;
+}
+@end
 
 @implementation GameCommandRelay
+
+- (instancetype)initWith:(EventAggregator *)aggregator {
+    self = [super init];
+    if (self) {
+        _aggregator = aggregator;
+    }
+    return self;
+}
 
 - (void)sendCommand:(CommandContext *)ctx {
     
     NSDictionary *userInfo = @{@"command": ctx};
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:command"
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [_aggregator publish:@"OL:command" data:userInfo];
 }
 
 - (void)sendEcho:(TextTag *)tag {
     
     NSDictionary *userInfo = @{@"tag": tag};
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:echo"
-                                                        object:nil
-                                                      userInfo:userInfo];
+    [_aggregator publish:@"OL:echo" data:userInfo];
 }
 
 @end

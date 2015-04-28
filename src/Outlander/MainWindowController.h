@@ -15,6 +15,6 @@
 - (void)showLogin;
 - (void)showProfiles;
 - (void)showAppUpdate;
-- (void)showSheet:(NSView *)view;
+- (void)showSheet:(NSView *)view withFrame:(NSRect)frame;
 - (void)endSheet;
 @end

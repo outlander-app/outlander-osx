@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) GameContext *gameContext;
 @property (nonatomic, strong) RACSignal *keyup;
+@property (nonatomic, strong) RACSignal *command;
 @property (nonatomic, copy) NSString *key;
 @property (unsafe_unretained) IBOutlet MyNSTextView *TextView;
 

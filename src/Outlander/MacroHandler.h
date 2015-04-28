@@ -10,8 +10,9 @@
 #import "Macro.h"
 
 @class GameContext;
+@protocol ISubscriber;
 
-@interface MacroHandler : NSObject
+@interface MacroHandler : NSObject <ISubscriber>
 
 - (instancetype)initWith:(GameContext *)context and:(id<CommandRelay>)commandRelay;
 

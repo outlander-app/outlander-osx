@@ -11,15 +11,12 @@
 #import "CommandContext.h"
 
 @interface MyNSTextView () {
-    GameCommandRelay *_commandRelay;
 }
 @end
 
 @implementation MyNSTextView
 
 - (void)awakeFromNib {
-    
-    _commandRelay = [[GameCommandRelay alloc] init];
     
     NSMenu *menu = [self menu];
     
@@ -81,7 +78,9 @@
 - (void)executeCommand:(NSString *)command {
     CommandContext *ctx = [[CommandContext alloc] init];
     ctx.command = [command substringFromIndex:@"command:".length];
-    [_commandRelay sendCommand:ctx];
+    
+    id<RACSubscriber> sub = (id<RACSubscriber>)self.commandSignal;
+    [sub sendNext:ctx];
 }
 
 - (void)openLink:(NSURLRequest *)request {

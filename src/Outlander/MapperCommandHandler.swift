@@ -27,10 +27,15 @@ class MapperCommandHandler : CommandHandler {
 @objc
 class MapperGotoCommandHandler : CommandHandler {
     
-    var startDate = NSDate()
+    private var startDate = NSDate()
+    private var relay:CommandRelay
     
-    class func newInstance() -> MapperGotoCommandHandler {
-        return MapperGotoCommandHandler()
+    class func newInstance(relay:CommandRelay) -> MapperGotoCommandHandler {
+        return MapperGotoCommandHandler(relay)
+    }
+    
+    init(_ relay:CommandRelay) {
+        self.relay = relay
     }
     
     func canHandle(command: String) -> Bool {
@@ -106,7 +111,9 @@ class MapperGotoCommandHandler : CommandHandler {
                 return []
             }
             
-            return ["no path found for \"\(area)\""]
+            self.sendMessage("no path found for \"\(area)\"")
+            
+            return []
             
         } ~> { (moves) -> () in
             
@@ -127,11 +134,10 @@ class MapperGotoCommandHandler : CommandHandler {
     }
     
     func sendMessage(message:String) {
-        let relay = GameCommandRelay()
-        
         var tag = TextTag()
         tag.text = "[AutoMapper] \(message)\n"
         tag.color = "#00ffff"
+        tag.preset = "automapper"
         relay.sendEcho(tag)
     }
     
@@ -147,7 +153,6 @@ class MapperGotoCommandHandler : CommandHandler {
             }
         }
         
-        let relay = GameCommandRelay()
         var context = CommandContext()
         context.command = ".automapper " + walk
         relay.sendCommand(context)

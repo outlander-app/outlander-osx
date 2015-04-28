@@ -12,11 +12,13 @@
 #import "GameConnection.h"
 #import "TextTag.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "GameCommandRelay.h"
 #import "Outlander-Swift.h"
 
 @interface GameStream () {
     RACSignal *_connection;
     GameContext *_gameContext;
+    GameCommandRelay *_commandRelay;
     RACSubject *_mainSubject;
     StormFrontTokenizer *_tokenizer;
     StormFrontTagStreamer *_tagStreamer;
@@ -35,13 +37,14 @@
     if(self == nil) return nil;
     
     _gameContext = context;
+    _commandRelay = [[GameCommandRelay alloc] initWith:context.events];
     
     _gameServer = [[GameServer alloc] initWithContext:context];
     _gameParser = [[GameParser alloc] initWithContext:context];
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
     _scriptStreamHandler = [ScriptStreamHandler newInstance];
-    _roomChangeHandler = [RoomChangeHandler newInstance];
+    _roomChangeHandler = [RoomChangeHandler newInstance:_commandRelay];
     _tdpUpdateHandler = [TDPUpdateHandler newInstance];
     _expUpdateHandler = [ExpUpdateHandler newInstance];
     

@@ -46,7 +46,7 @@
     
     _gameContext = [GameContext newInstance];
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
-    _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] init]];
+    _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] initWith:_gameContext.events]];
     
     _loginViewController = [[LoginViewController alloc] init];
     

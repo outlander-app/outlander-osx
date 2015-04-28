@@ -16,12 +16,16 @@ public protocol NodeHandler {
 @objc
 class RoomChangeHandler : NodeHandler {
     
-    var commandRelay = GameCommandRelay()
+    var relay:CommandRelay
     
     private var showAfterPrompt = false
     
-    class func newInstance() -> RoomChangeHandler {
-        return RoomChangeHandler()
+    class func newInstance(relay:CommandRelay) -> RoomChangeHandler {
+        return RoomChangeHandler(relay)
+    }
+    
+    init(_ relay:CommandRelay) {
+        self.relay = relay
     }
     
     func handle(nodes:[Node], text:String, context:GameContext) {
@@ -78,7 +82,8 @@ class RoomChangeHandler : NodeHandler {
         
             tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
             tag.color = "#00ffff"
-            self.commandRelay.sendEcho(tag)
+            tag.preset = "automapper"
+            self.relay.sendEcho(tag)
         }
         
         var exits = ", ".join(room.nonCardinalExists().map { $0.move })
@@ -88,7 +93,8 @@ class RoomChangeHandler : NodeHandler {
             tag = TextTag()
             tag.text = "Mapped exits: \(exits)\n"
             tag.color = "#00ffff"
-            self.commandRelay.sendEcho(tag)
+            tag.preset = "automapper"
+            self.relay.sendEcho(tag)
             
         }
     }

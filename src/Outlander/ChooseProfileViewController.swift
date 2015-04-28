@@ -34,7 +34,10 @@ class ProfileDataSource : NSObject, NSTableViewDataSource {
         
         while let element = enumerator?.nextObject() as? String {
             if !contains(element, ".") {
-                profiles.append(element)
+                profiles.append(
+                    element.stringByTrimmingCharactersInSet(
+                        NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                )
             }
         }
         
@@ -48,6 +51,7 @@ class ChooseProfileViewController: NSViewController, NSTableViewDataSource, NSTa
     var cancelCommand:RACCommand?
     var gameContext:GameContext?
     var selectedProfile:String?
+    var currentProfile:String?
     
     @IBOutlet weak var okButton: NSButton!
     @IBOutlet weak var cancelButton: NSButton!
@@ -62,6 +66,17 @@ class ChooseProfileViewController: NSViewController, NSTableViewDataSource, NSTa
         if let cancel = self.cancelCommand {
             cancelButton.rac_command = cancel
         }
+        
+        if let current = self.currentProfile {
+        
+            if let found = find(self.profileDataSource!.profiles, current) {
+                
+                if self.tableView != nil {
+                
+                    self.tableView.selectRowIndexes(NSIndexSet(index: found), byExtendingSelection: false)
+                }
+            }
+        }
     }
 
     override func viewDidLoad() {
@@ -69,20 +84,14 @@ class ChooseProfileViewController: NSViewController, NSTableViewDataSource, NSTa
     }
     
     func loadProfiles(current:String) {
+        self.currentProfile = current
         if let ctx = self.gameContext {
             if let ds = self.profileDataSource {
                 ds.loadProfiles()
-                if let found = find(ds.profiles, current) {
-                    //self.tableView.selectRowIndexes(NSIndexSet(index: found), byExtendingSelection: false)
-                }
             }
             else {
                 self.profileDataSource = ProfileDataSource(ctx)
                 self.profileDataSource?.loadProfiles()
-                if let found = find(self.profileDataSource!.profiles, current) {
-                    
-                    //self.tableView.selectRowIndexes(NSIndexSet(index: found), byExtendingSelection: false)
-                }
             }
         }
     }

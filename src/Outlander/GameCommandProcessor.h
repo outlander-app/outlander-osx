@@ -10,8 +10,9 @@
 #import "VariableReplacer.h"
 
 @class GameContext;
+@protocol ISubscriber;
 
-@interface GameCommandProcessor : NSObject <CommandProcessor>
+@interface GameCommandProcessor : NSObject <CommandProcessor, ISubscriber>
 
 -(id)initWith:(GameContext *)context and:(VariableReplacer *)replacer;
 

@@ -37,6 +37,9 @@
                                                  name:NSApplicationDidResignActiveNotification
                                                object:nil];
     
+    [_context.events subscribe:self token:@"OL:unregisterMacros"];
+    [_context.events subscribe:self token:@"OL:registerMacros"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receiveCommandUnregisterMacros:)
                                                  name:@"OL:unregisterMacros"
@@ -57,6 +60,14 @@
 
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) handle:(NSString *)token data:(NSDictionary *)data {
+    if ([token isEqualToString:@"OL:unregisterMacros"]) {
+        [self unRegisterMacros];
+    } else if ([token isEqualToString:@"OL:registerMacros"]) {
+        [self registerMacros];
+    }
 }
 
 - (void) receiveCommandUnregisterMacros:(NSNotification *) notification {
