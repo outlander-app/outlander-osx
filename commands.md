@@ -20,8 +20,18 @@
 
 ## Scripting
 
-    .myscript one two "three four"
-   
+#### Example Scripts
+* [hunt.cmd] (https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script - requires weapon to be in hand/offhand `.hunt offhand nightstick`
+* [disarm.cmd](https://gist.github.com/joemcbride/584f1b99d8c5211b410d) - disarm and pick boxes (supports lockpick rings or loose lockpicks, removes and re-equips armor)
+* [swim.cmd](https://gist.github.com/joemcbride/adeb7ce75816ec510213) - swim between two rooms `.swim north south`
+* [simpletravel.cmd](https://gist.github.com/joemcbride/f5d7d8aeaf687b31ccc5) - travel to locations across maps  `.simpletravel "w gate" brook`
+* [automapper.cmd](https://gist.github.com/joemcbride/1614787c3913b6a4739f) - required for `#goto` map commands to work
+
+#### Scripting Basics
+```
+.myscript one two "three four"
+```
+
 Script arguments become local variables:
 	
     %scriptname = myscript
@@ -77,7 +87,7 @@ end:
 * gosub
     * gosub &lt;label&gt; &lt;argument1, argument2, etc.&gt;
     * Move to a label with the supplied arguments.  Arguments are referenced by $1, $2, etc.  Use $0 to reference all arguments.
-    * Use 'return' to return to the line directly after the gosub.
+    * Use `return` to return to the line directly after the gosub.
 * match
 	* match &lt;label&gt; &lt;text&gt;
 	* match start You see
@@ -140,7 +150,7 @@ echo %weapons(2) # prints scimitar
 Global variables are prefixed with a $.
 
 * $charactername - your character name
-* $preparedspell - currently prepared spell, 'None' when there isn't one.
+* $preparedspell - currently prepared spell, `None` when there isn't one.
 * $spelltime - amount of time in seconds the spell has been prepared
 * $game - what game you are connected to, ex: 'DR'
 * $gametime - the time in game you are playing, a Unix timestamp, ex: 1388858263
