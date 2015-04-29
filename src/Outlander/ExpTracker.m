@@ -11,6 +11,7 @@
 
 @implementation ExpTracker {
     TSMutableDictionary *_skills;
+    NSArray *_skillsetSort;
 }
 
 -(instancetype)init {
@@ -18,6 +19,8 @@
     if(!self) return nil;
     
     _skills = [[TSMutableDictionary alloc] initWithName:@"exp_tracker"];
+    
+    _skillsetSort = @[@"Shield_Usage", @"Light_Armor", @"Chain_Armor", @"Brigandine", @"Plate_Armor", @"Defending", @"Parry_Ability", @"Small_Edged", @"Large_Edged", @"Twohanded_Edged", @"Small_Blunt", @"Large_Blunt", @"Twohanded_Blunt", @"Slings", @"Bow", @"Crossbow", @"Staves", @"Polearms", @"Light_Thrown", @"Heavy_Thrown", @"Brawling", @"Offhand_Weapon", @"Melee_Mastery", @"Missle_Mastery", @"Expertise", @"Elemental_Magic", @"Holy_Magic", @"Inner_Fire", @"Inner_Magic", @"Life_Magic", @"Attunement", @"Arcana", @"Targeted_Magic", @"Augmentation", @"Debilitation", @"Utility", @"Warding", @"Sorcery", @"Theurgy", @"Astrology", @"Summoning", @"Evasion", @"Athletics", @"Perception", @"Stealth", @"Locksmithing", @"Thievery", @"First_Aid", @"Outdoorsmanship", @"Skinning", @"Scouting", @"Backstab", @"Thantology", @"Forging", @"Engineering", @"Outfitting", @"Alchemy", @"Enchanting", @"Scholarship", @"Mechanical_Lore", @"Appraisal", @"Performance", @"Tactics", @"Bardic_Lore", @"Empathy", @"Trading"];
     
     return self;
 }
@@ -53,6 +56,43 @@
         return item.mindState.rateId > 0;
     }].array;
     
+    return [self orderBySkillset:array];
+}
+
+-(NSArray *)orderBySkillset:(NSArray *)array {
+    return [array sortedArrayUsingComparator:^NSComparisonResult(SkillExp *obj1, SkillExp *obj2) {
+        
+        NSUInteger idx1 = [_skillsetSort indexOfObject:obj1.name];
+        NSUInteger idx2 = [_skillsetSort indexOfObject:obj2.name];
+        
+        if (idx1 < idx2) {
+            return -1;
+        }
+        
+        if (idx1 > idx2) {
+            return 1;
+        }
+        
+        return 0;
+    }];
+}
+
+-(NSArray *)orderByRank:(NSArray *)array {
+    return [array sortedArrayUsingComparator:^NSComparisonResult(SkillExp *obj1, SkillExp *obj2) {
+        
+        if (obj1.ranks.doubleValue < obj1.ranks.doubleValue) {
+            return -1;
+        }
+        
+        if (obj1.ranks.doubleValue > obj2.ranks.doubleValue) {
+            return 1;
+        }
+        
+        return 0;
+    }];
+}
+
+-(NSArray *)orderByName:(NSArray *)array {
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     return [array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
 }
