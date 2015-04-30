@@ -156,8 +156,10 @@
 -(NSString *)textForTagList:(NSArray *)tags {
     NSMutableString *text = [[NSMutableString alloc] init];
 
-    for(TextTag *tag in tags){
-        [text appendString:tag.text];
+    for(TextTag *tag in tags) {
+        if (tag != nil && [tag.text length] > 0) {
+            [text appendString:tag.text];
+        }
     }
     
     return text;

@@ -334,7 +334,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags[0].command).to(equal("HELP search stealing"))
             }
             
-            it("creates command for d tags") {
+            it("sets game and charactername settings") {
                 let data = [
                     "<app char=\"Arneson\" game=\"DR\" title=\"[DR: Arneson] StormFront\"/>"
                 ]
@@ -353,6 +353,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                     "<popStream/><preset id=\"whisper\">You whisper to Someone,</preset> \"OOC: It's a secret to everybody.\""
                 ]
               
+                self.streamer.isSetup = true
                 self.streamData(data)
                 
                 expect(self.tags.count).to(equal(3))
@@ -362,6 +363,8 @@ class StormFrontTagStreamerTester: QuickSpec {
                 let data = [
                     "<indicator id='IconHIDDEN' visible='y'/>You melt into the background, convinced that your attempt to hide went unobserved."
                 ]
+                
+                self.streamer.isSetup = true
               
                 self.streamData(data)
                 
@@ -413,6 +416,18 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.settings["up"]).to(equal("0"))
                 expect(self.settings["down"]).to(equal("0"))
                 expect(self.settings["out"]).to(equal("0"))
+            }
+            
+            it("can display profile usage") {
+                let data = [
+                    "Your default:  <pushBold/>nowindow<popBold/>.",
+                    "<d><b>PROFILE /EDIT</b></d>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(6))
+                expect(self.tags[4].text).to(equal("PROFILE /EDIT"))
             }
         })
     }

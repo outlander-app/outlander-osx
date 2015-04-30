@@ -347,7 +347,17 @@ public class StormFrontTagStreamer {
             tag = emitTag(node)
             
         case _ where node.name == "d":
-            tag = emitTag(node)
+            
+            if node.children.count > 0 {
+                
+                if node.children[0].name == "b" {
+                    tag = emitTag(node.children[0])
+                }
+                
+            } else {
+                tag = emitTag(node)
+            }
+            
             if let cmd = node.attr("cmd") {
                 tag?.command = cmd
             }
