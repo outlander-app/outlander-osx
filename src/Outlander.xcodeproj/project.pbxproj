@@ -238,6 +238,7 @@
 		F98782F81942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
 		F98782FB1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
 		F98782FC1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
+		F988C40F1AF35A74003B4634 /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988C40E1AF35A74003B4634 /* Directions.swift */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
 		F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -632,6 +633,7 @@
 		F98782F61942AB6200D76231 /* RegexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexToken.m; sourceTree = "<group>"; };
 		F98782F91946873500D76231 /* WaitForToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitForToken.h; sourceTree = "<group>"; };
 		F98782FA1946873500D76231 /* WaitForToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitForToken.m; sourceTree = "<group>"; };
+		F988C40E1AF35A74003B4634 /* Directions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
 		F989E1F6192C278C00562E32 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -1125,24 +1127,25 @@
 		F97A5CAC1895E72D00E2C318 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				F988C40E1AF35A74003B4634 /* Directions.swift */,
 				F9AE6A80189E218F00A11EE9 /* MMDrawingUtils.h */,
-				F9AE6A81189E218F00A11EE9 /* MMScroller.h */,
-				F9AE6A82189E218F00A11EE9 /* MMScrollView.h */,
 				F9AE6A83189E218F00A11EE9 /* MMDrawingUtils.m */,
+				F9AE6A81189E218F00A11EE9 /* MMScroller.h */,
 				F9AE6A84189E218F00A11EE9 /* MMScroller.m */,
+				F9AE6A82189E218F00A11EE9 /* MMScrollView.h */,
 				F9AE6A85189E218F00A11EE9 /* MMScrollView.m */,
-				F97A5CA01895E06400E2C318 /* MyView.h */,
-				F97A5CA11895E06400E2C318 /* MyView.m */,
 				F97A5CA41895E2C400E2C318 /* MyNSTextField.h */,
 				F97A5CA51895E2C400E2C318 /* MyNSTextField.m */,
-				F97A5CBD1896384A00E2C318 /* MyThumb.h */,
-				F97A5CBE1896384A00E2C318 /* MyThumb.m */,
-				F9AE6A8F189FFE6100A11EE9 /* MyProgressBar.h */,
-				F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */,
-				F92A4FBF192B3484006C71F9 /* MyWindow.h */,
-				F92A4FC0192B3484006C71F9 /* MyWindow.m */,
 				F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */,
 				F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */,
+				F9AE6A8F189FFE6100A11EE9 /* MyProgressBar.h */,
+				F9AE6A90189FFE6100A11EE9 /* MyProgressBar.m */,
+				F97A5CBD1896384A00E2C318 /* MyThumb.h */,
+				F97A5CBE1896384A00E2C318 /* MyThumb.m */,
+				F97A5CA01895E06400E2C318 /* MyView.h */,
+				F97A5CA11895E06400E2C318 /* MyView.m */,
+				F92A4FBF192B3484006C71F9 /* MyWindow.h */,
+				F92A4FC0192B3484006C71F9 /* MyWindow.m */,
 				F959D3D71AC8757F00B2A659 /* OLShortcutView.h */,
 				F959D3D91AC8759500B2A659 /* OLShortcutView.m */,
 			);
@@ -1667,6 +1670,7 @@
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
+				F988C40F1AF35A74003B4634 /* Directions.swift in Sources */,
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,

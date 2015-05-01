@@ -27,6 +27,7 @@
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;
 @property (unsafe_unretained) IBOutlet NSTextView *MainTextView;
+@property (weak) IBOutlet DirectionsView *directionsView;
 
 - (NSArray *)getWindows;
 - (IBAction)commandSubmit:(id)sender;

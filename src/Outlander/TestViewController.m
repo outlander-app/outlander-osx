@@ -142,7 +142,7 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
-   
+    
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
 //    
 //    TextTag *tag = [TextTag tagFor:@"test\r\n" mono:NO];
@@ -500,6 +500,23 @@
     [tags addObject:tag];
     
     [self set:@"room" withTags:tags];
+    [self updateCardinalDirections];
+}
+
+-(void)updateCardinalDirections {
+    
+    NSArray *options = @[@"north", @"south", @"east", @"west", @"northeast", @"northwest", @"southeast", @"southwest", @"up", @"down", @"out"];
+    
+    NSMutableArray *dirs = [NSMutableArray new];
+    
+    for (NSString *option in options) {
+        NSString *res = [_gameContext.globalVars cacheObjectForKey:option];
+        if ([res isEqualToString:@"1"]) {
+            [dirs addObject:option];
+        }
+    }
+    
+    [_directionsView setDirections:dirs];
 }
 
 @end

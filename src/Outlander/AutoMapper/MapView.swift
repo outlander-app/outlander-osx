@@ -11,7 +11,7 @@ import Cocoa
 class MapView: NSView {
     
     private var mapZone:MapZone?
-    private var rect:NSRect?
+    var rect:NSRect?
     private var trackingArea:NSTrackingArea?
     private var nodeLookup:[NSValue:String] = [:]
     
@@ -125,18 +125,28 @@ class MapView: NSView {
     }
     
     func redrawRoom(id:String?) {
+        
+        if let rect = self.rectForRoom(id) {
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.setNeedsDisplayInRect(rect)
+            })
+        }
+    }
+    
+    func rectForRoom(id:String?) -> NSRect? {
+        
         if let roomId = id {
             
             if let room = self.mapZone?.roomWithId(roomId) {
                 var point = self.translatePosition(room.position)
                 
                 var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.setNeedsDisplayInRect(outlineRect)
-                })
+                return outlineRect
             }
         }
+        
+        return nil
     }
     
     override func drawRect(dirtyRect: NSRect) {

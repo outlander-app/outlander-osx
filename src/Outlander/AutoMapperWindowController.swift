@@ -158,10 +158,6 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         
         self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
-            if self.mapView == nil {
-                return
-            }
-            
             if let changed = obj as? Dictionary<String, String> {
                 if changed.keys.first == "roomid" {
                     
@@ -203,7 +199,30 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                                 }
                             } else {
                                 mainThread {
-                                    self.mapView.currentRoomId = roomId
+                                    if self.mapView != nil {
+                                        self.mapView.currentRoomId = roomId
+                                        
+//                                        if let rect = self.mapView?.rectForRoom(roomId) {
+//                                            
+//                                            var bounds = self.scrollView.convertRect(rect, toView: self.mapView!)
+//                                            var bounds2 = self.scrollView.bounds
+//                                            println("visible bounds: \(bounds) // \(rect) // \(bounds2)")
+//                                            
+////                                            var contentBounds = self.scrollView.contentView.bounds
+////                                            var visRect = self.scrollView.contentView.documentVisibleRect
+////                                            
+////                                            var mapFrame = self.mapView.frame
+////                                            
+////                                            var frame = self.scrollView.contentView.frame
+////                                            var mapRect = self.mapView.rect!
+////                                            var midXPoint = bounds.size.width/2.0
+////                                            var midYPoint = bounds.size.height/2.0
+////                                            println("\(self.mapView.rect!) :: \(midXPoint),\(midYPoint)")
+//                                            self.scrollView.contentView.scrollPoint(NSPoint(x: bounds.origin.x, y: bounds.origin.y))
+//                                            self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
+//                                            //self.scrollView.scrollRectToVisible(rect)
+//                                        }
+                                    }
                                 }
                             }
                         }
@@ -264,6 +283,10 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         
         var room = self.findCurrentRoom(zone)
         
+        if self.mapView == nil {
+            return
+        }
+        
         var rect = zone.mapSize(0, padding: 100.0)
         
         self.mapLevel = 0
@@ -275,6 +298,10 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         let roomCount = zone.rooms.count
         
         self.nodesLabel.stringValue = "Map Rooms: \(roomCount)"
+        
+        if let rect = self.mapView?.rectForRoom(self.mapView?.currentRoomId) {
+            self.scrollView.scrollRectToVisible(rect)
+        }
     }
     
     func loadMapFromInfo(info:MapInfo) {

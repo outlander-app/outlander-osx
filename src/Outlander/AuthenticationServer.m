@@ -65,18 +65,22 @@
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    //NSData *pwData = [_password dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    
     NSLog(@"Response: %@", response);
     
     if(tag == AuthStatePasswordHash) {
-        char* hash = sge_encrypt_password((char*)[_password UTF8String], (char*)[response UTF8String]);
-        NSData *data = [[NSString stringWithFormat:@"A\t%@\t%s\r\n", _account, hash] dataUsingEncoding:NSUTF8StringEncoding];
         
-        //AuthBuilder *builder = [AuthBuilder newInstance];
-        //NSData *data = [builder build:_account hash:[NSData dataWithBytes:hash length:sizeof(hash)]];
+        NSMutableData *newData = [[NSMutableData alloc] init];
         
-        [asyncSocket writeData:data withTimeout:-1 tag:-1];
+        NSString *initialData = [NSString stringWithFormat:@"A\t%@\t", _account];
+        [newData appendData:[initialData dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES]];
+        
+        NSString *hash = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSData *hashData = [self encrypt_password:_password with:hash];
+        
+        [newData appendData:hashData];
+        [newData appendData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES]];
+        
+        [asyncSocket writeData:newData withTimeout:-1 tag:-1];
         [asyncSocket readDataWithTimeout:-1 tag:AuthStateAuthenticate];
     }
     
@@ -179,15 +183,52 @@
     return key;
 }
 
-char* sge_encrypt_password(char *passwd, char *hash) {
-    char *final = (char*)malloc(sizeof (char)* 33);
+- (NSData *)dataFromHexString:(NSString *)str {
+    const char *chars = [str UTF8String];
+    int i = 0;
+    unsigned long len = [str length];
+    
+    NSMutableData *data = [NSMutableData dataWithCapacity:len / 2];
+    char byteChars[3] = {'\0','\0','\0'};
+    unsigned long wholeByte;
+    
+    while (i < len) {
+        byteChars[0] = chars[i++];
+        byteChars[1] = chars[i++];
+        wholeByte = strtoul(byteChars, NULL, 16);
+        [data appendBytes:&wholeByte length:1];
+    }
+    
+    return data;
+}
+
+- (NSData *)encrypt_password:(NSString *)password with:(NSString *)hashString {
+    
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    
+    char* passwd = (char*)[password UTF8String];
+    char* hash = (char*)[hashString UTF8String];
     
     int i;
     for (i = 0; i < 32 && passwd[i] != '\0' && hash[i] != '\0'; i++) {
-        final[i] = (char)((hash[i] ^ (passwd[i] - 32)) + 32);
+        
+        int h = (int)hash[i];
+        int p = (int)passwd[i];
+        //int or = h^(p-32);
+        
+        int res = (h^(p-32))+32;
+        
+        [arr addObject:[NSNumber numberWithInt:res]];
+        
+        //NSLog(@"%d ^ %d = %d + 32 = %d", h, (p-32), or, res);
     }
-    final[i] = '\0';
     
-    return final;
+    NSMutableString *hexHash = [[NSMutableString alloc] init];
+    
+    for (NSNumber *num in arr) {
+        [hexHash appendFormat:@"%X", [num intValue]];
+    }
+    
+    return [self dataFromHexString:hexHash];
 }
 @end
