@@ -12,6 +12,8 @@ Outlander supports Genie map files.
 * You will also need the `automapper.cmd` script found listed under the [example scripts](#example-scripts)
     * Create a new script file named `automapper.cmd`, paste in the text from the gist, and save it to `/Documents/Outlander/Scripts`
 
+#### Automapper FAQ
+
 ## Configuration Commands
 
 * \#alias \<name\> \<replacement\>
