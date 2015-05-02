@@ -13,6 +13,9 @@ Outlander supports Genie map files.
     * Create a new script file named `automapper.cmd`, paste in the text from the gist, and save it to `/Documents/Outlander/Scripts`
 
 #### Automapper FAQ
+> The automapper sometimes gets stuck, is this normal?
+
+Yes - the Genie map files have several commands that are not yet fully supported.  As Outlander's script engine becomes more robust the `automapper.cmd` script will be updated to support those commands.
 
 ## Configuration Commands
 
