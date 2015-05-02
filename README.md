@@ -5,7 +5,7 @@ Outlander - OSX 10.9+
 
 ![](http://i.imgur.com/Q3t3QYG.png)
 
-> Maps! See your current location on the map.  Get directions to named locations or room numbers.  Compatible with Genie map files.
+> Maps! See your current location on the map.  Get directions to named locations or room numbers.  Compatible with Genie map files.  [Instructions for installing map files](commands.md#automapper)
 
 ![](http://i.imgur.com/tVivgNn.png)
 
@@ -17,7 +17,7 @@ Players
 ==========
 Read the [Outlander documentation](commands.md).
 
-[Instructions for downloading map files](commands.md#automapper)
+[Instructions for installing map files](commands.md#automapper)
 
 [Scripting support](commands.md#scripting) and [Example scripts](commands.md#example-scripts)
 
