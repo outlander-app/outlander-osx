@@ -113,6 +113,7 @@ end:
     * gosub &lt;label&gt; &lt;argument1, argument2, etc.&gt;
     * Move to a label with the supplied arguments.  Arguments are referenced by $1, $2, etc.  Use $0 to reference all arguments.
     * Use `return` to return to the line directly after the gosub.
+* math \<variable\> add/subtract/multiply/divide/modulus \<number\>
 * match
 	* match &lt;label&gt; &lt;text&gt;
 	* match start You see
@@ -160,6 +161,12 @@ echo %weapon # prints katana
 if matchre("$roomobjs", "((which|that) appears dead|\(dead\))") then {
   # loot, skin
 }
+```
+* `countsplit` function - counts the number of occurances of the given character
+```
+var two a|b|yes|test
+eval twoCount countsplit(%two, "|")
+echo %twoCount #prints 4
 ```
 * variable indexers - variables with `|` delimiters can be used as sudo arrays with indexers
 ```
