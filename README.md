@@ -15,7 +15,11 @@ Outlander - OSX 10.9+
 
 Players
 ==========
-Read the client [documentation](commands.md).
+Read the [Outlander documentation](commands.md).
+
+[Instructions for downloading map files](commands.md#automapper)
+
+[Scripting support](commands.md#scripting) and [Example scripts](commands.md#example-scripts)
 
 Developers
 ==========
