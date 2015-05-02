@@ -10,7 +10,7 @@ Outlander supports Genie map files.
 * [Manually Download the map files](http://sourceforge.net/projects/geniemapsfordr/files/) (click on the Download Maps.zip link) and put them in the `/Documents/Outlander/Maps` folder.
 * You can also use svn: `$ svn checkout https://svn.code.sf.net/p/geniemapsfordr/Genie3Maps/trunk Maps`
 * You will also need the `automapper.cmd` script found listed under the [example scripts](#example-scripts)
-    * Create a new file named `automapper.cmd` and paste in the text from the gist
+    * Create a new script file named `automapper.cmd`, paste in the text from the gist, and save it to `/Documents/Outlander/Scripts`
 
 ## Configuration Commands
 
