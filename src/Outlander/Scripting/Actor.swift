@@ -218,7 +218,7 @@ public class Script : IScript {
     
     public func stream(text:String, nodes:[Node]) {
         
-        if self.paused || self.cancelled {
+        if (count(text) == 0 && nodes.count == 0) || self.paused || self.cancelled {
             return
         }
         
@@ -362,6 +362,7 @@ public class Script : IScript {
                 
                 self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
                 self.context!.marker.currentIdx = -1
+                self.context!.setVariable("scriptname", value: self.scriptName)
                 self.moveNext()
                 
             })
@@ -850,10 +851,23 @@ public class TokenToMessage {
                 
             case "var", "setvariable":
                 
-                var txt = cmd.bodyText().componentsSeparatedByString(" ")
+                if cmd.body.count < 2 {
+                    break
+                }
                 
-                var identifier = context.simplify(txt.removeAtIndex(0))
-                var value = context.simplify(" ".join(txt))
+                var cmds = cmd.body
+                var identifierCmd:Token?
+                
+                while cmds.count > 0 && (identifierCmd == nil || identifierCmd?.name == "whitespace") {
+                    identifierCmd = cmds.removeAtIndex(0)
+                }
+                
+                if identifierCmd == nil {
+                    break
+                }
+                
+                var identifier = context.simplify([identifierCmd!])
+                var value = context.simplify(cmds)
                 
                 msg = VarMessage(identifier, value)
                 

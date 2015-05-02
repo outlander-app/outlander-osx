@@ -92,20 +92,20 @@ public class CommandToken : Token {
 public class IndexerToken : Token {
    
     var variable:String
-    var indexer:Int
+    var indexer:String
     
     public init(_ characters:String, _ index:Int, _ lineNumber:Int){
         self.variable = ""
-        self.indexer = -1
+        self.indexer = ""
         
         super.init(name: "indexer", withCharacters:characters, index:index)
         self.originalStringLine = lineNumber
         
-        let groups = characters["(.+)\\s*[\\(\\[](\\d+)"].groups()
+        let groups = characters["(.+)\\s*[\\(\\[]([\\$%\\w]+)"].groups()
         
         if groups.count > 2 {
             variable = groups[1]
-            indexer = groups[2].toInt() ?? -1
+            indexer = groups[2]
         }
     }
 }
@@ -227,8 +227,11 @@ public class MatchReEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        let lh = simplify(left)
-        let rh = simplify(right)
+        var lh = simplify(left)
+        var rh = simplify(right)
+        
+        lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         
         var groups = lh[rh].groups()
         var found = groups.count > 0
@@ -247,8 +250,11 @@ public class CountSplitEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        let lh = simplify(left)
-        let rh = simplify(right)
+        var lh = simplify(left)
+        var rh = simplify(right)
+        
+        lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         
         let count = lh.componentsSeparatedByString(rh).count
         
@@ -343,12 +349,18 @@ public class OutlanderStandard {
             leftParen.clone().branch(
                 decimalDigits.branch(
                     rightParen.clone().token("indexer")
+                ),
+                word.clone().branch(
+                    rightParen.clone().token("indexer")
                 )
             )
         
         let brackets =
             leftBracket.clone().branch(
                 decimalDigits.branch(
+                    rightBracket.clone().token("indexer")
+                ),
+                word.clone().branch(
                     rightBracket.clone().token("indexer")
                 )
             )
@@ -361,6 +373,18 @@ public class OutlanderStandard {
                 ),
                 Exit().token("punct")
             )
+        )
+    }
+    
+    public class var quotedString:TokenizationState{
+        return Delimited(delimiter: "\"", states:
+            Repeat(state:Branch().branch(
+                Characters(from:"\\").branch(
+                    // include regex escapes
+                    Characters(from:"trn\"\\()^$Az.sSdDwWb?*+{}[]").token("char")
+                ),
+                LoopingCharacters(except: "\"\\").token("char")
+            ), min: 1, max: nil).token("quoted-string")
         )
     }
 }
@@ -394,7 +418,7 @@ public class ScriptTokenizer : Tokenizer {
             Characters(from:")").token("close-paren"),
             Characters(from:"{").token("open-bracket"),
             Characters(from:"}").token("close-bracket"),
-            OKStandard.Code.quotedString,
+            OutlanderStandard.quotedString,
             OKStandard.number,
             OKStandard.word,
             OKStandard.punctuation,

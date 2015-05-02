@@ -103,6 +103,8 @@ public class ScriptContext {
         for (index, param) in enumerate(self.params) {
             self.paramVars["\(index+1)"] = param
         }
+        
+        self.variables["argcount"] = "\(self.paramVars.count)"
     }
     
     public func varsForDisplay() -> [String] {
@@ -347,13 +349,18 @@ public class ScriptContext {
         
         for t in tokens {
             
-            if let idx = t as? IndexerToken {
+            if t.name == "quoted-string" {
+                var res = self.simplify(t.characters)
+                text += "\"\(res)\""
+            }
+            else if let idx = t as? IndexerToken {
                 
                 var replaced = self.simplify(idx.variable)
                
                 var options = replaced.componentsSeparatedByString("|")
-                if options.count > idx.indexer {
-                    text += options[idx.indexer]
+                var indexer = self.simplify(idx.indexer).toInt() ?? -1
+                if indexer > -1 && options.count > indexer {
+                    text += options[indexer]
                 } else {
                     text += replaced
                 }
@@ -373,13 +380,18 @@ public class ScriptContext {
             if t is WhiteSpaceToken {
                 result += t.characters
             }
+            else if t.name == "quoted-string" {
+                var res = self.simplify(t.characters)
+                result += "\"\(res)\""
+            }
             else if let idx = t as? IndexerToken {
                 
                 var replaced = self.simplify(idx.variable)
                
                 var options = replaced.componentsSeparatedByString("|")
-                if options.count > idx.indexer {
-                    result += options[idx.indexer]
+                var indexer = self.simplify(idx.indexer).toInt() ?? -1
+                if indexer > -1 && options.count > indexer {
+                    result += options[indexer]
                 } else {
                     result += replaced
                 }
