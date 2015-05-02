@@ -5,8 +5,14 @@
 
 ## Automapper
 
-Outlander supports Genie map files.
+Outlander supports Genie map files.  View maps via the `⌘M` shortcut.  Mouse over a map node to see its name and `roomid`.  Your `roomid` can be referenced as a global variable, `$roomid`, and the id of the current map can be referenced as `$zoneid`.
 
+#### Automapper Usage
+
+* `#goto <roomid>`, `#goto <named room>`
+* ex: `#goto 123`  `#goto bank`
+
+#### Automapper Installation
 * [Manually Download the map files](http://sourceforge.net/projects/geniemapsfordr/files/) (click on the Download Maps.zip link) and put them in the `/Documents/Outlander/Maps` folder.
 * You can also use svn: `$ svn checkout https://svn.code.sf.net/p/geniemapsfordr/Genie3Maps/trunk Maps`
 * You will also need the `automapper.cmd` script found listed under the [example scripts](#example-scripts)
@@ -201,6 +207,7 @@ Global variables are prefixed with a $.
 * $righthand - `Empty` when nothing
 * $righthandnoun
 * $righthandnounid
+* $roomid - the room # of the map you are in
 * $roomtitle
 * $roomdesc
 * $roomobjs
@@ -220,3 +227,4 @@ Global variables are prefixed with a $.
 * $up (0/1)
 * $down (0/1)
 * $out (0/01)
+* $zoneid - the zone # of the map you are in
