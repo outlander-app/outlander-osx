@@ -230,10 +230,12 @@ public class MatchReMessage : Message, IMatch {
 }
 
 public class MatchwaitMessage : Message {
-    
+  
+    var id:String
     var timeout:Double?
     
     public init(_ timeout:Double?) {
+        self.id = NSUUID().UUIDString
         self.timeout = timeout
         super.init("matchwait")
     }

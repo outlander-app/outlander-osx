@@ -28,6 +28,14 @@ public class Stack<T>
     public func hasItems() -> Bool {
         return stack.count > 0
     }
+    
+    public func count() -> Int {
+        return stack.count
+    }
+    
+    public func clear() {
+        stack.removeAll(keepCapacity: true)
+    }
 }
 
 public struct GosubContext {
@@ -147,6 +155,14 @@ public class ScriptContext {
     }
     
     public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
+        
+        if isGosub && label.lowercaseString == "clear" {
+            
+            self.gosubStack.clear()
+            
+            return true
+        }
+        
         var returnIdx = self.marker.currentIdx
         
         var seq = TokenSequence()

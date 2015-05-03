@@ -103,7 +103,15 @@
         return [RACSignal empty];
     }];
     
+    [_gameContext.events subscribe:self token:@"disconnected"];
+    
 	return self;
+}
+
+- (void)handle:(NSString * __nonnull)token data:(NSDictionary * __nonnull)data {
+    if ([token isEqualToString:@"disconnected"]) {
+        [self saveSettings];
+    }
 }
 
 - (TestViewController *)currentVC {

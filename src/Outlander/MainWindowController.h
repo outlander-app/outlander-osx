@@ -8,7 +8,9 @@
 
 #import "Commands.h"
 
-@interface MainWindowController : NSWindowController <Commands, NSWindowDelegate>
+@protocol ISubscriber;
+
+@interface MainWindowController : NSWindowController <Commands, NSWindowDelegate, ISubscriber>
 
 - (id)init;
 - (void)command:(NSString *)command;

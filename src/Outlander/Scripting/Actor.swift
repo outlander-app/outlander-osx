@@ -66,6 +66,7 @@ public protocol IScript : IAcceptMessage {
     func stream(text:String, nodes:[Node])
     func varsChanged(vars:[String:String])
     func moveNext()
+    func moveNextAfterRoundtime()
 }
 
 public enum ScriptLogLevel : Int {
@@ -299,11 +300,23 @@ public class Script : IScript {
         if !self.context!.gotoLabel(label, params: params, previousLine:previousLine, isGosub: isGosub) {
             
             var tag = TextTag(with: "label \(label) not found\n", mono: true)
-            
             tag.color = "#efefef"
             tag.backgroundColor = "#ff3300"
+            tag.preset = "scripterror"
             
             self.notify(tag)
+        }
+        
+        if self.context!.gosubStack.count() >= 100 {
+            var tag = TextTag(with: "Potential infinite loop of 100+ gosubs - use gosub clear if this is intended\n", mono: true)
+            tag.color = "#efefef"
+            tag.backgroundColor = "#ff3300"
+            tag.preset = "scripterror"
+            
+            self.notify(tag)
+            
+            self.cancel()
+            self.completed?(self.scriptName, "100+ gosubs")
         }
     }
     
@@ -319,6 +332,7 @@ public class Script : IScript {
             
             tag.color = "#efefef"
             tag.backgroundColor = "#ff3300"
+            tag.preset = "scripterror"
             
             self.notify(tag)
             self.cancel()
@@ -353,6 +367,7 @@ public class Script : IScript {
                         var tag = TextTag(with: "\(err)\n", mono: true)
                         tag.color = "#efefef"
                         tag.backgroundColor = "#ff3300"
+                        tag.preset = "scripterror"
                         self.notify(tag)
                     }
                     self.cancel()
@@ -479,8 +494,21 @@ public class Script : IScript {
             self.moveNext()
         }
         else if let matchwait = msg as? MatchwaitMessage {
-            self.notify(TextTag(with: "matchwait\n", mono: true), debug:ScriptLogLevel.Wait)
+            var timeStr = matchwait.timeout != nil ? "\(matchwait.timeout!)" : ""
+            self.notify(TextTag(with: "matchwait \(timeStr)\n", mono: true), debug:ScriptLogLevel.Wait)
+            
             self.matchwait = matchwait
+           
+            if let timeout = matchwait.timeout {
+                after(timeout) {
+                    if let match = self.matchwait where match.id == matchwait.id {
+                        self.matchwait = nil
+                        self.matchStack.removeAll(keepCapacity: true)
+                        self.notify(TextTag(with: "matchwait timeout\n", mono: true), debug:ScriptLogLevel.Wait)
+                        self.moveNextAfterRoundtime()
+                    }
+                }
+            }
         }
         else if let pauseMsg = msg as? PauseMessage {
             var op = PauseOp(self, seconds: pauseMsg.seconds)
@@ -568,6 +596,8 @@ public class Script : IScript {
                 let txtMsg = TextTag(with: "no more params to shift!\n", mono: true)
                 txtMsg.color = "#efefef"
                 txtMsg.backgroundColor = "#ff3300"
+                txtMsg.preset = "scripterror"
+                
                 self.notify(txtMsg)
                 self.cancel()
                 self.completed?(self.scriptName, "no more params to shift")
@@ -613,6 +643,7 @@ public class Script : IScript {
             let txtMsg = TextTag(with: "unkown command: \(unkownMsg.description)\n", mono: true)
             txtMsg.color = "#efefef"
             txtMsg.backgroundColor = "#ff3300"
+            txtMsg.preset = "scripterror"
             self.notify(txtMsg)
             self.moveNext()
         }
@@ -643,8 +674,10 @@ public class Script : IScript {
         if message.color == nil {
             message.color = "#0066cc"
         }
-        
-        message.preset = "scriptinput"
+       
+        if message.preset == nil {
+            message.preset = "scriptinput"
+        }
         
         self.notifier.notify(message)
     }
@@ -1048,7 +1081,7 @@ public class NextRoomOp : IWantStreamInfo {
     }
     
     public func execute(script:IScript, context:ScriptContext) {
-        script.moveNext()
+        script.moveNextAfterRoundtime()
     }
 }
 
@@ -1067,7 +1100,7 @@ public class WaitforOp : IWantStreamInfo {
     }
     
     public func execute(script:IScript, context:ScriptContext) {
-        script.moveNext()
+        script.moveNextAfterRoundtime()
     }
 }
 
@@ -1087,7 +1120,7 @@ public class WaitforReOp : IWantStreamInfo {
     }
     
     public func execute(script:IScript, context:ScriptContext) {
-        script.moveNext()
+        script.moveNextAfterRoundtime()
     }
 }
 
@@ -1111,7 +1144,7 @@ public class WaitforPromptOp : IWantStreamInfo {
     }
     
     public func execute(script:IScript, context:ScriptContext) {
-        script.moveNext()
+        script.moveNextAfterRoundtime()
     }
 }
 
@@ -1145,7 +1178,7 @@ public class WaitEvalOp : IWantStreamInfo {
     }
     
     public func execute(script:IScript, context:ScriptContext) {
-        script.moveNext()
+        script.moveNextAfterRoundtime()
     }
     
     private func getBoolResult(result:EvalResult) -> Bool {

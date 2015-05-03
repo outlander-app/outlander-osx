@@ -450,7 +450,7 @@
                   to:@"main"];
         _gameStream = nil;
         
-        [self command:@"saveSettings"];
+        [_gameContext.events publish:@"disconnected" data:@{}];
     }];
 }
 
