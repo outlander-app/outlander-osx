@@ -46,11 +46,18 @@ Yes - the Genie map files have several commands that are not yet fully supported
 ## Scripting
 
 #### Example Scripts
-* [hunt.cmd] (https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script - requires weapon to be in hand/offhand `.hunt offhand nightstick`
+* [hunt.cmd] (https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script
+```
+supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
+
+.hunt offhand lob nightstick
+.hunt poach shortbow
+.hunt ambush "short sword"
+```
 * [disarm.cmd](https://gist.github.com/joemcbride/584f1b99d8c5211b410d) - disarm and pick boxes (supports lockpick rings or loose lockpicks, removes and re-equips armor)
 * [swim.cmd](https://gist.github.com/joemcbride/adeb7ce75816ec510213) - swim between two rooms `.swim north south`
 * [simpletravel.cmd](https://gist.github.com/joemcbride/f5d7d8aeaf687b31ccc5) - travel to locations across maps  `.simpletravel "w gate" brook`
-* [automapper.cmd](https://gist.github.com/joemcbride/1614787c3913b6a4739f) - required for `#goto` map commands to work
+* [automapper.cmd](https://gist.github.com/joemcbride/1614787c3913b6a4739f) - required for `#goto` map commands to work.  Set `#var powerwalk 1` to enable powerwalking to the given destination.
 
 #### Scripting Basics
 ```
