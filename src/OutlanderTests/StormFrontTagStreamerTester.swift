@@ -429,6 +429,19 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(6))
                 expect(self.tags[4].text).to(equal("PROFILE /EDIT"))
             }
+            
+            it("can display dynastream spells") {
+                let data = [
+                    "<dynaStream id='spells'>Fae Arts</dynaStream>",
+                    "<dynaStream id='spells'>  <d cmd=\"_magic ask -3683 Glythtide's Joy\">Glythtide's Joy</d></dynaStream>",
+                    "<dynaStream id='spells'></dynaStream>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(6))
+                expect(self.tags[2].text).to(equal("  Glythtide's Joy"))
+            }
         })
     }
     

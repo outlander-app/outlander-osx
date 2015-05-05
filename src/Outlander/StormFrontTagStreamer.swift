@@ -362,6 +362,14 @@ public class StormFrontTagStreamer {
                 tag?.command = cmd
             }
             
+        case _ where node.name == "dynastream":
+            if node.children.count > 0 {
+                tag = emitTag(node)
+                tag?.text = self.nodeChildValues(node)
+            } else {
+                tag = emitTag(node)
+            }
+            
         default:
            tag = nil
         }

@@ -235,7 +235,7 @@ import Foundation
             return
         }
         
-        if context.next != "/" && context.next != context.tagName[0] {
+        if context.next != "/" { //&& context.next != context.tagName[0] {
             // new tag
             //println("\n\n****new tag!****\n")
             let checker = "</\(context.tagName)>"
