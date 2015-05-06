@@ -70,6 +70,7 @@
         @strongify(self)
         TextTag *tag = [TextTag tagFor:echo mono:YES];
         tag.color = @"00ffff";
+        tag.preset = @"scriptecho";
         [self append:tag to:@"main"];
     };
     

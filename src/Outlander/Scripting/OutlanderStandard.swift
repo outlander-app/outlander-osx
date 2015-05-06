@@ -324,6 +324,47 @@ public class CommentToken : Token {
     }
 }
 
+public class HexColorState : TokenizationState {
+    let allowedCharacters : String
+    
+    public init(from:String){
+        self.allowedCharacters = from
+        super.init()
+    }
+    
+    public override func scan(operation: TokenizeOperation){
+        operation.debug(operation: "Entered HexColorState '\(allowedCharacters)'")
+        
+        if isAllowed(operation.current) {
+            //Scan through as much as we can
+            do {
+                operation.advance()
+            } while !operation.complete && isAllowed(operation.current) && count(operation.context.consumedCharacters) < 8
+            
+            //Emit a token, branch on
+            if count(operation.context.consumedCharacters) == 7 {
+                emitToken(operation)
+            }
+            
+            //If we are done, bug out
+            if operation.complete {
+                return
+            }
+            
+            scanBranches(operation)
+        }
+    }
+
+    func isAllowed(character:Character)->Bool{
+        for allowedCharacter in allowedCharacters{
+            if allowedCharacter == character {
+                return true
+            }
+        }
+        return false
+    }
+}
+
 public class OutlanderStandard {
     public class var word:TokenizationState {
         return LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.").token("word")
@@ -332,6 +373,15 @@ public class OutlanderStandard {
     public class var localVar:TokenizationState {
         return Characters(from:"%").branch(
             OutlanderStandard.word.token("localvar")
+        )
+    }
+    
+    public class var hexColor:TokenizationState {
+        var hexDigits = HexColorState(from: hexDigitString)
+        return Characters(from:"#").branch(
+            hexDigits.token("color").branch(
+                Exit().token("yap")
+            )
         )
     }
     
@@ -376,7 +426,7 @@ public class OutlanderStandard {
         )
     }
     
-    public class var quotedString:TokenizationState{
+    public class var quotedString:TokenizationState {
         return Delimited(delimiter: "\"", states:
             Repeat(state:Branch().branch(
                 Characters(from:"\\").branch(
@@ -387,6 +437,12 @@ public class OutlanderStandard {
             ), min: 1, max: nil).token("quoted-string")
         )
     }
+    
+    public class var keywords:TokenizationState {
+        return Branch().branch(
+            hexColor
+        )
+    }
 }
 
 public class ScriptTokenizer : Tokenizer {
@@ -395,22 +451,23 @@ public class ScriptTokenizer : Tokenizer {
         super.init();
         
         self.branch(
+            OKStandard.whiteSpaces,
+            OutlanderStandard.keywords,
             Keywords(
-                validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
+                validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
                 .branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
-            ),
+                ),
             Keywords(validStrings:[">", "<", "=", "==", "!=", ">=", "<="]).branch(
                 Exit().token("bool-operator")
             ),
             Keywords(validStrings:["|", "||", "&", "&&"]).branch(
                 Exit().token("or-operator")
             ),
-            Characters(from:"#").token("comment"),
+            //Characters(from:"#").token("comment"),
             Characters(from:"\n").token("newline"),
             Characters(from:"\r\n").token("newline"),
-            OKStandard.whiteSpaces,
             Characters(from:":").token("label"),
             Characters(from:";").token("split"),
             OutlanderStandard.indexer,

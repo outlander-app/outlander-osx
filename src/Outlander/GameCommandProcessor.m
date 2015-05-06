@@ -53,6 +53,7 @@
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
     [_handlers addObject:[[SendCommandHandler alloc] initWith:relay]];
+    [_handlers addObject:[EchoCommandHandler newInstance:relay]];
     [_handlers addObject:[MapperCommandHandler newInstance]];
     [_handlers addObject:[MapperGotoCommandHandler newInstance:relay]];
     [_handlers addObject:[ParseCommandHandler newInstance]];

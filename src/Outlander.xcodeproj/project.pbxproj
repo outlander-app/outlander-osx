@@ -67,10 +67,6 @@
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
-		F9316D191AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
-		F9316D1A1AD9D02B00880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
-		F9316D1B1AD9D04300880149 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; };
-		F9316D1C1AD9D04300880149 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9316D181AD9D02B00880149 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
@@ -130,6 +126,10 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
+		F971F95A1AF898CF00A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
+		F971F95B1AF898CF00A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
+		F971F95C1AF898D600A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
+		F971F95D1AF898D600A1C277 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
@@ -357,6 +357,9 @@
 		F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
 		F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
 		F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */; };
+		F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF148D1AF84E7F000A05FB /* EchoCommandHandler.swift */; };
+		F9DF148F1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF148D1AF84E7F000A05FB /* EchoCommandHandler.swift */; };
+		F9DF14921AF8589C000A05FB /* EchoCommandHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */; };
 		F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */; };
 		F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */; };
 		F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */; };
@@ -413,7 +416,7 @@
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
-				F9316D1C1AD9D04300880149 /* OysterKit.framework in Copy Files */,
+				F971F95D1AF898D600A1C277 /* OysterKit.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
 			);
@@ -471,7 +474,6 @@
 		F92A82371AEAE732005BBD2F /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
 		F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseProfileViewController.swift; sourceTree = "<group>"; };
 		F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
-		F9316D181AD9D02B00880149 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9316D1F1AD9E1D400880149 /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
 		F9316D201AD9E1D400880149 /* OutlanderStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderStandard.swift; sourceTree = "<group>"; };
 		F9316D211AD9E1D400880149 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 		F971EFD91938830D008AF6A8 /* StubCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubCommandRelay.m; sourceTree = "<group>"; };
 		F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubInfoStream.h; sourceTree = "<group>"; };
 		F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubInfoStream.m; sourceTree = "<group>"; };
+		F971F9591AF898CE00A1C277 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
 		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
@@ -751,6 +754,8 @@
 		F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightsViewController.swift; sourceTree = "<group>"; };
 		F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightsViewController.xib; sourceTree = "<group>"; };
 		F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSColorExtensions.swift; sourceTree = "<group>"; };
+		F9DF148D1AF84E7F000A05FB /* EchoCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoCommandHandler.swift; sourceTree = "<group>"; };
+		F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoCommandHandlerTester.swift; sourceTree = "<group>"; };
 		F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeepCommandHandler.swift; sourceTree = "<group>"; };
 		F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
 		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
@@ -786,13 +791,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
-				F9316D1B1AD9D04300880149 /* OysterKit.framework in Frameworks */,
+				F971F95C1AF898D600A1C277 /* OysterKit.framework in Frameworks */,
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F9316D191AD9D02B00880149 /* OysterKit.framework in Frameworks */,
+				F971F95A1AF898CF00A1C277 /* OysterKit.framework in Frameworks */,
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
@@ -810,7 +815,7 @@
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
-				F9316D1A1AD9D02B00880149 /* OysterKit.framework in Frameworks */,
+				F971F95B1AF898CF00A1C277 /* OysterKit.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
@@ -917,7 +922,9 @@
 				F9772F101940383500172083 /* Tokens */,
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
+				F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */,
 				F971EFD31938806C008AF6A8 /* CommandRelay.h */,
+				F9DF148D1AF84E7F000A05FB /* EchoCommandHandler.swift */,
 				F9BF6AEF193A90880075A12F /* EventRelay.h */,
 				F91A39AE194BDE83006144F8 /* ExecuteBlock.h */,
 				F91A39AF194BDE83006144F8 /* ExecuteBlock.m */,
@@ -945,7 +952,6 @@
 				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
-				F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1261,7 +1267,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F9316D181AD9D02B00880149 /* OysterKit.framework */,
+				F971F9591AF898CE00A1C277 /* OysterKit.framework */,
 				F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */,
 				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
 				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,
@@ -1333,6 +1339,7 @@
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
+				F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
@@ -1694,6 +1701,7 @@
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
+				F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F959D3D81AC8757F00B2A659 /* OLShortcutView.h in Sources */,
@@ -1766,6 +1774,7 @@
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
 				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F96ECDD2193565CE00787CB9 /* HighlightCommandTester.m in Sources */,
+				F9DF148F1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
 				F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
@@ -1872,6 +1881,7 @@
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
+				F9DF14921AF8589C000A05FB /* EchoCommandHandlerTester.swift in Sources */,
 				F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
