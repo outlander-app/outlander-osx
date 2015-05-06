@@ -85,6 +85,8 @@ loop:
 
 * \#beep
     * performs a system beep
+* \#echo
+    * send and echo message
 * \#flash
     * makes the dock icon bounce if the application is not the currently active application
 * action \<commands\> when \<regex\>
