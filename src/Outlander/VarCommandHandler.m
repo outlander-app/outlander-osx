@@ -13,7 +13,7 @@
 @implementation VarCommandHandler
 
 - (BOOL)canHandle:(NSString *)command {
-    return [command hasPrefix:@"#var"];
+    return [[command lowercaseString] hasPrefix:@"#var"];
 }
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {

@@ -14,7 +14,7 @@
 @implementation AliasCommandHandler
 
 - (BOOL)canHandle:(NSString *)command {
-    return [command hasPrefix:@"#alias"];
+    return [[command lowercaseString] hasPrefix:@"#alias"];
 }
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {

@@ -12,7 +12,7 @@
 @implementation ScriptCommandHandler
 
 - (BOOL)canHandle:(NSString *)command {
-    return [command hasPrefix:@"#script"];
+    return [[command lowercaseString] hasPrefix:@"#script"];
 }
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {

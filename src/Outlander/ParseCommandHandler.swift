@@ -16,7 +16,7 @@ class ParseCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#parse")
+        return command.lowercaseString.hasPrefix("#parse")
     }
     
     func handle(command: String, withContext: GameContext) {

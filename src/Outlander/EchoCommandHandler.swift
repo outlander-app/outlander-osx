@@ -22,7 +22,7 @@ class EchoCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#echo")
+        return command.lowercaseString.hasPrefix("#echo")
     }
     
     func handle(command: String, withContext: GameContext) {

@@ -16,7 +16,7 @@ class BeepCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#beep")
+        return command.lowercaseString.hasPrefix("#beep")
     }
     
     func handle(command: String, withContext: GameContext) {
@@ -32,7 +32,7 @@ class FlashCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#flash")
+        return command.lowercaseString.hasPrefix("#flash")
     }
     
     func handle(command: String, withContext: GameContext) {

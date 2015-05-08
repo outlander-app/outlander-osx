@@ -16,7 +16,7 @@ class MapperCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#mapper")
+        return command.lowercaseString.hasPrefix("#mapper")
     }
     
     func handle(command: String, withContext: GameContext) {
@@ -39,7 +39,7 @@ class MapperGotoCommandHandler : CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.hasPrefix("#goto")
+        return command.lowercaseString.hasPrefix("#goto")
     }
     
     func handle(command: String, withContext: GameContext) {

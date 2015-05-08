@@ -100,15 +100,30 @@
             if (x.scriptName.length > 0 && tag.color == nil) {
                 tag.color = @"#acff2f";
             }
+            
+            tag.targetWindow = @"main";
         }
-        [self append:tag to:@"main"];
+
+        NSString *target = [self windowForTarget:tag.targetWindow];
+        [self append:tag to:target];
     }];
     
     [_commandProcessor.echoed subscribeNext:^(TextTag *tag) {
-        [self append:tag to:@"main"];
+        
+        NSString *target = [self windowForTarget:tag.targetWindow];
+        [self append:tag to:target];
     }];
     
     return self;
+}
+
+- (NSString *)windowForTarget:(NSString *)targetWindow {
+
+    if (targetWindow != nil && [self hasWindow:targetWindow]) {
+        return targetWindow;
+    }
+    
+    return @"main";
 }
 
 - (void)awakeFromNib {
@@ -438,11 +453,8 @@
         _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
         
         for (TextTag *tag in tags) {
-            if (tag.targetWindow != nil && [self hasWindow:tag.targetWindow]) {
-                [self append:tag to:tag.targetWindow];
-            } else {
-                [self append:tag to:@"main"];
-            }
+            NSString *target = [self windowForTarget:tag.targetWindow];
+            [self append:tag to:target];
         }
         
     } completed:^{
@@ -457,7 +469,7 @@
 
 - (void)appendError:(NSString *)msg {
     NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
-    [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@ %@]\n", dateFormat, msg]
+    [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, msg]
                             mono:true]
               to:@"main"];
 }

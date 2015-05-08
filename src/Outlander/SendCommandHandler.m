@@ -32,7 +32,7 @@
 }
 
 - (BOOL)canHandle:(NSString *)command {
-    return [command hasPrefix:@"#send"];
+    return [[command lowercaseString] hasPrefix:@"#send"];
 }
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {

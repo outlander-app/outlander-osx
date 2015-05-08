@@ -14,7 +14,7 @@
 @implementation HighlightCommandHandler
 
 - (BOOL)canHandle:(NSString *)command {
-    return [command hasPrefix:@"#highlight"];
+    return [[command lowercaseString] hasPrefix:@"#highlight"];
 }
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {
