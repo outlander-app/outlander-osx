@@ -111,8 +111,7 @@
 
 - (BOOL)endsWith:(NSString*)value {
     NSString *trimmed = [_TextView.string trimNewLine];
-    NSString *val = [[trimmed substringFromIndex:trimmed.length - 4] trimNewLine];
-    return [val hasSuffix:value];
+    return [trimmed hasSuffix:value];
 }
 
 - (void)beginEdit {

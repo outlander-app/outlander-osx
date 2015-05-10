@@ -126,10 +126,6 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
-		F971F95A1AF898CF00A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
-		F971F95B1AF898CF00A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
-		F971F95C1AF898D600A1C277 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; };
-		F971F95D1AF898D600A1C277 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F971F9591AF898CE00A1C277 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
@@ -289,6 +285,10 @@
 		F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
+		F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
+		F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
+		F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -416,7 +416,7 @@
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
-				F971F95D1AF898D600A1C277 /* OysterKit.framework in Copy Files */,
+				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
 				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
 			);
@@ -530,7 +530,6 @@
 		F971EFD91938830D008AF6A8 /* StubCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubCommandRelay.m; sourceTree = "<group>"; };
 		F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubInfoStream.h; sourceTree = "<group>"; };
 		F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubInfoStream.m; sourceTree = "<group>"; };
-		F971F9591AF898CE00A1C277 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
 		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
@@ -682,6 +681,7 @@
 		F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
 		F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
 		F9A8DD311AC299EC009A2F67 /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Squirrel.framework; sourceTree = "<group>"; };
+		F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -791,13 +791,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
-				F971F95C1AF898D600A1C277 /* OysterKit.framework in Frameworks */,
+				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F971F95A1AF898CF00A1C277 /* OysterKit.framework in Frameworks */,
+				F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
@@ -815,7 +815,7 @@
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
-				F971F95B1AF898CF00A1C277 /* OysterKit.framework in Frameworks */,
+				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
@@ -1267,7 +1267,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F971F9591AF898CE00A1C277 /* OysterKit.framework */,
+				F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */,
 				F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */,
 				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
 				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,

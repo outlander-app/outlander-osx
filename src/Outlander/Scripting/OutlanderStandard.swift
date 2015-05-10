@@ -338,11 +338,15 @@ public class HexColorState : TokenizationState {
         if isAllowed(operation.current) {
             //Scan through as much as we can
             do {
+                println("HexColorState: '\(operation.current)' '\(operation.context.consumedCharacters)'")
                 operation.advance()
             } while !operation.complete && isAllowed(operation.current) && count(operation.context.consumedCharacters) < 8
             
+            var sent = false
+            
             //Emit a token, branch on
             if count(operation.context.consumedCharacters) == 7 {
+                sent = true
                 emitToken(operation)
             }
             
@@ -351,10 +355,12 @@ public class HexColorState : TokenizationState {
                 return
             }
             
-            scanBranches(operation)
+            if count(operation.context.consumedCharacters) > 0 {
+                scanBranches(operation)
+            }
         }
     }
-
+    
     func isAllowed(character:Character)->Bool{
         for allowedCharacter in allowedCharacters{
             if allowedCharacter == character {
@@ -362,6 +368,36 @@ public class HexColorState : TokenizationState {
             }
         }
         return false
+    }
+}
+
+public class Comments : TokenizationState{
+    
+    override public func stateClassName()->String {
+        return "Comment"
+    }
+    
+    public override func scan(operation: TokenizeOperation) {
+        operation.debug(operation: "Entered Comment Char")
+        
+        if operation.current == "#" || operation.context.consumedCharacters.hasPrefix("#") {
+            
+            if operation.current == "#" {
+                //Move scanning forward
+                operation.advance()
+            }
+            
+            //Emit a token, branch on
+            emitToken(operation)
+            
+            //If we are done, bug out
+            if operation.complete {
+                return
+            }
+            
+            //Otherwise evaluate our branches
+            scanBranches(operation)
+        }
     }
 }
 
@@ -380,11 +416,22 @@ public class OutlanderStandard {
         var hexDigits = HexColorState(from: hexDigitString)
         return Characters(from:"#").branch(
             hexDigits.token("color").branch(
-                Exit().token("yap")
-            )
+                Keywords(
+                    validStrings: ["#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
+                    .branch(
+                        OutlanderStandard.word.token("variable"),
+                        Exit().token("keyword")
+                ),
+                Exit().token("comment")
+            ),
+            Exit().token("comment")
         )
     }
     
+    public class var comments:TokenizationState {
+        return Comments().token("comment")
+    }
+
     public class var indexer:TokenizationState {
        
         var prefix = LoopingCharacters(from:"%$")
@@ -417,9 +464,9 @@ public class OutlanderStandard {
     
         return Branch().branch(
             prefix.clone().branch( word.clone().branch(
-                parens.clone(),
-                brackets.clone(),
-                Exit().token("globalvar")
+                    parens.clone(),
+                    brackets.clone(),
+                    Exit().token("globalvar")
                 ),
                 Exit().token("punct")
             )
@@ -437,12 +484,6 @@ public class OutlanderStandard {
             ), min: 1, max: nil).token("quoted-string")
         )
     }
-    
-    public class var keywords:TokenizationState {
-        return Branch().branch(
-            hexColor
-        )
-    }
 }
 
 public class ScriptTokenizer : Tokenizer {
@@ -451,8 +492,10 @@ public class ScriptTokenizer : Tokenizer {
         super.init();
         
         self.branch(
+            Characters(from:"\n").token("newline"),
+            Characters(from:"\r\n").token("newline"),
             OKStandard.whiteSpaces,
-            OutlanderStandard.keywords,
+            OutlanderStandard.hexColor,
             Keywords(
                 validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
                 .branch(
@@ -465,9 +508,7 @@ public class ScriptTokenizer : Tokenizer {
             Keywords(validStrings:["|", "||", "&", "&&"]).branch(
                 Exit().token("or-operator")
             ),
-            //Characters(from:"#").token("comment"),
-            Characters(from:"\n").token("newline"),
-            Characters(from:"\r\n").token("newline"),
+            OutlanderStandard.comments,
             Characters(from:":").token("label"),
             Characters(from:";").token("split"),
             OutlanderStandard.indexer,
@@ -649,8 +690,8 @@ public class OutlanderScriptParser : StackParser {
     
     func createComment(token:Token) {
         endCommand(false)
-        comment = true
         pushToken(CommentToken(token.characters, token.originalStringIndex!, token.originalStringLine!))
+        comment = true
     }
     
     func handleComment(token:Token) -> Bool {
