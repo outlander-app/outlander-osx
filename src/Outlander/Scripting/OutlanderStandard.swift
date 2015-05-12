@@ -416,9 +416,9 @@ public class OutlanderStandard {
         var hexDigits = HexColorState(from: hexDigitString)
         return Characters(from:"#").branch(
             hexDigits.token("color").branch(
-                Keywords(
+                IgnoreCaseKeywords(
                     validStrings: ["#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
-                    .branch(
+                    .token("keyword").branch(
                         OutlanderStandard.word.token("variable"),
                         Exit().token("keyword")
                 ),
@@ -496,9 +496,9 @@ public class ScriptTokenizer : Tokenizer {
             Characters(from:"\r\n").token("newline"),
             OKStandard.whiteSpaces,
             OutlanderStandard.hexColor,
-            Keywords(
+            IgnoreCaseKeywords(
                 validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
-                .branch(
+                .token("keyword").branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
                 ),
@@ -566,11 +566,7 @@ public class OutlanderScriptParser : StackParser {
             lineNumber++
             endCommand(true)
         case _ where token.name == "keyword":
-            // TODO: remove this once keyword bug is fixed (keyword matches partials)
-            if(token.characters == "#") {
-                createComment(token)
-            }
-            else if(token.characters == "if" && lineCommandStack.count == 0) {
+            if(token.characters == "if" && lineCommandStack.count == 0) {
                 // if there is an elseif token on the stack, ignore this if
                 if let lastToken = ifStack.last {
                     if lastToken.name == "elseif" {
@@ -609,9 +605,6 @@ public class OutlanderScriptParser : StackParser {
                 ifToken.argumentCheck = argStr.toInt()
                 pushToken(ifToken)
                 ifStack.append(ifToken)
-            }
-            else if token.characters.hasPrefix("#") {
-                createComment(token)
             }
             else {
                 pushToken(token)
@@ -677,7 +670,11 @@ public class OutlanderScriptParser : StackParser {
                 pushToken(token)
             }
         case _ where token.name == "comment":
-            createComment(token)
+            if lineCommandStack.count == 0 {
+                createComment(token)
+            } else {
+                pushToken(token)
+            }
         case _ where token.name == "indexer":
             createIndexer(token)
         default:
@@ -709,7 +706,8 @@ public class OutlanderScriptParser : StackParser {
     }
     
     func endComment() {
-        var tokens = popTo("comment")
+        var tokens =  popToType(CommentToken("", 0, 0))
+        
         let commentToken = tokens.removeAtIndex(0) as! CommentToken
         
         for token in tokens {
@@ -804,8 +802,39 @@ public class OutlanderScriptParser : StackParser {
         ifToken.body = tokens
     }
     
-    func popTo(tokenNamed:String)->Array<Token> {
-        var tokenArray = Array<Token>()
+    func popToType<T : Token>(type:T) -> [Token] {
+        var tokenArray = [Token]()
+        
+        if !hasTokens() {
+            errors.append("Failed to pop to \(T.self), there were no tokens on the stack")
+            return tokenArray
+        }
+        
+        var token = popToken()
+        
+        while !(token is T) {
+            if let nextToken = token {
+                tokenArray.append(nextToken)
+            } else {
+                errors.append("Stack exhausted before finding '\(T.self)' token")
+                return tokenArray.reverse()
+            }
+            token = popToken()
+            if token == nil {
+                errors.append("Stack exhausted before finding '\(T.self)' token")
+                return tokenArray.reverse()
+            }
+        }
+        
+        if token != nil {
+            tokenArray.append(token!)
+        }
+        
+        return tokenArray.reverse()
+    }
+    
+    func popTo(tokenNamed:String)->[Token] {
+        var tokenArray = [Token]()
         
         if !hasTokens() {
             errors.append("Failed to pop to \(tokenNamed), there were no tokens on the stack")
