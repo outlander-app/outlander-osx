@@ -85,8 +85,15 @@ loop:
 
 * \#beep
     * performs a system beep
-* \#echo
-    * send and echo message
+* `#echo [>targetWindow] [color[,backgroundcolor]] <text>`
+    * echo a message to a window
+    * text - The text you want to echo
+    * window (optional) - The target window you want to echo to.  Defaults to main.
+    * color (optional) - The foreground color.  Use hex color.
+    * backgroundcolor (optional) - The background color.
+```
+put #echo >thoughts #000000,#efefef hello
+```
 * \#flash
     * makes the dock icon bounce if the application is not the currently active application
 * action \<commands\> when \<regex\>
