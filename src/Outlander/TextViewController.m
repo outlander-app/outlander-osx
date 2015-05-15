@@ -239,7 +239,7 @@
     if(text.text == nil || text.text.length == 0) {
         return;
     }
-   
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         BOOL endswithNewline = [self endsWithNewline:textView];
@@ -251,7 +251,7 @@
         
         double autoScrollToleranceLineCount = 3.0;
         
-        unsigned long lines = [self countLines:[textView string]];
+        NSUInteger lines = [self countLines:[textView string]];
         double scrolled = [scroller doubleValue];
         double scrollDiff = 1.0 - scrolled;
         double percentScrolled = autoScrollToleranceLineCount / lines;
@@ -266,17 +266,44 @@
             [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
         }
         
+        //NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+        
+//        [textView.textStorage beginEditing];
+//        
+//        if (lines >= 10000) {
+//            NSRange removeRange = [self getRemovalRange:textView.string];
+//            //NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
+//            [textView.textStorage deleteCharactersInRange:removeRange];
+//        }
+        
         [[textView textStorage] appendAttributedString:attr];
         
+//        [textView.textStorage endEditing];
+       
         if(shouldScrollToBottom) {
             [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
     });
 }
 
-- (unsigned long)countLines:(NSString *)s {
+- (NSRange)getRemovalRange:(NSString *)s {
     
-    unsigned long numberOfLines, index, stringLength = [s length];
+    NSUInteger numberOfLines, index, stringLength = [s length];
+    
+    for (index = 0, numberOfLines = 0; index < stringLength;
+         numberOfLines++) {
+        index = NSMaxRange([s lineRangeForRange:NSMakeRange(index, 0)]);
+        if (numberOfLines >= 100) {
+            break;
+        }
+    }
+    
+    return NSMakeRange(0, index);
+}
+
+- (NSUInteger) countLines:(NSString *)s {
+    
+    NSUInteger numberOfLines, index, stringLength = [s length];
     
     for (index = 0, numberOfLines = 0; index < stringLength;
          numberOfLines++) {
@@ -307,6 +334,12 @@
                     [textStorage addAttribute:NSForegroundColorAttributeName
                                         value:[NSColor colorWithHexString:hl.color]
                                         range:newRange];
+                    
+                    if (hl.backgroundColor != nil) {
+                        [textStorage addAttribute:NSBackgroundColorAttributeName
+                                            value:[NSColor colorWithHexString:hl.backgroundColor]
+                                            range:newRange];
+                    }
                 }
             }
         }];

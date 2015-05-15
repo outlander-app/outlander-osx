@@ -566,7 +566,7 @@ public class OutlanderScriptParser : StackParser {
             lineNumber++
             endCommand(true)
         case _ where token.name == "keyword":
-            if(token.characters == "if" && lineCommandStack.count == 0) {
+            if(token.characters.lowercaseString == "if" && lineCommandStack.count == 0) {
                 // if there is an elseif token on the stack, ignore this if
                 if let lastToken = ifStack.last {
                     if lastToken.name == "elseif" {
@@ -578,12 +578,12 @@ public class OutlanderScriptParser : StackParser {
                 ifStack.append(ifToken)
                 self.trackingExpression = true
             }
-            else if(token.characters == "else" && lineCommandStack.count == 0) {
+            else if(token.characters.lowercaseString == "else" && lineCommandStack.count == 0) {
                 let elseToken = ElseIfToken(token.originalStringIndex!, token.originalStringLine!)
                 pushToken(elseToken)
                 ifStack.append(elseToken)
             }
-            else if(token.characters == "then" && lineCommandStack.count == 0) {
+            else if(token.characters.lowercaseString == "then" && lineCommandStack.count == 0) {
                 endIf()
                 self.trackingExpression = false
             }
@@ -599,7 +599,7 @@ public class OutlanderScriptParser : StackParser {
                 pushToken(token)
             }
         case _ where token.name == "variable":
-            if token.characters.hasPrefix("if_") {
+            if token.characters.lowercaseString.hasPrefix("if_") {
                 let ifToken = IfToken(token.originalStringIndex!, token.originalStringLine!)
                 let argStr = token.characters.substringFromIndex(advance(token.characters.startIndex, 3))
                 ifToken.argumentCheck = argStr.toInt()

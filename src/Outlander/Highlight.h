@@ -10,5 +10,6 @@
 
 @property (nonatomic, strong) NSString *pattern;
 @property (nonatomic, strong) NSString *color;
+@property (nonatomic, strong) NSString *backgroundColor;
 
 @end
