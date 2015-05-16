@@ -81,6 +81,10 @@
 		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AE91AC3B0630035B2F5 /* Kiwi.framework */; };
 		F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */; };
+		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
+		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
+		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
+		F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
 		F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
 		F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
 		F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
@@ -486,6 +490,8 @@
 		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
 		F9423AE91AC3B0630035B2F5 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
 		F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = /Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods/CocoaAsyncSocket.framework; sourceTree = "<absolute>"; };
+		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
+		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
 		F94A3FC81948AE0500D6B35D /* GosubToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GosubToken.m; sourceTree = "<group>"; };
 		F94A3FCB1948AE6700D6B35D /* ActionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionToken.h; sourceTree = "<group>"; };
@@ -1018,6 +1024,8 @@
 				F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */,
 				F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */,
 				F982CF601AD7834200BB9574 /* WindowsViewController.xib */,
+				F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */,
+				F949238F1B07C7280051F7F5 /* HighlightCellView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1472,6 +1480,7 @@
 				F97A5C261890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
+				F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
 				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 			);
@@ -1486,6 +1495,7 @@
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
+				F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
@@ -1667,6 +1677,7 @@
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
+				F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
 				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
@@ -1840,6 +1851,7 @@
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
+				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,

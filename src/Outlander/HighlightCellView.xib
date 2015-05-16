@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="HighlightCellView" customModule="Outlander" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="407" height="25"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="04C-ci-ZI1">
+                    <rect key="frame" x="104" y="-3" width="49" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="ZXy-Gn-loS"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Pattern" id="24d-26-afR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Ap-qf-BZL">
+                    <rect key="frame" x="0.0" y="-3" width="100" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="09Z-4o-cQs"/>
+                        <constraint firstAttribute="height" constant="25" id="BWH-2r-3Pw"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="#efefef" id="lkh-Qo-F9D">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="04C-ci-ZI1" secondAttribute="trailing" constant="9" id="5qN-Jm-geb"/>
+                <constraint firstItem="9Ap-qf-BZL" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="3" id="7Nm-u8-GGL"/>
+                <constraint firstItem="04C-ci-ZI1" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="3" id="9dh-ir-Qqe"/>
+                <constraint firstItem="9Ap-qf-BZL" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="2" id="XP3-qx-R46"/>
+                <constraint firstItem="04C-ci-ZI1" firstAttribute="leading" secondItem="9Ap-qf-BZL" secondAttribute="trailing" constant="8" id="aMW-GF-oQC"/>
+                <constraint firstAttribute="bottom" secondItem="04C-ci-ZI1" secondAttribute="bottom" constant="-3" id="z5F-pX-P0V"/>
+            </constraints>
+            <connections>
+                <outlet property="colorField" destination="9Ap-qf-BZL" id="SFF-8Y-TZx"/>
+                <outlet property="pattern" destination="04C-ci-ZI1" id="cqP-jY-jqK"/>
+            </connections>
+            <point key="canvasLocation" x="440.5" y="195.5"/>
+        </customView>
+    </objects>
+</document>

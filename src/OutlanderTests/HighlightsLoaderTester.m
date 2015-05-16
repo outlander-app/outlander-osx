@@ -37,11 +37,25 @@ describe(@"Highlights Loader", ^{
             Highlight *highlight = [theContext.highlights objectAtIndex:0];
             [[highlight.pattern should] equal:@"a silver clenched fist"];
             [[highlight.color should] equal:@"#AD0000"];
+            [[highlight.backgroundColor should] equal:@""];
+        });
+
+        it(@"should parse simple highlight with background color", ^{
+            
+            theFileSystem.fileContents = @"#highlight {#AD0000, #efefef} {a silver clenched fist}";
+            
+            [theLoader load];
+            [[theContext.highlights should] haveCountOf:1];
+            
+            Highlight *highlight = [theContext.highlights objectAtIndex:0];
+            [[highlight.pattern should] equal:@"a silver clenched fist"];
+            [[highlight.color should] equal:@"#AD0000"];
+            [[highlight.backgroundColor should] equal:@"#efefef"];
         });
         
         it(@"should parse multiple highlights", ^{
             
-            theFileSystem.fileContents = @"#highlight {#AD0000} {a silver clenched fist}\n#highlight {#0000FF} {^You've gained a new rank.*$}";
+            theFileSystem.fileContents = @"#highlight {#AD0000} {a silver clenched fist}\n#highlight {#0000FF, #efefef} {^You've gained a new rank.*$}";
             
             [theLoader load];
             [[theContext.highlights should] haveCountOf:2];
@@ -53,6 +67,7 @@ describe(@"Highlights Loader", ^{
             highlight = [theContext.highlights objectAtIndex:1];
             [[highlight.pattern should] equal:@"^You've gained a new rank.*$"];
             [[highlight.color should] equal:@"#0000FF"];
+            [[highlight.backgroundColor should] equal:@"#efefef"];
         });
     });
     
@@ -67,10 +82,11 @@ describe(@"Highlights Loader", ^{
             
             hl = [[Highlight alloc] init];
             hl.color = @"#0000FF";
+            hl.backgroundColor = @"#efefef";
             hl.pattern = @"^You've gained a new rank.*$";
             [theContext.highlights addObject:hl];
             
-            NSString *result = @"#highlight {#AD0000} {a silver clenched fist}\n#highlight {#0000FF} {^You've gained a new rank.*$}\n";
+            NSString *result = @"#highlight {#AD0000} {a silver clenched fist}\n#highlight {#0000FF,#efefef} {^You've gained a new rank.*$}\n";
             
             [theLoader save];
             

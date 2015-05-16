@@ -39,6 +39,10 @@
     return _cache[index];
 }
 
+- (NSInteger)indexOfObject:(id)item {
+    return [_cache indexOfObject:item];
+}
+
 - (void)removeObject:(id)item {
     [_cache removeObject:item];
     [self signalRemoval:item];

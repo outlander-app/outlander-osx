@@ -43,7 +43,12 @@
     [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {
             Highlight *hl = [[Highlight alloc] init];
-            hl.color = [data substringWithRange:[res rangeAtIndex:1]];
+            NSString *colorsStr = [data substringWithRange:[res rangeAtIndex:1]];
+            
+            NSArray *colors = [colorsStr componentsSeparatedByString:@","];
+            
+            hl.color = colors.count > 0 ? [colors[0] trimWhitespace] : @"";
+            hl.backgroundColor = colors.count > 1 ? [colors[1] trimWhitespace] : @"";
             hl.pattern = [data substringWithRange:[res rangeAtIndex:2]];
             [_context.highlights addObject:hl];
         }
@@ -56,7 +61,14 @@
     NSMutableString *str = [[NSMutableString alloc] init];
     
     [_context.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
-        [str appendFormat:@"#highlight {%@} {%@}\n", hl.color, hl.pattern];
+        
+        NSMutableString *colors = [[NSMutableString alloc] initWithString:hl.color];
+        
+        if (hl.backgroundColor != nil && [hl.backgroundColor length] > 0) {
+            [colors appendFormat:@",%@", hl.backgroundColor];
+        }
+        
+        [str appendFormat:@"#highlight {%@} {%@}\n", colors, hl.pattern];
     }];
     
     [_fileSystem write:str toFile:configFile];

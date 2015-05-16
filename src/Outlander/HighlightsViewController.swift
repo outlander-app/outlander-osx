@@ -12,6 +12,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var colorWell: NSColorWell!
+    @IBOutlet weak var backgroundColorWell: NSColorWell!
     private var _context:GameContext?
     private var _appSettingsLoader:AppSettingsLoader?
     
@@ -23,8 +24,12 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             self.didChangeValueForKey("selectedItem")
             
             if let item = selectedItem {
-                if count(item.color) > 0 {
+                if item.color != nil && count(item.color) > 0 {
                     colorWell.color = NSColor(hex: item.color)
+                }
+                
+                if item.backgroundColor != nil && count(item.backgroundColor) > 0 {
+                    backgroundColorWell.color = NSColor(hex: item.backgroundColor)
                 }
             }
         }
@@ -40,7 +45,9 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        
+        let nib = NSNib(nibNamed: "HighlightCellView", bundle: NSBundle.mainBundle())
+        tableView.registerNib(nib!, forIdentifier: "highlightCellView")
     }
     
     public override func awakeFromNib() {
@@ -64,24 +71,51 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             if(textField.tag == 1) {
                 
                 item.pattern = textField.stringValue
+
+            } else if(textField.tag == 2) {
+                
+                item.backgroundColor = textField.stringValue
+                
+                if item.backgroundColor == nil {
+                    item.backgroundColor = ""
+                }
+                
+                if count(item.backgroundColor) > 0 {
+                    backgroundColorWell.color = NSColor(hex: item.backgroundColor)
+                }
                 
             } else {
                 
                 item.color = textField.stringValue
+                
+                if item.color == nil {
+                    item.color = ""
+                }
                 
                 if count(item.color) > 0 {
                     colorWell.color = NSColor(hex: item.color)
                 }
             }
             
-            self.tableView.reloadData()
+            self.reloadSelectedRow()
         }
+    }
+    
+    func reloadSelectedRow() {
+        self.reloadTargetRowColumn(self.tableView.selectedRow, column: 0)
+    }
+    
+    func reloadTargetRowColumn(row:Int, column:Int) {
+        let indexSet = NSIndexSet(index: row)
+        let columnSet = NSIndexSet(index: column)
+        self.tableView.reloadDataForRowIndexes(indexSet, columnIndexes: columnSet)
     }
     
     @IBAction func addRemoveAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             var highlight = Highlight()
             highlight.color = "#0000ff"
+            highlight.backgroundColor = ""
             highlight.pattern = ""
             _context!.highlights.addObject(highlight)
            
@@ -111,6 +145,13 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     }
     
     public func tableViewSelectionDidChange(notification:NSNotification) {
+        
+        var lastIdx = -1
+        
+        if let last = self.selectedItem {
+            lastIdx = _context?.highlights.indexOfObject(last) ?? -1
+        }
+        
         let selectedRow = self.tableView.selectedRow
         if(selectedRow > -1
             && selectedRow < _context!.highlights.count()) {
@@ -120,21 +161,47 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         else {
             self.selectedItem = nil;
         }
+        
+        if lastIdx > -1 {
+            self.reloadTargetRowColumn(lastIdx, column: 0)
+        }
+        
+        self.reloadSelectedRow()
     }
     
-    public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+    public func tableView(tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView {
+        var cell = tableView.makeViewWithIdentifier("highlightCellView", owner: self) as? HighlightCellView
         
-        
-        if (row >= _context!.highlights.count()){
-            return "";
+        if(row > -1 && row < _context!.highlights.count()) {
+            
+            if let hl = _context!.highlights.objectAtIndex(row) as? Highlight {
+               
+                cell?.pattern.stringValue = hl.pattern
+                
+                if hl.color != nil && count(hl.color) > 0 {
+                    cell?.colorField.stringValue = hl.color
+                    cell?.colorField.textColor = NSColor(hex: hl.color)
+                    cell?.pattern.textColor = NSColor(hex: hl.color)
+                } else {
+                    cell?.colorField.stringValue = ""
+                    cell?.colorField.textColor = nil
+                    cell?.pattern.textColor = nil
+                }
+                
+                if contains(self.tableView.selectedRowIndexes, row) {
+                    cell?.selected = true
+                } else {
+                    cell?.selected = false
+                }
+                
+                if hl.backgroundColor != nil && count(hl.backgroundColor) > 0 {
+                    cell?.backgroundColor = NSColor(hex: hl.backgroundColor)
+                } else {
+                    cell?.backgroundColor = nil
+                }
+            }
         }
         
-        var item = _context!.highlights.objectAtIndex(row) as! Highlight
-        
-        if(tableColumn!.identifier == "color") {
-            return item.color
-        }
-        
-        return item.pattern
+        return cell ?? NSView()
     }
 }
