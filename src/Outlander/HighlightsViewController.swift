@@ -26,10 +26,14 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             if let item = selectedItem {
                 if item.color != nil && count(item.color) > 0 {
                     colorWell.color = NSColor(hex: item.color)
+                } else {
+                    colorWell.color = NSColor.blackColor()
                 }
                 
                 if item.backgroundColor != nil && count(item.backgroundColor) > 0 {
                     backgroundColorWell.color = NSColor(hex: item.backgroundColor)
+                } else {
+                    backgroundColorWell.color = NSColor.blackColor()
                 }
             }
         }
