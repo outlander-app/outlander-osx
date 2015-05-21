@@ -59,6 +59,7 @@
     [_handlers addObject:[ParseCommandHandler newInstance]];
     [_handlers addObject:[BeepCommandHandler newInstance]];
     [_handlers addObject:[FlashCommandHandler newInstance]];
+    [_handlers addObject:[WindowCommandHandler newInstance]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];

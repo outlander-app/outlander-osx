@@ -22,9 +22,13 @@
 @property (nonatomic, assign) float kY;
 @property (nonatomic, assign) BOOL dragging;
 @property (nonatomic, assign) BOOL showBorder;
-@property (nonatomic, strong) NSMutableArray *viewsList;
 @property (nonatomic, strong) RACSignal *keyup;
 
 - (void)setKeyHandler:(id<KeyHandler>)handler;
+
+- (void)addViewFromTextView:(TextViewController *)controller;
+- (TextViewController*)createTextController:(NSString *)key atLoc:(NSRect)rect;
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
+
+- (BOOL)hasView:(NSString *)key;
 @end

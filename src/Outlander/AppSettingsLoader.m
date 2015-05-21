@@ -62,6 +62,8 @@
     [self writeProfileFolders:_context.settings.profile];
     [self loadProfile];
     
+    [self loadLayout];
+    
     [self loadHighlights];
     [self loadVariables];
     [self loadAliases];
@@ -71,15 +73,19 @@
 - (void)loadConfig {
 }
 
-- (void)loadProfile {
-    
+- (void)loadLayout {
     _context.layout = [_windowDataService readLayoutJson:_context];
+}
+
+- (void)saveLayout {
+    [_windowDataService write:_context LayoutJson:_context.layout];
+}
+
+- (void)loadProfile {
     [_profileLoader load];
 }
 
 - (void)saveProfile {
-    
-    [_windowDataService write:_context LayoutJson:_context.layout];
     [_profileLoader save];
 }
 

@@ -26,6 +26,11 @@
 @property (nonatomic, copy) NSString *monoFontName;
 @property (nonatomic, assign) double monoFontSize;
 
+@property (nonatomic, assign) BOOL isVisible;
+@property (nonatomic, assign) BOOL lastShowBorder;
+@property (nonatomic, assign) NSRect lastLocation;
+
+- (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)show;
 - (void)setDisplayTimestamp:(BOOL)timestamp;
 - (NSString *)text;
@@ -36,4 +41,8 @@
 - (BOOL)endsWith:(NSString*)value;
 - (void)append:(TextTag*)text;
 - (BOOL)displayTimestamp;
+
+- (NSRect)location;
+
+- (void)removeView;
 @end

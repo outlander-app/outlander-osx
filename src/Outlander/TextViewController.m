@@ -14,7 +14,6 @@
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
-    BOOL _displayBorder;
 }
 @end
 
@@ -88,13 +87,41 @@
 
 - (BOOL)showBorder {
     MyView *parent = (MyView *)[[self view] superview];
-    return parent.showBorder;
+    
+    if (parent != nil) {
+        return parent.showBorder;
+    }
+    
+    return self.lastShowBorder;
 }
 
 - (void)setShowBorder:(BOOL)show {
+    _lastShowBorder = show;
+
     MyView *parent = (MyView *)[[self view] superview];
-    parent.showBorder = show;
-    parent.needsDisplay = YES;
+    if (parent != nil) {
+        parent.showBorder = show;
+        parent.needsDisplay = YES;
+    }
+}
+
+- (NSRect)location {
+    MyView *parent = (MyView *)[[self view] superview];
+    if (parent != nil) {
+        return parent.frame;
+    }
+    
+    return self.lastLocation;
+}
+
+- (void)removeView {
+    MyView *parent = (MyView *)[[self view] superview];
+    [parent removeFromSuperview];
+    
+    _lastLocation = parent.frame;
+    _lastShowBorder = parent.showBorder;
+    
+    _isVisible = NO;
 }
 
 - (BOOL)displayTimestamp {

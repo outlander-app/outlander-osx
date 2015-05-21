@@ -34,7 +34,6 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     if (self) {
         self.backgroundColor = [NSColor blackColor];
         self.draggable = NO;
-        self.viewsList = [[NSMutableArray alloc] init];
         self.autoresizesSubviews = YES;
         _maxViewSize = NSMakeSize(50, 50);
         _nwseCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nwse"] hotSpot:NSMakePoint(10, 10)];
@@ -61,26 +60,38 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     return YES;
 }
 
-- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
+- (BOOL)hasView:(NSString *)key {
+    
+    __block BOOL found = NO;
+    
+    [self.subviews enumerateObjectsUsingBlock:^(MyView *view, NSUInteger idx, BOOL *stop) {
+        if ([view.key isEqualToString:key]) {
+            found = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return found;
+}
+
+- (void)addViewFromTextView:(TextViewController *)controller {
+    __block MyView *view = [self createMyView:[NSColor blackColor]
+                                        atLoc:controller.lastLocation
+                                      withKey:controller.key];
+    
+    [view setShowBorder:controller.showBorder];
+    
+    [view addSubview:controller.view];
+}
+
+- (MyView*)createMyView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
     __block MyView *view = [[MyView alloc] initWithFrame:rect];
     view.backgroundColor = color;
     view.draggable = YES;
     view.showBorder = YES;
     [self addSubview:view];
     
-    TextViewController *textcrl = [[TextViewController alloc] init];
-    [textcrl.view setFrameSize:NSMakeSize(rect.size.width, rect.size.height)];
-    [textcrl.view fixLeftEdge:YES];
-    [textcrl.view fixTopEdge:YES];
-    [textcrl.view fixWidth:NO];
-    [textcrl.view fixHeight:NO];
-    [textcrl.view fixRightEdge:YES];
-    [textcrl.view fixBottomEdge:YES];
-    
-    view.key = textcrl.key = key;
-    
-    [view addSubview:textcrl.view];
-    [_viewsList addObject:view];
+    view.key = key;
     
     [self wireBottomLeftResize:view];
     [self wireBottomRightResize:view];
@@ -120,6 +131,33 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [rightThumb fixRightEdge:YES];
     [rightThumb fixWidth:YES];
     [rightThumb fixHeight:NO];
+    
+    return view;
+}
+
+- (TextViewController*)createTextController:(NSString *)key atLoc:(NSRect)rect {
+    TextViewController *textcrl = [[TextViewController alloc] init];
+    [textcrl.view setFrameSize:NSMakeSize(rect.size.width, rect.size.height)];
+    [textcrl.view fixLeftEdge:YES];
+    [textcrl.view fixTopEdge:YES];
+    [textcrl.view fixWidth:NO];
+    [textcrl.view fixHeight:NO];
+    [textcrl.view fixRightEdge:YES];
+    [textcrl.view fixBottomEdge:YES];
+    
+    textcrl.lastLocation = rect;
+    
+    textcrl.key = key;
+    
+    return textcrl;
+}
+
+- (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
+    __block MyView *view = [self createMyView:color atLoc:rect withKey:key];
+    
+    TextViewController *textcrl = [self createTextController:key atLoc:rect];
+    
+    [view addSubview:textcrl.view];
     
     return textcrl;
 }

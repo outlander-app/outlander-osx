@@ -114,12 +114,66 @@
         [self append:tag to:target];
     }];
     
+    [gameContext.events subscribe:self token:@"OL:window"];
+    
     return self;
+}
+
+
+- (void)handle:(NSString *)token data:(NSDictionary *)data {
+    if ([token isEqualToString:@"OL:window"]) {
+        [self processWindowCommand:data[@"action"] target:data[@"window"]];
+    }
+}
+
+- (void)processWindowCommand:(NSString *)action target:(NSString *)window {
+    NSLog(@"#window command: %@ %@", action, window);
+    
+    if ([action isEqualToString:@"add"]) {
+        
+        if(![self hasWindow:window]) {
+            WindowData *newWindow = [[WindowData alloc]
+                                         initWithName:window
+                                         atLoc:NSMakeRect(0, 0, 200, 200)
+                                         andTimestamp:NO];
+            [self addWindow:newWindow];
+        }
+        
+    } else if ([action isEqualToString:@"show"]) {
+        
+        if (![self hasWindow:window]) {
+            return;
+        }
+        
+        [self showWindow:window];
+        
+    } else if ([action isEqualToString:@"hide"]) {
+        
+        if (![self hasWindow:window]) {
+            return;
+        }
+        
+        [self hideWindow:window];
+        
+    } else if ([action isEqualToString:@"list"]) {
+        
+        NSArray *windows = [self getWindows];
+        
+        NSMutableString *windowData = [NSMutableString stringWithString:@"\nWindows:\n"];
+        
+        [windows enumerateObjectsUsingBlock:^(WindowData *win, NSUInteger idx, BOOL *stop) {
+            NSString *coords = [NSString stringWithFormat:@"[(%.0f,%.0f), (%.0f, %.0f)]", win.x, win.y, win.height, win.width];
+            [windowData appendFormat:@"%@ - %@\n", win.name, coords];
+        }];
+        
+        TextTag *tag = [TextTag tagFor:windowData mono:NO];
+        [self append:tag to:@"main"];
+    }
 }
 
 - (NSString *)windowForTarget:(NSString *)targetWindow {
 
-    if (targetWindow != nil && [self hasWindow:targetWindow]) {
+    if (targetWindow != nil && [self hasWindow:targetWindow] && [self isWindowVisible:targetWindow]) {
         return targetWindow;
     }
     
@@ -191,10 +245,9 @@
     
     NSRect rect = NSMakeRect(window.x, window.y, window.width, window.height);
     
-    TextViewController *controller = [_ViewContainer addView:[NSColor blackColor]
-                                                       atLoc:rect
-                                                     withKey:window.name];
-
+    TextViewController *controller = [_ViewContainer createTextController:window.name atLoc:rect];
+   
+    controller.isVisible = window.visible;
     controller.fontName = window.fontName;
     controller.fontSize = window.fontSize;
     controller.monoFontName = window.monoFontName;
@@ -202,6 +255,7 @@
 
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];
+    
     controller.gameContext = _gameContext;
     [controller.command subscribeNext:^(CommandContext *ctx) {
         [_commandProcessor process:ctx];
@@ -219,22 +273,42 @@
         }
     }];
     [_windows setCacheObject:controller forKey:window.name];
+   
+    if (controller.isVisible || [controller.key isEqualToString:@"main"]) {
+        [_ViewContainer addViewFromTextView:controller];
+    }
 }
 
 - (NSArray *)getWindows {
     
-    NSArray *windows = [_ViewContainer.subviews.rac_sequence map:^id(MyView *value) {
-        TextViewController *controller = [_windows cacheObjectForKey:value.key];
-        WindowData *data = [WindowData windowWithName:value.key atLoc:value.frame andTimestamp:[controller displayTimestamp]];
-        data.showBorder = value.showBorder;
+    NSMutableArray *windows = [[NSMutableArray alloc] init];
+    
+    [_windows enumerateKeysAndObjectsUsingBlock:^(NSString *key, TextViewController *controller, BOOL *stop) {
+        WindowData *data = [WindowData windowWithName:key atLoc:[controller location] andTimestamp:[controller displayTimestamp]];
+        data.showBorder = [controller showBorder];
         data.fontName = controller.fontName;
         data.fontSize = controller.fontSize;
         data.monoFontName = controller.monoFontName;
         data.monoFontSize = controller.monoFontSize;
-        return data;
-    }].array;
+        data.visible = controller.isVisible;
+        [windows addObject:data];
+    }];
     
     return windows;
+}
+
+- (void)showWindow:(NSString *)window {
+    if (![_ViewContainer hasView:window]) {
+        TextViewController *controller = [_windows cacheObjectForKey:window];
+        [_ViewContainer addViewFromTextView:controller];
+        controller.isVisible = YES;
+    }
+}
+
+- (void)hideWindow:(NSString *)window {
+    TextViewController *controller = [_windows cacheObjectForKey:window];
+    [controller removeView];
+    controller.isVisible = NO;
 }
 
 - (void)command:(NSString *)command {
@@ -287,14 +361,13 @@
     return controller.text;
 }
 
-//- (void)appendAll:(NSArray *)tags to:(NSString *)key {
-//    [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        [self append:obj to:key];
-//    }];
-//}
-
 - (BOOL)hasWindow:(NSString *)window {
     return [_windows cacheDoesContain:window];
+}
+
+- (BOOL)isWindowVisible:(NSString *)window {
+    TextViewController *controller = (TextViewController *)[_windows cacheObjectForKey:window];
+    return controller.isVisible;
 }
 
 - (void)append:(TextTag*)text to:(NSString *)key {

@@ -13,8 +13,19 @@ class HighlightCellView: NSView {
     @IBOutlet weak var colorField: NSTextField!
     @IBOutlet weak var pattern: NSTextField!
     
-    var selected:Bool = false
+    var selected:Bool = false {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
+    
     var backgroundColor:NSColor? {
+        didSet {
+            self.needsDisplay = true
+        }
+    }
+
+    var selectedColor:NSColor = NSColor(hex:"#3399ff") {
         didSet {
             self.needsDisplay = true
         }
@@ -34,7 +45,7 @@ class HighlightCellView: NSView {
         }
         
         if self.selected {
-            NSColor(hex: "#3399ff").setStroke()
+            self.selectedColor.setStroke()
             var border = NSBezierPath()
             var borderRect = NSMakeRect(self.bounds.origin.x, self.bounds.origin.y, self.bounds.width-2, self.bounds.height)
             border.appendBezierPathWithRect(borderRect)

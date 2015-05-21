@@ -207,6 +207,7 @@
     
     _gameContext.layout.windows = [vc getWindows];
     
+    [_appSettingsLoader saveLayout];
     [_appSettingsLoader saveProfile];
     [_appSettingsLoader saveVariables];
     [_appSettingsLoader saveHighlights];

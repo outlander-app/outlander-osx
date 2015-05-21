@@ -14,7 +14,9 @@
 #import "MyNSTextField.h"
 #import "Commands.h"
 
-@interface TestViewController : NSViewController <Commands> {
+@protocol ISubscriber;
+
+@interface TestViewController : NSViewController <Commands, ISubscriber> {
     AuthenticationServer *_server;
     GameStream *_gameStream;
     TSMutableDictionary *_windows;

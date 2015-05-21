@@ -13,6 +13,7 @@
 + (id)windowWithName:(NSString *)name atLoc:(NSRect)loc andTimestamp:(BOOL)timestamp {
     return [[self alloc] initWithName:name atLoc:loc andTimestamp:timestamp];
 }
+
 - (id)initWithName:(NSString *)name atLoc:(NSRect)loc andTimestamp:(BOOL)timestamp {
     self = [super init];
     if(!self) return nil;
@@ -28,6 +29,7 @@
     _fontSize = 14;
     _monoFontName = @"Menlo";
     _monoFontSize = 13;
+    _visible = YES;
     
     return self;
 }

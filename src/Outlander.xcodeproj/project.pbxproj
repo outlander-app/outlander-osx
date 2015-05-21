@@ -30,6 +30,8 @@
 		F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
 		F90CEC211AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
 		F90CEC221AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
+		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
+		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -446,6 +448,7 @@
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
+		F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowCommandHandler.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -962,6 +965,7 @@
 				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
+				F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1714,6 +1718,7 @@
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
+				F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
@@ -1845,6 +1850,7 @@
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
+				F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,

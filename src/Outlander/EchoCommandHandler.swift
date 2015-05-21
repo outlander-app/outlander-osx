@@ -44,7 +44,7 @@ class EchoCommandHandler : CommandHandler {
         tag.text = "\(text)\n"
         tag.color = foregroundColor
         tag.backgroundColor = backgroundColor
-        tag.targetWindow = window
+        tag.targetWindow = window.lowercaseString
         self.relay.sendEcho(tag)
     }
 }
