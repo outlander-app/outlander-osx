@@ -77,14 +77,13 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 - (void)addViewFromTextView:(TextViewController *)controller {
     __block MyView *view = [self createMyView:[NSColor blackColor]
                                         atLoc:controller.lastLocation
-                                      withKey:controller.key];
+                                      withKey:controller.key
+                                      andView:controller.view];
     
     [view setShowBorder:controller.showBorder];
-    
-    [view addSubview:controller.view];
 }
 
-- (MyView*)createMyView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
+- (MyView*)createMyView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key andView:(NSView *)childView {
     __block MyView *view = [[MyView alloc] initWithFrame:rect];
     view.backgroundColor = color;
     view.draggable = YES;
@@ -97,6 +96,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [self wireBottomRightResize:view];
     [self wireTopLeftResize:view];
     [self wireTopRightResize:view];
+    
+    [view addSubview:childView];
     
     NSCursor *cursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"move"]  hotSpot:NSMakePoint(0, 0)];
     
@@ -153,11 +154,72 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 }
 
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
-    __block MyView *view = [self createMyView:color atLoc:rect withKey:key];
-    
     TextViewController *textcrl = [self createTextController:key atLoc:rect];
     
+    [self createMyView:color atLoc:rect withKey:key andView:textcrl.view];
+    
+    return textcrl;
+}
+
+- (TextViewController*)addViewOld:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key {
+    __block MyView *view = [[MyView alloc] initWithFrame:rect];
+    view.backgroundColor = color;
+    view.draggable = YES;
+    view.showBorder = YES;
+    [self addSubview:view];
+    
+    TextViewController *textcrl = [[TextViewController alloc] init];
+    [textcrl.view setFrameSize:NSMakeSize(rect.size.width, rect.size.height)];
+    [textcrl.view fixLeftEdge:YES];
+    [textcrl.view fixTopEdge:YES];
+    [textcrl.view fixWidth:NO];
+    [textcrl.view fixHeight:NO];
+    [textcrl.view fixRightEdge:YES];
+    [textcrl.view fixBottomEdge:YES];
+    
+    view.key = textcrl.key = key;
+    
     [view addSubview:textcrl.view];
+    //[_viewsList addObject:view];
+    
+    [self wireBottomLeftResize:view];
+    [self wireBottomRightResize:view];
+    [self wireTopLeftResize:view];
+    [self wireTopRightResize:view];
+    
+    NSCursor *cursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"move"]  hotSpot:NSMakePoint(0, 0)];
+    
+    MyThumb *bottomThumb = [self wireDragRect:view
+                                    withFrame:NSMakeRect(15, 0, view.frame.size.width-30, 10)
+                                   withCursor:cursor];
+    [bottomThumb fixLeftEdge:YES];
+    [bottomThumb fixWidth:NO];
+    [bottomThumb fixHeight:YES];
+    
+    MyThumb *topThumb = [self wireDragRect:view
+                                 withFrame:NSMakeRect(15, view.frame.size.height-10, view.frame.size.width-30, 10)
+                                withCursor:cursor];
+    [topThumb fixTopEdge:NO];
+    [topThumb fixLeftEdge:YES];
+    [topThumb fixWidth:NO];
+    [topThumb fixHeight:YES];
+    
+    MyThumb *leftThumb = [self wireDragRect:view
+                                  withFrame:NSMakeRect(0, 15, 10, view.frame.size.height - 30)
+                                 withCursor:cursor];
+    [leftThumb fixTopEdge:YES];
+    [leftThumb fixLeftEdge:YES];
+    [leftThumb fixWidth:YES];
+    [leftThumb fixHeight:NO];
+    
+    MyThumb *rightThumb = [self wireDragRect:view
+                                   withFrame:NSMakeRect(view.frame.size.width - 10, 15, 10, view.frame.size.height - 30)
+                                  withCursor:cursor];
+    [rightThumb fixTopEdge:YES];
+    [rightThumb fixLeftEdge:NO];
+    [rightThumb fixRightEdge:YES];
+    [rightThumb fixWidth:YES];
+    [rightThumb fixHeight:NO];
     
     return textcrl;
 }

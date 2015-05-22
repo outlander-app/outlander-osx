@@ -29,6 +29,7 @@
 - (void)addViewFromTextView:(TextViewController *)controller;
 - (TextViewController*)createTextController:(NSString *)key atLoc:(NSRect)rect;
 - (TextViewController*)addView:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
+- (TextViewController*)addViewOld:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
 
 - (BOOL)hasView:(NSString *)key;
 @end

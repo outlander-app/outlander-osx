@@ -50,7 +50,7 @@ class EchoCommandHandlerTester: QuickSpec {
                 
                 expect(relay?.echos.count).to(equal(1))
                 expect(relay?.echos[0].text).to(equal("something to log\n"))
-                expect(relay?.echos[0].targetWindow).to(equal("Log"))
+                expect(relay?.echos[0].targetWindow).to(equal("log"))
             }
             
             it("sets foreground color") {
