@@ -27,13 +27,13 @@ Yes - the Genie map files have several commands that are not yet fully supported
 
 * \#alias \<name\> \<replacement\>
     * setup an alias
-    * ex: #alias l2 load arrows    
+    * ex: `#alias l2 load arrows`   
 * \#var
     * set global var
-    * ex: #var primary.container backpack
+    * ex: `#var primary.container backpack`
 * \#highlight
     * add highlight
-    * ex: #highlight #AD0000 a silver clenched fist
+    * ex: `#highlight #AD0000 a silver clenched fist`
 * \#script (abort|pause|resume|vars) \<script name\>
     * control running scripts
     * ex: #script pause forage
