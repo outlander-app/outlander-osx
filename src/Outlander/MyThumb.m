@@ -26,7 +26,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
 //    [[NSColor purpleColor] setFill];
 //    NSRectFill(dirtyRect);
-//    
+
 	[super drawRect:self.bounds];
 }
 

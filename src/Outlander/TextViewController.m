@@ -118,6 +118,8 @@
     MyView *parent = (MyView *)[[self view] superview];
     [parent removeFromSuperview];
     
+    [parent.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     _lastLocation = parent.frame;
     _lastShowBorder = parent.showBorder;
     

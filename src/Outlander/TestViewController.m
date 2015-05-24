@@ -245,7 +245,13 @@
     
     NSRect rect = NSMakeRect(window.x, window.y, window.width, window.height);
     
-    TextViewController *controller = [_ViewContainer addViewOld:[NSColor blackColor] atLoc:rect withKey:window.name];
+    TextViewController *controller = nil;
+    
+    if (window.visible || [window.name isEqualToString:@"main"]) {
+        controller = [_ViewContainer addViewOld:[NSColor blackColor] atLoc:rect withKey:window.name];
+    } else {
+        controller = [_ViewContainer createTextController:window.name atLoc:rect];
+    }
    
     controller.isVisible = window.visible;
     controller.fontName = window.fontName;
@@ -273,10 +279,6 @@
         }
     }];
     [_windows setCacheObject:controller forKey:window.name];
-   
-    if (!controller.isVisible && ![controller.key isEqualToString:@"main"]) {
-        [self hideWindow:controller.key];
-    }
 }
 
 - (NSArray *)getWindows {
@@ -301,7 +303,9 @@
     if (![_ViewContainer hasView:window]) {
         TextViewController *controller = [_windows cacheObjectForKey:window];
         [_ViewContainer addViewFromTextView:controller];
+//        controller = [_ViewContainer addViewOld:[NSColor blackColor] atLoc:controller.lastLocation withKey:window];
         controller.isVisible = YES;
+//        [_windows setCacheObject:controller forKey:window];
     }
 }
 

@@ -508,6 +508,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     __block float minX = 0.0;
     
     thumb.down = ^(NSEvent *ev){
+//        NSLog(@"****DOWN****");
         [self reOrderView:view];
         nonTrans = [ev locationInWindow];
         downPoint = [view convertPoint:nonTrans fromView:nil];
@@ -519,15 +520,16 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     };
     
     thumb.up = ^(NSEvent *ev) {
+//        NSLog(@"****UP****");
         view.dragging = NO;
         view.needsDisplay = YES;
     };
     
     thumb.dragged = ^(NSEvent *ev){
+//        NSLog(@"****DRAGGED****");
         if(!view.draggable) return;
         
         view.dragging = YES;
-        view.needsDisplay = YES;
         
         NSPoint loc = [ev locationInWindow];
         
@@ -554,8 +556,12 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         if(size.width < _maxViewSize.width)
             size.width = _maxViewSize.width;
         
-        [view setFrameSize:size];
+//        NSLog(@"newOrigin: %f, %f", newOrigin.x, newOrigin.y);
+        
         [view setFrameOrigin:newOrigin];
+        [view setFrameSize:size];
+
+        view.needsDisplay = YES;
     };
     [view addSubview:thumb];
 }
@@ -603,6 +609,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
             newOrigin.x = maxX;
         if(newOrigin.y > maxY)
             newOrigin.y = maxY;
+        
+//        NSLog(@"newOrigin: %f, %f", newOrigin.x, newOrigin.y);
         
         [view setFrameOrigin:newOrigin];
     };
