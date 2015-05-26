@@ -342,6 +342,12 @@
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
 		F9C1787D1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
 		F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
+		F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */; };
+		F9C178821B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */; };
+		F9C178831B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */; };
+		F9C178841B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */; };
+		F9C178861B140F2A00CC7291 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C178851B140F2A00CC7291 /* FlippedView.swift */; };
+		F9C178871B140F2A00CC7291 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C178851B140F2A00CC7291 /* FlippedView.swift */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
@@ -741,6 +747,9 @@
 		F9BF6AF4193A941B0075A12F /* StubEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubEventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF5193A941B0075A12F /* StubEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubEventRelay.m; sourceTree = "<group>"; };
 		F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCommandHandler.swift; sourceTree = "<group>"; };
+		F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptToolbarViewController.swift; sourceTree = "<group>"; };
+		F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptToolbarViewController.xib; sourceTree = "<group>"; };
+		F9C178851B140F2A00CC7291 /* FlippedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBuilder.swift; sourceTree = "<group>"; };
@@ -1034,6 +1043,8 @@
 				F982CF601AD7834200BB9574 /* WindowsViewController.xib */,
 				F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */,
 				F949238F1B07C7280051F7F5 /* HighlightCellView.swift */,
+				F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */,
+				F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1174,6 +1185,7 @@
 				F92A4FC0192B3484006C71F9 /* MyWindow.m */,
 				F959D3D71AC8757F00B2A659 /* OLShortcutView.h */,
 				F959D3D91AC8759500B2A659 /* OLShortcutView.m */,
+				F9C178851B140F2A00CC7291 /* FlippedView.swift */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -1482,6 +1494,7 @@
 				F97A5CC61896C21600E2C318 /* TextViewController.xib in Resources */,
 				F9CF92811890832800449548 /* MainMenu.xib in Resources */,
 				F97CD5931ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */,
+				F9C178831B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */,
 				F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */,
 				F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
@@ -1505,6 +1518,7 @@
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 				F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
+				F9C178841B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */,
 				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
@@ -1628,6 +1642,7 @@
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
+				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F90BCF901AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
@@ -1662,6 +1677,7 @@
 				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
 				F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */,
+				F9C178861B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
@@ -1910,10 +1926,12 @@
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
+				F9C178821B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,
 				F9DF14921AF8589C000A05FB /* EchoCommandHandlerTester.swift in Sources */,
 				F9E1C8B11AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */,
+				F9C178871B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,

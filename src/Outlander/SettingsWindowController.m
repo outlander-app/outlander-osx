@@ -99,7 +99,8 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
             
         case SettingsOptionWindows:
             identifier = @"windows";
-            vc = [[WindowsViewController alloc] initWithNibName:@"WindowsViewController" bundle:[NSBundle mainBundle]];
+            //vc = [[WindowsViewController alloc] initWithNibName:@"WindowsViewController" bundle:[NSBundle mainBundle]];
+            vc = [[ScriptToolbarViewController alloc] initWithNibName:@"ScriptToolbarViewController" bundle:[NSBundle mainBundle]];
             break;
     }
     
