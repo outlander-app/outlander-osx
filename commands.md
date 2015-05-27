@@ -25,23 +25,27 @@ Yes - the Genie map files have several commands that are not yet fully supported
 
 ## Configuration Commands
 
-* \#alias \<name\> \<replacement\>
+* `#alias <name> <replacement>`
     * setup an alias
     * ex: `#alias l2 load arrows`   
-* \#var
+* `#var`
     * set global var
     * ex: `#var primary.container backpack`
-* \#highlight
+* `#highlight`
     * add highlight
     * ex: `#highlight #AD0000 a silver clenched fist`
-* \#script (abort|pause|resume|vars) \<script name\>
+* `#script (abort|pause|resume|vars) <script name\>`
     * control running scripts
     * ex: #script pause forage
     * ex: #script resume forage
     * ex: #script vars forage
         * vars will display the current list of local script variables.
-* \#parse \<text\>
+* `#parse <text>`
 	* sends the text to be parsed by the scripting engine, as if sent by the game
+* `#window add/show/hide <name>`
+  * ex: `#window add log`
+  * ex: `#window hide log`
+  * `#window list all` will show all window ids and locations
 
 ## Scripting
 
