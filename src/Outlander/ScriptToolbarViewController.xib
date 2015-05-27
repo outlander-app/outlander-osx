@@ -16,16 +16,16 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gj1-IY-QTo">
-                    <rect key="frame" x="191" y="165" width="98" height="25"/>
-                    <popUpButtonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" lineBreakMode="truncatingTail" inset="2" id="AEf-vS-ejv">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <menu key="menu" id="KSv-Im-gKy">
+                <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2U9-45-xCf">
+                    <rect key="frame" x="151" y="100" width="87" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" pullsDown="YES" id="acq-1v-3AV">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="GXK-d3-8gg">
                             <items>
-                                <menuItem title="Item 1" id="pBe-8x-Uyv"/>
-                                <menuItem title="Item 2" id="mD7-o9-ZMn"/>
-                                <menuItem title="Item 3" id="jZn-NJ-VOS"/>
+                                <menuItem title="Item 1" state="on" hidden="YES" id="v03-DY-WOu"/>
+                                <menuItem title="Item 2" id="2vq-Me-TV8"/>
+                                <menuItem title="Item 3" id="bOG-2z-TUw"/>
                             </items>
                         </menu>
                     </popUpButtonCell>

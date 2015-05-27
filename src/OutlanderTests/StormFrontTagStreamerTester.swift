@@ -442,6 +442,20 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(6))
                 expect(self.tags[2].text).to(equal("  Glythtide's Joy"))
             }
+            
+            it("ignores percWindow (for now)") {
+                let data = [
+                    "<clearStream id=\"percWindow\"/>",
+                    "<pushStream id=\"percWindow\"/>Bear Strength<popStream/><pushStream id=\"percWindow\"/>  (Indefinite)",
+                    "<popStream/>"
+                ]
+              
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+//                expect(self.tags[0].text).to(equal("bear strength"))
+//                expect(self.tags[0].targetWindow).to(equal("percWindow"))
+            }
         })
     }
     

@@ -14,4 +14,13 @@ class FlippedView : NSView {
             return true
         }
     }
+    
+    override func drawRect(dirtyRect: NSRect) {
+        
+        NSColor.blackColor().setFill()
+        
+        NSRectFill(dirtyRect)
+        
+        super.drawRect(dirtyRect)
+    }
 }

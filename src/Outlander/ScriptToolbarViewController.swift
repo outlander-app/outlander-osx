@@ -18,31 +18,35 @@ class ScriptToolbarViewController: NSViewController, SettingsView {
         super.viewDidLoad()
         
         self.addScript("collect")
+        self.addScript("idle")
     }
     
     func addScript(scriptName:String) {
-        var btn = NSPopUpButton(frame: NSRect(x: 0, y: 0, width: 100, height: 25), pullsDown: true)
-        btn.setButtonType(NSButtonType.SwitchButton)
+        let viewCount = self.view.subviews.count
+        let width = 75
+        
+        var btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
+        btn.setButtonType(NSButtonType.PushOnPushOffButton)
         btn.menu = NSMenu()
-        btn.menu?.addItem(createMenuItem(scriptName, title: scriptName, tag: 0))
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Resume", tag: 1))
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Pause", tag: 2))
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Abort", tag: 3))
+        btn.menu?.title = scriptName
+        btn.menu?.addItem(createMenuItem(scriptName, title: scriptName, textColor: NSColor.whiteColor()))
+        btn.menu?.addItem(createMenuItem(scriptName, title: "Resume", textColor: NSColor.blackColor()))
+        btn.menu?.addItem(createMenuItem(scriptName, title: "Pause", textColor: NSColor.blackColor()))
+        btn.menu?.addItem(createMenuItem(scriptName, title: "Abort", textColor: NSColor.blackColor()))
         self.view.subviews.append(btn)
     }
     
-    func createMenuItem(scriptName:String, title:String, tag:Int) -> NSMenuItem {
+    func createMenuItem(scriptName:String, title:String, textColor:NSColor) -> NSMenuItem {
         var item = NSMenuItem()
-        var attributes = [NSForegroundColorAttributeName: NSColor.whiteColor()]
+        var attributes = [NSForegroundColorAttributeName: textColor]
         var titleString = NSAttributedString(string: title, attributes: attributes)
         item.attributedTitle = titleString
-        item.tag = tag
         return item
     }
     
     func popUpSelectionChanged(notification:NSNotification) {
         if let menuItem = notification.userInfo?["MenuItem"] as? NSMenuItem {
-            println("\(menuItem.title)")
+            println("\(menuItem.menu?.title): \(menuItem.attributedTitle?.string)")
         }
     }
     

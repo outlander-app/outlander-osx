@@ -261,7 +261,7 @@ public class StormFrontTagStreamer {
             isSetup = false
             
         case _ where node.name == "text":
-            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
+            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc" || lastStreamId == "percWindow") {
                 break
             }
             
@@ -277,6 +277,7 @@ public class StormFrontTagStreamer {
             if lastNode?.name == "preset" && count(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
                 var text = tag!.text!.trimPrefix("  ")
                 tag?.text = "\n\(text)"
+                tag?.preset = lastNode?.attr("id")
             }
             
             // room name
@@ -391,7 +392,7 @@ public class StormFrontTagStreamer {
         case _ where streamId == "ooc":
             return "ooc"
         default:
-            return "main"
+            return streamId.lowercaseString
         }
     }
     
