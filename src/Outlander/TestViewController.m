@@ -41,6 +41,7 @@
     ScriptRunner *_scriptRunner;
     NotifyMessage *_notifier;
     VitalsViewController *_vitalsViewController;
+    ScriptToolbarViewController *_scriptToolbarViewController;
     ExpTracker *_expTracker;
     RoundtimeNotifier *_roundtimeNotifier;
     SpelltimeNotifier *_spelltimeNotifier;
@@ -77,6 +78,7 @@
     _scriptRunner = [ScriptRunner newInstance: _gameContext notifier: _notifier];
     
     _vitalsViewController = [[VitalsViewController alloc] init];
+    _scriptToolbarViewController = [[ScriptToolbarViewController alloc] initWithNibName:@"ScriptToolbarViewController" bundle:[NSBundle mainBundle]];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
     _expTracker = [[ExpTracker alloc] init];
@@ -186,12 +188,23 @@
     _ViewContainer.autoresizesSubviews = YES;
     
     [_VitalsView addSubview:_vitalsViewController.view];
+    _VitalsView.backgroundColor = [NSColor blackColor];
     [_vitalsViewController.view fixTopEdge:YES];
     [_vitalsViewController.view fixRightEdge:YES];
     [_vitalsViewController.view fixBottomEdge:NO];
     [_vitalsViewController.view fixLeftEdge:YES];
     [_vitalsViewController.view fixWidth:NO];
     [_vitalsViewController.view fixHeight:NO];
+    
+    [_scriptToolbarView addSubview:_scriptToolbarViewController.view];
+    _scriptToolbarView.backgroundColor = [NSColor colorWithHexString:@"#323232"];
+    [_scriptToolbarViewController.view fixTopEdge:YES];
+    [_scriptToolbarViewController.view fixRightEdge:YES];
+    [_scriptToolbarViewController.view fixBottomEdge:NO];
+    [_scriptToolbarViewController.view fixLeftEdge:YES];
+    [_scriptToolbarViewController.view fixWidth:NO];
+    [_scriptToolbarViewController.view fixHeight:NO];
+    [_scriptToolbarViewController setContext:_gameContext];
     
     [_gameContext.layout.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj];

@@ -8,45 +8,130 @@
 
 import Cocoa
 
-class ScriptToolbarViewController: NSViewController, SettingsView {
+class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
-    override func awakeFromNib() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popUpSelectionChanged:", name: NSMenuDidSendActionNotification, object: nil)
+    private var context:GameContext?
+    
+    func handle(token:String, data:Dictionary<String, AnyObject>) {
+        mainThread { () -> () in
+            if token == "script:add" {
+                self.addScript(data["scriptName"] as! String)
+            } else if token == "script:resume" {
+                self.resumeScript(data["scriptName"] as! String)
+            } else if token == "script:pause" {
+                self.pauseScript(data["scriptName"] as! String)
+            } else if token == "script:remove" {
+                self.removeScript(data["scriptName"] as! String)
+            } else if token == "script:removeAll" {
+                self.removeAll()
+            }
+        }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func resumeScript(scriptName:String) {
+        for view in self.view.subviews as! [NSView] {
+            if let button = view as? NSPopUpButton {
+                if button.menu?.title == scriptName {
+                    button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
+                }
+            }
+        }
+    }
+    
+    func pauseScript(scriptName:String) {
+        for view in self.view.subviews as! [NSView] {
+            if let button = view as? NSPopUpButton {
+                if button.menu?.title == scriptName {
+                    button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusPartiallyAvailable")
+                }
+            }
+        }
+    }
+    
+    func removeAll() {
+        for view in self.view.subviews as! [NSView] {
+            if let button = view as? NSPopUpButton {
+                button.removeFromSuperview()
+            }
+        }
+    }
+    
+    func removeScript(scriptName:String) {
+        let startCount = self.view.subviews.count
         
-        self.addScript("collect")
-        self.addScript("idle")
+        for view in self.view.subviews as! [NSView] {
+            if let button = view as? NSPopUpButton {
+                if button.menu?.title == scriptName {
+                    button.removeFromSuperview()
+                }
+            }
+        }
+        
+        if self.view.subviews.count != startCount {
+            updateButtonFrames()
+        }
+    }
+    
+    func updateButtonFrames() {
+        let viewCount = self.view.subviews.count
+        let width = 125
+        var count = 0
+        for view in self.view.subviews as! [NSView] {
+            if var button = view as? NSPopUpButton {
+                button.frame = NSRect(x: count * width, y: 0, width: width, height: 25)
+//                button.sizeToFit()
+                count++
+            }
+        }
     }
     
     func addScript(scriptName:String) {
         let viewCount = self.view.subviews.count
-        let width = 75
+        let width = 125
         
         var btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
-        btn.setButtonType(NSButtonType.PushOnPushOffButton)
+        btn.setButtonType(NSButtonType.SwitchButton)
         btn.menu = NSMenu()
         btn.menu?.title = scriptName
         btn.menu?.addItem(createMenuItem(scriptName, title: scriptName, textColor: NSColor.whiteColor()))
+        btn.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
         btn.menu?.addItem(createMenuItem(scriptName, title: "Resume", textColor: NSColor.blackColor()))
+        btn.menu?.itemAtIndex(1)?.image = NSImage(named: "NSStatusAvailable")
         btn.menu?.addItem(createMenuItem(scriptName, title: "Pause", textColor: NSColor.blackColor()))
+        btn.menu?.itemAtIndex(2)?.image = NSImage(named: "NSStatusPartiallyAvailable")
         btn.menu?.addItem(createMenuItem(scriptName, title: "Abort", textColor: NSColor.blackColor()))
+        btn.menu?.itemAtIndex(3)?.image = NSImage(named: "NSStatusUnavailable")
+        btn.menu?.addItem(createMenuItem(scriptName, title: "Vars", textColor: NSColor.blackColor()))
+        btn.menu?.itemAtIndex(4)?.image = NSImage(named: "NSStatusNone")
         self.view.subviews.append(btn)
+        //btn.sizeToFit()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popUpSelectionChanged:", name: NSMenuDidSendActionNotification, object: btn.menu)
     }
     
     func createMenuItem(scriptName:String, title:String, textColor:NSColor) -> NSMenuItem {
         var item = NSMenuItem()
-        var attributes = [NSForegroundColorAttributeName: textColor]
-        var titleString = NSAttributedString(string: title, attributes: attributes)
+        var titleString = createTitleString(title, textColor: textColor)
         item.attributedTitle = titleString
         return item
     }
     
+    func createTitleString(title:String, textColor:NSColor) -> NSAttributedString {
+        var attributes = [String:AnyObject]()
+        attributes[NSForegroundColorAttributeName] = textColor
+        attributes[NSFontAttributeName] = NSFont(name: "Menlo", size: 12)
+        
+        var style = NSMutableParagraphStyle()
+        style.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        attributes[NSParagraphStyleAttributeName] = style
+        
+        return NSAttributedString(string: title, attributes: attributes)
+    }
+    
     func popUpSelectionChanged(notification:NSNotification) {
         if let menuItem = notification.userInfo?["MenuItem"] as? NSMenuItem {
-            println("\(menuItem.menu?.title): \(menuItem.attributedTitle?.string)")
+            var action = menuItem.attributedTitle!.string.lowercaseString
+            self.context?.events.publish("script", data: ["target":menuItem.menu!.title, "action":action])
         }
     }
     
@@ -54,5 +139,13 @@ class ScriptToolbarViewController: NSViewController, SettingsView {
     }
     
     func setContext(context:GameContext) {
+        self.context = context
+        
+        self.context?.events.subscribe(self, token: "script:add")
+        self.context?.events.subscribe(self, token: "script:resume")
+        self.context?.events.subscribe(self, token: "script:pause")
+        self.context?.events.subscribe(self, token: "script:remove")
+        self.context?.events.subscribe(self, token: "script:removeAll")
+        self.context?.events.subscribe(self, token: "script:debug")
     }
 }

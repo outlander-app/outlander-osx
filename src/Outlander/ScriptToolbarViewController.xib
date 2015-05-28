@@ -15,22 +15,6 @@
         <customView id="Hz6-mo-xeY" customClass="FlippedView" customModule="Outlander" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2U9-45-xCf">
-                    <rect key="frame" x="151" y="100" width="87" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" pullsDown="YES" id="acq-1v-3AV">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="GXK-d3-8gg">
-                            <items>
-                                <menuItem title="Item 1" state="on" hidden="YES" id="v03-DY-WOu"/>
-                                <menuItem title="Item 2" id="2vq-Me-TV8"/>
-                                <menuItem title="Item 3" id="bOG-2z-TUw"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-            </subviews>
             <point key="canvasLocation" x="684" y="254"/>
         </customView>
     </objects>

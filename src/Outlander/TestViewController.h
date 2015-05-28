@@ -30,6 +30,7 @@
 @property (strong) IBOutlet CharacterViewModel *viewModel;
 @property (unsafe_unretained) IBOutlet NSTextView *MainTextView;
 @property (weak) IBOutlet DirectionsView *directionsView;
+@property (weak) IBOutlet MyView *scriptToolbarView;
 
 - (NSArray *)getWindows;
 - (IBAction)commandSubmit:(id)sender;

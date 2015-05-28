@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TestViewController">
@@ -11,6 +11,7 @@
                 <outlet property="VitalsView" destination="aaS-Tl-hqC" id="cLu-jW-Cxg"/>
                 <outlet property="_CommandTextField" destination="HLQ-x9-5se" id="dk3-gg-eI0"/>
                 <outlet property="directionsView" destination="srS-QB-sed" id="cep-5h-wQb"/>
+                <outlet property="scriptToolbarView" destination="koe-W5-1xI" id="RuT-ub-hrG"/>
                 <outlet property="view" destination="1" id="2"/>
                 <outlet property="viewModel" destination="BCL-fi-1Ob" id="dHA-Ak-DLE"/>
             </connections>
@@ -18,11 +19,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" id="1" customClass="MyView">
-            <rect key="frame" x="0.0" y="0.0" width="692" height="483"/>
+            <rect key="frame" x="0.0" y="1" width="692" height="488"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField focusRingType="none" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
-                    <rect key="frame" x="18" y="37" width="656" height="12"/>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
+                    <rect key="frame" x="18" y="39" width="656" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="lFc-SB-QLH"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" state="on" focusRingType="none" placeholderString="" id="FN0-lT-QP8">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -32,8 +36,8 @@
                         <action selector="commandSubmit:" target="-2" id="jSk-kc-1tU"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0o8-5z-kiJ">
-                    <rect key="frame" x="41" y="55" width="182" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0o8-5z-kiJ">
+                    <rect key="frame" x="41" y="60" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="AQg-xr-Dda"/>
                     </constraints>
@@ -46,8 +50,8 @@
                         <binding destination="BCL-fi-1Ob" name="value" keyPath="self.lefthand" id="fky-Vo-5C5"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yf4-ji-u2U">
-                    <rect key="frame" x="217" y="55" width="182" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yf4-ji-u2U">
+                    <rect key="frame" x="217" y="60" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="5eb-ES-iMF"/>
                     </constraints>
@@ -60,8 +64,8 @@
                         <binding destination="BCL-fi-1Ob" name="value" keyPath="self.righthand" id="tht-xk-e8t"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3P-js-Xda">
-                    <rect key="frame" x="399" y="55" width="182" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P3P-js-Xda">
+                    <rect key="frame" x="399" y="60" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="7P4-WQ-GXh"/>
                     </constraints>
@@ -74,17 +78,11 @@
                         <binding destination="BCL-fi-1Ob" name="value" keyPath="self.spell" id="ehK-j3-bOA"/>
                     </connections>
                 </textField>
-                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHV-Sq-xD0" customClass="MyView">
-                    <rect key="frame" x="20" y="80" width="652" height="383"/>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHV-Sq-xD0" customClass="MyView">
+                    <rect key="frame" x="20" y="85" width="652" height="362"/>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="aaS-Tl-hqC" customClass="MyView">
-                    <rect key="frame" x="20" y="8" width="652" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="23" id="Vqw-QE-7dO"/>
-                    </constraints>
-                </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-on-IaD">
-                    <rect key="frame" x="18" y="55" width="40" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-on-IaD">
+                    <rect key="frame" x="18" y="60" width="40" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="36" id="yyf-hm-S5e"/>
                     </constraints>
@@ -97,41 +95,52 @@
                         <binding destination="BCL-fi-1Ob" name="value" keyPath="self.roundtime" id="iwL-My-I3w"/>
                     </connections>
                 </textField>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="srS-QB-sed" customClass="DirectionsView" customModule="Outlander" customModuleProvider="target">
-                    <rect key="frame" x="643" y="39" width="33" height="35"/>
+                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="srS-QB-sed" customClass="DirectionsView" customModule="Outlander" customModuleProvider="target">
+                    <rect key="frame" x="643" y="44" width="33" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="33" id="U5q-Yx-ITa"/>
                         <constraint firstAttribute="height" constant="35" id="Y82-wu-VMl"/>
                     </constraints>
                 </customView>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="koe-W5-1xI" customClass="MyView">
+                    <rect key="frame" x="20" y="455" width="652" height="25"/>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="aaS-Tl-hqC" customClass="MyView">
+                    <rect key="frame" x="20" y="8" width="652" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="Vqw-QE-7dO"/>
+                    </constraints>
+                </customView>
             </subviews>
             <constraints>
                 <constraint firstItem="yf4-ji-u2U" firstAttribute="baseline" secondItem="P3P-js-Xda" secondAttribute="baseline" id="0Xr-uT-Fqj"/>
-                <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="mxr-on-IaD" secondAttribute="bottom" constant="6" id="1BT-vR-uRa"/>
+                <constraint firstAttribute="bottom" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="85" id="4HF-zb-A7I"/>
+                <constraint firstAttribute="trailing" secondItem="CHV-Sq-xD0" secondAttribute="trailing" constant="20" id="6UJ-CD-uxj"/>
                 <constraint firstItem="aaS-Tl-hqC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="7cc-lY-cwI"/>
-                <constraint firstItem="mxr-on-IaD" firstAttribute="leading" secondItem="HLQ-x9-5se" secondAttribute="leading" id="AVw-WP-ceC"/>
-                <constraint firstItem="mxr-on-IaD" firstAttribute="top" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="8" symbolic="YES" id="BeZ-BE-txg"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="43" id="EHm-ic-nJN"/>
-                <constraint firstItem="CHV-Sq-xD0" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="G3i-rs-HSN"/>
-                <constraint firstAttribute="trailing" secondItem="CHV-Sq-xD0" secondAttribute="trailing" constant="20" id="Jhs-BR-jfq"/>
+                <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="InT-U6-H6h"/>
                 <constraint firstAttribute="bottom" secondItem="aaS-Tl-hqC" secondAttribute="bottom" constant="8" id="MV0-Dv-ZlC"/>
-                <constraint firstAttribute="trailing" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="20" id="NT1-Zt-FNw"/>
+                <constraint firstItem="koe-W5-1xI" firstAttribute="top" secondItem="1" secondAttribute="top" constant="8" id="OMC-D0-WLE"/>
+                <constraint firstItem="koe-W5-1xI" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="P8c-P0-vAo"/>
                 <constraint firstAttribute="trailing" secondItem="srS-QB-sed" secondAttribute="trailing" constant="16" id="R8g-Vc-x3K"/>
-                <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="VJl-Th-Ry7"/>
-                <constraint firstAttribute="bottom" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="92" id="ZBe-cy-5d0"/>
-                <constraint firstAttribute="bottom" secondItem="HLQ-x9-5se" secondAttribute="bottom" constant="37" id="bww-aF-LOb"/>
+                <constraint firstItem="CHV-Sq-xD0" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="RdX-t1-cSl"/>
+                <constraint firstAttribute="trailing" secondItem="koe-W5-1xI" secondAttribute="trailing" constant="20" id="a5L-B0-ryc"/>
                 <constraint firstItem="mxr-on-IaD" firstAttribute="baseline" secondItem="0o8-5z-kiJ" secondAttribute="baseline" id="cit-V8-Ibr"/>
+                <constraint firstItem="mxr-on-IaD" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="dMg-iC-5ky"/>
                 <constraint firstItem="srS-QB-sed" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1" secondAttribute="leading" constant="632" id="dde-ij-dmS"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="baseline" secondItem="yf4-ji-u2U" secondAttribute="baseline" id="fBd-Ct-2Gs"/>
                 <constraint firstItem="yf4-ji-u2U" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="219" id="ftr-qE-OLN"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aaS-Tl-hqC" secondAttribute="trailing" constant="20" id="gWg-qX-N2P"/>
                 <constraint firstAttribute="trailing" secondItem="aaS-Tl-hqC" secondAttribute="trailing" constant="20" id="hUd-Ib-Rty"/>
+                <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="mxr-on-IaD" secondAttribute="bottom" constant="1" id="ibe-GS-96K"/>
                 <constraint firstAttribute="bottom" secondItem="srS-QB-sed" secondAttribute="bottom" constant="39" id="khc-hV-h8V"/>
-                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="oBX-QR-0Rp"/>
+                <constraint firstAttribute="trailing" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="20" id="lrl-9i-iDx"/>
+                <constraint firstItem="aaS-Tl-hqC" firstAttribute="top" secondItem="HLQ-x9-5se" secondAttribute="bottom" constant="8" id="lvL-HL-OtQ"/>
+                <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="0o8-5z-kiJ" secondAttribute="bottom" constant="1" id="qWJ-Sm-A1u"/>
                 <constraint firstItem="P3P-js-Xda" firstAttribute="leading" secondItem="yf4-ji-u2U" secondAttribute="trailing" constant="4" id="rwq-wz-kFP"/>
-                <constraint firstItem="0o8-5z-kiJ" firstAttribute="top" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="8" symbolic="YES" id="vrF-KM-bXe"/>
+                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="koe-W5-1xI" secondAttribute="bottom" constant="8" id="v6h-FR-HbM"/>
             </constraints>
-            <point key="canvasLocation" x="400" y="291.5"/>
+            <point key="canvasLocation" x="400" y="294"/>
         </customView>
         <customObject id="BCL-fi-1Ob" customClass="CharacterViewModel"/>
     </objects>

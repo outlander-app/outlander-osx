@@ -106,6 +106,8 @@ public class ScriptRunner : ISubscriber {
             script.run(res.scriptText!, globalVars: { () -> [String:String] in
                 return self.context.globalVars.copyValues() as! [String:String]
             }, params: res.params)
+            
+            self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
         }
     }
     
@@ -113,6 +115,7 @@ public class ScriptRunner : ISubscriber {
         var found = self.scripts.find { $0.scriptName == name }
         if let idx = found {
             self.scripts.removeAtIndex(idx)
+            self.context.events.publish("script:remove", data: ["scriptName":name])
         }
     }
     
@@ -156,18 +159,32 @@ public class ScriptRunner : ISubscriber {
             
             if action == "abort" {
                 self.abort(scriptName)
+                
+                if scriptName == "all" {
+                    self.context.events.publish("script:removeAll", data: [:])
+                }
             }
             else if action == "pause" {
                 self.pause(scriptName)
+                self.context.events.publish("script:pause", data: ["scriptName":scriptName])
             }
             else if action == "resume" {
                 self.resume(scriptName)
+                self.context.events.publish("script:resume", data: ["scriptName":scriptName])
             }
             else if action == "vars" {
                 self.vars(scriptName)
             }
             else if action == "debug" {
-                self.debug(scriptName, level: dict["param"])
+                var levelNum = dict["param"]?.toInt()
+                var level = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
+                self.debug(scriptName, level: level)
+                
+                var data = [String:AnyObject]()
+                data["scriptName"] = scriptName
+                data["level"] = level.rawValue
+                
+                self.context.events.publish("script:debug", data: data)
             } else if action == "list" {
                 self.listAll()
             }
@@ -231,11 +248,10 @@ public class ScriptRunner : ISubscriber {
         }
     }
     
-    private func debug(name:String, level:String?) {
+    private func debug(name:String, level:ScriptLogLevel) {
         for (index, script) in enumerate(self.scripts) {
             if script.scriptName == name {
-                var levelNum = level?.toInt()
-                script.setLogLevel(ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None)
+                script.setLogLevel(level)
                 break
             }
         }
