@@ -91,28 +91,54 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         
         var btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
         btn.setButtonType(NSButtonType.SwitchButton)
-        btn.menu = NSMenu()
-        btn.menu?.title = scriptName
-        btn.menu?.addItem(createMenuItem(scriptName, title: scriptName, textColor: NSColor.whiteColor()))
+        btn.menu = NSMenu(title: scriptName)
+        btn.menu?.addItem(createMenuItem(scriptName, textColor: NSColor.whiteColor()))
         btn.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Resume", textColor: NSColor.blackColor()))
+        btn.menu?.addItem(createMenuItem("Resume", textColor: NSColor.blackColor()))
         btn.menu?.itemAtIndex(1)?.image = NSImage(named: "NSStatusAvailable")
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Pause", textColor: NSColor.blackColor()))
+        btn.menu?.addItem(createMenuItem("Pause", textColor: NSColor.blackColor()))
         btn.menu?.itemAtIndex(2)?.image = NSImage(named: "NSStatusPartiallyAvailable")
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Abort", textColor: NSColor.blackColor()))
+        btn.menu?.addItem(createMenuItem("Abort", textColor: NSColor.blackColor()))
         btn.menu?.itemAtIndex(3)?.image = NSImage(named: "NSStatusUnavailable")
-        btn.menu?.addItem(createMenuItem(scriptName, title: "Vars", textColor: NSColor.blackColor()))
+        
+        var debugMenu = createMenuItem("Debug", textColor: NSColor.blackColor())
+        debugMenu.submenu = NSMenu(title: scriptName)
+        debugMenu.submenu?.addItem(createSubMenuItem("0. Debug off", textColor: NSColor.blackColor(), tag: ScriptLogLevel.None))
+        debugMenu.submenu?.addItem(createSubMenuItem("1. Goto, gosub, return, labels", textColor: NSColor.blackColor(), tag: ScriptLogLevel.Gosubs))
+        debugMenu.submenu?.addItem(createSubMenuItem("2. Pause, wait, waitfor, move", textColor: NSColor.blackColor(), tag: ScriptLogLevel.Wait))
+        debugMenu.submenu?.addItem(createSubMenuItem("3. If evaluations", textColor: NSColor.blackColor(), tag: ScriptLogLevel.If))
+        debugMenu.submenu?.addItem(createSubMenuItem("4. Math, variables", textColor: NSColor.blackColor(), tag: ScriptLogLevel.Vars))
+        debugMenu.submenu?.addItem(createSubMenuItem("5. Actions", textColor: NSColor.blackColor(), tag: ScriptLogLevel.Actions))
+        btn.menu?.addItem(debugMenu)
         btn.menu?.itemAtIndex(4)?.image = NSImage(named: "NSStatusNone")
+        
+        btn.menu?.addItem(createMenuItem("Vars", textColor: NSColor.blackColor()))
+        btn.menu?.itemAtIndex(5)?.image = NSImage(named: "NSStatusNone")
         self.view.subviews.append(btn)
         //btn.sizeToFit()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "popUpSelectionChanged:", name: NSMenuDidSendActionNotification, object: btn.menu)
     }
     
-    func createMenuItem(scriptName:String, title:String, textColor:NSColor) -> NSMenuItem {
+    func debugMenuItemSelection(target:NSMenuItem) {
+        var level = ScriptLogLevel(rawValue: target.tag) ?? ScriptLogLevel.None
+        var scriptName = target.menu!.title
+        self.context?.events.publish("script", data: ["target":scriptName, "action":"debug", "param":"\(level.rawValue)"])
+    }
+    
+    func createMenuItem(title:String, textColor:NSColor) -> NSMenuItem {
         var item = NSMenuItem()
         var titleString = createTitleString(title, textColor: textColor)
         item.attributedTitle = titleString
+        return item
+    }
+    
+    func createSubMenuItem(title:String, textColor:NSColor, tag:ScriptLogLevel) -> NSMenuItem {
+        var item = NSMenuItem(title: "", action: "debugMenuItemSelection:", keyEquivalent: "")
+        item.target = self
+        var titleString = createTitleString(title, textColor: textColor)
+        item.attributedTitle = titleString
+        item.tag = tag.rawValue
         return item
     }
     
