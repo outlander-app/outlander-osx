@@ -3,7 +3,7 @@ Outlander - OSX 10.9+
 
 [![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
 
-![](http://i.imgur.com/Q3t3QYG.png)
+![](http://i.imgur.com/Gk8LFK1.png)
 
 **Maps**
 
