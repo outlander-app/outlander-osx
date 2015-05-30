@@ -9,7 +9,7 @@ Outlander - OSX 10.9+
 
 See your current location on the map.  Get directions to named locations or room numbers.  Compatible with Genie map files.  [Instructions for installing map files](commands.md#automapper)
 
-![](http://i.imgur.com/tVivgNn.png)
+![](http://i.imgur.com/V4cWDhW.png)
 
 **Script toolbar**
 
