@@ -274,14 +274,33 @@
     [controller.command subscribeNext:^(CommandContext *ctx) {
         [_commandProcessor process:ctx];
     }];
+    
+    NSArray *recognizedCodes = @[@51/*DELETE*/];
+    
     [controller.keyup subscribeNext:^(NSEvent *theEvent) {
         
-        if(![__CommandTextField hasFocus]) {
+        NSString *val = [theEvent charactersIgnoringModifiers];
+        NSArray *matches = [val matchesForPattern:@"[a-zA-Z0-9\\!\\\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\\\\\-\\./:;<=>\\?@\\[\\]\\^_`{|}~]"];
         
-            NSString *val = [theEvent charactersIgnoringModifiers];
-            val = [val stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@""]];
+        NSNumber *keyCode = [NSNumber numberWithInteger:[theEvent keyCode]];
+        
+        //NSLog(@"Keyup: %@ (%@) | %lu", val, keyCode, (unsigned long)matches.count);
+        
+        if(![__CommandTextField hasFocus] && (matches.count > 0 || [recognizedCodes containsObject:keyCode])) {
             
-            [__CommandTextField setStringValue:[NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val]];
+            NSString *newVal;
+            
+            if ([keyCode isEqual: @51/*DELETE*/]) {
+                NSInteger newIdx = [[__CommandTextField stringValue] length] - 1;
+                if (newIdx < 0) {
+                    newIdx = 0;
+                }
+                newVal = [[__CommandTextField stringValue] substringToIndex:newIdx];
+            } else {
+                newVal = [NSString stringWithFormat:@"%@%@", [__CommandTextField stringValue], val];
+            }
+        
+            [__CommandTextField setStringValue:newVal];
             [__CommandTextField selectText:self];
             [[__CommandTextField currentEditor] setSelectedRange:NSMakeRange([[__CommandTextField stringValue] length], 0)];
         }
