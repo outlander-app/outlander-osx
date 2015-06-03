@@ -188,13 +188,11 @@
     _ViewContainer.autoresizesSubviews = YES;
     
     [_VitalsView addSubview:_vitalsViewController.view];
-    _VitalsView.backgroundColor = [NSColor blackColor];
-    [_vitalsViewController.view fixTopEdge:YES];
+    _VitalsView.autoresizesSubviews = YES;
+//    _VitalsView.backgroundColor = [NSColor yellowColor];
     [_vitalsViewController.view fixRightEdge:YES];
-    [_vitalsViewController.view fixBottomEdge:NO];
     [_vitalsViewController.view fixLeftEdge:YES];
     [_vitalsViewController.view fixWidth:NO];
-    [_vitalsViewController.view fixHeight:NO];
     
     [_scriptToolbarView addSubview:_scriptToolbarViewController.view];
     _scriptToolbarView.backgroundColor = [NSColor colorWithHexString:@"#323232"];

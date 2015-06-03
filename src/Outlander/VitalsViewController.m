@@ -25,13 +25,11 @@
     
     _bars = [[TSMutableDictionary alloc] initWithName:@"com.outlander.vitals"];
     
-    
     return self;
 }
 
 -(void)awakeFromNib {
-    self.backgroundView.backgroundColor = [NSColor blueColor];
-    self.backgroundView.showBorder = NO;
+    self.view.autoresizesSubviews = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(frameChanged:) name:NSViewFrameDidChangeNotification object:self.view];
     
@@ -51,7 +49,7 @@
 }
 
 -(void)frameChanged:(NSNotification *)notification {
-    NSLog(@"**** Frame Changed: %f,%f ****", self.view.frame.size.width, self.view.frame.size.height);
+//    NSLog(@"**** Frame Changed: %f,%f ****", self.view.frame.size.width, self.view.frame.size.height);
     __block float viewX = 0.0;
     float width = self.view.frame.size.width / self.view.subviews.count;
     [self.view.subviews enumerateObjectsUsingBlock:^(NSView *view, NSUInteger idx, BOOL *stop) {

@@ -10,8 +10,6 @@
 
 @interface VitalsViewController : NSViewController
 
-@property (strong) IBOutlet MyView *backgroundView;
-
 -(void)updateValue:(NSString *)key text:(NSString*)text value:(float)value;
 
 @end

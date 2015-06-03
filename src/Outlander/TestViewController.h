@@ -24,7 +24,7 @@
 
 -(id)initWithContext:(GameContext *)context;
 
-@property (strong) IBOutlet MyView *VitalsView;
+@property (strong) IBOutlet NSView *VitalsView;
 @property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;
