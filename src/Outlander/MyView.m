@@ -35,10 +35,10 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
         self.backgroundColor = [NSColor blackColor];
         self.draggable = NO;
         self.autoresizesSubviews = YES;
+        self.postsFrameChangedNotifications = YES;
         _maxViewSize = NSMakeSize(50, 50);
         _nwseCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nwse"] hotSpot:NSMakePoint(10, 10)];
         _neswCursor = [[NSCursor alloc] initWithImage:[NSImage imageNamed:@"resize_nesw"] hotSpot:NSMakePoint(10, 10)];
-        
     }
     return self;
 }
