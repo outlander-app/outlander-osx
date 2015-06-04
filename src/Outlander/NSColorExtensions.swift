@@ -37,4 +37,12 @@ extension NSColor {
     convenience init(netHex:Int) {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
+    
+    func getHexString() -> String {
+        let red = Int(round(self.redComponent * 0xFF))
+        let grn = Int(round(self.greenComponent * 0xFF))
+        let blu = Int(round(self.blueComponent * 0xFF))
+        let hexString = NSString(format: "#%02X%02X%02X", red, grn, blu)
+        return hexString as String
+    }
 }
