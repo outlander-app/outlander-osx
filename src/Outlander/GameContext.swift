@@ -36,6 +36,7 @@ public class GameContext {
     public var highlights:OLMutableArray
     public var aliases:OLMutableArray
     public var macros:OLMutableArray
+    public var triggers:OLMutableArray
     public var globalVars:TSMutableDictionary
     public var events:EventAggregator
     
@@ -45,6 +46,7 @@ public class GameContext {
         self.highlights = OLMutableArray()
         self.aliases = OLMutableArray()
         self.macros = OLMutableArray()
+        self.triggers = OLMutableArray()
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
         
         self.events = EventAggregator()

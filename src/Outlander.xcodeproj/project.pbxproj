@@ -252,6 +252,11 @@
 		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
+		F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
+		F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
+		F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
+		F9A2C1751B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
+		F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */; };
 		F9A3452F1913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
 		F9A345301913390400920F0E /* WindowData.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3452E1913390400920F0E /* WindowData.m */; };
 		F9A345331913398800920F0E /* WindowDataService.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A345321913398800920F0E /* WindowDataService.m */; };
@@ -669,6 +674,9 @@
 		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
+		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
+		F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoader.swift; sourceTree = "<group>"; };
+		F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoaderTester.swift; sourceTree = "<group>"; };
 		F9A3452D1913390400920F0E /* WindowData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowData.h; sourceTree = "<group>"; };
 		F9A3452E1913390400920F0E /* WindowData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowData.m; sourceTree = "<group>"; };
 		F9A345311913398800920F0E /* WindowDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowDataService.h; sourceTree = "<group>"; };
@@ -734,7 +742,7 @@
 		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
 		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
 		F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Outlander-Bridging-Header.h"; sourceTree = "<group>"; };
-		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OutlanderTests-Bridging-Header.h"; path = "../Outlander/OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
 		F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizer.swift; sourceTree = "<group>"; };
 		F9B9BFE71ABD5DA000CB44B6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
@@ -1122,7 +1130,6 @@
 				F9F3D8321953C384005B9D68 /* MacroHandler.h */,
 				F9F3D8331953C384005B9D68 /* MacroHandler.m */,
 				F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */,
-				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */,
 				F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */,
 				F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */,
@@ -1146,6 +1153,7 @@
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
+				F9A2C1701B22ABA1005B9B6C /* Trigger.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1260,6 +1268,7 @@
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
+				F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1367,6 +1376,7 @@
 		F9CF928E1890832800449548 /* OutlanderTests */ = {
 			isa = PBXGroup;
 			children = (
+				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F9B9BFF01ABD724600CB44B6 /* Text */,
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
@@ -1385,6 +1395,7 @@
 				F9A74F0D192ED272008F410A /* VariableReplacerTester.m */,
 				F9A74F131930606A008F410A /* VariablesLoaderTester.m */,
 				F9CF928F1890832800449548 /* Supporting Files */,
+				F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */,
 			);
 			path = OutlanderTests;
 			sourceTree = "<group>";
@@ -1658,6 +1669,7 @@
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
+				F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
@@ -1666,6 +1678,7 @@
 				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
+				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
@@ -1805,6 +1818,7 @@
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
 				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
+				F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */,
@@ -1936,6 +1950,7 @@
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
+				F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
@@ -1947,6 +1962,7 @@
 				F90BCF941AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */,
 				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
+				F9A2C1751B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
 				F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F90BCF911AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,
