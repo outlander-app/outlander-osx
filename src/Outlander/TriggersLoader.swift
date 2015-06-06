@@ -29,7 +29,10 @@ class TriggersLoader {
         }
         
         let pattern = "^#trigger \\{(.*)\\} \\{(.*)\\}(\\s\\{(.*)\\})?$"
-        let groups = data[pattern].allGroups()
+        
+        var target = SwiftRegex(target: data, pattern: pattern, options: NSRegularExpressionOptions.AnchorsMatchLines|NSRegularExpressionOptions.CaseInsensitive)
+        
+        let groups = target.allGroups()
         
         for group in groups {
             if group.count == 5 {
@@ -49,6 +52,22 @@ class TriggersLoader {
     }
     
     func save() {
+        
+        let configFile = self.context.pathProvider.profileFolder().stringByAppendingPathComponent("triggers.cfg")
+        
+        var triggers = ""
+        
+        self.context.triggers.enumerateObjectsUsingBlock({ object, index, stop in
+            var trigger = object as! Trigger
+            triggers += "#trigger {\(trigger.trigger)} {\(trigger.action)}"
+            
+            if count(trigger.className) > 0 {
+                triggers += " {\(trigger.className)}"
+            }
+            triggers += "\n"
+        })
+        
+        self.fileSystem.write(triggers, toFile: configFile)
     }
     
 }
