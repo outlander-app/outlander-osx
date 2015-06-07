@@ -19,5 +19,6 @@
 - (void)saveHighlights;
 - (void)saveAliases;
 - (void)saveMacros;
+- (void)saveTriggers;
 
 @end

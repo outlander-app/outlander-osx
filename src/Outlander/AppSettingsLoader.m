@@ -24,6 +24,7 @@
     AliasLoader *_aliasLoader;
     VariablesLoader *_variablesLoader;
     MacrosLoader *_macrosLoader;
+    TriggersLoader *_triggersLoader;
 }
 @end
 
@@ -41,6 +42,7 @@
     _aliasLoader = [[AliasLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _variablesLoader = [[VariablesLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _macrosLoader = [[MacrosLoader alloc] initWithContext:_context andFileSystem:fileSystem];
+    _triggersLoader = [TriggersLoader newInstance:_context fileSystem:fileSystem];
     
     return self;
 }
@@ -68,6 +70,7 @@
     [self loadVariables];
     [self loadAliases];
     [self loadMacros];
+    [self loadTriggers];
 }
 
 - (void)loadConfig {
@@ -119,6 +122,14 @@
 
 - (void)saveMacros {
     [_macrosLoader save];
+}
+
+- (void)loadTriggers {
+    [_triggersLoader load];
+}
+
+- (void)saveTriggers {
+    [_triggersLoader save];
 }
 
 - (void)writeConfigFolders:(NSString *)profile {

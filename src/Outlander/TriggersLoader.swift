@@ -8,7 +8,12 @@
 
 import Foundation
 
+@objc
 class TriggersLoader {
+    
+    class func newInstance(context:GameContext, fileSystem:FileSystem) -> TriggersLoader {
+        return TriggersLoader(context: context, fileSystem: fileSystem)
+    }
     
     var context:GameContext
     var fileSystem:FileSystem

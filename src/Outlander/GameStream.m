@@ -26,6 +26,7 @@
     RoomChangeHandler *_roomChangeHandler;
     TDPUpdateHandler *_tdpUpdateHandler;
     ExpUpdateHandler *_expUpdateHandler;
+    TriggerHandler *_triggerHandler;
 }
 
 @end
@@ -47,6 +48,7 @@
     _roomChangeHandler = [RoomChangeHandler newInstance:_commandRelay];
     _tdpUpdateHandler = [TDPUpdateHandler newInstance];
     _expUpdateHandler = [ExpUpdateHandler newInstance];
+    _triggerHandler = [TriggerHandler newInstance:context];
     
     _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value){
         [_gameContext.globalVars setCacheObject:value forKey:key];
@@ -141,6 +143,7 @@
          
          NSString *rawText = [self textForTagList:tags];
          //NSLog(@"-->%@", rawText);
+         [_triggerHandler handle:nodes text:rawText context:_gameContext];
          [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
          [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
          [_expUpdateHandler handle:nodes text:rawText context:_gameContext];

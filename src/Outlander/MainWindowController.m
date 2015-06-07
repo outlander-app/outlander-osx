@@ -213,6 +213,7 @@
     [_appSettingsLoader saveHighlights];
     [_appSettingsLoader saveAliases];
     [_appSettingsLoader saveMacros];
+    [_appSettingsLoader saveTriggers];
     
     [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
                             mono:true]
