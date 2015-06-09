@@ -16,10 +16,17 @@ class TriggerHandler : ISubscriber {
     }
     
     var context:GameContext
+    var subId:String?
     
     init(context:GameContext) {
         self.context = context
-        context.events.subscribe(self, token: "ol:game-parse")
+        self.subId = context.events.subscribe(self, token: "ol:game-parse")
+    }
+    
+    func unsubscribe() {
+        if let subId = self.subId {
+            self.context.events.unSubscribe(subId)
+        }
     }
     
     func handle(token:String, data:Dictionary<String, AnyObject>) {

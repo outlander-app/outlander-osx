@@ -150,7 +150,8 @@
          [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
          
      } completed:^{
-        [_mainSubject sendCompleted];
+         [_triggerHandler unsubscribe];
+         [_mainSubject sendCompleted];
      }];
     
     return _subject;
