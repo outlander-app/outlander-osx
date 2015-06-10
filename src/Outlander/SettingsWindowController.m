@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
     SettingsOptionVariables = 2,
     SettingsOptionHighlights = 3,
     SettingsOptionWindows = 4,
+    SettingsOptionTriggers = 5
 };
 
 @interface SettingsWindowController () {
@@ -101,6 +102,10 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
             identifier = @"windows";
             vc = [[WindowsViewController alloc] initWithNibName:@"WindowsViewController" bundle:[NSBundle mainBundle]];
             //vc = [[ScriptToolbarViewController alloc] initWithNibName:@"ScriptToolbarViewController" bundle:[NSBundle mainBundle]];
+            break;
+            
+        case SettingsOptionTriggers:
+            vc = [[TriggersViewController alloc] initWithNibName:@"TriggersViewController" bundle:[NSBundle mainBundle]];
             break;
     }
     

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsWindowController">
@@ -16,7 +16,7 @@
         <window title="Outlander Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="196" y="240" width="700" height="450"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="700" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -50,11 +50,17 @@
                             <action selector="selectSection:" target="-2" id="L8b-dc-boM"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="F98336A0-D818-4A8E-837D-69E555AF2436" label="Triggers" paletteLabel="Triggers" tag="5" id="61m-MZ-pyg">
+                        <connections>
+                            <action selector="selectSection:" target="-2" id="8nJ-wI-4pw"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="fxC-fS-Pe8"/>
                     <toolbarItem reference="Kcl-M4-42Y"/>
                     <toolbarItem reference="sHp-zo-Kdh"/>
+                    <toolbarItem reference="61m-MZ-pyg"/>
                     <toolbarItem reference="8c1-Cg-eyQ"/>
                     <toolbarItem reference="iED-sd-Xpb"/>
                 </defaultToolbarItems>
