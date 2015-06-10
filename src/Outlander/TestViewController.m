@@ -175,8 +175,13 @@
 
 - (NSString *)windowForTarget:(NSString *)targetWindow {
 
-    if (targetWindow != nil && [self hasWindow:targetWindow] && [self isWindowVisible:targetWindow]) {
-        return targetWindow;
+    if (targetWindow != nil && [self hasWindow:targetWindow] ) {
+        TextViewController *controller = (TextViewController *)[_windows cacheObjectForKey:targetWindow];
+        if (controller.isVisible) {
+            return targetWindow;
+        } else if (controller.closedTarget != nil && [controller.closedTarget length] > 0) {
+            return [self windowForTarget:controller.closedTarget];
+        }
     }
     
     return @"main";
@@ -264,6 +269,7 @@
     controller.fontSize = window.fontSize;
     controller.monoFontName = window.monoFontName;
     controller.monoFontSize = window.monoFontSize;
+    controller.closedTarget = window.closedTarget;
 
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];

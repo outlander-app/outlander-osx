@@ -97,6 +97,10 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
+		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
+		F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
+		F95538A21B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
 		F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
 		F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
 		F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
@@ -521,6 +525,8 @@
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
+		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F959D3CF1AC6897000B2A659 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		F959D3D01AC6897000B2A659 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		F959D3D51AC7264300B2A659 /* MacroTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroTester.m; sourceTree = "<group>"; };
@@ -1057,6 +1063,8 @@
 				F949238F1B07C7280051F7F5 /* HighlightCellView.swift */,
 				F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */,
 				F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */,
+				F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */,
+				F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1518,6 +1526,7 @@
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
 				F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
 				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
+				F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */,
 				F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1528,6 +1537,7 @@
 			files = (
 				F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */,
+				F95538A21B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */,
 				F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
@@ -1683,6 +1693,7 @@
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
+				F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
@@ -1933,6 +1944,7 @@
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
