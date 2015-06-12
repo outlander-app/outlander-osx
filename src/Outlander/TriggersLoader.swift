@@ -33,19 +33,19 @@ class TriggersLoader {
             return
         }
         
-        let pattern = "^#trigger \\{(.*)\\} \\{(.*)\\}(\\s\\{(.*)\\})?$"
+        let pattern = "^#trigger \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
         var target = SwiftRegex(target: data, pattern: pattern, options: NSRegularExpressionOptions.AnchorsMatchLines|NSRegularExpressionOptions.CaseInsensitive)
         
         let groups = target.allGroups()
         
         for group in groups {
-            if group.count == 5 {
+            if group.count == 4 {
                 let trigger = group[1]
                 let action = group[2]
                 var className = ""
                 
-                if group[3] != "_" {
+                if group[2] != "_" {
                     className = group[3]
                 }
                 
