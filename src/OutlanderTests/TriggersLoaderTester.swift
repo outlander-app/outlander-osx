@@ -33,6 +33,7 @@ class TriggersLoaderTester : QuickSpec {
                 let trigger = context.triggers.objectAtIndex(0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
+                expect(trigger.className).to(equal(""))
             }
             
             it("loads trigger with class") {

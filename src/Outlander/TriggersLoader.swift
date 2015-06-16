@@ -45,7 +45,7 @@ class TriggersLoader {
                 let action = group[2]
                 var className = ""
                 
-                if group[2] != "_" {
+                if group[3] != "_" {
                     className = group[3]
                 }
                 
