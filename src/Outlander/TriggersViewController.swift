@@ -8,13 +8,13 @@
 
 import Cocoa
 
-class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSource {
+public class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
     private var _context:GameContext?
     private var _appSettingsLoader:AppSettingsLoader?
-    
-    var selectedItem:Trigger? {
+   
+    public var selectedItem:Trigger? {
         willSet {
             self.willChangeValueForKey("selectedItem")
         }
@@ -23,7 +23,7 @@ class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSou
         }
     }
     
-    override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
+    public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
         if key == "selectedItem" {
             return true
         } else {
@@ -31,25 +31,27 @@ class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSou
         }
     }
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
     }
     
-    func save() {
+    public func save() {
         _appSettingsLoader!.saveTriggers()
     }
 
-    func setContext(context:GameContext) {
+    public func setContext(context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
     }
     
     // MARK: NSTableViewDataSource
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
         return _context!.triggers.count()
     }
     
-    func tableViewSelectionDidChange(notification:NSNotification) {
+    public func tableViewSelectionDidChange(notification:NSNotification) {
         let selectedRow = self.tableView.selectedRow
         if(selectedRow > -1
             && selectedRow < _context!.triggers.count()) {
@@ -61,7 +63,7 @@ class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSou
         }
     }
     
-    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+    public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
         
         if (row >= _context!.triggers.count()){
             return "";
@@ -78,7 +80,7 @@ class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSou
             res = item.action
         }
         else {
-            res = item.className
+            res = item.actionClass
         }
     
         return res

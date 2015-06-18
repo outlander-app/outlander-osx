@@ -16,7 +16,7 @@
         <window title="Outlander Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="196" y="240" width="700" height="450"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="700" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -50,7 +50,7 @@
                             <action selector="selectSection:" target="-2" id="L8b-dc-boM"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="F98336A0-D818-4A8E-837D-69E555AF2436" label="Triggers" paletteLabel="Triggers" tag="5" id="61m-MZ-pyg">
+                    <toolbarItem implicitItemIdentifier="F98336A0-D818-4A8E-837D-69E555AF2436" label="Triggers" paletteLabel="Triggers" tag="5" selectable="YES" id="61m-MZ-pyg">
                         <connections>
                             <action selector="selectSection:" target="-2" id="8nJ-wI-4pw"/>
                         </connections>

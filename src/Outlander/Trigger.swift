@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Trigger {
+public class Trigger : NSObject {
     var trigger:String
     var action:String
-    var className:String
+    var actionClass:String
     
-    init(_ trigger:String, _ action:String, _ className:String) {
+    init(_ trigger:String, _ action:String, _ actionClass:String) {
         self.trigger = trigger
         self.action = action
-        self.className = className
+        self.actionClass = actionClass
     }
 }

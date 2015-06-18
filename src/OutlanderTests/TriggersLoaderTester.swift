@@ -33,7 +33,7 @@ class TriggersLoaderTester : QuickSpec {
                 let trigger = context.triggers.objectAtIndex(0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
-                expect(trigger.className).to(equal(""))
+                expect(trigger.actionClass).to(equal(""))
             }
             
             it("loads trigger with class") {
@@ -45,7 +45,7 @@ class TriggersLoaderTester : QuickSpec {
                 let trigger = context.triggers.objectAtIndex(0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
-                expect(trigger.className).to(equal("people"))
+                expect(trigger.actionClass).to(equal("people"))
             }
             
             it("loads multiple triggers") {
