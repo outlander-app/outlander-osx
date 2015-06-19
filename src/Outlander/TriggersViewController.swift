@@ -37,6 +37,21 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
         self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
     }
     
+    public override func controlTextDidChange(obj: NSNotification) {
+        if let item = self.selectedItem {
+            var textField = obj.object as! NSTextField
+            if(textField.tag == 1) {
+                item.trigger = textField.stringValue
+            }
+            else if(textField.tag == 2) {
+                item.action = textField.stringValue
+            } else {
+                item.actionClass = textField.stringValue
+            }
+            self.tableView.reloadData()
+        }
+    }
+    
     public func save() {
         _appSettingsLoader!.saveTriggers()
     }
@@ -44,6 +59,30 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
     public func setContext(context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
+    }
+
+    @IBAction func addRemoveAction(sender: NSSegmentedControl) {
+        if sender.selectedSegment == 0 {
+            var trigger = Trigger("", "", "")
+            _context!.triggers.addObject(trigger)
+            
+            let idx = NSIndexSet(index: _context!.triggers.count() - 1)
+            self.tableView.reloadData()
+            self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
+            self.tableView.scrollRowToVisible(idx.firstIndex)
+        } else {
+            
+            if self.tableView.selectedRow < 0 || self.tableView.selectedRow >= _context!.triggers.count() {
+                return
+            }
+            
+            self.selectedItem = nil;
+            
+            var item:Trigger = _context!.triggers.objectAtIndex(self.tableView.selectedRow) as! Trigger
+            _context!.triggers.removeObject(item)
+            
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: NSTableViewDataSource
