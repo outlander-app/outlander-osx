@@ -64,10 +64,14 @@ class TriggersLoader {
         
         self.context.triggers.enumerateObjectsUsingBlock({ object, index, stop in
             var trigger = object as! Trigger
-            triggers += "#trigger {\(trigger.trigger)} {\(trigger.action)}"
+            var triggerText = trigger.trigger != nil ? trigger.trigger! : ""
+            var action = trigger.action != nil ? trigger.action! : ""
+            var className = trigger.actionClass != nil ? trigger.actionClass! : ""
+            
+            triggers += "#trigger {\(triggerText)} {\(action)}"
             
             if count(trigger.className) > 0 {
-                triggers += " {\(trigger.className)}"
+                triggers += " {\(className)}"
             }
             triggers += "\n"
         })

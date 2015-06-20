@@ -110,16 +110,16 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
         
         var item = _context!.triggers.objectAtIndex(row) as! Trigger
         
-        var res:AnyObject?
+        var res:String = ""
         
         if(tableColumn!.identifier == "trigger") {
-            res = item.trigger
+            res = item.trigger != nil ? item.trigger! : ""
         }
         else if(tableColumn!.identifier == "action") {
-            res = item.action
+            res = item.action != nil ? item.action! : ""
         }
         else {
-            res = item.actionClass
+            res = item.actionClass != nil ? item.actionClass! : ""
         }
     
         return res

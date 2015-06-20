@@ -49,10 +49,13 @@ class TriggerHandler : ISubscriber {
         triggers.enumerateObjectsUsingBlock({ object, index, stop in
             let trigger = object as! Trigger
             
-            let groups = text[trigger.trigger].groups()
+            if let triggerText = trigger.trigger {
             
-            if (groups.count > 0) {
-                println("matches")
+                let groups = text[triggerText].groups()
+                
+                if (groups.count > 0) {
+                    println("matches")
+                }
             }
         });
     }
