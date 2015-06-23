@@ -11,15 +11,17 @@ import Foundation
 @objc
 class TriggerHandler : ISubscriber {
     
-    class func newInstance(context:GameContext) -> TriggerHandler {
-        return TriggerHandler(context: context)
+    class func newInstance(context:GameContext, relay:CommandRelay) -> TriggerHandler {
+        return TriggerHandler(context: context, relay: relay)
     }
     
-    var context:GameContext
+    let context:GameContext
+    let relay:CommandRelay
     var subId:String?
     
-    init(context:GameContext) {
+    init(context:GameContext, relay:CommandRelay) {
         self.context = context
+        self.relay = relay
         self.subId = context.events.subscribe(self, token: "ol:game-parse")
     }
     
@@ -54,7 +56,9 @@ class TriggerHandler : ISubscriber {
                 let groups = text[triggerText].groups()
                 
                 if (groups.count > 0) {
-                    println("matches")
+                    var commandContext = CommandContext()
+                    commandContext.command = trigger.action
+                    self.relay.sendCommand(commandContext)
                 }
             }
         });

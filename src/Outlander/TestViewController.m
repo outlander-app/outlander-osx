@@ -543,6 +543,10 @@
          if(authMsg) {
              [self appendError:authMsg];
          }
+         
+         if (_gameStream) {
+            [_gameStream unsubscribe];
+         }
      }
      completed:^{
         [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
@@ -573,7 +577,11 @@
         [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
-        _gameStream = nil;
+        
+        if(_gameStream) {
+            [_gameStream unsubscribe];
+            _gameStream = nil;
+        }
         
         [_gameContext.events publish:@"disconnected" data:@{}];
     }];

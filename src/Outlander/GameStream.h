@@ -34,6 +34,7 @@
 -(id) initWithContext:(GameContext *)context;
 -(void) publish:(id)item;
 -(void) complete;
+-(void) unsubscribe;
 -(void) error:(NSError *)error;
 -(void) sendCommand:(NSString *)command;
 -(RACMulticastConnection *) connect:(GameConnection *)connection;

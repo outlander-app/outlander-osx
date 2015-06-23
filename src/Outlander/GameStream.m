@@ -48,7 +48,7 @@
     _roomChangeHandler = [RoomChangeHandler newInstance:_commandRelay];
     _tdpUpdateHandler = [TDPUpdateHandler newInstance];
     _expUpdateHandler = [ExpUpdateHandler newInstance];
-    _triggerHandler = [TriggerHandler newInstance:context];
+    _triggerHandler = [TriggerHandler newInstance:context relay:_commandRelay];
     
     _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value){
         [_gameContext.globalVars setCacheObject:value forKey:key];
@@ -118,7 +118,12 @@
 
 -(void) complete {
     [_gameServer disconnect];
+    [_triggerHandler unsubscribe];
     [_mainSubject sendCompleted];
+}
+
+-(void) unsubscribe {
+    [_triggerHandler unsubscribe];
 }
 
 -(void) error:(NSError *)error {
@@ -150,7 +155,7 @@
          [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
          
      } completed:^{
-         [_triggerHandler unsubscribe];
+         [self unsubscribe];
          [_mainSubject sendCompleted];
      }];
     

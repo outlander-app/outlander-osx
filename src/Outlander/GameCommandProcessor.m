@@ -33,6 +33,7 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_gameContext.events unSubscribeListener:self];
+    [_handlers removeAllObjects];
 }
 
 -(id)initWith:(GameContext *)context and:(VariableReplacer *)replacer {
