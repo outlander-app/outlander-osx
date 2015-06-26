@@ -30,6 +30,10 @@
 		F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */; };
 		F90CEC211AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
 		F90CEC221AD4322600204243 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90CEC201AD4322600204243 /* GameContext.swift */; };
+		F91031511B3D0F140039BDF0 /* Gag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031501B3D0F140039BDF0 /* Gag.swift */; };
+		F91031521B3D0F140039BDF0 /* Gag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031501B3D0F140039BDF0 /* Gag.swift */; };
+		F91031541B3D0F710039BDF0 /* GagLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031531B3D0F710039BDF0 /* GagLoader.swift */; };
+		F91031551B3D0F710039BDF0 /* GagLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031531B3D0F710039BDF0 /* GagLoader.swift */; };
 		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
@@ -471,6 +475,8 @@
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
+		F91031501B3D0F140039BDF0 /* Gag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gag.swift; sourceTree = "<group>"; };
+		F91031531B3D0F710039BDF0 /* GagLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GagLoader.swift; sourceTree = "<group>"; };
 		F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowCommandHandler.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
@@ -1174,6 +1180,7 @@
 				F9C29108189AB86000F70224 /* Vitals.h */,
 				F9C29109189AB86000F70224 /* Vitals.m */,
 				F9A2C1701B22ABA1005B9B6C /* Trigger.swift */,
+				F91031501B3D0F140039BDF0 /* Gag.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1289,6 +1296,7 @@
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
 				F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */,
+				F91031531B3D0F710039BDF0 /* GagLoader.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1679,6 +1687,7 @@
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F90BCF901AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,
+				F91031541B3D0F710039BDF0 /* GagLoader.swift in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
@@ -1694,6 +1703,7 @@
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */,
+				F91031511B3D0F140039BDF0 /* Gag.swift in Sources */,
 				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
@@ -1960,6 +1970,7 @@
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
+				F91031521B3D0F140039BDF0 /* Gag.swift in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
@@ -2006,6 +2017,7 @@
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
 				F90CEC191AD037CE00204243 /* MapView.swift in Sources */,
+				F91031551B3D0F710039BDF0 /* GagLoader.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
