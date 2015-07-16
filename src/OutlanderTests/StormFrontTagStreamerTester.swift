@@ -203,6 +203,40 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.exp[1].mindState).to(equal(LearningRate.fromRate(0)))
             }
             
+            it("streams brief exp into exp") {
+                let data = [
+                    "<component id='exp Shield Usage'><d cmd='skill Shield Usage'>  Shield</d>:   71 33% [33/34]</component>\r\n"
+                ]
+                
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.exp.count).to(equal(1))
+                
+                expect(self.exp[0].name).to(equal("Shield_Usage"))
+                expect(self.exp[0].ranks).to(equal(71.33))
+                expect(self.exp[0].isNew).to(equal(false))
+                expect(self.exp[0].mindState).to(equal(LearningRate.fromRate(33)))
+            }
+            
+            it("streams -new- brief exp into exp") {
+                let data = [
+                    "<component id='exp Scholarship'><preset id='whisper'><d cmd='skill Scholarship'> Scholar</d>:  552 30%  [ 3/34]</preset></component>"
+                ]
+                
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(0))
+                expect(self.exp.count).to(equal(1))
+                
+                println("ranks: \(self.exp[0].ranks)")
+                
+                expect(self.exp[0].name).to(equal("Scholarship"))
+                expect(self.exp[0].ranks).to(equal(552.30))
+                expect(self.exp[0].isNew).to(equal(true))
+                expect(self.exp[0].mindState).to(equal(LearningRate.fromRate(3)))
+            }
+            
             it("streams room exists into settings") {
                 let data = [
                     "<component id='room exits'>Obvious paths: <d>north</d>, <d>west</d>, <d>northwest</d>.<compass></compass></component>\r\n",

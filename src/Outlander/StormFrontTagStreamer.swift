@@ -171,8 +171,38 @@ public class StormFrontTagStreamer {
                 }
                 
             } else if !compId.hasPrefix("exp_tdp") {
-                if let val = node.children.count > 0 ? node.children[0].value : node.value {
-                    parseExp(compId, data: val, isNew: node.children.count > 0)
+                var val = ""
+                var isNew = false
+                var isBrief = false
+                
+                if(node.children.count > 0
+                    && node.children[0].name == "preset"
+                    && node.children[0].attr("id") == "whisper") {
+                    isNew = true
+                }
+                
+                if node.children.count > 0 && (node.children.count == 2 || node.children[0].children.count > 1) {
+                    isBrief = true
+                }
+               
+                if isBrief {
+                    
+                    if isNew {
+                        val = nodeChildValues(node.children[0])
+                    } else {
+                        val = nodeChildValues(node)
+                    }
+                    
+                    parseExpBrief(compId, data: val, isNew: isNew)
+                } else {
+                    
+                    if isNew {
+                        val = node.children[0].value ?? ""
+                    } else {
+                        val = node.value ?? ""
+                    }
+                    
+                    parseExp(compId, data: val, isNew: isNew)
                 }
             }
             
@@ -396,6 +426,21 @@ public class StormFrontTagStreamer {
         }
     }
     
+    public func nodeChildValuesRecursive(node:Node) -> String {
+        
+        var result = ""
+       
+        for child in node.children {
+            if child.name == "text" || child.name == "d" {
+                result += child.value ?? ""
+            }
+            
+            result += nodeChildValuesRecursive(child)
+        }
+        
+        return result
+    }
+    
     public func nodeChildValues(node:Node) -> String {
         
         var result = ""
@@ -440,6 +485,52 @@ public class StormFrontTagStreamer {
         return (result, monsters, monsterCount)
     }
     
+    public func parseExpBrief(compId:String, data:String, isNew:Bool) {
+        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
+        
+        if count(data) == 0 {
+            
+            var rate = LearningRate.fromRate(0)
+            let skill = SkillExp()
+            skill.name = expName
+            skill.ranks = NSDecimalNumber(double: 0.0)
+            skill.mindState = rate
+            skill.isNew = isNew
+            
+            emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+            emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
+            
+            emitExp?(skill)
+            return
+        }
+        
+        let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s+\\[\\s?(\\d+)?.*";
+        
+        var trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+      
+        var ranks = RegexMutable(trimmed)
+        ranks[pattern] ~= "$1.$2"
+        
+        var mindstate = RegexMutable(trimmed)
+        mindstate[pattern] ~= "$3"
+        
+        var mindstateNumber = NSDecimalNumber(string: mindstate as String)
+        
+        var rate = LearningRate.fromRate(mindstateNumber.unsignedShortValue)
+        
+        let skill = SkillExp()
+        skill.name = expName
+        skill.ranks = NSDecimalNumber(string:ranks as String)
+        skill.mindState = rate
+        skill.isNew = isNew
+        
+        emitSetting?("\(expName).Ranks", ranks as String)
+        emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+        emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
+        
+        emitExp?(skill)
+    }
+    
     public func parseExp(compId:String, data:String, isNew:Bool) {
         
         let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
@@ -470,7 +561,11 @@ public class StormFrontTagStreamer {
         var mindstate = RegexMutable(trimmed)
         mindstate[pattern] ~= "$3"
         
-        let rate = LearningRate.fromDescription(mindstate as String)
+        var rate = LearningRate.fromDescription(mindstate as String)
+        
+        if(rate == nil) {
+            rate = LearningRate.fromRate(0)
+        }
         
         let skill = SkillExp()
         skill.name = expName
