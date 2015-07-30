@@ -736,9 +736,7 @@ public class Script : IScript {
     }
     
     func handlePut(putMsg:PutMessage) {
-        
-        //self.notify(TextTag(with: "put \(putMsg.message)\n", mono: true), debug:ScriptLogLevel.Gosubs)
-        let cmds = putMsg.message.componentsSeparatedByString(";")
+        let cmds = putMsg.message.splitToCommands()
         for cmd in cmds {
             self.sendCommand(cmd)
         }
@@ -1309,5 +1307,40 @@ extension String {
             return distance(self.startIndex, idx)
         }
         return nil
+    }
+    
+    func splitToCommands() -> [String] {
+        
+        var results:[String] = []
+        
+        let matches = self["((?<!\\\\);)"].matchResults()
+        
+        var lastIndex = 0
+        var length = count(self)
+        
+        for match in matches {
+            let matchLength = match.range.location - lastIndex
+            let start = advance(self.startIndex, lastIndex)
+            let end = advance(start, matchLength)
+            var str = self.substringWithRange(Range<String.Index>(
+                start:start,
+                end: end))
+            str = str.stringByReplacingOccurrencesOfString("\\;", withString: ";")
+            results.append(str)
+            
+            lastIndex = match.range.location + match.range.length
+        }
+        
+        if lastIndex < length {
+            let start = advance(self.startIndex, lastIndex)
+            let end = advance(start, length - lastIndex)
+            var str = self.substringWithRange(Range<String.Index>(
+                start:start,
+                end: end))
+            str = str.stringByReplacingOccurrencesOfString("\\;", withString: ";")
+            results.append(str)
+        }
+        
+        return results
     }
 }

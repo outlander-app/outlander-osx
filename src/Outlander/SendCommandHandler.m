@@ -54,7 +54,7 @@
     
     while ((msg = [_queue dequeue])) {
         
-        NSArray *commands = [msg componentsSeparatedByString:@";"];
+        NSArray *commands = [msg splitToCommands];
         
         [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
             CommandContext *ctx = [[CommandContext alloc] init];

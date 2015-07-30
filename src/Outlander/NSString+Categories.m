@@ -77,4 +77,30 @@
                                              range:NSMakeRange(0, [self length])
                                       withTemplate:template];
 }
+
+- (NSArray*) splitToCommands {
+
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    NSArray *matches = [self matchesForPattern:@"((?<!\\\\);)"];
+    
+    __block NSUInteger lastIndex = 0;
+
+    [matches enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        NSString *str = [self substringWithRange:NSMakeRange(lastIndex, res.range.location - lastIndex)];
+        str = [str stringByReplacingOccurrencesOfString:@"\\;" withString:@";"];
+        [results addObject:str];
+        lastIndex = res.range.location + res.range.length;
+    }];
+    
+    NSUInteger length = [self length];
+    
+    if(lastIndex < length) {
+        NSString *str = [self substringWithRange:NSMakeRange(lastIndex, length - lastIndex)];
+        str = [str stringByReplacingOccurrencesOfString:@"\\;" withString:@";"];
+        [results addObject:str];
+    }
+    
+    return results;
+}
 @end

@@ -17,4 +17,5 @@
 - (NSString *) stringFromDateFormat: (NSString *) dateFormat;
 - (NSArray  *) matchesForPattern:(NSString *)pattern;
 - (NSString *) replaceWithPattern:(NSString *)pattern andTemplate:(NSString *)template;
+- (NSArray*) splitToCommands;
 @end

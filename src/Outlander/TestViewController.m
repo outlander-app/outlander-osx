@@ -356,6 +356,7 @@
     }
 }
 
+
 - (IBAction)commandSubmit:(MyNSTextField*)sender {
     
     NSString *command = [sender stringValue];
@@ -366,7 +367,7 @@
     
     [sender setStringValue:@""];
     
-    NSArray *commands = [command componentsSeparatedByString:@";"];
+    NSArray *commands = [command splitToCommands];
     
     [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
         CommandContext *ctx = [[CommandContext alloc] init];
