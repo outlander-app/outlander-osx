@@ -1,10 +1,9 @@
 Outlander - OSX 10.9+
 ==========
 
-[![Build Status](https://travis-ci.org/joemcbride/outlander-osx.png?branch=master)](https://travis-ci.org/joemcbride/outlander-osx)
-
 ## Player documentation
-Read the [player documentation](commands.md) to see all of the available [commands](commands.md).
+Question or suggestion?  [![Join the chat at https://gitter.im/joemcbride/outlander-osx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joemcbride/outlander-osx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+You can also read the [player documentation](commands.md) to see all of the available [commands](commands.md).
 
 [Scripting support](commands.md#scripting) and [Example scripts](commands.md#example-scripts)
 
