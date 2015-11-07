@@ -1,4 +1,4 @@
-Outlander - OSX 10.9+
+Outlander - OSX 10.10+
 ==========
 
 ## Player documentation
