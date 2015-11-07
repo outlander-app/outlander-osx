@@ -84,7 +84,7 @@ public class ScriptContext {
     public func shiftParamVars() -> Bool {
         var res = false
         
-        if let first = self.params.first {
+        if let _ = self.params.first {
             self.params.removeAtIndex(0)
             self.updateParamVars()
             res = true

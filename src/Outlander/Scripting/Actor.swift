@@ -179,10 +179,10 @@ public class Script : IScript {
             let diff = NSDate().timeIntervalSinceDate(self.started!)
             self.notify(TextTag(with: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
             
-            var sorted = display.sort { $0 < $1 }
+            let sorted = display.sort { $0 < $1 }
             
             for v in sorted {
-                var tag = TextTag(with: "|  \(v)\n", mono: true)
+                let tag = TextTag(with: "|  \(v)\n", mono: true)
                 self.notify(tag)
             }
             
@@ -196,13 +196,13 @@ public class Script : IScript {
     }
     
     public func varsChanged(vars:[String:String]) {
-        var actions = self.actions.filter { x in
+        let actions = self.actions.filter { x in
             
             if !x.enabled {
                 return false
             }
             
-            var res = x.vars(vars)
+            let res = x.vars(vars)
             switch res {
             case .Match(let x):
                 self.notify(TextTag(with: x, mono: true), debug:ScriptLogLevel.Actions)
@@ -225,10 +225,10 @@ public class Script : IScript {
         
         self.matches(text)
         
-        var handlers = self.reactToStream.filter { x in
-            var res = x.stream(text, nodes: nodes)
+        let handlers = self.reactToStream.filter { x in
+            let res = x.stream(text, nodes: nodes)
             switch res {
-            case .Match(let x):
+            case .Match:
                 return true
             default:
                 return false
@@ -236,18 +236,18 @@ public class Script : IScript {
         }
         
         handlers.forEach { handler in
-            var idx = self.reactToStream.find { $0.id == handler.id  }
+            let idx = self.reactToStream.find { $0.id == handler.id  }
             self.reactToStream.removeAtIndex(idx!)
             handler.execute(self, context: self.context!)
         }
         
-        var actions = self.actions.filter { x in
+        let actions = self.actions.filter { x in
             
             if !x.enabled {
                 return false
             }
             
-            var res = x.stream(text, nodes: nodes)
+            let res = x.stream(text, nodes: nodes)
             switch res {
             case .Match(let x):
                 self.notify(TextTag(with: x, mono: true), debug:ScriptLogLevel.Actions)
@@ -494,7 +494,7 @@ public class Script : IScript {
             self.moveNext()
         }
         else if let matchwait = msg as? MatchwaitMessage {
-            var timeStr = matchwait.timeout != nil ? "\(matchwait.timeout!)" : ""
+            let timeStr = matchwait.timeout != nil ? "\(matchwait.timeout!)" : ""
             self.notify(TextTag(with: "matchwait \(timeStr)\n", mono: true), debug:ScriptLogLevel.Wait)
             
             self.matchwait = matchwait
@@ -511,7 +511,7 @@ public class Script : IScript {
             }
         }
         else if let pauseMsg = msg as? PauseMessage {
-            var op = PauseOp(self, seconds: pauseMsg.seconds)
+            let op = PauseOp(self, seconds: pauseMsg.seconds)
             op.run()
         }
         else if let debugMsg = msg as? DebugLevelMessage {
@@ -727,8 +727,6 @@ public class Script : IScript {
                 newVal = "\(x)"
             case .Str(let x):
                 newVal = x
-            default:
-                newVal = ""
             }
         }
         
@@ -758,7 +756,7 @@ public class Script : IScript {
     }
     
     func handleGoto(gotoMsg:GotoMessage) {
-        var params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
+        let params = gotoMsg.params.count > 0 ? gotoMsg.params[0] : ""
         self.notify(TextTag(with: "goto \(gotoMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Gosubs)
         self.gotoLabel(gotoMsg.label, params:gotoMsg.params, previousLine: self.currentLine!)
         self.moveNext()
@@ -782,9 +780,9 @@ public class Script : IScript {
     
     func handleMath(mathMsg:MathMessage) {
         
-        var current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
-        var result = mathMsg.calcResult(current)
-        var strResult = String(format:"%g", result)
+        let current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
+        let result = mathMsg.calcResult(current)
+        let strResult = String(format:"%g", result)
         
         self.setVariable(mathMsg.variable, value: "\(strResult)")
         
@@ -815,9 +813,10 @@ public class TokenToMessage {
             
         }
         else if let cmd = token as? CommandToken {
-            switch cmd.name {
+            let name = cmd.name
+            switch name {
                 
-            case "echo":
+            case _ where name == "echo":
                 msg = EchoMessage(
                     context
                         .simplifyEach(cmd.body)
@@ -827,7 +826,7 @@ public class TokenToMessage {
             case _ where cmd.name == "eval":
                 msg = EvalMessage(cmd as! EvalCommandToken)
                 
-            case "goto":
+            case _ where name == "goto":
                 var args = context.simplifyEach(cmd.body)
                     .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                     .componentsSeparatedByString(" ")
@@ -838,21 +837,21 @@ public class TokenToMessage {
                 
                 msg = GotoMessage(label, args)
                 
-            case "put":
+            case _ where name == "put":
                 msg = PutMessage(
                     context
                         .simplifyEach(cmd.body)
                         .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 )
                 
-            case "send":
+            case _ where name == "send":
                 msg = SendMessage(
                     context
                         .simplifyEach(cmd.body)
                         .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 )
                 
-            case "pause":
+            case _ where name == "pause":
                 let lengthStr = cmd.bodyText()
                 msg = PauseMessage(lengthStr.toDouble() ?? 1)
                 
@@ -860,7 +859,7 @@ public class TokenToMessage {
                 let levelStr = cmd.bodyText()
                 msg = DebugLevelMessage(Int(levelStr) ?? ScriptLogLevel.Actions.rawValue)
                 
-            case "math":
+            case _ where name == "math":
                 
                 var variable = ""
                 var operation = ""
@@ -880,7 +879,7 @@ public class TokenToMessage {
                 let txt = context.simplify(cmd.bodyText())
                 msg = UnVarMessage(txt)
                 
-            case "var", "setvariable":
+            case _ where name == "var", _ where name == "setvariable":
                 
                 if cmd.body.count < 2 {
                     break
@@ -902,7 +901,7 @@ public class TokenToMessage {
                 
                 msg = VarMessage(identifier, value)
                 
-            case "save":
+            case _ where name == "save":
                 let txt = context.simplify(cmd.bodyText())
                 msg = SaveMessage(txt)
 
@@ -937,7 +936,7 @@ public class TokenToMessage {
             case _ where cmd.name == "waiteval":
                 msg = WaitEvalMessage(cmd)
                 
-            case "gosub":
+            case _ where name == "gosub":
                 var args = context.simplifyEach(cmd.body)
                     .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                     .componentsSeparatedByString(" ")
@@ -948,7 +947,7 @@ public class TokenToMessage {
                 
                 msg = GosubMessage(label, args)
                 
-            case "random":
+            case _ where name == "random":
                 var nums = cmd.bodyText().componentsSeparatedByString(" ")
                 
                 var min = 0
@@ -961,23 +960,23 @@ public class TokenToMessage {
                 
                 msg = RandomMessage(min, max)
             
-            case "return":
+            case _ where name == "return":
                 msg = ReturnMessage()
                 
-            case "nextroom":
+            case _ where name == "nextroom":
                 msg = NextRoomMessage()
                 
-            case "move":
+            case _ where name == "move":
                 let direction = context.simplifyEach(cmd.body)
                 msg = MoveMessage(direction.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                 
-            case "shift":
+            case _ where name == "shift":
                 msg = ShiftMessage()
                 
-            case "exit":
+            case _ where name == "exit":
                 msg = ExitMessage()
                 
-            case "action":
+            case _ where name == "action":
                 msg = ActionMessage(cmd as! ActionToken)
                 
             default:
