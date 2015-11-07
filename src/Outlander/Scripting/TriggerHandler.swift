@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class TriggerHandler : ISubscriber {
+class TriggerHandler : NSObject, ISubscriber {
     
     class func newInstance(context:GameContext, relay:CommandRelay) -> TriggerHandler {
         return TriggerHandler(context: context, relay: relay)
@@ -22,6 +22,7 @@ class TriggerHandler : ISubscriber {
     init(context:GameContext, relay:CommandRelay) {
         self.context = context
         self.relay = relay
+        super.init()
         self.subId = context.events.subscribe(self, token: "ol:game-parse")
     }
     
@@ -33,9 +34,9 @@ class TriggerHandler : ISubscriber {
     
     func handle(token:String, data:Dictionary<String, AnyObject>) {
         if let dict = data as? [String:String] {
-            var text = dict["text"] ?? ""
+            let text = dict["text"] ?? ""
             
-            if count(text) > 0 {
+            if text.characters.count > 0 {
                 self.checkTriggers(text, context: self.context)
             }
         }
@@ -46,19 +47,19 @@ class TriggerHandler : ISubscriber {
     }
     
     func checkTriggers(text:String, context:GameContext) {
-        var triggers = context.triggers;
+        let triggers = context.triggers;
         
         triggers.enumerateObjectsUsingBlock({ object, index, stop in
             let trigger = object as! Trigger
             
             if let triggerText = trigger.trigger {
             
-                let groups = text[triggerText].groups()
-                
-                if (groups.count > 0) {
-                    var commandContext = CommandContext()
-                    commandContext.command = trigger.action
-                    self.relay.sendCommand(commandContext)
+                if let groups = text[triggerText].groups() {
+                    if groups.count > 0 {
+                        let commandContext = CommandContext()
+                        commandContext.command = trigger.action
+                        self.relay.sendCommand(commandContext)
+                    }
                 }
             }
         });

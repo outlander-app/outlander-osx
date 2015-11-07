@@ -10,10 +10,6 @@
 		DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
-		F90BCF901AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */; };
-		F90BCF911AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */; };
-		F90BCF931AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */; };
-		F90BCF941AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */; };
 		F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
 		F90CEC0E1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
 		F90CEC0F1ACE711300204243 /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -468,9 +464,6 @@
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
 		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
-		F90BCF8E1AE17F0000FBD7C4 /* TryCatchFinally.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TryCatchFinally.h; sourceTree = "<group>"; };
-		F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TryCatchFinally.m; sourceTree = "<group>"; };
-		F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TryCatchFinally.swift; sourceTree = "<group>"; };
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
@@ -1172,9 +1165,6 @@
 				F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */,
 				F97A5C881893AFDF00E2C318 /* TextTag.h */,
 				F97A5C891893AFDF00E2C318 /* TextTag.m */,
-				F90BCF8E1AE17F0000FBD7C4 /* TryCatchFinally.h */,
-				F90BCF8F1AE17F0000FBD7C4 /* TryCatchFinally.m */,
-				F90BCF921AE183F600FBD7C4 /* TryCatchFinally.swift */,
 				F9ACB13E192ECFC3006D3548 /* VariableReplacer.h */,
 				F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */,
 				F9C29108189AB86000F70224 /* Vitals.h */,
@@ -1488,6 +1478,8 @@
 		F9CF925F1890832800449548 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Joe McBride";
 				TargetAttributes = {
@@ -1686,7 +1678,6 @@
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
-				F90BCF901AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,
 				F91031541B3D0F710039BDF0 /* GagLoader.swift in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
@@ -1802,7 +1793,6 @@
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
-				F90BCF931AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */,
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
@@ -2000,13 +1990,11 @@
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
-				F90BCF941AE183F600FBD7C4 /* TryCatchFinally.swift in Sources */,
 				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F9A2C1751B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
 				F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */,
 				F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */,
-				F90BCF911AE17F0000FBD7C4 /* TryCatchFinally.m in Sources */,
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
@@ -2108,7 +2096,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -2142,7 +2130,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 			};
@@ -2190,7 +2178,7 @@
 					/Users/jomc/.Trash,
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2251,7 +2239,7 @@
 					/Users/jomc/.Trash,
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2306,7 +2294,7 @@
 					/Users/jomc/.Trash,
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",
@@ -2352,7 +2340,7 @@
 					/Users/jomc/.Trash,
 					"$(PROJECT_DIR)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-ObjC",

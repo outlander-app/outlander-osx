@@ -17,9 +17,9 @@ public struct RandomNumberGenerator: SequenceType {
         self.count = count
     }
     
-    public func generate() -> GeneratorOf<Int> {
+    public func generate() -> AnyGenerator<Int> {
         var i = 0
-        return GeneratorOf<Int> {
+        return anyGenerator {
             return (i++ == self.count) ? .None : randomNumberFrom(self.range)
         }
     }
@@ -29,6 +29,6 @@ public func randomNumberFrom(from: Range<Int>) -> Int {
     return from.startIndex + Int(arc4random_uniform(UInt32(from.endIndex - from.startIndex)))
 }
 
-public func randomNumbersFrom(from: Range<Int>, #count: Int) -> RandomNumberGenerator {
+public func randomNumbersFrom(from: Range<Int>, count: Int) -> RandomNumberGenerator {
     return RandomNumberGenerator(range: from, count: count)
 }

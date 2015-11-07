@@ -15,8 +15,8 @@ public class Pathfinder {
         var openList:[TreeNode] = []
         var closedList:[TreeNode] = []
         
-        var startNode = zone.roomWithId(start)!
-        var targetNode = zone.roomWithId(target)!
+        let startNode = zone.roomWithId(start)!
+        let targetNode = zone.roomWithId(target)!
         
         openList.append(TreeNode(id: startNode.id, parent: nil))
         
@@ -24,10 +24,10 @@ public class Pathfinder {
         
         while let current = nodeWithLowestFScore(openList) {
             
-            println("checking: \(current.id)")
+            print("checking: \(current.id)")
             
             closedList.append(current)
-            openList.removeAtIndex(find(openList, current)!)
+            openList.removeAtIndex(openList.indexOf(current)!)
             
             if self.isInList(closedList, node: targetNode) {
                 // found path
@@ -35,16 +35,16 @@ public class Pathfinder {
                 break
             }
             
-            var currentMapNode = zone.roomWithId(current.id)!
+            let currentMapNode = zone.roomWithId(current.id)!
             
             let sorted = currentMapNode.arcs
-                .filter { count($0.destination) > 0 }
-                .sorted { $0.destination.toInt()! < $1.destination.toInt()! }
+                .filter { $0.destination.characters.count > 0 }
+                .sort { Int($0.destination)! < Int($1.destination)! }
             
             for arc in sorted {
                 
                 let room = zone.roomWithId(arc.destination)!
-                var treeNode = nodeInList(openList, mapNode: room)
+                let treeNode = nodeInList(openList, mapNode: room)
                 
                 let moveCost = zone.moveCostForNode(currentMapNode, toNode: room)
                 
@@ -59,7 +59,7 @@ public class Pathfinder {
                     
                 } else {
                     
-                    var newNode = TreeNode(id: room.id, parent: current)
+                    let newNode = TreeNode(id: room.id, parent: current)
                     
                     newNode.gValue = current.gValue + moveCost
                     newNode.hValue = zone.hValueForNode(room, endNode: targetNode)
@@ -83,7 +83,7 @@ public class Pathfinder {
         
         var step:TreeNode? = path
         
-        do {
+        repeat {
             if step?.parent != nil {
                 shortestPath.insert(step!.id, atIndex: 0)
             }
@@ -117,7 +117,7 @@ public class Pathfinder {
     }
     
     func nodeWithLowestFScore(list:[TreeNode]) -> TreeNode? {
-        return list.sorted { $0.fValue < $1.fValue }.first
+        return list.sort { $0.fValue < $1.fValue }.first
     }
     
     func nodeInList(list:[TreeNode], mapNode:MapNode) -> TreeNode? {

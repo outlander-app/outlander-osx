@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class EchoCommandHandler : CommandHandler {
+class EchoCommandHandler : NSObject, CommandHandler {
     
     private var relay:CommandRelay
     
@@ -26,7 +26,9 @@ class EchoCommandHandler : CommandHandler {
     }
     
     func handle(command: String, withContext: GameContext) {
-        let echo = command.substringFromIndex(advance(command.startIndex, 5)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let echo = command
+            .substringFromIndex(command.startIndex.advancedBy(5))
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
         var groups = echo["^(>(\\w+)\\s)?((#[a-fA-F0-9]+)(,(#[a-fA-F0-9]+))?\\s)?(.*)"].groups()
         
@@ -35,12 +37,12 @@ class EchoCommandHandler : CommandHandler {
         var backgroundColor = groups[6]
         var text = groups[7]
         
-        window = window == "_" ? "" : window
-        foregroundColor = foregroundColor == "_" ? "" : foregroundColor
-        backgroundColor = backgroundColor == "_" ? "" : backgroundColor
-        text = text == "_" ? "" : text
+        window = window == regexNoGroup ? "" : window
+        foregroundColor = foregroundColor == regexNoGroup ? "" : foregroundColor
+        backgroundColor = backgroundColor == regexNoGroup ? "" : backgroundColor
+        text = text == regexNoGroup ? "" : text
         
-        var tag = TextTag()
+        let tag = TextTag()
         tag.text = "\(text)\n"
         tag.color = foregroundColor
         tag.backgroundColor = backgroundColor

@@ -9,19 +9,20 @@
 import Foundation
 
 @objc
-class TDPUpdateHandler {
+class TDPUpdateHandler : NSObject {
     
     class func newInstance() -> TDPUpdateHandler {
         return TDPUpdateHandler()
     }
     
     func handle(nodes:[Node], text:String, context:GameContext) {
-        var groups = text["Time Development Points: (\\d+)"].groups()
+        if let groups = text["Time Development Points: (\\d+)"].groups() {
+            if groups.count > 1 {
+                context.globalVars.setCacheObject(groups[1], forKey: "tdp")
+            }
+        }
         
-        if groups.count > 1 {
-            context.globalVars.setCacheObject(groups[1], forKey: "tdp")
-        } else {
-            groups = text["TDPs : (\\d+)"].groups()
+        if let groups = text["TDPs : (\\d+)"].groups() {
             if groups.count > 1 {
                 context.globalVars.setCacheObject(groups[1], forKey: "tdp")
             }

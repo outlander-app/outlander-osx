@@ -14,9 +14,9 @@ class TriggersLoaderTester : QuickSpec {
     
     override func spec() {
         
-        var fileSystem = StubFileSystem()
-        var context = GameContext()
-        var loader = TriggersLoader(context: context, fileSystem: fileSystem)
+        let fileSystem = StubFileSystem()
+        let context = GameContext()
+        let loader = TriggersLoader(context: context, fileSystem: fileSystem)
         
         describe("triggers") {
             

@@ -37,7 +37,7 @@ public class AttributesTokenizer {
             return nil
         }
         
-        var name = context.consumedCharacters.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let name = context.consumedCharacters.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
         context.advance()
         context.flushConsumedCharacters()

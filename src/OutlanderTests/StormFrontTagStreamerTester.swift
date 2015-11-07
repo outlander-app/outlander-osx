@@ -229,7 +229,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(0))
                 expect(self.exp.count).to(equal(1))
                 
-                println("ranks: \(self.exp[0].ranks)")
+                print("ranks: \(self.exp[0].ranks)")
                 
                 expect(self.exp[0].name).to(equal("Scholarship"))
                 expect(self.exp[0].ranks).to(equal(552.30))

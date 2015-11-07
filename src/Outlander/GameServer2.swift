@@ -14,7 +14,7 @@ public class Connection : NSObject, NSStreamDelegate {
     private var outputStream: NSOutputStream?
     
     func connect(host:String, port:Int) {
-        println("connecting...")
+        print("connecting...")
         
         NSStream.getStreamsToHostWithName(host, port: port, inputStream: &inputStream, outputStream: &outputStream)
         
@@ -29,29 +29,29 @@ public class Connection : NSObject, NSStreamDelegate {
     }
     
     public func writeData(str:String) {
-        var test = str + "\r\n"
-        println("writing: \(test)")
+        let test = str + "\r\n"
+        print("writing: \(test)")
         let data = test.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
         self.outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
     }
     
     public func stream(stream: NSStream, handleEvent eventCode: NSStreamEvent) {
-        println("stream event: \(eventCode)")
+        print("stream event: \(eventCode)")
         
         switch(eventCode) {
         case NSStreamEvent.OpenCompleted:
-            println("Stream opened")
+            print("Stream opened")
         case NSStreamEvent.HasBytesAvailable:
-            println("bytes")
+            print("bytes")
             readBytes(stream)
         case NSStreamEvent.ErrorOccurred:
-            println("error")
+            print("error")
         case NSStreamEvent.EndEncountered:
-            println("end")
+            print("end")
             stream.close()
             stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         default:
-            println("unknown event!")
+            print("unknown event!")
         }
     }
     
@@ -64,7 +64,7 @@ public class Connection : NSObject, NSStreamDelegate {
                 let length = inputStream!.read(&buffer, maxLength: buffer.count)
                 if(length > 0) {
                     let data = NSString(bytes: buffer, length: length, encoding: NSUTF8StringEncoding)
-                    println("recieved data: \(data)")
+                    print("recieved data: \(data)")
                 }
             }
         }

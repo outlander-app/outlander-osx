@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class TestCommandHandler : CommandHandler {
+class TestCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> TestCommandHandler {
         return TestCommandHandler()

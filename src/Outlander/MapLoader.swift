@@ -60,9 +60,9 @@ final class MapLoader {
     
     func loadMeta(file: String, folder: String) -> MapMetaResult {
         
-        println("Loading \(file)")
+        print("Loading \(file)")
         
-        var filePath = folder.stringByAppendingPathComponent(file)
+        let filePath = folder.stringByAppendingPathComponent(file)
         
         let parsed = GlimpseXML.Document.parseFile(filePath)
         
@@ -73,8 +73,8 @@ final class MapLoader {
         case .Value(let val):
             let doc: GlimpseXML.Document = val.value
             
-            var id = doc.rootElement.attributeValue("id", namespace: nil)!
-            var name = doc.rootElement.attributeValue("name", namespace: nil)!
+            let id = doc.rootElement.attributeValue("id", namespace: nil)!
+            let name = doc.rootElement.attributeValue("name", namespace: nil)!
             
             return MapMetaResult.Success(
                 MapInfo(id, name: name, file: file)
@@ -93,18 +93,18 @@ final class MapLoader {
         case .Value(let val):
             let doc: GlimpseXML.Document = val.value
             
-            var id = doc.rootElement.attributeValue("id")!
-            var name = doc.rootElement.attributeValue("name")!
+            let id = doc.rootElement.attributeValue("id")!
+            let name = doc.rootElement.attributeValue("name")!
             
-            var mapZone = MapZone(id, name)
+            let mapZone = MapZone(id, name)
             
             if let roomNodes = doc.xpath("/zone/node").value {
                 
                 for n in roomNodes {
-                    var desc = self.descriptions(n.children)
-                    var position = self.position(n.children)
-                    var arcs = self.arcs(n.children)
-                    var room =  MapNode(
+                    let desc = self.descriptions(n.children)
+                    let position = self.position(n.children)
+                    let arcs = self.arcs(n.children)
+                    let room =  MapNode(
                         id: n.attributeValue("id")!,
                         name: n.attributeValue("name")!,
                         descriptions: desc,
@@ -119,8 +119,8 @@ final class MapLoader {
             
             if let labelNodes = doc.xpath("/zone/label").value {
                 mapZone.labels = labelNodes.map {
-                    var text = $0.attributeValue("text") ?? ""
-                    var position = self.position($0.children)
+                    let text = $0.attributeValue("text") ?? ""
+                    let position = self.position($0.children)
                     
                     return MapLabel(text: text, position: position)
                 }
@@ -157,9 +157,9 @@ final class MapLoader {
         if filtered.count > 0 {
             let item = filtered[0]
             return MapPosition(
-                x: item.attributeValue("x")!.toInt()!,
-                y: item.attributeValue("y")!.toInt()!,
-                z: item.attributeValue("z")!.toInt()!
+                x: Int(item.attributeValue("x")!)!,
+                y: Int(item.attributeValue("y")!)!,
+                z: Int(item.attributeValue("z")!)!
             )
         }
         

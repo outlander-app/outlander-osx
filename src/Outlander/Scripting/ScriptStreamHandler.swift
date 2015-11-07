@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class ScriptStreamHandler : NodeHandler {
+public class ScriptStreamHandler : NSObject, NodeHandler {
     
     class func newInstance() -> ScriptStreamHandler {
         return ScriptStreamHandler()

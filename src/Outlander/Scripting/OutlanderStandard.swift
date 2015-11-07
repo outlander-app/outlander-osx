@@ -124,7 +124,7 @@ public class EvalCommandToken: CommandToken {
         
         var text = ""
         
-        for (index, t) in enumerate(expression) {
+        for (_, t) in expression.enumerate() {
             
             if t is CommandToken {
                 let cmd = t as! CommandToken
@@ -170,7 +170,7 @@ public class ActionToken : CommandToken {
     
         var text = ""
         
-        for (index, t) in enumerate(commands) {
+        for (index, t) in commands.enumerate() {
             
             if index > 0 {
                 text += ";"
@@ -233,8 +233,8 @@ public class MatchReEvalToken : FuncEvalToken {
         lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         
-        var groups = lh[rh].groups()
-        var found = groups.count > 0
+        let groups = lh[rh].groups()
+        let found = groups.count > 0
         
         return ExpressionEvalResult(
             result: EvalResult.Boolean(val: found),
@@ -333,20 +333,17 @@ public class HexColorState : TokenizationState {
     }
     
     public override func scan(operation: TokenizeOperation){
-        operation.debug(operation: "Entered HexColorState '\(allowedCharacters)'")
+        operation.debug("Entered HexColorState '\(allowedCharacters)'")
         
         if isAllowed(operation.current) {
             //Scan through as much as we can
-            do {
-                println("HexColorState: '\(operation.current)' '\(operation.context.consumedCharacters)'")
+            repeat {
+                print("HexColorState: '\(operation.current)' '\(operation.context.consumedCharacters)'")
                 operation.advance()
-            } while !operation.complete && isAllowed(operation.current) && count(operation.context.consumedCharacters) < 8
-            
-            var sent = false
+            } while !operation.complete && isAllowed(operation.current) && operation.context.consumedCharacters.characters.count < 8
             
             //Emit a token, branch on
-            if count(operation.context.consumedCharacters) == 7 {
-                sent = true
+            if operation.context.consumedCharacters.characters.count == 7 {
                 emitToken(operation)
             }
             
@@ -355,14 +352,14 @@ public class HexColorState : TokenizationState {
                 return
             }
             
-            if count(operation.context.consumedCharacters) > 0 {
+            if operation.context.consumedCharacters.characters.count > 0 {
                 scanBranches(operation)
             }
         }
     }
     
     func isAllowed(character:Character)->Bool{
-        for allowedCharacter in allowedCharacters{
+        for allowedCharacter in allowedCharacters.characters {
             if allowedCharacter == character {
                 return true
             }
@@ -378,7 +375,7 @@ public class Comments : TokenizationState{
     }
     
     public override func scan(operation: TokenizeOperation) {
-        operation.debug(operation: "Entered Comment Char")
+        operation.debug("Entered Comment Char")
         
         if operation.current == "#" || operation.context.consumedCharacters.hasPrefix("#") {
             
@@ -413,7 +410,7 @@ public class OutlanderStandard {
     }
     
     public class var hexColor:TokenizationState {
-        var hexDigits = HexColorState(from: hexDigitString)
+        let hexDigits = HexColorState(from: hexDigitString)
         return Characters(from:"#").branch(
             hexDigits.token("color").branch(
                 IgnoreCaseKeywords(
@@ -434,8 +431,8 @@ public class OutlanderStandard {
 
     public class var indexer:TokenizationState {
        
-        var prefix = LoopingCharacters(from:"%$")
-        var word = LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.")
+        let prefix = LoopingCharacters(from:"%$")
+        let word = LoopingCharacters(from: lowerCaseLetterString+upperCaseLetterString+decimalDigitString+"$%_-.")
         let leftParen = Characters(from:"(")
         let rightParen = Characters(from:")")
         let leftBracket = Characters(from:"[")
@@ -474,14 +471,20 @@ public class OutlanderStandard {
     }
     
     public class var quotedString:TokenizationState {
-        return Delimited(delimiter: "\"", states:
-            Repeat(state:Branch().branch(
-                Characters(from:"\\").branch(
-                    // include regex escapes
-                    Characters(from:"trn\"\\()^$Az.sSdDwWb?*+{}[]").token("char")
-                ),
-                LoopingCharacters(except: "\"\\").token("char")
-            ), min: 1, max: nil).token("quoted-string")
+        let charToken = "trn\"\\()^$Az.sSdDwWb?*+{}[]"
+        let delem1 = "\""
+        let delem2 = "\\"
+        let delem3 = "\"\\"
+
+        let repeater = Branch().branch(
+            Characters(from:delem2).branch(
+                // include regex escapes
+                Characters(from:charToken).token("char")
+            ), LoopingCharacters(except: delem3).token("char")
+        )
+
+        return Delimited(delimiter: delem1, states:
+            Repeat(state: repeater, min: 1, max: nil).token("quoted-string")
         )
     }
 }
@@ -587,11 +590,11 @@ public class OutlanderScriptParser : StackParser {
                 endIf()
                 self.trackingExpression = false
             }
-            else if lineCommandStack.count == 0 && contains(lineCommands, token.characters) {
+            else if lineCommandStack.count == 0 && lineCommands.contains(token.characters) {
                 pushToken(CommandToken(token.characters, token.originalStringIndex!, token.originalStringLine!))
                 lineCommandStack.append(token.characters)
             }
-            else if funcCommandStack.count == 0 && contains(funcCommands, token.characters){
+            else if funcCommandStack.count == 0 && funcCommands.contains(token.characters){
                 pushToken(FuncToken(token.characters, token.originalStringIndex!, token.originalStringLine!))
                 funcCommandStack.append(token.characters)
             }
@@ -601,8 +604,8 @@ public class OutlanderScriptParser : StackParser {
         case _ where token.name == "variable":
             if token.characters.lowercaseString.hasPrefix("if_") {
                 let ifToken = IfToken(token.originalStringIndex!, token.originalStringLine!)
-                let argStr = token.characters.substringFromIndex(advance(token.characters.startIndex, 3))
-                ifToken.argumentCheck = argStr.toInt()
+                let argStr = token.characters.substringFromIndex(token.characters.startIndex.advancedBy(3))
+                ifToken.argumentCheck = Int(argStr)
                 pushToken(ifToken)
                 ifStack.append(ifToken)
             }
@@ -610,7 +613,7 @@ public class OutlanderScriptParser : StackParser {
                 pushToken(token)
             }
         case _ where token.name == "open-paren":
-            if let name = lineCommandStack.last where contains(self.funcCommands, name) {
+            if let name = lineCommandStack.last where self.funcCommands.contains(name) {
                 
                 var isFunc = true
                 
@@ -726,7 +729,7 @@ public class OutlanderScriptParser : StackParser {
         
         while topToken() != nil
             && topToken()!.originalStringLine == token.originalStringLine
-            && contains(validLabelTokens, topToken()!.name) {
+            && validLabelTokens.contains(topToken()!.name) {
                 
             let popped = popToken()!
             idx = popped.originalStringIndex!
@@ -734,7 +737,7 @@ public class OutlanderScriptParser : StackParser {
             chars = popped.characters + chars
         }
         
-        if count(chars) > 0 {
+        if chars.characters.count > 0 {
             let labelToken = LabelToken(chars, idx, line)
             pushToken(labelToken)
         } else {
@@ -743,7 +746,7 @@ public class OutlanderScriptParser : StackParser {
     }
     
     func createIndexer(token:Token) {
-        var indexer = IndexerToken(token.characters, token.originalStringIndex!, token.originalStringLine!)
+        let indexer = IndexerToken(token.characters, token.originalStringIndex!, token.originalStringLine!)
         pushToken(indexer)
     }
     
@@ -867,7 +870,7 @@ public class OutlanderScriptParser : StackParser {
     func checkStackTo(tokenNamed:String, check:(Token?)->Bool) {
         
         var tokens = self.tokens()
-        var end = tokens.count
+        let end = tokens.count
         
         var last:Token?
         var current = end-1
@@ -887,13 +890,13 @@ public class OutlanderScriptParser : StackParser {
     }
     
     func createEval(token:CommandToken) -> CommandToken {
-        var evalToken = EvalCommandToken(token.originalStringIndex!, token.originalStringLine!)
+        let evalToken = EvalCommandToken(token.originalStringIndex!, token.originalStringLine!)
         evalToken.body = token.body
         
         var foundVar = false
         var inExpression = false
         
-        for (index, t) in enumerate(token.body) {
+        for (_, t) in token.body.enumerate() {
             if (t.name == "variable" || t.name == "globalvar") && !foundVar && !inExpression {
                 evalToken.variable = t.characters
                 foundVar = true
@@ -910,13 +913,12 @@ public class OutlanderScriptParser : StackParser {
     }
     
     func createAction(token:CommandToken) -> ActionToken {
-        var actionToken = ActionToken(token.originalStringIndex!, token.originalStringLine!)
+        let actionToken = ActionToken(token.originalStringIndex!, token.originalStringLine!)
         actionToken.body = token.body
         
         var action = [Token]()
         
         var pastWhen = false
-        var inClass = false
         var evalToken:CommandToken?
         
         for t in token.body {
@@ -953,11 +955,11 @@ public class OutlanderScriptParser : StackParser {
         
         let manageActions = ["on", "off"]
         
-        if !pastWhen && !contains(manageActions, actionText) {
+        if !pastWhen && !manageActions.contains(actionText) {
             errors.append("No when pattern defined for action on line \(token.originalStringLine!+1)")
         }
         
-        if contains(manageActions, actionText) {
+        if manageActions.contains(actionText) {
             switch actionText {
             case "on":
                 actionToken.actionToggle = ActionToggle.On
@@ -1061,7 +1063,7 @@ public class BoolExpressionToken : Token, EvalToken {
             }
         }
         
-        var text = "\(lh) \(characters) \(rh) (\(result))"
+        let text = "\(lh) \(characters) \(rh) (\(result))"
         
         return ExpressionEvalResult(result: EvalResult.Boolean(val: result), info:text, matchGroups:nil)
     }
@@ -1096,7 +1098,7 @@ public class OrExpressionToken : Token, EvalToken {
                 result = false
         }
         
-        var text = "\(lhRes.info) \(characters) \(rhRes.info) = \(result)"
+        let text = "\(lhRes.info) \(characters) \(rhRes.info) = \(result)"
         
         return ExpressionEvalResult(result: EvalResult.Boolean(val: result), info:text, matchGroups:nil)
     }
@@ -1155,14 +1157,11 @@ public class ExpressionEvaluator : StackParser {
         
         parse(EndToken())
         
-        var result = false
-        var info = ""
-        
         if let evalToken = topToken() as? EvalToken {
            return evalToken.eval(simplify)
         }
         
-        return ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:info, matchGroups:nil)
+        return ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:"", matchGroups:nil)
     }
     
     override public func parse(token: Token) -> Bool {
@@ -1211,16 +1210,16 @@ public class ExpressionEvaluator : StackParser {
     
     func processOperator(token:Token) {
         
-        var tokens = popTo("bool-expression", includeLast:false)
+        let tokens = popTo("bool-expression", includeLast:false)
         
         var left = [Token]()
-        var right = [Token]()
+        let right = [Token]()
         
         for t in tokens {
             left.append(t)
         }
         
-        var expr = BoolExpressionToken(left: left, withOperator: token.characters, right: right)
+        let expr = BoolExpressionToken(left: left, withOperator: token.characters, right: right)
         pushToken(expr)
         boolStack.append(expr)
     }
@@ -1228,13 +1227,13 @@ public class ExpressionEvaluator : StackParser {
     func processOrOperator(right:BoolExpressionToken) {
         boolStack.removeLast()
         
-        var op = orStack.removeLast()
+        let op = orStack.removeLast()
         
-        var left = popToken() as? EvalToken
+        let left = popToken() as? EvalToken
         
         if let lh = left {
         
-            var or = OrExpressionToken(left: lh, withOperator: op, right: right)
+            let or = OrExpressionToken(left: lh, withOperator: op, right: right)
             
             pushToken(or)
         }
@@ -1242,7 +1241,7 @@ public class ExpressionEvaluator : StackParser {
     
     func processEnd() {
         
-        var tokens = popTo("bool-expression", includeLast:false)
+        let tokens = popTo("bool-expression", includeLast:false)
         if let expr = boolStack.last {
         
             for t in tokens {

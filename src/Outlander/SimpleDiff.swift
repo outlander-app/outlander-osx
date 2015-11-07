@@ -28,7 +28,7 @@ struct Operation<T> {
     let elements: [T]
     
     var elementsString: String {
-        return "".join(elements.map { "\($0)" })
+        return elements.map { "\($0)" }.joinWithSeparator("")
     }
     
     var description: String {
@@ -48,13 +48,13 @@ struct Operation<T> {
 /// diff finds the difference between two lists.
 /// This algorithm a shameless copy of simplediff https://github.com/paulgb/simplediff
 ///
-/// :param: before Old list of elements.
-/// :param: after New list of elements
-/// :returns: A list of operation (insert, delete, noop) to transform the list *before* to the list *after*.
+/// - parameter before: Old list of elements.
+/// - parameter after: New list of elements
+/// - returns: A list of operation (insert, delete, noop) to transform the list *before* to the list *after*.
 func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operation<T>] {
     // Create map of indices for every element
     var beforeIndices = [T: [Int]]()
-    for (index, elem) in enumerate(before) {
+    for (index, elem) in before.enumerate() {
         var indices = beforeIndices.indexForKey(elem) != nil ? beforeIndices[elem]! : [Int]()
         indices.append(index)
         beforeIndices[elem] = indices
@@ -64,7 +64,7 @@ func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operat
     var afterStart = 0
     var maxOverlayLength = 0
     var overlay = [Int: Int]() // remembers *overlayLength* of previous element
-    for (index, elem) in enumerate(after) {
+    for (index, elem) in after.enumerate() {
         var _overlay = [Int: Int]()
         // Element must be in *before* list
         if let elemIndices = beforeIndices[elem] {
@@ -96,11 +96,11 @@ func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operat
         }
     } else {
         // Recursive call with elements before overlay
-        operations += diff(Array(before[0..<beforeStart]), Array(after[0..<afterStart]))
+        operations += diff(Array(before[0..<beforeStart]), after: Array(after[0..<afterStart]))
         // Noop for longest overlay
         operations.append(Operation(type: .Noop, elements: Array(after[afterStart..<afterStart+maxOverlayLength])))
         // Recursive call with elements after overlay
-        operations += diff(Array(before[beforeStart+maxOverlayLength..<before.count]), Array(after[afterStart+maxOverlayLength..<after.count]))
+        operations += diff(Array(before[beforeStart+maxOverlayLength..<before.count]), after: Array(after[afterStart+maxOverlayLength..<after.count]))
     }
     return operations
 }

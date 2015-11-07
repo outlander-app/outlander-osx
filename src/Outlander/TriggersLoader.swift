@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class TriggersLoader {
+class TriggersLoader : NSObject {
     
     class func newInstance(context:GameContext, fileSystem:FileSystem) -> TriggersLoader {
         return TriggersLoader(context: context, fileSystem: fileSystem)
@@ -25,17 +25,22 @@ class TriggersLoader {
     
     func load() {
         let configFile = self.context.pathProvider.profileFolder().stringByAppendingPathComponent("triggers.cfg")
-       
-        var error:NSError?
-        var data = self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding, error: &error)
         
-        if error != nil || data == nil {
+        var data:String?
+        
+        do {
+            data = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+        } catch {
+            return
+        }
+        
+        if data == nil {
             return
         }
         
         let pattern = "^#trigger \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
-        var target = SwiftRegex(target: data, pattern: pattern, options: NSRegularExpressionOptions.AnchorsMatchLines|NSRegularExpressionOptions.CaseInsensitive)
+        let target = SwiftRegex(target: data!, pattern: pattern, options: [NSRegularExpressionOptions.AnchorsMatchLines, NSRegularExpressionOptions.CaseInsensitive])
         
         let groups = target.allGroups()
         
@@ -45,7 +50,7 @@ class TriggersLoader {
                 let action = group[2]
                 var className = ""
                 
-                if group[3] != "_" {
+                if group[3] != regexNoGroup {
                     className = group[3]
                 }
                 
@@ -63,14 +68,14 @@ class TriggersLoader {
         var triggers = ""
         
         self.context.triggers.enumerateObjectsUsingBlock({ object, index, stop in
-            var trigger = object as! Trigger
-            var triggerText = trigger.trigger != nil ? trigger.trigger! : ""
-            var action = trigger.action != nil ? trigger.action! : ""
-            var className = trigger.actionClass != nil ? trigger.actionClass! : ""
+            let trigger = object as! Trigger
+            let triggerText = trigger.trigger != nil ? trigger.trigger! : ""
+            let action = trigger.action != nil ? trigger.action! : ""
+            let className = trigger.actionClass != nil ? trigger.actionClass! : ""
             
             triggers += "#trigger {\(triggerText)} {\(action)}"
             
-            if count(trigger.className) > 0 {
+            if className.characters.count > 0 {
                 triggers += " {\(className)}"
             }
             triggers += "\n"

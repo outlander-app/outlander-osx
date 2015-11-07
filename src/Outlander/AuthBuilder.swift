@@ -9,19 +9,19 @@
 import Foundation
 
 @objc
-class AuthBuilder {
+class AuthBuilder : NSObject {
     
     class func newInstance() -> AuthBuilder {
         return AuthBuilder()
     }
     
     func build(account:String, hash: NSData) -> NSData {
-        var data = NSMutableData()
+        let data = NSMutableData()
         
         data.appendByte(0x41) // A
         data.appendByte(0x09) // tab
         
-        var accountData = account.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        let accountData = account.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
         
         data.appendBytes(accountData!.bytes, length: accountData!.length)
         data.appendByte(0x09) // tab
@@ -36,7 +36,7 @@ class AuthBuilder {
 
 extension NSMutableData {
     
-    func appendByteArray(var bytes: [UInt8]) {
+    func appendByteArray(let bytes: [UInt8]) {
         for b in bytes {
             self.appendByte(b)
         }

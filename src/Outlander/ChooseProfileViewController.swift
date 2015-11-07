@@ -26,14 +26,14 @@ class ProfileDataSource : NSObject, NSTableViewDataSource {
     private func getProfiles() ->  [String] {
         var profiles:[String] = []
         
-        var configFolder = self.context.pathProvider.configFolder()
-        var profilesFolder = configFolder.stringByAppendingPathComponent(self.context.settings.profilesFolder)
+        let configFolder = self.context.pathProvider.configFolder()
+        let profilesFolder = configFolder.stringByAppendingPathComponent(self.context.settings.profilesFolder)
         
         let fileManager = NSFileManager.defaultManager()
         let enumerator = fileManager.enumeratorAtPath(profilesFolder)
         
         while let element = enumerator?.nextObject() as? String {
-            if !contains(element, ".") {
+            if !element.characters.contains(".") {
                 profiles.append(
                     element.stringByTrimmingCharactersInSet(
                         NSCharacterSet.whitespaceAndNewlineCharacterSet())
@@ -69,20 +69,16 @@ class ChooseProfileViewController: NSViewController, NSTableViewDataSource, NSTa
         
         if let current = self.currentProfile {
         
-            if let found = find(self.profileDataSource!.profiles, current) {
+            if let foundIndex = self.profileDataSource!.profiles.indexOf(current) {
                 
                 if self.tableView != nil {
                 
-                    self.tableView.selectRowIndexes(NSIndexSet(index: found), byExtendingSelection: false)
+                    self.tableView.selectRowIndexes(NSIndexSet(index: foundIndex), byExtendingSelection: false)
                 }
             }
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     func loadProfiles(current:String) {
         self.currentProfile = current
         if let ctx = self.gameContext {

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc(OLTreeNode)
-public class TreeNode {
+public class TreeNode : NSObject {
     var id:String
     var parent:TreeNode?
     
@@ -31,16 +31,12 @@ public class TreeNode {
     public var fValue: Int {
         return hValue + gValue
     }
-}
-
-extension TreeNode : Hashable {
+    
     @objc
-    public var hashValue : Int {
+    public override var hashValue : Int {
         return self.id.hashValue
     }
 }
-
-extension TreeNode : Equatable {}
 
 public func ==(lhs: TreeNode, rhs: TreeNode) -> Bool {
   return lhs === rhs

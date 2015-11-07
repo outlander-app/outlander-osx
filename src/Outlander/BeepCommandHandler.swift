@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class BeepCommandHandler : CommandHandler {
+class BeepCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> BeepCommandHandler {
         return BeepCommandHandler()
@@ -25,7 +25,7 @@ class BeepCommandHandler : CommandHandler {
 }
 
 @objc
-class FlashCommandHandler : CommandHandler {
+class FlashCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> FlashCommandHandler {
         return FlashCommandHandler()

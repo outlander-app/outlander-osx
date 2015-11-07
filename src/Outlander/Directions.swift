@@ -40,47 +40,47 @@ public class DirectionsView : NSView {
         
         dir?.drawInRect(self.bounds)
         
-        if find(self.availableDirections, "north") != nil {
+        if self.availableDirections.indexOf("north") != nil {
             north?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "south") != nil {
+        if self.availableDirections.indexOf("south") != nil {
             south?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "east") != nil {
+        if self.availableDirections.indexOf("east") != nil {
             east?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "west") != nil {
+        if self.availableDirections.indexOf("west") != nil {
             west?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "northeast") != nil {
+        if self.availableDirections.indexOf("northeast") != nil {
             northeast?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "northwest") != nil {
+        if self.availableDirections.indexOf("northwest") != nil {
             northwest?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "southeast") != nil {
+        if self.availableDirections.indexOf("southeast") != nil {
             southeast?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "southwest") != nil {
+        if self.availableDirections.indexOf("southwest") != nil {
             southwest?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "up") != nil {
+        if self.availableDirections.indexOf("up") != nil {
             up?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "down") != nil {
+        if self.availableDirections.indexOf("down") != nil {
             down?.drawInRect(self.bounds)
         }
         
-        if find(self.availableDirections, "out") != nil {
+        if self.availableDirections.indexOf("out") != nil {
             out?.drawInRect(self.bounds)
         }
     }

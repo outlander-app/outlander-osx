@@ -29,7 +29,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func resumeScript(scriptName:String) {
-        for view in self.view.subviews as! [NSView] {
+        for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
                 if button.menu?.title == scriptName {
                     button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
@@ -39,7 +39,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func pauseScript(scriptName:String) {
-        for view in self.view.subviews as! [NSView] {
+        for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
                 if button.menu?.title == scriptName {
                     button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusPartiallyAvailable")
@@ -49,7 +49,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func removeAll() {
-        for view in self.view.subviews as! [NSView] {
+        for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
                 button.removeFromSuperview()
             }
@@ -59,7 +59,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     func removeScript(scriptName:String) {
         let startCount = self.view.subviews.count
         
-        for view in self.view.subviews as! [NSView] {
+        for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
                 if button.menu?.title == scriptName {
                     button.removeFromSuperview()
@@ -76,8 +76,8 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         let viewCount = self.view.subviews.count
         let width = 125
         var count = 0
-        for view in self.view.subviews as! [NSView] {
-            if var button = view as? NSPopUpButton {
+        for view in self.view.subviews {
+            if let button = view as? NSPopUpButton {
                 button.frame = NSRect(x: count * width, y: 0, width: width, height: 25)
 //                button.sizeToFit()
                 count++
@@ -89,7 +89,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         let viewCount = self.view.subviews.count
         let width = 125
         
-        var btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
+        let btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
         btn.setButtonType(NSButtonType.SwitchButton)
         btn.menu = NSMenu(title: scriptName)
         btn.menu?.addItem(createMenuItem(scriptName, textColor: NSColor.whiteColor()))
@@ -101,7 +101,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         btn.menu?.addItem(createMenuItem("Abort", textColor: NSColor.blackColor()))
         btn.menu?.itemAtIndex(3)?.image = NSImage(named: "NSStatusUnavailable")
         
-        var debugMenu = createMenuItem("Debug", textColor: NSColor.blackColor())
+        let debugMenu = createMenuItem("Debug", textColor: NSColor.blackColor())
         debugMenu.submenu = NSMenu(title: scriptName)
         debugMenu.submenu?.addItem(createSubMenuItem("0. Debug off", textColor: NSColor.blackColor(), tag: ScriptLogLevel.None))
         debugMenu.submenu?.addItem(createSubMenuItem("1. Goto, gosub, return, labels", textColor: NSColor.blackColor(), tag: ScriptLogLevel.Gosubs))
@@ -121,22 +121,22 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func debugMenuItemSelection(target:NSMenuItem) {
-        var level = ScriptLogLevel(rawValue: target.tag) ?? ScriptLogLevel.None
-        var scriptName = target.menu!.title
+        let level = ScriptLogLevel(rawValue: target.tag) ?? ScriptLogLevel.None
+        let scriptName = target.menu!.title
         self.context?.events.publish("script", data: ["target":scriptName, "action":"debug", "param":"\(level.rawValue)"])
     }
     
     func createMenuItem(title:String, textColor:NSColor) -> NSMenuItem {
-        var item = NSMenuItem()
-        var titleString = createTitleString(title, textColor: textColor)
+        let item = NSMenuItem()
+        let titleString = createTitleString(title, textColor: textColor)
         item.attributedTitle = titleString
         return item
     }
     
     func createSubMenuItem(title:String, textColor:NSColor, tag:ScriptLogLevel) -> NSMenuItem {
-        var item = NSMenuItem(title: "", action: "debugMenuItemSelection:", keyEquivalent: "")
+        let item = NSMenuItem(title: "", action: "debugMenuItemSelection:", keyEquivalent: "")
         item.target = self
-        var titleString = createTitleString(title, textColor: textColor)
+        let titleString = createTitleString(title, textColor: textColor)
         item.attributedTitle = titleString
         item.tag = tag.rawValue
         return item
@@ -147,7 +147,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         attributes[NSForegroundColorAttributeName] = textColor
         attributes[NSFontAttributeName] = NSFont(name: "Menlo", size: 12)
         
-        var style = NSMutableParagraphStyle()
+        let style = NSMutableParagraphStyle()
         style.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         attributes[NSParagraphStyleAttributeName] = style
         
@@ -156,7 +156,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
     func popUpSelectionChanged(notification:NSNotification) {
         if let menuItem = notification.userInfo?["MenuItem"] as? NSMenuItem {
-            var action = menuItem.attributedTitle!.string.lowercaseString
+            let action = menuItem.attributedTitle!.string.lowercaseString
             self.context?.events.publish("script", data: ["target":menuItem.menu!.title, "action":action])
         }
     }

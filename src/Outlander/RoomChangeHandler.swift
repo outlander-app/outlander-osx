@@ -14,7 +14,7 @@ public protocol NodeHandler {
 }
 
 @objc
-class RoomChangeHandler : NodeHandler {
+class RoomChangeHandler : NSObject, NodeHandler {
     
     var relay:CommandRelay
     
@@ -44,11 +44,11 @@ class RoomChangeHandler : NodeHandler {
                     self.showAfterPrompt = false
                     
                     var title = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-                    var desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+                    let desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
                     
                     title = title.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
                     
-                    var roomId = context.globalVars.cacheObjectForKey("roomid") as? String
+                    let roomId = context.globalVars.cacheObjectForKey("roomid") as? String
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
                     
@@ -86,9 +86,9 @@ class RoomChangeHandler : NodeHandler {
             self.relay.sendEcho(tag)
         }
         
-        var exits = ", ".join(room.nonCardinalExists().map { $0.move })
+        let exits = room.nonCardinalExists().map { $0.move }.joinWithSeparator(", ")
         
-        if count(exits) > 0 {
+        if exits.characters.count > 0 {
         
             tag = TextTag()
             tag.text = "Mapped exits: \(exits)\n"

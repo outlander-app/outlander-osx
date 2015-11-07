@@ -24,7 +24,7 @@ public class IgnoreCaseKeywords : TokenizationState {
     }
     
     public override func scan(operation: TokenizeOperation) {
-        operation.debug(operation: "Entered Keywords \(validStrings)")
+        operation.debug("Entered Keywords \(validStrings)")
         
         var didAdvance = false
         
@@ -35,8 +35,8 @@ public class IgnoreCaseKeywords : TokenizationState {
         while let allCompletions = completions("\(operation.context.consumedCharacters)\(operation.current)".lowercaseString) {
             if allCompletions.count == 1 {
             
-                var keyword = allCompletions[0]
-                var test = "\(operation.context.consumedCharacters)\(operation.current)".lowercaseString
+                let keyword = allCompletions[0]
+                let test = "\(operation.context.consumedCharacters)\(operation.current)".lowercaseString
             
                 if keyword == test && isWhiteSpaceOrEot(operation.next) {
                     
@@ -45,7 +45,7 @@ public class IgnoreCaseKeywords : TokenizationState {
                     //Pursue our branches
                     emitToken(operation, useCharacters: test)
                     
-                    if count(operation.context.consumedCharacters) > 0 {
+                    if operation.context.consumedCharacters.characters.count > 0 {
                         scanBranches(operation)
                     }
                     return
@@ -68,7 +68,7 @@ public class IgnoreCaseKeywords : TokenizationState {
     
     func isWhiteSpaceOrEot(next:Character?) -> Bool {
         
-        for c in self.whiteSpaceString {
+        for c in self.whiteSpaceString.characters {
             if next == c {
                 return true
             }

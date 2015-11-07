@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class ExpUpdateHandler {
+class ExpUpdateHandler : NSObject {
     
     class func newInstance() -> ExpUpdateHandler {
         return ExpUpdateHandler()
@@ -38,13 +38,13 @@ class ExpUpdateHandler {
                 return
             }
             
-            var groups = text[exp_regex].allGroups()
+            let groups = text[exp_regex].allGroups()
             
             for group in groups {
                 
-                var var_name = group[1].replace(" ", withString: "_")
+                let var_name = group[1].replace(" ", withString: "_")
                 
-                var skill = SkillExp()
+                let skill = SkillExp()
                 skill.name = var_name
                 skill.mindState = LearningRate.fromDescription(group[4])
                 skill.ranks = NSDecimalNumber(string: "\(group[2]).\(group[3])")

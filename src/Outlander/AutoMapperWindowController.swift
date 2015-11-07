@@ -47,11 +47,11 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                     success.append(mapInfo)
                     
                 case let .Error(error):
-                    println("\(error)")
+                    print("\(error)")
                 }
             }
             
-            self.maps = success.sorted { $0.id.compare($1.id, options: NSStringCompareOptions.NumericSearch, range: $0.id.startIndex..<$0.id.endIndex, locale:nil) == NSComparisonResult.OrderedAscending }
+            self.maps = success.sort { $0.id.compare($1.id, options: NSStringCompareOptions.NumericSearch, range: $0.id.startIndex..<$0.id.endIndex, locale:nil) == NSComparisonResult.OrderedAscending }
             
             loaded?()
         }
@@ -72,7 +72,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     func indexOfMap(id:String) -> Int? {
         
         if let info = mapForId(id) {
-            return find(self.maps, info)
+            return self.maps.indexOf(info)
         }
         
         return nil
@@ -161,7 +161,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             if let changed = obj as? Dictionary<String, String> {
                 if changed.keys.first == "roomid" {
                     
-                    var roomId = changed["roomid"]
+                    let roomId = changed["roomid"]
                     
                     if let id = roomId {
                         if let room = self.context!.mapZone?.roomWithId(id) {
@@ -235,7 +235,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     func findCurrentRoom(zone:MapZone) -> MapNode? {
         if let ctx = self.context {
             
-            var roomId = ctx.globalVars.cacheObjectForKey("roomid") as? String
+            let roomId = ctx.globalVars.cacheObjectForKey("roomid") as? String
             
             var name = ctx.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
             name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
@@ -281,13 +281,13 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     func renderMap(zone:MapZone) {
         
-        var room = self.findCurrentRoom(zone)
+        let room = self.findCurrentRoom(zone)
         
         if self.mapView == nil {
             return
         }
         
-        var rect = zone.mapSize(0, padding: 100.0)
+        let rect = zone.mapSize(0, padding: 100.0)
         
         self.mapLevel = 0
         
@@ -318,7 +318,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             
             loadMap({ () -> MapLoadResult in
                 return self.mapLoader.load(file)
-            }, { (result) -> () in
+            }, mainClosure: { (result) -> () in
                 
                 let diff = NSDate().timeIntervalSinceDate(start)
                 
@@ -326,7 +326,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     
                 case let .Success(zone):
                     
-                    println("map \(zone.name) loaded in: \(diff) seconds")
+                    print("map \(zone.name) loaded in: \(diff) seconds")
                     
                     self.context?.mapZone = zone
                     
@@ -338,7 +338,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     }
                     
                 case let .Error(error):
-                    println("map loaded with error in: \(diff) seconds")
+                    print("map loaded with error in: \(diff) seconds")
                     if self.nodesLabel != nil {
                         self.nodesLabel.stringValue = "Error loading map: \(error)"
                     }
@@ -363,9 +363,9 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             self.mapZoom -= 0.5
         }
         
-        var clipView = self.scrollView.contentView
+        let clipView = self.scrollView.contentView
         var clipViewBounds = clipView.bounds
-        var clipViewSize = clipView.frame.size
+        let clipViewSize = clipView.frame.size
         
         clipViewBounds.size.width = clipViewSize.width / self.mapZoom
         clipViewBounds.size.height = clipViewSize.height / self.mapZoom

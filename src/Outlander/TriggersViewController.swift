@@ -39,7 +39,7 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
     
     public override func controlTextDidChange(obj: NSNotification) {
         if let item = self.selectedItem {
-            var textField = obj.object as! NSTextField
+            let textField = obj.object as! NSTextField
             if(textField.tag == 1) {
                 item.trigger = textField.stringValue
             }
@@ -63,7 +63,7 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
 
     @IBAction func addRemoveAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
-            var trigger = Trigger("", "", "")
+            let trigger = Trigger("", "", "")
             _context!.triggers.addObject(trigger)
             
             let idx = NSIndexSet(index: _context!.triggers.count() - 1)
@@ -78,7 +78,7 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
             
             self.selectedItem = nil;
             
-            var item:Trigger = _context!.triggers.objectAtIndex(self.tableView.selectedRow) as! Trigger
+            let item:Trigger = _context!.triggers.objectAtIndex(self.tableView.selectedRow) as! Trigger
             _context!.triggers.removeObject(item)
             
             self.tableView.reloadData()
@@ -108,7 +108,7 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
             return "";
         }
         
-        var item = _context!.triggers.objectAtIndex(row) as! Trigger
+        let item = _context!.triggers.objectAtIndex(row) as! Trigger
         
         var res:String = ""
         

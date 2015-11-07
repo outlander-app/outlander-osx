@@ -71,10 +71,6 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
         self.reloadVars()
     }
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     public func save() {
     }
     
@@ -89,11 +85,11 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
         _globalVars = []
         
         for key in vars {
-            var global = GlobalVariable(key.0 as! String, key.1 as! String)
+            let global = GlobalVariable(key.0 as! String, key.1 as! String)
             _globalVars.append(global)
         }
         
-        _globalVars = _globalVars.sorted {
+        _globalVars = _globalVars.sort {
             $0.name.localizedCaseInsensitiveCompare($1.name)
                 == NSComparisonResult.OrderedAscending
         }
@@ -104,7 +100,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
     @IBAction func addRemoveAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
            
-            var global = GlobalVariable("", "")
+            let global = GlobalVariable("", "")
             
             _globalVars.append(global)
             
@@ -157,7 +153,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
             return "";
         }
         
-        var item = _globalVars[row]
+        let item = _globalVars[row]
         
         if(tableColumn!.identifier == "name") {
             return item.name

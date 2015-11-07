@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class GagsLoader {
+class GagsLoader : NSObject {
     
     class func newInstance(context:GameContext, fileSystem:FileSystem) -> GagsLoader {
         return GagsLoader(context: context, fileSystem: fileSystem)

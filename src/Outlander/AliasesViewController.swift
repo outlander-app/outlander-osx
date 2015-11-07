@@ -43,7 +43,7 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     
     public override func controlTextDidChange(obj: NSNotification) {
         if let item = self.selectedItem {
-            var textField = obj.object as! NSTextField
+            let textField = obj.object as! NSTextField
             if(textField.tag == 1) {
                 item.pattern = textField.stringValue
             } else {
@@ -64,7 +64,7 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
     
     @IBAction func addRemoveAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
-            var alias = Alias()
+            let alias = Alias()
             _context!.aliases.addObject(alias)
            
             let idx = NSIndexSet(index: _context!.aliases.count() - 1)
@@ -79,7 +79,7 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
             
             self.selectedItem = nil;
             
-            var item: Alias = _context!.aliases.objectAtIndex(self.tableView.selectedRow) as! Alias
+            let item: Alias = _context!.aliases.objectAtIndex(self.tableView.selectedRow) as! Alias
             _context!.aliases.removeObject(item)
             
             self.tableView.reloadData()
@@ -110,7 +110,7 @@ public class AliasesViewController: NSViewController, SettingsView, NSTableViewD
             return "";
         }
         
-        var item = _context!.aliases.objectAtIndex(row) as! Alias
+        let item = _context!.aliases.objectAtIndex(row) as! Alias
         
         if(tableColumn!.identifier == "alias") {
             return item.pattern

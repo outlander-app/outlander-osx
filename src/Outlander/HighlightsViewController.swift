@@ -24,13 +24,13 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             self.didChangeValueForKey("selectedItem")
             
             if let item = selectedItem {
-                if item.color != nil && count(item.color) > 0 {
+                if item.color != nil && item.color.characters.count > 0 {
                     colorWell.color = NSColor(hex: item.color)
                 } else {
                     colorWell.color = NSColor.blackColor()
                 }
                 
-                if item.backgroundColor != nil && count(item.backgroundColor) > 0 {
+                if item.backgroundColor != nil && item.backgroundColor.characters.count > 0 {
                     backgroundColorWell.color = NSColor(hex: item.backgroundColor)
                 } else {
                     backgroundColorWell.color = NSColor.blackColor()
@@ -70,7 +70,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     public override func controlTextDidChange(obj: NSNotification) {
         if let item = self.selectedItem {
             
-            var textField = obj.object as! NSTextField
+            let textField = obj.object as! NSTextField
             
             if(textField.tag == 1) {
                 
@@ -84,7 +84,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                     item.backgroundColor = ""
                 }
                 
-                if count(item.backgroundColor) > 0 {
+                if item.backgroundColor.characters.count > 0 {
                     backgroundColorWell.color = NSColor(hex: item.backgroundColor)
                 }
                 
@@ -96,7 +96,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                     item.color = ""
                 }
                 
-                if count(item.color) > 0 {
+                if item.color.characters.count > 0 {
                     colorWell.color = NSColor(hex: item.color)
                 }
             }
@@ -117,7 +117,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     
     @IBAction func addRemoveAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
-            var highlight = Highlight()
+            let highlight = Highlight()
             highlight.color = "#0000ff"
             highlight.backgroundColor = ""
             highlight.pattern = ""
@@ -135,7 +135,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             
             self.selectedItem = nil;
             
-            var item: Highlight = _context!.highlights.objectAtIndex(self.tableView.selectedRow) as! Highlight
+            let item: Highlight = _context!.highlights.objectAtIndex(self.tableView.selectedRow) as! Highlight
             _context!.highlights.removeObject(item)
             
             self.tableView.reloadData()
@@ -174,7 +174,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     }
     
     public func tableView(tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView {
-        var cell = tableView.makeViewWithIdentifier("highlightCellView", owner: self) as? HighlightCellView
+        let cell = tableView.makeViewWithIdentifier("highlightCellView", owner: self) as? HighlightCellView
         
         if(row > -1 && row < _context!.highlights.count()) {
             
@@ -182,7 +182,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                
                 cell?.pattern.stringValue = hl.pattern
                 
-                if hl.color != nil && count(hl.color) > 0 {
+                if hl.color != nil && hl.color.characters.count > 0 {
                     cell?.colorField.stringValue = hl.color
                     cell?.colorField.textColor = NSColor(hex: hl.color)
                     cell?.pattern.textColor = NSColor(hex: hl.color)
@@ -192,13 +192,13 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                     cell?.pattern.textColor = nil
                 }
                 
-                if contains(self.tableView.selectedRowIndexes, row) {
+                if self.tableView.selectedRowIndexes.contains(row) {
                     cell?.selected = true
                 } else {
                     cell?.selected = false
                 }
                 
-                if hl.backgroundColor != nil && count(hl.backgroundColor) > 0 {
+                if hl.backgroundColor != nil && hl.backgroundColor.characters.count > 0 {
                     cell?.backgroundColor = NSColor(hex: hl.backgroundColor)
                 } else {
                     cell?.backgroundColor = nil

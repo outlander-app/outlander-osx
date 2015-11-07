@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class MapperCommandHandler : CommandHandler {
+class MapperCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> MapperCommandHandler {
         return MapperCommandHandler()
@@ -20,12 +20,12 @@ class MapperCommandHandler : CommandHandler {
     }
     
     func handle(command: String, withContext: GameContext) {
-        println("#mapper: \(command)")
+        print("#mapper: \(command)")
     }
 }
 
 @objc
-class MapperGotoCommandHandler : CommandHandler {
+class MapperGotoCommandHandler : NSObject, CommandHandler {
     
     private var startDate = NSDate()
     private var relay:CommandRelay
@@ -44,7 +44,9 @@ class MapperGotoCommandHandler : CommandHandler {
     
     func handle(command: String, withContext: GameContext) {
         
-        let area = command.substringFromIndex(advance(command.startIndex, 5)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let area = command
+            .substringFromIndex(command.startIndex.advancedBy(5))
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
         self.gotoArea(area, context: withContext)
     }
@@ -61,15 +63,15 @@ class MapperGotoCommandHandler : CommandHandler {
                 
                 let description = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
              
-                var roomId = context.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+                let roomId = context.globalVars.cacheObjectForKey("roomid") as? String ?? ""
                 
                 if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
-                    println("currentRoomId: \(currentRoom.id)")
+                    print("currentRoomId: \(currentRoom.id)")
                     
                     var toRoom:MapNode?
                     
-                    var matches = zone.roomsWithNote(area)
+                    let matches = zone.roomsWithNote(area)
                     
                     for match in matches {
                         toRoom = match
@@ -94,7 +96,7 @@ class MapperGotoCommandHandler : CommandHandler {
                                 self.sendMessage("[\(toRoom!.name)] (\(toRoom!.id))")
                             }
                             
-                            var pathfinder = Pathfinder()
+                            let pathfinder = Pathfinder()
                             let path = pathfinder.findPath(currentRoom.id, target: toRoom!.id, zone: zone)
                             
                             let moves = pathfinder.getMoves(path, zone: zone)
@@ -117,7 +119,7 @@ class MapperGotoCommandHandler : CommandHandler {
             
         } ~> { (moves) -> () in
             
-            let walk = ", ".join(moves)
+            let walk = moves.joinWithSeparator(", ")
             
             let diff = NSDate().timeIntervalSinceDate(self.startDate)
             
@@ -125,7 +127,7 @@ class MapperGotoCommandHandler : CommandHandler {
                 self.sendMessage("Debug: path found in \(diff) seconds")
             }
             
-            if count(walk) > 0 {
+            if walk.characters.count > 0 {
             
                 self.sendMessage("Map path: \(walk)")
                 self.autoWalk(moves)
@@ -134,7 +136,7 @@ class MapperGotoCommandHandler : CommandHandler {
     }
     
     func sendMessage(message:String) {
-        var tag = TextTag()
+        let tag = TextTag()
         tag.text = "[AutoMapper] \(message)\n"
         tag.color = "#00ffff"
         tag.preset = "automapper"
@@ -153,7 +155,7 @@ class MapperGotoCommandHandler : CommandHandler {
             }
         }
         
-        var context = CommandContext()
+        let context = CommandContext()
         context.command = ".automapper " + walk
         relay.sendCommand(context)
     }

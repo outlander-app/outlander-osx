@@ -13,7 +13,7 @@ extension NSColor {
     convenience init(hex:String) {
         var str = hex
         if(str.hasPrefix("#")) {
-            str = hex.substringFromIndex(advance(hex.startIndex, 1))
+            str = hex.substringFromIndex(hex.startIndex.advancedBy(1))
         }
         var rgbValue:UInt32 = 0
         NSScanner(string: str).scanHexInt(&rgbValue)

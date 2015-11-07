@@ -47,14 +47,14 @@ public struct GosubContext {
     var vars:[String:String]
     var isGosub:Bool
     var marker:TokenSequence
-    var current:GeneratorOf<Token>
+    var current:AnyGenerator<Token>
 }
 
 public class ScriptContext {
     var tree:[Token]
     var marker:TokenSequence
     var results:Array<Token>
-    var current:GeneratorOf<Token>
+    var current:AnyGenerator<Token>
     var gosubContext:GosubContext?
     var gosubStack:Stack<GosubContext>
     var actionVars:[String:String] = [:]
@@ -108,7 +108,7 @@ public class ScriptContext {
         
         self.paramVars["0"] = all.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
-        for (index, param) in enumerate(self.params) {
+        for (index, param) in self.params.enumerate() {
             self.paramVars["\(index+1)"] = param
         }
         
@@ -163,15 +163,15 @@ public class ScriptContext {
             return true
         }
         
-        var returnIdx = self.marker.currentIdx
+        let returnIdx = self.marker.currentIdx
         
-        var seq = TokenSequence()
+        let seq = TokenSequence()
         seq.tree = self.tree
-        var cur = seq.generate()
+        let cur = seq.generate()
         
         var found = false
         
-        var trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).lowercaseString
+        let trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).lowercaseString
         
         while let token = cur.next() {
             if let labelToken = token as? LabelToken where labelToken.characters.lowercaseString == trimmed {
@@ -190,7 +190,7 @@ public class ScriptContext {
                         marker: self.marker,
                         current: self.current)
                     
-                    for (index, param) in enumerate(params) {
+                    for (index, param) in params.enumerate() {
                         gosub.vars["\(index)"] = param
                     }
                     
@@ -221,7 +221,7 @@ public class ScriptContext {
     
     public func popGosub() -> GosubContext? {
         if self.gosubStack.hasItems() {
-            var last = self.gosubStack.pop()
+            let last = self.gosubStack.pop()
             self.marker = last.marker
             self.current = last.current
             self.gosubContext = self.gosubStack.lastItem()
@@ -235,7 +235,7 @@ public class ScriptContext {
     }
     
     public func next() -> Token? {
-        var nextToken = self.current.next()
+        let nextToken = self.current.next()
         
         if let token = nextToken {
             evalToken(token)
@@ -247,9 +247,9 @@ public class ScriptContext {
     
     public func evalToken(token:Token) {
         if(token is BranchToken) {
-            var branchToken = token as! BranchToken
+            let branchToken = token as! BranchToken
             if(!evalIf(branchToken)) {
-                var last = self.marker.branchStack.lastItem()!
+                let last = self.marker.branchStack.lastItem()!
                 if last.sequence.branchStack.hasItems() {
                     last.sequence.branchStack.pop()
                 } else {
@@ -328,7 +328,7 @@ public class ScriptContext {
     
     public func simplify(data:String) -> String {
         
-        var mutable = RegexMutable(data)
+        let mutable = RegexMutable(data)
         
         if self.actionVars.count > 0 && data.rangeOfString("$") != nil {
             self.replace("\\$", target: mutable, dict: self.actionVars)
@@ -366,15 +366,15 @@ public class ScriptContext {
         for t in tokens {
             
             if t.name == "quoted-string" {
-                var res = self.simplify(t.characters)
+                let res = self.simplify(t.characters)
                 text += "\"\(res)\""
             }
             else if let idx = t as? IndexerToken {
                 
-                var replaced = self.simplify(idx.variable)
+                let replaced = self.simplify(idx.variable)
                
                 var options = replaced.componentsSeparatedByString("|")
-                var indexer = self.simplify(idx.indexer).toInt() ?? -1
+                let indexer = Int(self.simplify(idx.indexer)) ?? -1
                 if indexer > -1 && options.count > indexer {
                     text += options[indexer]
                 } else {
@@ -397,15 +397,15 @@ public class ScriptContext {
                 result += t.characters
             }
             else if t.name == "quoted-string" {
-                var res = self.simplify(t.characters)
+                let res = self.simplify(t.characters)
                 result += "\"\(res)\""
             }
             else if let idx = t as? IndexerToken {
                 
-                var replaced = self.simplify(idx.variable)
+                let replaced = self.simplify(idx.variable)
                
                 var options = replaced.componentsSeparatedByString("|")
-                var indexer = self.simplify(idx.indexer).toInt() ?? -1
+                let indexer = Int(self.simplify(idx.indexer)) ?? -1
                 if indexer > -1 && options.count > indexer {
                     result += options[indexer]
                 } else {
@@ -423,7 +423,7 @@ public class ScriptContext {
 
 struct BranchContext {
     var sequence:BranchTokenSequence
-    var generator:GeneratorOf<Token>
+    var generator:AnyGenerator<Token>
 }
 
 class TokenSequence : SequenceType {
@@ -437,9 +437,9 @@ class TokenSequence : SequenceType {
         branchStack = Stack<BranchContext>()
     }
     
-    func generate() -> GeneratorOf<Token> {
-        return GeneratorOf<Token>({
-            if var b = self.branchStack.lastItem() {
+    func generate() -> AnyGenerator<Token> {
+        return anyGenerator({
+            if let b = self.branchStack.lastItem() {
                 if let next = b.generator.next() {
                     return next
                 } else {
@@ -447,11 +447,11 @@ class TokenSequence : SequenceType {
                 }
             }
             
-            var bodyToken = self.getNext()
+            let bodyToken = self.getNext()
             if let nextToken = bodyToken {
                 if let branchToken = nextToken as? BranchToken {
-                    var seq = BranchTokenSequence(branchToken)
-                    var generator = seq.generate()
+                    let seq = BranchTokenSequence(branchToken)
+                    let generator = seq.generate()
                     self.branchStack.push(BranchContext(sequence: seq, generator: generator))
                 }
                 return nextToken
@@ -487,9 +487,9 @@ class BranchTokenSequence : SequenceType {
         branchStack = Stack<BranchContext>()
     }
     
-    func generate() -> GeneratorOf<Token> {
-        return GeneratorOf<Token>({
-            if var b = self.branchStack.lastItem() {
+    func generate() -> AnyGenerator<Token> {
+        return anyGenerator({
+            if let b = self.branchStack.lastItem() {
                 if let next = b.generator.next() {
                     return next
                 } else {
@@ -497,11 +497,11 @@ class BranchTokenSequence : SequenceType {
                 }
             }
             
-            var bodyToken = self.getNext()
+            let bodyToken = self.getNext()
             if let nextToken = bodyToken {
                 if let branchToken = nextToken as? BranchToken {
-                    var seq = BranchTokenSequence(branchToken)
-                    var generator = seq.generate()
+                    let seq = BranchTokenSequence(branchToken)
+                    let generator = seq.generate()
                     self.branchStack.push(BranchContext(sequence: seq, generator: generator))
                     return branchToken
                 }

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public final class MapZone {
+public final class MapZone : NSObject {
     var id:String
     var name:String
     var rooms:[MapNode]
@@ -55,10 +55,10 @@ public final class MapZone {
             }
         }
         
-        var width:Double = abs(maxX) + abs(minX) + padding
-        var height:Double = abs(maxY) + abs(minY) + padding
+        let width:Double = abs(maxX) + abs(minX) + padding
+        let height:Double = abs(maxY) + abs(minY) + padding
         
-        println("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
+        print("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
        
         // set origin x,y to the point on screen where were the most points can fit on screen
         // between maxX and maxY
@@ -67,7 +67,7 @@ public final class MapZone {
     
     func roomWithId(id:String) -> MapNode? {
         
-        if count(id) == 0 {
+        if id.characters.count == 0 {
             return nil
         }
         
@@ -76,15 +76,15 @@ public final class MapZone {
     
     func findRoomFrom(id:String, name:String, description:String) -> MapNode? {
         
-        var last = roomIdLookup[id]
+        let last = roomIdLookup[id]
         
         var trimmed = description
        
-        if count(description) > 10 {
-            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        if description.characters.count > 10 {
+            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
         }
         
-        let filtered = last?.arcs.filter { count($0.destination) > 0 }
+        let filtered = last?.arcs.filter { $0.destination.characters.count > 0 }
  
         for arc in filtered! {
             
@@ -104,11 +104,11 @@ public final class MapZone {
         
         var trimmed = description
        
-        if count(description) > 10 {
-            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        if description.characters.count > 10 {
+            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
         }
         
-        var currentRoom = roomWithId(currentRoomId ?? "")
+        let currentRoom = roomWithId(currentRoomId ?? "")
         
         if currentRoom == nil || currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed) {
             return self.findRoom(name, description: description)
@@ -121,8 +121,8 @@ public final class MapZone {
         
         var trimmed = description
        
-        if count(description) > 10 {
-            trimmed = description.substringToIndex(advance(description.startIndex, 10))
+        if description.characters.count > 10 {
+            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
         }
         
         for room in rooms {

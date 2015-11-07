@@ -17,7 +17,7 @@ public protocol INotifyMessage {
 }
 
 @objc
-public class NotifyMessage : INotifyMessage {
+public class NotifyMessage : NSObject, INotifyMessage {
     
     class func newInstance() -> NotifyMessage {
         return NotifyMessage()
@@ -27,7 +27,7 @@ public class NotifyMessage : INotifyMessage {
     var commandBlock: ((command:CommandContext) -> Void)?
     var echoBlock: ((echo:String) -> Void)?
     
-    public init() {
+    public override init() {
     }
 
     public func notify(message:TextTag) {
@@ -154,8 +154,8 @@ public class Script : IScript {
             return
         }
         
-        var line = self.currentLine
-        var column = self.currentColumn
+        let line = self.currentLine
+        let column = self.currentColumn
         
         self.currentLine = nil
         self.currentColumn = nil
@@ -179,7 +179,7 @@ public class Script : IScript {
             let diff = NSDate().timeIntervalSinceDate(self.started!)
             self.notify(TextTag(with: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
             
-            var sorted = display.sorted { $0 < $1 }
+            var sorted = display.sort { $0 < $1 }
             
             for v in sorted {
                 var tag = TextTag(with: "|  \(v)\n", mono: true)
@@ -219,7 +219,7 @@ public class Script : IScript {
     
     public func stream(text:String, nodes:[Node]) {
         
-        if (count(text) == 0 && nodes.count == 0) || self.paused || self.cancelled {
+        if (text.characters.count == 0 && nodes.count == 0) || self.paused || self.cancelled {
             return
         }
         
@@ -357,7 +357,7 @@ public class Script : IScript {
             
             let parseTime = NSDate().timeIntervalSinceDate(self.started!)
             
-            println("parsed \(self.scriptName) in \(parseTime)")
+            print("parsed \(self.scriptName) in \(parseTime)")
             
             dispatch_async(dispatch_get_main_queue(), {
                 
@@ -409,12 +409,12 @@ public class Script : IScript {
             return
         }
         
-        var result = self.context!.next()
+        let result = self.context!.next()
         if let nextToken = result {
             
             self.currentLine = nextToken.originalStringLine
             
-            println("next - \(nextToken.description)")
+            print("next - \(nextToken.description)")
             
             if let msg = tokenToMessage.toMessage(self.context!, token: nextToken) {
                 self.sendMessage(msg)
@@ -701,7 +701,7 @@ public class Script : IScript {
             
             var filtered = self.actions.filter { a in
                 
-                return count(a.token.className) > 0 && a.token.className == msg.token.className
+                return a.token.className.characters.count > 0 && a.token.className == msg.token.className
             }
             
             for index in 0..<filtered.count {
@@ -832,8 +832,8 @@ public class TokenToMessage {
                     .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                     .componentsSeparatedByString(" ")
                 
-                var label = args.removeAtIndex(0)
-                var allArgs = " ".join(args)
+                let label = args.removeAtIndex(0)
+                let allArgs = args.joinWithSeparator(" ")
                 args.insert(allArgs, atIndex: 0)
                 
                 msg = GotoMessage(label, args)
@@ -853,12 +853,12 @@ public class TokenToMessage {
                 )
                 
             case "pause":
-                var lengthStr = cmd.bodyText()
+                let lengthStr = cmd.bodyText()
                 msg = PauseMessage(lengthStr.toDouble() ?? 1)
                 
             case _ where cmd.name == "debuglevel" || cmd.name == "debug":
-                var levelStr = cmd.bodyText()
-                msg = DebugLevelMessage(levelStr.toInt() ?? ScriptLogLevel.Actions.rawValue)
+                let levelStr = cmd.bodyText()
+                msg = DebugLevelMessage(Int(levelStr) ?? ScriptLogLevel.Actions.rawValue)
                 
             case "math":
                 
@@ -877,7 +877,7 @@ public class TokenToMessage {
                 msg = MathMessage(variable, operation, number)
                 
             case _ where cmd.name == "unvar":
-                var txt = context.simplify(cmd.bodyText())
+                let txt = context.simplify(cmd.bodyText())
                 msg = UnVarMessage(txt)
                 
             case "var", "setvariable":
@@ -897,31 +897,31 @@ public class TokenToMessage {
                     break
                 }
                 
-                var identifier = context.simplify([identifierCmd!])
-                var value = context.simplify(cmds)
+                let identifier = context.simplify([identifierCmd!])
+                let value = context.simplify(cmds)
                 
                 msg = VarMessage(identifier, value)
                 
             case "save":
-                var txt = context.simplify(cmd.bodyText())
+                let txt = context.simplify(cmd.bodyText())
                 msg = SaveMessage(txt)
 
             case _ where cmd.name == "matchwait":
-                var timeoutStr = cmd.bodyText()
+                let timeoutStr = cmd.bodyText()
                 msg = MatchwaitMessage(timeoutStr.toDouble())
 
             case _ where cmd.name == "matchre":
                 var txt = cmd.bodyText().componentsSeparatedByString(" ")
                 
-                var label = txt.removeAtIndex(0)
-                var value = " ".join(txt)
+                let label = txt.removeAtIndex(0)
+                let value = txt.joinWithSeparator(" ")
                 msg = MatchReMessage(label, value)
                 
             case _ where cmd.name == "match":
                 var txt = cmd.bodyText().componentsSeparatedByString(" ")
                 
-                var label = txt.removeAtIndex(0)
-                var value = " ".join(txt)
+                let label = txt.removeAtIndex(0)
+                let value = txt.joinWithSeparator(" ")
                 
                 msg = MatchMessage(label, value)
                 
@@ -942,8 +942,8 @@ public class TokenToMessage {
                     .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                     .componentsSeparatedByString(" ")
                 
-                var label = args.removeAtIndex(0)
-                var allArgs = " ".join(args)
+                let label = args.removeAtIndex(0)
+                let allArgs = args.joinWithSeparator(" ")
                 args.insert(allArgs, atIndex: 0)
                 
                 msg = GosubMessage(label, args)
@@ -955,8 +955,8 @@ public class TokenToMessage {
                 var max = 1
                 
                 if nums.count > 1 {
-                    min = nums[0].toInt() ?? 0
-                    max = nums[1].toInt() ?? 1
+                    min = Int(nums[0]) ?? 0
+                    max = Int(nums[1]) ?? 1
                 }
                 
                 msg = RandomMessage(min, max)
@@ -968,7 +968,7 @@ public class TokenToMessage {
                 msg = NextRoomMessage()
                 
             case "move":
-                var direction = context.simplifyEach(cmd.body)
+                let direction = context.simplifyEach(cmd.body)
                 msg = MoveMessage(direction.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
                 
             case "shift":
@@ -983,7 +983,7 @@ public class TokenToMessage {
             default:
                 msg = UnknownMessage(token.description)
             }
-        } else if let comment = token as? CommentToken {
+        } else if let _ = token as? CommentToken {
             msg = CommentMessage()
         }
         
@@ -1002,8 +1002,8 @@ public class PauseOp {
     }
     
     public func run() {
-        var text = String(format: "pausing for %.02f seconds\n", self.seconds)
-        var txtMsg = TextTag(with: text, mono: true)
+        let text = String(format: "pausing for %.02f seconds\n", self.seconds)
+        let txtMsg = TextTag(with: text, mono: true)
         self.actor.notify(txtMsg, debug:ScriptLogLevel.Wait)
         
         after(self.seconds) {
@@ -1113,7 +1113,7 @@ public class WaitforReOp : IWantStreamInfo {
     }
     
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
-        var groups = text[self.pattern].groups()
+        let groups = text[self.pattern].groups()
         return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
     }
     
@@ -1165,7 +1165,7 @@ public class WaitEvalOp : IWantStreamInfo {
         for n in nodes {
             if n.name == "prompt" {
                 let res = self.evaluator.eval(self.token.body, self.simplify)
-                println("eval res: \(res.info)")
+                print("eval res: \(res.info)")
                 if getBoolResult(res.result) {
                     return CheckStreamResult.Match(result: res.info)
                 }
@@ -1209,7 +1209,7 @@ public class ActionOp : IAction {
     
     public func stream(text:String, nodes:[Node]) -> CheckStreamResult {
         
-        if count(self.token.whenText) > 0 {
+        if self.token.whenText.characters.count > 0 {
             self.lastGroups = text[self.token.whenText].groups()
             return self.lastGroups?.count > 0
                 ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n")
@@ -1223,7 +1223,7 @@ public class ActionOp : IAction {
         
         var vars:[String:String] = [:]
         
-        for (index, g) in enumerate(self.lastGroups ?? []) {
+        for (index, g) in self.lastGroups?.enumerate() ?? [].enumerate() {
             vars["\(index)"] = g
         }
         
@@ -1240,7 +1240,7 @@ public class ActionOp : IAction {
     
     public func vars(vars: Dictionary<String, String>) -> CheckStreamResult {
         
-        if count(self.token.whenText) > 0 {
+        if self.token.whenText.characters.count > 0 {
             return CheckStreamResult.None
         }
         
@@ -1270,14 +1270,14 @@ public enum CheckStreamResult {
 }
 
 extension Array {
-    func forEach(doThis: (element: T) -> Void) {
+    func forEach(doThis: (element: Element) -> Void) {
         for e in self {
             doThis(element: e)
         }
     }
     
-    func find(includedElement: T -> Bool) -> Int? {
-        for (idx, element) in enumerate(self) {
+    func find(includedElement: Element -> Bool) -> Int? {
+        for (idx, element) in self.enumerate() {
             if includedElement(element) {
                 return idx
             }
@@ -1299,12 +1299,12 @@ extension String {
     }
     
     func substringFromIndex(index:Int) -> String {
-        return self.substringFromIndex(advance(self.startIndex, index))
+        return self.substringFromIndex(self.startIndex.advancedBy(index))
     }
     
     func indexOfCharacter(char: Character) -> Int? {
-        if let idx = find(self, char) {
-            return distance(self.startIndex, idx)
+        if let idx = self.characters.indexOf(char) {
+            return self.startIndex.distanceTo(idx)
         }
         return nil
     }
@@ -1316,12 +1316,12 @@ extension String {
         let matches = self["((?<!\\\\);)"].matchResults()
         
         var lastIndex = 0
-        var length = count(self)
+        let length = self.characters.count
         
         for match in matches {
             let matchLength = match.range.location - lastIndex
-            let start = advance(self.startIndex, lastIndex)
-            let end = advance(start, matchLength)
+            let start = self.startIndex.advancedBy(lastIndex)
+            let end = start.advancedBy(matchLength)
             var str = self.substringWithRange(Range<String.Index>(
                 start:start,
                 end: end))
@@ -1332,8 +1332,8 @@ extension String {
         }
         
         if lastIndex < length {
-            let start = advance(self.startIndex, lastIndex)
-            let end = advance(start, length - lastIndex)
+            let start = self.startIndex.advancedBy(lastIndex)
+            let end = start.advancedBy(length - lastIndex)
             var str = self.substringWithRange(Range<String.Index>(
                 start:start,
                 end: end))

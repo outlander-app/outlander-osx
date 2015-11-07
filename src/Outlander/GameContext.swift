@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class GameContext {
+public class GameContext : NSObject {
     
     class func newInstance() -> GameContext {
         return GameContext()
@@ -40,7 +40,7 @@ public class GameContext {
     public var globalVars:TSMutableDictionary
     public var events:EventAggregator
     
-    init() {
+    override init() {
         self.settings = AppSettings()
         self.pathProvider = AppPathProvider(settings: settings)
         self.highlights = OLMutableArray()

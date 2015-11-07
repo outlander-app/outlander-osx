@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class StormFrontTagStreamer {
+public class StormFrontTagStreamer : NSObject {
     
     private var tags:[TextTag]
     private var lastNode:Node?
@@ -74,18 +74,18 @@ public class StormFrontTagStreamer {
         return StormFrontTagStreamer()
     }
     
-    init() {
+    override init() {
         tags = []
     }
     
     public func stream(nodes:[Node]) -> [TextTag] {
-        var tags:[TextTag] = nodes
-            .map {
-                self.processNode($0)
+        let tags:[TextTag] = nodes
+            .map { (node) -> TextTag? in
+                self.processNode(node)
                 
-                self.emitProcessNode?($0)
+                self.emitProcessNode?(node)
                 
-                return self.tagForNode($0)
+                return self.tagForNode(node)
             }
             .filter { $0 != nil }
             .map { $0! }
@@ -129,8 +129,8 @@ public class StormFrontTagStreamer {
             emitSetting?("gametimeupdate", "\(today)")
             
         case _ where node.name == "roundtime":
-            var roundtime = Roundtime()
-            roundtime.time = NSDate(timeIntervalSince1970: NSTimeInterval(node.attr("value")!.toInt()!))
+            let roundtime = Roundtime()
+            roundtime.time = NSDate(timeIntervalSince1970: NSTimeInterval(Int(node.attr("value")!)!))
             emitRoundtime?(roundtime)
             
         case _ where node.name == "component":
@@ -166,7 +166,7 @@ public class StormFrontTagStreamer {
                 
                 emitSetting?(compId, value)
                 
-                if contains(roomTags, compId) {
+                if roomTags.contains(compId) {
                     emitRoom?()
                 }
                 
@@ -217,10 +217,10 @@ public class StormFrontTagStreamer {
             }
             
         case _ where node.name == "indicator":
-            var id = node.attr("id")?.substringFromIndex(4).lowercaseString ?? ""
-            var visible = node.attr("visible") == "y" ? "1" : "0"
+            let id = node.attr("id")?.substringFromIndex(4).lowercaseString ?? ""
+            let visible = node.attr("visible") == "y" ? "1" : "0"
             
-            if count(id) == 0 {
+            if id.characters.count == 0 {
                 return
             }
             
@@ -233,22 +233,22 @@ public class StormFrontTagStreamer {
             var found:[String] = []
             
             for dir in dirs {
-                var mapped = self.dirMap[dir.attr("value")!]!
+                let mapped = self.dirMap[dir.attr("value")!]!
                 found.append(mapped)
                 emitSetting?(mapped, "1")
             }
             
-            var notFound = dirMap.values.filter { !contains(found, $0) }
+            let notFound = dirMap.values.filter { !found.contains($0) }
             
             for dir in notFound {
                 emitSetting?(dir, "0")
             }
             
         case _ where node.name == "streamwindow":
-            var id = node.attr("id")
+            let id = node.attr("id")
             var subtitle = node.attr("subtitle")
-            if id == "main" && subtitle != nil && count(subtitle!) > 3 {
-                subtitle = subtitle!.substringFromIndex(advance(subtitle!.startIndex, 3))
+            if id == "main" && subtitle != nil && subtitle!.characters.count > 3 {
+                subtitle = subtitle!.substringFromIndex(subtitle!.startIndex.advancedBy(3))
                 if let t = subtitle {
                     emitSetting?("roomtitle", t)
                 }
@@ -263,7 +263,7 @@ public class StormFrontTagStreamer {
                 let value = vital.attr("value") ?? "0"
                 emitSetting?(name, value)
                
-                let send = Vitals(with: name, value: UInt16(value.toInt()!))
+                let send = Vitals(with: name, value: UInt16(Int(value)!))
                 emitVitals?(send)
             }
             
@@ -304,8 +304,8 @@ public class StormFrontTagStreamer {
                 }
             }
            
-            if lastNode?.name == "preset" && count(tag!.text) > 0 && tag!.text!.hasPrefix("  You also see") {
-                var text = tag!.text!.trimPrefix("  ")
+            if lastNode?.name == "preset" && tag!.text.characters.count > 0 && tag!.text!.hasPrefix("  You also see") {
+                let text = tag!.text!.trimPrefix("  ")
                 tag?.text = "\n\(text)"
                 tag?.preset = lastNode?.attr("id")
             }
@@ -316,7 +316,7 @@ public class StormFrontTagStreamer {
             }
             
         case _ where node.name == "eot":
-            if inStream || lastNode != nil && (contains(ignoredEot, lastNode!.name) || lastNode!.name == "prompt") {
+            if inStream || lastNode != nil && (ignoredEot.contains(lastNode!.name) || lastNode!.name == "prompt") {
                 break
             }
             tag = TextTag()
@@ -472,7 +472,7 @@ public class StormFrontTagStreamer {
             
             if child.name == "popbold" {
                 monsterCount++
-                if count(monsters) > 0 {
+                if monsters.characters.count > 0 {
                     monsters += "|"
                 }
                 monsters += lastNode?.value ?? ""
@@ -486,11 +486,11 @@ public class StormFrontTagStreamer {
     }
     
     public func parseExpBrief(compId:String, data:String, isNew:Bool) {
-        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
+        let expName = compId.substringFromIndex(compId.startIndex.advancedBy(4))
         
-        if count(data) == 0 {
+        if data.characters.count == 0 {
             
-            var rate = LearningRate.fromRate(0)
+            let rate = LearningRate.fromRate(0)
             let skill = SkillExp()
             skill.name = expName
             skill.ranks = NSDecimalNumber(double: 0.0)
@@ -506,17 +506,17 @@ public class StormFrontTagStreamer {
         
         let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s+\\[\\s?(\\d+)?.*";
         
-        var trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
       
-        var ranks = RegexMutable(trimmed)
+        let ranks = RegexMutable(trimmed)
         ranks[pattern] ~= "$1.$2"
         
-        var mindstate = RegexMutable(trimmed)
+        let mindstate = RegexMutable(trimmed)
         mindstate[pattern] ~= "$3"
         
-        var mindstateNumber = NSDecimalNumber(string: mindstate as String)
+        let mindstateNumber = NSDecimalNumber(string: mindstate as String)
         
-        var rate = LearningRate.fromRate(mindstateNumber.unsignedShortValue)
+        let rate = LearningRate.fromRate(mindstateNumber.unsignedShortValue)
         
         let skill = SkillExp()
         skill.name = expName
@@ -533,11 +533,11 @@ public class StormFrontTagStreamer {
     
     public func parseExp(compId:String, data:String, isNew:Bool) {
         
-        let expName = compId.substringFromIndex(advance(compId.startIndex, 4))
+        let expName = compId.substringFromIndex(compId.startIndex.advancedBy(4))
         
-        if count(data) == 0 {
+        if data.characters.count == 0 {
             
-            var rate = LearningRate.fromRate(0)
+            let rate = LearningRate.fromRate(0)
             let skill = SkillExp()
             skill.name = expName
             skill.ranks = NSDecimalNumber(double: 0.0)
@@ -553,12 +553,12 @@ public class StormFrontTagStreamer {
         
         let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s(\\w.*)?.*";
         
-        var trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
       
-        var ranks = RegexMutable(trimmed)
+        let ranks = RegexMutable(trimmed)
         ranks[pattern] ~= "$1.$2"
         
-        var mindstate = RegexMutable(trimmed)
+        let mindstate = RegexMutable(trimmed)
         mindstate[pattern] ~= "$3"
         
         var rate = LearningRate.fromDescription(mindstate as String)

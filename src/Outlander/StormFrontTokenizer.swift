@@ -12,7 +12,7 @@ import Foundation
     func didRecieveToken(token:Node)
 }
 
-@objc public class ParseContext : Printable {
+@objc public class ParseContext : NSObject {
     var nodes = [Node]()
     var consumedCharacters : String {
         let substring = __sourceString[__startIndex..<__currentIndex]
@@ -28,7 +28,7 @@ import Foundation
     
     var scanAdvanced = false
     
-    private var __marker : String.Generator {
+    private var __marker : IndexingGenerator<String.CharacterView> {
         didSet {
             scanAdvanced = true
         }
@@ -52,11 +52,11 @@ import Foundation
         __startIndex = withMarker
         __currentIndex = __startIndex
         __sourceString = forString
-        sourceLength = count(__sourceString)
+        sourceLength = __sourceString.characters.count
         
         current = eot
         
-        __marker = __sourceString.generate()
+        __marker = __sourceString.characters.generate()
         if let first = __marker.next() {
             current = first
             next = __marker.next()
@@ -73,7 +73,7 @@ import Foundation
         startPosition = currentPosition
     }
     
-    func createNode(_ children:[Node]? = nil) {
+    func createNode(children:[Node]? = nil) {
         let node = Node(tagName.lowercaseString, value, attributes)
         
         if let c = children {
@@ -120,7 +120,7 @@ import Foundation
         }
     }
     
-    public var description : String {
+    public override var description : String {
         return "Started at: \(startPosition), now at: \(currentPosition), having consumed \(consumedCharacters) and holding \(nodes)"
     }
 }
@@ -168,7 +168,7 @@ import Foundation
             && context.currentPosition == context.sourceLength - 1
             && context.current !=  "\r\n" {
             let length = context.sourceLength - 1
-            let data = context.__sourceString.substringFromIndex(advance(context.__sourceString.startIndex, length))
+            let data = context.__sourceString.substringFromIndex(context.__sourceString.startIndex.advancedBy(length))
             let token = Node("text", data, nil)
             context.nodes.append(token)
             context.advance()
@@ -180,7 +180,7 @@ import Foundation
                 return char == "<"
             })
             
-            if count(context.consumedCharacters) > 0 {
+            if context.consumedCharacters.characters.count > 0 {
                 let token = Node("text", context.consumedCharacters, nil)
                 context.nodes.append(token)
             }

@@ -39,8 +39,8 @@ class ExpUpdateHandlerTester : QuickSpec {
             
             it("handles parsing exp") {
                 
-                var one = "Shield Usage:    743 59% clear          (0/34)     Light Armor:    773 98% thoughtful          (4/34)"
-                var two = "Chain Armor:    689 44% clear          (0/34)      Brigandine:    667 17% clear          (0/34)"
+                let one = "Shield Usage:    743 59% clear          (0/34)     Light Armor:    773 98% thoughtful          (4/34)"
+                let two = "Chain Armor:    689 44% clear          (0/34)      Brigandine:    667 17% clear          (0/34)"
                 
                 self.handler.handle([], text: one, context: self.context)
                 self.handler.handle([], text: two, context: self.context)

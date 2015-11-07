@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class Node {
+public class Node : NSObject {
     var name:String
     var value:String?
     var attributes:[String: String]? {
@@ -48,7 +48,7 @@ public class Node {
         return self.attributes?[key]
     }
     
-    public var description : String {
+    override public var description : String {
         return "Node name=\(name) value=\(value) attrs=\(attributes)"
     }
     

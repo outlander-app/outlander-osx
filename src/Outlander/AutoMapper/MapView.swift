@@ -77,7 +77,7 @@ class MapView: NSView {
     func createTrackingArea() -> NSTrackingArea {
         return NSTrackingArea(
             rect: self.bounds,
-            options: NSTrackingAreaOptions.ActiveInKeyWindow|NSTrackingAreaOptions.MouseMoved,
+            options: [NSTrackingAreaOptions.ActiveInKeyWindow, NSTrackingAreaOptions.MouseMoved],
             owner: self,
             userInfo: nil)
     }
@@ -139,9 +139,9 @@ class MapView: NSView {
         if let roomId = id {
             
             if let room = self.mapZone?.roomWithId(roomId) {
-                var point = self.translatePosition(room.position)
+                let point = self.translatePosition(room.position)
                 
-                var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
+                let outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
                 return outlineRect
             }
         }
@@ -166,7 +166,7 @@ class MapView: NSView {
                 
                 self.defaultPathColor.setStroke()
                 
-                var hasDest = room.arcs.filter { count($0.destination) > 0 && !$0.hidden }
+                var hasDest = room.arcs.filter { $0.destination.characters.count > 0 && !$0.hidden }
                 
                 for dest in hasDest {
                     var arc = zone.roomWithId(dest.destination)!
@@ -247,14 +247,14 @@ class MapView: NSView {
     
     func translatePosition(point:MapPosition) -> CGPoint {
         
-        var x = point.x
-        var y = point.y
+        let x = point.x
+        let y = point.y
         
-        var centerX = self.rect!.origin.x
-        var centerY = self.rect!.origin.y;
+        let centerX = self.rect!.origin.x
+        let centerY = self.rect!.origin.y;
         
-        var resX = CGFloat(x) + centerX
-        var resY = CGFloat(y) + centerY
+        let resX = CGFloat(x) + centerX
+        let resY = CGFloat(y) + centerY
         
         return CGPoint(x: resX, y: resY)
     }

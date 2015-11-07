@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class WindowCommandHandler : CommandHandler {
+class WindowCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> WindowCommandHandler {
         return WindowCommandHandler()
@@ -23,11 +23,13 @@ class WindowCommandHandler : CommandHandler {
     
     func handle(command: String, withContext: GameContext) {
         
-        let commands = command.substringFromIndex(advance(command.startIndex, 7)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let commands = command
+            .substringFromIndex(command.startIndex.advancedBy(7))
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
         let groups = commands["(.*) (.*)"].groups()
         
-        if groups.count > 2 && contains(validCommands, groups[1]) {
+        if groups.count > 2 && validCommands.contains(groups[1]) {
             let action = groups[1].lowercaseString
             let window = groups[2].lowercaseString
             

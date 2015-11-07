@@ -33,7 +33,7 @@ class HighlightCellView: NSView {
     
     override func drawRect(dirtyRect: NSRect) {
         
-        var strokeWidth:CGFloat = 3.5
+        let strokeWidth:CGFloat = 3.5
         
         NSBezierPath.setDefaultLineWidth(strokeWidth)
         NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
@@ -46,8 +46,8 @@ class HighlightCellView: NSView {
         
         if self.selected {
             self.selectedColor.setStroke()
-            var border = NSBezierPath()
-            var borderRect = NSMakeRect(self.bounds.origin.x, self.bounds.origin.y, self.bounds.width-2, self.bounds.height)
+            let border = NSBezierPath()
+            let borderRect = NSMakeRect(self.bounds.origin.x, self.bounds.origin.y, self.bounds.width-2, self.bounds.height)
             border.appendBezierPathWithRect(borderRect)
             border.stroke()
         }

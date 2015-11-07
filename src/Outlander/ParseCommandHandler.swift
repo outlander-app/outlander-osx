@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-class ParseCommandHandler : CommandHandler {
+class ParseCommandHandler : NSObject, CommandHandler {
     
     class func newInstance() -> ParseCommandHandler {
         return ParseCommandHandler()
@@ -20,9 +20,11 @@ class ParseCommandHandler : CommandHandler {
     }
     
     func handle(command: String, withContext: GameContext) {
-        let text = command.substringFromIndex(advance(command.startIndex, 6)).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let text = command
+            .substringFromIndex(command.startIndex.advancedBy(6))
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         
-        var dict = ["text": text]
+        let dict = ["text": text]
         
         withContext.events.publish("ol:game-parse", data: dict)
     }

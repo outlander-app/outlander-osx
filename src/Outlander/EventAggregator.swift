@@ -14,19 +14,19 @@ public protocol ISubscriber {
 }
 
 @objc
-public class EventAggregator {
+public class EventAggregator : NSObject {
     
     private var handlers:[EventHandler]
     
-    init() {
+    override init() {
         handlers = []
     }
     
     public func subscribe(subscriber:ISubscriber, token:String) -> String {
         
-        var id = NSUUID().UUIDString
+        let id = NSUUID().UUIDString
         
-        var handler = EventHandler(
+        let handler = EventHandler(
             id: id,
             subscriber: subscriber,
             token: token
@@ -38,17 +38,17 @@ public class EventAggregator {
     }
     
     public func unSubscribe(id:String) {
-        var idx = self.handlers.find { $0.id == id }
+        let idx = self.handlers.find { $0.id == id }
         if let found = idx {
             self.handlers.removeAtIndex(found)
         }
     }
     
     public func unSubscribeListener(subscriber:ISubscriber) {
-        var res = self.handlers.filter { $0.subscriber === subscriber }
+        let res = self.handlers.filter { $0.subscriber === subscriber }
         
         for sub in res {
-            var idx = self.handlers.find { $0.id == sub.id }
+            let idx = self.handlers.find { $0.id == sub.id }
             if let found = idx {
                 self.handlers.removeAtIndex(found)
             }
@@ -60,7 +60,7 @@ public class EventAggregator {
     }
     
     public func publish(token:String, data:Dictionary<String, AnyObject>) {
-        var events = self.handlers.filter { $0.token == token }
+        let events = self.handlers.filter { $0.token == token }
         
         for ev in events {
             if let sub = ev.subscriber {
