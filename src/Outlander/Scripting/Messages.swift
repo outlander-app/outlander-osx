@@ -86,7 +86,7 @@ public class SendMessage : Message {
     
     public override init(_ message:String) {
         self.message = message
-        super.init("put")
+        super.init("send")
     }
     
     public override var description : String {

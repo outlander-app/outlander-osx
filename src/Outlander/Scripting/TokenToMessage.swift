@@ -51,12 +51,26 @@ public class TokenToMessage {
     var messageMap = TokenToMessageMap()
     
     init() {
+        messageMap.setTarget(self, action: TokenToMessage.action, tokenName: "action")
         messageMap.setTarget(self, action: TokenToMessage.debug, tokenName: "debug")
         messageMap.setTarget(self, action: TokenToMessage.debug, tokenName: "debuglevel")
         messageMap.setTarget(self, action: TokenToMessage.echo, tokenName: "echo")
         messageMap.setTarget(self, action: TokenToMessage.eval, tokenName: "eval")
+        messageMap.setTarget(self, action: TokenToMessage.exit, tokenName: "exit")
+        messageMap.setTarget(self, action: TokenToMessage.goto, tokenName: "goto")
+        messageMap.setTarget(self, action: TokenToMessage.matchre, tokenName: "matchre")
+        messageMap.setTarget(self, action: TokenToMessage.matchwait, tokenName: "matchwait")
+        messageMap.setTarget(self, action: TokenToMessage.math, tokenName: "math")
         messageMap.setTarget(self, action: TokenToMessage.pause, tokenName: "pause")
         messageMap.setTarget(self, action: TokenToMessage.put, tokenName: "put")
+        messageMap.setTarget(self, action: TokenToMessage.random, tokenName: "random")
+        messageMap.setTarget(self, action: TokenToMessage.save, tokenName: "save")
+        messageMap.setTarget(self, action: TokenToMessage.send, tokenName: "send")
+        messageMap.setTarget(self, action: TokenToMessage.unvar, tokenName: "unvar")
+    }
+    
+    public func action(context:ScriptContext, token:Token) -> Message? {
+        return ActionMessage(token as! ActionToken)
     }
     
     public func debug(context:ScriptContext, token:Token) -> Message? {
@@ -78,6 +92,55 @@ public class TokenToMessage {
         return EvalMessage(token as! EvalCommandToken)
     }
     
+    public func exit(context:ScriptContext, token:Token) -> Message? {
+        return ExitMessage()
+    }
+    
+    public func goto(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        var args = context.simplifyEach(cmd.body)
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            .componentsSeparatedByString(" ")
+        
+        let label = args.removeAtIndex(0)
+        let allArgs = args.joinWithSeparator(" ")
+        args.insert(allArgs, atIndex: 0)
+        
+        return GotoMessage(label, args)
+    }
+    
+    public func matchwait(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        let timeoutStr = cmd.bodyText()
+        return MatchwaitMessage(timeoutStr.toDouble())
+    }
+    
+    public func matchre(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        var txt = cmd.bodyText().componentsSeparatedByString(" ")
+        
+        let label = txt.removeAtIndex(0)
+        let value = txt.joinWithSeparator(" ")
+        return MatchReMessage(label, value)
+    }
+    
+    public func math(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        var variable = ""
+        var operation = ""
+        var number:Double = 0
+        
+        var evaled = context.simplify(cmd.bodyText()).componentsSeparatedByString(" ")
+        
+        if evaled.count > 2 {
+            variable = evaled[0]
+            operation = evaled[1]
+            number = evaled[2].toDouble() ?? 0
+        }
+        
+        return MathMessage(variable, operation, number)
+    }
+    
     public func pause(context:ScriptContext, token:Token) -> Message? {
         let cmd = token as! CommandToken
         let lengthStr = cmd.bodyText()
@@ -91,6 +154,42 @@ public class TokenToMessage {
                 .simplifyEach(cmd.body)
                 .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         )
+    }
+    
+    public func random(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        var nums = cmd.bodyText().componentsSeparatedByString(" ")
+        
+        var min = 0
+        var max = 1
+        
+        if nums.count > 1 {
+            min = Int(nums[0]) ?? 0
+            max = Int(nums[1]) ?? 1
+        }
+        
+        return RandomMessage(min, max)
+    }
+    
+    public func save(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        let txt = context.simplify(cmd.bodyText())
+        return SaveMessage(txt)
+    }
+    
+    public func send(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        return SendMessage(
+            context
+                .simplifyEach(cmd.body)
+                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        )
+    }
+    
+    public func unvar(context:ScriptContext, token:Token) -> Message? {
+        let cmd = token as! CommandToken
+        let txt = context.simplify(cmd.bodyText())
+        return UnVarMessage(txt)
     }
     
     public func toMessage(context:ScriptContext, token:Token) -> Message? {
@@ -115,45 +214,6 @@ public class TokenToMessage {
             let name = cmd.name
             switch name {
                 
-            case _ where name == "goto":
-                var args = context.simplifyEach(cmd.body)
-                    .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                    .componentsSeparatedByString(" ")
-                
-                let label = args.removeAtIndex(0)
-                let allArgs = args.joinWithSeparator(" ")
-                args.insert(allArgs, atIndex: 0)
-                
-                msg = GotoMessage(label, args)
-                
-                
-            case _ where name == "send":
-                msg = SendMessage(
-                    context
-                        .simplifyEach(cmd.body)
-                        .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                )
-                
-            case _ where name == "math":
-                
-                var variable = ""
-                var operation = ""
-                var number:Double = 0
-                
-                var evaled = context.simplify(cmd.bodyText()).componentsSeparatedByString(" ")
-                
-                if evaled.count > 2 {
-                    variable = evaled[0]
-                    operation = evaled[1]
-                    number = evaled[2].toDouble() ?? 0
-                }
-                
-                msg = MathMessage(variable, operation, number)
-                
-            case _ where cmd.name == "unvar":
-                let txt = context.simplify(cmd.bodyText())
-                msg = UnVarMessage(txt)
-                
             case _ where name == "var", _ where name == "setvariable":
                 
                 if cmd.body.count < 2 {
@@ -175,21 +235,6 @@ public class TokenToMessage {
                 let value = context.simplify(cmds)
                 
                 msg = VarMessage(identifier, value)
-                
-            case _ where name == "save":
-                let txt = context.simplify(cmd.bodyText())
-                msg = SaveMessage(txt)
-                
-            case _ where cmd.name == "matchwait":
-                let timeoutStr = cmd.bodyText()
-                msg = MatchwaitMessage(timeoutStr.toDouble())
-                
-            case _ where cmd.name == "matchre":
-                var txt = cmd.bodyText().componentsSeparatedByString(" ")
-                
-                let label = txt.removeAtIndex(0)
-                let value = txt.joinWithSeparator(" ")
-                msg = MatchReMessage(label, value)
                 
             case _ where cmd.name == "match":
                 var txt = cmd.bodyText().componentsSeparatedByString(" ")
@@ -222,19 +267,6 @@ public class TokenToMessage {
                 
                 msg = GosubMessage(label, args)
                 
-            case _ where name == "random":
-                var nums = cmd.bodyText().componentsSeparatedByString(" ")
-                
-                var min = 0
-                var max = 1
-                
-                if nums.count > 1 {
-                    min = Int(nums[0]) ?? 0
-                    max = Int(nums[1]) ?? 1
-                }
-                
-                msg = RandomMessage(min, max)
-                
             case _ where name == "return":
                 msg = ReturnMessage()
                 
@@ -247,12 +279,6 @@ public class TokenToMessage {
                 
             case _ where name == "shift":
                 msg = ShiftMessage()
-                
-            case _ where name == "exit":
-                msg = ExitMessage()
-                
-            case _ where name == "action":
-                msg = ActionMessage(cmd as! ActionToken)
                 
             default:
                 msg = UnknownMessage(token.description)

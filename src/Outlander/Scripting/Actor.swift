@@ -328,7 +328,7 @@ public class Script : IScript {
                 self.moveNext()
             }
         } else {
-            var tag = TextTag(with: "no gosub to return to!\n", mono: true)
+            let tag = TextTag(with: "no gosub to return to!\n", mono: true)
             
             tag.color = "#efefef"
             tag.backgroundColor = "#ff3300"
@@ -541,12 +541,12 @@ public class Script : IScript {
             self.handleGoto(gotoMsg)
         }
         else if let gosubMsg = msg as? GosubMessage {
-            var params = gosubMsg.params.count > 0 ? gosubMsg.params[0] : ""
+            let params = gosubMsg.params.count > 0 ? gosubMsg.params[0] : ""
             self.notify(TextTag(with: "gosub \(gosubMsg.label) \(params)\n", mono: true), debug:ScriptLogLevel.Gosubs)
             self.gotoLabel(gosubMsg.label, params:gosubMsg.params, previousLine: self.currentLine!, isGosub:true)
             self.moveNext()
         }
-        else if let returnMsg = msg as? ReturnMessage {
+        else if let _ = msg as? ReturnMessage {
             self.gosubReturn(true)
         }
         else if let varMsg = msg as? VarMessage {
@@ -561,7 +561,7 @@ public class Script : IScript {
             self.notify(TextTag(with: "waitforre \(waitForMsg.pattern)\n", mono: true), debug:ScriptLogLevel.Wait)
             self.addStreamWatcher( WaitforReOp(waitForMsg.pattern) )
         }
-        else if let waitMsg = msg as? WaitMessage {
+        else if let _ = msg as? WaitMessage {
             self.notify(TextTag(with: "wait\n", mono: true), debug:ScriptLogLevel.Wait)
             self.addStreamWatcher( WaitforPromptOp() )
         }
@@ -583,12 +583,12 @@ public class Script : IScript {
             self.notify(TextTag(with: "move \(moveMsg.direction)\n", mono: true), debug:ScriptLogLevel.Wait)
             self.sendCommand(moveMsg.direction)
         }
-        else if let moveMsg = msg as? NextRoomMessage {
+        else if let _ = msg as? NextRoomMessage {
             self.addStreamWatcher( NextRoomOp() )
             self.notify(TextTag(with: "nextroom\n", mono: true), debug:ScriptLogLevel.Wait)
         }
-        else if let shiftMsg = msg as? ShiftMessage {
-            var res = self.context!.shiftParamVars()
+        else if let _ = msg as? ShiftMessage {
+            let res = self.context!.shiftParamVars()
             if res {
                 self.notify(TextTag(with: "shift\n", mono: true), debug:ScriptLogLevel.Vars)
                 self.moveNext()
@@ -631,10 +631,10 @@ public class Script : IScript {
         else if let actionInfoMsg = msg as? ActionInfoMessage {
             self.notify(TextTag(with: "action - \(actionInfoMsg.msg)\n", mono: true), debug:ScriptLogLevel.Actions)
         }
-        else if let commentMsg = msg as? CommentMessage {
+        else if let _ = msg as? CommentMessage {
             self.moveNext()
         }
-        else if let exitMsg = msg as? ExitMessage {
+        else if let _ = msg as? ExitMessage {
             self.notify(TextTag(with: "exit\n", mono: true), debug:ScriptLogLevel.Gosubs)
             self.cancel()
             self.completed?(self.scriptName, "script exit")
