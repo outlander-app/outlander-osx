@@ -312,7 +312,7 @@ public class ScriptContext {
         return false
     }
     
-    private func getBoolResult(result:EvalResult?) -> Bool {
+    public func getBoolResult(result:EvalResult?) -> Bool {
         
         if result == nil {
             return false
@@ -468,7 +468,7 @@ class TokenSequence : SequenceType {
             token = self.tree[self.currentIdx]
         }
         
-        if let next = token as? WhiteSpaceToken {
+        if let _ = token as? WhiteSpaceToken {
             token = getNext()
         }
         

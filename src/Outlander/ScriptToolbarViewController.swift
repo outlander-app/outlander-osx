@@ -73,7 +73,6 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func updateButtonFrames() {
-        let viewCount = self.view.subviews.count
         let width = 125
         var count = 0
         for view in self.view.subviews {

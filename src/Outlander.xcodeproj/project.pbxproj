@@ -97,6 +97,7 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
@@ -530,6 +531,7 @@
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersViewController.swift; sourceTree = "<group>"; };
@@ -1305,6 +1307,7 @@
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
 				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
 				F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */,
+				F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1947,6 +1950,7 @@
 				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
+				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
 				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,

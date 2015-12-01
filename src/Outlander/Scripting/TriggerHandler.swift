@@ -57,11 +57,31 @@ class TriggerHandler : NSObject, ISubscriber {
                 if let groups = text[triggerText].groups() {
                     if groups.count > 0 {
                         let commandContext = CommandContext()
-                        commandContext.command = trigger.action
+                        commandContext.command = self.replaceWithGroups(trigger.action ?? "", groups:groups)
                         self.relay.sendCommand(commandContext)
                     }
                 }
             }
         });
+    }
+    
+    private func replaceWithGroups(input:String, groups:[String]) -> String {
+        var vars = [String:String]()
+        for (index, param) in groups.enumerate() {
+            vars["\(index)"] = param
+        }
+        
+        let mutable = RegexMutable(input)
+        
+        self.replace("\\$", target: mutable, dict: vars)
+        
+        return mutable as String
+    }
+    
+    private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
+        
+        for key in dict.keys {
+            target["\(prefix)\(key)"] ~= dict[key] ?? ""
+        }
     }
 }

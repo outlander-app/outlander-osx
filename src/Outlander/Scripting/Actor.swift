@@ -273,7 +273,7 @@ public class Script : IScript {
             
             for match in self.matchStack {
                 if match.isMatch(text) {
-                    var label = self.context!.simplify(match.label)
+                    let label = self.context!.simplify(match.label)
                     self.notify(TextTag(with: "match \(label)\n", mono: true), debug:ScriptLogLevel.Wait)
                     
                     if label.lowercaseString == "return" {

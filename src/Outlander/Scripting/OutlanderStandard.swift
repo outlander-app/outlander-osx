@@ -961,7 +961,7 @@ public class OutlanderScriptParser : StackParser {
         
         if manageActions.contains(actionText) {
             switch actionText {
-            case "on":
+            case _ where actionText == "on":
                 actionToken.actionToggle = ActionToggle.On
                 
             default:
@@ -1028,17 +1028,17 @@ public class BoolExpressionToken : Token, EvalToken {
         
         if lhNum != nil && rhNum != nil {
             switch characters {
-                case "!=":
+                case _ where characters == "!=":
                     result = lhNum != rhNum
-                case "<=":
+                case  _ where characters == "<=":
                     result = lhNum <= rhNum
-                case ">=":
+                case _ where characters == ">=":
                     result = lhNum >= rhNum
-                case ">":
+                case  _ where characters == ">":
                     result = lhNum > rhNum
-                case "<":
+                case _ where characters == "<":
                     result = lhNum < rhNum
-                case "==", "=":
+                case _ where characters == "==", _ where characters == "=":
                     result = lhNum == rhNum
                 default:
                     result = false
@@ -1046,17 +1046,17 @@ public class BoolExpressionToken : Token, EvalToken {
             
         } else {
             switch characters {
-                case "!=":
+                case _ where characters == "!=":
                     result = lh != rh
-                case "<=":
+                case _ where characters == "<=":
                     result = lh <= rh
-                case ">=":
+                case _ where characters == ">=":
                     result = lh >= rh
-                case ">":
+                case _ where characters == ">":
                     result = lh > rh
-                case "<":
+                case _ where characters == "<":
                     result = lh < rh
-                case "==", "=":
+                case _ where characters == "==", _ where characters == "=":
                     result = lh == rh
                 default:
                     result = false
@@ -1187,18 +1187,18 @@ public class ExpressionEvaluator : StackParser {
         }
         
         switch token.name {
-        case "whitespace":
+        case _ where token.name == "whitespace":
             return true
-        case "bool-operator":
+        case _ where token.name == "bool-operator":
             processOperator(token)
-        case "or-operator":
+        case _ where token.name == "or-operator":
             processEnd()
             orStack.append(token.characters)
-        case "open-paren":
+        case _ where token.name == "open-paren":
             return true
-        case "close-paren":
+        case _ where token.name == "close-paren":
             return true
-        case "end":
+        case _ where token.name == "end":
             processEnd()
         default:
             pushToken(token)

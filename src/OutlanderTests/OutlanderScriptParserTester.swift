@@ -129,22 +129,21 @@ class OutlanderScriptParserTester : QuickSpec {
             }
             
             it("math message - add") {
-                let script = "math %myvar add 2"
+                let script = "math myvar add 2"
                 let ctx:MessageTestContext<MathMessage> = self.buildMessage(script)
                 
                 expect(ctx.message.name).to(equal("math"))
-                expect(ctx.message.variable).to(equal("%myvar"))
+                expect(ctx.message.variable).to(equal("myvar"))
                 expect(ctx.message.operation).to(equal("add"))
                 expect(ctx.message.number).to(equal(2))
             }
             
-            
             it("math message - subtract") {
-                let script = "math %myvar subtract 3"
+                let script = "math myvar subtract 3"
                 let ctx:MessageTestContext<MathMessage> = self.buildMessage(script)
                 
                 expect(ctx.message.name).to(equal("math"))
-                expect(ctx.message.variable).to(equal("%myvar"))
+                expect(ctx.message.variable).to(equal("myvar"))
                 expect(ctx.message.operation).to(equal("subtract"))
                 expect(ctx.message.number).to(equal(3))
             }
