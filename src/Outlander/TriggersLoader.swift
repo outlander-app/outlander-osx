@@ -38,6 +38,8 @@ class TriggersLoader : NSObject {
             return
         }
         
+        self.context.triggers.removeAll()
+        
         let pattern = "^#trigger \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
         let target = SwiftRegex(target: data!, pattern: pattern, options: [NSRegularExpressionOptions.AnchorsMatchLines, NSRegularExpressionOptions.CaseInsensitive])
