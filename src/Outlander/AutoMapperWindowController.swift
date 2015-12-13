@@ -57,7 +57,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
         }
     }
     
-    func mapForId(id:String) -> MapInfo? {
+    func mapForZoneId(id:String) -> MapInfo? {
         return self.maps.filter { $0.id == id }.first
     }
     
@@ -71,7 +71,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     
     func indexOfMap(id:String) -> Int? {
         
-        if let info = mapForId(id) {
+        if let info = mapForZoneId(id) {
             return self.maps.indexOf(info)
         }
         
@@ -159,11 +159,19 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
+                
+                if changed.keys.first == "zoneid" {
+                    if let zoneId = changed["zoneid"] {
+                        
+                        if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
+                            self.setZoneFromMap(mapInfo)
+                        }
+                    }
+                }
+                
                 if changed.keys.first == "roomid" {
                     
-                    let roomId = changed["roomid"]
-                    
-                    if let id = roomId {
+                    if let id = changed["roomid"] {
                         if let room = self.context!.mapZone?.roomWithId(id) {
                             
                             if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
@@ -175,32 +183,15 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                                     
                                     if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
                                         
-                                        if let idx = self.mapsDataSource.indexOfMap(mapInfo.id) {
-                                            
-                                            mainThread {
-                                            
-                                                if self.mapsComboBox != nil {
-                                                    self.mapsComboBox.selectItemAtIndex(idx)
-                                                }
-                                                else {
-                                                    
-                                                    if mapInfo.zone != nil {
-                                                        
-                                                        self.renderMap(mapInfo.zone!)
-                                                        self.context?.mapZone = mapInfo.zone!
-                                                        
-                                                    } else {
-                                                        self.loadMapFromInfo(mapInfo)
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        self.setZoneFromMap(mapInfo)
                                     }
                                 }
                             } else {
                                 mainThread {
                                     if self.mapView != nil {
-                                        self.mapView.currentRoomId = roomId
+                                        self.mapView.mapLevel = room.position.z
+                                        self.mapView.currentRoomId = id
+                                        
                                         
 //                                        if let rect = self.mapView?.rectForRoom(roomId) {
 //                                            
@@ -226,6 +217,29 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+    
+    func setZoneFromMap(mapInfo:MapInfo) {
+        if let idx = self.mapsDataSource.indexOfMap(mapInfo.id) {
+            
+            mainThread {
+                
+                if self.mapsComboBox != nil && self.mapsComboBox.indexOfSelectedItem != idx {
+                    self.mapsComboBox.selectItemAtIndex(idx)
+                }
+                else {
+                    
+                    if mapInfo.zone != nil {
+                        
+                        self.renderMap(mapInfo.zone!)
+                        self.context?.mapZone = mapInfo.zone!
+                        
+                    } else {
+                        self.loadMapFromInfo(mapInfo)
                     }
                 }
             }
@@ -283,13 +297,13 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         
         let room = self.findCurrentRoom(zone)
         
-        if self.mapView == nil {
+        if self.mapView == nil || self.mapView.getCurrentZoneId() == zone.id {
             return
         }
         
         let rect = zone.mapSize(0, padding: 100.0)
         
-        self.mapLevel = 0
+        self.mapLevel = room?.position.z ?? 0
         
         self.mapView?.setFrameSize(rect.size)
         self.mapView?.currentRoomId = room != nil ? room!.id : ""

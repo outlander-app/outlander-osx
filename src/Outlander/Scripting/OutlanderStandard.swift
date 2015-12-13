@@ -276,6 +276,25 @@ public class DefEvalToken : FuncEvalToken {
     }
 }
 
+public class ContainsEvalToken : FuncEvalToken {
+    
+    public init(_ token:FuncToken) {
+        super.init("contains-func", token)
+    }
+    
+    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+        var lh = simplify(left)
+        var rh = simplify(right)
+        
+        lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        
+        let contains = lh.containsString(rh)
+        
+        return ExpressionEvalResult(result: EvalResult.Boolean(val: contains), info: "contains(\(lh), \(rh)) = \(contains)", matchGroups:nil)
+    }
+}
+
 public class FuncEvalToken : Token, EvalToken {
     
     var token:FuncToken
@@ -500,7 +519,7 @@ public class ScriptTokenizer : Tokenizer {
             OKStandard.whiteSpaces,
             OutlanderStandard.hexColor,
             IgnoreCaseKeywords(
-                validStrings: ["action", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
+                validStrings: ["action", "contains", "countsplit", "debug", "debuglevel", "def", "echo", "else", "eval", "exit", "gosub", "goto", "if", "include", "match", "matchre", "matchwait", "math", "move", "nextroom", "pause", "put", "random", "replace", "replacere", "return", "save", "shift", "send", "setvariable", "then", "unvar", "var", "wait", "waiteval", "waitfor", "waitforre", "when", "#alias", "#beep", "#echo", "#highlight", "#flash", "#goto", "#mapper", "#script", "#parse", "#var"])
                 .token("keyword").branch(
                     OutlanderStandard.word.token("variable"),
                     Exit().token("keyword")
@@ -544,7 +563,7 @@ public class OutlanderScriptParser : StackParser {
     var validLabelTokens = ["globalvar", "variable", "localvar", "word", "keyword", "integer", "punct"]
    
     var funcCommandStack = [String]()
-    var funcCommands = ["def", "countsplit", "matchre", "replace", "replacere"]
+    var funcCommands = ["contains", "countsplit", "def", "matchre", "replace", "replacere"]
     
     public func parseString(string:String) -> Array<Token> {
         var str = string
@@ -1046,6 +1065,10 @@ public class BoolExpressionToken : Token, EvalToken {
             
         } else {
             switch characters {
+                case _ where characters == "!":
+                    if let val = rh.toBool() {
+                        result = !val
+                    }
                 case _ where characters == "!=":
                     result = lh != rh
                 case _ where characters == "<=":
@@ -1061,6 +1084,10 @@ public class BoolExpressionToken : Token, EvalToken {
                 default:
                     result = false
             }
+        }
+        
+        if inverse {
+            result = !result
         }
         
         let text = "\(lh) \(characters) \(rh) (\(result))"
@@ -1096,6 +1123,10 @@ public class OrExpressionToken : Token, EvalToken {
                 result = lh && rh
             default:
                 result = false
+        }
+        
+        if inverse {
+            result = !result
         }
         
         let text = "\(lhRes.info) \(characters) \(rhRes.info) = \(result)"
@@ -1134,6 +1165,7 @@ public class ExpressionEvaluator : StackParser {
     
     var boolStack = [BoolExpressionToken]()
     var orStack = [String]()
+    var inverse = false
     
     public func eval(tokens:Array<Token>) -> ExpressionEvalResult {
         func simplify(tokens:Array<Token>)->String {
@@ -1152,13 +1184,21 @@ public class ExpressionEvaluator : StackParser {
     public func eval(tokens:Array<Token>, _ simplify:(Array<Token>)->String) -> ExpressionEvalResult {
         
         for token in tokens {
+            if token.name == "bool-operator" && token.characters == "!" {
+                inverse = true
+                continue
+            }
             parse(token)
         }
         
         parse(EndToken())
         
         if let evalToken = topToken() as? EvalToken {
-           return evalToken.eval(simplify)
+            var result = evalToken.eval(simplify)
+            if inverse {
+                result.result = EvalResult.Boolean(val: !getBoolResult(result.result))
+            }
+            return result
         }
         
         return ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:"", matchGroups:nil)
@@ -1168,7 +1208,10 @@ public class ExpressionEvaluator : StackParser {
         
         if let funcToken = token as? FuncToken {
             
-            if funcToken.name == "matchre" {
+            if funcToken.name == "contains" {
+                pushToken(ContainsEvalToken(funcToken))
+            }
+            else if funcToken.name == "matchre" {
                 pushToken(MatchReEvalToken(funcToken))
             } else if funcToken.name == "countsplit" {
                 pushToken(CountSplitEvalToken(funcToken))
@@ -1206,6 +1249,15 @@ public class ExpressionEvaluator : StackParser {
         }
         
         return true
+    }
+    
+    private func getBoolResult(result:EvalResult) -> Bool {
+        switch(result) {
+        case .Boolean(let x):
+            return x
+        default:
+            return false
+        }
     }
     
     func processOperator(token:Token) {

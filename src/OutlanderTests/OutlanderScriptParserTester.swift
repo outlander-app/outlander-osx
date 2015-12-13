@@ -128,6 +128,15 @@ class OutlanderScriptParserTester : QuickSpec {
                 expect(ctx.message.value).to(equal("(two|three|four)"))
             }
             
+            it("matchre with regex message") {
+                let script = "matchre Done %material (\\s.*)?%item"
+                let ctx:MessageTestContext<MatchReMessage> = self.buildMessage(script)
+                
+                expect(ctx.message.name).to(equal("match"))
+                expect(ctx.message.label).to(equal("Done"))
+                expect(ctx.message.value).to(equal("%material (\\s.*)?%item"))
+            }
+            
             it("math message - add") {
                 let script = "math myvar add 2"
                 let ctx:MessageTestContext<MathMessage> = self.buildMessage(script)

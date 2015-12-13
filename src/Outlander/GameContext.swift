@@ -28,8 +28,11 @@ public class GameContext : NSObject {
                 zoneId = self.mapZone!.id
             }
             
-            self.globalVars.setCacheObject(zoneId, forKey: "zoneid")
+            let lastId = self.globalVars.cacheObjectForKey("zoneid") as? String ?? ""
             
+            if zoneId != lastId {
+                self.globalVars.setCacheObject(zoneId, forKey: "zoneid")
+            }
         }
     }
     

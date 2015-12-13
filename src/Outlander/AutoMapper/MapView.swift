@@ -44,6 +44,9 @@ class MapView: NSView {
     
     var nodeHover:((MapNode?)->Void)?
     
+    func getCurrentZoneId() -> String? {
+        return self.mapZone?.id
+    }
     
     func setZone(mapZone:MapZone, rect:NSRect) {
         self.mapZone = mapZone

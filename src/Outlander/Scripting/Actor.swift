@@ -272,7 +272,7 @@ public class Script : IScript {
             var matched = false
             
             for match in self.matchStack {
-                if match.isMatch(text) {
+                if match.isMatch(text, self.context!.simplify) {
                     let label = self.context!.simplify(match.label)
                     self.notify(TextTag(with: "match \(label)\n", mono: true), debug:ScriptLogLevel.Wait)
                     

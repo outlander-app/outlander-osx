@@ -183,7 +183,7 @@ public protocol IMatch {
     var label:String {get}
     var groups:[String] {get}
     
-    func isMatch(text:String) -> Bool
+    func isMatch(text:String, _ simplify: (String)->String) -> Bool
 }
 
 public class MatchMessage : Message, IMatch {
@@ -198,7 +198,7 @@ public class MatchMessage : Message, IMatch {
         super.init("match")
     }
     
-    public func isMatch(text:String) -> Bool {
+    public func isMatch(text:String, _ simplify: (String)->String) -> Bool {
         return text.rangeOfString(value) != nil
     }
     
@@ -219,8 +219,9 @@ public class MatchReMessage : Message, IMatch {
         super.init("match")
     }
     
-    public func isMatch(text:String) -> Bool {
-        self.groups = text[value].groups()
+    public func isMatch(text:String, _ simplify: (String)->String) -> Bool {
+        let val = simplify(value)
+        self.groups = text[val].groups()
         return self.groups.count > 0
     }
     
@@ -348,24 +349,24 @@ public class MathMessage : Message {
         var result:Double = 0
         
         switch operation {
-        case "add":
+        case _ where operation == "add":
             result = start + self.number
             
-        case "subtract":
+        case _ where operation == "subtract":
             result = start - self.number
             
-        case "multiply":
+        case _ where operation == "multiply":
             result = start * self.number
             
-        case "divide":
+        case _ where operation == "divide":
             if self.number != 0 {
                 result = start / self.number
             }
             
-        case "modulus":
+        case _ where operation == "modulus":
             result = start % self.number
             
-        case "set":
+        case _ where operation == "set":
             result = self.number
             
         default:

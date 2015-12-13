@@ -59,4 +59,21 @@ extension String {
         
         return nsSt.stringByAppendingPathComponent(path)
     }
+    
+    func toBool() -> Bool? {
+        let trueValues = ["true", "yes", "1"]
+        let falseValues = ["false", "no", "0"]
+        
+        let lowerSelf = self.lowercaseString
+        
+        if trueValues.contains(lowerSelf) {
+            return true
+        }
+        
+        if falseValues.contains(lowerSelf) {
+            return false
+        }
+        
+        return nil
+    }
 }
