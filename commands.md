@@ -69,7 +69,7 @@ supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
 ```
 
 Script arguments become local variables:
-	
+
     %scriptname = myscript
 	%0 = one two "three four"
 	%1 = one
@@ -154,14 +154,14 @@ end:
 * math \<variable\> \<add|subtract|multiply|divide|modulus\> \<number\>
     * math my_count add 1
 * random \<min\> \<max\>
-    *  saves the result of the random to `%r` variable 
+    *  saves the result of the random to `%r` variable
 * save \<text\>
     * Saves the given text to `%s` variable
 * send \<text\>
     * sends the text after roundtime has completed or immediately if there is none
 * setvariable
 * unvar \<name\>
-    * removes the script variable 
+    * removes the script variable
 * var \<name\> \<value\>
 ```
 var weapon katana
@@ -169,13 +169,20 @@ echo %weapon # prints katana
 ```
 * wait
 * waiteval \<expression\>
-    * waiteval $mana >= 60 
+    * waiteval $mana >= 60
 * waitfor \<text\>
     * waits to continue until the given text
 * waitforre \<regex\>
     * waits for the given regex to match
 
 ### Misc
+* `contains` function - can be used to determine if a value contains another value
+```
+if !contains("$lefthand", "%tool") then
+{
+  gosub get.tool %tool
+}
+```
 * `matchre` function - can be used to evaluate to true/false within an `if` expression
 ```
 if matchre("$roomobjs", "((which|that) appears dead|\(dead\))") then {
