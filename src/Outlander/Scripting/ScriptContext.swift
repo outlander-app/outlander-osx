@@ -355,7 +355,9 @@ public class ScriptContext {
     
     private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
         
-        for key in dict.keys {
+        let sortedKeys = dict.keys.sort({ $0.0.characters.count > $0.1.characters.count })
+        
+        for key in sortedKeys {
             target["\(prefix)\(key)"] ~= dict[key] ?? ""
         }
     }
@@ -520,7 +522,7 @@ class BranchTokenSequence : SequenceType {
             token = self.token.body[self.currentIndex]
         }
         
-        if let next = token as? WhiteSpaceToken {
+        if let _ = token as? WhiteSpaceToken {
             token = getNext()
         }
         

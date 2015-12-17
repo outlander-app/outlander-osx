@@ -227,8 +227,11 @@ public class MatchReEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        var lh = simplify(left)
-        var rh = simplify(right)
+        
+        super.eval(simplify)
+        
+        var lh = stack.count > 0 ? simplify(stack[0]) : ""
+        var rh = stack.count > 1 ? simplify(stack[1]) : ""
         
         lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
@@ -250,8 +253,11 @@ public class CountSplitEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        var lh = simplify(left)
-        var rh = simplify(right)
+        
+        super.eval(simplify)
+        
+        var lh = stack.count > 0 ? simplify(stack[0]) : ""
+        var rh = stack.count > 1 ? simplify(stack[1]) : ""
         
         lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
@@ -269,7 +275,9 @@ public class DefEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        let lh = simplify(left)
+        super.eval(simplify)
+        
+        let lh = stack.count > 0 ? simplify(stack[0]) : ""
         let res = false
         
         return ExpressionEvalResult(result: EvalResult.Boolean(val: res), info: "def(\(lh)) = \(res)", matchGroups:nil)
@@ -283,8 +291,11 @@ public class ContainsEvalToken : FuncEvalToken {
     }
     
     override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        var lh = simplify(left)
-        var rh = simplify(right)
+        
+        super.eval(simplify)
+        
+        var lh = stack.count > 0 ? simplify(stack[0]) : ""
+        var rh = stack.count > 1 ? simplify(stack[1]) : ""
         
         lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
@@ -295,33 +306,59 @@ public class ContainsEvalToken : FuncEvalToken {
     }
 }
 
+public class ReplaceReEvalToken : FuncEvalToken {
+    
+    public init(_ token:FuncToken) {
+        super.init("replacere-func", token)
+    }
+    
+    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+        
+        super.eval(simplify)
+        
+        var lh = stack.count > 0 ? simplify(stack[0]) : ""
+        var rh = stack.count > 1 ? simplify(stack[1]) : ""
+        let replace = stack.count > 2 ? simplify(stack[2]) : ""
+        
+        lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        
+        let mutable = RegexMutable(lh)
+        mutable[rh] ~= replace
+        
+        let result = String(mutable)
+        
+        return ExpressionEvalResult(
+            result: EvalResult.Str(val: result),
+            info: "replacere(\(lh), \(rh), \(replace)) = \(result)",
+            matchGroups:nil
+        )
+    }
+}
+
 public class FuncEvalToken : Token, EvalToken {
     
     var token:FuncToken
-    var left:[Token]
-    var right:[Token]
+    var stack:[[Token]] = []
     
     public init(_ name:String, _ token:FuncToken) {
         self.token = token
-        self.left = []
-        self.right = []
         
         super.init(name: name, withCharacters: "")
         
-        var appendLeft = true
+        var current:[Token] = []
         
         for t in token.body {
             if t.name == "punct" && t.characters == "," {
-                appendLeft = false
+                stack.append(current)
+                current = []
                 continue
             }
             
-            if appendLeft {
-                left.append(t)
-            } else {
-                right.append(t)
-            }
+            current.append(t)
         }
+        
+        stack.append(current)
     }
     
     public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
@@ -1211,11 +1248,16 @@ public class ExpressionEvaluator : StackParser {
             if funcToken.name == "contains" {
                 pushToken(ContainsEvalToken(funcToken))
             }
+            else if funcToken.name == "replacere" {
+                pushToken(ReplaceReEvalToken(funcToken))
+            }
             else if funcToken.name == "matchre" {
                 pushToken(MatchReEvalToken(funcToken))
-            } else if funcToken.name == "countsplit" {
+            }
+            else if funcToken.name == "countsplit" {
                 pushToken(CountSplitEvalToken(funcToken))
-            } else if funcToken.name == "def" {
+            }
+            else if funcToken.name == "def" {
                 pushToken(DefEvalToken(funcToken))
             }
             

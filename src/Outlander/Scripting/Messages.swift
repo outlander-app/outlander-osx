@@ -199,7 +199,7 @@ public class MatchMessage : Message, IMatch {
     }
     
     public func isMatch(text:String, _ simplify: (String)->String) -> Bool {
-        return text.rangeOfString(value) != nil
+        return text.rangeOfString(simplify(value)) != nil
     }
     
     public override var description : String {

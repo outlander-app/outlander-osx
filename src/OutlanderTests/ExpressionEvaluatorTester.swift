@@ -64,6 +64,59 @@ class ExpressionEvaluatorTester : QuickSpec {
                 
                 expect(boolResult).to(equal(true))
             }
+            
+            it("properly replaces lefthandnoun") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [
+                        "lefthand":"icesteel tongs",
+                        "lefthandnoun":"tongs"
+                    ]
+                    return res
+                }
+                
+                let script = "put $lefthandnoun"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("put tongs"))
+            }
+            
+            it("eval replacere") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "eval movement replacere(\"%movement\", \"^(swim|web|muck|rt|wait|slow|script|room) \", \"\")"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("movement", value: "rt north")
+                
+                let evaluator = ExpressionEvaluator()
+                let evalResult = evaluator.eval(tokens, context.simplify)
+                let result = self.getStringResult(evalResult.result)
+                
+                expect(result).to(equal("north"))
+            }
+        }
+    }
+    
+    private func getStringResult(result:EvalResult) -> String {
+        switch(result) {
+        case .Str(let x):
+            return x
+        default:
+            return ""
         }
     }
 }
