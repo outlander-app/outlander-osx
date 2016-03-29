@@ -69,6 +69,7 @@ public class StormFrontTagStreamer : NSObject {
     public var emitProcessNode : ((Node)->Void)?
     public var emitSpell : ((String)->Void)?
     public var emitVitals : ((Vitals)->Void)?
+    public var emitClearStream : ((String)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -253,6 +254,11 @@ public class StormFrontTagStreamer : NSObject {
                     emitSetting?("roomtitle", t)
                 }
             }
+        
+        case _ where node.name == "clearstream":
+            if let id = node.attr("id") {
+                emitClearStream?(id)
+            }
             
         case _ where node.name == "dialogdata" && node.attr("id") == "minivitals":
             let vitals = node.children
@@ -263,7 +269,7 @@ public class StormFrontTagStreamer : NSObject {
                 let value = vital.attr("value") ?? "0"
                 emitSetting?(name, value)
                
-                let send = Vitals(with: name, value: UInt16(Int(value)!))
+                let send = Vitals(name, value: UInt16(Int(value)!))
                 emitVitals?(send)
             }
             
@@ -291,7 +297,7 @@ public class StormFrontTagStreamer : NSObject {
             isSetup = false
             
         case _ where node.name == "text":
-            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc" || lastStreamId == "percWindow") {
+            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
                 break
             }
             

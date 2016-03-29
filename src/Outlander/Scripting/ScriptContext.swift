@@ -112,7 +112,20 @@ public class ScriptContext {
             self.paramVars["\(index+1)"] = param
         }
         
-        self.variables["argcount"] = "\(self.paramVars.count)"
+        let originalCount = self.params.count
+        
+        let maxArgs = 9
+        
+        let diff = maxArgs - originalCount
+        
+        if(diff > 0) {
+            let start = maxArgs - diff
+            for index in start..<(maxArgs) {
+                self.paramVars["\(index+1)"] = ""
+            }
+        }
+        
+        self.variables["argcount"] = "\(originalCount)"
     }
     
     public func varsForDisplay() -> [String] {
@@ -269,7 +282,7 @@ public class ScriptContext {
     
     private func evalEvalCommand(token:EvalCommandToken) {
         let evaluator = ExpressionEvaluator()
-        token.lastResult = evaluator.eval(token.expression, self.simplify)
+        token.lastResult = evaluator.eval(self, token.expression, self.simplify)
     }
     
     private func evalIf(token:BranchToken) -> Bool {
@@ -292,14 +305,14 @@ public class ScriptContext {
         let evaluator = ExpressionEvaluator()
         
         if token.name == "if" && token.expression.count > 0 {
-            let res = evaluator.eval(token.expression, self.simplify)
+            let res = evaluator.eval(self, token.expression, self.simplify)
             token.lastResult = res
             lastTopIfResult = getBoolResult(res.result)
             return lastTopIfResult
         } else if token.name == "elseif" && !lastTopIfResult && lastBranchToken != nil && !lastBranchResult {
            
             if token.expression.count > 0 {
-                let res = evaluator.eval(token.expression, self.simplify)
+                let res = evaluator.eval(self, token.expression, self.simplify)
                 token.lastResult = res
                 return getBoolResult(res.result)
             }

@@ -1487,7 +1487,7 @@
 		F9CF925F1890832800449548 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftMigration = 0710;
+				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Joe McBride";

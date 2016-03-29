@@ -161,7 +161,7 @@ class MapView: NSView {
             NSBezierPath.setDefaultLineWidth(strokeWidth)
             NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
             
-            var rooms = zone.rooms.filter { $0.position.z == self.mapLevel }
+            let rooms = zone.rooms.filter { $0.position.z == self.mapLevel }
             
             for room in rooms {
                 
@@ -169,10 +169,10 @@ class MapView: NSView {
                 
                 self.defaultPathColor.setStroke()
                 
-                var hasDest = room.arcs.filter { $0.destination.characters.count > 0 && !$0.hidden }
+                let hasDest = room.arcs.filter { $0.destination.characters.count > 0 && !$0.hidden }
                 
                 for dest in hasDest {
-                    var arc = zone.roomWithId(dest.destination)!
+                    let arc = zone.roomWithId(dest.destination)!
                     let arcPoint = self.translatePosition(arc.position)
                     
                     NSBezierPath.strokeLineFromPoint(point, toPoint: arcPoint)
@@ -198,12 +198,12 @@ class MapView: NSView {
                         self.defaultPathColor.setStroke()
                     }
 
-                    var outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
+                    let outlineRect = NSMakeRect(point.x-(self.roomSize/2), point.y-(self.roomSize/2), self.roomSize, self.roomSize)
                     
                     let loc = NSValue(rect: outlineRect)
                     self.nodeLookup[loc] = room.id
                    
-                    var border = NSBezierPath()
+                    let border = NSBezierPath()
                     border.appendBezierPathWithRect(outlineRect)
                     border.stroke()
                     
@@ -239,7 +239,7 @@ class MapView: NSView {
                 
                 let point = self.translatePosition(label.position)
                 
-                var storage = NSTextStorage(string: label.text)
+                let storage = NSTextStorage(string: label.text)
                 storage.drawAtPoint(point)
             }
             

@@ -15,7 +15,7 @@ class WindowCommandHandler : NSObject, CommandHandler {
         return WindowCommandHandler()
     }
     
-    let validCommands = ["add", "show", "hide", "list"]
+    let validCommands = ["add", "clear", "hide", "list", "show"]
     
     func canHandle(command: String) -> Bool {
         return command.lowercaseString.hasPrefix("#window")

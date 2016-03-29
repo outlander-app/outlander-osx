@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OysterKit
 import Quick
 import Nimble
 
@@ -34,7 +35,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                 
                 let evaluator = ExpressionEvaluator()
                 let iftoken = tokens[0] as! IfToken
-                let result = evaluator.eval(iftoken.expression, context.simplify)
+                let result = evaluator.eval(context, iftoken.expression, context.simplify)
                 
                 let boolResult = context.getBoolResult(result.result)
                 
@@ -58,7 +59,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                 
                 let evaluator = ExpressionEvaluator()
                 let iftoken = tokens[0] as! IfToken
-                let result = evaluator.eval(iftoken.expression, context.simplify)
+                let result = evaluator.eval(context, iftoken.expression, context.simplify)
                 
                 let boolResult = context.getBoolResult(result.result)
                 
@@ -103,10 +104,34 @@ class ExpressionEvaluatorTester : QuickSpec {
                 context.setVariable("movement", value: "rt north")
                 
                 let evaluator = ExpressionEvaluator()
-                let evalResult = evaluator.eval(tokens, context.simplify)
+                let evalResult = evaluator.eval(context, tokens, context.simplify)
                 let result = self.getStringResult(evalResult.result)
                 
                 expect(result).to(equal("north"))
+            }
+            
+            it("eval replacere") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "eval type replacere(\"%movement\", \"^(swim|web|muck|rt|wait|slow|script|room) \", \"\")"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("movement", value: "rt north")
+                
+                let evalTokens:[Token] = [tokens[0]]
+                
+                let evaluator = ExpressionEvaluator()
+                evaluator.eval(context, evalTokens, context.simplify)
+                
+                expect(context.actionVars.count).to(equal(2))
+                expect(context.actionVars["1"]).to(equal("rt"))
             }
         }
     }

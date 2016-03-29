@@ -11,12 +11,14 @@
 #import "Alias.h"
 #import "NSString+Categories.h"
 #import "Outlander-Swift.h"
+#import <PEGKit/PEGKit.h>
 
 @implementation VariableReplacer
 
 - (NSString *)replace:(NSString *)data withContext:(GameContext *)context {
     data = [self replaceGlobalVar:data withContext:context];
     data = [self replaceAlias:data withContext:context];
+    data = [self replaceGlobalVar:data withContext:context];
     return data;
 }
 
@@ -26,13 +28,45 @@
 
 - (NSString *)replaceAlias:(NSString *)data withContext:(GameContext *)context {
     
-    NSMutableString *str = [data mutableCopy];
+    __block NSString *str = data;
     
     [context.aliases enumerateObjectsUsingBlock:^(Alias *obj, NSUInteger idx, BOOL *stop) {
         
-        NSString *pattern = [NSString stringWithFormat:@"\\b%@\\b", obj.pattern];
+        NSString *pattern = [NSString stringWithFormat:@"^%@\\b", obj.pattern];
         
-        [self replace:str withTemplate:obj.replace andPattern:pattern];
+        if ([str matchesForPattern:pattern].count == 0) {
+            return;
+        }
+        
+        NSRange range = [str rangeOfString:@" "];
+        NSString *allArgs = @"";
+        
+        if(range.location != NSNotFound) {
+            allArgs = [str substringFromIndex:range.location + 1];
+        }
+        
+        __block NSMutableArray *tokens = [[NSMutableArray alloc] init];
+        
+        PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:allArgs];
+        [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
+            
+            if(tok.tokenType != PKTokenTypeSymbol) {
+                NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+                [tokens addObject:val];
+            }
+        }];
+        
+        [tokens insertObject:allArgs atIndex:0];
+        
+        str = obj.replace;
+        
+        [tokens enumerateObjectsUsingBlock:^(NSString * _Nonnull token, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSString *key = [NSString stringWithFormat:@"$%lu", (unsigned long)idx];
+            NSString *val = idx > 0 && [token containsString:@" "] ? [NSString stringWithFormat:@"\"%@\"", token] : token;
+            str = [str stringByReplacingOccurrencesOfString: key
+                                                 withString:val];
+        }];
     }];
     
     return str;

@@ -25,7 +25,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         
         self.context = context
         self.notifier = notifier
-        self.scriptLoader = ScriptLoader(with: self.context, and: LocalFileSystem())
+        self.scriptLoader = ScriptLoader(self.context, and: LocalFileSystem())
         self.scripts = []
         
         super.init()
@@ -265,7 +265,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
         
         if self.scripts.count == 0 {
-            self.notifier.notify(TextTag(with: "\n[No scripts current running.]\n\n", mono: true))
+            self.notifier.notify(TextTag("\n[No scripts current running.]\n\n", mono: true))
         }
     }
     

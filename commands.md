@@ -42,15 +42,16 @@ Yes - the Genie map files have several commands that are not yet fully supported
         * vars will display the current list of local script variables.
 * `#parse <text>`
 	* sends the text to be parsed by the scripting engine, as if sent by the game
-* `#window add/show/hide <name>`
+* `#window add/show/hide/clear <name>`
   * ex: `#window add log`
   * ex: `#window hide log`
   * `#window list all` will show all window ids and locations
+  * `#window clear log` will clear all contents of the window
 
 ## Scripting
 
 #### Example Scripts
-* [hunt.cmd] (https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script
+* [hunt.cmd](https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script
 ```
 supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
 

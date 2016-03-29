@@ -486,9 +486,9 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(0))
-//                expect(self.tags[0].text).to(equal("bear strength"))
-//                expect(self.tags[0].targetWindow).to(equal("percWindow"))
+                //expect(self.tags.count).to(equal(0))
+                expect(self.tags[0].text).to(equal("bear strength"))
+                expect(self.tags[0].targetWindow).to(equal("percWindow"))
             }
         })
     }

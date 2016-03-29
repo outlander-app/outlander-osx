@@ -38,26 +38,48 @@ describe(@"Variable Replacer", ^{
                 [[result should] equal:@"load arrows"];
             });
             
-            it(@"should replace alias within other text", ^{
+            it(@"should replace alias variables", ^{
                 Alias *al = [[Alias alloc] init];
-                al.pattern = @"l2";
-                al.replace = @"load arrows";
+                al.pattern = @"fire";
+                al.replace = @"snipe $0";
                 [_context.aliases addObject:al];
                 
-                NSString *result = [_replacer replace:@"do something l2 with something else" withContext:_context];
+                NSString *result = [_replacer replace:@"fire one two" withContext:_context];
                 
-                [[result should] equal:@"do something load arrows with something else"];
+                [[result should] equal:@"snipe one two"];
             });
             
-            it(@"should replace alias within word boundry", ^{
+            it(@"should replace alias variables 2", ^{
                 Alias *al = [[Alias alloc] init];
-                al.pattern = @"l2";
-                al.replace = @"load arrows";
+                al.pattern = @"fire";
+                al.replace = @"aim $1;snipe $2;look $3";
                 [_context.aliases addObject:al];
                 
-                NSString *result = [_replacer replace:@"do al2a l2" withContext:_context];
+                NSString *result = [_replacer replace:@"fire one \"two three\" four" withContext:_context];
                 
-                [[result should] equal:@"do al2a load arrows"];
+                [[result should] equal:@"aim one;snipe \"two three\";look four"];
+            });
+            
+            it(@"should replace alias variables 3", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"fire";
+                al.replace = @"aim $1;snipe $2";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"fire one two" withContext:_context];
+                
+                [[result should] equal:@"aim one;snipe two"];
+            });
+            
+            it(@"should not match partial", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"fir";
+                al.replace = @"aim $1;snipe $2";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"fire one two" withContext:_context];
+                
+                [[result should] equal:@"fire one two"];
             });
         });
         

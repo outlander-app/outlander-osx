@@ -130,8 +130,11 @@
 
 - (void)processWindowCommand:(NSString *)action target:(NSString *)window {
     NSLog(@"#window command: %@ %@", action, window);
-    
-    if ([action isEqualToString:@"add"]) {
+    if ([action isEqualToString:@"clear"]) {
+        
+        [self clearWindow:window];
+        
+    } else if ([action isEqualToString:@"add"]) {
         
         if(![self hasWindow:window]) {
             WindowData *newWindow = [[WindowData alloc]
@@ -139,6 +142,9 @@
                                          atLoc:NSMakeRect(0, 0, 200, 200)
                                          andTimestamp:NO];
             [self addWindow:newWindow];
+            
+        } else if ([self hasWindow:window]) {
+            [self showWindow:window];
         }
         
     } else if ([action isEqualToString:@"show"]) {
@@ -348,6 +354,11 @@
     TextViewController *controller = [_windows cacheObjectForKey:window];
     [controller removeView];
     controller.isVisible = NO;
+}
+
+- (void)clearWindow:(NSString *)window {
+    TextViewController *controller = [_windows cacheObjectForKey:window];
+    [controller clear];
 }
 
 - (void)command:(NSString *)command {

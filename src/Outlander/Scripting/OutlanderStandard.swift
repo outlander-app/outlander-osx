@@ -226,9 +226,9 @@ public class MatchReEvalToken : FuncEvalToken {
         super.init("matchre-func", token)
     }
     
-    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    override public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         
-        super.eval(simplify)
+        super.eval(context, simplify: simplify)
         
         var lh = stack.count > 0 ? simplify(stack[0]) : ""
         var rh = stack.count > 1 ? simplify(stack[1]) : ""
@@ -252,9 +252,9 @@ public class CountSplitEvalToken : FuncEvalToken {
         super.init("countsplit-func", token)
     }
     
-    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    override public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         
-        super.eval(simplify)
+        super.eval(context, simplify: simplify)
         
         var lh = stack.count > 0 ? simplify(stack[0]) : ""
         var rh = stack.count > 1 ? simplify(stack[1]) : ""
@@ -274,8 +274,8 @@ public class DefEvalToken : FuncEvalToken {
         super.init("def-func", token)
     }
     
-    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
-        super.eval(simplify)
+    override public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+        super.eval(context, simplify: simplify)
         
         let lh = stack.count > 0 ? simplify(stack[0]) : ""
         let res = false
@@ -290,9 +290,9 @@ public class ContainsEvalToken : FuncEvalToken {
         super.init("contains-func", token)
     }
     
-    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    override public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         
-        super.eval(simplify)
+        super.eval(context, simplify: simplify)
         
         var lh = stack.count > 0 ? simplify(stack[0]) : ""
         var rh = stack.count > 1 ? simplify(stack[1]) : ""
@@ -312,19 +312,28 @@ public class ReplaceReEvalToken : FuncEvalToken {
         super.init("replacere-func", token)
     }
     
-    override public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    override public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         
-        super.eval(simplify)
+        super.eval(context, simplify: simplify)
         
         var lh = stack.count > 0 ? simplify(stack[0]) : ""
         var rh = stack.count > 1 ? simplify(stack[1]) : ""
-        let replace = stack.count > 2 ? simplify(stack[2]) : ""
+        var replace = stack.count > 2 ? context.simplifyEach(stack[2]) : ""
         
         lh = lh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         rh = rh.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
+        replace = replace.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\"'"))
         
         let mutable = RegexMutable(lh)
+        let groups = mutable[rh].groups()
         mutable[rh] ~= replace
+        
+        var vars:[String:String] = [:]
+        for (index, g) in groups.enumerate() ?? [].enumerate() {
+            vars["\(index)"] = g
+        }
+        
+//        context.actionVars = vars
         
         let result = String(mutable)
         
@@ -355,13 +364,17 @@ public class FuncEvalToken : Token, EvalToken {
                 continue
             }
             
+            if current.count == 0 && t.name == "whitespace" {
+                continue
+            }
+            
             current.append(t)
         }
         
         stack.append(current)
     }
     
-    public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         return ExpressionEvalResult(result: EvalResult.Boolean(val: false), info: "\(self.name) - not implemented", matchGroups:nil)
     }
 }
@@ -1059,7 +1072,7 @@ public class OutlanderScriptParser : StackParser {
 }
 
 public protocol EvalToken {
-    func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult
+    func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult
 }
 
 public class BoolExpressionToken : Token, EvalToken {
@@ -1074,7 +1087,7 @@ public class BoolExpressionToken : Token, EvalToken {
         super.init(name:"bool-expression", withCharacters:withOperator)
     }
     
-    public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    public func eval(context: ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         var result = false
         let lh = simplify(left)
         let rh = simplify(right)
@@ -1145,10 +1158,10 @@ public class OrExpressionToken : Token, EvalToken {
         super.init(name:"or-expression", withCharacters:withOperator)
     }
     
-    public func eval(simplify: (Array<Token>)->String) -> ExpressionEvalResult {
+    public func eval(context:ScriptContext, simplify: (Array<Token>)->String) -> ExpressionEvalResult {
         var result = false
-        let lhRes = left.eval(simplify)
-        let rhRes = right.eval(simplify)
+        let lhRes = left.eval(context, simplify: simplify)
+        let rhRes = right.eval(context, simplify: simplify)
         
         let lh = getBoolResult(lhRes.result)
         let rh = getBoolResult(rhRes.result)
@@ -1204,7 +1217,7 @@ public class ExpressionEvaluator : StackParser {
     var orStack = [String]()
     var inverse = false
     
-    public func eval(tokens:Array<Token>) -> ExpressionEvalResult {
+    public func eval(context:ScriptContext, tokens:Array<Token>) -> ExpressionEvalResult {
         func simplify(tokens:Array<Token>)->String {
             var text = ""
             
@@ -1215,10 +1228,10 @@ public class ExpressionEvaluator : StackParser {
             return text
         }
         
-        return self.eval(tokens, simplify)
+        return self.eval(context, tokens, simplify)
     }
     
-    public func eval(tokens:Array<Token>, _ simplify:(Array<Token>)->String) -> ExpressionEvalResult {
+    public func eval(context:ScriptContext, _ tokens:Array<Token>, _ simplify:(Array<Token>)->String) -> ExpressionEvalResult {
         
         for token in tokens {
             if token.name == "bool-operator" && token.characters == "!" {
@@ -1231,7 +1244,7 @@ public class ExpressionEvaluator : StackParser {
         parse(EndToken())
         
         if let evalToken = topToken() as? EvalToken {
-            var result = evalToken.eval(simplify)
+            var result = evalToken.eval(context, simplify: simplify)
             if inverse {
                 result.result = EvalResult.Boolean(val: !getBoolResult(result.result))
             }

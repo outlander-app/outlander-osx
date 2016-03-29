@@ -82,6 +82,13 @@
         [_gameParser.spell sendNext:spell];
     };
     
+    _tagStreamer.emitClearStream = ^(NSString *window){
+        CommandContext *ctx = [[CommandContext alloc] init];
+        ctx.command = [NSString stringWithFormat:@"#window clear %@", window];
+        
+        [_commandRelay sendCommand:ctx];
+    };
+    
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
     _directions = _gameParser.directions;
