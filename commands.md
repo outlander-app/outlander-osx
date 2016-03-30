@@ -45,7 +45,31 @@ Yes - the Genie map files have several commands that are not yet fully supported
 * `#window add/show/hide/clear <name>`
   * ex: `#window add log`
   * ex: `#window hide log`
-  * `#window list all` will show all window ids and locations
+  * `#window list all` will show all window ids and locations.
+    * The output: (x,y), (height, width)
+    * x,y being the point of the top-left corner.  Height going down, width accross.
+  ```
+  Windows:
+    thoughts: (0,0), (150, 438)
+    log: (0,149), (111, 438)
+    main: (0,258), (432, 1021)
+    logons: (1020,0), (131, 380)
+    death: (1020,129), (100, 380)
+    experience: (1020,228), (462, 380)
+    room: (437,0), (260, 584)
+    percwindow: (748,150), (148, 273)
+    (hidden) atmospherics: (0,0), (200, 200)
+    (hidden) chatter: (0,0), (200, 200)
+    (hidden) conversation: (0,0), (200, 200)
+    (hidden) familiar: (0,0), (200, 200)
+    (hidden) group: (0,0), (200, 200)
+    (hidden) inv: (0,0), (200, 200)
+    (hidden) ooc: (0,0), (200, 200)
+    (hidden) whispers: (0,0), (200, 200)
+    (hidden) raw: (554,286), (275, 791)
+    (hidden) assess: (782,502), (177, 567)
+    (hidden) talk: (801,306), (200, 200)
+  ```
   * `#window clear log` will clear all contents of the window
 
 ## Scripting
