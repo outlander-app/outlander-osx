@@ -45,7 +45,11 @@ public class Node : NSObject {
     }
     
     public func attr(key:String) -> String? {
-        return self.attributes?[key]
+        if hasAttr(key) {
+            return self.attributes?[key]
+        }
+        
+        return nil
     }
     
     override public var description : String {

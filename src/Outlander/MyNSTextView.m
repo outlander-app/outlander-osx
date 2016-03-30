@@ -39,6 +39,20 @@
     [sub sendNext:theEvent];
 }
 
+- (void)addMenuTitle:(NSString *)title {
+    
+    NSMenu *menu = [self menu];
+    
+    NSMenuItem *item = [menu itemWithTitle:self.menuTitle];
+    
+    if(item == nil) {
+        item = [menu insertItemWithTitle:title action:nil keyEquivalent:@"" atIndex:0];
+    }
+    
+    item.title = title;
+    self.menuTitle = title;
+}
+
 - (IBAction)clearAction:(id)sender {
     [self setString:@""];
 }
@@ -48,6 +62,8 @@
 }
 
 - (IBAction)closeWindow:(id)sender {
+    id<RACSubscriber> sub = (id<RACSubscriber>)self.closeWindowSignal;
+    [sub sendNext:nil];
 }
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item {
@@ -60,16 +76,12 @@
         }
     }
     
-    if ([item action] == @selector(closeWindow:)) {
-        return NO;
-    }
-    
     return YES;
 }
 
 - (void)clickedOnLink:(id)link atIndex:(NSUInteger)charIndex {
     if([link hasPrefix:@"command:"]) {
-        [self executeCommand:link];
+        [self executeCommand:[link substringFromIndex:@"command:".length]];
     } else {
         [self openLink:[NSURLRequest requestWithURL:[NSURL URLWithString:link]]];
     }
@@ -77,7 +89,7 @@
 
 - (void)executeCommand:(NSString *)command {
     CommandContext *ctx = [[CommandContext alloc] init];
-    ctx.command = [command substringFromIndex:@"command:".length];
+    ctx.command = command;
     
     id<RACSubscriber> sub = (id<RACSubscriber>)self.commandSignal;
     [sub sendNext:ctx];

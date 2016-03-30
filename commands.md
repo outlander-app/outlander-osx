@@ -177,19 +177,24 @@ echo %weapon # prints katana
     * waits for the given regex to match
 
 ### Misc
-* `contains` function - can be used to determine if a value contains another value
+* `contains("<value to check>", "<value to check for>")` function - can be used to determine if a value contains another value
 ```
 if !contains("$lefthand", "%tool") then
 {
   gosub get.tool %tool
 }
 ```
-* `matchre` function - can be used to evaluate to true/false within an `if` expression
+* `matchre("<variable>", "<regex>")` function - can be used to evaluate to true/false within an `if` expression
 ```
 if matchre("$roomobjs", "((which|that) appears dead|\(dead\))") then {
   # loot, skin
 }
 ```
+* `replacere("<variable>", "<regex>", "<replacement>")` function - can be used to do a regex replace on a variable
+```
+eval dir replacere("%dir", "^(search|swim|web|muck|rt|wait|slow|script|room|ice) ", "")
+```
+
 * `countsplit` function - counts the number of occurances of the given character
 ```
 var two a|b|yes|test

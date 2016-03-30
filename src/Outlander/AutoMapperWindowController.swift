@@ -364,9 +364,9 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     @IBAction func mapLevelAction(sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
-            self.mapLevel++
+            self.mapLevel += 1
         } else {
-            self.mapLevel--
+            self.mapLevel -= 1
         }
     }
     

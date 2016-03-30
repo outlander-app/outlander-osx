@@ -71,7 +71,13 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(2))
+                var result = ""
+                
+                for tag in self.tags {
+                    result = "\(result) \(tag.text)"
+                }
+                
+                expect(self.tags.count).to(equal(8))
             }
             
             it("excludes extra line breaks - inv stream") {
@@ -87,10 +93,13 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(0))
+                expect(self.tags.count).to(equal(6))
+                for tag in self.tags {
+                    expect(tag.targetWindow).to(equal("inv"))
+                }
             }
 
-            it("streams login tag to arrivals") {
+            it("streams login tag") {
                 let data = [
                     "<pushStream id=\"logons\"/> * Arneson joins the adventure.\r\n"
                 ]
@@ -99,10 +108,10 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.tags.count).to(equal(1))
                 expect(self.tags[0].text).to(equal("* Arneson joins the adventure.\n"))
-                expect(self.tags[0].targetWindow).to(equal("arrivals"))
+                expect(self.tags[0].targetWindow).to(equal("logons"))
             }
             
-            it("streams death tag to deaths") {
+            it("streams death tag") {
                 let data = [
                     "<pushStream id=\"death\"/> * A fiery phoenix soars into the heavens\r\n"
                 ]
@@ -112,7 +121,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags.count).to(equal(1))
                 let tag = self.tags[0]
                 expect(tag.text).to(equal("* A fiery phoenix soars into the heavens\n"))
-                expect(tag.targetWindow).to(equal("deaths"))
+                expect(tag.targetWindow).to(equal("death"))
             }
             
             it("streams exp into settings") {
@@ -390,7 +399,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.streamer.isSetup = true
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(3))
+                expect(self.tags.count).to(equal(7))
             }
             
             it("sets hidden ON") {
@@ -477,7 +486,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.tags[2].text).to(equal("  Glythtide's Joy"))
             }
             
-            it("ignores percWindow (for now)") {
+            it("streams percWindow") {
                 let data = [
                     "<clearStream id=\"percWindow\"/>",
                     "<pushStream id=\"percWindow\"/>Bear Strength<popStream/><pushStream id=\"percWindow\"/>  (Indefinite)",
@@ -486,9 +495,12 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
+                let text = self.tags[0].text
+                let window = self.tags[0].targetWindow
+                
                 //expect(self.tags.count).to(equal(0))
-                expect(self.tags[0].text).to(equal("bear strength"))
-                expect(self.tags[0].targetWindow).to(equal("percWindow"))
+                expect(text).to(equal("Bear Strength\n"))
+                expect(window).to(equal("percwindow"))
             }
         })
     }

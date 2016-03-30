@@ -261,6 +261,7 @@
 		F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E200192C2B9B00562E32 /* StubFileSystem.m */; };
 		F989E205192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
 		F989E206192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
+		F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */; };
 		F98F22D419248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
@@ -690,6 +691,7 @@
 		F989E200192C2B9B00562E32 /* StubFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubFileSystem.m; sourceTree = "<group>"; };
 		F989E203192C2E6200562E32 /* Highlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Highlight.h; sourceTree = "<group>"; };
 		F989E204192C2E6200562E32 /* Highlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Highlight.m; sourceTree = "<group>"; };
+		F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContextTester.swift; sourceTree = "<group>"; };
 		F98F22D119248506008175FD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -1308,6 +1310,7 @@
 				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
 				F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */,
 				F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */,
+				F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1951,6 +1954,7 @@
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
+				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
 				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,

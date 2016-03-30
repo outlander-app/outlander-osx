@@ -63,6 +63,7 @@
         layout.windows = [jsonWindows.rac_sequence  map:^id(id value) {
             return [self dataFor:value];
         }].array;
+        
         return layout;
     }
     @catch (NSException *exception) {
@@ -96,10 +97,20 @@
     
     [items addObject:[WindowData windowWithName:@"main" atLoc:NSMakeRect(0, 100, 574, 377) andTimestamp:NO]];
     [items addObject:[WindowData windowWithName:@"thoughts" atLoc:NSMakeRect(0, 0, 361, 101) andTimestamp:YES]];
-    [items addObject:[WindowData windowWithName:@"arrivals" atLoc:NSMakeRect(360, 0, 214, 101) andTimestamp:YES]];
-    [items addObject:[WindowData windowWithName:@"deaths" atLoc:NSMakeRect(573, 0, 275, 101) andTimestamp:YES]];
+    [items addObject:[WindowData windowWithName:@"logons" atLoc:NSMakeRect(360, 0, 214, 101) andTimestamp:YES]];
+    [items addObject:[WindowData windowWithName:@"death" atLoc:NSMakeRect(573, 0, 275, 101) andTimestamp:YES]];
     [items addObject:[WindowData windowWithName:@"room" atLoc:NSMakeRect(573, 100, 275, 177) andTimestamp:NO]];
-    [items addObject:[WindowData windowWithName:@"exp" atLoc:NSMakeRect(573, 276, 275, 201) andTimestamp:NO]];
+    [items addObject:[WindowData windowWithName:@"experience" atLoc:NSMakeRect(573, 276, 275, 201) andTimestamp:NO]];
+    
+    WindowData *assess = [WindowData windowWithName:@"assess" atLoc:NSMakeRect(0, 0, 200, 200) andTimestamp:NO];
+    assess.visible = NO;
+    assess.closedTarget = @"main";
+    [items addObject:assess];
+    
+    WindowData *chatter = [WindowData windowWithName:@"chatter" atLoc:NSMakeRect(0, 0, 200, 200) andTimestamp:YES];
+    chatter.visible = NO;
+    chatter.closedTarget = @"main";
+    [items addObject:chatter];
     
     Layout *layout = [[Layout alloc] init];
     layout.primaryWindow = [WindowData windowWithName:@"primary" atLoc:NSMakeRect(0, 0, 900, 615) andTimestamp:NO];

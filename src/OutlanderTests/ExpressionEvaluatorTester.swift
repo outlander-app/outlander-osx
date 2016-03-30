@@ -110,7 +110,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                 expect(result).to(equal("north"))
             }
             
-            it("eval replacere") {
+            it("eval replacere sets match groups") {
                 let parser = OutlanderScriptParser()
                 
                 let vars = { () -> [String:String] in
@@ -128,10 +128,10 @@ class ExpressionEvaluatorTester : QuickSpec {
                 let evalTokens:[Token] = [tokens[0]]
                 
                 let evaluator = ExpressionEvaluator()
-                evaluator.eval(context, evalTokens, context.simplify)
+                let result = evaluator.eval(context, evalTokens, context.simplify)
                 
-                expect(context.actionVars.count).to(equal(2))
-                expect(context.actionVars["1"]).to(equal("rt"))
+                expect(result.matchGroups?.count).to(equal(2))
+                expect(result.matchGroups?[1]).to(equal("rt"))
             }
         }
     }

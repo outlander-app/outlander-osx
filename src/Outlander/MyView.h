@@ -32,4 +32,5 @@
 - (TextViewController*)addViewOld:(NSColor *)color atLoc:(NSRect)rect withKey:(NSString *)key;
 
 - (BOOL)hasView:(NSString *)key;
+- (void)bringToFront:(NSString *)key;
 @end

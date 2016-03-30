@@ -99,8 +99,8 @@ import Foundation
         }
         
         if(!complete) {
-            __currentIndex++
-            currentPosition++
+            __currentIndex = __currentIndex.successor()
+            currentPosition += 1
         }
     }
     

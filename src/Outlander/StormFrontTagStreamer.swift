@@ -69,6 +69,7 @@ public class StormFrontTagStreamer : NSObject {
     public var emitProcessNode : ((Node)->Void)?
     public var emitSpell : ((String)->Void)?
     public var emitVitals : ((Vitals)->Void)?
+    public var emitWindow : ((String,String?,String?)->Void)?
     public var emitClearStream : ((String)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
@@ -254,10 +255,14 @@ public class StormFrontTagStreamer : NSObject {
                     emitSetting?("roomtitle", t)
                 }
             }
+            
+            if let win = id {
+                emitWindow?(win.lowercaseString, node.attr("title"), node.attr("ifClosed"))
+            }
         
         case _ where node.name == "clearstream":
             if let id = node.attr("id") {
-                emitClearStream?(id)
+                emitClearStream?(id.lowercaseString)
             }
             
         case _ where node.name == "dialogdata" && node.attr("id") == "minivitals":
@@ -286,23 +291,20 @@ public class StormFrontTagStreamer : NSObject {
     public func tagForNode(node:Node) -> TextTag? {
         var tag:TextTag? = nil
         
-        if !isSetup {
-            isSetup = node.name == "endsetup"
-            return nil
-        }
+//        if !isSetup {
+//            isSetup = node.name == "endsetup"
+//            return nil
+//        }
         
         switch node.name {
             
-        case _ where node.name == "app":
-            isSetup = false
+//        case _ where node.name == "app":
+//            isSetup = false
             
         case _ where node.name == "text":
-            if inStream && (lastStreamId == "inv" || lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
-                break
-            }
             
             tag = emitTag(node)
-            tag?.targetWindow = self.streamIdToWindow(lastStreamId)
+            tag?.targetWindow = lastStreamId
             if inStream {
                 tag?.text = "\(tag!.text!)\n"
                 if lastStreamId == "logons" || lastStreamId == "death" {
@@ -336,14 +338,14 @@ public class StormFrontTagStreamer : NSObject {
             tag?.text = tag!.text! + "\r\n"
             
         case _ where node.name == "preset":
-            if inStream && (lastStreamId == "talk" || lastStreamId == "whispers" || lastStreamId == "ooc") {
-                break
-            }
+//            if inStream && (lastStreamId == "talk") {
+//                break
+//            }
             tag = emitTag(node)
-            tag?.targetWindow = self.streamIdToWindow(lastStreamId)
+            tag?.targetWindow = lastStreamId
             let id = node.attr("id")
             tag?.preset = id
-            if id == "speech" || id == "whisper" || id == "thought" {
+            if id == "speech" || id == "whisper" || id == "whispers" || id == "thought" || id == "chatter" {
                 tag?.color = "#99FFFF"
             }
             
@@ -356,7 +358,7 @@ public class StormFrontTagStreamer : NSObject {
         case _ where node.name == "pushstream":
             inStream = true
             if let id = node.attr("id") {
-                lastStreamId = id
+                lastStreamId = id.lowercaseString
             }
             
         case _ where node.name == "popstream":
@@ -377,11 +379,14 @@ public class StormFrontTagStreamer : NSObject {
             tag?.href = node.attr("href")
             
         case _ where node.name == "b":
+            
+            tag = emitTag(node)
+            
             // <b>You yell,</b> Hogs!
             if inStream && lastStreamId == "talk" {
-                break
+                tag?.bold = true
+                tag?.targetWindow = lastStreamId
             }
-            tag = emitTag(node)
             
         case _ where node.name == "d":
             
@@ -413,23 +418,6 @@ public class StormFrontTagStreamer : NSObject {
        
         self.lastNode = node
         return tag
-    }
-    
-    public func streamIdToWindow(streamId:String) -> String {
-        switch(streamId) {
-        case _ where streamId == "logons":
-            return "arrivals"
-        case _ where streamId == "thoughts" || streamId == "chatter":
-            return "thoughts"
-        case _ where streamId == "death":
-            return "deaths"
-        case _ where streamId == "whispers":
-            return "whispers"
-        case _ where streamId == "ooc":
-            return "ooc"
-        default:
-            return streamId.lowercaseString
-        }
     }
     
     public func nodeChildValuesRecursive(node:Node) -> String {
@@ -477,7 +465,7 @@ public class StormFrontTagStreamer : NSObject {
             }
             
             if child.name == "popbold" {
-                monsterCount++
+                monsterCount += 1
                 if monsters.characters.count > 0 {
                     monsters += "|"
                 }

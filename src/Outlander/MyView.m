@@ -623,9 +623,26 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 //Reorder's the subviews so the picked up view always appears on top
 - (void)reOrderView:(NSView *)view {
     NSMutableArray *subViews = [self.subviews mutableCopy];
-    [subViews exchangeObjectAtIndex:[subViews indexOfObject:view]
-                        withObjectAtIndex:[subViews count] - 1];
+    [subViews removeObject:view];
+    [subViews addObject:view];
     [self setSubviews:subViews];
+}
+
+
+- (void)bringToFront:(NSString *)key {
+    
+    __block MyView *foundView = nil;
+    
+    [self.subviews enumerateObjectsUsingBlock:^(MyView *view, NSUInteger idx, BOOL *stop) {
+        if ([view.key isEqualToString:key]) {
+            foundView = view;
+            *stop = YES;
+        }
+    }];
+    
+    if(foundView != nil) {
+        [self reOrderView:foundView];
+    }
 }
 
 @end

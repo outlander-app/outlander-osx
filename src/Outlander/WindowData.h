@@ -19,6 +19,7 @@
 @property (nonatomic, assign) double height;
 @property (nonatomic, assign) double width;
 @property (nonatomic, copy) NSString *closedTarget;
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, assign) BOOL visible;
 @property (nonatomic, assign) BOOL timestamp;
 @property (nonatomic, assign) BOOL showBorder;

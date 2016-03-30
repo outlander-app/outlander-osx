@@ -328,19 +328,12 @@ public class ReplaceReEvalToken : FuncEvalToken {
         let groups = mutable[rh].groups()
         mutable[rh] ~= replace
         
-        var vars:[String:String] = [:]
-        for (index, g) in groups.enumerate() ?? [].enumerate() {
-            vars["\(index)"] = g
-        }
-        
-//        context.actionVars = vars
-        
         let result = String(mutable)
         
         return ExpressionEvalResult(
             result: EvalResult.Str(val: result),
             info: "replacere(\(lh), \(rh), \(replace)) = \(result)",
-            matchGroups:nil
+            matchGroups:groups
         )
     }
 }

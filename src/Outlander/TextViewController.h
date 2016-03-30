@@ -26,6 +26,7 @@
 @property (nonatomic, copy) NSString *monoFontName;
 @property (nonatomic, assign) double monoFontSize;
 
+@property (nonatomic, copy) NSString *windowTitle;
 @property (nonatomic, copy) NSString *closedTarget;
 @property (nonatomic, assign) BOOL isVisible;
 @property (nonatomic, assign) BOOL lastShowBorder;

@@ -82,11 +82,20 @@
         [_gameParser.spell sendNext:spell];
     };
     
-    _tagStreamer.emitClearStream = ^(NSString *window){
+    _tagStreamer.emitClearStream = ^(NSString *window) {
         CommandContext *ctx = [[CommandContext alloc] init];
         ctx.command = [NSString stringWithFormat:@"#window clear %@", window];
         
         [_commandRelay sendCommand:ctx];
+    };
+    
+    _tagStreamer.emitWindow = ^(NSString *window, NSString *title, NSString *closedTarget) {
+        NSDictionary *win = @{
+            @"name" : window,
+            @"title" : title != nil ? title : [NSNull null],
+            @"closedTarget" : closedTarget != nil ? closedTarget : [NSNull null]
+        };
+        [_gameContext.events publish:@"OL:window:ensure" data:win];
     };
     
     _vitals = _gameParser.vitals;
@@ -147,6 +156,12 @@
                   toHost:connection.host
                   onPort:connection.port]
      subscribeNext:^(NSString *rawXml) {
+         
+         TextTag *rawTag = [TextTag tagFor:rawXml mono:YES];
+         rawTag.targetWindow = @"raw";
+         
+         NSArray *rawArray = [NSArray arrayWithObjects:rawTag, nil];
+         [_mainSubject sendNext:rawArray];
          
          NSArray *nodes = [_tokenizer tokenize:rawXml];
          NSArray *tags = [_tagStreamer stream:nodes];

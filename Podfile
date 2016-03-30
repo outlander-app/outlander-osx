@@ -8,6 +8,6 @@ pod 'PEGKit', '~> 0.4'
 
 target :OutlanderTests, :exclusive => true do
   pod 'Kiwi', '2.3.1'
-  pod 'Quick', '0.8.0'
-  pod 'Nimble', '3.0.0'
+  pod 'Quick', '0.9.1'
+  pod 'Nimble', '3.2.0'
 end

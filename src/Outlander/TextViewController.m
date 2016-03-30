@@ -45,6 +45,20 @@
         [sub sendNext:x];
     }];
     
+    _TextView.closeWindowSignal = [RACSubject subject];
+    [_TextView.closeWindowSignal subscribeNext:^(id x) {
+        
+        if ([self.key isEqualToString:@"main"]) {
+            return;
+        }
+        
+        id<RACSubscriber> sub = (id<RACSubscriber>)_command;
+        
+        CommandContext *ctx = [[CommandContext alloc] init];
+        ctx.command = [NSString stringWithFormat:@"#window hide %@", self.key];
+        [sub sendNext:ctx];
+    }];
+    
     [_TextView.textStorage setDelegate:self];
     [_TextView setLinkTextAttributes:@{
                                        NSForegroundColorAttributeName: [NSColor colorWithHexString:@"#cccccc"],

@@ -79,7 +79,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
             if let button = view as? NSPopUpButton {
                 button.frame = NSRect(x: count * width, y: 0, width: width, height: 25)
 //                button.sizeToFit()
-                count++
+                count += 1
             }
         }
     }
@@ -116,7 +116,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         self.view.subviews.append(btn)
         //btn.sizeToFit()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popUpSelectionChanged:", name: NSMenuDidSendActionNotification, object: btn.menu)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScriptToolbarViewController.popUpSelectionChanged(_:)), name: NSMenuDidSendActionNotification, object: btn.menu)
     }
     
     func debugMenuItemSelection(target:NSMenuItem) {
@@ -133,7 +133,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func createSubMenuItem(title:String, textColor:NSColor, tag:ScriptLogLevel) -> NSMenuItem {
-        let item = NSMenuItem(title: "", action: "debugMenuItemSelection:", keyEquivalent: "")
+        let item = NSMenuItem(title: "", action: #selector(ScriptToolbarViewController.debugMenuItemSelection(_:)), keyEquivalent: "")
         item.target = self
         let titleString = createTitleString(title, textColor: textColor)
         item.attributedTitle = titleString

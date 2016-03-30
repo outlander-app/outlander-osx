@@ -10,8 +10,10 @@
 
 @interface MyNSTextView : NSTextView 
 
+@property (nonatomic, copy) NSString *menuTitle;
 @property (nonatomic, assign) BOOL displayTimestamp;
 @property (nonatomic, strong) RACSignal *keyupSignal;
 @property (nonatomic, strong) RACSignal *commandSignal;
+@property (nonatomic, strong) RACSignal *closeWindowSignal;
 
 @end

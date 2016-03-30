@@ -103,7 +103,7 @@ class MapView: NSView {
         if let timer = debounceTimer {
             timer.invalidate()
         }
-        debounceTimer = NSTimer(timeInterval: 0.07, target: self, selector: Selector("lookupRoom"), userInfo: nil, repeats: false)
+        debounceTimer = NSTimer(timeInterval: 0.07, target: self, selector: #selector(MapView.lookupRoom), userInfo: nil, repeats: false)
         NSRunLoop.currentRunLoop().addTimer(debounceTimer!, forMode: "NSDefaultRunLoopMode")
     }
     

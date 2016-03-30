@@ -58,6 +58,16 @@
         
         [tokens insertObject:allArgs atIndex:0];
         
+        NSInteger maxArgCount = 10;
+        
+        if([tokens count] < maxArgCount) {
+            NSInteger diff = maxArgCount - [tokens count];
+            
+            for (NSInteger i = 0; i < diff; i++) {
+                [tokens addObject:@""];
+            }
+        }
+        
         str = obj.replace;
         
         [tokens enumerateObjectsUsingBlock:^(NSString * _Nonnull token, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -69,7 +79,7 @@
         }];
     }];
     
-    return str;
+    return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
 - (NSString *)replaceLocalVars:(NSString *)data withVars:(TSMutableDictionary *)dict {

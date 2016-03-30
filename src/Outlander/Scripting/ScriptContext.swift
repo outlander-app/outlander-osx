@@ -150,6 +150,10 @@ public class ScriptContext {
         }
     }
     
+    public func getParamVar(identifier:String) -> String? {
+        return self.paramVars[identifier]
+    }
+    
     public func getVariable(identifier:String) -> String? {
         return self.variables[identifier]
     }
@@ -453,7 +457,7 @@ class TokenSequence : SequenceType {
     }
     
     func generate() -> AnyGenerator<Token> {
-        return anyGenerator({
+        return AnyGenerator(body: {
             if let b = self.branchStack.lastItem() {
                 if let next = b.generator.next() {
                     return next
@@ -478,7 +482,7 @@ class TokenSequence : SequenceType {
     
     func getNext() -> Token? {
         var token:Token?
-        self.currentIdx++
+        self.currentIdx += 1
         if(self.currentIdx > -1 && self.currentIdx < self.tree.count) {
             token = self.tree[self.currentIdx]
         }
@@ -503,7 +507,7 @@ class BranchTokenSequence : SequenceType {
     }
     
     func generate() -> AnyGenerator<Token> {
-        return anyGenerator({
+        return AnyGenerator<Token>(body: {
             if let b = self.branchStack.lastItem() {
                 if let next = b.generator.next() {
                     return next
@@ -530,7 +534,7 @@ class BranchTokenSequence : SequenceType {
     
     func getNext() -> Token? {
         var token:Token?
-        self.currentIndex++
+        self.currentIndex += 1
         if(self.currentIndex < self.token.body.count) {
             token = self.token.body[self.currentIndex]
         }

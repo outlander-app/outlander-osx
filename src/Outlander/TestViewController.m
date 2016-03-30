@@ -32,6 +32,7 @@
 #import "Outlander-Swift.h"
 #import <MASShortcut/MASShortcut.h>
 #import <MASShortcut/MASShortcutMonitor.h>
+#import "NSArray+PEGKitAdditions.h"
 
 @interface TestViewController ()
 @end
@@ -117,14 +118,47 @@
     }];
     
     [gameContext.events subscribe:self token:@"OL:window"];
+    [gameContext.events subscribe:self token:@"OL:window:ensure"];
     
     return self;
 }
 
-
 - (void)handle:(NSString *)token data:(NSDictionary *)data {
     if ([token isEqualToString:@"OL:window"]) {
         [self processWindowCommand:data[@"action"] target:data[@"window"]];
+        return;
+    }
+    
+    if ([token isEqualToString:@"OL:window:ensure"]) {
+        NSString *name = data[@"name"];
+        NSString *title = nil;
+        NSString *closedTarget = nil;
+        
+        id maybeTarget = data[@"closedTarget"];
+        if([maybeTarget isKindOfClass:[NSString class]]) {
+            closedTarget = maybeTarget;
+        }
+        
+        id maybeTitle = data[@"title"];
+        if([maybeTitle isKindOfClass:[NSString class]]) {
+            title = maybeTitle;
+        }
+        
+        if(![self hasWindow:name]) {
+            WindowData *newWindow = [[WindowData alloc]
+                                         initWithName:name
+                                         atLoc:NSMakeRect(0, 0, 200, 200)
+                                         andTimestamp:NO];
+            newWindow.visible = NO;
+            newWindow.closedTarget = closedTarget;
+            newWindow.title = title;
+            [self addWindow:newWindow withNotification:NO];
+        } else {
+            // update title if it doesn't have one
+            [self setTitleForWindowIfNone:name to:title];
+        }
+        
+        return;
     }
 }
 
@@ -141,7 +175,7 @@
                                          initWithName:window
                                          atLoc:NSMakeRect(0, 0, 200, 200)
                                          andTimestamp:NO];
-            [self addWindow:newWindow];
+            [self addWindow:newWindow withNotification:NO];
             
         } else if ([self hasWindow:window]) {
             [self showWindow:window];
@@ -161,18 +195,30 @@
             return;
         }
         
-        [self hideWindow:window];
+        [self hideWindow:window withNotification:YES];
         
     } else if ([action isEqualToString:@"list"]) {
         
         NSArray *windows = [self getWindows];
         
+        NSSortDescriptor *name = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        NSSortDescriptor *description = [[NSSortDescriptor alloc] initWithKey:@"description" ascending:YES];
+        NSSortDescriptor *hidden = [[NSSortDescriptor alloc] initWithKey:@"visible" ascending:NO];
+        
+        windows = [windows sortedArrayUsingDescriptors:[NSArray arrayWithObjects:hidden, description, name, nil]];
+        
         NSMutableString *windowData = [NSMutableString stringWithString:@"\nWindows:\n"];
         
         [windows enumerateObjectsUsingBlock:^(WindowData *win, NSUInteger idx, BOOL *stop) {
-            NSString *coords = [NSString stringWithFormat:@"[(%.0f,%.0f), (%.0f, %.0f)]", win.x, win.y, win.height, win.width];
-            [windowData appendFormat:@"%@ - %@\n", win.name, coords];
+            NSString *coords = [NSString stringWithFormat:@"(%.0f,%.0f), (%.0f, %.0f)", win.x, win.y, win.height, win.width];
+            NSString *name = win.name;
+            if(!win.visible) {
+                name = [NSString stringWithFormat:@"(hidden) %@", name];
+            }
+            [windowData appendFormat:@"    %@: %@\n", name, coords];
         }];
+        
+        [windowData appendString:@"\n"];
         
         TextTag *tag = [TextTag tagFor:windowData mono:NO];
         [self append:tag to:@"main"];
@@ -188,6 +234,12 @@
         } else if (controller.closedTarget != nil && [controller.closedTarget length] > 0) {
             return [self windowForTarget:controller.closedTarget];
         }
+        
+        return nil;
+    }
+    
+    if([targetWindow isEqual: @"raw"]) {
+        return nil;
     }
     
     return @"main";
@@ -215,8 +267,10 @@
     [_scriptToolbarViewController.view fixHeight:NO];
     [_scriptToolbarViewController setContext:_gameContext];
     
-    [_gameContext.layout.windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
-        [self addWindow:obj];
+    NSArray *windows = [_gameContext.layout.windows reversedArray];
+    
+    [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
+        [self addWindow:obj withNotification:NO];
     }];
     
     [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
@@ -263,7 +317,7 @@
 //    [self set:@"thoughts" withTags:tags];
 }
 
-- (void)addWindow:(WindowData *)window {
+- (void)addWindow:(WindowData *)window withNotification:(BOOL)notify {
     
     NSRect rect = NSMakeRect(window.x, window.y, window.width, window.height);
     
@@ -276,6 +330,7 @@
     controller.monoFontName = window.monoFontName;
     controller.monoFontSize = window.monoFontSize;
     controller.closedTarget = window.closedTarget;
+    controller.windowTitle = window.title;
 
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];
@@ -318,7 +373,7 @@
     [_windows setCacheObject:controller forKey:window.name];
     
     if (!window.visible && ![window.name isEqualToString:@"main"]) {
-        [self hideWindow:window.name];
+        [self hideWindow:window.name withNotification:notify];
     }
 }
 
@@ -334,6 +389,8 @@
         data.monoFontName = controller.monoFontName;
         data.monoFontSize = controller.monoFontSize;
         data.visible = controller.isVisible;
+        data.closedTarget = controller.closedTarget;
+        data.title = controller.windowTitle;
         [windows addObject:data];
     }];
     
@@ -348,12 +405,20 @@
         controller.isVisible = YES;
 //        [_windows setCacheObject:controller forKey:window];
     }
+    
+    [_ViewContainer bringToFront:window];
 }
 
-- (void)hideWindow:(NSString *)window {
+- (void)hideWindow:(NSString *)window withNotification:(BOOL)notify {
     TextViewController *controller = [_windows cacheObjectForKey:window];
     [controller removeView];
     controller.isVisible = NO;
+    
+    if(notify) {
+        TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@ window closed\n", window]
+                                  mono:NO];
+        [self append:tag to:@"main"];
+    }
 }
 
 - (void)clearWindow:(NSString *)window {
@@ -421,7 +486,20 @@
     return controller.isVisible;
 }
 
+- (void)setTitleForWindowIfNone:(NSString*)window to:(NSString*)title {
+    TextViewController *controller = [_windows cacheObjectForKey:window];
+    if([controller.windowTitle length] > 0) {
+        return;
+    }
+    controller.windowTitle = title;
+}
+
 - (void)append:(TextTag*)text to:(NSString *)key {
+    
+    if([key length] == 0) {
+        return;
+    }
+    
     NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
@@ -473,30 +551,6 @@
         [_spelltimeNotifier set:spell];
     }];
     
-    [_gameStream.thoughts subscribeNext:^(TextTag *tag) {
-        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
-        tag.text = [NSString stringWithFormat:@"[%@]: %@\n", timeStamp, tag.text];
-        [self append:tag to:@"thoughts"];
-    }];
-    
-    [_gameStream.chatter subscribeNext:^(TextTag *tag) {
-        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
-        tag.text = [NSString stringWithFormat:@"[%@]: %@\n", timeStamp, tag.text];
-        [self append:tag to:@"thoughts"];
-    }];
-    
-    [_gameStream.arrivals subscribeNext:^(TextTag *tag) {
-        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
-        tag.text = [NSString stringWithFormat:@"[%@]:%@\n", timeStamp, tag.text];
-        [self append:tag to:@"arrivals"];
-    }];
-    
-    [_gameStream.deaths subscribeNext:^(TextTag *tag) {
-        NSString *timeStamp = [@"%@" stringFromDateFormat:@"HH:mm"];
-        tag.text = [NSString stringWithFormat:@"[%@]:%@\n", timeStamp, tag.text];
-        [self append:tag to:@"deaths"];
-    }];
-    
     [_gameStream.room.signal subscribeNext:^(id x) {
         [self updateRoom];
     }];
@@ -535,7 +589,7 @@
         [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
         [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
         
-        [self set:@"exp" withTags:tags];
+        [self set:@"experience" withTags:tags];
     }];
     
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];

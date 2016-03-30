@@ -19,8 +19,13 @@ public struct RandomNumberGenerator: SequenceType {
     
     public func generate() -> AnyGenerator<Int> {
         var i = 0
-        return anyGenerator {
-            return (i++ == self.count) ? .None : randomNumberFrom(self.range)
+        return AnyGenerator<Int> {
+            var result:Int?
+            if i == self.count {
+                result = randomNumberFrom(self.range)
+            }
+            i += 1
+            return result
         }
     }
 }
