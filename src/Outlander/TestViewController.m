@@ -210,7 +210,7 @@
         NSMutableString *windowData = [NSMutableString stringWithString:@"\nWindows:\n"];
         
         [windows enumerateObjectsUsingBlock:^(WindowData *win, NSUInteger idx, BOOL *stop) {
-            NSString *coords = [NSString stringWithFormat:@"(%.0f,%.0f), (%.0f, %.0f)", win.x, win.y, win.height, win.width];
+            NSString *coords = [NSString stringWithFormat:@"(x:%.0f, y:%.0f), (h:%.0f, w:%.0f)", win.x, win.y, win.height, win.width];
             NSString *name = win.name;
             if(!win.visible) {
                 name = [NSString stringWithFormat:@"(hidden) %@", name];

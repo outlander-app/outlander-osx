@@ -19,6 +19,7 @@ public class StormFrontTagStreamer : NSObject {
    
     private var lastStreamId = ""
     private var inStream = false
+    private var ignoreNextEot = false
     
     private let ignoredEot = [
         "app",
@@ -27,17 +28,25 @@ public class StormFrontTagStreamer : NSObject {
         "compdef",
         "component",
         "dialogdata",
+        "endsetup",
+        "exposecontainer",
         "indicator",
         "left",
         "mode",
+        "opendialog",
         "nav",
         "output",
-        "popstream",
-        "pushstream",
         "right",
         "streamwindow",
         "spell",
         "switchquickbar"
+    ]
+    
+    private let ignoreNextEotList = [
+        "experience",
+        "inv",
+        "popstream",
+        "room"
     ]
     
     private let roomTags = [
@@ -91,6 +100,11 @@ public class StormFrontTagStreamer : NSObject {
             }
             .filter { $0 != nil }
             .map { $0! }
+        
+        if inStream && tags.count > 0 {
+            let tag = tags.last!
+            tag.text = "\(tag.text!)\n"
+        }
         
         return tags
         
@@ -291,22 +305,13 @@ public class StormFrontTagStreamer : NSObject {
     public func tagForNode(node:Node) -> TextTag? {
         var tag:TextTag? = nil
         
-//        if !isSetup {
-//            isSetup = node.name == "endsetup"
-//            return nil
-//        }
-        
         switch node.name {
-            
-//        case _ where node.name == "app":
-//            isSetup = false
             
         case _ where node.name == "text":
             
             tag = emitTag(node)
             tag?.targetWindow = lastStreamId
             if inStream {
-                tag?.text = "\(tag!.text!)\n"
                 if lastStreamId == "logons" || lastStreamId == "death" {
                     tag?.text = tag?.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 }
@@ -324,7 +329,13 @@ public class StormFrontTagStreamer : NSObject {
             }
             
         case _ where node.name == "eot":
-            if inStream || lastNode != nil && (ignoredEot.contains(lastNode!.name) || lastNode!.name == "prompt") {
+            if inStream
+                || lastNode != nil && (ignoredEot.contains(lastNode!.name)
+                || lastNode!.name == "prompt") {
+                break
+            }
+            if ignoreNextEot {
+                ignoreNextEot = false
                 break
             }
             tag = TextTag()
@@ -338,9 +349,6 @@ public class StormFrontTagStreamer : NSObject {
             tag?.text = tag!.text! + "\r\n"
             
         case _ where node.name == "preset":
-//            if inStream && (lastStreamId == "talk") {
-//                break
-//            }
             tag = emitTag(node)
             tag?.targetWindow = lastStreamId
             let id = node.attr("id")
@@ -362,6 +370,7 @@ public class StormFrontTagStreamer : NSObject {
             }
             
         case _ where node.name == "popstream":
+            ignoreNextEot = ignoreNextEotList.contains(lastStreamId)
             inStream = false
             lastStreamId = ""
             
@@ -383,7 +392,7 @@ public class StormFrontTagStreamer : NSObject {
             tag = emitTag(node)
             
             // <b>You yell,</b> Hogs!
-            if inStream && lastStreamId == "talk" {
+            if inStream {
                 tag?.bold = true
                 tag?.targetWindow = lastStreamId
             }

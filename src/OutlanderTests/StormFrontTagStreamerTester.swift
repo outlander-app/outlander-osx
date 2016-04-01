@@ -12,21 +12,13 @@ import Nimble
 
 class StormFrontTagStreamerTester: QuickSpec {
     
-    let streamer = StormFrontTagStreamer()
+    var streamer = StormFrontTagStreamer()
     var nodes = [Node]()
     var tags = [TextTag]()
     var exp = [SkillExp]()
     var settings = [String: String]()
     
     override func spec() {
-        
-        streamer.emitSetting = { (key,value) in
-            self.settings[key] = value
-        }
-        
-        streamer.emitExp = { (exp) in
-            self.exp.append(exp)
-        }
         
         describe("streamer", {
             
@@ -35,6 +27,15 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.tags = []
                 self.exp = []
                 self.settings = [String: String]()
+                self.streamer = StormFrontTagStreamer()
+                
+                self.streamer.emitSetting = { (key,value) in
+                    self.settings[key] = value
+                }
+                
+                self.streamer.emitExp = { (exp) in
+                    self.exp.append(exp)
+                }
             })
             
             it("excludes extra line breaks") {
@@ -312,7 +313,7 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(1))
+                expect(self.tags.count).to(equal(2))
                 
                 expect(self.tags[0].color).to(equal("#0000FF"))
             }
@@ -372,7 +373,7 @@ class StormFrontTagStreamerTester: QuickSpec {
               
                 self.streamData(data)
                 
-                expect(self.tags.count).to(equal(1))
+                expect(self.tags.count).to(equal(2))
                 expect(self.tags[0].text).to(equal("help search stealing"))
                 expect(self.tags[0].command).to(equal("HELP search stealing"))
             }
@@ -489,18 +490,61 @@ class StormFrontTagStreamerTester: QuickSpec {
             it("streams percWindow") {
                 let data = [
                     "<clearStream id=\"percWindow\"/>",
-                    "<pushStream id=\"percWindow\"/>Bear Strength<popStream/><pushStream id=\"percWindow\"/>  (Indefinite)",
+                    "<pushStream id=\"percWindow\"/>Bear Strength<popStream/><pushStream id=\"percWindow\"/>  (Indefinite)\n",
                     "<popStream/>"
                 ]
               
                 self.streamData(data)
                 
+                expect(self.tags.count).to(equal(3))
+                
                 let text = self.tags[0].text
                 let window = self.tags[0].targetWindow
                 
-                //expect(self.tags.count).to(equal(0))
-                expect(text).to(equal("Bear Strength\n"))
+                let text2 = self.tags[1].text
+                let window2 = self.tags[1].targetWindow
+                
+                let text3 = self.tags[2].text
+                let window3 = self.tags[2].targetWindow
+                
+                expect(text).to(equal("Bear Strength"))
                 expect(window).to(equal("percwindow"))
+                
+                expect(text2).to(equal("  (Indefinite)"))
+                expect(window2).to(equal("percwindow"))
+                
+                expect(text3).to(equal("\r\n"))
+                expect(window3).to(beNil())
+            }
+            
+            it("streams ooc tweets") {
+                let data = [
+                    "<pushStream id=\"ooc\"/><b>TWEET:  </b>Too early to be an April Fools, Premium gifts are out for April and portals are open! #premium #drprime\n",
+                    "<popStream/>"
+                ]
+                
+                self.streamData(data)
+                
+                expect(self.tags.count).to(equal(3))
+                
+                let text = self.tags[0].text
+                let window = self.tags[0].targetWindow
+                
+                let text2 = self.tags[1].text
+                let window2 = self.tags[1].targetWindow
+                
+                let text3 = self.tags[2].text
+                let window3 = self.tags[2].targetWindow
+                
+                expect(text).to(equal("TWEET:  "))
+                expect(window).to(equal("ooc"))
+                expect(self.tags[0].bold).to(beTrue())
+                
+                expect(text2).to(equal("Too early to be an April Fools, Premium gifts are out for April and portals are open! #premium #drprime"))
+                expect(window2).to(equal("ooc"))
+                
+                expect(text3).to(equal("\r\n"))
+                expect(window3).to(beNil())
             }
         })
     }

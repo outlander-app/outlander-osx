@@ -554,11 +554,11 @@ public class Script : IScript {
             self.moveNext()
         }
         else if let waitForMsg = msg as? WaitforMessage {
-            self.notify(TextTag("waitfor \(waitForMsg.pattern)\n", mono: true), debug:ScriptLogLevel.Wait)
+            self.notify(TextTag("waitfor \(context!.simplify(waitForMsg.pattern))\n", mono: true), debug:ScriptLogLevel.Wait)
             self.addStreamWatcher( WaitforOp(waitForMsg.pattern) )
         }
         else if let waitForMsg = msg as? WaitforReMessage {
-            self.notify(TextTag("waitforre \(waitForMsg.pattern)\n", mono: true), debug:ScriptLogLevel.Wait)
+            self.notify(TextTag("waitforre \(context!.simplify(waitForMsg.pattern))\n", mono: true), debug:ScriptLogLevel.Wait)
             self.addStreamWatcher( WaitforReOp(waitForMsg.pattern) )
         }
         else if let _ = msg as? WaitMessage {
@@ -567,7 +567,7 @@ public class Script : IScript {
         }
         else if let waitEvalMsg = msg as? WaitEvalMessage {
             self.notify(TextTag("waiteval \(waitEvalMsg.token.bodyText())\n", mono: true), debug:ScriptLogLevel.Wait)
-            self.addStreamWatcher( WaitEvalOp(waitEvalMsg.token, context!.simplify) )
+            self.addStreamWatcher( WaitEvalOp(waitEvalMsg.token) )
         }
         else if let saveMsg = msg as? SaveMessage {
             self.handleSave(saveMsg)
@@ -901,7 +901,7 @@ public class WaitforOp : IWantStreamInfo {
     }
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
-        return text.rangeOfString(self.target) != nil ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        return text.rangeOfString(context.simplify(self.target)) != nil ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
@@ -920,7 +920,8 @@ public class WaitforReOp : IWantStreamInfo {
     }
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
-        let groups = text[self.pattern].groups()
+        let pattern = context.simplify(self.pattern)
+        let groups = text[pattern].groups()
         return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
     }
     
@@ -957,13 +958,11 @@ public class WaitEvalOp : IWantStreamInfo {
 
     public var id = ""
     private var token:CommandToken
-    private var simplify:(Array<Token>)->String
     private var evaluator:ExpressionEvaluator
     
-    public init(_ token:CommandToken, _ simplify:(Array<Token>)->String) {
+    public init(_ token:CommandToken) {
         self.id = NSUUID().UUIDString
         self.token = token
-        self.simplify = simplify
         self.evaluator = ExpressionEvaluator()
     }
     
@@ -971,7 +970,7 @@ public class WaitEvalOp : IWantStreamInfo {
         
         for n in nodes {
             if n.name == "prompt" {
-                let res = self.evaluator.eval(context, self.token.body, self.simplify)
+                let res = self.evaluator.eval(context, self.token.body, context.simplify)
                 print("eval res: \(res.info)")
                 if getBoolResult(res.result) {
                     return CheckStreamResult.Match(result: res.info)

@@ -139,7 +139,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         let nodes = dict["nodes"] as! [Node]
         let text = dict["text"] as! String
         
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             script.stream(text, nodes: nodes)
         }
     }
@@ -148,7 +148,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         if let dict = userInfo as? [String:String] {
             let text = dict["text"] ?? ""
             
-            for (index, script) in self.scripts.enumerate() {
+            for (_, script) in self.scripts.enumerate() {
                 script.stream(text, nodes: [])
             }
         }

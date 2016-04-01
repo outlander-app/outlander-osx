@@ -88,6 +88,91 @@ class ExpressionEvaluatorTester : QuickSpec {
                 expect(result).to(equal("put tongs"))
             }
             
+            it("properly replaces combined local/global vars") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [
+                        "Arcana.LearningRate":"34"
+                    ]
+                    return res
+                }
+                
+                let script = "var maxexp $%magicToTrain.LearningRate"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("magicToTrain", value: "Arcana")
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("var maxexp 34"))
+            }
+            
+            it("properly replaces combined local variables") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "echo %%yy-var"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("xx-var", value: "abcdef")
+                context.setVariable("yy", value: "xx")
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("echo abcdef"))
+            }
+            
+            it("properly replaces combined global variables") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [
+                        "MagicToTrain" : "Arcana",
+                        "Arcana.LearningRate" : "34"
+                    ]
+                    return res
+                }
+                
+                let script = "echo $$MagicToTrain.LearningRate"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("echo 34"))
+            }
+            
+            it("properly breaks with non-matched local variables") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "echo %%yy-var"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("yy", value: "xx")
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("echo %xx-var"))
+            }
+            
             it("eval replacere") {
                 let parser = OutlanderScriptParser()
                 
