@@ -121,9 +121,8 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
             
             let walk = moves.joinWithSeparator(", ")
             
-            let diff = NSDate().timeIntervalSinceDate(self.startDate)
-            
             if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+                let diff = NSDate().timeIntervalSinceDate(self.startDate)
                 self.sendMessage("Debug: path found in \(diff) seconds")
             }
             

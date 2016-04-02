@@ -89,23 +89,31 @@
         return [RACSignal empty];
     }];
     
-    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
-    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        [self endSheet];
-        return [RACSignal empty];
-    }];
-    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        [self endSheet];
-        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
-            NSLog(@"Error preparing update: %@", error);
-        }];
-        
-        return [RACSignal empty];
-    }];
+//    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
+//    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        [self endSheet];
+//        return [RACSignal empty];
+//    }];
+//    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        [self endSheet];
+//        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
+//            NSLog(@"Error preparing update: %@", error);
+//        }];
+//        
+//        return [RACSignal empty];
+//    }];
     
     [_gameContext.events subscribe:self token:@"disconnected"];
     
 	return self;
+}
+
+-(void) windowDidBecomeKey: (NSNotification*) note {
+    [self registerMacros];
+}
+
+-(void) windowDidResignKey: (NSNotification*) note {
+    [self unRegisterMacros];
 }
 
 - (void)handle:(NSString * __nonnull)token data:(NSDictionary * __nonnull)data {
@@ -267,11 +275,7 @@
     
     [self.sheet setFrame:frame display:YES animate:NO];
     
-    [NSApp beginSheet:self.sheet
-       modalForWindow:self.window
-        modalDelegate:self
-       didEndSelector:nil
-          contextInfo:nil];
+    [self.window beginSheet:self.sheet completionHandler:nil];
 }
 
 - (void)endSheet {
@@ -315,6 +319,14 @@
     // Check for updates immediately on launch, then every 4 hours.
     [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
     [self.updater startAutomaticChecksWithInterval:60 * 60 * 4];
+}
+
+-(void)registerMacros {
+    [_macroHandler registerMacros];
+}
+
+-(void)unRegisterMacros {
+    [_macroHandler unRegisterMacros];
 }
 
 @end

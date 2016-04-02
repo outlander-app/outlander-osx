@@ -51,17 +51,10 @@ typedef NS_ENUM(NSUInteger, SettingsOption) {
     if(current) {
         [current save];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:registerMacros"
-                                                        object:nil
-                                                      userInfo:nil];
 }
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OL:unregisterMacros"
-                                                        object:nil
-                                                      userInfo:nil];
 }
 
 - (IBAction)selectSection:(NSToolbarItem *)sender {

@@ -12,8 +12,11 @@
 @class GameContext;
 @protocol ISubscriber;
 
-@interface MacroHandler : NSObject <ISubscriber>
+@interface MacroHandler : NSObject
 
 - (instancetype)initWith:(GameContext *)context and:(id<CommandRelay>)commandRelay;
+
+-(void)registerMacros;
+-(void)unRegisterMacros;
 
 @end

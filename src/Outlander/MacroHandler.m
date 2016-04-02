@@ -28,28 +28,6 @@
     _context = context;
     _commandRelay = commandRelay;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidBecomeActive:)
-                                                 name:NSApplicationDidBecomeActiveNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidResignActive:)
-                                                 name:NSApplicationDidResignActiveNotification
-                                               object:nil];
-    
-    [_context.events subscribe:self token:@"OL:unregisterMacros"];
-    [_context.events subscribe:self token:@"OL:registerMacros"];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveCommandUnregisterMacros:)
-                                                 name:@"OL:unregisterMacros"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveCommandRegisterMacros:)
-                                                 name:@"OL:registerMacros"
-                                               object:nil];
-    
     [_context.macros.removed subscribeNext:^(Macro *macro) {
         MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:macro.keyCode modifierFlags:0];
         [[MASShortcutMonitor sharedMonitor] unregisterShortcut:shortcut];
@@ -62,22 +40,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void) handle:(NSString *)token data:(NSDictionary *)data {
-    if ([token isEqualToString:@"OL:unregisterMacros"]) {
-        [self unRegisterMacros];
-    } else if ([token isEqualToString:@"OL:registerMacros"]) {
-        [self registerMacros];
-    }
-}
-
-- (void) receiveCommandUnregisterMacros:(NSNotification *) notification {
-    [self unRegisterMacros];
-}
-
-- (void) receiveCommandRegisterMacros:(NSNotification *) notification {
-    [self registerMacros];
-}
-
 -(void)registerMacros {
     [_context.macros enumerateObjectsUsingBlock:^(Macro *macro, NSUInteger idx, BOOL *stop) {
         [self registerMacro:macro];
@@ -87,7 +49,7 @@
 -(void)registerMacro:(Macro *)macro {
     MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:macro.keyCode modifierFlags:macro.modifiers];
     [[MASShortcutMonitor sharedMonitor] registerShortcut:shortcut withAction:^{
-        if(_isApplicationActive && macro != nil){
+        if(macro != nil){
             CommandContext *ctx = [[CommandContext alloc] init];
             ctx.command = macro.action;
             [_commandRelay sendCommand:ctx];
@@ -97,16 +59,6 @@
 
 -(void)unRegisterMacros {
     [[MASShortcutMonitor sharedMonitor] unregisterAllShortcuts];
-}
-
--(void) applicationDidBecomeActive: (NSNotification*) note{
-    _isApplicationActive = YES;
-    [self registerMacros];
-}
-
--(void) applicationDidResignActive: (NSNotification*) note{
-    _isApplicationActive = NO;
-    [self unRegisterMacros];
 }
 
 @end
