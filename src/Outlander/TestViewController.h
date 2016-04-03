@@ -33,9 +33,10 @@
 @property (weak) IBOutlet MyView *scriptToolbarView;
 
 - (NSArray *)getWindows;
+- (void)removeAllWindows;
+- (void)loadWindows;
 - (IBAction)commandSubmit:(id)sender;
 - (IBAction)connect:(id)sender;
 - (void)append:(TextTag*)text to:(NSString *)key;
 - (NSString *)textForWindow:(NSString *)key;
-- (void)addWindow:(WindowData *)window;
 @end

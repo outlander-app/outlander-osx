@@ -78,6 +78,9 @@
         [self endSheet];
         
         [_appSettingsLoader loadProfile:_chooseProfileViewController.selectedProfile];
+       
+        [[self currentVC] removeAllWindows];
+        [[self currentVC] loadWindows];
         
         [self showLogin];
         
@@ -152,6 +155,11 @@
     
     TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
     [self setCurrentViewController:vc];
+    
+    NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
+    NSString *version = dict[@"CFBundleShortVersionString"];
+    
+    [self.window setTitle:[NSString stringWithFormat:@"Outlander %@ Alpha", version]];
     
     @weakify(self);
     

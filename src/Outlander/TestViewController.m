@@ -65,8 +65,9 @@
         [self append:tag to:@"main"];
     };
     _notifier.commandBlock = ^(CommandContext *command){
+        @strongify(self)
         command.command = [command.command trimWhitespaceAndNewline];
-        [_commandProcessor process:command];
+        [self->_commandProcessor process:command];
     };
     _notifier.echoBlock = ^(NSString *echo){
         @strongify(self)
@@ -266,18 +267,14 @@
     [_scriptToolbarViewController.view fixWidth:NO];
     [_scriptToolbarViewController.view fixHeight:NO];
     [_scriptToolbarViewController setContext:_gameContext];
-    
-    NSArray *windows = [_gameContext.layout.windows reversedArray];
-    
-    [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
-        [self addWindow:obj withNotification:NO];
-    }];
+   
+    [self loadWindows];
     
     [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
         
         self._CommandTextField.progress = rt.percent;
         
-        if(rt.value == 0){
+        if(rt.value == 0) {
             _viewModel.roundtime = @"";
         }
         else {
@@ -315,6 +312,22 @@
 //    
 //    [self set:@"room" withTags:tags];
 //    [self set:@"thoughts" withTags:tags];
+}
+
+- (void)removeAllWindows {
+    [_windows enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+        [self hideWindow:key withNotification:NO];
+    }];
+    
+    [_windows removeAllObjects];
+}
+
+- (void)loadWindows {
+    NSArray *windows = [_gameContext.layout.windows reversedArray];
+    
+    [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
+        [self addWindow:obj withNotification:NO];
+    }];
 }
 
 - (void)addWindow:(WindowData *)window withNotification:(BOOL)notify {
