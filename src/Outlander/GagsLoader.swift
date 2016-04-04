@@ -38,7 +38,7 @@ class GagsLoader : NSObject {
             return
         }
         
-        self.context.substitutes.removeAll()
+        self.context.gags.removeAll()
         
         let pattern = "^#gag \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
