@@ -287,14 +287,14 @@
     }];
     
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
-//    
+//
 //    TextTag *tag = [TextTag tagFor:@"test\r\n" mono:NO];
 //    tag.color = @"#565656";
 //    tag.href = @"http://google.com";
 //    [self append:tag to:@"main"];
 //    [tags addObject:tag];
 //
-//    tag = [TextTag tagFor:@"123" mono:NO];
+//    TextTag *tag = [TextTag tagFor:@"Something Guard Report" mono:NO];
 //    tag.color = @"#565656";
 //    tag.command = @"something";
 //    [self append:tag to:@"main"];

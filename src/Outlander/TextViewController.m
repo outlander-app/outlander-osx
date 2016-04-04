@@ -174,32 +174,39 @@
 }
 
 - (void)setWithTags:(NSArray *)tags {
-    NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    BOOL timestamp = _TextView.displayTimestamp && (_TextView.textStorage.length == 0 || [self endsWithNewline:_TextView]);
-    
-    
-    BOOL first = YES;
-    
-    for (TextTag *tag in tags) {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        if(tag.text == nil || tag.text.length == 0) {
-            continue;
-        }
+        NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
         
-        if (first && timestamp) {
-            [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
-            first = NO;
-        }
-        else if (_TextView.displayTimestamp && [self hasNewlineSuffix:target.string]) {
-            [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
-        }
+        BOOL timestamp = _TextView.displayTimestamp && (_TextView.textStorage.length == 0 || [self endsWithNewline:_TextView]);
         
-        [target appendAttributedString:[self stringFromTag:tag]];
-    }
+        BOOL first = YES;
+        
+        for (TextTag *tag in tags) {
+            
+            if(tag.text == nil || tag.text.length == 0 || [self matchesGag:tag.text]) {
+                continue;
+            }
+            
+            if (first && timestamp) {
+                [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
+                first = NO;
+            }
+            else if (_TextView.displayTimestamp && [self hasNewlineSuffix:target.string]) {
+                [target appendAttributedString:[self stringFromTag:[self timestampTag]]];
+            }
+            
+            tag.text = [self processSubs:tag.text];
+            
+            [target appendAttributedString:[self stringFromTag:tag]];
+        }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_TextView.textStorage setAttributedString:target];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [_TextView.textStorage setAttributedString:target];
+        });
     });
 }
 
@@ -279,9 +286,11 @@
 }
 
 - (void)append:(TextTag*)text toTextView:(MyNSTextView *) textView {
-    if(text.text == nil || text.text.length == 0) {
+    if(text.text == nil || text.text.length == 0 || [self matchesGag:text.text]) {
         return;
     }
+    
+    text.text = [self processSubs:text.text];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -387,6 +396,32 @@
             }
         }];
     }];
+}
+
+- (NSString *)processSubs:(NSString *)text {
+    
+    __block NSString *data = text;
+    
+    [_gameContext.substitutes enumerateObjectsUsingBlock:^(Substitute *sub, NSUInteger idx, BOOL *stop) {
+        data = [data replaceWithPattern:sub.pattern andTemplate:sub.action];
+    }];
+    
+    return data;
+}
+
+- (BOOL)matchesGag:(NSString *)text {
+    __block BOOL matches = NO;
+    
+    [_gameContext.gags enumerateObjectsUsingBlock:^(Gag *gag, NSUInteger idx, BOOL *stop) {
+        NSArray *matchGroups = [text matchesForPattern:gag.pattern];
+        if(matchGroups && [matchGroups count] > 0) {
+            *stop = YES;
+            matches = YES;
+            return;
+        }
+    }];
+    
+    return matches;
 }
 
 @end

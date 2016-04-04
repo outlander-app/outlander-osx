@@ -20,5 +20,7 @@
 - (void)saveAliases;
 - (void)saveMacros;
 - (void)saveTriggers;
+- (void)saveSubs;
+- (void)saveGags;
 
 @end

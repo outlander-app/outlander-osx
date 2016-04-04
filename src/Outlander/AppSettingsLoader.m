@@ -25,6 +25,8 @@
     VariablesLoader *_variablesLoader;
     MacrosLoader *_macrosLoader;
     TriggersLoader *_triggersLoader;
+    SubstituteLoader *_substituteLoader;
+    GagsLoader *_gagsLoader;
 }
 @end
 
@@ -43,6 +45,8 @@
     _variablesLoader = [[VariablesLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _macrosLoader = [[MacrosLoader alloc] initWithContext:_context andFileSystem:fileSystem];
     _triggersLoader = [TriggersLoader newInstance:_context fileSystem:fileSystem];
+    _substituteLoader = [SubstituteLoader newInstance:_context fileSystem:fileSystem];
+    _gagsLoader = [GagsLoader newInstance:_context fileSystem:fileSystem];
     
     return self;
 }
@@ -71,6 +75,8 @@
     [self loadAliases];
     [self loadMacros];
     [self loadTriggers];
+    [self loadSubs];
+    [self loadGags];
 }
 
 - (void)loadConfig {
@@ -130,6 +136,22 @@
 
 - (void)saveTriggers {
     [_triggersLoader save];
+}
+
+- (void)loadSubs {
+    [_substituteLoader load];
+}
+
+- (void)saveSubs {
+    [_substituteLoader save];
+}
+
+- (void)loadGags {
+    [_gagsLoader load];
+}
+
+- (void)saveGags {
+    [_gagsLoader save];
 }
 
 - (void)writeConfigFolders:(NSString *)profile {

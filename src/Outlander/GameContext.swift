@@ -40,6 +40,8 @@ public class GameContext : NSObject {
     public var aliases:OLMutableArray
     public var macros:OLMutableArray
     public var triggers:OLMutableArray
+    public var substitutes:OLMutableArray
+    public var gags:OLMutableArray
     public var globalVars:TSMutableDictionary
     public var events:EventAggregator
     
@@ -50,6 +52,8 @@ public class GameContext : NSObject {
         self.aliases = OLMutableArray()
         self.macros = OLMutableArray()
         self.triggers = OLMutableArray()
+        self.substitutes = OLMutableArray()
+        self.gags = OLMutableArray()
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
         
         self.events = EventAggregator()

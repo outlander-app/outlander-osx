@@ -9,9 +9,11 @@
 import Foundation
 
 class Gag : NSObject {
-    var text:String
+    var pattern:String?
+    var patternClass:String?
     
-    init(text:String) {
-        self.text = text
+    init(_ pattern:String, _ patternClass:String) {
+        self.pattern = pattern
+        self.patternClass = patternClass
     }
 }

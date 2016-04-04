@@ -230,10 +230,12 @@
     [_appSettingsLoader saveAliases];
     [_appSettingsLoader saveMacros];
     [_appSettingsLoader saveTriggers];
+    [_appSettingsLoader saveSubs];
+    [_appSettingsLoader saveGags];
     
     [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
-                            mono:true]
-              to:@"main"];
+                          mono:true]
+            to:@"main"];
 }
 
 - (void)command:(NSString *)command {

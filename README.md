@@ -23,6 +23,12 @@ Create aliased commands for less typing.
 
 As an example, `l2` can become `load arrows`, or `atk mace` can become `.hunt offhand lob mace`.
 
+### Substitutes
+Provide substitute text based on regex to add or replace game text.  For example, adding numbers to mana perception or weapon appraisals.
+
+### Gags
+You can provide a list of things to ignore being shown.
+
 ### Windows
 Customize and save your window layout with draggable/resizable windows. Create custom windows and show/hide existing windows with the #window command.
 
