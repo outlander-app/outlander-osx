@@ -3,5 +3,4 @@ language: objective-c
 osx_image: xcode7.3
 rvm: 2.0.0
 before_install: gem install cocoapods
-before_script: travis/before.sh
 script: travis/script.sh
