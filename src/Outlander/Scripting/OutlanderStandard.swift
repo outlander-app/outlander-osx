@@ -718,7 +718,7 @@ public class OutlanderScriptParser : StackParser {
                 endIf()
                 self.trackingExpression = false
             }
-            self.inBracketCount++
+            self.inBracketCount = self.inBracketCount + 1
             pushToken(token)
         case _ where token.name == "close-bracket":
             if !ifStack.isEmpty {
@@ -727,7 +727,7 @@ public class OutlanderScriptParser : StackParser {
             else if lineCommandStack.count > 0 {
                 pushToken(token)
             }
-            self.inBracketCount--
+            self.inBracketCount = self.inBracketCount - 1
         case _ where token.name == "label":
             if lineCommandStack.count == 0 {
                 createLabel(token)
@@ -761,7 +761,7 @@ public class OutlanderScriptParser : StackParser {
         if comment == true {
             handled = true
             if token.name == "newline" {
-                lineNumber++
+                lineNumber = lineNumber + 1
                 endComment()
             } else {
                 pushToken(token)
@@ -947,7 +947,7 @@ public class OutlanderScriptParser : StackParser {
             if check(last) {
                 break
             }
-            current--
+            current = current - 1
         }
     }
     

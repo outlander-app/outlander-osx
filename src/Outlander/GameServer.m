@@ -122,11 +122,18 @@
 
 - (void) writeLog:(NSString *)data {
     
-    NSString *logsDir = _gameContext.pathProvider.logsFolder;
-    NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@.txt", _gameContext.settings.character, _gameContext.settings.game, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
+    if(!_gameContext.settings.loggingEnabled) {
+        return;
+    }
     
-    NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
-    [[NSString stringWithFormat:@"%@<-->", data] appendToFile:filePath encoding:NSUTF8StringEncoding];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSString *logsDir = _gameContext.pathProvider.logsFolder;
+        NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@.txt", _gameContext.settings.character, _gameContext.settings.game, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
+        
+        NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
+        [[NSString stringWithFormat:@"%@<-->", data] appendToFile:filePath encoding:NSUTF8StringEncoding];
+    });
 }
 
 @end

@@ -218,6 +218,28 @@ class ExpressionEvaluatorTester : QuickSpec {
                 expect(result.matchGroups?.count).to(equal(2))
                 expect(result.matchGroups?[1]).to(equal("rt"))
             }
+            
+            it("eval countsplit") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "eval count countsplit(%equipment, \"|\")"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("equipment", value: "targe|shirt|pants")
+                
+                let evaluator = ExpressionEvaluator()
+                let evalResult = evaluator.eval(context, tokens, context.simplify)
+                let result = self.getStringResult(evalResult.result)
+                
+                expect(result).to(equal("3"))
+            }
         }
     }
     
