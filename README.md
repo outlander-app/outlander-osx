@@ -1,6 +1,8 @@
 Outlander - OSX 10.10+
 ==========
 
+Like Outlander?  Consider [becoming a Patreon](https://www.patreon.com/outlander).
+
 ## Player documentation
 Question or suggestion?  [![Join the chat at https://gitter.im/joemcbride/outlander-osx](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joemcbride/outlander-osx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 You can also read the [player documentation](commands.md) to see all of the available [commands](commands.md).
