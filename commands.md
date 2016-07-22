@@ -75,6 +75,7 @@ Yes - the Genie map files have several commands that are not yet fully supported
 ## Scripting
 
 #### Example Scripts
+* Repository of several scripts: https://github.com/joemcbride/outlander-osx-scripts
 * [hunt.cmd](https://gist.github.com/joemcbride/d0c2b2cde11d68f9f9e4) - basic hunt script
 ```
 supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
