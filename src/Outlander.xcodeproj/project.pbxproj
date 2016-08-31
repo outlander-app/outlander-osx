@@ -71,6 +71,7 @@
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92D67CD1D76907C00668EAA /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F92D67CE1D76907C00668EAA /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F92D67CF1D76925800668EAA /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
@@ -430,7 +431,6 @@
 		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */; };
-		F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 /* End PBXBuildFile section */
 
@@ -881,7 +881,7 @@
 				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
-				F9F446A41ABD8733003ECAD2 /* Pods.framework in Frameworks */,
+				F92D67CF1D76925800668EAA /* Pods_Outlander.framework in Frameworks */,
 				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
