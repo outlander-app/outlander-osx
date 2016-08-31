@@ -395,9 +395,26 @@ public class ScriptContext {
         
         let sortedKeys = dict.keys.sort({ $0.0.characters.count > $0.1.characters.count })
         
-        for key in sortedKeys {
-            target["\(prefix)\(key)"] ~= dict[key] ?? ""
+        func doReplace() {
+            for key in sortedKeys {
+                
+                let replaceCanidate = "\(prefix.trimPrefix("\\"))\(key)"
+                
+                if target.containsString(replaceCanidate) {
+                    target["\(prefix)\(key)"] ~= dict[key] ?? ""
+                    break
+                }
+            }
         }
+        
+        let maxIterations = 15
+        var count = 0
+        
+        repeat {
+            doReplace()
+            count += 1
+        }
+        while count < maxIterations && target.containsString(prefix.trimPrefix("\\"))
     }
     
     public func simplify(tokens:Array<Token>) -> String {

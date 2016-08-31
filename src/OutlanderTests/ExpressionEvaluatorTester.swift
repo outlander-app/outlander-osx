@@ -131,6 +131,29 @@ class ExpressionEvaluatorTester : QuickSpec {
                 expect(result).to(equal("echo abcdef"))
             }
             
+            it("properly replaces combined local variables") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "setVariable shopdiff %percentsign%storecodeQuant"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("Chab", value: "skullcap")
+                context.setVariable("ChabQuant", value: "2")
+                context.setVariable("percentsign", value: "%")
+                context.setVariable("storecode", value: "Chab")
+                
+                let result = context.simplify(script);
+                
+                expect(result).to(equal("setVariable shopdiff 2"))
+            }
+            
             it("properly replaces combined global variables") {
                 let parser = OutlanderScriptParser()
                 
