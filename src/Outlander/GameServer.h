@@ -12,7 +12,7 @@
 
 @class GameContext;
 
-@interface GameServer : NSObject {
+@interface GameServer : NSObject <GCDAsyncSocketDelegate> {
     NSString *_host;
     UInt16 _port;
     GCDAsyncSocket *asyncSocket;

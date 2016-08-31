@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, AuthErrorType) {
     AuthErrorEnd = 99
 };
 
-@interface AuthenticationServer : NSObject {
+@interface AuthenticationServer : NSObject <GCDAsyncSocketDelegate> {
     NSString *_host;
     UInt16 _port;
     GCDAsyncSocket *asyncSocket;

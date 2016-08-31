@@ -10,7 +10,7 @@
 #import "GCDAsyncSocket.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
-@interface SignalSocket : NSObject {
+@interface SignalSocket : NSObject <GCDAsyncSocketDelegate> {
     GCDAsyncSocket *asyncSocket;
 	RACSubject *subject;
 }

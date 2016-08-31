@@ -85,7 +85,7 @@ public class SwiftRegex: NSObject, BooleanType {
         if ( range.location != NSNotFound ) {
             return target.substringWithRange(range)
         } else {
-            return nil
+            return ""
         }
     }
     
@@ -117,7 +117,7 @@ public class SwiftRegex: NSObject, BooleanType {
             }
             return groups
         } else {
-            return nil
+            return []
         }
     }
     
@@ -127,7 +127,7 @@ public class SwiftRegex: NSObject, BooleanType {
                 let group = groups[groupno]
                 return group != regexNoGroup ? group : nil
             } else {
-                return nil
+                return ""
             }
         }
         set( newValue ) {
