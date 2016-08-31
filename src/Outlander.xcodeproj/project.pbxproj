@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
-		F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
 		F90CEC0E1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
-		F90CEC0F1ACE711300204243 /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
 		F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
 		F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
@@ -31,6 +29,11 @@
 		F91031551B3D0F710039BDF0 /* GagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031531B3D0F710039BDF0 /* GagsLoader.swift */; };
 		F910E4941D76B400000A7A8F /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F910E4951D76B400000A7A8F /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F910E49C1D76B7A2000A7A8F /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
+		F910E49D1D76B7A2000A7A8F /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F910E49E1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; };
+		F910E49F1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4A01D76B8A5000A7A8F /* libxml2.tbd */; };
 		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
@@ -58,7 +61,6 @@
 		F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */; };
 		F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
 		F91ADCE11ACA63C100B78327 /* VariablesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */; };
-		F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9269A9B1AD7A5D900E35690 /* MapLabel.swift */; };
 		F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9269A9B1AD7A5D900E35690 /* MapLabel.swift */; };
 		F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */; };
@@ -83,8 +85,6 @@
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
-		F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AE91AC3B0630035B2F5 /* Kiwi.framework */; };
-		F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
@@ -173,7 +173,6 @@
 		F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C781893808F00E2C318 /* HTMLNode.m */; };
 		F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C7A1893808F00E2C318 /* HTMLParser.m */; };
 		F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C7A1893808F00E2C318 /* HTMLParser.m */; };
-		F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F97A5C7F1893812D00E2C318 /* libxml2.dylib */; };
 		F97A5C831893962E00E2C318 /* GameParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C821893962E00E2C318 /* GameParser.m */; };
 		F97A5C841893962E00E2C318 /* GameParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C821893962E00E2C318 /* GameParser.m */; };
 		F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C86189397DA00E2C318 /* GameParserTester.m */; };
@@ -302,7 +301,6 @@
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
-		F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */; };
 		F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
 		F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
 		F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; };
@@ -450,9 +448,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F90CEC0F1ACE711300204243 /* GlimpseXML.framework in Copy Files */,
-				F924B38B1AC36F600064BFD5 /* libPods-CocoaAsyncSocket.a in Copy Files */,
+				F910E49D1D76B7A2000A7A8F /* GlimpseXML.framework in Copy Files */,
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
+				F910E49F1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
@@ -470,7 +468,6 @@
 		75C0CC3EA40A2B5D0B4B9467 /* Pods-Outlander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Outlander.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Outlander/Pods-Outlander.release.xcconfig"; sourceTree = "<group>"; };
 		7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Outlander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
-		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1245CF34ADDAE5E9979D03 /* Pods-Outlander.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Outlander.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Outlander/Pods-Outlander.debug.xcconfig"; sourceTree = "<group>"; };
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
@@ -479,6 +476,8 @@
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
 		F91031501B3D0F140039BDF0 /* Gag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gag.swift; sourceTree = "<group>"; };
 		F91031531B3D0F710039BDF0 /* GagsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GagsLoader.swift; sourceTree = "<group>"; };
+		F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Outlander-ewculpqfverqnbebaiaippfxsuew/Build/Products/Debug/CocoaAsyncSocket/CocoaAsyncSocket.framework"; sourceTree = "<group>"; };
+		F910E4A01D76B8A5000A7A8F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowCommandHandler.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
@@ -522,8 +521,6 @@
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
-		F9423AE91AC3B0630035B2F5 /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = "/Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods-OutlanderTests/Kiwi.framework"; sourceTree = "<absolute>"; };
-		F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = /Users/jomc/Dev/Outlander/Pods/../build/Debug/Pods/CocoaAsyncSocket.framework; sourceTree = "<absolute>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
@@ -536,7 +533,6 @@
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
-		F94B64711AB7F74B002D70FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
@@ -611,7 +607,6 @@
 		F97A5C781893808F00E2C318 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
 		F97A5C791893808F00E2C318 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
 		F97A5C7A1893808F00E2C318 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
-		F97A5C7F1893812D00E2C318 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		F97A5C811893962E00E2C318 /* GameParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameParser.h; sourceTree = "<group>"; };
 		F97A5C821893962E00E2C318 /* GameParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameParser.m; sourceTree = "<group>"; };
 		F97A5C86189397DA00E2C318 /* GameParserTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameParserTester.m; sourceTree = "<group>"; };
@@ -732,7 +727,6 @@
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
 		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
-		F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPods-CocoaAsyncSocket.a"; sourceTree = "<group>"; };
 		F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
 		F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
 		F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -851,15 +845,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
+				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
-				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
-				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
+				F910E49E1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
+				F910E49C1D76B7A2000A7A8F /* GlimpseXML.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 				F910E4941D76B400000A7A8F /* Pods_Outlander.framework in Frameworks */,
@@ -871,13 +865,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90CEC0E1ACE70F500204243 /* GlimpseXML.framework in Frameworks */,
-				F9423AEA1AC3B0630035B2F5 /* Kiwi.framework in Frameworks */,
 				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD351AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
-				F9A8DD2C1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a in Frameworks */,
 				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
 				F92D67CF1D76925800668EAA /* Pods_Outlander.framework in Frameworks */,
 				F9F446A31ABD8668003ECAD2 /* Pods_OutlanderTests.framework in Frameworks */,
@@ -1347,21 +1339,17 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
+				F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */,
 				F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */,
 				F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */,
-				F9423AEB1AC3B0960035B2F5 /* CocoaAsyncSocket.framework */,
-				F9423AE91AC3B0630035B2F5 /* Kiwi.framework */,
 				F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */,
 				F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */,
 				F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */,
 				F9A8DD311AC299EC009A2F67 /* Squirrel.framework */,
-				F9A8DD2A1AC25F3B009A2F67 /* libPods-CocoaAsyncSocket.a */,
-				F94B64711AB7F74B002D70FD /* SenTestingKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
-				F97A5C7F1893812D00E2C318 /* libxml2.dylib */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
-				B26C7DA750198A8239EB3C35 /* Pods.framework */,
 				594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */,
 				7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */,
 			);

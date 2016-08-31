@@ -216,7 +216,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func pause(name:String) {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             
             if name == "all" || script.scriptName == name {
                 script.pause()
@@ -229,7 +229,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func resume(name:String) {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             
             if name == "all" || script.scriptName == name {
                 script.resume()
@@ -242,7 +242,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func vars(name:String) {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             if script.scriptName == name {
                 script.vars()
                 break
@@ -251,7 +251,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func debug(name:String, level:ScriptLogLevel) {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             if script.scriptName == name {
                 script.setLogLevel(level)
                 break
@@ -260,7 +260,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func listAll() {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             script.printInfo()
         }
         
@@ -270,7 +270,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func notifyVars(vars:[String:String]) {
-        for (index, script) in self.scripts.enumerate() {
+        for (_, script) in self.scripts.enumerate() {
             script.varsChanged(vars)
         }
     }

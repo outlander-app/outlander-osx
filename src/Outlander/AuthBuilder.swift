@@ -42,7 +42,8 @@ extension NSMutableData {
         }
     }
     
-    func appendByte(var b: UInt8) {
-        self.appendBytes(&b, length: 1)
+    func appendByte(b: UInt8) {
+        var b2 = b
+        self.appendBytes(&b2, length: 1)
     }
 }

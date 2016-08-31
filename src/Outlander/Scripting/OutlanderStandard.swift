@@ -628,7 +628,7 @@ public class OutlanderScriptParser : StackParser {
         
         switch token.name {
         case _ where token.name == "newline":
-            lineNumber++
+            lineNumber += 1
             endCommand(true)
         case _ where token.name == "keyword":
             if(token.characters.lowercaseString == "if" && lineCommandStack.count == 0) {

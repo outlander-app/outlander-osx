@@ -1128,9 +1128,7 @@ extension String {
             let matchLength = match.range.location - lastIndex
             let start = self.startIndex.advancedBy(lastIndex)
             let end = start.advancedBy(matchLength)
-            var str = self.substringWithRange(Range<String.Index>(
-                start:start,
-                end: end))
+            var str = self.substringWithRange(start..<end)
             str = str.stringByReplacingOccurrencesOfString("\\;", withString: ";")
             results.append(str)
             
@@ -1140,9 +1138,7 @@ extension String {
         if lastIndex < length {
             let start = self.startIndex.advancedBy(lastIndex)
             let end = start.advancedBy(length - lastIndex)
-            var str = self.substringWithRange(Range<String.Index>(
-                start:start,
-                end: end))
+            var str = self.substringWithRange(start ..< end)
             str = str.stringByReplacingOccurrencesOfString("\\;", withString: ";")
             results.append(str)
         }

@@ -26,7 +26,7 @@ extension String {
     public func trimSuffix(suffix:String) -> String {
         
         if(self.hasSuffix(suffix)) {
-            return self.substringWithRange(Range<String.Index>(start:self.startIndex, end:self.endIndex.advancedBy(-1*suffix.characters.count)))
+            return self.substringWithRange(self.startIndex ..< self.endIndex.advancedBy(-1*suffix.characters.count))
         }
         
         return self
@@ -46,7 +46,7 @@ extension String {
     }
     
     subscript (r: Range<Int>) -> String {
-        return substringWithRange(Range(start: startIndex.advancedBy(r.startIndex), end: startIndex.advancedBy(r.endIndex)))
+        return substringWithRange(startIndex.advancedBy(r.startIndex) ..< startIndex.advancedBy(r.endIndex))
     }
     
     subscript (r: Range<String.Index>) -> String {

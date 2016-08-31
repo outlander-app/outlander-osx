@@ -240,7 +240,7 @@ import Foundation
             //println("\n\n****new tag!****\n")
             let checker = "</\(context.tagName)>"
             let endRange = context.__sourceString.rangeOfString(checker)
-            let childNodes = pushContext(context, range: Range(start: context.__startIndex, end: endRange!.startIndex))
+            let childNodes = pushContext(context, range: context.__startIndex ..< endRange!.startIndex)
             context.createNode(childNodes)
             
             // advance to end of closing tag

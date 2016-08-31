@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#44 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#46 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -117,7 +117,7 @@ public class SwiftRegex: NSObject, BooleanType {
             }
             return groups
         } else {
-            return []
+            return nil
         }
     }
     
@@ -134,7 +134,7 @@ public class SwiftRegex: NSObject, BooleanType {
             if let mutableTarget = target as? NSMutableString {
                 for match in Array(matchResults().reverse()) {
                     let replacement = regex.replacementStringForResult( match,
-                        inString: target as String, offset: 0, template: newValue )
+                                                                        inString: target as String, offset: 0, template: newValue )
                     mutableTarget.replaceCharactersInRange( match.rangeAtIndex(groupno), withString: replacement )
                 }
             } else {
@@ -208,30 +208,30 @@ public class SwiftRegex: NSObject, BooleanType {
     }
     
     /* removed Beta6
-    public func __conversion() -> Bool {
-    return doesMatch()
-    }
-    
-    public func __conversion() -> NSRange {
-    return range()
-    }
-    
-    public func __conversion() -> String {
-    return match()
-    }
-    
-    public func __conversion() -> [String] {
-    return matches()
-    }
-    
-    public func __conversion() -> [[String]] {
-    return allGroups()
-    }
-    
-    public func __conversion() -> [String:String] {
-    return dictionary()
-    }
-    */
+     public func __conversion() -> Bool {
+     return doesMatch()
+     }
+     
+     public func __conversion() -> NSRange {
+     return range()
+     }
+     
+     public func __conversion() -> String {
+     return match()
+     }
+     
+     public func __conversion() -> [String] {
+     return matches()
+     }
+     
+     public func __conversion() -> [[String]] {
+     return allGroups()
+     }
+     
+     public func __conversion() -> [String:String] {
+     return dictionary()
+     }
+     */
     public var boolValue: Bool {
         return doesMatch()
     }
@@ -265,16 +265,16 @@ public func RegexMutable( string: NSString ) -> NSMutableString {
     return NSMutableString( string: string )
 }
 
-// for switch
-public var lastRegexMatchGroups: [String!]!
-
-public func ~= ( left: String, right: String ) -> Bool {
-    if let groups = SwiftRegex( target: right, pattern: left ).groups() {
-        lastRegexMatchGroups = groups.map { $0 != regexNoGroup ? $0 : nil }
-        return true
-    }
-    return false
-}
+//// for switch
+//public var lastRegexMatchGroups: [String!]!
+//
+//public func ~= ( left: String, right: String ) -> Bool {
+//    if let groups = SwiftRegex( target: right, pattern: left ).groups() {
+//        lastRegexMatchGroups = groups.map { $0 != regexNoGroup ? $0 : nil }
+//        return true
+//    }
+//    return false
+//}
 
 // for replacements
 public func ~= ( left: SwiftRegex, right: String ) -> Bool {
@@ -290,7 +290,8 @@ public func ~= ( left: SwiftRegex, right: [String] ) -> Bool {
     return left.substituteMatches( {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         
-        if ++matchNumber == right.count {
+        matchNumber += 1
+        if matchNumber == right.count {
             stop.memory = true
         }
         
