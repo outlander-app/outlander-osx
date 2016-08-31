@@ -1,5 +1,6 @@
 Outlander - OSX 10.10+
 ==========
+[![Travis](https://img.shields.io/travis/joemcbride/outlander-osx.svg)]()
 
 Like Outlander?  Consider [becoming a Patreon](https://www.patreon.com/outlander).
 
