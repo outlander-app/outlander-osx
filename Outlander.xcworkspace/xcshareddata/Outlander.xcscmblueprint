@@ -1,39 +1,46 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++E01E9BE",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++C720149",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7E3F702" : 0,
-    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++043F7E3" : 0,
-    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++E01E9BE" : 0,
     "E3F1CFC7B66794122E6D31906D72E79A4B1AAB6D+++ED288D2" : 0,
     "51B210D0D41486D3ADD6940D57E4480BBD4DE4C5+++31CF63D" : 0,
-    "68EF5AECE86A008766AFB939980711214C9515A4+++64BC2E2" : 0,
-    "E084C86B03F81D63323C9E7510697EA528A758C7+++EB36659" : 0,
-    "E084C86B03F81D63323C9E7510697EA528A758C7+++5058290" : 0,
-    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC+++8FB6DD9" : 0,
     "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7538069" : 0,
+    "E084C86B03F81D63323C9E7510697EA528A758C7+++EB36659" : 0,
+    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++C720149" : 0,
+    "E084C86B03F81D63323C9E7510697EA528A758C7+++5058290" : 0,
+    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++E01E9BE" : 0,
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++043F7E3" : 0,
+    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC+++8FB6DD9" : 0,
+    "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7E3F702" : 0,
+    "68EF5AECE86A008766AFB939980711214C9515A4+++64BC2E2" : 0,
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++76B6D9B" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "122AD21F-9485-4FC7-97B0-995B4F2B21AB",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7E3F702" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/specta",
-    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++043F7E3" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/expecta",
-    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++E01E9BE" : "Outlander",
     "E3F1CFC7B66794122E6D31906D72E79A4B1AAB6D+++ED288D2" : "Outlander\/Squirrel.Mac\/External\/Mantle",
     "51B210D0D41486D3ADD6940D57E4480BBD4DE4C5+++31CF63D" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa",
-    "68EF5AECE86A008766AFB939980711214C9515A4+++64BC2E2" : "Outlander\/Squirrel.Mac",
-    "E084C86B03F81D63323C9E7510697EA528A758C7+++EB36659" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/xcconfigs",
-    "E084C86B03F81D63323C9E7510697EA528A758C7+++5058290" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/xcconfigs",
-    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC+++8FB6DD9" : "Outlander\/Squirrel.Mac\/External\/OHHTTPStubs",
     "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7538069" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/specta",
+    "E084C86B03F81D63323C9E7510697EA528A758C7+++EB36659" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/xcconfigs",
+    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++C720149" : "outlander-osx\/",
+    "E084C86B03F81D63323C9E7510697EA528A758C7+++5058290" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/xcconfigs",
+    "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++E01E9BE" : "Outlander",
+    "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++043F7E3" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/expecta",
+    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC+++8FB6DD9" : "Outlander\/Squirrel.Mac\/External\/OHHTTPStubs",
+    "2FD0F96481B39E576130E173BF6923CF52C91FF7+++7E3F702" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/specta",
+    "68EF5AECE86A008766AFB939980711214C9515A4+++64BC2E2" : "Outlander\/Squirrel.Mac",
     "8884BD3B878631A1500EC9895E6A3CF4CB0AB3DB+++76B6D9B" : "Outlander\/Squirrel.Mac\/External\/ReactiveCocoa\/external\/expecta"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Outlander",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Outlander.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:joemcbride\/outlander-osx.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0FA4C0C1F42F773AB945A1E0F995D3466A1FF26D+++C720149"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/joemcbride\/outlander-osx.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",

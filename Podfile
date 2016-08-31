@@ -1,12 +1,19 @@
 platform:osx, '10.10'
 use_frameworks!
 
-xcodeproj 'src/Outlander.xcodeproj'
+project 'src/Outlander.xcodeproj'
 
-pod 'CocoaAsyncSocket', '7.3.3'
-pod 'PEGKit', '~> 0.4'
+def shared_pods
+  pod 'CocoaAsyncSocket', '7.3.3'
+  pod 'PEGKit', '~> 0.4'
+end
 
-target :OutlanderTests, :exclusive => true do
+target :Outlander do
+    shared_pods
+end
+
+target :OutlanderTests do
+  shared_pods
   pod 'Kiwi', '2.3.1'
   pod 'Quick', '0.9.1'
   pod 'Nimble', '3.2.0'

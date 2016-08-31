@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		DD7EFAC92090A30C6F398B77 /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
@@ -69,6 +69,8 @@
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
+		F92D67CD1D76907C00668EAA /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
+		F92D67CE1D76907C00668EAA /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
@@ -143,7 +145,6 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
-		F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = B26C7DA750198A8239EB3C35 /* Pods.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */; };
@@ -457,7 +458,7 @@
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
-				F97466AB1ABD8C340075AC77 /* Pods.framework in Copy Files */,
+				F92D67CE1D76907C00668EAA /* Pods_Outlander.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,12 +466,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OutlanderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.debug.xcconfig"; sourceTree = "<group>"; };
+		75C0CC3EA40A2B5D0B4B9467 /* Pods-Outlander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Outlander.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Outlander/Pods-Outlander.release.xcconfig"; sourceTree = "<group>"; };
+		7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Outlander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OutlanderTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests.release.xcconfig"; sourceTree = "<group>"; };
 		B26C7DA750198A8239EB3C35 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1245CF34ADDAE5E9979D03 /* Pods-Outlander.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Outlander.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Outlander/Pods-Outlander.debug.xcconfig"; sourceTree = "<group>"; };
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
 		F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
@@ -855,13 +857,14 @@
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
+				F92D67CD1D76907C00668EAA /* Pods_Outlander.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
-				DDBB350E08DC88628C93F57B /* Pods.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
+				DD7EFAC92090A30C6F398B77 /* Pods_Outlander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,10 +892,10 @@
 		DFBD5CB6EC1C07B0976E2FFC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */,
-				31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */,
 				66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */,
 				7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */,
+				BE1245CF34ADDAE5E9979D03 /* Pods-Outlander.debug.xcconfig */,
+				75C0CC3EA40A2B5D0B4B9467 /* Pods-Outlander.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1362,6 +1365,7 @@
 				F9CF926C1890832800449548 /* Other Frameworks */,
 				B26C7DA750198A8239EB3C35 /* Pods.framework */,
 				594A6EE3BBD73C9AD7393D6C /* Pods_OutlanderTests.framework */,
+				7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1454,13 +1458,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9CF92981890832800449548 /* Build configuration list for PBXNativeTarget "Outlander" */;
 			buildPhases = (
-				302E9CBC367A4D4DB47B5D65 /* Check Pods Manifest.lock */,
+				5FB0FF78683EA37769AA2570 /* [CP] Check Pods Manifest.lock */,
 				F9CF92631890832800449548 /* Sources */,
 				F9CF92641890832800449548 /* Frameworks */,
 				F9F3D899195CA499005B9D68 /* Copy Files */,
 				F9CF92651890832800449548 /* Resources */,
-				90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */,
-				0BD0B33C5C541E23C0B14342 /* Embed Pods Frameworks */,
+				1D9B743F293EDE56A60B31E5 /* [CP] Embed Pods Frameworks */,
+				EB1BA7707BA1FAC7E16A8A2E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1475,12 +1479,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9CF929B1890832800449548 /* Build configuration list for PBXNativeTarget "OutlanderTests" */;
 			buildPhases = (
-				5882B6895BA34C8C8CFA2C7C /* Check Pods Manifest.lock */,
+				5882B6895BA34C8C8CFA2C7C /* [CP] Check Pods Manifest.lock */,
 				F9CF92841890832800449548 /* Sources */,
 				F9CF92851890832800449548 /* Frameworks */,
 				F9CF92861890832800449548 /* Resources */,
-				6A1D0D83916E4B5B894CA214 /* Copy Pods Resources */,
-				2BBF27BEE1318C35A566CFF2 /* Embed Pods Frameworks */,
+				6A1D0D83916E4B5B894CA214 /* [CP] Copy Pods Resources */,
+				2BBF27BEE1318C35A566CFF2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1588,29 +1592,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BD0B33C5C541E23C0B14342 /* Embed Pods Frameworks */ = {
+		1D9B743F293EDE56A60B31E5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Outlander/Pods-Outlander-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2BBF27BEE1318C35A566CFF2 /* Embed Pods Frameworks */ = {
+		2BBF27BEE1318C35A566CFF2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1618,14 +1622,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		302E9CBC367A4D4DB47B5D65 /* Check Pods Manifest.lock */ = {
+		5882B6895BA34C8C8CFA2C7C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1633,14 +1637,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		5882B6895BA34C8C8CFA2C7C /* Check Pods Manifest.lock */ = {
+		5FB0FF78683EA37769AA2570 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1648,14 +1652,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		6A1D0D83916E4B5B894CA214 /* Copy Pods Resources */ = {
+		6A1D0D83916E4B5B894CA214 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1663,19 +1667,19 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-OutlanderTests/Pods-OutlanderTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		90F76A8BB2AD494C94C82D94 /* Copy Pods Resources */ = {
+		EB1BA7707BA1FAC7E16A8A2E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Outlander/Pods-Outlander-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2166,7 +2170,7 @@
 		};
 		F9CF92991890832800449548 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D5704133F4741A3D15D6402 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = BE1245CF34ADDAE5E9979D03 /* Pods-Outlander.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -2228,7 +2232,7 @@
 		};
 		F9CF929A1890832800449548 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31D2D4DFDAA12D5617E715B0 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 75C0CC3EA40A2B5D0B4B9467 /* Pods-Outlander.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
