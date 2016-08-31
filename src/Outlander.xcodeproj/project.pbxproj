@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD7EFAC92090A30C6F398B77 /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90CEC0D1ACE70F500204243 /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
@@ -30,6 +29,8 @@
 		F91031521B3D0F140039BDF0 /* Gag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031501B3D0F140039BDF0 /* Gag.swift */; };
 		F91031541B3D0F710039BDF0 /* GagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031531B3D0F710039BDF0 /* GagsLoader.swift */; };
 		F91031551B3D0F710039BDF0 /* GagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91031531B3D0F710039BDF0 /* GagsLoader.swift */; };
+		F910E4941D76B400000A7A8F /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
+		F910E4951D76B400000A7A8F /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
@@ -69,8 +70,6 @@
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
-		F92D67CD1D76907C00668EAA /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
-		F92D67CE1D76907C00668EAA /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F92D67CF1D76925800668EAA /* Pods_Outlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; };
 		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
@@ -458,7 +457,7 @@
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
 				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
-				F92D67CE1D76907C00668EAA /* Pods_Outlander.framework in Copy Files */,
+				F910E4951D76B400000A7A8F /* Pods_Outlander.framework in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -857,14 +856,13 @@
 				F9423AEC1AC3B0960035B2F5 /* CocoaAsyncSocket.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97A5C801893812D00E2C318 /* libxml2.dylib in Frameworks */,
-				F92D67CD1D76907C00668EAA /* Pods_Outlander.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
-				DD7EFAC92090A30C6F398B77 /* Pods_Outlander.framework in Frameworks */,
+				F910E4941D76B400000A7A8F /* Pods_Outlander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
