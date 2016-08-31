@@ -313,7 +313,6 @@
 		F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD2F1AC299EC009A2F67 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
 		F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
 		F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
 		F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -850,7 +849,6 @@
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F9AAC0591AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 				F910E49E1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F910E49C1D76B7A2000A7A8F /* GlimpseXML.framework in Frameworks */,
@@ -1490,7 +1488,7 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Joe McBride";
 				TargetAttributes = {
 					F9CF92871890832800449548 = {
@@ -2099,6 +2097,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2208,6 +2207,7 @@
 					SystemConfiguration,
 					"-lxml2",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
@@ -2269,6 +2269,7 @@
 					SystemConfiguration,
 					"-lxml2",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
@@ -2318,6 +2319,7 @@
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2364,6 +2366,7 @@
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";
