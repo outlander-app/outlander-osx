@@ -35,6 +35,8 @@ public class GameContext : NSObject {
             }
         }
     }
+
+    public var maps: [String:MapZone]
     
     public var highlights:OLMutableArray
     public var aliases:OLMutableArray
@@ -57,5 +59,6 @@ public class GameContext : NSObject {
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
         
         self.events = EventAggregator()
+        self.maps = [:]
     }
 }

@@ -8,6 +8,55 @@
 
 import Foundation
 
+extension GameContext {
+
+    func resetMap() {
+        if let zone = self.mapZone {
+            var name = self.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+            name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
+
+            let description = self.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+
+            let roomId = self.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+
+            if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
+                print("reset: found room \(currentRoom.id)")
+                self.globalVars.setCacheObject(currentRoom.id, forKey: "roomid")
+            } else {
+                findRoomInZones(name, description: description)
+            }
+        }
+    }
+
+    func findRoomInZones(name: String, description: String) -> MapNode? {
+
+        for (_, zone) in self.maps {
+            let (found, room) = findRoomInZone(zone, name: name, description: description)
+            guard found else { continue }
+
+            print("found room \(room!.id) in zone \(zone.id) - \(zone.name)")
+
+            self.mapZone = zone
+
+//            context.globalVars.setCacheObject(zoneId, forKey: "zoneid")
+//            context.globalVars.setCacheObject(roomId!, forKey: "roomid")
+            return room
+        }
+
+        print("cound not find room")
+        return nil
+    }
+
+    private func findRoomInZone(zone: MapZone, name:String, description:String) -> (Bool, MapNode?) {
+
+        if let currentRoom = zone.findRoomFuzyFrom(nil, name: name, description: description) {
+            return (true, currentRoom)
+        }
+        
+        return (false, nil)
+    }
+}
+
 @objc
 class MapperCommandHandler : NSObject, CommandHandler {
     
@@ -20,7 +69,13 @@ class MapperCommandHandler : NSObject, CommandHandler {
     }
     
     func handle(command: String, withContext: GameContext) {
-        print("#mapper: \(command)")
+        let text = command
+            .substringFromIndex(command.startIndex.advancedBy(7))
+            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+
+        if text == "reset" {
+            withContext.resetMap()
+        }
     }
 }
 

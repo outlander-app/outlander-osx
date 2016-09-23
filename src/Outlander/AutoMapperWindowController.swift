@@ -77,6 +77,38 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
         
         return nil
     }
+
+    func initializeMaps(context:GameContext, loader: MapLoader) {
+        guard let mapsFolder = context.pathProvider.mapsFolder() else { return }
+
+        let start = NSDate()
+
+        let maps = self.maps.filter { $0.zone == nil }
+
+        loadMap({ () -> [MapLoadResult] in
+            var results: [MapLoadResult] = []
+            maps.forEach { m in
+                let result = loader.load(mapsFolder.stringByAppendingPathComponent(m.file))
+                switch result {
+
+                case let .Success(zone):
+                    m.zone = zone
+
+                case let .Error(error):
+                    print(error)
+                }
+                results.append(result)
+            }
+            return results
+            }, mainClosure: { result -> () in
+                let diff = NSDate().timeIntervalSinceDate(start)
+                self.maps.forEach { map in
+                    context.maps[map.id] = map.zone!
+                }
+                print("all maps loaded in \(diff)")
+                context.resetMap()
+        })
+    }
     
     // MARK - NSComboBoxDataSource
     
@@ -85,10 +117,11 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     }
     
     func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject {
+        guard index > -1 else { return "" }
+
         let map = self.maps[index]
         return "\(map.id). \(map.name)"
     }
-    
 }
 
 class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
@@ -101,7 +134,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     @IBOutlet weak var nodeNameLabel: NSTextField!
     
     private var mapsDataSource: MapsDataSource = MapsDataSource()
-    
+
     private var context:GameContext?
     private let mapLoader:MapLoader = MapLoader()
     
@@ -122,7 +155,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        
+
         self.nodeNameLabel.stringValue = ""
         
         self.mapsComboBox.dataSource = self.mapsDataSource
@@ -147,9 +180,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 self.mapsComboBox.selectItemAtIndex(idx)
                 
                 self.renderMap(zone)
-                
             }
-            
+        }
+
+        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), game = self.context?.globalVars.cacheObjectForKey("game") {
+            self.window?.title = "AutoMapper - \(game): \(charname)"
         }
     }
     
@@ -159,7 +194,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
-                
+
                 if changed.keys.first == "zoneid" {
                     if let zoneId = changed["zoneid"] {
                         
@@ -289,18 +324,19 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                         }
                     }
                 }
+
+                self.mapsDataSource.initializeMaps(self.context!, loader: self.mapLoader)
             })
         }
     }
-    
+
     func renderMap(zone:MapZone) {
         
-        let room = self.findCurrentRoom(zone)
-        
-        if self.mapView == nil || self.mapView.getCurrentZoneId() == zone.id {
+        if self.mapView == nil {
             return
         }
-        
+
+        let room = self.findCurrentRoom(zone)
         let rect = zone.mapSize(0, padding: 100.0)
         
         self.mapLevel = room?.position.z ?? 0
@@ -319,6 +355,18 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     }
     
     func loadMapFromInfo(info:MapInfo) {
+
+        if let loaded = info.zone {
+            self.context?.mapZone = loaded
+            
+            info.zone = loaded
+            
+            if self.mapView != nil {
+                
+                self.renderMap(loaded)
+            }
+            return
+        }
         
         if let mapsFolder = context?.pathProvider.mapsFolder() {
             
@@ -329,7 +377,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             }
             
             let start = NSDate()
-            
+
             loadMap({ () -> MapLoadResult in
                 return self.mapLoader.load(file)
             }, mainClosure: { (result) -> () in
@@ -402,5 +450,4 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         
         self.loadMapFromInfo(selectedMap)
     }
-
 }

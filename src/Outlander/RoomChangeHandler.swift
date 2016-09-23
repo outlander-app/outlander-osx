@@ -51,24 +51,26 @@ class RoomChangeHandler : NSObject, NodeHandler {
                     let roomId = context.globalVars.cacheObjectForKey("roomid") as? String
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
-                    
                 }
             }
         }
     }
     
     func findRoom(context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) {
-        
-        { () -> Void in
-            let start = NSDate()
-        
-            if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
-                
+
+        let start = NSDate()
+
+        if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
+            
+            let diff = NSDate().timeIntervalSinceDate(start)
+            self.send(context, room: room, diff: diff)
+        }
+        else {
+            if let room = context.findRoomInZones(name, description: description) {
+
                 let diff = NSDate().timeIntervalSinceDate(start)
                 self.send(context, room: room, diff: diff)
             }
-            
-        } ~> { () -> Void in
         }
     }
     
@@ -95,7 +97,6 @@ class RoomChangeHandler : NSObject, NodeHandler {
             tag.color = "#00ffff"
             tag.preset = "automapper"
             self.relay.sendEcho(tag)
-            
         }
     }
 }
