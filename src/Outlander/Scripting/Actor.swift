@@ -350,7 +350,7 @@ public class Script : IScript {
         
         self.sendMessage(ScriptInfoMessage("[Starting '\(self.scriptName)' at \(formattedDate)]\n"))
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             
             let parser = OutlanderScriptParser()
             let tokens = parser.parseString(script)

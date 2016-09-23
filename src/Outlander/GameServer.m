@@ -126,7 +126,7 @@
         return;
     }
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         
         NSString *logsDir = _gameContext.pathProvider.logsFolder;
         NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@.txt", _gameContext.settings.character, _gameContext.settings.game, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];

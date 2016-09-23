@@ -92,20 +92,20 @@
         return [RACSignal empty];
     }];
     
-//    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
-//    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-//        [self endSheet];
-//        return [RACSignal empty];
-//    }];
-//    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-//        [self endSheet];
-//        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
-//            NSLog(@"Error preparing update: %@", error);
-//        }];
-//        
-//        return [RACSignal empty];
-//    }];
-    
+    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
+    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        return [RACSignal empty];
+    }];
+    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        [self endSheet];
+        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
+            NSLog(@"Error preparing update: %@", error);
+        }];
+        
+        return [RACSignal empty];
+    }];
+
     [_gameContext.events subscribe:self token:@"disconnected"];
     
 	return self;
@@ -194,7 +194,7 @@
     //[self.window makeFirstResponder:vc._CommandTextField];
     //[vc._CommandTextField becomeFirstResponder];
     
-    //[self checkForUpdates];
+//    [self checkForUpdates];
 }
 
 - (void)awakeFromNib {
@@ -270,8 +270,8 @@
 }
 
 - (void)showAppUpdate {
-//    NSRect viewRect = NSMakeRect(0, 0, 300, 300);
-//    [self showSheet:_appUpdateController.view withFrame:viewRect];
+    NSRect viewRect = NSMakeRect(0, 0, 300, 300);
+    [self showSheet:_appUpdateController.view withFrame:viewRect];
 }
 
 - (void)showProfiles {
@@ -307,15 +307,19 @@
     NSURLComponents *components = [[NSURLComponents alloc] init];
     
     components.scheme = @"http";
-//    components.host = @"localhost";
-//    components.port = @(5000);
+    components.host = @"localhost";
+    components.port = @(3000);
     components.host = @"outlanderapp.com";
-    components.path = @"/version";
+    components.path = @"/api/updates";
     
     NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
     NSString *version = dict[@"CFBundleShortVersionString"];
-    
-    components.query = [[NSString stringWithFormat:@"version=v%@", version] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+
+    NSOperatingSystemVersion osVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+
+    NSString *osVersionString = [NSString stringWithFormat:@"%ld.%ld.%ld", (long)osVersion.majorVersion, (long)osVersion.minorVersion, (long)osVersion.patchVersion];
+
+    components.query = [[NSString stringWithFormat:@"version=v%@&os=%@", version, osVersionString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
     
     NSLog(@"%@", components.URL);
     

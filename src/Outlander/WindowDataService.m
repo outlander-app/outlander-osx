@@ -82,7 +82,7 @@
     [dict setValue:windows forKey:@"windows"];
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                       options:kNilOptions
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     NSString *filePath = [self get:context FilePath:@"layout.cfg"];
     [jsonData writeToFile:filePath atomically:YES];

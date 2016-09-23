@@ -30,7 +30,7 @@
     _monoFontName = @"Menlo";
     _monoFontSize = 13;
     _visible = YES;
-    
+
     return self;
 }
 
