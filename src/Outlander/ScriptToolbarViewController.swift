@@ -10,7 +10,9 @@ import Cocoa
 
 class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
-    private var context:GameContext?
+    private var context: GameContext?
+    private var font: String = "Menlo"
+    private var fontSize: CGFloat = 12
     
     func handle(token:String, data:Dictionary<String, AnyObject>) {
         mainThread { () -> () in
@@ -73,23 +75,29 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     }
     
     func updateButtonFrames() {
-        let width = 125
-        var count = 0
+        var width: CGFloat = 125
+        var offset: CGFloat = 0
         for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
-                button.frame = NSRect(x: count * width, y: 0, width: width, height: 25)
-//                button.sizeToFit()
-                count += 1
+                if let title = button.menu?.title {
+                    width = NSString(string: title).sizeWithAttributes([NSFontAttributeName: NSFont(name: self.font, size: self.fontSize)!]).width
+                    width += 50
+                }
+                button.frame = NSRect(x: offset, y: 0, width: width, height: 25)
+                offset += button.frame.width
             }
         }
     }
     
     func addScript(scriptName:String) {
-        let viewCount = self.view.subviews.count
-        let width = 125
+
+        let buttonFont = NSFont(name: self.font, size: self.fontSize)!
+
+        let frame = NSRect(x: 0, y: 0, width: 75, height: 25)
         
-        let btn = NSPopUpButton(frame: NSRect(x: viewCount * width, y: 0, width: width, height: 25), pullsDown: true)
+        let btn = NSPopUpButton(frame: frame, pullsDown: true)
         btn.setButtonType(NSButtonType.SwitchButton)
+        btn.font = buttonFont
         btn.menu = NSMenu(title: scriptName)
         btn.menu?.addItem(createMenuItem(scriptName, textColor: NSColor.whiteColor()))
         btn.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
@@ -114,9 +122,10 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         btn.menu?.addItem(createMenuItem("Vars", textColor: NSColor.blackColor()))
         btn.menu?.itemAtIndex(5)?.image = NSImage(named: "NSStatusNone")
         self.view.subviews.append(btn)
-        //btn.sizeToFit()
-        
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ScriptToolbarViewController.popUpSelectionChanged(_:)), name: NSMenuDidSendActionNotification, object: btn.menu)
+
+        self.updateButtonFrames()
     }
     
     func debugMenuItemSelection(target:NSMenuItem) {
@@ -144,7 +153,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     func createTitleString(title:String, textColor:NSColor) -> NSAttributedString {
         var attributes = [String:AnyObject]()
         attributes[NSForegroundColorAttributeName] = textColor
-        attributes[NSFontAttributeName] = NSFont(name: "Menlo", size: 12)
+        attributes[NSFontAttributeName] = NSFont(name: self.font, size: self.fontSize)
         
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = NSLineBreakMode.ByTruncatingTail

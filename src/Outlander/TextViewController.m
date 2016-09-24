@@ -318,24 +318,31 @@
             [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
         }
         
-        //NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
-        
+//        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+
 //        [textView.textStorage beginEditing];
-//        
-//        if (lines >= 10000) {
-//            NSRange removeRange = [self getRemovalRange:textView.string];
-//            //NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
-//            [textView.textStorage deleteCharactersInRange:removeRange];
-//        }
-        
+
+        if (lines >= 1000) {
+            NSRange removeRange = [self getRemovalRange:textView.string];
+//            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
+            [textView.textStorage deleteCharactersInRange:removeRange];
+        }
+
         [[textView textStorage] appendAttributedString:attr];
         
 //        [textView.textStorage endEditing];
-       
+
         if(shouldScrollToBottom) {
-            [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+//                [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
+//            });
+            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
         }
     });
+}
+
+- (void)scrollTextView:(MyNSTextView *)textView {
+    [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
 }
 
 - (NSRange)getRemovalRange:(NSString *)s {
@@ -345,7 +352,7 @@
     for (index = 0, numberOfLines = 0; index < stringLength;
          numberOfLines++) {
         index = NSMaxRange([s lineRangeForRange:NSMakeRange(index, 0)]);
-        if (numberOfLines >= 100) {
+        if (numberOfLines >= 50) {
             break;
         }
     }

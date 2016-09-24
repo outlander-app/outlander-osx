@@ -78,9 +78,16 @@
         [self endSheet];
         
         [_appSettingsLoader loadProfile:_chooseProfileViewController.selectedProfile];
-       
+
         [[self currentVC] removeAllWindows];
         [[self currentVC] loadWindows];
+
+        [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
+                                         _gameContext.layout.primaryWindow.y,
+                                         _gameContext.layout.primaryWindow.width,
+                                         _gameContext.layout.primaryWindow.height)
+                      display:YES
+                      animate:NO];
         
         [self showLogin];
         
