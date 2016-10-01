@@ -13,6 +13,7 @@
 
 @interface GameServer () {
     GameContext *_gameContext;
+    BOOL _matchedToken;
 }
 @end
 
@@ -26,6 +27,7 @@
     
     _subject = [RACSubject subject];
     _connected = [RACSubject subject];
+    _matchedToken = NO;
     
     return self;
 }
@@ -76,9 +78,8 @@
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"Response: %@", response);
     
-    [self writeLog:response];
-   
-    if([self matchesToken:response]) {
+    if(!_matchedToken && [self matchesToken:response]) {
+        _matchedToken = YES;
         NSMutableString *replaced = [NSMutableString stringWithString:response];
         [self replace:replaced withPattern:@"GSw\\d+"];
         NSData *data = [@"\r\n" dataUsingEncoding:NSUTF8StringEncoding];
@@ -118,22 +119,6 @@
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:nil];
     [regex replaceMatchesInString:data options:0 range:NSMakeRange(0, [data length]) withTemplate:@""];
-}
-
-- (void) writeLog:(NSString *)data {
-    
-    if(!_gameContext.settings.loggingEnabled) {
-        return;
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        
-        NSString *logsDir = _gameContext.pathProvider.logsFolder;
-        NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@.txt", _gameContext.settings.character, _gameContext.settings.game, [@"%@" stringFromDateFormat:@"yyyy-MM-dd"]];
-        
-        NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
-        [[NSString stringWithFormat:@"%@<-->", data] appendToFile:filePath encoding:NSUTF8StringEncoding];
-    });
 }
 
 @end

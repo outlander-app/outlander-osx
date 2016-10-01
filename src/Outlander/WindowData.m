@@ -30,6 +30,8 @@
     _monoFontName = @"Menlo";
     _monoFontSize = 13;
     _visible = YES;
+    _bufferSize = 1000;
+    _bufferClearSize = 50;
 
     return self;
 }

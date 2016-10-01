@@ -31,6 +31,8 @@
 @property (nonatomic, assign) BOOL isVisible;
 @property (nonatomic, assign) BOOL lastShowBorder;
 @property (nonatomic, assign) NSRect lastLocation;
+@property (nonatomic, assign) NSUInteger bufferSize;
+@property (nonatomic, assign) NSUInteger bufferClearSize;
 
 - (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)show;

@@ -291,14 +291,13 @@
     }
     
     text.text = [self processSubs:text.text];
+    NSAttributedString *attr = [self stringFromTag:text];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
         BOOL endswithNewline = [self endsWithNewline:textView];
         BOOL timestamp = textView.displayTimestamp && (textView.textStorage.length == 0 || endswithNewline);
-        
-        NSAttributedString *attr = [self stringFromTag:text];
-       
+
         NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
         
         double autoScrollToleranceLineCount = 3.0;
@@ -317,18 +316,27 @@
         if ([text.scriptName length] > 0 &&  text.scriptLine > -1) {
             [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
         }
+
+        NSLog(@"**** Should Scroll: (%@) %hhd, %f, %f", self.key, shouldScrollToBottom, scrollDiff, percentScrolled);
         
-//        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+
+        NSRange removeRange;
+        BOOL shouldRemoveRange = NO;
+
+        if (lines >= self.bufferSize) {
+            shouldRemoveRange = YES;
+            removeRange = [self getRemovalRange:textView.string withDiff:lines - self.bufferSize];
+        }
 
 //        [textView.textStorage beginEditing];
 
-        if (lines >= 1000) {
-            NSRange removeRange = [self getRemovalRange:textView.string];
-//            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
+        if (shouldRemoveRange) {
+            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
             [textView.textStorage deleteCharactersInRange:removeRange];
         }
 
-        [[textView textStorage] appendAttributedString:attr];
+        [textView.textStorage appendAttributedString:attr];
         
 //        [textView.textStorage endEditing];
 
@@ -336,7 +344,9 @@
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
 //                [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
 //            });
-            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
+//            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
+            NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
+            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0 inModes:modes];
         }
     });
 }
@@ -345,14 +355,16 @@
     [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
 }
 
-- (NSRange)getRemovalRange:(NSString *)s {
+- (NSRange)getRemovalRange:(NSString *)s withDiff:(NSUInteger) diff {
+
+    NSUInteger totalLinesToRemove = diff + self.bufferClearSize;
     
     NSUInteger numberOfLines, index, stringLength = [s length];
     
     for (index = 0, numberOfLines = 0; index < stringLength;
          numberOfLines++) {
         index = NSMaxRange([s lineRangeForRange:NSMakeRange(index, 0)]);
-        if (numberOfLines >= 50) {
+        if (numberOfLines >= totalLinesToRemove) {
             break;
         }
     }

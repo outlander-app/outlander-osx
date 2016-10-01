@@ -51,11 +51,12 @@
         return;
     }
     
-    _timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
-                                              target: self
-                                            selector: @selector(onTick:)
-                                            userInfo: nil
-                                             repeats: YES];
+    _timer = [NSTimer timerWithTimeInterval: 1.0
+                                     target: self
+                                   selector: @selector(onTick:)
+                                   userInfo: nil
+                                    repeats: YES];
+    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)onTick:(NSTimer *)t {

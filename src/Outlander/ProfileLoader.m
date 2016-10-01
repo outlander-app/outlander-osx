@@ -58,6 +58,11 @@
     if(logging && logging.length > 0 && ([[logging lowercaseString] hasPrefix:@"yes"] || [[logging lowercaseString] hasPrefix:@"true"])) {
         _context.settings.loggingEnabled = YES;
     }
+
+    NSString *rawLogging = [self matchFor:data pattern:@"RawLogging: (.+)"];
+    if(rawLogging && rawLogging.length > 0 && ([[rawLogging lowercaseString] hasPrefix:@"yes"] || [[rawLogging lowercaseString] hasPrefix:@"true"])) {
+        _context.settings.rawLoggingEnabled = YES;
+    }
 }
 
 - (void)save {
@@ -70,6 +75,7 @@
     [profile appendFormat:@"Game: %@\n", _context.settings.game];
     [profile appendFormat:@"Character: %@\n", _context.settings.character];
     [profile appendFormat:@"Logging: %@\n", _context.settings.loggingEnabled ? @"yes" : @"no"];
+    [profile appendFormat:@"RawLogging: %@\n", _context.settings.rawLoggingEnabled ? @"yes" : @"no"];
     
     NSData *data = [profile dataUsingEncoding:NSUTF8StringEncoding];
     

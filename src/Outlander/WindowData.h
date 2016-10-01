@@ -27,5 +27,7 @@
 @property (nonatomic, assign) double fontSize;
 @property (nonatomic, copy) NSString *monoFontName;
 @property (nonatomic, assign) double monoFontSize;
+@property (nonatomic, assign) NSUInteger bufferSize;
+@property (nonatomic, assign) NSUInteger bufferClearSize;
 
 @end

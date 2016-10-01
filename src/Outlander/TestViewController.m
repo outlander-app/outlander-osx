@@ -344,6 +344,8 @@
     controller.monoFontSize = window.monoFontSize;
     controller.closedTarget = window.closedTarget;
     controller.windowTitle = window.title;
+    controller.bufferSize = window.bufferSize;
+    controller.bufferClearSize = window.bufferClearSize;
 
     [controller setDisplayTimestamp:window.timestamp];
     [controller setShowBorder:window.showBorder];
@@ -404,6 +406,8 @@
         data.visible = controller.isVisible;
         data.closedTarget = controller.closedTarget;
         data.title = controller.windowTitle;
+        data.bufferSize = controller.bufferSize;
+        data.bufferClearSize = controller.bufferClearSize;
         [windows addObject:data];
     }];
     
@@ -508,11 +512,14 @@
 }
 
 - (void)append:(TextTag*)text to:(NSString *)key {
-    
+
+    NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
+    [self performSelector:@selector(writeLog:) withObject:text afterDelay:0 inModes:modes];
+
     if([key length] == 0) {
         return;
     }
-    
+
     NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
@@ -729,6 +736,41 @@
     }
     
     [_directionsView setDirections:dirs];
+}
+
+- (void) writeLog:(TextTag *)tag {
+
+    NSString *target = [tag.targetWindow isEqualToString:@"raw"] ? @"raw" : [self windowForTarget:tag.targetWindow];
+
+    if(![target isEqualToString:@"main"] && ![target isEqualToString:@"raw"]) {
+        return;
+    }
+
+    BOOL isRaw = NO;
+
+    if([target isEqualToString: @"raw"]) {
+        isRaw = YES;
+    }
+
+    if(isRaw && !_gameContext.settings.rawLoggingEnabled) {
+        return;
+    }
+
+    if(!isRaw && !_gameContext.settings.loggingEnabled) {
+        return;
+    }
+
+    NSString *ending = isRaw ? @"-raw" : @"";
+    
+    NSString *logsDir = _gameContext.pathProvider.logsFolder;
+    NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@%@.txt",
+                          _gameContext.settings.character,
+                          _gameContext.settings.game,
+                          [@"%@" stringFromDateFormat:@"yyyy-MM-dd"],
+                          ending];
+    
+    NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
+    [tag.text appendToFile:filePath encoding:NSUTF8StringEncoding];
 }
 
 @end

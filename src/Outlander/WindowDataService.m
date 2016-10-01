@@ -32,7 +32,23 @@
         data.monoFontName = @"Menlo";
         data.monoFontSize = 13;
     }
-    
+
+    if(data.bufferSize == 0) {
+        data.bufferSize = 1000;
+    }
+
+    if(data.bufferSize < 10) {
+        data.bufferSize = 10;
+    }
+
+    if(data.bufferClearSize == 0) {
+        data.bufferClearSize = 50;
+    }
+
+    if(data.bufferClearSize < 10) {
+        data.bufferClearSize = 10;
+    }
+
     return data;
 }
 

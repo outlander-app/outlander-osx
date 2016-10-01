@@ -162,14 +162,14 @@
          
          NSArray *rawArray = [NSArray arrayWithObjects:rawTag, nil];
          [_mainSubject sendNext:rawArray];
-         
+
          NSArray *nodes = [_tokenizer tokenize:rawXml];
          NSArray *tags = [_tagStreamer stream:nodes];
          
          [_mainSubject sendNext:tags];
          
          NSString *rawText = [self textForTagList:tags];
-         //NSLog(@"-->%@", rawText);
+
          [_triggerHandler handle:nodes text:rawText context:_gameContext];
          [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
          [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
