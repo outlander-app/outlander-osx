@@ -6,10 +6,15 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "SkillExp.h"
 
-SPEC_BEGIN(SkillExpTester)
+QuickSpecBegin(SkillExpSpec)
 
 describe(@"SkillExp", ^{
    
@@ -21,7 +26,7 @@ describe(@"SkillExp", ^{
             exp.ranks = [NSDecimalNumber decimalNumberWithString:@"55.6"];
             exp.mindState = [LearningRate fromRate:3];
             
-            [[exp.description should] equal:@"    Locksmithing:   55 60%   (3/34) +55.60"];
+            expect(exp.description).to(equal(@"    Locksmithing:   55 60%   (3/34) +55.60"));
         });
         
         it(@"should replace underscore in name with space", ^{
@@ -30,7 +35,7 @@ describe(@"SkillExp", ^{
             exp.ranks = [NSDecimalNumber decimalNumberWithString:@"155.23"];
             exp.mindState = [LearningRate fromRate:5];
             
-            [[exp.description should] equal:@"      Life Magic:  155 23%   (5/34) +155.23"];
+            expect(exp.description).to(equal(@"      Life Magic:  155 23%   (5/34) +155.23"));
         });
         
         it(@"should display double-digit mind state correctly", ^{
@@ -39,9 +44,9 @@ describe(@"SkillExp", ^{
             exp.ranks = [NSDecimalNumber decimalNumberWithString:@"55.6"];
             exp.mindState = [LearningRate fromRate:10];
             
-            [[exp.description should] equal:@"    Locksmithing:   55 60%  (10/34) +55.60"];
+            expect(exp.description).to(equal(@"    Locksmithing:   55 60%  (10/34) +55.60"));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

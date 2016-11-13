@@ -5,11 +5,15 @@
 //  Created by Joseph McBride on 6/18/14.
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
 
-#import "Kiwi.h"
 #import "RoomObjsTags.h"
 
-SPEC_BEGIN(RoomObjsTagsTests)
+QuickSpecBegin(RoomObjsTagsSpec)
 
 describe(@"RoomObjcsTags", ^{
    
@@ -24,27 +28,27 @@ describe(@"RoomObjcsTags", ^{
         it(@"should create monster bold tags", ^{
             NSString *data = @"You also see <pushbold/>a musk hog<popbold/> and <pushbold/>a musk hog<popbold/>.";
             NSArray *tags = [theController tagsForRoomObjs:data];
-            
-            [[tags should] haveCountOf:5];
+
+            expect(@(tags.count)).to(equal(@5));
             
             TextTag *tag = tags[0];
-            [[tag.text should] equal:@"You also see "];
-            
+            expect(tag.text).to(equal(@"You also see "));
+
             tag = tags[1];
-            [[tag.text should] equal:@"a musk hog"];
-            [[theValue(tag.bold) should] equal:theValue(YES)];
+            expect(tag.text).to(equal(@"a musk hog"));
+            expect(@(tag.bold)).to(equal(@YES));
             
             tag = tags[2];
-            [[tag.text should] equal:@" and "];
-            
+            expect(tag.text).to(equal(@" and "));
+
             tag = tags[3];
-            [[tag.text should] equal:@"a musk hog"];
-            [[theValue(tag.bold) should] equal:theValue(YES)];
-            
+            expect(tag.text).to(equal(@"a musk hog"));
+            expect(@(tag.bold)).to(equal(@YES));
+
             tag = tags[4];
-            [[tag.text should] equal:@"."];
+            expect(tag.text).to(equal(@"."));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

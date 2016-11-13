@@ -6,11 +6,16 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "VarCommandHandler.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(VarCommandHandlerTester)
+QuickSpecBegin(VarCommandHandlerSpec)
 
 describe(@"var command handler", ^{
    
@@ -28,12 +33,12 @@ describe(@"var command handler", ^{
     context(@"can handle", ^{
         it(@"success", ^{
             BOOL result = [theHandler canHandle:@"#var one two"];
-            [[theValue(result) should] equal:theValue(YES)];
+            expect(@(result)).to(equal(@YES));
         });
         
         it(@"failure", ^{
             BOOL result = [theHandler canHandle:@"var one two"];
-            [[theValue(result) should] equal:theValue(NO)];
+            expect(@(result)).to(equal(@NO));
         });
     });
     
@@ -42,33 +47,33 @@ describe(@"var command handler", ^{
             [theHandler handle:@"#var one two" withContext:theContext];
             
             NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
-            [[value should] equal:@"two"];
-            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+            expect(value).to(equal(@"two"));
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
         });
         
         it(@"sets global var", ^{
             [theHandler handle:@"#var one two three four" withContext:theContext];
             
             NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
-            [[value should] equal:@"two three four"];
-            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+            expect(value).to(equal(@"two three four"));
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
         });
         
         it(@"updates existing global var", ^{
             [theHandler handle:@"#var one two" withContext:theContext];
             
             NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
-            [[value should] equal:@"two"];
-            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
-            
+            expect(value).to(equal(@"two"));
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
+
             [theHandler handle:@"#var one three" withContext:theContext];
             
             value = [theContext.globalVars cacheObjectForKey:@"one"];
-            [[value should] equal:@"three"];
-            
-            [[theValue(theContext.globalVars.count) should] equal:theValue(originalCount + 1)];
+            expect(value).to(equal(@"three"));
+
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

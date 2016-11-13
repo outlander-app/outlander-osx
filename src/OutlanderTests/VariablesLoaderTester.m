@@ -6,12 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "VariablesLoader.h"
 #import "StubFileSystem.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(VariblesLoaderTester)
+QuickSpecBegin(VariablesLoaderSpec)
 
 describe(@"Variables Loader", ^{
    
@@ -36,9 +41,9 @@ describe(@"Variables Loader", ^{
             theFileSystem.fileContents = @"#var {key} {some value}";
             
             [theLoader load];
-            [[theContext.globalVars should] haveCountOf:originalCount + 1];
-            
-            [[[theContext.globalVars cacheObjectForKey:@"key"] should] equal:@"some value"];
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
+
+            expect([theContext.globalVars cacheObjectForKey:@"key"]).to(equal(@"some value"));
         });
         
         it(@"should parse multiple vars", ^{
@@ -46,10 +51,10 @@ describe(@"Variables Loader", ^{
             theFileSystem.fileContents = @"#var {key1} {some value}\n#var {key2} {some other value}";
             
             [theLoader load];
-            [[theContext.globalVars should] haveCountOf:originalCount + 2];
-            
-            [[[theContext.globalVars cacheObjectForKey:@"key1"] should] equal:@"some value"];
-            [[[theContext.globalVars cacheObjectForKey:@"key2"] should] equal:@"some other value"];
+            expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 2)));
+
+            expect([theContext.globalVars cacheObjectForKey:@"key1"]).to(equal(@"some value"));
+            expect([theContext.globalVars cacheObjectForKey:@"key2"]).to(equal(@"some other value"));
         });
     });
     
@@ -63,11 +68,11 @@ describe(@"Variables Loader", ^{
             [theLoader save];
             
             NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"variables.cfg"];
-            
-            [[theFileSystem.givenFileName should] equal:path];
-            [[theFileSystem.fileContents should] equal:result];
+
+            expect(theFileSystem.givenFileName).to(equal(path));
+            expect(theFileSystem.fileContents).to(equal(result));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

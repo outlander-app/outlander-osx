@@ -6,10 +6,15 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "MyNSTextField.h"
 
-SPEC_BEGIN(MyNSTextFieldTester)
+QuickSpecBegin(MyNSTextFieldSpec)
 
 describe(@"My TextField", ^{
    
@@ -29,41 +34,41 @@ describe(@"My TextField", ^{
     context(@"keeps command history", ^{
         
         it(@"basic behavior", ^{
-            
-            [[[_textField stringValue] should] equal:@""];
+
+            expect(_textField.stringValue).to(equal(@""));
             
             [_textField previousHistory];
-            
-            [[[_textField stringValue] should] equal:@"two"];
+
+            expect(_textField.stringValue).to(equal(@"two"));
         });
         
         it(@"cycles through previous history", ^{
-            [[[_textField stringValue] should] equal:@""];
-            
+            expect(_textField.stringValue).to(equal(@""));
+
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@"two"];
-            
+            expect(_textField.stringValue).to(equal(@"two"));
+
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@"one"];
-            
+            expect(_textField.stringValue).to(equal(@"one"));
+
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@""];
-            
+            expect(_textField.stringValue).to(equal(@""));
+
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@"two"];
+            expect(_textField.stringValue).to(equal(@"two"));
         });
         
         it(@"cycles through next history", ^{
-            [[[_textField stringValue] should] equal:@""];
-            
+            expect(_textField.stringValue).to(equal(@""));
+
             [_textField nextHistory];
-            [[[_textField stringValue] should] equal:@"one"];
-            
+            expect(_textField.stringValue).to(equal(@"one"));
+
             [_textField nextHistory];
-            [[[_textField stringValue] should] equal:@"two"];
-            
+            expect(_textField.stringValue).to(equal(@"two"));
+
             [_textField nextHistory];
-            [[[_textField stringValue] should] equal:@""];
+            expect(_textField.stringValue).to(equal(@""));
         });
         
         it(@"does not commit the same value twice", ^{
@@ -71,12 +76,12 @@ describe(@"My TextField", ^{
             [_textField commitHistory];
             
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@"two"];
-            
+            expect(_textField.stringValue).to(equal(@"two"));
+
             [_textField previousHistory];
-            [[[_textField stringValue] should] equal:@"one"];
+            expect(_textField.stringValue).to(equal(@"one"));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

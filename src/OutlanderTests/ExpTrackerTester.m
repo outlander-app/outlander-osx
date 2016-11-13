@@ -6,10 +6,15 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "ExpTracker.h"
 
-SPEC_BEGIN(ExpTrackerTester)
+QuickSpecBegin(ExpTrackerSpec)
 
 describe(@"ExpTracker", ^{
    
@@ -29,14 +34,14 @@ describe(@"ExpTracker", ^{
             skill.isNew = NO;
             
             [_tracker update:skill];
-            
-            [[[_tracker skills] should] haveCountOf:1];
+
+            expect(@(_tracker.skills.count)).to(equal(@1));
         });
         
         it(@"should handle nils", ^{
             [_tracker update:nil];
-            
-            [[[_tracker skills] should] haveCountOf:0];
+
+            expect(@(_tracker.skills.count)).to(equal(@0));
         });
         
         
@@ -56,10 +61,10 @@ describe(@"ExpTracker", ^{
             skill.isNew = NO;
             
             [_tracker update:skill];
+            expect(@(_tracker.skills.count)).to(equal(@1));
             
-            [[[_tracker skills] should] haveCountOf:1];
             SkillExp *exp = [[_tracker skills] firstObject];
-            [[exp.ranks should] equal:theValue(55.5)];
+            expect(exp.ranks).to(equal(@55.5));
         });
     });
     
@@ -79,12 +84,12 @@ describe(@"ExpTracker", ^{
             skill.isNew = YES;
             
             [_tracker update:skill];
-            
-            [[[_tracker skills] should] haveCountOf:2];
-            [[[_tracker skillsWithExp] should] haveCountOf:1];
+
+            expect(@(_tracker.skills.count)).to(equal(@2));
+            expect(@(_tracker.skillsWithExp.count)).to(equal(@1));
         });
     });
     
 });
 
-SPEC_END;
+QuickSpecEnd

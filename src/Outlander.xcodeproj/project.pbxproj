@@ -31,8 +31,6 @@
 		F910E4951D76B400000A7A8F /* Pods_Outlander.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 7913BB2B4E07A72331C6C2E0 /* Pods_Outlander.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F910E49C1D76B7A2000A7A8F /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; };
 		F910E49D1D76B7A2000A7A8F /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F90CEC0C1ACE70F500204243 /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F910E49E1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; };
-		F910E49F1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4A01D76B8A5000A7A8F /* libxml2.tbd */; };
 		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
@@ -120,6 +118,8 @@
 		F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */; };
 		F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */; };
 		F959D3E41AC8FB6300B2A659 /* AliasesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */; };
+		F95F297E1D9F6E5B00B25B41 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; };
+		F95F297F1D9F6E5B00B25B41 /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F910E4961D76B728000A7A8F /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDB519343F5B00787CB9 /* ScriptLoader.m */; };
 		F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDBD1934585400787CB9 /* ScriptCommandHandler.m */; };
@@ -449,7 +449,7 @@
 			files = (
 				F910E49D1D76B7A2000A7A8F /* GlimpseXML.framework in Copy Files */,
 				F9A8DD3A1AC29AD6009A2F67 /* Mantle.framework in Copy Files */,
-				F910E49F1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Copy Files */,
+				F95F297F1D9F6E5B00B25B41 /* CocoaAsyncSocket.framework in Copy Files */,
 				F9A8DD3B1AC29AD6009A2F67 /* MASShortcut.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
@@ -849,11 +849,11 @@
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F910E49E1D76B7AD000A7A8F /* CocoaAsyncSocket.framework in Frameworks */,
 				F9A8DD341AC299EC009A2F67 /* MASShortcut.framework in Frameworks */,
 				F910E49C1D76B7A2000A7A8F /* GlimpseXML.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F9A8DD321AC299EC009A2F67 /* Mantle.framework in Frameworks */,
+				F95F297E1D9F6E5B00B25B41 /* CocoaAsyncSocket.framework in Frameworks */,
 				F910E4941D76B400000A7A8F /* Pods_Outlander.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1618,7 +1618,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5FB0FF78683EA37769AA2570 /* [CP] Check Pods Manifest.lock */ = {
@@ -1633,7 +1633,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		6A1D0D83916E4B5B894CA214 /* [CP] Copy Pods Resources */ = {

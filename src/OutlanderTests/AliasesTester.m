@@ -6,12 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "AliasLoader.h"
 #import "StubFileSystem.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(AliasesLoaderTester)
+QuickSpecBegin(AliasLoaderSpec)
 
 describe(@"Alias Loader", ^{
    
@@ -32,11 +37,12 @@ describe(@"Alias Loader", ^{
             theFileSystem.fileContents = @"#alias {l2} {load arrows}";
             
             [theLoader load];
-            [[[theContext.aliases should] have:1] aliases];
-            
+
+            expect(@(theContext.aliases.count)).to(equal(@1));
+
             Alias *alias = [theContext.aliases objectAtIndex:0];
-            [[alias.pattern should] equal:@"l2"];
-            [[alias.replace should] equal:@"load arrows"];
+            expect(alias.pattern).to(equal(@"l2"));
+            expect(alias.replace).to(equal(@"load arrows"));
         });
         
         it(@"should parse multiple aliases", ^{
@@ -44,15 +50,16 @@ describe(@"Alias Loader", ^{
             theFileSystem.fileContents = @"#alias {l2} {load arrows}\n#alias {atk} {.hunt lootcoin lootgem}\n";
             
             [theLoader load];
-            [[theContext.aliases should] haveCountOf:2];
-            
+
+            expect(@(theContext.aliases.count)).to(equal(@2));
+
             Alias *alias = [theContext.aliases objectAtIndex:0];
-            [[alias.pattern should] equal:@"l2"];
-            [[alias.replace should] equal:@"load arrows"];
-            
+            expect(alias.pattern).to(equal(@"l2"));
+            expect(alias.replace).to(equal(@"load arrows"));
+
             alias = [theContext.aliases objectAtIndex:1];
-            [[alias.pattern should] equal:@"atk"];
-            [[alias.replace should] equal:@".hunt lootcoin lootgem"];
+            expect(alias.pattern).to(equal(@"atk"));
+            expect(alias.replace).to(equal(@".hunt lootcoin lootgem"));
         });
     });
     
@@ -75,11 +82,11 @@ describe(@"Alias Loader", ^{
             [theLoader save];
             
             NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"aliases.cfg"];
-            
-            [[theFileSystem.givenFileName should] equal:path];
-            [[theFileSystem.fileContents should] equal:result];
+
+            expect(theFileSystem.givenFileName).to(equal(path));
+            expect(theFileSystem.fileContents).to(equal(result));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

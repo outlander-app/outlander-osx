@@ -6,10 +6,15 @@
 //  Copyright (c) 2015 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "Macro.h"
 
-SPEC_BEGIN(MacroTester)
+QuickSpecBegin(MacroSpec)
 
 describe(@"Macro", ^{
    
@@ -17,29 +22,29 @@ describe(@"Macro", ^{
         
         it(@"alt", ^{
             NSUInteger flags = [Macro stringToFlags:@"⌥"];
-            [[theValue(flags) should]equal:theValue(NSAlternateKeyMask)];
+            expect(@(flags)).to(equal(@(NSAlternateKeyMask)));
         });
         
         it(@"control", ^{
             NSUInteger flags = [Macro stringToFlags:@"⌃"];
-            [[theValue(flags) should]equal:theValue(NSControlKeyMask)];
+            expect(@(flags)).to(equal(@(NSControlKeyMask)));
         });
         
         it(@"command", ^{
             NSUInteger flags = [Macro stringToFlags:@"⌘"];
-            [[theValue(flags) should]equal:theValue(NSCommandKeyMask)];
+            expect(@(flags)).to(equal(@(NSCommandKeyMask)));
         });
         
         it(@"shift", ^{
             NSUInteger flags = [Macro stringToFlags:@"⇧"];
-            [[theValue(flags) should]equal:theValue(NSShiftKeyMask)];
+            expect(@(flags)).to(equal(@(NSShiftKeyMask)));
         });
         
         it(@"control|shift", ^{
             NSUInteger flags = [Macro stringToFlags:@"⌃⇧"];
-            [[theValue(flags) should]equal:theValue(NSControlKeyMask|NSShiftKeyMask)];
+            expect(@(flags)).to(equal(@(NSControlKeyMask|NSShiftKeyMask)));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

@@ -14,7 +14,6 @@ end
 
 target :OutlanderTests do
   shared_pods
-  pod 'Kiwi', '2.4.0'
   pod 'Quick', '0.9.3'
   pod 'Nimble', '4.1.0'
 end

@@ -6,12 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "VariableReplacer.h"
 #import "Alias.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(VariableReplacerTester)
+QuickSpecBegin(VariableReplacerSpec)
 
 describe(@"Variable Replacer", ^{
     
@@ -34,8 +39,8 @@ describe(@"Variable Replacer", ^{
                 [_context.aliases addObject:al];
                 
                 NSString *result = [_replacer replace:@"l2" withContext:_context];
-                
-                [[result should] equal:@"load arrows"];
+
+                expect(result).to(equal(@"load arrows"));
             });
             
             it(@"should replace alias variables", ^{
@@ -45,8 +50,8 @@ describe(@"Variable Replacer", ^{
                 [_context.aliases addObject:al];
                 
                 NSString *result = [_replacer replace:@"fire one two" withContext:_context];
-                
-                [[result should] equal:@"snipe one two"];
+
+                expect(result).to(equal(@"snipe one two"));
             });
             
             it(@"should replace alias variables 2", ^{
@@ -57,7 +62,7 @@ describe(@"Variable Replacer", ^{
                 
                 NSString *result = [_replacer replace:@"fire one \"two three\" four" withContext:_context];
                 
-                [[result should] equal:@"aim one;snipe \"two three\";look four"];
+                expect(result).to(equal(@"aim one;snipe \"two three\";look four"));
             });
             
             it(@"should replace alias variables 3", ^{
@@ -67,8 +72,8 @@ describe(@"Variable Replacer", ^{
                 [_context.aliases addObject:al];
                 
                 NSString *result = [_replacer replace:@"fire one two" withContext:_context];
-                
-                [[result should] equal:@"aim one;snipe two"];
+
+                expect(result).to(equal(@"aim one;snipe two"));
             });
             
             it(@"should not match partial", ^{
@@ -78,8 +83,8 @@ describe(@"Variable Replacer", ^{
                 [_context.aliases addObject:al];
                 
                 NSString *result = [_replacer replace:@"fire one two" withContext:_context];
-                
-                [[result should] equal:@"fire one two"];
+
+                expect(result).to(equal(@"fire one two"));
             });
         });
         
@@ -90,8 +95,8 @@ describe(@"Variable Replacer", ^{
                 [_context.globalVars setCacheObject:@"longsword" forKey:@"lefthand"];
                 
                 NSString *result = [_replacer replace:@"$lefthand" withContext:_context];
-                
-                [[result should] equal:@"longsword"];
+
+                expect(result).to(equal(@"longsword"));
             });
             
             it(@"should replace multiple global variables within text", ^{
@@ -101,13 +106,13 @@ describe(@"Variable Replacer", ^{
                 
                 NSString *result = [_replacer replace:@"stow my $lefthand in my $primary.container" withContext:_context];
                 
-                [[result should] equal:@"stow my longsword in my backpack"];
+                expect(result).to(equal(@"stow my longsword in my backpack"));
             });
             
             it(@"should handle unfound vars", ^{
                 NSString *result = [_replacer replace:@"$does_not_exist" withContext:_context];
                 
-                [[result should] equal:@"$does_not_exist"];
+                expect(result).to(equal(@"$does_not_exist"));
             });
         });
         
@@ -126,7 +131,7 @@ describe(@"Variable Replacer", ^{
                 
                 NSString *result = [_replacer replaceLocalVars:@"%lefthand" withVars:_localVars];
                 
-                [[result should] equal:@"longsword"];
+                expect(result).to(equal(@"longsword"));
             });
             
             it(@"should replace multiple global variables within text", ^{
@@ -135,14 +140,14 @@ describe(@"Variable Replacer", ^{
                 [_localVars setCacheObject:@"backpack" forKey:@"primary.container"];
                 
                 NSString *result = [_replacer replaceLocalVars:@"stow my %lefthand in my %primary.container" withVars:_localVars];
-                
-                [[result should] equal:@"stow my longsword in my backpack"];
+
+                expect(result).to(equal(@"stow my longsword in my backpack"));
             });
             
             it(@"should handle unfound vars", ^{
                 NSString *result = [_replacer replaceLocalVars:@"$does_not_exist" withVars:_localVars];
                 
-                [[result should] equal:@"$does_not_exist"];
+                expect(result).to(equal(@"$does_not_exist"));
             });
         });
         
@@ -161,7 +166,7 @@ describe(@"Variable Replacer", ^{
                 
                 NSString *result = [_replacer replaceLocalArgumentVars:@"$0" withVars:_localVars];
                 
-                [[result should] equal:@"longsword"];
+                expect(result).to(equal(@"longsword"));
             });
             
             it(@"should replace multiple global variables within text", ^{
@@ -170,17 +175,17 @@ describe(@"Variable Replacer", ^{
                 [_localVars setCacheObject:@"backpack" forKey:@"2"];
                 
                 NSString *result = [_replacer replaceLocalArgumentVars:@"stow my $1 in my $2" withVars:_localVars];
-                
-                [[result should] equal:@"stow my longsword in my backpack"];
+
+                expect(result).to(equal(@"stow my longsword in my backpack"));
             });
             
             it(@"should handle unfound vars", ^{
                 NSString *result = [_replacer replaceLocalArgumentVars:@"$0" withVars:_localVars];
-                
-                [[result should] equal:@"$0"];
+
+                expect(result).to(equal(@"$0"));
             });
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

@@ -6,12 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "HighlightCommandHandler.h"
 #import "Highlight.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(HighlightCommandHandlerTester)
+QuickSpecBegin(HighlightCommandHandlerSpec)
 
 describe(@"highlight command handler", ^{
    
@@ -26,12 +31,12 @@ describe(@"highlight command handler", ^{
     context(@"can handle", ^{
         it(@"success", ^{
             BOOL result = [theHandler canHandle:@"#highlight #000fff something"];
-            [[theValue(result) should] equal:theValue(YES)];
+            expect(@(result)).to(equal(@YES));
         });
         
         it(@"failure", ^{
             BOOL result = [theHandler canHandle:@"highlight one two"];
-            [[theValue(result) should] equal:theValue(NO)];
+            expect(@(result)).to(equal(@NO));
         });
     });
     
@@ -40,30 +45,30 @@ describe(@"highlight command handler", ^{
             [theHandler handle:@"#highlght #000fff something" withContext:theContext];
             
             Highlight *hl = [theContext.highlights objectAtIndex:0];
-            [[hl.color should] equal:@"#000fff"];
-            [[hl.pattern should] equal:@"something"];
+            expect(hl.color).to(equal(@"#000fff"));
+            expect(hl.pattern).to(equal(@"something"));
         });
         
         it(@"adds highlight to collection", ^{
             [theHandler handle:@"#highlght #000fff something with more text" withContext:theContext];
             
             Highlight *hl = [theContext.highlights objectAtIndex:0];
-            [[hl.color should] equal:@"#000fff"];
-            [[hl.pattern should] equal:@"something with more text"];
+            expect(hl.color).to(equal(@"#000fff"));
+            expect(hl.pattern).to(equal(@"something with more text"));
         });
         
         it(@"updates an existing highlight", ^{
             [theHandler handle:@"#highlght #000fff something" withContext:theContext];
             
             Highlight *hl = [theContext.highlights objectAtIndex:0];
-            [[hl.color should] equal:@"#000fff"];
-            [[hl.pattern should] equal:@"something"];
-            
+            expect(hl.color).to(equal(@"#000fff"));
+            expect(hl.pattern).to(equal(@"something"));
+
             [theHandler handle:@"#highlght #fcfcfc something" withContext:theContext];
-            
-            [[theValue(theContext.highlights.count) should] equal:theValue(1)];
+
+            expect(@(theContext.highlights.count)).to(equal(@1));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

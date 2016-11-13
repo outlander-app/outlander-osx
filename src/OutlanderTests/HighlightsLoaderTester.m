@@ -6,12 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "HighlightsLoader.h"
 #import "StubFileSystem.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(HighlightsLoaderTester)
+QuickSpecBegin(HighlightsLoaderSpec)
 
 describe(@"Highlights Loader", ^{
    
@@ -32,12 +37,12 @@ describe(@"Highlights Loader", ^{
             theFileSystem.fileContents = @"#highlight {#AD0000} {a silver clenched fist}";
             
             [theLoader load];
-            [[theContext.highlights should] haveCountOf:1];
-            
+            expect(@(theContext.highlights.count)).to(equal(@1));
+
             Highlight *highlight = [theContext.highlights objectAtIndex:0];
-            [[highlight.pattern should] equal:@"a silver clenched fist"];
-            [[highlight.color should] equal:@"#AD0000"];
-            [[highlight.backgroundColor should] equal:@""];
+            expect(highlight.pattern).to(equal(@"a silver clenched fist"));
+            expect(highlight.color).to(equal(@"#AD0000"));
+            expect(highlight.backgroundColor).to(equal(@""));
         });
 
         it(@"should parse simple highlight with background color", ^{
@@ -45,12 +50,12 @@ describe(@"Highlights Loader", ^{
             theFileSystem.fileContents = @"#highlight {#AD0000, #efefef} {a silver clenched fist}";
             
             [theLoader load];
-            [[theContext.highlights should] haveCountOf:1];
+            expect(@(theContext.highlights.count)).to(equal(@1));
             
             Highlight *highlight = [theContext.highlights objectAtIndex:0];
-            [[highlight.pattern should] equal:@"a silver clenched fist"];
-            [[highlight.color should] equal:@"#AD0000"];
-            [[highlight.backgroundColor should] equal:@"#efefef"];
+            expect(highlight.pattern).to(equal(@"a silver clenched fist"));
+            expect(highlight.color).to(equal(@"#AD0000"));
+            expect(highlight.backgroundColor).to(equal(@"#efefef"));
         });
         
         it(@"should parse multiple highlights", ^{
@@ -58,16 +63,17 @@ describe(@"Highlights Loader", ^{
             theFileSystem.fileContents = @"#highlight {#AD0000} {a silver clenched fist}\n#highlight {#0000FF, #efefef} {^You've gained a new rank.*$}";
             
             [theLoader load];
-            [[theContext.highlights should] haveCountOf:2];
-            
+            expect(@(theContext.highlights.count)).to(equal(@2));
+
             Highlight *highlight = [theContext.highlights objectAtIndex:0];
-            [[highlight.pattern should] equal:@"a silver clenched fist"];
-            [[highlight.color should] equal:@"#AD0000"];
+            expect(highlight.pattern).to(equal(@"a silver clenched fist"));
+            expect(highlight.color).to(equal(@"#AD0000"));
+            expect(highlight.backgroundColor).to(equal(@""));
             
             highlight = [theContext.highlights objectAtIndex:1];
-            [[highlight.pattern should] equal:@"^You've gained a new rank.*$"];
-            [[highlight.color should] equal:@"#0000FF"];
-            [[highlight.backgroundColor should] equal:@"#efefef"];
+            expect(highlight.pattern).to(equal(@"^You've gained a new rank.*$"));
+            expect(highlight.color).to(equal(@"#0000FF"));
+            expect(highlight.backgroundColor).to(equal(@"#efefef"));
         });
     });
     
@@ -91,11 +97,11 @@ describe(@"Highlights Loader", ^{
             [theLoader save];
             
             NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"highlights.cfg"];
-            
-            [[theFileSystem.givenFileName should] equal:path];
-            [[theFileSystem.fileContents should] equal:result];
+
+            expect(theFileSystem.givenFileName).to(equal(path));
+            expect(theFileSystem.fileContents).to(equal(result));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd

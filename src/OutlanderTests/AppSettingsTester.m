@@ -6,10 +6,15 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "AppSettings.h"
 
-SPEC_BEGIN(AppSettingsTester)
+QuickSpecBegin(AppSettingsSpec)
 
 describe(@"AppSettings", ^{
     
@@ -22,14 +27,15 @@ describe(@"AppSettings", ^{
     context(@"init", ^{
         
         it(@"should default login information", ^{
-            [[theSettings.account should] equal:@""];
-            [[theSettings.password should] equal:@""];
-            [[theSettings.character should] equal:@""];
-            [[theSettings.game should] equal:@"DR"];
-            [[theSettings.profile should] equal:@"Default"];
+
+            expect(theSettings.account).to(equal(@""));
+            expect(theSettings.password).to(equal(@""));
+            expect(theSettings.character).to(equal(@""));
+            expect(theSettings.game).to(equal(@"DR"));
+            expect(theSettings.profile).to(equal(@"Default"));
         });
     });
     
 });
 
-SPEC_END
+QuickSpecEnd

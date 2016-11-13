@@ -6,13 +6,17 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "TextTag.h"
 
-SPEC_BEGIN(TestViewControllerTester)
+QuickSpecBegin(TestViewControllerSpec)
 
 describe(@"TestViewControllerTester", ^{
-    
     
     beforeEach(^{
     });
@@ -29,4 +33,4 @@ describe(@"TestViewControllerTester", ^{
     });
 });
 
-SPEC_END
+QuickSpecEnd

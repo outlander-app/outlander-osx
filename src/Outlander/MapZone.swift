@@ -78,12 +78,12 @@ public final class MapZone : NSObject {
         
         let last = roomIdLookup[id]
         
-        var trimmed = description
+        let trimmed = description
        
-        if description.characters.count > 10 {
-            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
-        }
-        
+//        if description.characters.count > 50 {
+//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
+//        }
+
         let filtered = last?.arcs.filter { $0.destination.characters.count > 0 }
  
         for arc in filtered! {
@@ -102,12 +102,12 @@ public final class MapZone : NSObject {
     
     func findRoomFuzyFrom(currentRoomId:String?, name:String, description:String) -> MapNode? {
         
-        var trimmed = description
+        let trimmed = description
        
-        if description.characters.count > 10 {
-            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
-        }
-        
+//        if description.characters.count > 50 {
+//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
+//        }
+
         let currentRoom = roomWithId(currentRoomId ?? "")
         
         if currentRoom == nil || currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed) {
@@ -119,12 +119,12 @@ public final class MapZone : NSObject {
     
     func findRoom(name:String, description:String) -> MapNode? {
         
-        var trimmed = description
+        let trimmed = description
        
-        if description.characters.count > 10 {
-            trimmed = description.substringToIndex(description.startIndex.advancedBy(10))
-        }
-        
+//        if description.characters.count > 50 {
+//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
+//        }
+
         for room in rooms {
             if room.name == name && room.hasMatchingDescription(trimmed) {
                return room

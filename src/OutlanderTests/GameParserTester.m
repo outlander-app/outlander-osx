@@ -6,7 +6,12 @@
 //  Copyright (c) 2014 Joe McBride. All rights reserved.
 //
 
-#import "Kiwi.h"
+#define QUICK_DISABLE_SHORT_SYNTAX 1
+#import <Foundation/Foundation.h>
+#import <Quick/Quick.h>
+#import <Nimble/Nimble-Swift.h>
+#import <Nimble/Nimble.h>
+
 #import "GameParser.h"
 #import "TextTag.h"
 #import "Vitals.h"
@@ -14,7 +19,7 @@
 #import "Roundtime.h"
 #import "Outlander-Swift.h"
 
-SPEC_BEGIN(GameParserTester)
+QuickSpecBegin(GameParserSpec)
 
 describe(@"GameParser", ^{
    
@@ -36,8 +41,8 @@ describe(@"GameParser", ^{
             [_parser parse:prompt then:^(NSArray* res) {
                 result = res[0];
             }];
-            
-            [[[result text] should] equal:@">"];
+
+            expect(result.text).to(equal(@">"));
         });
         
         it(@"should parse room name", ^{
@@ -48,9 +53,9 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 result = res[0];
             }];
-            
-            [[[result text] should] equal:@"[Woodland Path, Brook]"];
-            [[[result color] should] equal:@"#0000FF"];
+
+            expect(result.text).to(equal(@"[Woodland Path, Brook]"));
+            expect(result.color).to(equal(@"#0000FF"));
         });
 
         it(@"should parse room description", ^{
@@ -62,7 +67,7 @@ describe(@"GameParser", ^{
                 result = res[0];
             }];
             
-            [[[result text] should] equal:@"This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.  \r\n"];
+            expect(result.text).to(equal(@"This shallow stream would probably only come chest-high on a short Halfling.  The water moves lazily southward, but the shifting, sharp rocky floor makes crossing uncomfortable.  \r\n"));
         });
         
         it(@"should handle exp mono", ^{
@@ -90,13 +95,14 @@ describe(@"GameParser", ^{
                     NSLog(@"%@", res);
                 }];
             }
-            
-            [[results should] haveCountOf:13];
+
+            expect(results).to(haveCount(@13));
+
             TextTag *tag = results[1];
-            [[theValue([tag mono]) should] beYes];
-            
+            expect(@(tag.mono)).to(beTruthy());
+
             tag = results[5];
-            [[tag.text should] equal:@"SKILL: Rank/Percent towards next rank/Amount learning/Mindstate Fraction\r\n"];
+            expect(tag.text).to(equal(@"SKILL: Rank/Percent towards next rank/Amount learning/Mindstate Fraction\r\n"));
         });
         
         it(@"should ignore component tag newline", ^{
@@ -106,8 +112,8 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
+
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore compdef tag newline", ^{
@@ -117,8 +123,8 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
+
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore dialogdata tag newline", ^{
@@ -129,7 +135,7 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore streamwindow tag newline", ^{
@@ -140,7 +146,7 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore nav tag newline", ^{
@@ -150,8 +156,8 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
+
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore opendialog tag newline", ^{
@@ -161,8 +167,8 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
+
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore switchquickbar tag newline", ^{
@@ -173,7 +179,7 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should ignore indicator tag newline", ^{
@@ -184,7 +190,7 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
+            expect(results).to(haveCount(@0));
         });
         
         it(@"should color monsterbold", ^{
@@ -195,8 +201,8 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:7];
+
+            expect(results).to(haveCount(@7));
         });
         
         it(@"should set roomdesc global var", ^{
@@ -204,11 +210,11 @@ describe(@"GameParser", ^{
             
             [_parser parse:data then:^(NSArray* res) {
             }];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"roomdesc"]) should] beYes];
-            
+
+            expect(@([_context.globalVars cacheDoesContain:@"roomdesc"])).to(beTruthy());
+
             NSString *roomDesc = [_context.globalVars cacheObjectForKey:@"roomdesc"];
-            [[roomDesc should] equal:@"For a moment you lose your sense of direction.  Bending down to gain a better perspective of the lie of the land, you manage to identify several landmarks and reorient yourself."];
+            expect(roomDesc).to(equal(@"For a moment you lose your sense of direction.  Bending down to gain a better perspective of the lie of the land, you manage to identify several landmarks and reorient yourself."));
         });
 
         it(@"should set roomobjs global var", ^{
@@ -218,13 +224,13 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"roomobjs"]) should] beYes];
+
+            expect(results).to(haveCount(0));
+
+            expect(@([_context.globalVars cacheDoesContain:@"roomobjs"])).to(beTruthy());
             
             NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"roomobjs"];
-            [[roomObjs should] equal:@"You also see a two auroch caravan with several things on it."];
+            expect(roomObjs).to(equal(@"You also see a two auroch caravan with several things on it."));
         });
         
         it(@"should set spell global var", ^{
@@ -234,13 +240,13 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
+
+            expect(results).to(haveCount(0));
             
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"preparedspell"]) should] beYes];
+            expect(@([_context.globalVars cacheDoesContain:@"preparedspell"])).to(beTruthy());
             
             NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"preparedspell"];
-            [[roomObjs should] equal:@"None"];
+            expect(roomObjs).to(equal(@"None"));
         });
 
         it(@"should set left global var", ^{
@@ -251,13 +257,13 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
-            
-            [[[_context.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"longsword"];
-            [[[_context.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@"41807070"];
-            [[[_context.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@"longsword"];
+            expect(results).to(haveCount(0));
+
+            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTruthy());
+
+            expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"longsword"));
+            expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@"41807070"));
+            expect([_context.globalVars cacheObjectForKey:@"lefthandnoun"]).to(equal(@"longsword"));
         });
         
         it(@"should set left global var as Empty", ^{
@@ -268,15 +274,15 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"lefthand"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"lefthandid"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"lefthandnoun"]) should] beYes];
-            
-            [[[_context.globalVars cacheObjectForKey:@"lefthand"] should] equal:@"Empty"];
-            [[[_context.globalVars cacheObjectForKey:@"lefthandid"] should] equal:@""];
-            [[[_context.globalVars cacheObjectForKey:@"lefthandnoun"] should] equal:@""];
+            expect(results).to(haveCount(0));
+
+            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthandid"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthandnoun"])).to(beTruthy());
+
+            expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"Empty"));
+            expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@""));
+            expect([_context.globalVars cacheObjectForKey:@"lefthandnoun"]).to(equal(@""));
         });
         
         it(@"should set right global var", ^{
@@ -286,16 +292,16 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"righthand"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
-            
-            [[[_context.globalVars cacheObjectForKey:@"righthand"] should] equal:@"longsword"];
-            [[[_context.globalVars cacheObjectForKey:@"righthandid"] should] equal:@"41807070"];
-            [[[_context.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@"longsword"];
+
+            expect(results).to(haveCount(0));
+
+            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTruthy());
+
+            expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"longsword"));
+            expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@"41807070"));
+            expect([_context.globalVars cacheObjectForKey:@"righthandnoun"]).to(equal(@"longsword"));
         });
         
         it(@"should set right global var as Empty", ^{
@@ -305,16 +311,16 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [results addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:0];
-            
-            [[theValue([_context.globalVars cacheDoesContain:@"righthand"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"righthandid"]) should] beYes];
-            [[theValue([_context.globalVars cacheDoesContain:@"righthandnoun"]) should] beYes];
-            
-            [[[_context.globalVars cacheObjectForKey:@"righthand"] should] equal:@"Empty"];
-            [[[_context.globalVars cacheObjectForKey:@"righthandid"] should] equal:@""];
-            [[[_context.globalVars cacheObjectForKey:@"righthandnoun"] should] equal:@""];
+
+            expect(results).to(haveCount(0));
+
+            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTruthy());
+
+            expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"Empty"));
+            expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@""));
+            expect([_context.globalVars cacheObjectForKey:@"righthandnoun"]).to(equal(@""));
         });
         
         it(@"should signal arrivals", ^{
@@ -329,13 +335,13 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
+
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
             
             TextTag *tag = signalResults[0];
             
-            [[tag.text should] equal:@" * Tayek joins the adventure."];
+            expect(tag.text).to(equal(@" * Tayek joins the adventure."));
         });
         
         it(@"should signal deaths", ^{
@@ -350,13 +356,13 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
+
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
             
             TextTag *tag = signalResults[0];
             
-            [[tag.text should] equal:@" * Tayek was just struck down!"];
+            expect(tag.text).to(equal(@" * Tayek was just struck down!"));
         });
         
         it(@"should signal thoughts", ^{
@@ -372,12 +378,12 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             TextTag *tag = signalResults[0];
             
-            [[tag.text should] equal:@"You hear your mental voice echo, \"Testing, one, two.\""];
+            expect(tag.text).to(equal(@"You hear your mental voice echo, \"Testing, one, two.\""));
         });
         
         it(@"should signal chatter", ^{
@@ -393,12 +399,12 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             TextTag *tag = signalResults[0];
             
-            [[tag.text should] equal:@"Chatter[Mentor Isharon]: Effects of charisma (detailed list):"];
+            expect(tag.text).to(equal(@"Chatter[Mentor Isharon]: Effects of charisma (detailed list):"));
         });
         
         it(@"should set roomtitle component", ^{
@@ -409,9 +415,9 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:0];
-            
-            [[[_context.globalVars cacheObjectForKey:@"roomtitle"] should] equal:@"[Ranger Guild, Longhouse]"];
+            expect(results).to(haveCount(0));
+
+            expect([_context.globalVars cacheObjectForKey:@"roomtitle"]).to(equal(@"[Ranger Guild, Longhouse]"));
         });
         
         it(@"should signal concentration vitals", ^{
@@ -427,15 +433,15 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             Vitals *tag = signalResults[0];
             
-            [[tag.name should] equal:@"concentration"];
-            [[theValue(tag.value) should] equal:theValue(98)];
+            expect(tag.name).to(equal(@"concentration"));
+            expect(@(tag.value)).to(equal(@(98)));
             
-            [[[_context.globalVars cacheObjectForKey:@"concentration"] should] equal:@"98"];
+            expect([_context.globalVars cacheObjectForKey:@"concentration"]).to(equal(@"98"));
         });
         
         it(@"should signal health vitals", ^{
@@ -451,15 +457,15 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             Vitals *tag = signalResults[0];
             
-            [[tag.name should] equal:@"health"];
-            [[theValue(tag.value) should] equal:theValue(98)];
+            expect(tag.name).to(equal(@"health"));
+            expect(@(tag.value)).to(equal(@(98)));
             
-            [[[_context.globalVars cacheObjectForKey:@"health"] should] equal:@"98"];
+            expect([_context.globalVars cacheObjectForKey:@"health"]).to(equal(@"98"));
         });
         
         it(@"should set exp global variables", ^{
@@ -470,19 +476,19 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
+            expect(parseResults).to(haveCount(0));
             
             NSString *ranks = [_context.globalVars cacheObjectForKey:@"Athletics.Ranks"];
             NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
             NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
-            
-            [[ranks should] beNonNil];
-            [[learningRate should] beNonNil];
-            [[learningRateName should] beNonNil];
-            
-            [[ranks should] equal:@"50.33"];
-            [[learningRate should] equal:@"11"];
-            [[learningRateName should] equal:@"deliberative"];
+
+            expect(ranks).toNot(beNil());
+            expect(learningRate).toNot(beNil());
+            expect(learningRateName).toNot(beNil());
+
+            expect(ranks).to(equal(@"50.33"));
+            expect(learningRate).to(equal(@"11"));
+            expect(learningRateName).to(equal(@"deliberative"));
         });
         
         it(@"should set exp global variables, not new", ^{
@@ -492,20 +498,20 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:0];
+
+            expect(parseResults).to(haveCount(0));
             
             NSString *ranks = [_context.globalVars cacheObjectForKey:@"Life_Magic.Ranks"];
             NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRate"];
             NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRateName"];
             
-            [[ranks should] beNonNil];
-            [[learningRate should] beNonNil];
-            [[learningRateName should] beNonNil];
-            
-            [[ranks should] equal:@"50.33"];
-            [[learningRate should] equal:@"11"];
-            [[learningRateName should] equal:@"deliberative"];
+            expect(ranks).toNot(beNil());
+            expect(learningRate).toNot(beNil());
+            expect(learningRateName).toNot(beNil());
+
+            expect(ranks).to(equal(@"50.33"));
+            expect(learningRate).to(equal(@"11"));
+            expect(learningRateName).to(equal(@"deliberative"));
         });
         
         it(@"should signal exp", ^{
@@ -520,16 +526,16 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             SkillExp *tag = signalResults[0];
-            
-            [[tag.name should] equal:@"Athletics"];
-            [[tag.ranks should] equal:[NSDecimalNumber decimalNumberWithString:@"50.33"]];
-            [[tag.mindState should] equal:[LearningRate fromDescription:@"deliberative"]];
-            [[theValue(tag.isNew) should] beYes];
+
+            expect(tag.name).to(equal(@"Athletics"));
+            expect(tag.ranks).to(equal([NSDecimalNumber decimalNumberWithString:@"50.33"]));
+            expect(tag.mindState).to(equal([LearningRate fromDescription:@"deliberative"]));
+            expect(@(tag.isNew)).to(beTruthy());
         });
         
         it(@"should signal exp, not new", ^{
@@ -545,15 +551,15 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             SkillExp *tag = signalResults[0];
-            
-            [[tag.name should] equal:@"Athletics"];
-            [[tag.ranks should] equal:[NSDecimalNumber decimalNumberWithString:@"150.47"]];
-            [[tag.mindState should] equal:[LearningRate fromDescription:@"mind lock"]];
-            [[theValue(tag.isNew) should] beNo];
+
+            expect(tag.name).to(equal(@"Athletics"));
+            expect(tag.ranks).to(equal([NSDecimalNumber decimalNumberWithString:@"150.47"]));
+            expect(tag.mindState).to(equal([LearningRate fromDescription:@"mind lock"]));
+            expect(@(tag.isNew)).to(beFalsy());
         });
         
         it(@"should signal roundtime", ^{
@@ -569,12 +575,12 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
             Roundtime *tag = signalResults[0];
             
-            [[tag.time should] equal:[NSDate dateWithTimeIntervalSince1970:[@"1400357815" doubleValue]]];
+            expect(tag.time).to(equal([NSDate dateWithTimeIntervalSince1970:[@"1400357815" doubleValue]]));
         });
         
         it(@"should handle combat hit messages", ^{
@@ -585,17 +591,17 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:3];
-            
+
+            expect(parseResults).to(haveCount(@3));
+
             TextTag *tag = parseResults[0];
-            [[tag.text should] equal:@"< Moving like a striking snake, you draw a longsword at a musk hog.  A musk hog fails to dodge, mis-stepping and blundering into the blow.  "];
+            expect(tag.text).to(equal(@"< Moving like a striking snake, you draw a longsword at a musk hog.  A musk hog fails to dodge, mis-stepping and blundering into the blow.  "));
             
             tag = parseResults[1];
-            [[tag.text should] equal:@"The longsword lands a heavy strike to the hog's right arm."];
+            expect(tag.text).to(equal(@"The longsword lands a heavy strike to the hog's right arm."));
             
             tag = parseResults[2];
-            [[tag.text should] equal:@"\r\n"];
+            expect(tag.text).to(equal(@"\r\n"));
         });
         
         it(@"should handle combat non-hit messages", ^{
@@ -606,11 +612,11 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:1];
-            
+
+            expect(parseResults).to(haveCount(@1));
+
             TextTag *tag = parseResults[0];
-            [[tag.text should] equal:@"< You punch your chain-clad fist at a scavenger goblin.  A scavenger goblin turns aside little of the fist with a mace.  \r\n"];
+            expect(tag.text).to(equal(@"< You punch your chain-clad fist at a scavenger goblin.  A scavenger goblin turns aside little of the fist with a mace.  \r\n"));
         });
         
         it(@"should handle combat monster hit messages", ^{
@@ -621,17 +627,17 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:3];
-            
+
+            expect(parseResults).to(haveCount(@3));
+
             TextTag *tag = parseResults[0];
-            [[tag.text should] equal:@"* Timing it well, a spotted scavenger goblin sweeps low at you.  You fail to evade.  "];
+            expect(tag.text).to(equal(@"* Timing it well, a spotted scavenger goblin sweeps low at you.  You fail to evade.  "));
             
             tag = parseResults[1];
-            [[tag.text should] equal:@"The cudgel lands a harmless strike to your chest."];
+            expect(tag.text).to(equal(@"The cudgel lands a harmless strike to your chest."));
             
             tag = parseResults[2];
-            [[tag.text should] equal:@"\r\n"];
+            expect(tag.text).to(equal(@"\r\n"));
         });
         
         it(@"should signal exp when tdp", ^{
@@ -647,10 +653,10 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[theValue(signaled) should] equal:theValue(YES)];
-            
-            [[[_context.globalVars cacheObjectForKey:@"tdp"] should] equal:@"197"];
+            expect(parseResults).to(haveCount(0));
+            expect(@(signaled)).to(beTruthy());
+
+            expect([_context.globalVars cacheObjectForKey:@"tdp"]).to(equal(@"197"));
         });
         
         it(@"should parse app data", ^{
@@ -660,40 +666,41 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
                 [parseResults addObjectsFromArray:res];
             }];
-            
-            [[parseResults should] haveCountOf:0];
-            
-            [[[_context.globalVars cacheObjectForKey:@"charactername"] should] equal:@"Tayek"];
-            [[[_context.globalVars cacheObjectForKey:@"game"] should] equal:@"DR"];
+
+            expect(parseResults).to(haveCount(0));
+
+            expect([_context.globalVars cacheObjectForKey:@"charactername"]).to(equal(@"Tayek"));
+            expect([_context.globalVars cacheObjectForKey:@"game"]).to(equal(@"DR"));
         });
         
         it(@"should add newline before 'you also see'", ^{
             NSString *data = @"<preset id='roomDesc'>For a moment you lose your sense of direction.</preset>  You also see <pushBold/>a musk hog<popBold/>, <pushBold/>a musk hog<popBold/> and <pushBold/>a musk hog<popBold/>.";
             
-            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             
             [_parser parse:data then:^(NSArray* res) {
-                [results addObjectsFromArray:res];
+                [parseResults addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:7];
-            TextTag *tag = results[0];
-            [[tag.text should] equal:@"For a moment you lose your sense of direction.\nYou also see "];
+
+            expect(parseResults).to(haveCount(@7));
+
+            TextTag *tag = parseResults[0];
+            expect(tag.text).to(equal(@"For a moment you lose your sense of direction.\nYou also see "));
         });
         
         it(@"should not send talk stream data", ^{
             NSString *data = @"<pushStream id=\"talk\"/><preset id='speech'>You say</preset>, \"Hrm.\"\r\n<popStream/><preset id='speech'>You say</preset>, \"Hrm.\"\r\n";
             
-            __block NSMutableArray *results = [[NSMutableArray alloc] init];
+            __block NSMutableArray *parseResults = [[NSMutableArray alloc] init];
             
             [_parser parse:data then:^(NSArray* res) {
-                [results addObjectsFromArray:res];
+                [parseResults addObjectsFromArray:res];
             }];
-            
-            [[results should] haveCountOf:1];
-            
-            TextTag *tag = results[0];
-            [[tag.text should] equal:@"You say, \"Hrm.\"\r\n"];
+
+            expect(parseResults).to(haveCount(@1));
+
+            TextTag *tag = parseResults[0];
+            expect(tag.text).to(equal(@"You say, \"Hrm.\"\r\n"));
         });
         
         it(@"should send yells", ^{
@@ -705,10 +712,10 @@ describe(@"GameParser", ^{
                 [results addObjectsFromArray:res];
             }];
             
-            [[results should] haveCountOf:1];
+            expect(results).to(haveCount(@1));
             
             TextTag *tag = results[0];
-            [[tag.text should] equal:@"You yell, \"Hogs!\"\r\n"];
+            expect(tag.text).to(equal(@"You yell, \"Hogs!\"\r\n"));
         });
         
         it(@"should signal kneeling indicator", ^{
@@ -724,14 +731,14 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
             
             PlayerStatusIndicator *tag = signalResults[0];
-            [[tag.name should] equal:@"kneeling"];
-            [[tag.value should] equal:@"1"];
+            expect(tag.name).to(equal(@"kneeling"));
+            expect(tag.value).to(equal(@"1"));
             
-            [[[_context.globalVars cacheObjectForKey:@"kneeling"] should] equal:@"1"];
+            expect([_context.globalVars cacheObjectForKey:@"kneeling"]).to(equal(@"1"));
         });
         
         it(@"should signal dead indicator", ^{
@@ -747,14 +754,14 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
             
             PlayerStatusIndicator *tag = signalResults[0];
-            [[tag.name should] equal:@"dead"];
-            [[tag.value should] equal:@"0"];
+            expect(tag.name).to(equal(@"dead"));
+            expect(tag.value).to(equal(@"0"));
             
-            [[[_context.globalVars cacheObjectForKey:@"dead"] should] equal:@"0"];
+            expect([_context.globalVars cacheObjectForKey:@"dead"]).to(equal(@"0"));
         });
         
         it(@"should add directional values", ^{
@@ -770,20 +777,20 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            [[signalResults should] haveCountOf:1];
-            
-            [[[_context.globalVars cacheObjectForKey:@"north"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"south"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"east"] should] equal:@"1"];
-            [[[_context.globalVars cacheObjectForKey:@"west"] should] equal:@"1"];
-            [[[_context.globalVars cacheObjectForKey:@"northeast"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"northwest"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"southeast"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"southwest"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"up"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"down"] should] equal:@"0"];
-            [[[_context.globalVars cacheObjectForKey:@"out"] should] equal:@"0"];
+            expect(parseResults).to(haveCount(0));
+            expect(signalResults).to(haveCount(@1));
+
+            expect([_context.globalVars cacheObjectForKey:@"north"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"south"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"east"]).to(equal(@"1"));
+            expect([_context.globalVars cacheObjectForKey:@"west"]).to(equal(@"1"));
+            expect([_context.globalVars cacheObjectForKey:@"northeast"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"northwest"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"southeast"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"southwest"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"up"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"down"]).to(equal(@"0"));
+            expect([_context.globalVars cacheObjectForKey:@"out"]).to(equal(@"0"));
         });
         
         it(@"sets monstercount and monsterlist global vars", ^{
@@ -795,10 +802,10 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            
-            [[[_context.globalVars cacheObjectForKey:@"monstercount"] should] equal:@"2"];
-            [[[_context.globalVars cacheObjectForKey:@"monsterlist"] should] equal:@"a musk hog,a musk hog"];
+            expect(parseResults).to(haveCount(0));
+
+            expect([_context.globalVars cacheObjectForKey:@"monstercount"]).to(equal(@"2"));
+            expect([_context.globalVars cacheObjectForKey:@"monsterlist"]).to(equal(@"a musk hog,a musk hog"));
         });
         
         it(@"sets roomobjorig global vars", ^{
@@ -810,9 +817,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            
-            [[[_context.globalVars cacheObjectForKey:@"roomobjsorig"] should] equal:@"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>."];
+            expect(parseResults).to(haveCount(0));
+
+            expect([_context.globalVars cacheObjectForKey:@"roomobjsorig"]).to(equal(@"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>."));
         });
         
         it(@"sets roomexits global var", ^{
@@ -824,9 +831,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:0];
-            
-            [[[_context.globalVars cacheObjectForKey:@"roomexits"] should] equal:@"Obvious paths: north, west, northwest."];
+            expect(parseResults).to(haveCount(0));
+
+            expect([_context.globalVars cacheObjectForKey:@"roomexits"]).to(equal(@"Obvious paths: north, west, northwest."));
         });
         
         it(@"parses <d/> items", ^{
@@ -838,9 +845,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(@1));
             TextTag *tag = parseResults[0];
-            [[[tag text] should] equal:@"1) blue              2) gold              3) crystal blue"];
+            expect(tag.text).to(equal(@"1) blue              2) gold              3) crystal blue"));
         });
         
         it(@"parses direction help <d/> items", ^{
@@ -852,9 +859,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(@1));
             TextTag *tag = parseResults[0];
-            [[[tag text] should] equal:@"Directions towards Barana's Shipyard: North."];
+            expect(tag.text).to(equal(@"Directions towards Barana's Shipyard: North."));
         });
 
         it(@"parses direction help <d/> items", ^{
@@ -866,9 +873,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(@1));
             TextTag *tag = parseResults[0];
-            [[[tag text] should] equal:@"Directions towards Barana's Shipyard: North."];
+            expect(tag.text).to(equal(@"Directions towards Barana's Shipyard: North."));
         });
         
         it(@"parses <d/> with multiple attributes", ^{
@@ -880,9 +887,9 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(@1));
             TextTag *tag = parseResults[0];
-            [[[tag text] should] equal:@"[You can use DIR MENTORS for directions to get there!]"];
+            expect(tag.text).to(equal(@"[You can use DIR MENTORS for directions to get there!]"));
         });
         
         it(@"parses hyperlinks", ^{
@@ -894,10 +901,10 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:1];
+            expect(parseResults).to(haveCount(@1));
             TextTag *tag = parseResults[0];
-            [[[tag text] should] equal:@"Simucoin Store"];
-            [[[tag href] should] equal:@"https://store.play.net/store/purchase/dr"];
+            expect(tag.text).to(equal(@"Simucoin Store"));
+            expect(tag.href).to(equal(@"https://store.play.net/store/purchase/dr"));
         });
         
         it(@"keeps whitespace with hyperlinks", ^{
@@ -909,16 +916,16 @@ describe(@"GameParser", ^{
                 [parseResults addObjectsFromArray:res];
             }];
             
-            [[parseResults should] haveCountOf:2];
+            expect(parseResults).to(haveCount(@2));
             
             TextTag *whitespace = parseResults[0];
-            [[[whitespace text] should] equal:@"                       "];
+            expect(whitespace.text).to(equal(@"                       "));
             
             TextTag *tag = parseResults[1];
-            [[[tag text] should] equal:@"Visit Top Mud Sites!"];
-            [[[tag href] should] equal:@"http://www.topmudsites.com/vote-DragonRealms.html"];
+            expect(tag.text).to(equal(@"Visit Top Mud Sites!"));
+            expect(tag.href).to(equal(@"http://www.topmudsites.com/vote-DragonRealms.html"));
         });
     });
 });
 
-SPEC_END
+QuickSpecEnd
