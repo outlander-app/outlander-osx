@@ -99,7 +99,7 @@ describe(@"GameParser", ^{
             expect(results).to(haveCount(@13));
 
             TextTag *tag = results[1];
-            expect(@(tag.mono)).to(beTruthy());
+            expect(@(tag.mono)).to(beTrue());
 
             tag = results[5];
             expect(tag.text).to(equal(@"SKILL: Rank/Percent towards next rank/Amount learning/Mindstate Fraction\r\n"));
@@ -211,7 +211,7 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
             }];
 
-            expect(@([_context.globalVars cacheDoesContain:@"roomdesc"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"roomdesc"])).to(beTrue());
 
             NSString *roomDesc = [_context.globalVars cacheObjectForKey:@"roomdesc"];
             expect(roomDesc).to(equal(@"For a moment you lose your sense of direction.  Bending down to gain a better perspective of the lie of the land, you manage to identify several landmarks and reorient yourself."));
@@ -227,7 +227,7 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"roomobjs"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"roomobjs"])).to(beTrue());
             
             NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"roomobjs"];
             expect(roomObjs).to(equal(@"You also see a two auroch caravan with several things on it."));
@@ -243,7 +243,7 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
             
-            expect(@([_context.globalVars cacheDoesContain:@"preparedspell"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"preparedspell"])).to(beTrue());
             
             NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"preparedspell"];
             expect(roomObjs).to(equal(@"None"));
@@ -259,7 +259,7 @@ describe(@"GameParser", ^{
             
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTrue());
 
             expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"longsword"));
             expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@"41807070"));
@@ -276,9 +276,9 @@ describe(@"GameParser", ^{
             
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"lefthandid"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"lefthandnoun"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthandid"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"lefthandnoun"])).to(beTrue());
 
             expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"Empty"));
             expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@""));
@@ -295,9 +295,9 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTrue());
 
             expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"longsword"));
             expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@"41807070"));
@@ -314,9 +314,9 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTruthy());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTruthy());
+            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTrue());
+            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTrue());
 
             expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"Empty"));
             expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@""));
@@ -535,7 +535,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"Athletics"));
             expect(tag.ranks).to(equal([NSDecimalNumber decimalNumberWithString:@"50.33"]));
             expect(tag.mindState).to(equal([LearningRate fromDescription:@"deliberative"]));
-            expect(@(tag.isNew)).to(beTruthy());
+            expect(@(tag.isNew)).to(beTrue());
         });
         
         it(@"should signal exp, not new", ^{
@@ -559,7 +559,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"Athletics"));
             expect(tag.ranks).to(equal([NSDecimalNumber decimalNumberWithString:@"150.47"]));
             expect(tag.mindState).to(equal([LearningRate fromDescription:@"mind lock"]));
-            expect(@(tag.isNew)).to(beFalsy());
+            expect(@(tag.isNew)).to(beFalse());
         });
         
         it(@"should signal roundtime", ^{
@@ -654,7 +654,7 @@ describe(@"GameParser", ^{
             }];
             
             expect(parseResults).to(haveCount(0));
-            expect(@(signaled)).to(beTruthy());
+            expect(@(signaled)).to(beTrue());
 
             expect([_context.globalVars cacheObjectForKey:@"tdp"]).to(equal(@"197"));
         });
