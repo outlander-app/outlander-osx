@@ -1489,6 +1489,7 @@
 				F9CF92861890832800449548 /* Resources */,
 				6A1D0D83916E4B5B894CA214 /* [CP] Copy Pods Resources */,
 				2BBF27BEE1318C35A566CFF2 /* [CP] Embed Pods Frameworks */,
+				F972179C1DDEACF500E8FC4E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1685,6 +1686,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Outlander/Pods-Outlander-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F972179C1DDEACF500E8FC4E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Nimble.framework",
+				"$(SRCROOT)/Quick.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2301,7 +2317,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 66AF71730CF7F5AAFF8A333A /* Pods-OutlanderTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2343,7 +2359,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -2352,7 +2368,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7973A2D487F693F0134C7B14 /* Pods-OutlanderTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2389,7 +2405,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
