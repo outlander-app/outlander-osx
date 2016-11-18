@@ -137,28 +137,32 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
-		F97217751DDE7DBC00E8FC4E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217731DDE7DBC00E8FC4E /* Nimble.framework */; };
-		F97217761DDE7DBC00E8FC4E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217741DDE7DBC00E8FC4E /* Quick.framework */; };
-		F97217781DDE7E8300E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */; };
-		F97217791DDE7E8300E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */; };
-		F972177A1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */; };
-		F972177B1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217801DDE7EE600E8FC4E /* (null) in Copy Files */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97217821DDE828000E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217811DDE828000E8FC4E /* MASShortcut.framework */; };
-		F97217831DDE828000E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217811DDE828000E8FC4E /* MASShortcut.framework */; };
-		F97217851DDE828F00E8FC4E /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217811DDE828000E8FC4E /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F972178B1DDE832500E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217891DDE832500E8FC4E /* Mantle.framework */; };
-		F972178C1DDE833300E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217891DDE832500E8FC4E /* Mantle.framework */; };
-		F972178D1DDE833300E8FC4E /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217891DDE832500E8FC4E /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97217971DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
-		F97217981DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
-		F972179A1DDE8FE700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
-		F972179F1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
-		F97217A01DDEBD2900E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
-		F97217A11DDEBD2900E8FC4E /* PEGKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
+		F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
+		F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
+		F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
+		F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
+		F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
+		F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; };
+		F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; };
+		F97217BA1DDF831B00E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; };
+		F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */; };
+		F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217B01DDF831B00E8FC4E /* Squirrel.framework */; };
+		F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217BF1DDF833700E8FC4E /* Nimble.framework */; };
+		F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217C01DDF833700E8FC4E /* Quick.framework */; };
+		F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
+		F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */; };
+		F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217B01DDF831B00E8FC4E /* Squirrel.framework */; };
+		F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217B01DDF831B00E8FC4E /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */; };
@@ -315,13 +319,6 @@
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
-		F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */; };
-		F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; };
-		F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; };
-		F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; };
-		F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; };
-		F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9A8DD311AC299EC009A2F67 /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
 		F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
 		F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -455,14 +452,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F97217A11DDEBD2900E8FC4E /* PEGKit.framework in Copy Files */,
-				F972177B1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
-				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
-				F972179A1DDE8FE700E8FC4E /* GlimpseXML.framework in Copy Files */,
+				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
+				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
+				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
+				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
+				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
 				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
-				F9A8DD3D1AC29AD6009A2F67 /* Squirrel.framework in Copy Files */,
-				F972178D1DDE833300E8FC4E /* Mantle.framework in Copy Files */,
-				F97217851DDE828F00E8FC4E /* MASShortcut.framework in Copy Files */,
+				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
+				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
@@ -575,15 +572,17 @@
 		F971EFD91938830D008AF6A8 /* StubCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubCommandRelay.m; sourceTree = "<group>"; };
 		F971EFDB1938D7D0008AF6A8 /* StubInfoStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubInfoStream.h; sourceTree = "<group>"; };
 		F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubInfoStream.m; sourceTree = "<group>"; };
-		F97217731DDE7DBC00E8FC4E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nimble.framework; sourceTree = "<group>"; };
-		F97217741DDE7DBC00E8FC4E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Quick.framework; sourceTree = "<group>"; };
-		F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaAsyncSocket.framework; sourceTree = "<group>"; };
-		F97217811DDE828000E8FC4E /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
-		F97217891DDE832500E8FC4E /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
-		F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
-		F972179D1DDEBD0700E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PEGKit.framework; sourceTree = "<group>"; };
 		F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PEGKitAdditions.h"; sourceTree = "<group>"; };
 		F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PEGKitAdditions.m"; sourceTree = "<group>"; };
+		F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Frameworks/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
+		F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlimpseXML.framework; path = Frameworks/GlimpseXML.framework; sourceTree = "<group>"; };
+		F97217AC1DDF831B00E8FC4E /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Frameworks/Mantle.framework; sourceTree = "<group>"; };
+		F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
+		F97217AE1DDF831B00E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PEGKit.framework; path = Frameworks/PEGKit.framework; sourceTree = "<group>"; };
+		F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Frameworks/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		F97217B01DDF831B00E8FC4E /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = Frameworks/Squirrel.framework; sourceTree = "<group>"; };
+		F97217BF1DDF833700E8FC4E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Frameworks/Nimble.framework; sourceTree = "<group>"; };
+		F97217C01DDF833700E8FC4E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Frameworks/Quick.framework; sourceTree = "<group>"; };
 		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
 		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
@@ -736,9 +735,6 @@
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
 		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
-		F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
-		F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = "<group>"; };
-		F9A8DD311AC299EC009A2F67 /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Squirrel.framework; sourceTree = "<group>"; };
 		F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
@@ -853,19 +849,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */,
+				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
+				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
+				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
+				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
+				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
+				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
+				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
-				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F972177A1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
-				F97217821DDE828000E8FC4E /* MASShortcut.framework in Frameworks */,
-				F97217A01DDEBD2900E8FC4E /* PEGKit.framework in Frameworks */,
-				F972178C1DDE833300E8FC4E /* Mantle.framework in Frameworks */,
-				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
-				F97217781DDE7E8300E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
-				F97217971DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,18 +867,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F972179F1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */,
-				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
-				F97217981DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */,
+				F97217BA1DDF831B00E8FC4E /* PEGKit.framework in Frameworks */,
+				F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
+				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
+				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
+				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
+				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
+				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
-				F9A8DD391AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
-				F97217751DDE7DBC00E8FC4E /* Nimble.framework in Frameworks */,
-				F97217791DDE7E8300E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
-				F97217831DDE828000E8FC4E /* MASShortcut.framework in Frameworks */,
-				F97217761DDE7DBC00E8FC4E /* Quick.framework in Frameworks */,
+				F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */,
+				F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
-				F9A8DD331AC299EC009A2F67 /* Mantle.framework in Frameworks */,
-				F972178B1DDE832500E8FC4E /* Mantle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1341,18 +1334,17 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F972179D1DDEBD0700E8FC4E /* PEGKit.framework */,
-				F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */,
-				F97217891DDE832500E8FC4E /* Mantle.framework */,
-				F97217811DDE828000E8FC4E /* MASShortcut.framework */,
-				F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */,
-				F97217731DDE7DBC00E8FC4E /* Nimble.framework */,
-				F97217741DDE7DBC00E8FC4E /* Quick.framework */,
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
+				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
+				F97217C01DDF833700E8FC4E /* Quick.framework */,
+				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
+				F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */,
+				F97217AC1DDF831B00E8FC4E /* Mantle.framework */,
+				F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */,
+				F97217AE1DDF831B00E8FC4E /* PEGKit.framework */,
+				F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */,
+				F97217B01DDF831B00E8FC4E /* Squirrel.framework */,
 				F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */,
-				F9A8DD2E1AC299EC009A2F67 /* Mantle.framework */,
-				F9A8DD301AC299EC009A2F67 /* ReactiveCocoa.framework */,
-				F9A8DD311AC299EC009A2F67 /* Squirrel.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
@@ -1583,8 +1575,8 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Nimble.framework",
-				"$(SRCROOT)/Quick.framework",
+				"$(SRCROOT)/Frameworks/Nimble.framework",
+				"$(SRCROOT)/Frameworks/Quick.framework",
 			);
 			outputPaths = (
 			);
@@ -2094,6 +2086,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2142,6 +2135,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -2187,6 +2181,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OutlanderTests",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
@@ -2231,6 +2226,7 @@
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/OutlanderTests",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
