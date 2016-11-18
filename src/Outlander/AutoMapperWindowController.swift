@@ -116,7 +116,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
         return self.maps.count
     }
     
-    func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject {
+    func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject? {
         guard index > -1 else { return "" }
 
         let map = self.maps[index]

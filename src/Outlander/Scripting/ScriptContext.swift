@@ -375,7 +375,7 @@ public class ScriptContext {
         }
         
         if let gosub = self.gosubContext where gosub.vars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-            
+
             self.replace("\\$", target: mutable, dict: gosub.vars)
         }
         

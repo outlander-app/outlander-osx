@@ -107,7 +107,7 @@ static const CGFloat MASButtonFontSize = 11;
     }
 }
 
-- (void)setStyle:(MASShortcutViewStyle)newStyle
+- (void)setStyle:(MASShortcutViewStyle2)newStyle
 {
     if (_style != newStyle) {
         _style = newStyle;
@@ -119,19 +119,19 @@ static const CGFloat MASButtonFontSize = 11;
 - (void)resetShortcutCellStyle
 {
     switch (_style) {
-        case MASShortcutViewStyleDefault: {
+        case MASShortcutViewStyle2Default: {
             _shortcutCell.bezelStyle = NSRoundRectBezelStyle;
             break;
         }
-        case MASShortcutViewStyleTexturedRect: {
+        case MASShortcutViewStyle2TexturedRect: {
             _shortcutCell.bezelStyle = NSTexturedRoundedBezelStyle;
             break;
         }
-        case MASShortcutViewStyleRounded: {
+        case MASShortcutViewStyle2Rounded: {
             _shortcutCell.bezelStyle = NSRoundedBezelStyle;
             break;
         }
-        case MASShortcutViewStyleFlat: {
+        case MASShortcutViewStyle2Flat: {
             self.wantsLayer = YES;
             _shortcutCell.backgroundColor = [NSColor clearColor];
             _shortcutCell.bordered = NO;
@@ -208,19 +208,19 @@ static const CGFloat MASButtonFontSize = 11;
     _shortcutCell.enabled = self.enabled;
     
     switch (_style) {
-        case MASShortcutViewStyleDefault: {
+        case MASShortcutViewStyle2Default: {
             [_shortcutCell drawWithFrame:frame inView:self];
             break;
         }
-        case MASShortcutViewStyleTexturedRect: {
+        case MASShortcutViewStyle2TexturedRect: {
             [_shortcutCell drawWithFrame:CGRectOffset(frame, 0.0, 1.0) inView:self];
             break;
         }
-        case MASShortcutViewStyleRounded: {
+        case MASShortcutViewStyle2Rounded: {
             [_shortcutCell drawWithFrame:CGRectOffset(frame, 0.0, 1.0) inView:self];
             break;
         }
-        case MASShortcutViewStyleFlat: {
+        case MASShortcutViewStyle2Flat: {
             [_shortcutCell drawWithFrame:frame inView:self];
             break;
         }
@@ -279,9 +279,9 @@ static const CGFloat MASButtonFontSize = 11;
     CGRect shortcutRect, hintRect;
     CGFloat hintButtonWidth = MASHintButtonWidth;
     switch (self.style) {
-        case MASShortcutViewStyleTexturedRect: hintButtonWidth += 2.0; break;
-        case MASShortcutViewStyleRounded: hintButtonWidth += 3.0; break;
-        case MASShortcutViewStyleFlat: hintButtonWidth -= 8.0 - (_shortcutCell.font.pointSize - MASButtonFontSize); break;
+        case MASShortcutViewStyle2TexturedRect: hintButtonWidth += 2.0; break;
+        case MASShortcutViewStyle2Rounded: hintButtonWidth += 3.0; break;
+        case MASShortcutViewStyle2Flat: hintButtonWidth -= 8.0 - (_shortcutCell.font.pointSize - MASButtonFontSize); break;
         default: break;
     }
     CGRectDivide(self.bounds, &hintRect, &shortcutRect, hintButtonWidth, CGRectMaxXEdge);
