@@ -42,7 +42,7 @@ describe(@"Alias Loader", ^{
 
             Alias *alias = [theContext.aliases objectAtIndex:0];
             expect(alias.pattern).to(equal(@"l2"));
-            expect(alias.replace).to(equal(@"load arrows blah"));
+            expect(alias.replace).to(equal(@"load arrows"));
         });
         
         it(@"should parse multiple aliases", ^{
