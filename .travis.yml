@@ -1,9 +1,5 @@
 language: objective-c
 osx_image: xcode7.3
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libxml2-dev
-
 before_script: travis/before.sh
 script: travis/script.sh
