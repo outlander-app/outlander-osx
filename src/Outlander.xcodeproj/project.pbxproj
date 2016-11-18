@@ -2101,8 +2101,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"/usr/include/libxml2\"",
-					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
@@ -2148,8 +2148,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"/usr/include/libxml2\"",
-					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\" $(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
