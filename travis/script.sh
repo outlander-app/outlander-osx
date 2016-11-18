@@ -1,5 +1,5 @@
 #!/bin/sh
 
-xctool -workspace outlander.xcworkspace \
+xcodebuild -workspace outlander.xcworkspace \
        -scheme OutlanderTests \
-       clean test
+       clean test | xcpretty -tc

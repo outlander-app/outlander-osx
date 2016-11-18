@@ -11,7 +11,7 @@
 #import "Alias.h"
 #import "NSString+Categories.h"
 #import "Outlander-Swift.h"
-#import <PEGKit/PEGKit.h>
+@import PEGKit;
 
 @implementation VariableReplacer
 

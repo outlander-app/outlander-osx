@@ -7,7 +7,7 @@
 //
 
 #import "ScriptHandler.h"
-#import <PEGKit/PEGKit.h>
+@import PEGKit;
 
 @interface ScriptHandler () {
     id<EventRelay> _relay;
