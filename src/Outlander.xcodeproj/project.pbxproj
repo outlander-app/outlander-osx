@@ -152,7 +152,6 @@
 		F972178D1DDE833300E8FC4E /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217891DDE832500E8FC4E /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217971DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
 		F97217981DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
-		F97217991DDE8FE700E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
 		F972179A1DDE8FE700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
 		F972179F1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
@@ -856,7 +855,6 @@
 			files = (
 				F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
-				F97217991DDE8FE700E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,

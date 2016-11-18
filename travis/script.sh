@@ -2,7 +2,7 @@
 
 xcodebuild -workspace outlander.xcworkspace \
        -scheme OutlanderTests \
-       clean test | xcpretty -tc
+       clean test | xcpretty -tc && exit ${PIPESTATUS[0]}
 
 if [ $? -eq 0 ]
 then
