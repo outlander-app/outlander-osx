@@ -2,3 +2,4 @@ github "shpakovski/MASShortcut" ~> 2.3.6
 github "Squirrel/Squirrel.Mac" ~> 0.3.0
 github "robbiehanson/CocoaAsyncSocket" ~> 7.5.1
 github "joemcbride/GlimpseXML" "xcode7-el-capitan"
+github "joemcbride/pegkit" "modules"

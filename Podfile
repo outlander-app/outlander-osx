@@ -4,7 +4,6 @@ use_frameworks!
 project 'src/Outlander.xcodeproj'
 
 def shared_pods
-  pod 'PEGKit', '~> 0.4'
 end
 
 target :Outlander do

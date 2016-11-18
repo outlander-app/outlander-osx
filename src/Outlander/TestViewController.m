@@ -32,6 +32,7 @@
 #import "Outlander-Swift.h"
 #import <MASShortcut/MASShortcut.h>
 #import <MASShortcut/MASShortcutMonitor.h>
+#import <PEGKit/PEGKit.h>
 #import "NSArray+PEGKitAdditions.h"
 
 @interface TestViewController ()

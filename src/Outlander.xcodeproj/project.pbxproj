@@ -156,6 +156,14 @@
 		F97217981DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
 		F97217991DDE8FE700E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; };
 		F972179A1DDE8FE700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
+		F972179F1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
+		F97217A01DDEBD2900E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; };
+		F97217A11DDEBD2900E8FC4E /* PEGKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F972179D1DDEBD0700E8FC4E /* PEGKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97217A41DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h in Sources */ = {isa = PBXBuildFile; fileRef = F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */; };
+		F97217A51DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h in Sources */ = {isa = PBXBuildFile; fileRef = F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */; };
+		F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
+		F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */; };
@@ -453,6 +461,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F97217A11DDEBD2900E8FC4E /* PEGKit.framework in Copy Files */,
 				F972177B1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
 				F9A8DD3C1AC29AD6009A2F67 /* ReactiveCocoa.framework in Copy Files */,
 				F972179A1DDE8FE700E8FC4E /* GlimpseXML.framework in Copy Files */,
@@ -581,10 +590,12 @@
 		F97217731DDE7DBC00E8FC4E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Nimble.framework; sourceTree = "<group>"; };
 		F97217741DDE7DBC00E8FC4E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Quick.framework; sourceTree = "<group>"; };
 		F97217771DDE7E8300E8FC4E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaAsyncSocket.framework; sourceTree = "<group>"; };
-		F972177C1DDE7EB800E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = PEGKit.framework; path = "/Users/jomc/Library/Developer/Xcode/DerivedData/Outlander-ewculpqfverqnbebaiaippfxsuew/Build/Products/Debug/PEGKit/PEGKit.framework"; sourceTree = "<absolute>"; };
 		F97217811DDE828000E8FC4E /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
 		F97217891DDE832500E8FC4E /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mantle.framework; sourceTree = "<group>"; };
 		F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GlimpseXML.framework; sourceTree = "<group>"; };
+		F972179D1DDEBD0700E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PEGKit.framework; sourceTree = "<group>"; };
+		F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PEGKitAdditions.h"; sourceTree = "<group>"; };
+		F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PEGKitAdditions.m"; sourceTree = "<group>"; };
 		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
 		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
@@ -854,6 +865,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F972179E1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F97217991DDE8FE700E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
@@ -862,6 +874,7 @@
 				F9A8DD361AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F972177A1DDE7E9A00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217821DDE828000E8FC4E /* MASShortcut.framework in Frameworks */,
+				F97217A01DDEBD2900E8FC4E /* PEGKit.framework in Frameworks */,
 				F972178C1DDE833300E8FC4E /* Mantle.framework in Frameworks */,
 				F9A8DD381AC299EC009A2F67 /* Squirrel.framework in Frameworks */,
 				F97217781DDE7E8300E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
@@ -874,6 +887,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F972179F1DDEBD0700E8FC4E /* PEGKit.framework in Frameworks */,
 				F9A8DD371AC299EC009A2F67 /* ReactiveCocoa.framework in Frameworks */,
 				F97217981DDE8FDC00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -1125,6 +1139,8 @@
 				F959D3DB1AC8AC5100B2A659 /* MASShortcut+Categories.h */,
 				F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */,
 				F9D6A6F31ACBE1A700FEA665 /* NSColorExtensions.swift */,
+				F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */,
+				F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -1333,7 +1349,6 @@
 		F9CF925E1890832800449548 = {
 			isa = PBXGroup;
 			children = (
-				F972177C1DDE7EB800E8FC4E /* PEGKit.framework */,
 				F9CF92701890832800449548 /* Outlander */,
 				F9CF928E1890832800449548 /* OutlanderTests */,
 				F9CF92691890832800449548 /* Frameworks */,
@@ -1354,6 +1369,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F972179D1DDEBD0700E8FC4E /* PEGKit.framework */,
 				F97217961DDE8FDC00E8FC4E /* GlimpseXML.framework */,
 				F97217891DDE832500E8FC4E /* Mantle.framework */,
 				F97217811DDE828000E8FC4E /* MASShortcut.framework */,
@@ -1759,6 +1775,7 @@
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
 				F95538A51B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
+				F97217A41DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h in Sources */,
 				F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F9C178861B140F2A00CC7291 /* FlippedView.swift in Sources */,
@@ -1781,6 +1798,7 @@
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
 				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
+				F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
@@ -1917,6 +1935,7 @@
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
+				F97217A51DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
@@ -1989,6 +2008,7 @@
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
 				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
+				F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
 				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
