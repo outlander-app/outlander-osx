@@ -7,7 +7,6 @@
 //
 
 #import "SignalSocket.h"
-#import "GCDAsyncSocket.h"
 
 @implementation SignalSocket
 

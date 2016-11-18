@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GCDAsyncSocket.h"
+#import <CocoaAsyncSocket/GCDAsyncSocket.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 @interface SignalSocket : NSObject <GCDAsyncSocketDelegate> {

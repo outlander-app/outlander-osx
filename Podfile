@@ -4,7 +4,6 @@ use_frameworks!
 project 'src/Outlander.xcodeproj'
 
 def shared_pods
-  pod 'CocoaAsyncSocket', '7.5.0'
   pod 'PEGKit', '~> 0.4'
 end
 
@@ -14,6 +13,4 @@ end
 
 target :OutlanderTests do
   shared_pods
-  pod 'Quick', '0.9.3'
-  pod 'Nimble', '4.1.0'
 end

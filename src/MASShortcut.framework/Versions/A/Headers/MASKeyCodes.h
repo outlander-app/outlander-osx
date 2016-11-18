@@ -1,4 +1,6 @@
 #import <Carbon/Carbon.h>
+#import <AppKit/AppKit.h>
+#import "MASKeyMasks.h"
 
 // These glyphs are missed in Carbon.h
 enum {
@@ -20,7 +22,7 @@ enum {
     kMASShortcutGlyphPadClear = 0x2327,
     kMASShortcutGlyphNorthwestArrow = 0x2196,
     kMASShortcutGlyphSoutheastArrow = 0x2198,
-} MASShortcutGlyph;
+};
 
 NS_INLINE NSString* NSStringFromMASKeyCode(unsigned short ch)
 {
@@ -29,14 +31,14 @@ NS_INLINE NSString* NSStringFromMASKeyCode(unsigned short ch)
 
 NS_INLINE NSUInteger MASPickCocoaModifiers(NSUInteger flags)
 {
-    return (flags & (NSControlKeyMask | NSShiftKeyMask | NSAlternateKeyMask | NSCommandKeyMask));
+    return (flags & (NSEventModifierFlagControl | NSEventModifierFlagShift | NSEventModifierFlagOption | NSEventModifierFlagCommand));
 }
 
 NS_INLINE UInt32 MASCarbonModifiersFromCocoaModifiers(NSUInteger cocoaFlags)
 {
     return
-          (cocoaFlags & NSCommandKeyMask ? cmdKey : 0)
-        | (cocoaFlags & NSAlternateKeyMask ? optionKey : 0)
-        | (cocoaFlags & NSControlKeyMask ? controlKey : 0)
-        | (cocoaFlags & NSShiftKeyMask ? shiftKey : 0);
+          (cocoaFlags & NSEventModifierFlagCommand ? cmdKey : 0)
+        | (cocoaFlags & NSEventModifierFlagOption ? optionKey : 0)
+        | (cocoaFlags & NSEventModifierFlagControl ? controlKey : 0)
+        | (cocoaFlags & NSEventModifierFlagShift ? shiftKey : 0);
 }
