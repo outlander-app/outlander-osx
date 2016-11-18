@@ -2,8 +2,6 @@
 set -e
 
 gem install xcpretty
-brew update
-brew install libxml2 libxslt
 
 if [ $? -eq 0 ]
 then
