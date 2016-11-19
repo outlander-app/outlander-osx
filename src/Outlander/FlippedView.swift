@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc
 class FlippedView : NSView {
     override var flipped:Bool {
         get {

@@ -8,12 +8,13 @@
 
 import Cocoa
 
+@objc
 class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
     private var context: GameContext?
     private var font: String = "Menlo"
     private var fontSize: CGFloat = 12
-    
+
     func handle(token:String, data:Dictionary<String, AnyObject>) {
         mainThread { () -> () in
             if token == "script:add" {
