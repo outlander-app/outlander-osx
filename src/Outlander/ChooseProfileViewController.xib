@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ChooseProfileViewController" customModule="Outlander" customModuleProvider="target">
@@ -18,14 +19,14 @@
             <rect key="frame" x="0.0" y="0.0" width="192" height="237"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOX-hf-Qjb">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOX-hf-Qjb">
                     <rect key="frame" x="20" y="61" width="152" height="156"/>
-                    <clipView key="contentView" ambiguous="YES" id="rle-53-c6b">
-                        <rect key="frame" x="1" y="17" width="150" height="138"/>
+                    <clipView key="contentView" id="rle-53-c6b">
+                        <rect key="frame" x="1" y="0.0" width="150" height="155"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="XjM-DY-23i" viewBased="YES" id="gyA-hU-L1f">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="138"/>
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="132"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -51,10 +52,9 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="jAw-BV-R4h">
-                        <rect key="frame" x="1" y="2" width="0.0" height="15"/>
+                        <rect key="frame" x="1" y="8" width="0.0" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="bYE-TV-VQJ">
@@ -62,12 +62,15 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="XjM-DY-23i">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqw-BT-LwZ">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqw-BT-LwZ">
                     <rect key="frame" x="14" y="13" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="W4l-xw-IwE"/>
+                    </constraints>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GQ2-cv-TRq">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -76,7 +79,7 @@ Gw
 </string>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6v-Qf-8lw">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c6v-Qf-8lw">
                     <rect key="frame" x="96" y="13" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Ok" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fmR-Lj-Nyf">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -87,6 +90,17 @@ DQ
                     </buttonCell>
                 </button>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="IOX-hf-Qjb" secondAttribute="trailing" constant="20" symbolic="YES" id="9Tu-tH-eF6"/>
+                <constraint firstItem="gqw-BT-LwZ" firstAttribute="top" secondItem="IOX-hf-Qjb" secondAttribute="bottom" constant="20" symbolic="YES" id="9tt-j9-Yb2"/>
+                <constraint firstAttribute="bottom" secondItem="gqw-BT-LwZ" secondAttribute="bottom" constant="20" symbolic="YES" id="Nuo-zj-teM"/>
+                <constraint firstItem="gqw-BT-LwZ" firstAttribute="baseline" secondItem="c6v-Qf-8lw" secondAttribute="baseline" id="Oj9-RC-EuR"/>
+                <constraint firstItem="IOX-hf-Qjb" firstAttribute="trailing" secondItem="c6v-Qf-8lw" secondAttribute="trailing" id="Pw0-fg-Hsh"/>
+                <constraint firstItem="IOX-hf-Qjb" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="Ue2-df-7US"/>
+                <constraint firstItem="IOX-hf-Qjb" firstAttribute="leading" secondItem="gqw-BT-LwZ" secondAttribute="leading" id="c2o-bV-7ha"/>
+                <constraint firstItem="c6v-Qf-8lw" firstAttribute="leading" secondItem="gqw-BT-LwZ" secondAttribute="trailing" constant="12" symbolic="YES" id="ff6-HM-WAv"/>
+                <constraint firstItem="IOX-hf-Qjb" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="gbn-gv-g8Z"/>
+            </constraints>
             <point key="canvasLocation" x="192" y="210.5"/>
         </customView>
     </objects>
