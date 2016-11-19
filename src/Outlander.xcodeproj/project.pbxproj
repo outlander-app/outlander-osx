@@ -319,9 +319,6 @@
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
-		F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
-		F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
-		F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -383,6 +380,10 @@
 		F9CB31111903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB311419032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
 		F9CB311519032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
+		F9CC818B1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
+		F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
+		F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
+		F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92751890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92731890832800449548 /* InfoPlist.strings */; };
 		F9CF92771890832800449548 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CF92761890832800449548 /* main.m */; };
@@ -457,9 +458,9 @@
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
 				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
-				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
 				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
+				F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
@@ -735,7 +736,6 @@
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
 		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
-		F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -792,6 +792,7 @@
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
 		F9CB311219032EDE004587A5 /* LearningRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearningRate.h; sourceTree = "<group>"; };
 		F9CB311319032EDE004587A5 /* LearningRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearningRate.m; sourceTree = "<group>"; };
+		F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OysterKit.framework; path = Frameworks/OysterKit.framework; sourceTree = "<group>"; };
 		F9CF92671890832800449548 /* Outlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9CF926A1890832800449548 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F9CF926D1890832800449548 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -850,13 +851,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
+				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
+				F9CC818B1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
-				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -873,11 +875,11 @@
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
+				F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */,
 				F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
-				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1344,7 +1346,7 @@
 				F97217AE1DDF831B00E8FC4E /* PEGKit.framework */,
 				F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */,
 				F97217B01DDF831B00E8FC4E /* Squirrel.framework */,
-				F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */,
+				F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
