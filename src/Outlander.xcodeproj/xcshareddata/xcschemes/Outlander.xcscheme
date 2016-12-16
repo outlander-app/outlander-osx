@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A01BD6622E49001EDEC82BEC619F6DE"
-               BuildableName = "Pods.framework"
-               BlueprintName = "Pods"
-               ReferencedContainer = "container:../Pods/Pods.xcodeproj">
+               BlueprintIdentifier = "F9CF92661890832800449548"
+               BuildableName = "Outlander.app"
+               BlueprintName = "Outlander"
+               ReferencedContainer = "container:Outlander.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry

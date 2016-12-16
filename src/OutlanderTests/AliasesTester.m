@@ -29,13 +29,13 @@ describe(@"Alias Loader", ^{
         theFileSystem = [[StubFileSystem alloc] init];
         theLoader = [[AliasLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
     });
-    
+
     context(@"load", ^{
-        
+
         it(@"should parse simple alias", ^{
-            
+
             theFileSystem.fileContents = @"#alias {l2} {load arrows}";
-            
+
             [theLoader load];
 
             expect(@(theContext.aliases.count)).to(equal(@1));

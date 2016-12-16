@@ -6,3 +6,4 @@ Pods
 podfile.lock
 gemfile.lock
 xcuserdata
+.idea

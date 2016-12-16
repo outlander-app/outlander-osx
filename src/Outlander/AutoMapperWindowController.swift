@@ -136,6 +136,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     private var mapsDataSource: MapsDataSource = MapsDataSource()
 
     private var context:GameContext?
+    private var relay:CommandRelay?
     private let mapLoader:MapLoader = MapLoader()
     
     var mapLevel:Int = 0 {
@@ -407,7 +408,6 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 }
             })
         }
-        
     }
     
     @IBAction func mapLevelAction(sender: NSSegmentedControl) {
