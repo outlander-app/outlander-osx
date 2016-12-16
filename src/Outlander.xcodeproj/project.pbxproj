@@ -380,7 +380,6 @@
 		F9CB31111903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB311419032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
 		F9CB311519032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
-		F9CC818B1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
 		F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
 		F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
 		F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -857,7 +856,6 @@
 				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
-				F9CC818B1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
@@ -1483,7 +1481,7 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Joe McBride";
 				TargetAttributes = {
 					F9CF92661890832800449548 = {
