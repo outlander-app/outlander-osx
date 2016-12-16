@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Double {
+    func format(f: String) -> String {
+        return String(format: "%\(f)f", self)
+    }
+}
+
 extension String {
     public func trim(type:String) -> String {
         let newVal = self.trimPrefix(type)

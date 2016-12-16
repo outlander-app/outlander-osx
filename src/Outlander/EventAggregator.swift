@@ -68,6 +68,21 @@ public class EventAggregator : NSObject {
             }
         }
     }
+
+    public func sendCommand(context:CommandContext) {
+        publish("OL:command", data: ["command":context])
+    }
+
+    public func sendEcho(tag:TextTag) {
+        publish("OL:echo", data: ["tag":tag])
+    }
+
+    public func echoText(text:String, mono: Bool = false) {
+        let tag = TextTag()
+        tag.text = "\(text)\n"
+        tag.mono = mono
+        publish("OL:echo", data: ["tag":tag])
+    }
 }
 
 public struct EventHandler {

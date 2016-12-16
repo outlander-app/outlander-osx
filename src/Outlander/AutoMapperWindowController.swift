@@ -85,6 +85,8 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
 
         let maps = self.maps.filter { $0.zone == nil }
 
+        context.events.echoText("[Automapper]: loading all maps...")
+
         loadMap({ () -> [MapLoadResult] in
             var results: [MapLoadResult] = []
             maps.forEach { m in
@@ -105,7 +107,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 self.maps.forEach { map in
                     context.maps[map.id] = map.zone!
                 }
-                print("all maps loaded in \(diff)")
+                context.events.echoText("[Automapper]: all maps loaded in \(diff.format("0.2")) seconds")
                 context.resetMap()
         })
     }
@@ -136,7 +138,6 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     private var mapsDataSource: MapsDataSource = MapsDataSource()
 
     private var context:GameContext?
-    private var relay:CommandRelay?
     private let mapLoader:MapLoader = MapLoader()
     
     var mapLevel:Int = 0 {
@@ -191,7 +192,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     
     func setContext(context:GameContext) {
         self.context = context
-        
+
         self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
@@ -376,6 +377,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             if self.nodesLabel != nil {
                 self.nodesLabel.stringValue = "Loading ..."
             }
+
+            self.context?.events.echoText("[Automapper]: loading selected map \(info.file)")
             
             let start = NSDate()
 
@@ -388,8 +391,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 switch result {
                     
                 case let .Success(zone):
-                    
-                    print("map \(zone.name) loaded in: \(diff) seconds")
+
+                    self.context?.events.echoText("[Automapper]: \(zone.name) loaded in \(diff.format(".2")) seconds")
                     
                     self.context?.mapZone = zone
                     
@@ -401,7 +404,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     }
                     
                 case let .Error(error):
-                    print("map loaded with error in: \(diff) seconds")
+                    self.context?.events.echoText("[Automapper]: map loaded with error in \(diff.format(".2")) seconds")
+                    self.context?.events.echoText("\(error)")
                     if self.nodesLabel != nil {
                         self.nodesLabel.stringValue = "Error loading map: \(error)"
                     }

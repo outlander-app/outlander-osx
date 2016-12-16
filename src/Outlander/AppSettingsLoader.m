@@ -63,9 +63,10 @@
 - (void)load {
     
     [self writeConfigFolders:_context.settings.profile];
+    [self writeProfileFolders:_context.settings.profile];
+
     [self loadConfig];
     
-    [self writeProfileFolders:_context.settings.profile];
     [self loadProfile];
     
     [self loadLayout];
