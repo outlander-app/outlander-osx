@@ -31,7 +31,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="347" id="iPl-Ge-jaq"/>
                         </constraints>
-                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Maps" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="1000" id="CyM-VK-Bl8">
+                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Maps" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="1000" id="CyM-VK-Bl8">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -51,23 +51,24 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <scrollView canDrawConcurrently="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-me-1Bp">
+                    <scrollView canDrawConcurrently="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7v-me-1Bp">
                         <rect key="frame" x="20" y="45" width="649" height="232"/>
-                        <clipView key="contentView" canDrawConcurrently="YES" id="lRT-rG-1jD">
-                            <rect key="frame" x="1" y="1" width="632" height="215"/>
+                        <clipView key="contentView" canDrawConcurrently="YES" drawsBackground="NO" copiesOnScroll="NO" id="lRT-rG-1jD">
+                            <rect key="frame" x="0.0" y="0.0" width="634" height="217"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view canDrawConcurrently="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dK0-il-DeC" customClass="MapView" customModule="Outlander" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="136" width="166" height="79"/>
+                                    <rect key="frame" x="0.0" y="138" width="166" height="79"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </view>
                             </subviews>
+                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="625" id="VmW-hP-E6v"/>
                         </constraints>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Wlu-hT-kfy" customClass="MMScroller">
-                            <rect key="frame" x="1" y="216" width="632" height="15"/>
+                            <rect key="frame" x="0.0" y="217" width="634" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
@@ -76,7 +77,7 @@
                             </userDefinedRuntimeAttributes>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="wGe-Ld-C55" customClass="MMScroller">
-                            <rect key="frame" x="633" y="1" width="15" height="215"/>
+                            <rect key="frame" x="634" y="0.0" width="15" height="217"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">

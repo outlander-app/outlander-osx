@@ -107,7 +107,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 self.maps.forEach { map in
                     context.maps[map.id] = map.zone!
                 }
-                context.events.echoText("[Automapper]: all maps loaded in \(diff.format("0.2")) seconds")
+                context.events.echoText("[Automapper]: all \(self.maps.count) maps loaded in \(diff.format("0.2")) seconds")
                 context.resetMap()
         })
     }
