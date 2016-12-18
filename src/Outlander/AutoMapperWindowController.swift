@@ -10,12 +10,12 @@ import Cocoa
 
 func loadMap <R> (
     backgroundClosure: () -> R,
-    mainClosure: (result: R) -> ())
+    mainClosure: (R) -> ())
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-        let result = backgroundClosure()
+        let res = backgroundClosure()
         dispatch_async(dispatch_get_main_queue(), {
-            mainClosure(result: result)
+            mainClosure(res)
         })
     }
 }
@@ -185,7 +185,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             }
         }
 
-        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), game = self.context?.globalVars.cacheObjectForKey("game") {
+        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), let game = self.context?.globalVars.cacheObjectForKey("game") {
             self.window?.title = "AutoMapper - \(game): \(charname)"
         }
     }

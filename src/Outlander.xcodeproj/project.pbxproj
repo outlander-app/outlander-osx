@@ -410,6 +410,7 @@
 		F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */; };
 		F9E4DD691B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
 		F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
+		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
@@ -425,7 +426,6 @@
 		F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
-		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
@@ -849,6 +849,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
 				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
@@ -857,7 +858,6 @@
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
-				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 			);
@@ -2153,6 +2153,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2181,6 +2182,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 				WRAPPER_EXTENSION = app;
 			};
