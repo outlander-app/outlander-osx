@@ -364,6 +364,7 @@
 		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
+		F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */; };
 		F9C1787D1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
 		F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
 		F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */; };
@@ -780,6 +781,7 @@
 		F9BF6AF1193A914B0075A12F /* GameEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEventRelay.m; sourceTree = "<group>"; };
 		F9BF6AF4193A941B0075A12F /* StubEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubEventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF5193A941B0075A12F /* StubEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubEventRelay.m; sourceTree = "<group>"; };
+		F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubstituteTester.m; sourceTree = "<group>"; };
 		F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCommandHandler.swift; sourceTree = "<group>"; };
 		F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptToolbarViewController.swift; sourceTree = "<group>"; };
 		F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptToolbarViewController.xib; sourceTree = "<group>"; };
@@ -1420,6 +1422,7 @@
 				F9A74F0D192ED272008F410A /* VariableReplacerTester.m */,
 				F9A74F131930606A008F410A /* VariablesLoaderTester.m */,
 				F9CF928F1890832800449548 /* Supporting Files */,
+				F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */,
 			);
 			path = OutlanderTests;
 			sourceTree = "<group>";
@@ -1938,6 +1941,7 @@
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */,
 				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
 				F98782B819420CB500D76231 /* EchoToken.m in Sources */,

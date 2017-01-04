@@ -285,7 +285,9 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
-    
+
+//    __CommandTextField.maxHistoryLength = 3;
+
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
 //
 //    TextTag *tag = [TextTag tagFor:@"test\r\n" mono:NO];

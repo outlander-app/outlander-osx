@@ -321,13 +321,8 @@ public class Script : IScript {
     }
     
     private func gosubReturn(moveNext:Bool) {
-        if let ctx = self.context!.popGosub() {
-            let tag = TextTag("returning to line \(ctx.returnLine + 1)\n", mono: true)
-            self.notify(tag, debug: ScriptLogLevel.Gosubs)
-            if moveNext {
-                self.moveNext()
-            }
-        } else {
+        guard let ctx = self.context!.popGosub() else {
+
             let tag = TextTag("no gosub to return to!\n", mono: true)
             
             tag.color = "#efefef"
@@ -337,6 +332,13 @@ public class Script : IScript {
             self.notify(tag)
             self.cancel()
             self.completed?(self.scriptName, "no gosub to return to")
+            return
+        }
+
+        let tag = TextTag("returning to line \(ctx.returnLine + 1)\n", mono: true)
+        self.notify(tag, debug: ScriptLogLevel.Gosubs)
+        if moveNext {
+            self.moveNext()
         }
     }
     
@@ -379,7 +381,6 @@ public class Script : IScript {
                 self.context!.marker.currentIdx = -1
                 self.context!.setVariable("scriptname", value: self.scriptName)
                 self.moveNext()
-                
             })
         })
     }
