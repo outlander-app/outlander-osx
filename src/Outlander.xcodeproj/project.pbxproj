@@ -393,6 +393,7 @@
 		F9CF92831890832800449548 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92821890832800449548 /* Images.xcassets */; };
 		F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92931890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92911890832800449548 /* InfoPlist.strings */; };
+		F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
 		F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
 		F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
@@ -1488,7 +1489,9 @@
 				ORGANIZATIONNAME = "Joe McBride";
 				TargetAttributes = {
 					F9CF92661890832800449548 = {
+						DevelopmentTeam = 9F7EUQVBB7;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
 					};
 					F9CF92871890832800449548 = {
 						LastSwiftMigration = 0810;
@@ -1876,6 +1879,7 @@
 				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
+				F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
 				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
@@ -2102,6 +2106,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9F7EUQVBB7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2152,6 +2157,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9F7EUQVBB7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

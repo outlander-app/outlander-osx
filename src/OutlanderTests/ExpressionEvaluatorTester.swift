@@ -41,7 +41,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                 
                 expect(boolResult).to(equal(true))
             }
-            
+
             it("evaluates contains expression") {
                 let parser = OutlanderScriptParser()
                 

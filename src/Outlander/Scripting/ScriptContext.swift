@@ -387,6 +387,7 @@ public class ScriptContext {
     }
     
     private func simplifyImpl(mutable:NSMutableString)->Void {
+
         if self.actionVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
             self.replace("\\$", target: mutable, dict: self.actionVars)
         }
@@ -395,7 +396,7 @@ public class ScriptContext {
 
             self.replace("\\$", target: mutable, dict: self.regexVars)
         }
-        
+
         if mutable.rangeOfString("%").location != NSNotFound {
             
             self.replace("%", target: mutable, dict: self.variables)
