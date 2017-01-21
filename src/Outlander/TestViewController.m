@@ -694,13 +694,15 @@
     NSMutableString *room = [[NSMutableString alloc] init];
     if(name != nil && name.length != 0) {
         TextTag *nameTag = [TextTag tagFor:name mono:false];
-        nameTag.color = @"#0000FF";
+//        nameTag.color = @"#0000FF";
+        nameTag.preset = @"roomname";
         [tags addObject:nameTag];
         [room appendString:@"\n"];
     }
     if(desc != nil && desc.length != 0) {
         [room appendFormat:@"%@\n", desc];
         TextTag *tag = [TextTag tagFor:[room copy] mono:false];
+        tag.preset = @"roomdesc";
         [tags addObject:tag];
         [room setString:@""];
     }

@@ -77,10 +77,11 @@ public class EventAggregator : NSObject {
         publish("OL:echo", data: ["tag":tag])
     }
 
-    public func echoText(text:String, mono: Bool = false) {
+    public func echoText(text:String, mono: Bool = false, preset: String = "") {
         let tag = TextTag()
         tag.text = "\(text)\n"
         tag.mono = mono
+        tag.preset = preset
         publish("OL:echo", data: ["tag":tag])
     }
 }

@@ -85,7 +85,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
 
         let maps = self.maps.filter { $0.zone == nil }
 
-        context.events.echoText("[Automapper]: loading all maps...")
+        context.events.echoText("[Automapper]: loading all maps...", preset: "automapper")
 
         loadMap({ () -> [MapLoadResult] in
             var results: [MapLoadResult] = []
@@ -107,7 +107,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 self.maps.forEach { map in
                     context.maps[map.id] = map.zone!
                 }
-                context.events.echoText("[Automapper]: all \(self.maps.count) maps loaded in \(diff.format("0.2")) seconds")
+                context.events.echoText("[Automapper]: all \(self.maps.count) maps loaded in \(diff.format("0.2")) seconds", preset: "automapper")
                 context.resetMap()
         })
     }
@@ -378,7 +378,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 self.nodesLabel.stringValue = "Loading ..."
             }
 
-            self.context?.events.echoText("[Automapper]: loading selected map \(info.file)")
+            self.context?.events.echoText("[Automapper]: loading selected map \(info.file)", preset: "automapper")
             
             let start = NSDate()
 
@@ -392,7 +392,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     
                 case let .Success(zone):
 
-                    self.context?.events.echoText("[Automapper]: \(zone.name) loaded in \(diff.format(".2")) seconds")
+                    self.context?.events.echoText("[Automapper]: \(zone.name) loaded in \(diff.format(".2")) seconds", preset: "automapper")
                     
                     self.context?.mapZone = zone
                     
@@ -404,7 +404,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     }
                     
                 case let .Error(error):
-                    self.context?.events.echoText("[Automapper]: map loaded with error in \(diff.format(".2")) seconds")
+                    self.context?.events.echoText("[Automapper]: map loaded with error in \(diff.format(".2")) seconds", preset: "automapper")
                     self.context?.events.echoText("\(error)")
                     if self.nodesLabel != nil {
                         self.nodesLabel.stringValue = "Error loading map: \(error)"

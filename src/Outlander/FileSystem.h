@@ -10,5 +10,6 @@
 
 - (NSString *)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
 - (BOOL)write:(NSString *)data toFile:(NSString *)path;
+- (BOOL)fileExists:(NSString *)path;
 
 @end

@@ -113,6 +113,11 @@
 
 - (void)echo:(TextTag *)tag {
     id<RACSubscriber> sub = (id<RACSubscriber>)_echoed;
+
+    if(tag.preset == nil || [tag.preset length] == 0) {
+        tag.preset = @"scriptecho";
+    }
+
     [sub sendNext:tag];
 }
 @end

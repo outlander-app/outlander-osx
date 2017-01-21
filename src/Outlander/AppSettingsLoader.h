@@ -22,5 +22,6 @@
 - (void)saveTriggers;
 - (void)saveSubs;
 - (void)saveGags;
+- (void)savePresets;
 
 @end
