@@ -306,7 +306,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(self.settings["monstercount"]).to(equal("1"))
             }
             
-            it("streams colored room name") {
+            it("streams room name with preset") {
                 let data = [
                     "<style id=\"roomName\" />[The Crossing, Truffenyi Place]"
                 ]
@@ -315,7 +315,8 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.tags.count).to(equal(2))
                 
-                expect(self.tags[0].color).to(equal("#0000FF"))
+                expect(self.tags[0].preset).to(equal("roomname"))
+                expect(self.tags[0].color).to(beNil())
             }
             
             it("streams room exits when none") {

@@ -72,7 +72,7 @@
     _notifier.echoBlock = ^(NSString *echo){
         @strongify(self)
         TextTag *tag = [TextTag tagFor:echo mono:YES];
-        tag.color = @"00ffff";
+//        tag.color = @"00ffff";
         tag.preset = @"scriptecho";
         [self append:tag to:@"main"];
     };
@@ -101,8 +101,9 @@
             tag = [TextTag tagFor:[NSString stringWithFormat:@"%@%@\n",script, x.command]
                              mono: script.length > 0 ? YES : NO];
             
-            if (x.scriptName.length > 0 && tag.color == nil) {
-                tag.color = @"#acff2f";
+            if (x.scriptName.length > 0 && tag.color == nil && tag.preset == nil) {
+//                tag.color = @"#acff2f";
+                tag.preset = @"scriptinput";
             }
             
             tag.targetWindow = @"main";

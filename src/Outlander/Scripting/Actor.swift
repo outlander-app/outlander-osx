@@ -177,7 +177,7 @@ public class Script : IScript {
         if let display = self.context?.varsForDisplay() {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
-            self.notify(TextTag(String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
+            self.sendMessage(ScriptInfoMessage(String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff)))
             
             let sorted = display.sort { $0 < $1 }
             
@@ -192,7 +192,7 @@ public class Script : IScript {
     
     public func setLogLevel(level:ScriptLogLevel) {
         self.logLevel = level
-        self.notify(TextTag("[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n", mono: true))
+        self.sendMessage(ScriptInfoMessage("[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n"))
     }
     
     public func varsChanged(vars:[String:String]) {
@@ -678,7 +678,7 @@ public class Script : IScript {
 //        }
 //       
         if message.preset == nil {
-            message.preset = "scriptinput"
+            message.preset = "scriptinfo"
         }
         
         self.notifier.notify(message)

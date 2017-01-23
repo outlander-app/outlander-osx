@@ -31,6 +31,7 @@ class PresetLoaderTester : QuickSpec {
 
             it("loads preset") {
                 fileSystem.fileContents = "#preset {concentration} {#000040}"
+                fileSystem.fileExistsResult = true
 
                 loader.load()
 
@@ -43,6 +44,7 @@ class PresetLoaderTester : QuickSpec {
 
             it("loads preset with class") {
                 fileSystem.fileContents = "#preset {concentration} {#000040} {a class}"
+                fileSystem.fileExistsResult = true
 
                 loader.load()
 
@@ -55,6 +57,7 @@ class PresetLoaderTester : QuickSpec {
 
             it("loads preset with dual color") {
                 fileSystem.fileContents = "#preset {concentration} {#000040,#000055} {something}"
+                fileSystem.fileExistsResult = true
 
                 loader.load()
 
@@ -68,6 +71,7 @@ class PresetLoaderTester : QuickSpec {
 
             it("loads muliple presets") {
                 fileSystem.fileContents = "#preset {concentration} {#000040}\n#preset {health} {#400000} {a class}"
+                fileSystem.fileExistsResult = true
 
                 loader.load()
 

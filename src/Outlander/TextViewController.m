@@ -235,6 +235,7 @@
     TextTag *newTag = [TextTag tagFor:str mono: YES];
     newTag.color = tag.color;
     newTag.backgroundColor = tag.backgroundColor;
+    newTag.preset = tag.preset;
     
     return newTag;
 }

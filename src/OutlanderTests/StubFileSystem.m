@@ -21,4 +21,8 @@
     return _writeResult;
 }
 
+- (BOOL)fileExists:(NSString *)path {
+    return _fileExistsResult;
+}
+
 @end

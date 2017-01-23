@@ -117,6 +117,7 @@ class PresetLoader : NSObject {
         self.add("scripterror", "#efefef", "#ff3300")
         self.add("scriptinfo", "#acff2f")
         self.add("scriptinput", "#0066cc")
+        self.add("sendinput", "#0066cc")
         self.add("speech", "#99FFFF")
         self.add("thought", "#99FFFF")
         self.add("whisper", "#99FFFF")
