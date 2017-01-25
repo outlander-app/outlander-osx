@@ -59,6 +59,11 @@ public class ScriptRunner : NSObject, ISubscriber {
         
         let scriptName = dict["target"] as! String
         let tokens = dict["args"] as? NSArray;
+
+        if(!self.scriptLoader.exists(scriptName)) {
+            self.context.events.echoText("Cannot find script \(scriptName).cmd", mono: true, preset: "scripterror")
+            return
+        }
         
         self.abort(scriptName)
        

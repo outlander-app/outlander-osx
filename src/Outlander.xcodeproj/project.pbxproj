@@ -96,6 +96,8 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
+		F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
 		F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
@@ -540,6 +542,7 @@
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
+		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
 		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
@@ -1015,6 +1018,7 @@
 				F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */,
 				F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */,
 				F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */,
+				F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1701,6 +1705,7 @@
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
+				F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */,
 				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
@@ -1926,6 +1931,7 @@
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
 				F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */,
+				F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F98D4C291CB1A7DF00E81E70 /* Substitute.swift in Sources */,

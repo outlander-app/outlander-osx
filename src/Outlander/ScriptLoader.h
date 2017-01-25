@@ -14,5 +14,6 @@
 
 - (instancetype)initWith:(GameContext *)context and:(id<FileSystem>)fileSystem;
 - (NSString *)load:(NSString *)scriptName;
+- (BOOL)exists:(NSString *)scriptName;
 
 @end

@@ -108,16 +108,16 @@ class PresetLoader : NSObject {
     }
 
     func setupDefaults() {
-        self.add("automapper", "#0000FF")
+        self.add("automapper", "#99FFFF")
         self.add("chatter", "#99FFFF")
         self.add("creatures", "#FFFF00")
         self.add("roomdesc", "#cccccc")
         self.add("roomname", "#0000FF")
         self.add("scriptecho", "#99FFFF")
         self.add("scripterror", "#efefef", "#ff3300")
-        self.add("scriptinfo", "#acff2f")
-        self.add("scriptinput", "#0066cc")
-        self.add("sendinput", "#0066cc")
+        self.add("scriptinfo", "#0066cc")
+        self.add("scriptinput", "#acff2f")
+        self.add("sendinput", "#acff2f")
         self.add("speech", "#99FFFF")
         self.add("thought", "#99FFFF")
         self.add("whisper", "#99FFFF")

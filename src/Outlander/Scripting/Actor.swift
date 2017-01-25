@@ -204,7 +204,7 @@ public class Script : IScript {
             
             let res = x.vars(self.context!, vars: vars)
             switch res {
-            case .Match(let x):
+            case .Match(let x, _):
                 self.notify(TextTag(x, mono: true), debug:ScriptLogLevel.Actions)
                 return true
             default:
@@ -249,7 +249,7 @@ public class Script : IScript {
             
             let res = x.stream(text, nodes: nodes, context: self.context!)
             switch res {
-            case .Match(let x):
+            case .Match(let x, _):
                 self.notify(TextTag(x, mono: true), debug:ScriptLogLevel.Actions)
                 return true
             default:
@@ -855,7 +855,7 @@ public class MoveOp : IWantStreamInfo {
         for node in nodes {
             
             if node.name == "compass" {
-                return CheckStreamResult.Match(result: "")
+                return CheckStreamResult.Match(result: "", groups: nil)
             }
         }
         
@@ -880,7 +880,7 @@ public class NextRoomOp : IWantStreamInfo {
         for node in nodes {
             
             if node.name == "compass" {
-                return CheckStreamResult.Match(result: "")
+                return CheckStreamResult.Match(result: "", groups: nil)
             }
         }
         
@@ -896,14 +896,14 @@ public class WaitforOp : IWantStreamInfo {
     
     public var id = ""
     var target:String
-    
+
     public init(_ target:String) {
         self.id = NSUUID().UUIDString
         self.target = target
     }
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
-        return text.rangeOfString(context.simplify(self.target)) != nil ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        return text.rangeOfString(context.simplify(self.target)) != nil ? CheckStreamResult.Match(result: text, groups: nil) : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
@@ -915,7 +915,8 @@ public class WaitforReOp : IWantStreamInfo {
 
     public var id = ""
     var pattern:String
-    
+    var groups:[String]?
+
     public init(_ pattern:String) {
         self.id = NSUUID().UUIDString
         self.pattern = pattern
@@ -924,10 +925,16 @@ public class WaitforReOp : IWantStreamInfo {
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
         let pattern = context.simplify(self.pattern)
         let groups = text[pattern].groups()
-        return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        self.groups = groups
+        return groups.count > 0 ? CheckStreamResult.Match(result: text, groups: groups) : CheckStreamResult.None
     }
-    
+
     public func execute(script:IScript, context:ScriptContext) {
+
+        if let grps = self.groups {
+            context.setRegexVars(grps)
+        }
+        
         script.moveNextAfterRoundtime()
     }
 }
@@ -944,7 +951,7 @@ public class WaitforPromptOp : IWantStreamInfo {
         
         for n in nodes {
             if n.name == "prompt" {
-                return CheckStreamResult.Match(result: text)
+                return CheckStreamResult.Match(result: text, groups: nil)
             }
         }
         
@@ -975,7 +982,7 @@ public class WaitEvalOp : IWantStreamInfo {
                 let res = self.evaluator.eval(context, self.token.body, context.simplify)
                 print("eval res: \(res.info)")
                 if getBoolResult(res.result) {
-                    return CheckStreamResult.Match(result: res.info)
+                    return CheckStreamResult.Match(result: res.info, groups: nil)
                 }
             }
         }
@@ -1020,7 +1027,7 @@ public class ActionOp : IAction {
         if self.token.whenText.characters.count > 0 {
             self.lastGroups = text[self.token.whenText].groups()
             return self.lastGroups?.count > 0
-                ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n")
+                ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n", groups: nil)
                 : CheckStreamResult.None
         }
         
@@ -1056,7 +1063,7 @@ public class ActionOp : IAction {
         
         if getBoolResult(res.result) {
             self.lastGroups = res.matchGroups
-            return CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(res.info)\n")
+            return CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(res.info)\n", groups: res.matchGroups)
         }
         
         return CheckStreamResult.None
@@ -1074,7 +1081,7 @@ public class ActionOp : IAction {
 
 public enum CheckStreamResult {
     case None
-    case Match(result:String)
+    case Match(result:String, groups: [String]?)
 }
 
 extension Array {

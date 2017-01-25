@@ -190,6 +190,11 @@
         }
         
         [self showWindow:window];
+
+    } else if ([action isEqualToString:@"reload"]) {
+
+        [self removeAllWindows];
+        [self loadWindows];
         
     } else if ([action isEqualToString:@"hide"]) {
         
@@ -214,6 +219,11 @@
         [windows enumerateObjectsUsingBlock:^(WindowData *win, NSUInteger idx, BOOL *stop) {
             NSString *coords = [NSString stringWithFormat:@"(x:%.0f, y:%.0f), (h:%.0f, w:%.0f)", win.x, win.y, win.height, win.width];
             NSString *name = win.name;
+
+            if([win.closedTarget length] > 0) {
+                name = [NSString stringWithFormat:@"%@->%@", name, win.closedTarget];
+            }
+            
             if(!win.visible) {
                 name = [NSString stringWithFormat:@"(hidden) %@", name];
             }
@@ -222,7 +232,7 @@
         
         [windowData appendString:@"\n"];
         
-        TextTag *tag = [TextTag tagFor:windowData mono:NO];
+        TextTag *tag = [TextTag tagFor:windowData mono:YES];
         [self append:tag to:@"main"];
     }
 }

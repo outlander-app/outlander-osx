@@ -206,12 +206,8 @@ public class ScriptContext {
                         marker: self.marker,
                         current: self.current)
 
-                    self.regexVars = [:]
-                    
-                    for (index, param) in params.enumerate() {
-                        self.regexVars["\(index)"] = param
-                    }
-                    
+                    self.setRegexVars(params)
+
                     if isGosub && self.gosubContext != nil && self.gosubContext!.isGosub {
                         self.gosubStack.push(self.gosubContext!)
                     }
@@ -235,6 +231,14 @@ public class ScriptContext {
         }
         
         return found
+    }
+
+    public func setRegexVars(vars:[String]) {
+        self.regexVars = [:]
+        
+        for (index, param) in vars.enumerate() {
+            self.regexVars["\(index)"] = param
+        }
     }
     
     public func popGosub() -> GosubContext? {

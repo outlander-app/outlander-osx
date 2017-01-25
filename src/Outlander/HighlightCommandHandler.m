@@ -8,6 +8,7 @@
 
 #import "HighlightCommandHandler.h"
 #import "Highlight.h"
+#import "HighlightsLoader.h"
 #import "NSString+Categories.h"
 #import "Outlander-Swift.h"
 
@@ -22,6 +23,14 @@
     [commands removeObject:@""];
     
     if(commands && commands.count > 0) {
+
+        if([commands[0] isEqualToString:@"reload"]) {
+            HighlightsLoader *loader = [[HighlightsLoader alloc] initWithContext:context andFileSystem:[[LocalFileSystem alloc] init]];
+            [loader load];
+            [context.events echoText:@"Highlights reloaded" mono:true preset:@""];
+            return;
+        }
+        
         NSString *color = commands[0];
         NSString *pattern = [self items:commands after:0];
         
