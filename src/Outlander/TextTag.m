@@ -10,8 +10,14 @@
 
 @implementation TextTag
 
-+ tagFor:(NSString*)text mono:(BOOL)mono {
++ (TextTag*)tagFor:(NSString*)text mono:(BOOL)mono {
     return [[self alloc] initWith:text mono:mono];
+}
+
++ (TextTag*)tagWithPreset:(NSString*)text mono:(BOOL)mono preset:(NSString*)preset {
+    TextTag *tag = [[self alloc] initWith:text mono:mono];
+    tag.preset = preset;
+    return tag;
 }
 
 - initWith:(NSString*)text mono:(BOOL)mono {

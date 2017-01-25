@@ -177,16 +177,20 @@ public class Script : IScript {
         if let display = self.context?.varsForDisplay() {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
-            self.sendMessage(ScriptInfoMessage(String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff)))
+            self.notify(
+                TextTag(
+                    preset: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff),
+                    mono: true,
+                    preset: "scriptinfo"))
             
             let sorted = display.sort { $0 < $1 }
             
             for v in sorted {
-                let tag = TextTag("|  \(v)\n", mono: true)
+                let tag = TextTag(preset: "|  \(v)\n", mono: true, preset: "scriptinfo")
                 self.notify(tag)
             }
             
-            self.notify(TextTag("+---------------------------------------------------------+\n", mono: true))
+            self.notify(TextTag(preset: "+---------------------------------------------------------+\n", mono: true, preset: "scriptinfo"))
         }
     }
     
@@ -300,8 +304,6 @@ public class Script : IScript {
         if !self.context!.gotoLabel(label, params: params, previousLine:previousLine, isGosub: isGosub) {
             
             let tag = TextTag("label \(label) not found\n", mono: true)
-//            tag.color = "#efefef"
-//            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
@@ -309,8 +311,6 @@ public class Script : IScript {
         
         if self.context!.gosubStack.count() >= 100 {
             let tag = TextTag("Potential infinite loop of 100+ gosubs - use gosub clear if this is intended\n", mono: true)
-//            tag.color = "#efefef"
-//            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
@@ -325,8 +325,6 @@ public class Script : IScript {
 
             let tag = TextTag("no gosub to return to!\n", mono: true)
             
-//            tag.color = "#efefef"
-//            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
@@ -367,8 +365,6 @@ public class Script : IScript {
                     
                     for err in parser.errors {
                         let tag = TextTag("\(err)\n", mono: true)
-//                        tag.color = "#efefef"
-//                        tag.backgroundColor = "#ff3300"
                         tag.preset = "scripterror"
                         self.notify(tag)
                     }
@@ -595,8 +591,6 @@ public class Script : IScript {
                 self.moveNext()
             } else {
                 let txtMsg = TextTag("no more params to shift!\n", mono: true)
-//                txtMsg.color = "#efefef"
-//                txtMsg.backgroundColor = "#ff3300"
                 txtMsg.preset = "scripterror"
                 
                 self.notify(txtMsg)
@@ -642,16 +636,13 @@ public class Script : IScript {
         }
         else if let unkownMsg = msg as? UnknownMessage {
             let txtMsg = TextTag("unkown command: \(unkownMsg.description)\n", mono: true)
-//            txtMsg.color = "#efefef"
-//            txtMsg.backgroundColor = "#ff3300"
             txtMsg.preset = "scripterror"
             self.notify(txtMsg)
             self.moveNext()
         }
         else if let scriptInfo = msg as? ScriptInfoMessage {
             let txtMsg = TextTag(scriptInfo.description, mono: true)
-//            txtMsg.color = "#acff2f"
-            txtMsg.preset = "scriptinfo"
+            txtMsg.preset = "scriptinput"
             self.notify(txtMsg)
         }
         else {
@@ -673,10 +664,6 @@ public class Script : IScript {
             message.scriptLine = line
         }
         
-//        if message.color == nil {
-//            message.color = "#0066cc"
-//        }
-//       
         if message.preset == nil {
             message.preset = "scriptinfo"
         }
