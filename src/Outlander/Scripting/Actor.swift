@@ -617,7 +617,8 @@ public class Script : IScript {
                 self.toggleAction(actionMsg)
                 self.notify(TextTag("action (\(actionMsg.token.className)) \(actionMsg.token.commandText())\n", mono: true), debug:ScriptLogLevel.Actions)
             } else {
-                self.notify(TextTag("action \(actionMsg.token.commandText()) when \(actionMsg.token.whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
+                let whenText = self.context!.simplify(actionMsg.token.whenText)
+                self.notify(TextTag("action \(actionMsg.token.commandText()) when \(whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
                 self.actions.append(ActionOp(actionMsg.token, self.context!.simplify))
             }
             
@@ -1011,14 +1012,16 @@ public class ActionOp : IAction {
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
         
-        if self.token.whenText.characters.count > 0 {
-            self.lastGroups = text[self.token.whenText].groups()
-            return self.lastGroups?.count > 0
-                ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n", groups: nil)
-                : CheckStreamResult.None
+        if self.token.whenText.characters.count == 0 {
+            return CheckStreamResult.None
         }
-        
-        return CheckStreamResult.None
+
+        let whenText = context.simplify(self.token.whenText)
+
+        self.lastGroups = text[whenText].groups()
+        return self.lastGroups?.count > 0
+            ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n", groups: nil)
+            : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
