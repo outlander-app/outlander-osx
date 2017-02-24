@@ -8,6 +8,7 @@
 
 #import "AliasCommandHandler.h"
 #import "Alias.h"
+#import "AliasLoader.h"
 #import "NSString+Categories.h"
 #import "Outlander-Swift.h"
 
@@ -22,6 +23,14 @@
     [commands removeObject:@""];
     
     if(commands && commands.count > 0) {
+
+        if([commands[0] isEqualToString:@"reload"]) {
+            AliasLoader *loader = [[AliasLoader alloc] initWithContext:context andFileSystem:[[LocalFileSystem alloc] init]];
+            [loader load];
+            [context.events echoText:@"Aliases reloaded" mono:true preset:@""];
+            return;
+        }
+        
         NSString *pattern = commands[0];
         NSString *replace = [self items:commands after:0];
         

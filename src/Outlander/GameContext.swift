@@ -44,6 +44,7 @@ public class GameContext : NSObject {
     public var triggers:OLMutableArray
     public var substitutes:OLMutableArray
     public var gags:OLMutableArray
+    public var presets:[String:ColorPreset]
     public var globalVars:TSMutableDictionary
     public var events:EventAggregator
     
@@ -56,9 +57,29 @@ public class GameContext : NSObject {
         self.triggers = OLMutableArray()
         self.substitutes = OLMutableArray()
         self.gags = OLMutableArray()
+        self.presets = [:]
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
         
         self.events = EventAggregator()
         self.maps = [:]
+    }
+
+    public func presetFor(setting: String) -> ColorPreset? {
+
+        let settingToCheck = setting.lowercaseString
+
+        if settingToCheck.characters.count == 0 {
+            return ColorPreset("", "#cccccc")
+        }
+        
+        if let preset = self.presets[settingToCheck] {
+            return preset
+        }
+
+        return ColorPreset("", "#cccccc")
+    }
+
+    public func windowColorFor(windowName: String) -> String {
+        return "#cccccc"
     }
 }

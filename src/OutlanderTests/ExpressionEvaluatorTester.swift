@@ -41,7 +41,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                 
                 expect(boolResult).to(equal(true))
             }
-            
+
             it("evaluates contains expression") {
                 let parser = OutlanderScriptParser()
                 
@@ -64,6 +64,31 @@ class ExpressionEvaluatorTester : QuickSpec {
                 let boolResult = context.getBoolResult(result.result)
                 
                 expect(boolResult).to(equal(true))
+            }
+
+            it("evaluates matchre expression") {
+                let parser = OutlanderScriptParser()
+                
+                let vars = { () -> [String:String] in
+                    let res:[String:String] = [:]
+                    return res
+                }
+                
+                let script = "if matchre(\"%dir\", \"^(search|swim|climb) \") then { send hello }"
+                
+                let tokens = parser.parseString(script)
+                
+                let context = ScriptContext(tokens, globalVars: vars, params: [])
+                context.setVariable("dir", value: "swim north")
+                
+                let evaluator = ExpressionEvaluator()
+                let iftoken = tokens[0] as! IfToken
+                let result = evaluator.eval(context, iftoken.expression, context.simplify)
+                
+                let boolResult = context.getBoolResult(result.result)
+                
+                expect(boolResult).to(equal(true))
+                expect(result.matchGroups?.count).to(equal(2))
             }
             
             it("properly replaces lefthandnoun") {

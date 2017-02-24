@@ -71,24 +71,18 @@ You can remove window borders for a text-only experience.
 Developers
 ==========
 
-This project uses [CocoaPods](http://cocoapods.org) for dependency management.  Run the following at the root of the project to download and install dependencies.
+This project uses [Carthage](https://github.com/Carthage/Carthage) for dependency management.  Run the following at the root of the project to download and install dependencies.
 
-    $ sudo gem install cocoapods
-    $ pod install
+    $ brew update
+    $ brew install carthage
+    $ ./carthage_update.sh
 
 Use .xcworkspace workspace instead of .xcodeproj project after installation.
 
-Install xctool to run unit tests on the command line.  xctool requires Xcode command line tools installed.
+Install xcpretty to run unit tests on the command line.
 
-    $ xcode-select --install
-    $ brew update
-    $ brew install xctool
-    $ ./test.sh
-
-Run guard to have the unit tests auto-run on file changes.
-
-    $ bundle install
-    $ bundle exec guard
+    $ gem install xcpretty
+    $ ./build.sh
 
 License
 ==========

@@ -325,9 +325,10 @@ public class StormFrontTagStreamer : NSObject {
             
             // room name
             if lastNode?.name == "style" && lastNode?.attr("id") == "roomName" {
-                tag?.color = "#0000FF"
+//                tag?.color = "#0000FF"
+                tag?.preset = "roomname"
             }
-            
+
         case _ where node.name == "eot":
             if inStream
                 || lastNode != nil && (ignoredEot.contains(lastNode!.name)
@@ -353,10 +354,10 @@ public class StormFrontTagStreamer : NSObject {
             tag?.targetWindow = lastStreamId
             let id = node.attr("id")
             tag?.preset = id
-            if id == "speech" || id == "whisper" || id == "whispers" || id == "thought" || id == "chatter" {
-                tag?.color = "#99FFFF"
-            }
-            
+//            if id == "speech" || id == "whisper" || id == "whispers" || id == "thought" || id == "chatter" {
+//                tag?.color = "#99FFFF"
+//            }
+
         case _ where node.name == "pushbold":
             self.bold = true
             

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LoginViewController">
@@ -21,15 +22,18 @@
             <rect key="frame" x="0.0" y="0.0" width="308" height="120"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3t-JK-AYQ">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P3t-JK-AYQ">
                     <rect key="frame" x="20" y="78" width="130" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="130" id="HER-Ep-Exn"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Account" drawsBackground="YES" id="sMG-6y-dfh">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUa-qc-fOj">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sUa-qc-fOj">
                     <rect key="frame" x="158" y="50" width="130" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Character" drawsBackground="YES" id="I2v-dK-Dth">
                         <font key="font" metaFont="system"/>
@@ -37,7 +41,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9zJ-fi-aX6">
+                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9zJ-fi-aX6">
                     <rect key="frame" x="20" y="46" width="133" height="26"/>
                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Game" drawsBackground="YES" numberOfVisibleItems="5" id="DCg-o0-wOe">
                         <font key="font" metaFont="system"/>
@@ -54,8 +58,11 @@
                         <outlet property="delegate" destination="-2" id="EFP-ds-yIo"/>
                     </connections>
                 </comboBox>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N6s-HE-5y7">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N6s-HE-5y7">
                     <rect key="frame" x="212" y="14" width="82" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="VSh-Uh-U72"/>
+                    </constraints>
                     <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Seb-w0-1zt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -64,7 +71,7 @@ DQ
 </string>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1vM-ih-tbJ">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1vM-ih-tbJ">
                     <rect key="frame" x="130" y="14" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gN3-IK-Auz">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -74,7 +81,7 @@ Gw
 </string>
                     </buttonCell>
                 </button>
-                <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5BA-NC-XMH">
+                <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5BA-NC-XMH">
                     <rect key="frame" x="158" y="78" width="130" height="22"/>
                     <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Password" drawsBackground="YES" usesSingleLineMode="YES" id="EH3-wx-RbN">
                         <font key="font" metaFont="system"/>
@@ -86,6 +93,23 @@ Gw
                     </secureTextFieldCell>
                 </secureTextField>
             </subviews>
+            <constraints>
+                <constraint firstItem="P3t-JK-AYQ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="0kN-mM-uEh"/>
+                <constraint firstItem="P3t-JK-AYQ" firstAttribute="leading" secondItem="9zJ-fi-aX6" secondAttribute="leading" id="1GQ-2E-CMT"/>
+                <constraint firstItem="sUa-qc-fOj" firstAttribute="trailing" secondItem="N6s-HE-5y7" secondAttribute="trailing" id="7vH-wz-wlg"/>
+                <constraint firstItem="sUa-qc-fOj" firstAttribute="leading" secondItem="9zJ-fi-aX6" secondAttribute="trailing" constant="8" symbolic="YES" id="82p-1R-aHE"/>
+                <constraint firstItem="P3t-JK-AYQ" firstAttribute="baseline" secondItem="5BA-NC-XMH" secondAttribute="baseline" id="8me-u6-2nV"/>
+                <constraint firstItem="N6s-HE-5y7" firstAttribute="leading" secondItem="1vM-ih-tbJ" secondAttribute="trailing" constant="12" symbolic="YES" id="Gb8-ww-pRA"/>
+                <constraint firstItem="1vM-ih-tbJ" firstAttribute="baseline" secondItem="N6s-HE-5y7" secondAttribute="baseline" id="HTs-iY-U20"/>
+                <constraint firstItem="5BA-NC-XMH" firstAttribute="leading" secondItem="P3t-JK-AYQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Ic4-86-AgI"/>
+                <constraint firstItem="1vM-ih-tbJ" firstAttribute="top" secondItem="sUa-qc-fOj" secondAttribute="bottom" constant="8" symbolic="YES" id="KGw-Sc-YkN"/>
+                <constraint firstItem="5BA-NC-XMH" firstAttribute="leading" secondItem="sUa-qc-fOj" secondAttribute="leading" id="Umr-ia-1P4"/>
+                <constraint firstAttribute="trailing" secondItem="5BA-NC-XMH" secondAttribute="trailing" constant="20" symbolic="YES" id="UuR-Wr-gv1"/>
+                <constraint firstItem="9zJ-fi-aX6" firstAttribute="bottom" secondItem="sUa-qc-fOj" secondAttribute="bottom" id="wGP-Td-few"/>
+                <constraint firstItem="P3t-JK-AYQ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="xC6-ys-CYG"/>
+                <constraint firstItem="9zJ-fi-aX6" firstAttribute="top" secondItem="P3t-JK-AYQ" secondAttribute="bottom" constant="8" symbolic="YES" id="zBk-Pi-Is8"/>
+                <constraint firstItem="5BA-NC-XMH" firstAttribute="trailing" secondItem="sUa-qc-fOj" secondAttribute="trailing" id="zPv-EQ-bhh"/>
+            </constraints>
         </customView>
     </objects>
 </document>

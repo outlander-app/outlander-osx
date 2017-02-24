@@ -49,4 +49,6 @@
 - (NSRect)location;
 
 - (void)removeView;
+
+- (NSString *)processSubs:(NSString *)text;
 @end

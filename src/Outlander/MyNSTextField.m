@@ -30,6 +30,7 @@
     _history = [[NSMutableArray alloc] init];
     _currentHistory = -1;
     _progress = 0;
+    _maxHistoryLength = 30;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -95,7 +96,7 @@
         return;
     
     [_history insertObject:self.stringValue atIndex:0];
-    if(_history.count > 30) {
+    if(_history.count > _maxHistoryLength) {
         [_history removeObjectAtIndex:_history.count -1];
     }
 }

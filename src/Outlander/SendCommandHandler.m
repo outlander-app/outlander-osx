@@ -60,7 +60,7 @@
             CommandContext *ctx = [[CommandContext alloc] init];
             ctx.command = [command trimWhitespaceAndNewline];
             ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
-            ctx.tag.color = @"#ACFF2F";
+//            ctx.tag.color = @"#ACFF2F";
             ctx.tag.preset = @"sendinput";
             [_commandRelay sendCommand:ctx];
         }];

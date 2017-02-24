@@ -27,7 +27,7 @@
             
             NSString * name = [data substringWithRange:[res rangeAtIndex:1]];
             tag = [TextTag tagFor:name mono:false];
-            tag.color = @"#FFFF00";
+//            tag.color = @"#FFFF00";
             tag.bold = YES;
             [arr addObject:tag];
         }

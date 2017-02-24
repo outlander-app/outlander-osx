@@ -27,6 +27,7 @@
     TriggersLoader *_triggersLoader;
     SubstituteLoader *_substituteLoader;
     GagsLoader *_gagsLoader;
+    PresetLoader *_presetLoader;
 }
 @end
 
@@ -47,6 +48,7 @@
     _triggersLoader = [TriggersLoader newInstance:_context fileSystem:fileSystem];
     _substituteLoader = [SubstituteLoader newInstance:_context fileSystem:fileSystem];
     _gagsLoader = [GagsLoader newInstance:_context fileSystem:fileSystem];
+    _presetLoader = [PresetLoader newInstance:_context fileSystem:fileSystem];
     
     return self;
 }
@@ -63,9 +65,10 @@
 - (void)load {
     
     [self writeConfigFolders:_context.settings.profile];
+    [self writeProfileFolders:_context.settings.profile];
+
     [self loadConfig];
     
-    [self writeProfileFolders:_context.settings.profile];
     [self loadProfile];
     
     [self loadLayout];
@@ -77,6 +80,7 @@
     [self loadTriggers];
     [self loadSubs];
     [self loadGags];
+    [self loadPresets];
 }
 
 - (void)loadConfig {
@@ -152,6 +156,14 @@
 
 - (void)saveGags {
     [_gagsLoader save];
+}
+
+- (void)loadPresets {
+    [_presetLoader load];
+}
+
+- (void)savePresets {
+    [_presetLoader save];
 }
 
 - (void)writeConfigFolders:(NSString *)profile {

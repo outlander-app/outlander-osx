@@ -31,6 +31,28 @@ describe(@"Variable Replacer", ^{
     context(@"replace", ^{
         
         context(@"alias", ^{
+
+            it(@"should be able to use punctuation as an alias", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"=";
+                al.replace = @"#send $0";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"= one two" withContext:_context];
+
+                expect(result).to(equal(@"#send one two"));
+            });
+
+            it(@"should be able to include semicolons", ^{
+                Alias *al = [[Alias alloc] init];
+                al.pattern = @"-bund";
+                al.replace = @"remove my bundle;sell my bundle;stow my rope";
+                [_context.aliases addObject:al];
+                
+                NSString *result = [_replacer replace:@"-bund" withContext:_context];
+
+                expect(result).to(equal(@"remove my bundle;sell my bundle;stow my rope"));
+            });
             
             it(@"should replace alias", ^{
                 Alias *al = [[Alias alloc] init];

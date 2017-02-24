@@ -19,4 +19,9 @@
     return [bits writeToFile:path atomically:YES];
 }
 
+- (BOOL)fileExists:(NSString *)path {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager fileExistsAtPath:path];
+}
+
 @end

@@ -83,7 +83,7 @@ class RoomChangeHandler : NSObject, NodeHandler {
         if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
         
             tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
-            tag.color = "#00ffff"
+//            tag.color = "#00ffff"
             tag.preset = "automapper"
             self.relay.sendEcho(tag)
         }
@@ -94,7 +94,7 @@ class RoomChangeHandler : NSObject, NodeHandler {
         
             tag = TextTag()
             tag.text = "Mapped exits: \(exits)\n"
-            tag.color = "#00ffff"
+//            tag.color = "#00ffff"
             tag.preset = "automapper"
             self.relay.sendEcho(tag)
         }

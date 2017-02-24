@@ -27,47 +27,51 @@
 }
 
 - (NSString *)replaceAlias:(NSString *)data withContext:(GameContext *)context {
+
+    if([context.aliases count] == 0) {
+        return data;
+    }
     
     __block NSString *str = data;
-    
+    __block NSString *maybeAlias = data;
+
+    NSRange range = [str rangeOfString:@" "];
+    NSString *allArgs = @"";
+
+    if(range.location != NSNotFound) {
+        maybeAlias = [[str substringToIndex:range.location] trimWhitespace];
+        allArgs = [str substringFromIndex:range.location + 1];
+    }
+
+    __block NSMutableArray *tokens = [[NSMutableArray alloc] init];
+
+    PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:allArgs];
+    [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
+
+        if(tok.tokenType != PKTokenTypeSymbol) {
+            NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            [tokens addObject:val];
+        }
+    }];
+
+    [tokens insertObject:allArgs atIndex:0];
+
+    NSInteger maxArgCount = 10;
+
+    if([tokens count] < maxArgCount) {
+        NSInteger diff = maxArgCount - [tokens count];
+
+        for (NSInteger i = 0; i < diff; i++) {
+            [tokens addObject:@""];
+        }
+    }
+
     [context.aliases enumerateObjectsUsingBlock:^(Alias *obj, NSUInteger idx, BOOL *stop) {
-        
-        NSString *pattern = [NSString stringWithFormat:@"^%@\\b", obj.pattern];
-        
-        if ([str matchesForPattern:pattern].count == 0) {
+
+        if(![maybeAlias isEqualToString:obj.pattern]) {
             return;
         }
-        
-        NSRange range = [str rangeOfString:@" "];
-        NSString *allArgs = @"";
-        
-        if(range.location != NSNotFound) {
-            allArgs = [str substringFromIndex:range.location + 1];
-        }
-        
-        __block NSMutableArray *tokens = [[NSMutableArray alloc] init];
-        
-        PKTokenizer *tokenizer = [PKTokenizer tokenizerWithString:allArgs];
-        [tokenizer enumerateTokensUsingBlock:^(PKToken *tok, BOOL *stop) {
-            
-            if(tok.tokenType != PKTokenTypeSymbol) {
-                NSString *val = [[tok stringValue] stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-                [tokens addObject:val];
-            }
-        }];
-        
-        [tokens insertObject:allArgs atIndex:0];
-        
-        NSInteger maxArgCount = 10;
-        
-        if([tokens count] < maxArgCount) {
-            NSInteger diff = maxArgCount - [tokens count];
-            
-            for (NSInteger i = 0; i < diff; i++) {
-                [tokens addObject:@""];
-            }
-        }
-        
+
         str = obj.replace;
         
         [tokens enumerateObjectsUsingBlock:^(NSString * _Nonnull token, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -79,7 +83,7 @@
         }];
     }];
     
-    return [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    return [str trimWhitespace];
 }
 
 - (NSString *)replaceLocalVars:(NSString *)data withVars:(TSMutableDictionary *)dict {

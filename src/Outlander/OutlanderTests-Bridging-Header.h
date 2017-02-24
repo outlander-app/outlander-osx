@@ -25,6 +25,7 @@
 #import "OLMutableArray.h"
 #import "ScriptLoader.h"
 #import "LocalFileSystem.h"
+#import "WindowDataService.h"
 @import PEGKit;
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "StubFileSystem.h"

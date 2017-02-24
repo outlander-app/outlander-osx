@@ -72,7 +72,7 @@
     _notifier.echoBlock = ^(NSString *echo){
         @strongify(self)
         TextTag *tag = [TextTag tagFor:echo mono:YES];
-        tag.color = @"00ffff";
+//        tag.color = @"00ffff";
         tag.preset = @"scriptecho";
         [self append:tag to:@"main"];
     };
@@ -101,8 +101,9 @@
             tag = [TextTag tagFor:[NSString stringWithFormat:@"%@%@\n",script, x.command]
                              mono: script.length > 0 ? YES : NO];
             
-            if (x.scriptName.length > 0 && tag.color == nil) {
-                tag.color = @"#acff2f";
+            if (x.scriptName.length > 0 && tag.color == nil && tag.preset == nil) {
+//                tag.color = @"#acff2f";
+                tag.preset = @"scriptinput";
             }
             
             tag.targetWindow = @"main";
@@ -189,6 +190,11 @@
         }
         
         [self showWindow:window];
+
+    } else if ([action isEqualToString:@"reload"]) {
+
+        [self removeAllWindows];
+        [self loadWindows];
         
     } else if ([action isEqualToString:@"hide"]) {
         
@@ -213,6 +219,11 @@
         [windows enumerateObjectsUsingBlock:^(WindowData *win, NSUInteger idx, BOOL *stop) {
             NSString *coords = [NSString stringWithFormat:@"(x:%.0f, y:%.0f), (h:%.0f, w:%.0f)", win.x, win.y, win.height, win.width];
             NSString *name = win.name;
+
+            if([win.closedTarget length] > 0) {
+                name = [NSString stringWithFormat:@"%@->%@", name, win.closedTarget];
+            }
+            
             if(!win.visible) {
                 name = [NSString stringWithFormat:@"(hidden) %@", name];
             }
@@ -221,7 +232,7 @@
         
         [windowData appendString:@"\n"];
         
-        TextTag *tag = [TextTag tagFor:windowData mono:NO];
+        TextTag *tag = [TextTag tagFor:windowData mono:YES];
         [self append:tag to:@"main"];
     }
 }
@@ -285,7 +296,9 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
-    
+
+//    __CommandTextField.maxHistoryLength = 3;
+
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
 //
 //    TextTag *tag = [TextTag tagFor:@"test\r\n" mono:NO];
@@ -692,13 +705,15 @@
     NSMutableString *room = [[NSMutableString alloc] init];
     if(name != nil && name.length != 0) {
         TextTag *nameTag = [TextTag tagFor:name mono:false];
-        nameTag.color = @"#0000FF";
+//        nameTag.color = @"#0000FF";
+        nameTag.preset = @"roomname";
         [tags addObject:nameTag];
         [room appendString:@"\n"];
     }
     if(desc != nil && desc.length != 0) {
         [room appendFormat:@"%@\n", desc];
         TextTag *tag = [TextTag tagFor:[room copy] mono:false];
+        tag.preset = @"roomdesc";
         [tags addObject:tag];
         [room setString:@""];
     }

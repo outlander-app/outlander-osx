@@ -44,7 +44,6 @@ public struct GosubContext {
     var returnLine:Int
     var returnIndex:Int
     var params:[String]
-    var vars:[String:String]
     var isGosub:Bool
     var marker:TokenSequence
     var current:AnyGenerator<Token>
@@ -58,7 +57,8 @@ public class ScriptContext {
     var gosubContext:GosubContext?
     var gosubStack:Stack<GosubContext>
     var actionVars:[String:String] = [:]
-    
+    var regexVars:[String:String] = [:]
+
     private var lastTopIfResult = false
     private var lastToken:Token?
     
@@ -196,21 +196,18 @@ public class ScriptContext {
                 
                 if params.count > 0 || isGosub {
                     
-                    var gosub = GosubContext(
+                    let gosub = GosubContext(
                         label: labelToken,
                         labelIndex: self.marker.currentIdx,
                         returnLine: previousLine,
                         returnIndex:returnIdx,
                         params: params,
-                        vars: [:],
                         isGosub: isGosub,
                         marker: self.marker,
                         current: self.current)
-                    
-                    for (index, param) in params.enumerate() {
-                        gosub.vars["\(index)"] = param
-                    }
-                    
+
+                    self.setRegexVars(params)
+
                     if isGosub && self.gosubContext != nil && self.gosubContext!.isGosub {
                         self.gosubStack.push(self.gosubContext!)
                     }
@@ -234,6 +231,14 @@ public class ScriptContext {
         }
         
         return found
+    }
+
+    public func setRegexVars(vars:[String]) {
+        self.regexVars = [:]
+        
+        for (index, param) in vars.enumerate() {
+            self.regexVars["\(index)"] = param
+        }
     }
     
     public func popGosub() -> GosubContext? {
@@ -312,12 +317,28 @@ public class ScriptContext {
             let res = evaluator.eval(self, token.expression, self.simplify)
             token.lastResult = res
             lastTopIfResult = getBoolResult(res.result)
+
+            if let groups = res.matchGroups {
+                self.regexVars = [:]
+                for (index, param) in groups.enumerate() {
+                    self.regexVars["\(index)"] = param
+                }
+            }
+            
             return lastTopIfResult
         } else if token.name == "elseif" && !lastTopIfResult && lastBranchToken != nil && !lastBranchResult {
            
             if token.expression.count > 0 {
                 let res = evaluator.eval(self, token.expression, self.simplify)
                 token.lastResult = res
+
+                if let groups = res.matchGroups {
+                    self.regexVars = [:]
+                    for (index, param) in groups.enumerate() {
+                        self.regexVars["\(index)"] = param
+                    }
+                }
+                
                 return getBoolResult(res.result)
             }
             
@@ -370,15 +391,16 @@ public class ScriptContext {
     }
     
     private func simplifyImpl(mutable:NSMutableString)->Void {
+
         if self.actionVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
             self.replace("\\$", target: mutable, dict: self.actionVars)
         }
         
-        if let gosub = self.gosubContext where gosub.vars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-            
-            self.replace("\\$", target: mutable, dict: gosub.vars)
+        if self.regexVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
+
+            self.replace("\\$", target: mutable, dict: self.regexVars)
         }
-        
+
         if mutable.rangeOfString("%").location != NSNotFound {
             
             self.replace("%", target: mutable, dict: self.variables)

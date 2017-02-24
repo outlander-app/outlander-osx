@@ -9,6 +9,7 @@
 @interface MyNSTextField : NSTextField
 
 @property (nonatomic, assign) CGFloat progress;
+@property (nonatomic, assign) int maxHistoryLength;
 
 - (void)configure;
 - (void)commitHistory;

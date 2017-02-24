@@ -10,12 +10,12 @@ import Cocoa
 
 func loadMap <R> (
     backgroundClosure: () -> R,
-    mainClosure: (result: R) -> ())
+    mainClosure: (R) -> ())
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-        let result = backgroundClosure()
+        let res = backgroundClosure()
         dispatch_async(dispatch_get_main_queue(), {
-            mainClosure(result: result)
+            mainClosure(res)
         })
     }
 }
@@ -85,6 +85,8 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
 
         let maps = self.maps.filter { $0.zone == nil }
 
+        context.events.echoText("[Automapper]: loading all maps...", preset: "automapper")
+
         loadMap({ () -> [MapLoadResult] in
             var results: [MapLoadResult] = []
             maps.forEach { m in
@@ -105,7 +107,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 self.maps.forEach { map in
                     context.maps[map.id] = map.zone!
                 }
-                print("all maps loaded in \(diff)")
+                context.events.echoText("[Automapper]: all \(self.maps.count) maps loaded in \(diff.format("0.2")) seconds", preset: "automapper")
                 context.resetMap()
         })
     }
@@ -116,7 +118,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
         return self.maps.count
     }
     
-    func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject {
+    func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject? {
         guard index > -1 else { return "" }
 
         let map = self.maps[index]
@@ -183,14 +185,14 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             }
         }
 
-        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), game = self.context?.globalVars.cacheObjectForKey("game") {
+        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), let game = self.context?.globalVars.cacheObjectForKey("game") {
             self.window?.title = "AutoMapper - \(game): \(charname)"
         }
     }
     
     func setContext(context:GameContext) {
         self.context = context
-        
+
         self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
@@ -375,6 +377,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             if self.nodesLabel != nil {
                 self.nodesLabel.stringValue = "Loading ..."
             }
+
+            self.context?.events.echoText("[Automapper]: loading selected map \(info.file)", preset: "automapper")
             
             let start = NSDate()
 
@@ -387,8 +391,8 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                 switch result {
                     
                 case let .Success(zone):
-                    
-                    print("map \(zone.name) loaded in: \(diff) seconds")
+
+                    self.context?.events.echoText("[Automapper]: \(zone.name) loaded in \(diff.format(".2")) seconds", preset: "automapper")
                     
                     self.context?.mapZone = zone
                     
@@ -400,14 +404,14 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     }
                     
                 case let .Error(error):
-                    print("map loaded with error in: \(diff) seconds")
+                    self.context?.events.echoText("[Automapper]: map loaded with error in \(diff.format(".2")) seconds", preset: "automapper")
+                    self.context?.events.echoText("\(error)")
                     if self.nodesLabel != nil {
                         self.nodesLabel.stringValue = "Error loading map: \(error)"
                     }
                 }
             })
         }
-        
     }
     
     @IBAction func mapLevelAction(sender: NSSegmentedControl) {

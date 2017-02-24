@@ -192,7 +192,7 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
     func sendMessage(message:String) {
         let tag = TextTag()
         tag.text = "[AutoMapper] \(message)\n"
-        tag.color = "#00ffff"
+//        tag.color = "#00ffff"
         tag.preset = "automapper"
         relay.sendEcho(tag)
     }

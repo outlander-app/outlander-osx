@@ -29,6 +29,11 @@
 		F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F910E4A01D76B8A5000A7A8F /* libxml2.tbd */; };
 		F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
 		F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */; };
+		F917612C1E328B580091A617 /* PresetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F917612B1E328B580091A617 /* PresetLoader.swift */; };
+		F917612D1E328B580091A617 /* PresetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F917612B1E328B580091A617 /* PresetLoader.swift */; };
+		F917612F1E328BCB0091A617 /* ColorPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = F917612E1E328BCB0091A617 /* ColorPreset.swift */; };
+		F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = F917612E1E328BCB0091A617 /* ColorPreset.swift */; };
+		F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91761311E328DB90091A617 /* PresetLoaderTester.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
 		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
@@ -91,6 +96,8 @@
 		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
+		F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
+		F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
 		F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
@@ -319,9 +326,6 @@
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
 		F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */; };
-		F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
-		F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; };
-		F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */; };
 		F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9ACB13F192ECFC3006D3548 /* VariableReplacer.m */; };
@@ -367,6 +371,7 @@
 		F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF1193A914B0075A12F /* GameEventRelay.m */; };
 		F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF6AF5193A941B0075A12F /* StubEventRelay.m */; };
+		F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */; };
 		F9C1787D1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
 		F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */; };
 		F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */; };
@@ -383,6 +388,9 @@
 		F9CB31111903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB311419032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
 		F9CB311519032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
+		F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
+		F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
+		F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92751890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92731890832800449548 /* InfoPlist.strings */; };
 		F9CF92771890832800449548 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CF92761890832800449548 /* main.m */; };
@@ -392,6 +400,7 @@
 		F9CF92831890832800449548 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92821890832800449548 /* Images.xcassets */; };
 		F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92931890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92911890832800449548 /* InfoPlist.strings */; };
+		F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
 		F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */; };
 		F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */; };
@@ -410,6 +419,7 @@
 		F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */; };
 		F9E4DD691B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
 		F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
+		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
@@ -425,7 +435,6 @@
 		F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
-		F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
 		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
@@ -457,9 +466,9 @@
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
 				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
-				F9AAC05C1AFF12FE00ECD969 /* OysterKit.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
 				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
+				F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
@@ -476,6 +485,9 @@
 		F91031531B3D0F710039BDF0 /* GagsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GagsLoader.swift; sourceTree = "<group>"; };
 		F910E4A01D76B8A5000A7A8F /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowCommandHandler.swift; sourceTree = "<group>"; };
+		F917612B1E328B580091A617 /* PresetLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetLoader.swift; sourceTree = "<group>"; };
+		F917612E1E328BCB0091A617 /* ColorPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPreset.swift; sourceTree = "<group>"; };
+		F91761311E328DB90091A617 /* PresetLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetLoaderTester.swift; sourceTree = "<group>"; };
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
@@ -530,6 +542,7 @@
 		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
+		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
 		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
@@ -735,7 +748,6 @@
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
 		F9A8DD281AC1FDC5009A2F67 /* NSTextView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+Categories.m"; sourceTree = "<group>"; };
-		F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OysterKit.framework; sourceTree = "<group>"; };
 		F9ACB135192ECD00006D3548 /* CommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB136192ECD1A006D3548 /* GameCommandProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandProcessor.h; sourceTree = "<group>"; };
 		F9ACB137192ECD1A006D3548 /* GameCommandProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandProcessor.m; sourceTree = "<group>"; };
@@ -781,6 +793,7 @@
 		F9BF6AF1193A914B0075A12F /* GameEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEventRelay.m; sourceTree = "<group>"; };
 		F9BF6AF4193A941B0075A12F /* StubEventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StubEventRelay.h; sourceTree = "<group>"; };
 		F9BF6AF5193A941B0075A12F /* StubEventRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubEventRelay.m; sourceTree = "<group>"; };
+		F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubstituteTester.m; sourceTree = "<group>"; };
 		F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCommandHandler.swift; sourceTree = "<group>"; };
 		F9C1787F1B1398DA00CC7291 /* ScriptToolbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptToolbarViewController.swift; sourceTree = "<group>"; };
 		F9C178801B1398DA00CC7291 /* ScriptToolbarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScriptToolbarViewController.xib; sourceTree = "<group>"; };
@@ -792,6 +805,7 @@
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
 		F9CB311219032EDE004587A5 /* LearningRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearningRate.h; sourceTree = "<group>"; };
 		F9CB311319032EDE004587A5 /* LearningRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearningRate.m; sourceTree = "<group>"; };
+		F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OysterKit.framework; path = Frameworks/OysterKit.framework; sourceTree = "<group>"; };
 		F9CF92671890832800449548 /* Outlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9CF926A1890832800449548 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F9CF926D1890832800449548 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -849,15 +863,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
+				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
-				F9AAC05B1AFF12FE00ECD969 /* OysterKit.framework in Frameworks */,
-				F9F3D85B1957E54A005B9D68 /* Carbon.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 			);
@@ -873,11 +887,11 @@
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
+				F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */,
 				F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
-				F9AAC05A1AFF12EF00ECD969 /* OysterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1018,7 @@
 				F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */,
 				F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */,
 				F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */,
+				F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1011,12 +1026,12 @@
 		F97A5C1B1890A08400E2C318 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */,
+				F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */,
 				F9B9BFE71ABD5DA000CB44B6 /* Node.swift */,
-				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
 				F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */,
 				F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */,
-				F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */,
+				F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */,
+				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1176,6 +1191,7 @@
 				F9A2C1701B22ABA1005B9B6C /* Trigger.swift */,
 				F91031501B3D0F140039BDF0 /* Gag.swift */,
 				F98D4C271CB1A7DF00E81E70 /* Substitute.swift */,
+				F917612E1E328BCB0091A617 /* ColorPreset.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1287,6 +1303,7 @@
 				F93462581AC3DB7700B10ADF /* Layout.m */,
 				F9F3D826195335AF005B9D68 /* MacrosLoader.h */,
 				F9F3D827195335AF005B9D68 /* MacrosLoader.m */,
+				F917612B1E328B580091A617 /* PresetLoader.swift */,
 				F9A3454E191C59D500920F0E /* ProfileLoader.h */,
 				F9A3454F191C59D500920F0E /* ProfileLoader.m */,
 				F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */,
@@ -1344,7 +1361,7 @@
 				F97217AE1DDF831B00E8FC4E /* PEGKit.framework */,
 				F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */,
 				F97217B01DDF831B00E8FC4E /* Squirrel.framework */,
-				F9AAC0581AFF12EF00ECD969 /* OysterKit.framework */,
+				F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
@@ -1412,7 +1429,9 @@
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F959D3D51AC7264300B2A659 /* MacroTester.m */,
 				F92A4FBA192A56BC006C71F9 /* MyNSTextFieldTester.m */,
+				F91761311E328DB90091A617 /* PresetLoaderTester.swift */,
 				F9818D5D1908D8FC00137896 /* SkillExpTester.m */,
+				F9BFF56C1E0EFFEE009E5473 /* SubstituteTester.m */,
 				F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */,
 				F9818D60190D75E800137896 /* TextViewControllerTester.m */,
 				F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */,
@@ -1481,10 +1500,16 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Joe McBride";
 				TargetAttributes = {
+					F9CF92661890832800449548 = {
+						DevelopmentTeam = 9F7EUQVBB7;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
 					F9CF92871890832800449548 = {
+						LastSwiftMigration = 0810;
 						TestTargetID = F9CF92661890832800449548;
 					};
 				};
@@ -1647,6 +1672,7 @@
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
+				F917612F1E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
@@ -1679,6 +1705,7 @@
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
 				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
+				F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */,
 				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
@@ -1743,6 +1770,7 @@
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
+				F917612C1E328B580091A617 /* PresetLoader.swift in Sources */,
 				F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */,
 				F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
@@ -1800,6 +1828,7 @@
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
+				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
@@ -1869,6 +1898,7 @@
 				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
+				F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
 				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
@@ -1900,6 +1930,8 @@
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
+				F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */,
+				F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F98D4C291CB1A7DF00E81E70 /* Substitute.swift in Sources */,
@@ -1934,6 +1966,7 @@
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */,
 				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
 				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
@@ -1945,6 +1978,7 @@
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
+				F917612D1E328B580091A617 /* PresetLoader.swift in Sources */,
 				F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
 				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
@@ -2002,6 +2036,7 @@
 		F9CF92961890832800449548 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2011,16 +2046,20 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2042,6 +2081,7 @@
 		F9CF92971890832800449548 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2051,16 +2091,20 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2070,6 +2114,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -2083,6 +2128,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9F7EUQVBB7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2118,6 +2164,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2132,11 +2179,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9F7EUQVBB7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2165,6 +2214,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2209,6 +2260,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -2249,6 +2301,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};

@@ -177,22 +177,26 @@ public class Script : IScript {
         if let display = self.context?.varsForDisplay() {
             
             let diff = NSDate().timeIntervalSinceDate(self.started!)
-            self.notify(TextTag(String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff), mono: true))
+            self.notify(
+                TextTag(
+                    preset: String(format:"+----- '\(self.scriptName)' variables (running for %.02f seconds) -----+\n", diff),
+                    mono: true,
+                    preset: "scriptinfo"))
             
             let sorted = display.sort { $0 < $1 }
             
             for v in sorted {
-                let tag = TextTag("|  \(v)\n", mono: true)
+                let tag = TextTag(preset: "|  \(v)\n", mono: true, preset: "scriptinfo")
                 self.notify(tag)
             }
             
-            self.notify(TextTag("+---------------------------------------------------------+\n", mono: true))
+            self.notify(TextTag(preset: "+---------------------------------------------------------+\n", mono: true, preset: "scriptinfo"))
         }
     }
     
     public func setLogLevel(level:ScriptLogLevel) {
         self.logLevel = level
-        self.notify(TextTag("[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n", mono: true))
+        self.sendMessage(ScriptInfoMessage("[Script '\(self.scriptName)' - setting debug level to \(level.rawValue)]\n"))
     }
     
     public func varsChanged(vars:[String:String]) {
@@ -204,7 +208,7 @@ public class Script : IScript {
             
             let res = x.vars(self.context!, vars: vars)
             switch res {
-            case .Match(let x):
+            case .Match(let x, _):
                 self.notify(TextTag(x, mono: true), debug:ScriptLogLevel.Actions)
                 return true
             default:
@@ -249,7 +253,7 @@ public class Script : IScript {
             
             let res = x.stream(text, nodes: nodes, context: self.context!)
             switch res {
-            case .Match(let x):
+            case .Match(let x, _):
                 self.notify(TextTag(x, mono: true), debug:ScriptLogLevel.Actions)
                 return true
             default:
@@ -300,8 +304,6 @@ public class Script : IScript {
         if !self.context!.gotoLabel(label, params: params, previousLine:previousLine, isGosub: isGosub) {
             
             let tag = TextTag("label \(label) not found\n", mono: true)
-            tag.color = "#efefef"
-            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
@@ -309,8 +311,6 @@ public class Script : IScript {
         
         if self.context!.gosubStack.count() >= 100 {
             let tag = TextTag("Potential infinite loop of 100+ gosubs - use gosub clear if this is intended\n", mono: true)
-            tag.color = "#efefef"
-            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
@@ -321,22 +321,22 @@ public class Script : IScript {
     }
     
     private func gosubReturn(moveNext:Bool) {
-        if let ctx = self.context!.popGosub() {
-            let tag = TextTag("returning to line \(ctx.returnLine + 1)\n", mono: true)
-            self.notify(tag, debug: ScriptLogLevel.Gosubs)
-            if moveNext {
-                self.moveNext()
-            }
-        } else {
+        guard let ctx = self.context!.popGosub() else {
+
             let tag = TextTag("no gosub to return to!\n", mono: true)
             
-            tag.color = "#efefef"
-            tag.backgroundColor = "#ff3300"
             tag.preset = "scripterror"
             
             self.notify(tag)
             self.cancel()
             self.completed?(self.scriptName, "no gosub to return to")
+            return
+        }
+
+        let tag = TextTag("returning to line \(ctx.returnLine + 1)\n", mono: true)
+        self.notify(tag, debug: ScriptLogLevel.Gosubs)
+        if moveNext {
+            self.moveNext()
         }
     }
     
@@ -365,8 +365,6 @@ public class Script : IScript {
                     
                     for err in parser.errors {
                         let tag = TextTag("\(err)\n", mono: true)
-                        tag.color = "#efefef"
-                        tag.backgroundColor = "#ff3300"
                         tag.preset = "scripterror"
                         self.notify(tag)
                     }
@@ -379,7 +377,6 @@ public class Script : IScript {
                 self.context!.marker.currentIdx = -1
                 self.context!.setVariable("scriptname", value: self.scriptName)
                 self.moveNext()
-                
             })
         })
     }
@@ -594,8 +591,6 @@ public class Script : IScript {
                 self.moveNext()
             } else {
                 let txtMsg = TextTag("no more params to shift!\n", mono: true)
-                txtMsg.color = "#efefef"
-                txtMsg.backgroundColor = "#ff3300"
                 txtMsg.preset = "scripterror"
                 
                 self.notify(txtMsg)
@@ -622,7 +617,8 @@ public class Script : IScript {
                 self.toggleAction(actionMsg)
                 self.notify(TextTag("action (\(actionMsg.token.className)) \(actionMsg.token.commandText())\n", mono: true), debug:ScriptLogLevel.Actions)
             } else {
-                self.notify(TextTag("action \(actionMsg.token.commandText()) when \(actionMsg.token.whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
+                let whenText = self.context!.simplify(actionMsg.token.whenText)
+                self.notify(TextTag("action \(actionMsg.token.commandText()) when \(whenText)\n", mono: true), debug:ScriptLogLevel.Actions)
                 self.actions.append(ActionOp(actionMsg.token, self.context!.simplify))
             }
             
@@ -641,15 +637,13 @@ public class Script : IScript {
         }
         else if let unkownMsg = msg as? UnknownMessage {
             let txtMsg = TextTag("unkown command: \(unkownMsg.description)\n", mono: true)
-            txtMsg.color = "#efefef"
-            txtMsg.backgroundColor = "#ff3300"
             txtMsg.preset = "scripterror"
             self.notify(txtMsg)
             self.moveNext()
         }
         else if let scriptInfo = msg as? ScriptInfoMessage {
             let txtMsg = TextTag(scriptInfo.description, mono: true)
-            txtMsg.color = "#acff2f"
+            txtMsg.preset = "scriptinput"
             self.notify(txtMsg)
         }
         else {
@@ -671,12 +665,8 @@ public class Script : IScript {
             message.scriptLine = line
         }
         
-        if message.color == nil {
-            message.color = "#0066cc"
-        }
-       
         if message.preset == nil {
-            message.preset = "scriptinput"
+            message.preset = "scriptinfo"
         }
         
         self.notifier.notify(message)
@@ -853,7 +843,7 @@ public class MoveOp : IWantStreamInfo {
         for node in nodes {
             
             if node.name == "compass" {
-                return CheckStreamResult.Match(result: "")
+                return CheckStreamResult.Match(result: "", groups: nil)
             }
         }
         
@@ -878,7 +868,7 @@ public class NextRoomOp : IWantStreamInfo {
         for node in nodes {
             
             if node.name == "compass" {
-                return CheckStreamResult.Match(result: "")
+                return CheckStreamResult.Match(result: "", groups: nil)
             }
         }
         
@@ -894,14 +884,14 @@ public class WaitforOp : IWantStreamInfo {
     
     public var id = ""
     var target:String
-    
+
     public init(_ target:String) {
         self.id = NSUUID().UUIDString
         self.target = target
     }
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
-        return text.rangeOfString(context.simplify(self.target)) != nil ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        return text.rangeOfString(context.simplify(self.target)) != nil ? CheckStreamResult.Match(result: text, groups: nil) : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
@@ -913,7 +903,8 @@ public class WaitforReOp : IWantStreamInfo {
 
     public var id = ""
     var pattern:String
-    
+    var groups:[String]?
+
     public init(_ pattern:String) {
         self.id = NSUUID().UUIDString
         self.pattern = pattern
@@ -922,10 +913,16 @@ public class WaitforReOp : IWantStreamInfo {
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
         let pattern = context.simplify(self.pattern)
         let groups = text[pattern].groups()
-        return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
+        self.groups = groups
+        return groups.count > 0 ? CheckStreamResult.Match(result: text, groups: groups) : CheckStreamResult.None
     }
-    
+
     public func execute(script:IScript, context:ScriptContext) {
+
+        if let grps = self.groups {
+            context.setRegexVars(grps)
+        }
+        
         script.moveNextAfterRoundtime()
     }
 }
@@ -942,7 +939,7 @@ public class WaitforPromptOp : IWantStreamInfo {
         
         for n in nodes {
             if n.name == "prompt" {
-                return CheckStreamResult.Match(result: text)
+                return CheckStreamResult.Match(result: text, groups: nil)
             }
         }
         
@@ -973,7 +970,7 @@ public class WaitEvalOp : IWantStreamInfo {
                 let res = self.evaluator.eval(context, self.token.body, context.simplify)
                 print("eval res: \(res.info)")
                 if getBoolResult(res.result) {
-                    return CheckStreamResult.Match(result: res.info)
+                    return CheckStreamResult.Match(result: res.info, groups: nil)
                 }
             }
         }
@@ -1015,14 +1012,16 @@ public class ActionOp : IAction {
     
     public func stream(text:String, nodes:[Node], context:ScriptContext) -> CheckStreamResult {
         
-        if self.token.whenText.characters.count > 0 {
-            self.lastGroups = text[self.token.whenText].groups()
-            return self.lastGroups?.count > 0
-                ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n")
-                : CheckStreamResult.None
+        if self.token.whenText.characters.count == 0 {
+            return CheckStreamResult.None
         }
-        
-        return CheckStreamResult.None
+
+        let whenText = context.simplify(self.token.whenText)
+
+        self.lastGroups = text[whenText].groups()
+        return self.lastGroups?.count > 0
+            ? CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(text)\n", groups: nil)
+            : CheckStreamResult.None
     }
     
     public func execute(script:IScript, context:ScriptContext) {
@@ -1054,7 +1053,7 @@ public class ActionOp : IAction {
         
         if getBoolResult(res.result) {
             self.lastGroups = res.matchGroups
-            return CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(res.info)\n")
+            return CheckStreamResult.Match(result: "action (\(self.token.originalStringLine!+1)) triggered: \(res.info)\n", groups: res.matchGroups)
         }
         
         return CheckStreamResult.None
@@ -1072,7 +1071,7 @@ public class ActionOp : IAction {
 
 public enum CheckStreamResult {
     case None
-    case Match(result:String)
+    case Match(result:String, groups: [String]?)
 }
 
 extension Array {

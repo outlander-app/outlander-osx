@@ -8,12 +8,13 @@
 
 import Cocoa
 
+@objc
 class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
     private var context: GameContext?
     private var font: String = "Menlo"
     private var fontSize: CGFloat = 12
-    
+
     func handle(token:String, data:Dictionary<String, AnyObject>) {
         mainThread { () -> () in
             if token == "script:add" {
@@ -96,7 +97,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         let frame = NSRect(x: 0, y: 0, width: 75, height: 25)
         
         let btn = NSPopUpButton(frame: frame, pullsDown: true)
-        btn.setButtonType(NSButtonType.SwitchButton)
+        btn.setButtonType(NSButtonType.Switch)
         btn.font = buttonFont
         btn.menu = NSMenu(title: scriptName)
         btn.menu?.addItem(createMenuItem(scriptName, textColor: NSColor.whiteColor()))

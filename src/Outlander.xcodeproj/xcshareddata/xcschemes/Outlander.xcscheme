@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A01BD6622E49001EDEC82BEC619F6DE"
-               BuildableName = "Pods.framework"
-               BlueprintName = "Pods"
-               ReferencedContainer = "container:../Pods/Pods.xcodeproj">
+               BlueprintIdentifier = "F9CF92661890832800449548"
+               BuildableName = "Outlander.app"
+               BlueprintName = "Outlander"
+               ReferencedContainer = "container:Outlander.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry

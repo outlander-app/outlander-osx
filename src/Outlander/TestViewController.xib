@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TestViewController">
@@ -19,7 +19,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView wantsLayer="YES" id="1" customClass="MyView">
-            <rect key="frame" x="0.0" y="1" width="692" height="488"/>
+            <rect key="frame" x="0.0" y="0.0" width="692" height="488"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
@@ -78,7 +78,7 @@
                         <binding destination="BCL-fi-1Ob" name="value" keyPath="self.spell" id="ehK-j3-bOA"/>
                     </connections>
                 </textField>
-                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CHV-Sq-xD0" customClass="MyView">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="CHV-Sq-xD0" customClass="MyView">
                     <rect key="frame" x="20" y="85" width="652" height="362"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-on-IaD">
@@ -102,7 +102,7 @@
                         <constraint firstAttribute="height" constant="35" id="Y82-wu-VMl"/>
                     </constraints>
                 </customView>
-                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="koe-W5-1xI" customClass="MyView">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="koe-W5-1xI" customClass="MyView">
                     <rect key="frame" x="20" y="455" width="652" height="25"/>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="aaS-Tl-hqC">
@@ -119,6 +119,7 @@
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="43" id="EHm-ic-nJN"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="InT-U6-H6h"/>
                 <constraint firstItem="aaS-Tl-hqC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="KVW-X4-Miq"/>
+                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="1" secondAttribute="top" constant="41" id="LAA-fG-R9a"/>
                 <constraint firstAttribute="bottom" secondItem="aaS-Tl-hqC" secondAttribute="bottom" constant="8" id="MV0-Dv-ZlC"/>
                 <constraint firstItem="koe-W5-1xI" firstAttribute="top" secondItem="1" secondAttribute="top" constant="8" id="OMC-D0-WLE"/>
                 <constraint firstItem="koe-W5-1xI" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="P8c-P0-vAo"/>

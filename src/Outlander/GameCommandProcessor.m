@@ -62,6 +62,7 @@
     [_handlers addObject:[FlashCommandHandler newInstance]];
     [_handlers addObject:[WindowCommandHandler newInstance]];
     [_handlers addObject:[TestCommandHandler newInstance]];
+    [_handlers addObject:[PresetCommandHandler newInstance]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];
@@ -113,6 +114,11 @@
 
 - (void)echo:(TextTag *)tag {
     id<RACSubscriber> sub = (id<RACSubscriber>)_echoed;
+
+    if(tag.preset == nil || [tag.preset length] == 0) {
+        tag.preset = @"scriptecho";
+    }
+
     [sub sendNext:tag];
 }
 @end

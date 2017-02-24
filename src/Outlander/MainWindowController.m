@@ -67,8 +67,7 @@
     
     _autoMapperWindowController = [[AutoMapperWindowController alloc] initWithWindowNibName:@"AutoMapperWindowController"];
     [_autoMapperWindowController setContext:_gameContext];
-    [_autoMapperWindowController loadMaps];
-    
+
     _chooseProfileViewController = [[ChooseProfileViewController alloc]
                                     initWithNibName:@"ChooseProfileViewController"
                                     bundle:nil];
@@ -81,6 +80,8 @@
 
         [[self currentVC] removeAllWindows];
         [[self currentVC] loadWindows];
+
+        [self echoText:[NSString stringWithFormat:@"Loaded profile: %@\n", _gameContext.pathProvider.profileFolder] withMono:YES];
 
         [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
                                          _gameContext.layout.primaryWindow.y,
@@ -197,17 +198,46 @@
     }];
     
     _loginViewController.context = _gameContext;
-    
+
+    [self printSettings];
+
     //[self.window makeFirstResponder:vc._CommandTextField];
     //[vc._CommandTextField becomeFirstResponder];
     
 //    [self checkForUpdates];
 }
 
+-(void)echoText:(NSString *)text withMono:(BOOL)mono {
+    TestViewController *vc = [self currentVC];
+
+    [vc append:[TextTag tagFor:text
+                          mono:mono]
+            to:@"main"];
+}
+
+- (void)printSettings {
+    [self echoText:[NSString stringWithFormat:@"Config: %@\n",
+                    _gameContext.pathProvider.configFolder]
+          withMono:YES];
+    [self echoText:[NSString stringWithFormat:@"Profile: %@\n",
+                    _gameContext.pathProvider.profileFolder]
+          withMono:YES];
+    [self echoText:[NSString stringWithFormat:@"Maps: %@\n",
+                    _gameContext.pathProvider.mapsFolder]
+          withMono:YES];
+    [self echoText:[NSString stringWithFormat:@"Scripts: %@\n",
+                    _gameContext.pathProvider.scriptsFolder]
+          withMono:YES];
+    [self echoText:[NSString stringWithFormat:@"Logs: %@\n\n",
+                    _gameContext.pathProvider.logsFolder]
+          withMono:YES];
+}
+
 - (void)awakeFromNib {
-    
+
     [_appSettingsLoader load];
-    
+    [_autoMapperWindowController loadMaps];
+
     [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
                                      _gameContext.layout.primaryWindow.y,
                                      _gameContext.layout.primaryWindow.width,
@@ -239,6 +269,7 @@
     [_appSettingsLoader saveTriggers];
     [_appSettingsLoader saveSubs];
     [_appSettingsLoader saveGags];
+    [_appSettingsLoader savePresets];
     
     [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
                           mono:true]

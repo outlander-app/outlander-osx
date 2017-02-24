@@ -235,13 +235,21 @@
     TextTag *newTag = [TextTag tagFor:str mono: YES];
     newTag.color = tag.color;
     newTag.backgroundColor = tag.backgroundColor;
+    newTag.preset = tag.preset;
     
     return newTag;
 }
 
 - (NSAttributedString *)stringFromTag:(TextTag *)text {
     if(text.bold) {
-        text.color = @"#FFFF00";
+//        text.color = @"#FFFF00";
+        text.preset = @"creatures";
+    }
+
+    if( (text.color == nil || [text.color length] == 0) && [text.preset length] > 0 ) {
+        ColorPreset *preset = [[self gameContext] presetFor:text.preset];
+        text.color = preset.color;
+        text.backgroundColor = preset.backgroundColor;
     }
 
     NSString *escaped = [text.text replaceWithPattern:@"&gt;" andTemplate:@">"];

@@ -15,7 +15,7 @@ class WindowCommandHandler : NSObject, CommandHandler {
         return WindowCommandHandler()
     }
     
-    let validCommands = ["add", "clear", "hide", "list", "show"]
+    let validCommands = ["add", "clear", "hide", "list", "reload", "show"]
     
     func canHandle(command: String) -> Bool {
         return command.lowercaseString.hasPrefix("#window")
@@ -26,13 +26,21 @@ class WindowCommandHandler : NSObject, CommandHandler {
         let commands = command
             .substringFromIndex(command.startIndex.advancedBy(7))
             .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        
+
+        if commands.hasPrefix("reload") {
+            let loader = WindowDataService()
+            let layout = loader.readLayoutJson(withContext)
+            withContext.layout = layout
+            withContext.events.publish("OL:window", data: ["action":"reload", "window":""])
+            return
+        }
+
         let groups = commands["(.*) (.*)"].groups()
         
         if groups.count > 2 && validCommands.contains(groups[1]) {
             let action = groups[1].lowercaseString
             let window = groups[2].lowercaseString
-            
+
             withContext.events.publish("OL:window", data: ["action":action, "window":window])
         }
     }

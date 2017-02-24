@@ -32,15 +32,29 @@
     
     NSString *fileName = [NSString stringWithFormat:@"%@%@", [scriptName trimWhitespaceAndNewline], @".cmd"];
     NSString *file = [_context.pathProvider.scriptsFolder stringByAppendingPathComponent:fileName];
+
+    if (![_fileSystem fileExists:file]) {
+        return @"";
+    }
     
     NSError *err;
     NSString *data = [_fileSystem stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:&err];
-    
+
     if(err) {
-        NSLog(@"Error loading script: %@", [err localizedDescription]);
+        [_context.events echoText:[NSString stringWithFormat:@"Error loading script: %@", [err localizedDescription]]
+                             mono:true
+                           preset:@"scripterror"];
     }
     
     return data;
+}
+
+- (BOOL)exists:(NSString *)scriptName {
+
+    NSString *fileName = [NSString stringWithFormat:@"%@%@", [scriptName trimWhitespaceAndNewline], @".cmd"];
+    NSString *file = [_context.pathProvider.scriptsFolder stringByAppendingPathComponent:fileName];
+
+    return [_fileSystem fileExists:file];
 }
 
 @end

@@ -24,6 +24,7 @@
 @property (nonatomic, copy) NSString *preset;
 
 - initWith:(NSString*)text mono:(BOOL)mono;
-+ tagFor:(NSString*)text mono:(BOOL)mono;
++ (TextTag*)tagFor:(NSString*)text mono:(BOOL)mono;
++ (TextTag*)tagWithPreset:(NSString*)text mono:(BOOL)mono preset:(NSString*)preset;
 
 @end
