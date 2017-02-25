@@ -345,9 +345,9 @@
     NSURLComponents *components = [[NSURLComponents alloc] init];
     
     components.scheme = @"http";
+//    components.host = @"outlanderapp.com";
     components.host = @"localhost";
     components.port = @(3000);
-    components.host = @"outlanderapp.com";
     components.path = @"/api/updates";
     
     NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
@@ -362,15 +362,17 @@
     NSLog(@"%@", components.URL);
     
     self.updater = [[SQRLUpdater alloc] initWithUpdateRequest:[NSURLRequest requestWithURL:components.URL]];
-    
+
     [self.updater.updates subscribeNext:^(SQRLDownloadedUpdate *downloadedUpdate) {
         NSLog(@"An update is ready to install: %@", downloadedUpdate);
         [self showAppUpdate];
     }];
-    
+
     // Check for updates immediately on launch, then every 4 hours.
-    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
-    [self.updater startAutomaticChecksWithInterval:60 * 60 * 4];
+//    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
+//    [self.updater startAutomaticChecksWithInterval:60 * 60 * 4];
+//    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
+//    [self.updater startAutomaticChecksWithInterval:10];
 }
 
 -(void)registerMacros {
