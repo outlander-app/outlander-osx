@@ -14,13 +14,11 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <ReactiveCocoa/EXTScope.h>
 #import "SettingsWindowController.h"
-#import "ApplicationUpdateViewController.h"
 #import "AppSettingsLoader.h"
 #import "TextTag.h"
 #import "NSString+Categories.h"
 #import "MacroHandler.h"
 #import "GameCommandRelay.h"
-#import <Squirrel/Squirrel.h>
 #import "Outlander-Swift.h"
 
 @interface MainWindowController ()
@@ -29,9 +27,7 @@
     @property (nonatomic, strong) AutoMapperWindowController *autoMapperWindowController;
     @property (nonatomic, strong) IBOutlet NSPanel *sheet;
     @property (nonatomic, strong) NSViewController *currentViewController;
-    @property (nonatomic, strong) ApplicationUpdateViewController *appUpdateController;
     @property (nonatomic, strong) ChooseProfileViewController *chooseProfileViewController;
-    @property (nonatomic, strong) SQRLUpdater *updater;
     @property (nonatomic, strong) GameContext *gameContext;
 @end
 
@@ -100,30 +96,20 @@
         return [RACSignal empty];
     }];
     
-    _appUpdateController = [[ApplicationUpdateViewController alloc] init];
-    _appUpdateController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        [self endSheet];
-        return [RACSignal empty];
-    }];
-    _appUpdateController.relaunchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-        [self endSheet];
-        [[self.updater relaunchToInstallUpdate] subscribeError:^(NSError *error) {
-            NSLog(@"Error preparing update: %@", error);
-        }];
-        
-        return [RACSignal empty];
-    }];
-
     [_gameContext.events subscribe:self token:@"disconnected"];
     
 	return self;
 }
 
--(void) windowDidBecomeKey: (NSNotification*) note {
+- (void)echo:(NSString *)text withPreset: (NSString *)preset {
+    [[self.gameContext events] echoText:text mono:YES preset:preset];
+}
+
+- (void) windowDidBecomeKey: (NSNotification*) note {
     [self registerMacros];
 }
 
--(void) windowDidResignKey: (NSNotification*) note {
+- (void) windowDidResignKey: (NSNotification*) note {
     [self unRegisterMacros];
 }
 
@@ -203,8 +189,6 @@
 
     //[self.window makeFirstResponder:vc._CommandTextField];
     //[vc._CommandTextField becomeFirstResponder];
-    
-//    [self checkForUpdates];
 }
 
 -(void)echoText:(NSString *)text withMono:(BOOL)mono {
@@ -295,7 +279,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [_autoMapperWindowController setSelectedZone];
         });
-        
+
     } else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;
         [vc command:command];
@@ -305,11 +289,6 @@
 - (void)showLogin {
     NSRect viewRect = NSMakeRect(0, 0, 308, 120);
     [self showSheet:_loginViewController.view withFrame:viewRect];
-}
-
-- (void)showAppUpdate {
-    NSRect viewRect = NSMakeRect(0, 0, 300, 300);
-    [self showSheet:_appUpdateController.view withFrame:viewRect];
 }
 
 - (void)showProfiles {
@@ -338,41 +317,6 @@
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
-}
-
-- (void)checkForUpdates {
-    
-    NSURLComponents *components = [[NSURLComponents alloc] init];
-    
-    components.scheme = @"http";
-//    components.host = @"outlanderapp.com";
-    components.host = @"localhost";
-    components.port = @(3000);
-    components.path = @"/api/updates";
-    
-    NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
-    NSString *version = dict[@"CFBundleShortVersionString"];
-
-    NSOperatingSystemVersion osVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
-
-    NSString *osVersionString = [NSString stringWithFormat:@"%ld.%ld.%ld", (long)osVersion.majorVersion, (long)osVersion.minorVersion, (long)osVersion.patchVersion];
-
-    components.query = [[NSString stringWithFormat:@"version=v%@&os=%@", version, osVersionString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
-    
-    NSLog(@"%@", components.URL);
-    
-    self.updater = [[SQRLUpdater alloc] initWithUpdateRequest:[NSURLRequest requestWithURL:components.URL]];
-
-    [self.updater.updates subscribeNext:^(SQRLDownloadedUpdate *downloadedUpdate) {
-        NSLog(@"An update is ready to install: %@", downloadedUpdate);
-        [self showAppUpdate];
-    }];
-
-    // Check for updates immediately on launch, then every 4 hours.
-//    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
-//    [self.updater startAutomaticChecksWithInterval:60 * 60 * 4];
-//    [self.updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
-//    [self.updater startAutomaticChecksWithInterval:10];
 }
 
 -(void)registerMacros {

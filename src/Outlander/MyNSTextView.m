@@ -28,6 +28,8 @@
         [menu insertItemWithTitle:@"Timestamp" action:@selector(toggleTimestamp:) keyEquivalent:@"" atIndex:0];
         [menu insertItemWithTitle:@"Clear" action:@selector(clearAction:) keyEquivalent:@"" atIndex:0];
     }
+
+    [self setTextContainerInset:NSMakeSize(5, 10)];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

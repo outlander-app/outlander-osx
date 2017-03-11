@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="UpdateWindowController">
+            <connections>
+                <outlet property="_about" destination="bie-97-NaD" id="vFi-s4-Dys"/>
+                <outlet property="_notes" destination="1b2-PR-TF4" id="2Bh-UR-Ff8"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Outlander Updates" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <rect key="contentRect" x="1943" y="1116" width="617" height="301"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <value key="minSize" type="size" width="617" height="301"/>
+            <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="617" height="301"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bie-97-NaD">
+                        <rect key="frame" x="117" y="211" width="482" height="34"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="An application update has been downloaded.  Restart the application to start using the new version." id="aiB-4x-r5x">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXY-Ij-0da">
+                        <rect key="frame" x="117" y="253" width="282" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="278" id="hPV-PB-d50"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="A new version of Outlander is available!" id="GJ0-OQ-WC6">
+                            <font key="font" metaFont="systemBold" size="14"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8LD-G2-mjt">
+                        <rect key="frame" x="20" y="193" width="77" height="88"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="77" id="AvY-lh-JML"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="woodsword2" id="kyq-TH-lF6"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cds-Cw-OCS">
+                        <rect key="frame" x="452" y="167" width="151" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="139" id="Il4-pu-XtP"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Relaunch Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZHQ-Ub-ekV">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="relaunch:" target="-2" id="HiO-6t-5fs"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EmR-10-BDH">
+                        <rect key="frame" x="342" y="167" width="110" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="98" id="uYz-Hx-Prf"/>
+                        </constraints>
+                        <buttonCell key="cell" type="push" title="Later" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K5v-9p-iyh">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="later:" target="-2" id="ifD-Vu-sH6"/>
+                        </connections>
+                    </button>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxE-2O-Fet">
+                        <rect key="frame" x="20" y="20" width="577" height="134"/>
+                        <clipView key="contentView" id="reb-oe-8J5">
+                            <rect key="frame" x="1" y="1" width="575" height="132"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView editable="NO" importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="1b2-PR-TF4">
+                                    <rect key="frame" x="0.0" y="0.0" width="858" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="575" height="132"/>
+                                    <size key="maxSize" width="1013" height="10000000"/>
+                                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="De8-pn-Zdf">
+                            <rect key="frame" x="-100" y="-100" width="575" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="njX-cE-Q0b">
+                            <rect key="frame" x="561" y="1" width="15" height="132"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="bXY-Ij-0da" firstAttribute="leading" secondItem="8LD-G2-mjt" secondAttribute="trailing" constant="22" id="2Ru-Y8-3kv"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="leading" secondItem="8LD-G2-mjt" secondAttribute="leading" id="4j1-aM-SOY"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="top" secondItem="cds-Cw-OCS" secondAttribute="bottom" constant="20" symbolic="YES" id="7hb-s0-6aJ"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="top" secondItem="8LD-G2-mjt" secondAttribute="bottom" constant="39" id="B4w-8x-qxB"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="trailing" secondItem="cds-Cw-OCS" secondAttribute="trailing" id="K1W-sN-Nh2"/>
+                    <constraint firstItem="bie-97-NaD" firstAttribute="top" secondItem="bXY-Ij-0da" secondAttribute="bottom" constant="8" symbolic="YES" id="PC1-CK-5RC"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="147" id="PNW-l0-zkQ"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="top" secondItem="EmR-10-BDH" secondAttribute="bottom" constant="20" symbolic="YES" id="QAz-iK-5x0"/>
+                    <constraint firstItem="EmR-10-BDH" firstAttribute="top" secondItem="bie-97-NaD" secondAttribute="bottom" constant="16" id="VRw-if-2Rq"/>
+                    <constraint firstItem="bXY-Ij-0da" firstAttribute="leading" secondItem="bie-97-NaD" secondAttribute="leading" id="WAr-gm-hAH"/>
+                    <constraint firstAttribute="bottom" secondItem="qxE-2O-Fet" secondAttribute="bottom" constant="20" symbolic="YES" id="Z7P-Op-vC4"/>
+                    <constraint firstAttribute="trailing" secondItem="qxE-2O-Fet" secondAttribute="trailing" constant="20" symbolic="YES" id="o65-gl-7L9"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="qaF-6z-isN"/>
+                    <constraint firstItem="8LD-G2-mjt" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="thG-sJ-Clc"/>
+                    <constraint firstItem="qxE-2O-Fet" firstAttribute="trailing" secondItem="bie-97-NaD" secondAttribute="trailing" id="vMz-Y3-FoB"/>
+                    <constraint firstItem="cds-Cw-OCS" firstAttribute="leading" secondItem="EmR-10-BDH" secondAttribute="trailing" constant="12" symbolic="YES" id="zus-Yv-Ha0"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="104" y="111"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="woodsword2" width="256" height="256"/>
+    </resources>
+</document>

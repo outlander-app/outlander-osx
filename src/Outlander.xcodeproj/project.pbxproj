@@ -357,6 +357,10 @@
 		F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
 		F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
 		F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
+		F9B6CD7B1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
+		F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
+		F9B6CD7D1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
+		F9B6CD7E1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
 		F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
@@ -435,10 +439,6 @@
 		F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8461957BA92005B9D68 /* SettingsWindowController.m */; };
 		F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
 		F9F3D84B1957BA92005B9D68 /* SettingsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */; };
-		F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
-		F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */; };
-		F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
-		F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */; };
 		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
@@ -780,6 +780,9 @@
 		F9B3AC6C1940686700C081C4 /* PutToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutToken.m; sourceTree = "<group>"; };
 		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
 		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
+		F9B6CD781E73549B0085195F /* UpdateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateWindowController.h; sourceTree = "<group>"; };
+		F9B6CD791E73549B0085195F /* UpdateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateWindowController.m; sourceTree = "<group>"; };
+		F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindowController.xib; sourceTree = "<group>"; };
 		F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Outlander-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OutlanderTests-Bridging-Header.h"; path = "../Outlander/OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
@@ -849,9 +852,6 @@
 		F9F3D8471957BA92005B9D68 /* SettingsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsWindowController.xib; sourceTree = "<group>"; };
 		F9F3D84C1957D123005B9D68 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		F9F3D85A1957E54A005B9D68 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationUpdateViewController.h; sourceTree = "<group>"; };
-		F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationUpdateViewController.m; sourceTree = "<group>"; };
-		F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationUpdateViewController.xib; sourceTree = "<group>"; };
 		F9F4469B1ABD8478003ECAD2 /* RoomObjsTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomObjsTags.h; sourceTree = "<group>"; };
 		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
@@ -1041,9 +1041,6 @@
 			children = (
 				F959D3DF1AC8FB6300B2A659 /* AliasesViewController.swift */,
 				F959D3E01AC8FB6300B2A659 /* AliasesViewController.xib */,
-				F9F3D8A4195D26E8005B9D68 /* ApplicationUpdateViewController.h */,
-				F9F3D8A5195D26E8005B9D68 /* ApplicationUpdateViewController.m */,
-				F9F3D8A6195D26E8005B9D68 /* ApplicationUpdateViewController.xib */,
 				F97A5C9C1895C10100E2C318 /* CharacterViewModel.h */,
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
 				F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */,
@@ -1089,6 +1086,9 @@
 				F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */,
 				F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */,
 				F95538A41B2809AB007DCCD4 /* TriggersViewController.xib */,
+				F9B6CD781E73549B0085195F /* UpdateWindowController.h */,
+				F9B6CD791E73549B0085195F /* UpdateWindowController.m */,
+				F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1538,7 +1538,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9F3D8A9195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */,
 				F98F22D619248506008175FD /* LoginViewController.xib in Resources */,
 				F9F3D83C1956721C005B9D68 /* MacrosViewController.xib in Resources */,
@@ -1552,6 +1551,7 @@
 				F9CF92811890832800449548 /* MainMenu.xib in Resources */,
 				F97CD5931ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */,
 				F9C178831B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */,
+				F9B6CD7D1E73549B0085195F /* UpdateWindowController.xib in Resources */,
 				F97A5C511890DFB400E2C318 /* TestViewController.xib in Resources */,
 				F959D3E31AC8FB6300B2A659 /* AliasesViewController.xib in Resources */,
 				F9F3D84A1957BA92005B9D68 /* SettingsWindowController.xib in Resources */,
@@ -1580,9 +1580,9 @@
 				F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
 				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9C178841B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */,
-				F9F3D8AA195D26E8005B9D68 /* ApplicationUpdateViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
+				F9B6CD7E1E73549B0085195F /* UpdateWindowController.xib in Resources */,
 				F97A5C271890A6B600E2C318 /* MainWindowController.xib in Resources */,
 				F9CF92931890832800449548 /* InfoPlist.strings in Resources */,
 				F97CD5941ACD9813007E5804 /* AutoMapperWindowController.xib in Resources */,
@@ -1682,6 +1682,7 @@
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
+				F9B6CD7B1E73549B0085195F /* UpdateWindowController.m in Sources */,
 				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */,
@@ -1746,7 +1747,6 @@
 				F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
-				F9F3D8A7195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
@@ -1875,6 +1875,7 @@
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */,
+				F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */,
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
@@ -1952,7 +1953,6 @@
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F970BA071BEE16FE0047F6CC /* OutlanderScriptParserTester.swift in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
-				F9F3D8A8195D26E8005B9D68 /* ApplicationUpdateViewController.m in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F98D4C261CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
 				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,

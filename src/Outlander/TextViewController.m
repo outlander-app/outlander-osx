@@ -71,7 +71,7 @@
             [NSColor colorWithHexString:@"#252729"], NSBackgroundColorAttributeName,
             [NSColor colorWithHexString:@"#cccccc"], NSForegroundColorAttributeName,
         nil]];
-    
+
     NSMenu *menu = _TextView.menu;
     NSMenuItem *item = [menu itemWithTitle:@"Show Border"];
     if(item == nil) {

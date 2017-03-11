@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextViewController">
@@ -18,21 +19,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mf2-WY-abb">
-                    <rect key="frame" x="10" y="10" width="258" height="161"/>
+                    <rect key="frame" x="1" y="1" width="276" height="179"/>
                     <clipView key="contentView" id="m6p-pe-cWB">
-                        <rect key="frame" x="0.0" y="0.0" width="243" height="161"/>
+                        <rect key="frame" x="0.0" y="0.0" width="261" height="179"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView editable="NO" importsGraphics="NO" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="D4C-fw-NQv" customClass="MyNSTextView">
-                                <rect key="frame" x="0.0" y="0.0" width="243" height="161"/>
+                            <textView editable="NO" importsGraphics="NO" usesFontPanel="YES" findStyle="panel" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" id="D4C-fw-NQv" customClass="MyNSTextView">
+                                <rect key="frame" x="0.0" y="0.0" width="261" height="179"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <size key="minSize" width="243" height="161"/>
+                                <size key="minSize" width="261" height="179"/>
                                 <size key="maxSize" width="526" height="10000000"/>
                                 <color key="insertionPointColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <size key="minSize" width="243" height="161"/>
-                                <size key="maxSize" width="526" height="10000000"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,16 +41,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GWE-SN-vh2" customClass="MMScroller">
-                        <rect key="frame" x="243" y="0.0" width="15" height="161"/>
+                        <rect key="frame" x="261" y="0.0" width="15" height="179"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Mf2-WY-abb" secondAttribute="trailing" constant="10" id="FXQ-l6-bKV"/>
-                <constraint firstAttribute="bottom" secondItem="Mf2-WY-abb" secondAttribute="bottom" constant="10" id="fco-FZ-snr"/>
-                <constraint firstItem="Mf2-WY-abb" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="10" id="xMC-jv-sMc"/>
-                <constraint firstItem="Mf2-WY-abb" firstAttribute="top" secondItem="1" secondAttribute="top" constant="10" id="z3Y-yN-Ue2"/>
+                <constraint firstAttribute="trailing" secondItem="Mf2-WY-abb" secondAttribute="trailing" constant="1" id="FXQ-l6-bKV"/>
+                <constraint firstAttribute="bottom" secondItem="Mf2-WY-abb" secondAttribute="bottom" constant="1" id="fco-FZ-snr"/>
+                <constraint firstItem="Mf2-WY-abb" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="1" id="xMC-jv-sMc"/>
+                <constraint firstItem="Mf2-WY-abb" firstAttribute="top" secondItem="1" secondAttribute="top" constant="1" id="z3Y-yN-Ue2"/>
             </constraints>
         </customView>
     </objects>

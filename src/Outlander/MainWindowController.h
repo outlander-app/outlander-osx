@@ -16,7 +16,7 @@
 - (void)command:(NSString *)command;
 - (void)showLogin;
 - (void)showProfiles;
-- (void)showAppUpdate;
 - (void)showSheet:(NSView *)view withFrame:(NSRect)frame;
 - (void)endSheet;
+- (void)echo:(NSString *)text withPreset: (NSString *)preset;
 @end
