@@ -14,6 +14,7 @@
 }
 @property (nonatomic, copy) NSString *key;
 @property (nonatomic, strong) NSColor *backgroundColor;
+@property (nonatomic, strong) NSColor *borderColor;
 @property (nonatomic, assign) BOOL draggable;
 @property (nonatomic, assign) NSPoint mouseLoc;
 @property (nonatomic, strong) NSView *movingTile;

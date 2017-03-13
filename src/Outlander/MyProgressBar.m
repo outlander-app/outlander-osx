@@ -19,10 +19,11 @@
     self.value = 100;
     self.backgroundColor = [NSColor colorWithHexString:@"#00004B"];
     self.foregroundColor = [NSColor colorWithHexString:@"#F5F5F5"];
-    self.font = [NSFont fontWithName:@"Andale Mono" size:11];
-    
+    self.font = [NSFont fontWithName:@"Menlo Bold" size:11];
+
     [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"value" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"backgroundColor" options:NSKeyValueObservingOptionNew context:nil];
     
     return self;
 }
@@ -42,9 +43,9 @@
     float calcValue = width * (self.value * 0.01);
     float strokeWidth = 0.0;
     
-    [[NSColor colorWithHexString:@"#999999"] setFill];
-    NSRectFill(NSMakeRect(0, 0, width, height));
-    
+//    [[NSColor colorWithHexString:@"#999999"] setFill];
+//    NSRectFill(NSMakeRect(0, 0, width, height));
+
 //    [[NSColor whiteColor] setStroke];
 //    
 //    NSBezierPath* thePath = [NSBezierPath bezierPath];

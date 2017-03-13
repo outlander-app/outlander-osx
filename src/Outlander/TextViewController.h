@@ -23,6 +23,7 @@
 
 @property (nonatomic, copy) NSString *fontName;
 @property (nonatomic, assign) double fontSize;
+@property (nonatomic, copy) NSColor *fontColor;
 @property (nonatomic, copy) NSString *monoFontName;
 @property (nonatomic, assign) double monoFontSize;
 
@@ -37,6 +38,10 @@
 - (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)show;
 - (void)setDisplayTimestamp:(BOOL)timestamp;
+- (void)setBackgroundColor:(NSColor *)color;
+- (void)setBorderColor:(NSColor *)color;
+- (NSColor *)backgroundColor;
+- (NSColor *)borderColor;
 - (NSString *)text;
 - (void)setWithTags:(NSArray *)tags;
 - (void)beginEdit;

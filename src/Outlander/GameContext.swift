@@ -18,6 +18,7 @@ public class GameContext : NSObject {
     public var settings:AppSettings
     public var pathProvider:AppPathProvider
     public var layout:Layout?
+    public var vitalsSettings:VitalsSettings
     
     public var mapZone:MapZone? {
         didSet {
@@ -59,6 +60,8 @@ public class GameContext : NSObject {
         self.gags = OLMutableArray()
         self.presets = [:]
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
+
+        self.vitalsSettings = VitalsSettings()
         
         self.events = EventAggregator()
         self.maps = [:]
@@ -78,8 +81,13 @@ public class GameContext : NSObject {
 
         return ColorPreset("", "#cccccc")
     }
+}
 
-    public func windowColorFor(windowName: String) -> String {
-        return "#cccccc"
-    }
+@objc
+public class VitalsSettings : NSObject {
+    public var healthColor:String = "#cc0000"
+    public var manaColor:String = "#00004B"
+    public var staminaColor:String = "#004000"
+    public var concentrationColor:String = "#009999"
+    public var spiritColor:String = "#400040"
 }

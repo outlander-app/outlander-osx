@@ -49,6 +49,18 @@
         data.bufferClearSize = 10;
     }
 
+    if(data.fontColor == nil) {
+        data.fontColor = @"#cccccc";
+    }
+
+    if(data.backgroundColor == nil) {
+        data.backgroundColor = @"#000000";
+    }
+
+    if(data.borderColor == nil) {
+        data.borderColor = @"#cccccc";
+    }
+
     return data;
 }
 

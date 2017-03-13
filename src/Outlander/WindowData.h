@@ -25,9 +25,12 @@
 @property (nonatomic, assign) BOOL showBorder;
 @property (nonatomic, copy) NSString *fontName;
 @property (nonatomic, assign) double fontSize;
+@property (nonatomic, copy) NSString *fontColor;
 @property (nonatomic, copy) NSString *monoFontName;
 @property (nonatomic, assign) double monoFontSize;
 @property (nonatomic, assign) NSUInteger bufferSize;
 @property (nonatomic, assign) NSUInteger bufferClearSize;
+@property (nonatomic, copy) NSString *backgroundColor;
+@property (nonatomic, copy) NSString *borderColor;
 
 @end

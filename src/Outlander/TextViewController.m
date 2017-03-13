@@ -10,10 +10,12 @@
 #import "NSString+Categories.h"
 #import "Highlight.h"
 #import "MyView.h"
+#import "MMScroller.h"
 #import "Outlander-Swift.h"
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
+    __weak IBOutlet NSScrollView *_scrollView;
 }
 @end
 
@@ -33,6 +35,7 @@
 }
 
 - (void)awakeFromNib {
+
     _TextView.keyupSignal = [RACSubject subject];
     [_TextView.keyupSignal subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
@@ -99,6 +102,23 @@
     parent.needsDisplay = YES;
 }
 
+- (void)setBorderColor:(NSColor *)color {
+    MyView *parent = (MyView *)[[self view] superview];
+    if(parent != nil) {
+        parent.borderColor = color;
+        parent.needsDisplay = YES;
+    }
+}
+
+- (NSColor *)borderColor {
+    MyView *parent = (MyView *)[[self view] superview];
+    if(parent != nil) {
+        return parent.borderColor;
+    }
+
+    return [NSColor colorWithHexString:@"#cccccc"];
+}
+
 - (BOOL)showBorder {
     MyView *parent = (MyView *)[[self view] superview];
     
@@ -150,6 +170,19 @@
 
 - (NSString *)text {
     return _TextView.string;
+}
+
+- (void)setBackgroundColor:(NSColor *)color {
+    _TextView.backgroundColor = color;
+    MMScroller *vscroll = (MMScroller *)[_scrollView verticalScroller];
+    MMScroller *hscroll = (MMScroller *)[_scrollView horizontalScroller];
+
+    vscroll.backgroundColor = color;
+    hscroll.backgroundColor = color;
+}
+
+- (NSColor *)backgroundColor {
+    return _TextView.backgroundColor;
 }
 
 - (BOOL)endsWith:(NSString*)value {
@@ -272,7 +305,8 @@
         color = [NSColor colorWithHexString:text.color];
     }
     else {
-        color = [NSColor colorWithHexString:@"#cccccc"];
+//        color = [NSColor colorWithHexString:@"#cccccc"];
+        color = _fontColor;
     }
     
     [attr addAttribute:NSForegroundColorAttributeName value:color range:range];

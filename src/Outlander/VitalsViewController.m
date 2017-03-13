@@ -30,7 +30,7 @@
 
 -(void)awakeFromNib {
     self.view.autoresizesSubviews = YES;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(frameChanged:) name:NSViewFrameDidChangeNotification object:self.view];
     
     float height = self.view.frame.size.height;
@@ -49,13 +49,17 @@
 }
 
 -(void)frameChanged:(NSNotification *)notification {
-//    NSLog(@"**** Frame Changed: %f,%f ****", self.view.frame.size.width, self.view.frame.size.height);
     __block float viewX = 0.0;
     float width = self.view.frame.size.width / self.view.subviews.count;
     [self.view.subviews enumerateObjectsUsingBlock:^(NSView *view, NSUInteger idx, BOOL *stop) {
         [view setFrame:NSMakeRect(viewX, view.frame.origin.y, width, view.frame.size.height)];
         viewX = viewX + width;
     }];
+}
+
+-(void)updateColor:(NSString *)key value:(NSString *)color {
+    MyProgressBar *bar = [_bars cacheObjectForKey:key];
+    bar.backgroundColor = [NSColor colorWithHexString:color];
 }
 
 -(void)updateValue:(NSString *)key text:(NSString*)text value:(float)value {

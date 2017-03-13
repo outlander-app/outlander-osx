@@ -27,6 +27,9 @@
     _showBorder = YES;
     _fontName = @"Helvetica";
     _fontSize = 14;
+    _fontColor = @"#cccccc";
+    _backgroundColor = @"#000000";
+    _borderColor = @"#cccccc";
     _monoFontName = @"Menlo";
     _monoFontSize = 13;
     _visible = YES;

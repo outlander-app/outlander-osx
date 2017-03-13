@@ -74,6 +74,7 @@
         
         [_appSettingsLoader loadProfile:_chooseProfileViewController.selectedProfile];
 
+        [[self currentVC] reloadTheme];
         [[self currentVC] removeAllWindows];
         [[self currentVC] loadWindows];
 

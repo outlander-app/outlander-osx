@@ -24,7 +24,7 @@
 
 -(id)initWithContext:(GameContext *)context;
 
-@property (strong) IBOutlet NSView *VitalsView;
+@property (strong) IBOutlet MyView *VitalsView;
 @property (strong) IBOutlet MyNSTextField *_CommandTextField;
 @property (weak) IBOutlet MyView *ViewContainer;
 @property (strong) IBOutlet CharacterViewModel *viewModel;
@@ -32,6 +32,7 @@
 @property (weak) IBOutlet DirectionsView *directionsView;
 @property (weak) IBOutlet MyView *scriptToolbarView;
 
+- (void)reloadTheme;
 - (NSArray *)getWindows;
 - (void)removeAllWindows;
 - (void)loadWindows;

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HLQ-x9-5se" customClass="MyNSTextField">
-                    <rect key="frame" x="18" y="39" width="656" height="20"/>
+                    <rect key="frame" x="3" y="31" width="686" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="lFc-SB-QLH"/>
                     </constraints>
@@ -37,7 +37,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0o8-5z-kiJ">
-                    <rect key="frame" x="41" y="60" width="182" height="17"/>
+                    <rect key="frame" x="26" y="52" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="AQg-xr-Dda"/>
                     </constraints>
@@ -51,7 +51,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yf4-ji-u2U">
-                    <rect key="frame" x="217" y="60" width="182" height="17"/>
+                    <rect key="frame" x="217" y="52" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="5eb-ES-iMF"/>
                     </constraints>
@@ -65,7 +65,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P3P-js-Xda">
-                    <rect key="frame" x="399" y="60" width="182" height="17"/>
+                    <rect key="frame" x="399" y="52" width="182" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="178" id="7P4-WQ-GXh"/>
                     </constraints>
@@ -79,10 +79,10 @@
                     </connections>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="CHV-Sq-xD0" customClass="MyView">
-                    <rect key="frame" x="20" y="85" width="652" height="362"/>
+                    <rect key="frame" x="0.0" y="85" width="692" height="373"/>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mxr-on-IaD">
-                    <rect key="frame" x="18" y="60" width="40" height="17"/>
+                    <rect key="frame" x="3" y="52" width="40" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="36" id="yyf-hm-S5e"/>
                     </constraints>
@@ -96,49 +96,51 @@
                     </connections>
                 </textField>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="srS-QB-sed" customClass="DirectionsView" customModule="Outlander" customModuleProvider="target">
-                    <rect key="frame" x="643" y="44" width="33" height="35"/>
+                    <rect key="frame" x="649" y="44" width="33" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="33" id="U5q-Yx-ITa"/>
                         <constraint firstAttribute="height" constant="35" id="Y82-wu-VMl"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="koe-W5-1xI" customClass="MyView">
-                    <rect key="frame" x="20" y="455" width="652" height="25"/>
-                </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="aaS-Tl-hqC">
-                    <rect key="frame" x="20" y="8" width="652" height="23"/>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="aaS-Tl-hqC" customClass="MyView">
+                    <rect key="frame" x="0.0" y="0.0" width="692" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="Vqw-QE-7dO"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="koe-W5-1xI" customClass="MyView">
+                    <rect key="frame" x="0.0" y="463" width="692" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="KXI-JA-Rsj"/>
                     </constraints>
                 </customView>
             </subviews>
             <constraints>
                 <constraint firstItem="yf4-ji-u2U" firstAttribute="baseline" secondItem="P3P-js-Xda" secondAttribute="baseline" id="0Xr-uT-Fqj"/>
                 <constraint firstAttribute="bottom" secondItem="CHV-Sq-xD0" secondAttribute="bottom" constant="85" id="4HF-zb-A7I"/>
-                <constraint firstAttribute="trailing" secondItem="CHV-Sq-xD0" secondAttribute="trailing" constant="20" id="6UJ-CD-uxj"/>
-                <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="43" id="EHm-ic-nJN"/>
-                <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="InT-U6-H6h"/>
-                <constraint firstItem="aaS-Tl-hqC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="KVW-X4-Miq"/>
-                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="1" secondAttribute="top" constant="41" id="LAA-fG-R9a"/>
-                <constraint firstAttribute="bottom" secondItem="aaS-Tl-hqC" secondAttribute="bottom" constant="8" id="MV0-Dv-ZlC"/>
-                <constraint firstItem="koe-W5-1xI" firstAttribute="top" secondItem="1" secondAttribute="top" constant="8" id="OMC-D0-WLE"/>
-                <constraint firstItem="koe-W5-1xI" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="P8c-P0-vAo"/>
-                <constraint firstAttribute="trailing" secondItem="srS-QB-sed" secondAttribute="trailing" constant="16" id="R8g-Vc-x3K"/>
-                <constraint firstItem="CHV-Sq-xD0" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="RdX-t1-cSl"/>
-                <constraint firstAttribute="trailing" secondItem="aaS-Tl-hqC" secondAttribute="trailing" constant="20" id="TAj-ob-nL9"/>
-                <constraint firstAttribute="trailing" secondItem="koe-W5-1xI" secondAttribute="trailing" constant="20" id="a5L-B0-ryc"/>
+                <constraint firstAttribute="trailing" secondItem="koe-W5-1xI" secondAttribute="trailing" id="6GC-ta-7X0"/>
+                <constraint firstAttribute="trailing" secondItem="CHV-Sq-xD0" secondAttribute="trailing" id="6UJ-CD-uxj"/>
+                <constraint firstItem="koe-W5-1xI" firstAttribute="top" secondItem="1" secondAttribute="top" id="EC8-FF-p14"/>
+                <constraint firstItem="0o8-5z-kiJ" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="28" id="EHm-ic-nJN"/>
+                <constraint firstItem="HLQ-x9-5se" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="5" id="InT-U6-H6h"/>
+                <constraint firstItem="aaS-Tl-hqC" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="KVW-X4-Miq"/>
+                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="LAA-fG-R9a"/>
+                <constraint firstAttribute="bottom" secondItem="aaS-Tl-hqC" secondAttribute="bottom" id="MV0-Dv-ZlC"/>
+                <constraint firstAttribute="trailing" secondItem="srS-QB-sed" secondAttribute="trailing" constant="10" id="R8g-Vc-x3K"/>
+                <constraint firstItem="CHV-Sq-xD0" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="RdX-t1-cSl"/>
+                <constraint firstAttribute="trailing" secondItem="aaS-Tl-hqC" secondAttribute="trailing" id="TAj-ob-nL9"/>
+                <constraint firstItem="koe-W5-1xI" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="b03-kw-ee1"/>
                 <constraint firstItem="mxr-on-IaD" firstAttribute="baseline" secondItem="0o8-5z-kiJ" secondAttribute="baseline" id="cit-V8-Ibr"/>
-                <constraint firstItem="mxr-on-IaD" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="dMg-iC-5ky"/>
-                <constraint firstItem="srS-QB-sed" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1" secondAttribute="leading" constant="632" id="dde-ij-dmS"/>
+                <constraint firstItem="mxr-on-IaD" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="5" id="dMg-iC-5ky"/>
+                <constraint firstItem="srS-QB-sed" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1" secondAttribute="leading" constant="649" id="dde-ij-dmS"/>
                 <constraint firstItem="0o8-5z-kiJ" firstAttribute="baseline" secondItem="yf4-ji-u2U" secondAttribute="baseline" id="fBd-Ct-2Gs"/>
                 <constraint firstItem="yf4-ji-u2U" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="219" id="ftr-qE-OLN"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="mxr-on-IaD" secondAttribute="bottom" constant="1" id="ibe-GS-96K"/>
                 <constraint firstAttribute="bottom" secondItem="srS-QB-sed" secondAttribute="bottom" constant="39" id="khc-hV-h8V"/>
-                <constraint firstAttribute="trailing" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="20" id="lrl-9i-iDx"/>
+                <constraint firstAttribute="trailing" secondItem="HLQ-x9-5se" secondAttribute="trailing" constant="5" id="lrl-9i-iDx"/>
                 <constraint firstItem="aaS-Tl-hqC" firstAttribute="top" secondItem="HLQ-x9-5se" secondAttribute="bottom" constant="8" id="lvL-HL-OtQ"/>
                 <constraint firstItem="HLQ-x9-5se" firstAttribute="top" secondItem="0o8-5z-kiJ" secondAttribute="bottom" constant="1" id="qWJ-Sm-A1u"/>
                 <constraint firstItem="P3P-js-Xda" firstAttribute="leading" secondItem="yf4-ji-u2U" secondAttribute="trailing" constant="4" id="rwq-wz-kFP"/>
-                <constraint firstItem="CHV-Sq-xD0" firstAttribute="top" secondItem="koe-W5-1xI" secondAttribute="bottom" constant="8" id="v6h-FR-HbM"/>
             </constraints>
             <point key="canvasLocation" x="400" y="294"/>
         </customView>

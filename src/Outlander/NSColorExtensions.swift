@@ -42,7 +42,7 @@ extension NSColor {
         let red = Int(round(self.redComponent * 0xFF))
         let grn = Int(round(self.greenComponent * 0xFF))
         let blu = Int(round(self.blueComponent * 0xFF))
-        let hexString = NSString(format: "#%02X%02X%02X", red, grn, blu)
+        let hexString = NSString(format: "#%02X%02X%02X", red, grn, blu).lowercaseString
         return hexString as String
     }
 }

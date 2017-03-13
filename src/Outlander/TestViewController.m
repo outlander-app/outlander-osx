@@ -56,7 +56,7 @@
 	if(self == nil) return nil;
     
     _gameContext = gameContext;
-    
+
     @weakify(self)
     
     _notifier = [NotifyMessage newInstance];
@@ -72,7 +72,6 @@
     _notifier.echoBlock = ^(NSString *echo){
         @strongify(self)
         TextTag *tag = [TextTag tagFor:echo mono:YES];
-//        tag.color = @"00ffff";
         tag.preset = @"scriptecho";
         [self append:tag to:@"main"];
     };
@@ -102,7 +101,6 @@
                              mono: script.length > 0 ? YES : NO];
             
             if (x.scriptName.length > 0 && tag.color == nil && tag.preset == nil) {
-//                tag.color = @"#acff2f";
                 tag.preset = @"scriptinput";
             }
             
@@ -257,20 +255,32 @@
     return @"main";
 }
 
+- (void)reloadTheme {
+    NSColor *themeColor = [NSColor colorWithHexString:_gameContext.layout.primaryWindow.backgroundColor];
+
+    MyView *theView = (MyView *)self.view;
+    theView.backgroundColor = themeColor;
+
+    _ViewContainer.backgroundColor = themeColor;
+    _scriptToolbarView.backgroundColor = themeColor;
+}
+
 - (void)awakeFromNib {
-    _ViewContainer.backgroundColor = [NSColor blackColor];
+
     _ViewContainer.draggable = NO;
     _ViewContainer.autoresizesSubviews = YES;
     
     [_VitalsView addSubview:_vitalsViewController.view];
     _VitalsView.autoresizesSubviews = YES;
-//    _VitalsView.backgroundColor = [NSColor yellowColor];
-    [_vitalsViewController.view fixRightEdge:YES];
-    [_vitalsViewController.view fixLeftEdge:YES];
-    [_vitalsViewController.view fixWidth:NO];
-    
+    [_vitalsViewController.view setFrameSize:_VitalsView.frame.size];
+
+    [_vitalsViewController updateColor:@"health" value:_gameContext.vitalsSettings.healthColor];
+    [_vitalsViewController updateColor:@"mana" value:_gameContext.vitalsSettings.manaColor];
+    [_vitalsViewController updateColor:@"stamina" value:_gameContext.vitalsSettings.staminaColor];
+    [_vitalsViewController updateColor:@"concentration" value:_gameContext.vitalsSettings.concentrationColor];
+    [_vitalsViewController updateColor:@"spirit" value:_gameContext.vitalsSettings.spiritColor];
+
     [_scriptToolbarView addSubview:_scriptToolbarViewController.view];
-    _scriptToolbarView.backgroundColor = [NSColor colorWithHexString:@"#323232"];
     [_scriptToolbarViewController.view fixTopEdge:YES];
     [_scriptToolbarViewController.view fixRightEdge:YES];
     [_scriptToolbarViewController.view fixBottomEdge:NO];
@@ -278,6 +288,8 @@
     [_scriptToolbarViewController.view fixWidth:NO];
     [_scriptToolbarViewController.view fixHeight:NO];
     [_scriptToolbarViewController setContext:_gameContext];
+
+    [self reloadTheme];
    
     [self loadWindows];
     
@@ -346,13 +358,17 @@
 - (void)addWindow:(WindowData *)window withNotification:(BOOL)notify {
     
     NSRect rect = NSMakeRect(window.x, window.y, window.width, window.height);
+
+    NSColor *backgroundColor = [NSColor colorWithHexString:window.backgroundColor];
     
     TextViewController *controller = nil;
-    controller = [_ViewContainer addViewOld:[NSColor blackColor] atLoc:rect withKey:window.name];
+    controller = [_ViewContainer addViewOld:backgroundColor atLoc:rect withKey:window.name];
+    controller.backgroundColor = backgroundColor;
    
     controller.isVisible = window.visible;
     controller.fontName = window.fontName;
     controller.fontSize = window.fontSize;
+    controller.fontColor = [NSColor colorWithHexString:window.fontColor];
     controller.monoFontName = window.monoFontName;
     controller.monoFontSize = window.monoFontSize;
     controller.closedTarget = window.closedTarget;
@@ -361,6 +377,7 @@
     controller.bufferClearSize = window.bufferClearSize;
 
     [controller setDisplayTimestamp:window.timestamp];
+    [controller setBorderColor:[NSColor colorWithHexString:window.borderColor]];
     [controller setShowBorder:window.showBorder];
     
     controller.gameContext = _gameContext;
@@ -414,6 +431,7 @@
         data.showBorder = [controller showBorder];
         data.fontName = controller.fontName;
         data.fontSize = controller.fontSize;
+        data.fontColor = [controller.fontColor getHexString];
         data.monoFontName = controller.monoFontName;
         data.monoFontSize = controller.monoFontSize;
         data.visible = controller.isVisible;
@@ -421,6 +439,8 @@
         data.title = controller.windowTitle;
         data.bufferSize = controller.bufferSize;
         data.bufferClearSize = controller.bufferClearSize;
+        data.backgroundColor = [controller.backgroundColor getHexString];
+        data.borderColor = [controller.borderColor getHexString];
         [windows addObject:data];
     }];
     

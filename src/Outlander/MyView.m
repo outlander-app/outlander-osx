@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [NSColor blackColor];
+        self.borderColor = [NSColor colorWithHexString:@"#cccccc"];
         self.draggable = NO;
         self.autoresizesSubviews = YES;
         self.postsFrameChangedNotifications = YES;
@@ -229,9 +230,8 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [self.backgroundColor setFill];
     NSRectFill(dirtyRect);
     
-   
     if(self.dragging || self.showBorder) {
-        [[NSColor colorWithHexString:@"#cccccc"] setStroke];
+        [self.borderColor setStroke];
         
         NSBezierPath* thePath = [NSBezierPath bezierPath];
         [thePath appendBezierPathWithRect:dirtyRect];
