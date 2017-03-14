@@ -27,6 +27,7 @@ class VitalsLoader : NSObject {
         let configFile = self.context.pathProvider.profileFolder().stringByAppendingPathComponent("vitals.cfg")
 
         if !self.fileSystem.fileExists(configFile) {
+            context.vitalsSettings = VitalsSettings()
             return
         }
 

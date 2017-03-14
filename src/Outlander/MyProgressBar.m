@@ -23,6 +23,7 @@
 
     [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"value" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"foregroundColor" options:NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"backgroundColor" options:NSKeyValueObservingOptionNew context:nil];
     
     return self;

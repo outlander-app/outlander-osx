@@ -263,6 +263,12 @@
 
     _ViewContainer.backgroundColor = themeColor;
     _scriptToolbarView.backgroundColor = themeColor;
+
+    [_vitalsViewController updateColor:@"health" foreground:_gameContext.vitalsSettings.healthTextColor background:_gameContext.vitalsSettings.healthColor];
+    [_vitalsViewController updateColor:@"mana" foreground:_gameContext.vitalsSettings.manaTextColor background:_gameContext.vitalsSettings.manaColor];
+    [_vitalsViewController updateColor:@"stamina" foreground:_gameContext.vitalsSettings.staminaTextColor background:_gameContext.vitalsSettings.staminaColor];
+    [_vitalsViewController updateColor:@"concentration" foreground:_gameContext.vitalsSettings.concentrationTextColor background:_gameContext.vitalsSettings.concentrationColor];
+    [_vitalsViewController updateColor:@"spirit" foreground:_gameContext.vitalsSettings.spiritTextColor background:_gameContext.vitalsSettings.spiritColor];
 }
 
 - (void)awakeFromNib {
@@ -273,12 +279,6 @@
     [_VitalsView addSubview:_vitalsViewController.view];
     _VitalsView.autoresizesSubviews = YES;
     [_vitalsViewController.view setFrameSize:_VitalsView.frame.size];
-
-    [_vitalsViewController updateColor:@"health" foreground:_gameContext.vitalsSettings.healthTextColor background:_gameContext.vitalsSettings.healthColor];
-    [_vitalsViewController updateColor:@"mana" foreground:_gameContext.vitalsSettings.manaTextColor background:_gameContext.vitalsSettings.manaColor];
-    [_vitalsViewController updateColor:@"stamina" foreground:_gameContext.vitalsSettings.staminaTextColor background:_gameContext.vitalsSettings.staminaColor];
-    [_vitalsViewController updateColor:@"concentration" foreground:_gameContext.vitalsSettings.concentrationTextColor background:_gameContext.vitalsSettings.concentrationColor];
-    [_vitalsViewController updateColor:@"spirit" foreground:_gameContext.vitalsSettings.spiritTextColor background:_gameContext.vitalsSettings.spiritColor];
 
     [_scriptToolbarView addSubview:_scriptToolbarViewController.view];
     [_scriptToolbarViewController.view fixTopEdge:YES];
