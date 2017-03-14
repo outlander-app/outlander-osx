@@ -255,6 +255,7 @@
     [_appSettingsLoader saveSubs];
     [_appSettingsLoader saveGags];
     [_appSettingsLoader savePresets];
+    [_appSettingsLoader saveVitals];
     
     [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
                           mono:true]

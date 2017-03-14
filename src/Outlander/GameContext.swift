@@ -86,8 +86,13 @@ public class GameContext : NSObject {
 @objc
 public class VitalsSettings : NSObject {
     public var healthColor:String = "#cc0000"
+    public var healthTextColor:String = "#f5f5f5"
     public var manaColor:String = "#00004B"
+    public var manaTextColor:String = "#f5f5f5"
     public var staminaColor:String = "#004000"
+    public var staminaTextColor:String = "#f5f5f5"
     public var concentrationColor:String = "#009999"
+    public var concentrationTextColor:String = "#f5f5f5"
     public var spiritColor:String = "#400040"
+    public var spiritTextColor:String = "#f5f5f5"
 }

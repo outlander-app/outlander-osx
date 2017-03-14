@@ -10,7 +10,7 @@
 
 @interface VitalsViewController : NSViewController
 
--(void)updateColor:(NSString *)key value:(NSString *)color;
+-(void)updateColor:(NSString *)key foreground:(NSString *)foregroundColor background:(NSString *) backgroundColor;
 -(void)updateValue:(NSString *)key text:(NSString*)text value:(float)value;
 
 @end

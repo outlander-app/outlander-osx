@@ -361,6 +361,10 @@
 		F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
 		F9B6CD7D1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
 		F9B6CD7E1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
+		F9B6CD801E779CD50085195F /* VitalsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */; };
+		F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */; };
+		F9B6CD831E779F9C0085195F /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD821E779F9C0085195F /* JsonSerializer.swift */; };
+		F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD821E779F9C0085195F /* JsonSerializer.swift */; };
 		F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
@@ -783,6 +787,8 @@
 		F9B6CD781E73549B0085195F /* UpdateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateWindowController.h; sourceTree = "<group>"; };
 		F9B6CD791E73549B0085195F /* UpdateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateWindowController.m; sourceTree = "<group>"; };
 		F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindowController.xib; sourceTree = "<group>"; };
+		F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VitalsLoader.swift; sourceTree = "<group>"; };
+		F9B6CD821E779F9C0085195F /* JsonSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSerializer.swift; sourceTree = "<group>"; };
 		F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Outlander-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OutlanderTests-Bridging-Header.h"; path = "../Outlander/OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
@@ -1192,6 +1198,7 @@
 				F91031501B3D0F140039BDF0 /* Gag.swift */,
 				F98D4C271CB1A7DF00E81E70 /* Substitute.swift */,
 				F917612E1E328BCB0091A617 /* ColorPreset.swift */,
+				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1310,6 +1317,7 @@
 				F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */,
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
+				F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1714,11 +1722,13 @@
 				F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F988C40F1AF35A74003B4634 /* Directions.swift in Sources */,
+				F9B6CD831E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F9B6CD801E779CD50085195F /* VitalsLoader.swift in Sources */,
 				F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F90CEC181AD037CE00204243 /* MapView.swift in Sources */,
 				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
@@ -1845,6 +1855,7 @@
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
+				F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
 				F98782D4194249A400D76231 /* TokenList.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
@@ -1912,6 +1923,7 @@
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
 				F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */,
+				F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,

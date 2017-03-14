@@ -57,9 +57,10 @@
     }];
 }
 
--(void)updateColor:(NSString *)key value:(NSString *)color {
+-(void)updateColor:(NSString *)key foreground:(NSString *)foregroundColor background:(NSString *) backgroundColor {
     MyProgressBar *bar = [_bars cacheObjectForKey:key];
-    bar.backgroundColor = [NSColor colorWithHexString:color];
+    bar.foregroundColor = [NSColor colorWithHexString:foregroundColor];
+    bar.backgroundColor = [NSColor colorWithHexString:backgroundColor];
 }
 
 -(void)updateValue:(NSString *)key text:(NSString*)text value:(float)value {

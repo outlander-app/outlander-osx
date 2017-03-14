@@ -24,5 +24,6 @@
 - (void)saveSubs;
 - (void)saveGags;
 - (void)savePresets;
+- (void)saveVitals;
 
 @end

@@ -28,6 +28,7 @@
     SubstituteLoader *_substituteLoader;
     GagsLoader *_gagsLoader;
     PresetLoader *_presetLoader;
+    VitalsLoader *_vitalsLoader;
 }
 @end
 
@@ -49,6 +50,7 @@
     _substituteLoader = [SubstituteLoader newInstance:_context fileSystem:fileSystem];
     _gagsLoader = [GagsLoader newInstance:_context fileSystem:fileSystem];
     _presetLoader = [PresetLoader newInstance:_context fileSystem:fileSystem];
+    _vitalsLoader = [VitalsLoader newInstance:_context fileSystem:fileSystem];
     
     return self;
 }
@@ -81,6 +83,7 @@
     [self loadSubs];
     [self loadGags];
     [self loadPresets];
+    [self loadVitals];
 }
 
 - (void)loadConfig {
@@ -164,6 +167,14 @@
 
 - (void)savePresets {
     [_presetLoader save];
+}
+
+- (void)loadVitals {
+    [_vitalsLoader load];
+}
+
+- (void)saveVitals {
+    [_vitalsLoader save];
 }
 
 - (void)writeConfigFolders:(NSString *)profile {

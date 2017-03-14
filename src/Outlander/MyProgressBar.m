@@ -43,8 +43,8 @@
     float calcValue = width * (self.value * 0.01);
     float strokeWidth = 0.0;
     
-//    [[NSColor colorWithHexString:@"#999999"] setFill];
-//    NSRectFill(NSMakeRect(0, 0, width, height));
+    [[NSColor colorWithHexString:@"#999999"] setFill];
+    NSRectFill(NSMakeRect(0, 0, width, height));
 
 //    [[NSColor whiteColor] setStroke];
 //    

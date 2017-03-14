@@ -359,9 +359,9 @@
             [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
         }
 
-        NSLog(@"**** Should Scroll: (%@) %hhd, %f, %f", self.key, shouldScrollToBottom, scrollDiff, percentScrolled);
-        
-        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+//        NSLog(@"**** Should Scroll: (%@) %hhd, %f, %f", self.key, shouldScrollToBottom, scrollDiff, percentScrolled);
+//        
+//        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
 
         NSRange removeRange;
         BOOL shouldRemoveRange = NO;
@@ -374,7 +374,7 @@
 //        [textView.textStorage beginEditing];
 
         if (shouldRemoveRange) {
-            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
+//            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
             [textView.textStorage deleteCharactersInRange:removeRange];
         }
 

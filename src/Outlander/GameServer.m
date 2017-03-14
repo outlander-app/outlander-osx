@@ -68,7 +68,12 @@
     [asyncSocket writeData:data
                withTimeout:-1
                        tag:0];
-    [asyncSocket readDataToData:[GCDAsyncSocket CRLFData] withTimeout:-1.0 tag:0];
+    [asyncSocket readDataToData:[self getData] withTimeout:-1.0 tag:0];
+}
+
+- (NSData *)getData {
+    return [GCDAsyncSocket CRLFData];
+//    return [NSData dataWithBytes:"\x0D\x0A\x0D\x0A" length:4];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -89,7 +94,7 @@
         [_subject sendNext:response];
     }
     
-    [asyncSocket readDataToData:[GCDAsyncSocket CRLFData] withTimeout:-1.0 tag:0];
+    [asyncSocket readDataToData:[self getData] withTimeout:-1.0 tag:0];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
