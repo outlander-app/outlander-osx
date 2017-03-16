@@ -19,6 +19,7 @@ public class GameContext : NSObject {
     public var pathProvider:AppPathProvider
     public var layout:Layout?
     public var vitalsSettings:VitalsSettings
+    public var classSettings:ClassSettings
     
     public var mapZone:MapZone? {
         didSet {
@@ -62,6 +63,7 @@ public class GameContext : NSObject {
         self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
 
         self.vitalsSettings = VitalsSettings()
+        self.classSettings = ClassSettings()
         
         self.events = EventAggregator()
         self.maps = [:]
@@ -95,4 +97,108 @@ public class VitalsSettings : NSObject {
     public var concentrationTextColor:String = "#f5f5f5"
     public var spiritColor:String = "#400040"
     public var spiritTextColor:String = "#f5f5f5"
+}
+
+@objc
+public class ClassSettings : NSObject {
+
+    private var _values:[String:Bool] = [:]
+
+    func clear() {
+        _values.removeAll()
+    }
+
+    func allOn() {
+        for (key, _) in _values {
+            _values[key] = true
+        }
+    }
+
+    func allOff() {
+        for (key, _) in _values {
+            _values[key] = false
+        }
+    }
+
+    func set(key:String, value:Bool) {
+        _values[key.lowercaseString] = value
+    }
+
+    func parse(values:String) {
+
+        if values.hasPrefix("+") || values.hasPrefix("-") {
+            let components = values.componentsSeparatedByString(" ")
+
+            for comp in components {
+                let s = parseSetting(comp)
+                self.set(s.key, value: s.value)
+            }
+
+            return
+        }
+
+        if let s = parseToggleSetting(values) {
+
+            if s.key == "all" {
+
+                s.value ? allOn() : allOff()
+                
+            } else {
+                self.set(s.key, value: s.value)
+            }
+        }
+    }
+
+    func all() -> [ClassSetting] {
+        var items:[ClassSetting] = []
+
+        for (key, value) in _values {
+            items.append(ClassSetting(key: key, value: value))
+        }
+
+        return items.sort {
+            $0.key.localizedCaseInsensitiveCompare($1.key) == NSComparisonResult.OrderedAscending
+        }
+    }
+
+    func disabled() -> [String] {
+        var items:[String] = []
+
+        for (key, value) in _values {
+            if !value {
+                items.append(key)
+            }
+        }
+
+        return items
+    }
+
+    func parseToggleSetting(val:String) -> ClassSetting? {
+
+        let list = val.componentsSeparatedByString(" ")
+
+        if list.count < 2 {
+            return nil
+        }
+        
+        let key = list[0]
+        let symbol:String = list[1]
+        let value = symbol.toBool()
+
+        return ClassSetting(key: key, value: value ?? false)
+    }
+
+    func parseSetting(val:String) -> ClassSetting {
+
+        let key = val.substringFromIndex(1)
+        let symbol:String = val[0]
+        let value = symbol.toBool()
+
+        return ClassSetting(key: key, value: value ?? false)
+    }
+}
+
+public struct ClassSetting {
+    public var key:String
+    public var value:Bool
 }

@@ -628,7 +628,6 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     [self setSubviews:subViews];
 }
 
-
 - (void)bringToFront:(NSString *)key {
     
     __block MyView *foundView = nil;
@@ -643,6 +642,17 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     if(foundView != nil) {
         [self reOrderView:foundView];
     }
+}
+
+- (NSUInteger)indexFor:(NSString *)key {
+    __block NSUInteger result = 0;
+    [self.subviews enumerateObjectsUsingBlock:^(MyView *view, NSUInteger idx, BOOL *stop) {
+        if ([view.key isEqualToString:key]) {
+            *stop = YES;
+            result = idx + 1;
+        }
+    }];
+    return result;
 }
 
 @end

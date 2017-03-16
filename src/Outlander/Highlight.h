@@ -8,8 +8,9 @@
 
 @interface Highlight : NSObject
 
-@property (nonatomic, strong) NSString *pattern;
-@property (nonatomic, strong) NSString *color;
-@property (nonatomic, strong) NSString *backgroundColor;
+@property (nonatomic, strong, nullable) NSString *pattern;
+@property (nonatomic, strong, nullable) NSString *color;
+@property (nonatomic, strong, nullable) NSString *backgroundColor;
+@property (nonatomic, strong, nullable) NSString *filterClass;
 
 @end

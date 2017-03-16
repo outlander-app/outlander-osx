@@ -47,9 +47,20 @@ class TriggerHandler : NSObject, ISubscriber {
     }
     
     func checkTriggers(text:String, context:GameContext) {
-        let triggers = context.triggers;
-        
-        triggers.enumerateObjectsUsingBlock({ object, index, stop in
+
+        let disabledClasses = context.classSettings.disabled()
+
+        let triggers = context.triggers.filter(NSPredicate { (obj, _) in
+            let trig = obj as! Trigger
+
+            if let c = trig.actionClass {
+                return !disabledClasses.contains(c.lowercaseString)
+            }
+
+            return true
+        })
+
+        for object in triggers {
             let trigger = object as! Trigger
             
             if let triggerText = trigger.trigger {
@@ -62,9 +73,9 @@ class TriggerHandler : NSObject, ISubscriber {
                     }
                 }
             }
-        });
+        }
     }
-    
+
     private func replaceWithGroups(input:String, groups:[String]) -> String {
         var vars = [String:String]()
         for (index, param) in groups.enumerate() {

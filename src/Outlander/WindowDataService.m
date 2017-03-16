@@ -91,7 +91,19 @@
         layout.windows = [jsonWindows.rac_sequence  map:^id(id value) {
             return [self dataFor:value];
         }].array;
-        
+
+        layout.windows = [layout.windows sortedArrayUsingComparator:^NSComparisonResult(WindowData *a, WindowData *b) {
+            if (a.order > b.order) {
+                return NSOrderedAscending;
+            }
+
+            if(a.order < b.order) {
+                return NSOrderedDescending;
+            }
+
+            return NSOrderedSame;
+        }];
+
         return layout;
     }
     @catch (NSException *exception) {

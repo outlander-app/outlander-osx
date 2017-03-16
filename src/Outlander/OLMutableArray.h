@@ -21,5 +21,6 @@
 - (id)objectAtIndex:(NSInteger)index;
 - (void)enumerateObjectsUsingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block;
 - (void)signalChange:(id)item;
+- (NSArray *)filter:(NSPredicate *)predicate;
 
 @end

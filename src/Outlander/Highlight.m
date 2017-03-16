@@ -10,4 +10,15 @@
 
 @implementation Highlight
 
+-(id)init {
+    self = [super init];
+    if(!self) return nil;
+
+    _color = @"";
+    _backgroundColor = @"";
+    _pattern = @"";
+    _filterClass = @"";
+    
+    return self;
+}
 @end

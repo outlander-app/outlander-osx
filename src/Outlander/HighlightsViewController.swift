@@ -24,14 +24,14 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             self.didChangeValueForKey("selectedItem")
             
             if let item = selectedItem {
-                if item.color != nil && item.color.characters.count > 0 {
-                    colorWell.color = NSColor(hex: item.color)
+                if item.color != nil && item.color!.characters.count > 0 {
+                    colorWell.color = NSColor(hex: item.color!)
                 } else {
                     colorWell.color = NSColor.blackColor()
                 }
                 
-                if item.backgroundColor != nil && item.backgroundColor.characters.count > 0 {
-                    backgroundColorWell.color = NSColor(hex: item.backgroundColor)
+                if item.backgroundColor != nil && item.backgroundColor!.characters.count > 0 {
+                    backgroundColorWell.color = NSColor(hex: item.backgroundColor!)
                 } else {
                     backgroundColorWell.color = NSColor.blackColor()
                 }
@@ -84,21 +84,24 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                     item.backgroundColor = ""
                 }
                 
-                if item.backgroundColor.characters.count > 0 {
-                    backgroundColorWell.color = NSColor(hex: item.backgroundColor)
+                if item.backgroundColor!.characters.count > 0 {
+                    backgroundColorWell.color = NSColor(hex: item.backgroundColor!)
                 }
                 
-            } else {
+            } else if textField.tag == 0 {
                 
                 item.color = textField.stringValue
-                
+
                 if item.color == nil {
                     item.color = ""
                 }
                 
-                if item.color.characters.count > 0 {
-                    colorWell.color = NSColor(hex: item.color)
+                if item.color!.characters.count > 0 {
+                    colorWell.color = NSColor(hex: item.color!)
                 }
+
+            } else if textField.tag == 3 {
+                item.filterClass = textField.stringValue
             }
             
             self.reloadSelectedRow()
@@ -121,24 +124,33 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             highlight.color = "#0000ff"
             highlight.backgroundColor = ""
             highlight.pattern = ""
+            highlight.filterClass = ""
             _context!.highlights.addObject(highlight)
            
             let idx = NSIndexSet(index: _context!.highlights.count() - 1)
             self.tableView.reloadData()
-            self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
             self.tableView.scrollRowToVisible(idx.firstIndex)
+            self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
         } else {
             
             if self.tableView.selectedRow < 0 || self.tableView.selectedRow >= _context!.highlights.count() {
                 return
             }
-            
-            self.selectedItem = nil;
-            
-            let item: Highlight = _context!.highlights.objectAtIndex(self.tableView.selectedRow) as! Highlight
+
+            let selectedRow = self.tableView.selectedRow
+
+            self.selectedItem = nil
+
+            let item: Highlight = _context!.highlights.objectAtIndex(selectedRow) as! Highlight
             _context!.highlights.removeObject(item)
-            
+
             self.tableView.reloadData()
+
+            if _context!.highlights.count() > 0 {
+                let idx = NSIndexSet(index: 0)
+                self.tableView.scrollRowToVisible(idx.firstIndex)
+                self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
+            }
         }
     }
 
@@ -180,26 +192,33 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
             
             if let hl = _context!.highlights.objectAtIndex(row) as? Highlight {
                
-                cell?.pattern.stringValue = hl.pattern
-                
-                if hl.color != nil && hl.color.characters.count > 0 {
-                    cell?.colorField.stringValue = hl.color
-                    cell?.colorField.textColor = NSColor(hex: hl.color)
-                    cell?.pattern.textColor = NSColor(hex: hl.color)
+                cell?.pattern.stringValue = hl.pattern ?? ""
+                cell?.filterClass.stringValue = hl.filterClass ?? ""
+
+                if hl.color != nil && hl.color!.characters.count > 0 {
+                    cell?.colorField.stringValue = hl.color!
+
+                    let color = NSColor(hex: hl.color!)
+
+                    cell?.colorField.textColor = color
+                    cell?.pattern.textColor = color
+                    cell?.filterClass.textColor = color
+
                 } else {
                     cell?.colorField.stringValue = ""
                     cell?.colorField.textColor = nil
                     cell?.pattern.textColor = nil
+                    cell?.filterClass.textColor = nil
                 }
-                
+
                 if self.tableView.selectedRowIndexes.contains(row) {
                     cell?.selected = true
                 } else {
                     cell?.selected = false
                 }
                 
-                if hl.backgroundColor != nil && hl.backgroundColor.characters.count > 0 {
-                    cell?.backgroundColor = NSColor(hex: hl.backgroundColor)
+                if hl.backgroundColor != nil && hl.backgroundColor!.characters.count > 0 {
+                    cell?.backgroundColor = NSColor(hex: hl.backgroundColor!)
                 } else {
                     cell?.backgroundColor = nil
                 }

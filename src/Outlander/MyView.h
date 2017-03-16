@@ -34,4 +34,5 @@
 
 - (BOOL)hasView:(NSString *)key;
 - (void)bringToFront:(NSString *)key;
+- (NSUInteger)indexFor:(NSString *)key;
 @end

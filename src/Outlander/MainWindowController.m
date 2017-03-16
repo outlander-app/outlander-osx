@@ -71,6 +71,8 @@
     _chooseProfileViewController.gameContext = _gameContext;
     _chooseProfileViewController.okCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         [self endSheet];
+
+        [_gameContext.classSettings clear];
         
         [_appSettingsLoader loadProfile:_chooseProfileViewController.selectedProfile];
 
@@ -256,6 +258,7 @@
     [_appSettingsLoader saveGags];
     [_appSettingsLoader savePresets];
     [_appSettingsLoader saveVitals];
+    [_appSettingsLoader saveClasses];
     
     [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
                           mono:true]

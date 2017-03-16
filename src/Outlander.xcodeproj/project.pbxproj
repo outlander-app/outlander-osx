@@ -365,6 +365,11 @@
 		F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */; };
 		F9B6CD831E779F9C0085195F /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD821E779F9C0085195F /* JsonSerializer.swift */; };
 		F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD821E779F9C0085195F /* JsonSerializer.swift */; };
+		F9B6CD871E78BA430085195F /* ClassSettingsTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD851E78BA430085195F /* ClassSettingsTester.swift */; };
+		F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD881E78C2F90085195F /* ClassCommandHandler.swift */; };
+		F9B6CD8A1E78C2F90085195F /* ClassCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD881E78C2F90085195F /* ClassCommandHandler.swift */; };
+		F9B6CD8C1E7903DA0085195F /* ClassesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD8B1E7903DA0085195F /* ClassesLoader.swift */; };
+		F9B6CD8D1E7903DA0085195F /* ClassesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD8B1E7903DA0085195F /* ClassesLoader.swift */; };
 		F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */; };
 		F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
@@ -789,6 +794,9 @@
 		F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindowController.xib; sourceTree = "<group>"; };
 		F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VitalsLoader.swift; sourceTree = "<group>"; };
 		F9B6CD821E779F9C0085195F /* JsonSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSerializer.swift; sourceTree = "<group>"; };
+		F9B6CD851E78BA430085195F /* ClassSettingsTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassSettingsTester.swift; sourceTree = "<group>"; };
+		F9B6CD881E78C2F90085195F /* ClassCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCommandHandler.swift; sourceTree = "<group>"; };
+		F9B6CD8B1E7903DA0085195F /* ClassesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassesLoader.swift; sourceTree = "<group>"; };
 		F9B9BFDE1ABD558F00CB44B6 /* Outlander-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Outlander-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OutlanderTests-Bridging-Header.h"; path = "../Outlander/OutlanderTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
@@ -1025,6 +1033,7 @@
 				F9C1787C1B12754E00CC7291 /* TestCommandHandler.swift */,
 				F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */,
 				F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */,
+				F9B6CD881E78C2F90085195F /* ClassCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1318,6 +1327,7 @@
 				F9A74F0F19305D14008F410A /* VariablesLoader.h */,
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
 				F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */,
+				F9B6CD8B1E7903DA0085195F /* ClassesLoader.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1430,6 +1440,7 @@
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
+				F9B6CD851E78BA430085195F /* ClassSettingsTester.swift */,
 				F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
@@ -1647,6 +1658,7 @@
 				F9316D261AD9E1D400880149 /* Actor.swift in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
+				F9B6CD8C1E7903DA0085195F /* ClassesLoader.swift in Sources */,
 				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
 				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
@@ -1701,6 +1713,7 @@
 				F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
+				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
@@ -1871,6 +1884,7 @@
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
+				F9B6CD8A1E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F9B2C7B51ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
@@ -1902,6 +1916,7 @@
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
+				F9B6CD8D1E7903DA0085195F /* ClassesLoader.swift in Sources */,
 				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
@@ -1921,6 +1936,7 @@
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
+				F9B6CD871E78BA430085195F /* ClassSettingsTester.swift in Sources */,
 				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
 				F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */,
 				F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */,
@@ -2146,7 +2162,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2175,7 +2191,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2197,7 +2213,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2226,7 +2242,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 2.3;
 				WRAPPER_EXTENSION = app;
 			};

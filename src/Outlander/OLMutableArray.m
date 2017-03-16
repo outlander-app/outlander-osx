@@ -66,4 +66,8 @@
     [sub sendNext:item];
 }
 
+- (NSArray *)filter:(NSPredicate *)predicate {
+    return [_cache filteredArrayUsingPredicate:predicate];
+}
+
 @end

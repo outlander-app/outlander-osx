@@ -12,6 +12,7 @@ class HighlightCellView: NSView {
     
     @IBOutlet weak var colorField: NSTextField!
     @IBOutlet weak var pattern: NSTextField!
+    @IBOutlet weak var filterClass: NSTextField!
     
     var selected:Bool = false {
         didSet {

@@ -32,5 +32,6 @@
 @property (nonatomic, assign) NSUInteger bufferClearSize;
 @property (nonatomic, copy) NSString *backgroundColor;
 @property (nonatomic, copy) NSString *borderColor;
+@property (nonatomic, assign) NSUInteger order;
 
 @end

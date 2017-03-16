@@ -26,4 +26,7 @@
 - (void)savePresets;
 - (void)saveVitals;
 
+- (void)loadClassses;
+- (void)saveClasses;
+
 @end

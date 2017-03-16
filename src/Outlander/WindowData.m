@@ -35,6 +35,7 @@
     _visible = YES;
     _bufferSize = 1000;
     _bufferClearSize = 50;
+    _order = 0;
 
     return self;
 }

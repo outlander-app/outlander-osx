@@ -67,8 +67,8 @@ extension String {
     }
     
     func toBool() -> Bool? {
-        let trueValues = ["true", "yes", "1"]
-        let falseValues = ["false", "no", "0"]
+        let trueValues = ["true", "yes", "1", "on", "+"]
+        let falseValues = ["false", "no", "0", "off", "-"]
         
         let lowerSelf = self.lowercaseString
         

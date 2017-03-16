@@ -28,7 +28,12 @@ Yes - the Genie map files have several commands that are not yet fully supported
 
 * `#alias <name> <replacement>`
     * setup an alias
-    * ex: `#alias l2 load arrows`   
+    * ex: `#alias l2 load arrows`
+* `#class`
+    * `#class (list|load|save|clear)`
+    * `#class combat on` - this activates the `combat` class
+    * `#class combat off` - this deactivates the `combat` class
+    * `#class +combat -app` this activates the `combat` class and deactivates the `app` class
 * `#var`
     * set global var
     * ex: `#var primary.container backpack`

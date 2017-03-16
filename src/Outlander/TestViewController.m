@@ -425,7 +425,7 @@
 - (NSArray *)getWindows {
     
     NSMutableArray *windows = [[NSMutableArray alloc] init];
-    
+
     [_windows enumerateKeysAndObjectsUsingBlock:^(NSString *key, TextViewController *controller, BOOL *stop) {
         WindowData *data = [WindowData windowWithName:key atLoc:[controller location] andTimestamp:[controller displayTimestamp]];
         data.showBorder = [controller showBorder];
@@ -441,9 +441,10 @@
         data.bufferClearSize = controller.bufferClearSize;
         data.backgroundColor = [controller.backgroundColor getHexString];
         data.borderColor = [controller.borderColor getHexString];
+        data.order = [_ViewContainer indexFor:key];
         [windows addObject:data];
     }];
-    
+
     return windows;
 }
 

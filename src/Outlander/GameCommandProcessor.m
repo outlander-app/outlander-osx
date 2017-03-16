@@ -63,6 +63,7 @@
     [_handlers addObject:[WindowCommandHandler newInstance]];
     [_handlers addObject:[TestCommandHandler newInstance]];
     [_handlers addObject:[PresetCommandHandler newInstance]];
+    [_handlers addObject:[ClassCommandHandler newInstance:relay]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];

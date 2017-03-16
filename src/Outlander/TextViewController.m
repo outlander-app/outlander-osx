@@ -80,20 +80,36 @@
     if(item == nil) {
         [menu insertItemWithTitle:@"Show Border" action:@selector(toggleShowBorder:) keyEquivalent:@"" atIndex:2];
     }
+
+    item = [menu itemWithTag:42];
+    if(item == nil) {
+        item = [menu insertItemWithTitle:@"" action:@selector(menuTitle:) keyEquivalent:@"" atIndex:0];
+        item.tag = 42;
+        [menu insertItem:[NSMenuItem separatorItem] atIndex:1];
+    }
 }
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item {
+
+    MyView *parent = (MyView *)[[self view] superview];
+    NSMenuItem *menuItem = (NSMenuItem *)item;
+
     if ([item action] == @selector(toggleShowBorder:)) {
-        NSMenuItem *menuItem = (NSMenuItem *)item;
-        MyView *parent = (MyView *)[[self view] superview];
         if(parent.showBorder) {
             [menuItem setState:NSOnState];
         } else {
             [menuItem setState:NSOffState];
         }
     }
+    else if ([item action] == @selector(menuTitle:)) {
+        NSString *windowName = [NSString stringWithFormat:@"\"%@\"", parent.key];
+        [menuItem setTitle:windowName];
+    }
     
     return YES;
+}
+
+- (void)menuTitle:(id)sender {
 }
 
 - (void)toggleShowBorder:(id)sender {
@@ -434,8 +450,22 @@
     if(!data || data.length == 0) return;
     
     NSUInteger len = textStorage.length;
+
+    NSArray *disabledClasses = [_gameContext.classSettings disabled];
+    NSArray *highlights = [_gameContext.highlights filter:[NSPredicate predicateWithBlock:^BOOL(Highlight *hl, NSDictionary *bindings) {
+
+        if(hl.filterClass == nil || [hl.filterClass isEqualToString: @""]) {
+            return YES;
+        }
+
+        return ![disabledClasses containsObject:[hl.filterClass lowercaseString]];
+    }]];
     
-    [_gameContext.highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+    [highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
+
+        if(hl.pattern == nil || [hl.pattern isEqualToString:@""]) {
+            return;
+        }
     
         [[data matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
             
@@ -447,8 +477,8 @@
                     [textStorage addAttribute:NSForegroundColorAttributeName
                                         value:[NSColor colorWithHexString:hl.color]
                                         range:newRange];
-                    
-                    if (hl.backgroundColor != nil) {
+
+                    if (hl.backgroundColor != nil && ![hl.backgroundColor isEqualToString:@""]) {
                         [textStorage addAttribute:NSBackgroundColorAttributeName
                                             value:[NSColor colorWithHexString:hl.backgroundColor]
                                             range:newRange];
@@ -462,8 +492,19 @@
 - (NSString *)processSubs:(NSString *)text {
     
     __block NSString *data = text;
-    
-    [_gameContext.substitutes enumerateObjectsUsingBlock:^(Substitute *sub, NSUInteger idx, BOOL *stop) {
+
+    NSArray *disabledClasses = [_gameContext.classSettings disabled];
+
+    NSArray *subs = [_gameContext.substitutes filter:[NSPredicate predicateWithBlock:^BOOL(Substitute *sub, NSDictionary *bindings) {
+
+        if(sub.actionClass == nil || [sub.actionClass isEqualToString: @""]) {
+            return YES;
+        }
+
+        return ![disabledClasses containsObject:[sub.actionClass lowercaseString]];
+    }]];
+
+    [subs enumerateObjectsUsingBlock:^(Substitute *sub, NSUInteger idx, BOOL *stop) {
         data = [data replaceWithPattern:sub.pattern andTemplate:sub.action];
     }];
     
@@ -472,8 +513,19 @@
 
 - (BOOL)matchesGag:(NSString *)text {
     __block BOOL matches = NO;
+
+    NSArray *disabledClasses = [_gameContext.classSettings disabled];
+
+    NSArray *gags = [_gameContext.gags filter:[NSPredicate predicateWithBlock:^BOOL(Gag *gag, NSDictionary *bindings) {
+
+        if(gag.patternClass == nil || [gag.patternClass isEqualToString:@""]) {
+            return YES;
+        }
+
+        return ![disabledClasses containsObject:[gag.patternClass lowercaseString]];
+    }]];
     
-    [_gameContext.gags enumerateObjectsUsingBlock:^(Gag *gag, NSUInteger idx, BOOL *stop) {
+    [gags enumerateObjectsUsingBlock:^(Gag *gag, NSUInteger idx, BOOL *stop) {
         NSArray *matchGroups = [text matchesForPattern:gag.pattern];
         if(matchGroups && [matchGroups count] > 0) {
             *stop = YES;
