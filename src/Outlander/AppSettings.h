@@ -23,6 +23,7 @@
 @property (nonatomic, copy) NSString *profilesFolder;
 @property (nonatomic, copy) NSString *scriptsFolder;
 @property (nonatomic, copy) NSString *mapsFolder;
+@property (nonatomic, copy) NSString *soundsFolder;
 
 - (BOOL)isValid;
 

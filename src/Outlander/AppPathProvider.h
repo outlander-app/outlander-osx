@@ -14,6 +14,7 @@
 - (NSString *)logsFolder;
 - (NSString *)scriptsFolder;
 - (NSString *)mapsFolder;
+- (NSString *)soundsFolder;
 - (NSString *)configFolder;
 - (NSString *)profileFolder;
 - (NSString *)folderForProfile:(NSString *)profile;

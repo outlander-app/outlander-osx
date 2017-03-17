@@ -39,7 +39,7 @@
     
     [_context.highlights removeAll];
     
-    NSString *pattern = @"^#highlight \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$";
+    NSString *pattern = @"^#highlight \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?(?:\\s\\{(.*?)\\})?$";
     [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {
             Highlight *hl = [[Highlight alloc] init];
@@ -50,10 +50,13 @@
             hl.color = colors.count > 0 ? [colors[0] trimWhitespace] : @"";
             hl.backgroundColor = colors.count > 1 ? [colors[1] trimWhitespace] : @"";
             hl.pattern = [data substringWithRange:[res rangeAtIndex:2]];
-            hl.filterClass = @"";
 
-            if (res.numberOfRanges == 4 && [res rangeAtIndex:3].location != NSNotFound) {
+            if (res.numberOfRanges > 3 && [res rangeAtIndex:3].location != NSNotFound) {
                 hl.filterClass = [data substringWithRange:[res rangeAtIndex:3]];
+            }
+
+            if (res.numberOfRanges > 4 && [res rangeAtIndex:4].location != NSNotFound) {
+                hl.soundFile = [data substringWithRange:[res rangeAtIndex:4]];
             }
             
             [_context.highlights addObject:hl];
@@ -79,8 +82,17 @@
         if(hl.filterClass != nil && ![hl.filterClass isEqualToString:@""]) {
             filterClass = [NSString stringWithFormat:@" {%@}", hl.filterClass];
         }
+
+        NSString *soundFile = @"";
+        if(hl.soundFile != nil && ![hl.soundFile isEqualToString:@""]) {
+            soundFile = [NSString stringWithFormat:@" {%@}", hl.soundFile];
+
+            if([filterClass isEqualToString:@""]) {
+                filterClass = @" {}";
+            }
+        }
         
-        [str appendFormat:@"#highlight {%@} {%@}%@\n", colors, hl.pattern, filterClass];
+        [str appendFormat:@"#highlight {%@} {%@}%@%@\n", colors, hl.pattern, filterClass, soundFile];
     }];
     
     [_fileSystem write:str toFile:configFile];

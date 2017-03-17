@@ -8,13 +8,17 @@
 
 import Cocoa
 
-public class HighlightsViewController: NSViewController, SettingsView, NSTableViewDataSource {
+public class HighlightsViewController: NSViewController, SettingsView, NSTableViewDataSource, NSSoundDelegate {
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var backgroundColorWell: NSColorWell!
+    @IBOutlet weak var soundButton: NSButton!
+
     private var _context:GameContext?
     private var _appSettingsLoader:AppSettingsLoader?
+    private var _fileSystem:FileSystem?
+    private var _sound:NSSound?
     
     public var selectedItem:Highlight? {
         willSet {
@@ -55,11 +59,14 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     }
     
     public override func awakeFromNib() {
+        _fileSystem = LocalFileSystem()
         self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
     }
     
     public func save() {
         _appSettingsLoader!.saveHighlights()
+        stopSound()
+        removeSound()
     }
     
     public func setContext(context:GameContext) {
@@ -89,7 +96,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                 }
                 
             } else if textField.tag == 0 {
-                
+
                 item.color = textField.stringValue
 
                 if item.color == nil {
@@ -102,6 +109,9 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
 
             } else if textField.tag == 3 {
                 item.filterClass = textField.stringValue
+
+            } else if textField.tag == 4 {
+                item.soundFile = textField.stringValue
             }
             
             self.reloadSelectedRow()
@@ -122,9 +132,6 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         if sender.selectedSegment == 0 {
             let highlight = Highlight()
             highlight.color = "#0000ff"
-            highlight.backgroundColor = ""
-            highlight.pattern = ""
-            highlight.filterClass = ""
             _context!.highlights.addObject(highlight)
            
             let idx = NSIndexSet(index: _context!.highlights.count() - 1)
@@ -161,7 +168,10 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
     }
     
     public func tableViewSelectionDidChange(notification:NSNotification) {
-        
+
+        stopSound()
+        removeSound()
+
         var lastIdx = -1
         
         if let last = self.selectedItem {
@@ -224,7 +234,87 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
                 }
             }
         }
-        
+
         return cell ?? NSView()
+    }
+
+    @IBAction func toggleSoundAction(sender: AnyObject) {
+        guard self.selectedItem != nil else {
+            stopSound()
+            return
+        }
+
+        if _sound != nil && _sound!.playing {
+            stopSound()
+        }
+        else {
+            if _sound != nil {
+                playSound()
+            } else {
+                if let file = self.selectedItem?.soundFile {
+
+                    var f = file
+
+                    if !_fileSystem!.fileExists(f) {
+                        f = _context!.pathProvider.soundsFolder().stringByAppendingPathComponent(file)
+                        if !_fileSystem!.fileExists(f) { return }
+                    }
+                    
+                    _sound = NSSound(contentsOfFile: f, byReference: false)
+                    _sound?.delegate = self
+                    playSound()
+                }
+            }
+        }
+    }
+
+    public func sound(sound: NSSound, didFinishPlaying flag: Bool) {
+        soundButton.image = NSImage(named: "Play")
+    }
+
+    func stopSound() {
+        _sound?.stop()
+        soundButton.image = NSImage(named: "Play")
+    }
+
+    func playSound() {
+        if _sound != nil && _sound!.play() {
+            soundButton.image = NSImage(named: "Stop")
+        }
+    }
+
+    func removeSound() {
+        _sound?.delegate = nil
+        _sound = nil
+    }
+
+    @IBAction func browseForSoundAction(sender: AnyObject) {
+        let dialog = NSOpenPanel();
+
+        dialog.title                   = "Choose a sound file";
+        dialog.showsResizeIndicator    = true;
+        dialog.showsHiddenFiles        = false;
+        dialog.canChooseDirectories    = false;
+        dialog.canCreateDirectories    = true;
+        dialog.allowsMultipleSelection = false;
+        dialog.allowedFileTypes        = ["mp3", "wav"];
+
+        if (dialog.runModal() == NSModalResponseOK) {
+            if let result = dialog.URL {
+
+                if result.path != nil && result.path!.hasPrefix(_context!.pathProvider.soundsFolder()) {
+                    self.selectedItem?.soundFile = result.lastPathComponent
+
+                } else {
+                    self.selectedItem?.soundFile = result.path
+                }
+
+                stopSound()
+                removeSound()
+            }
+
+        } else {
+            return
+        }
     }
 }

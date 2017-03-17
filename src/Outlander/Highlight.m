@@ -18,6 +18,7 @@
     _backgroundColor = @"";
     _pattern = @"";
     _filterClass = @"";
+    _soundFile = @"";
     
     return self;
 }

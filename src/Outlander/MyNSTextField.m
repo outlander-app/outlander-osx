@@ -81,6 +81,14 @@
             [self nextHistory];
             return YES;
             break;
+        case NSHomeFunctionKey:
+            [[self currentEditor] moveToBeginningOfLine:nil];
+            return YES;
+            break;
+        case NSEndFunctionKey:
+            [[self currentEditor] moveToEndOfLine:nil];
+            return YES;
+            break;
         default:
             break;
     }

@@ -48,6 +48,10 @@
     return [[self rootFolder] stringByAppendingPathComponent:_settings.mapsFolder];
 }
 
+- (NSString *)soundsFolder {
+    return [[self rootFolder] stringByAppendingPathComponent:_settings.soundsFolder];
+}
+
 - (NSString *)profileFolder {
     return [self folderForProfile:_settings.profile];
 }

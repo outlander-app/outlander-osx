@@ -185,7 +185,7 @@ public class ClassSettings : NSObject {
         let symbol:String = list[1]
         let value = symbol.toBool()
 
-        return ClassSetting(key: key, value: value ?? false)
+        return ClassSetting(key: key.lowercaseString, value: value ?? false)
     }
 
     func parseSetting(val:String) -> ClassSetting {
@@ -194,7 +194,7 @@ public class ClassSettings : NSObject {
         let symbol:String = val[0]
         let value = symbol.toBool()
 
-        return ClassSetting(key: key, value: value ?? false)
+        return ClassSetting(key: key.lowercaseString, value: value ?? false)
     }
 }
 

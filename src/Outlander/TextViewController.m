@@ -30,7 +30,7 @@
     
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"HH:mm"];
-    
+
     return self;
 }
 
@@ -41,7 +41,7 @@
         id<RACSubscriber> sub = (id<RACSubscriber>)_keyup;
         [sub sendNext:x];
     }];
-    
+
     _TextView.commandSignal = [RACSubject subject];
     [_TextView.commandSignal subscribeNext:^(id x) {
         id<RACSubscriber> sub = (id<RACSubscriber>)_command;
@@ -442,6 +442,7 @@
 }
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification {
+
     NSTextStorage *textStorage = [notification object];
     
     NSRange editedRange = textStorage.editedRange;
@@ -470,9 +471,17 @@
         [[data matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
             
             if(res.numberOfRanges > 0) {
+
+                if(hl.soundFile) {
+                    CommandContext *ctx = [[CommandContext alloc] init];
+                    ctx.isSystemCommand = YES;
+                    ctx.command = [NSString stringWithFormat:@"#play %@", hl.soundFile];
+                    [_gameContext.events sendCommand:ctx];
+                }
+
                 NSRange range = [res rangeAtIndex:0];
                 NSRange newRange = NSMakeRange(range.location + editedRange.location, range.length);
-                
+
                 if(textStorage.string && textStorage.string.length >= len) {
                     [textStorage addAttribute:NSForegroundColorAttributeName
                                         value:[NSColor colorWithHexString:hl.color]

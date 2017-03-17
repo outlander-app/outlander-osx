@@ -26,6 +26,7 @@
     self.profilesFolder = @"Profiles";
     self.scriptsFolder = @"Scripts";
     self.mapsFolder = @"Maps";
+    self.soundsFolder = @"Sounds";
     
     return self;
 }

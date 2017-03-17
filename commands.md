@@ -33,6 +33,8 @@ Yes - the Genie map files have several commands that are not yet fully supported
     * `#class (list|load|save|clear)`
     * `#class combat on` - this activates the `combat` class
     * `#class combat off` - this deactivates the `combat` class
+    * `#class all on` - this activates all classes
+    * `#class all off` - this deactivates all classes
     * `#class +combat -app` this activates the `combat` class and deactivates the `app` class
 * `#var`
     * set global var
@@ -48,33 +50,39 @@ Yes - the Genie map files have several commands that are not yet fully supported
         * vars will display the current list of local script variables.
 * `#parse <text>`
 	* sends the text to be parsed by the scripting engine, as if sent by the game
+* `#play` - play a sound file
+  * `#play stop` - stops all playing sounds
+  * `#play <filename>` plays the given sound file
+  * If the file exists in the Outlander `Sounds` folder, you can leave off the full path and just use the file name, such as `spooky.mp3`.  Otherwise you will need to provide the full path to the file, such as `/Users/joe/Documents/Sounds/spooky.wav`.
 * `#window add/show/hide/clear <name>`
   * ex: `#window add log`
   * ex: `#window hide log`
   * `#window list all` will show all window ids and locations.
     * The output: (x,y), (height, width)
-    * x,y being the point of the top-left corner.  Height going down, width accross.
+    * x,y being the point of the top-left corner.  Height going down and width across.
+    * `->` represents what window messages are forwarded to if that window is hidden. Ex: `atmospherics->main` means messages send to the `atmospherics` window will be forwarded to the `main` window.  Set the `closedTarget` in `layout.cfg` for the given window to accomplish this.
   ```
   Windows:
-    thoughts: (0,0), (150, 438)
-    log: (0,149), (111, 438)
-    main: (0,258), (432, 1021)
-    logons: (1020,0), (131, 380)
-    death: (1020,129), (100, 380)
-    experience: (1020,228), (462, 380)
-    room: (437,0), (260, 584)
-    percwindow: (748,150), (148, 273)
-    (hidden) atmospherics: (0,0), (200, 200)
-    (hidden) chatter: (0,0), (200, 200)
-    (hidden) conversation: (0,0), (200, 200)
-    (hidden) familiar: (0,0), (200, 200)
-    (hidden) group: (0,0), (200, 200)
-    (hidden) inv: (0,0), (200, 200)
-    (hidden) ooc: (0,0), (200, 200)
-    (hidden) whispers: (0,0), (200, 200)
-    (hidden) raw: (554,286), (275, 791)
-    (hidden) assess: (782,502), (177, 567)
-    (hidden) talk: (801,306), (200, 200)
+    thoughts: (x:0, y:0), (h:148, w:521)
+    log: (x:0, y:147), (h:114, w:521)
+    main: (x:0, y:259), (h:790, w:1357)
+    percwindow: (x:1015, y:193), (h:177, w:341)
+    logons: (x:1356, y:0), (h:206, w:380)
+    death: (x:1356, y:205), (h:136, w:380)
+    experience: (x:1356, y:340), (h:710, w:380)
+    room: (x:520, y:0), (h:261, w:837)
+    (hidden) atmospherics->main: (x:0, y:0), (h:200, w:200)
+    (hidden) chatter->thoughts: (x:0, y:0), (h:200, w:200)
+    (hidden) conversation->log: (x:0, y:0), (h:200, w:200)
+    (hidden) familiar: (x:0, y:0), (h:200, w:200)
+    (hidden) group: (x:0, y:0), (h:200, w:200)
+    (hidden) inv: (x:0, y:0), (h:200, w:200)
+    (hidden) ooc->log: (x:0, y:0), (h:200, w:200)
+    (hidden) whispers: (x:0, y:0), (h:200, w:200)
+    (hidden) raw: (x:453, y:193), (h:300, w:881)
+    (hidden) assess->main: (x:782, y:502), (h:177, w:567)
+    (hidden) talk->conversation: (x:801, y:306), (h:200, w:200)
+
   ```
   * `#window clear log` will clear all contents of the window
 

@@ -20,6 +20,11 @@
 }
 
 - (BOOL)fileExists:(NSString *)path {
+
+    if(path == nil || [path length] == 0) {
+        return NO;
+    }
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     return [fileManager fileExistsAtPath:path];
 }

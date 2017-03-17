@@ -110,7 +110,7 @@
         [updateWindow.window makeKeyAndOrderFront:nil];
     }];
 
-    [updater.checkForUpdatesCommand.errors subscribeNext:^(NSError *error){
+    [updater.checkForUpdatesCommand.errors subscribeNext:^(NSError *error) {
         [self logUpdateInfo:error.localizedDescription withPreset:@"scripterror" echo:YES];
     }];
 

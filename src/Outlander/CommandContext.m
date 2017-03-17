@@ -15,6 +15,7 @@
     if (self) {
         self.scriptLine = -1;
         self.scriptColumn = -1;
+        self.isSystemCommand = NO;
     }
     return self;
 }

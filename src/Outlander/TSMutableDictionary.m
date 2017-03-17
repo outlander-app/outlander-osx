@@ -29,7 +29,6 @@
 }
 
 - (void)setCacheObject: (id)obj forKey: (id)key {
-    NSLog(@"%@::%@", key, obj);
     if(key == nil) {
         return;
     }
@@ -38,6 +37,7 @@
     }
     
     @synchronized(self) {
+        NSLog(@"%@::%@", key, obj);
         [_cache setObject: obj forKey: key];
     }
     

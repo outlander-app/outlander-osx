@@ -17,4 +17,6 @@
 @property (nonatomic, assign) int scriptLine;
 @property (nonatomic, assign) int scriptColumn;
 
+@property (nonatomic, assign) BOOL isSystemCommand;
+
 @end

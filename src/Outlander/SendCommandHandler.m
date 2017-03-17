@@ -62,6 +62,7 @@
             ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
 //            ctx.tag.color = @"#ACFF2F";
             ctx.tag.preset = @"sendinput";
+            ctx.isSystemCommand = YES;
             [_commandRelay sendCommand:ctx];
         }];
     }

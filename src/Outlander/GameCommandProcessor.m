@@ -25,6 +25,8 @@
     GameContext *_gameContext;
     VariableReplacer *_replacer;
     NSMutableArray *_handlers;
+    NSInteger _lastCommandCount;
+    NSDate *_lastCommandDate;
 }
 @end
 
@@ -44,6 +46,7 @@
     _replacer = replacer;
     _processed = [RACReplaySubject subject];
     _echoed = [RACReplaySubject subject];
+    _lastCommandCount = 0;
     
     GameCommandRelay *relay = [[GameCommandRelay alloc] initWith:_gameContext.events];
     
@@ -64,6 +67,7 @@
     [_handlers addObject:[TestCommandHandler newInstance]];
     [_handlers addObject:[PresetCommandHandler newInstance]];
     [_handlers addObject:[ClassCommandHandler newInstance:relay]];
+    [_handlers addObject:[PlayCommandHandler newInstance:[[LocalFileSystem alloc] init]]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];
@@ -92,7 +96,39 @@
 - (void)process:(CommandContext *)context {
     
     __block BOOL handled = NO;
-    
+
+    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate: _lastCommandDate];
+
+    if(interval < 0.1) {
+        _lastCommandCount++;
+    } else {
+        _lastCommandCount = 0;
+    }
+
+//    NSLog(@"%f // %ld // %@", interval, (long)_lastCommandCount, context.command);
+
+    if(_lastCommandCount > 50) {
+        context.tag = NULL;
+
+        if(context.scriptName) {
+            context.command = [NSString stringWithFormat:@"#script abort %@", context.scriptName];
+
+            NSString *msg = [NSString stringWithFormat:@"Possible infinate loop detected, aborting script \"%@\". Please check the commands you are sending for an infinate loop.", context.scriptName];
+
+            [_gameContext.events echoText:msg mono:YES preset:@"scripterror"];
+            
+        } else {
+            [_gameContext.events echoText:@"Possible infinate loop detected. Please check the commands you are sending for an infinate loop." mono:YES preset:@"scripterror"];
+            return;
+        }
+    }
+
+    _lastCommandDate = [NSDate date];
+
+    if(!context.isSystemCommand) {
+        [_gameContext.globalVars setCacheObject:context.command forKey:@"lastcommand"];
+    }
+
     context.command = [_replacer replace:context.command withContext:_gameContext];
     
     if(context.tag) {

@@ -193,6 +193,7 @@
     [self ensurePath:[_context.pathProvider logsFolder]];
     [self ensurePath:[_context.pathProvider scriptsFolder]];
     [self ensurePath:[_context.pathProvider mapsFolder]];
+    [self ensurePath:[_context.pathProvider soundsFolder]];
 }
 
 - (void)writeProfileFolders:(NSString *)profile {

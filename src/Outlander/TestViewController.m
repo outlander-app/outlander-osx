@@ -495,8 +495,9 @@
     [sender setStringValue:@""];
     
     NSArray *commands = [command splitToCommands];
-    
+
     [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
+
         CommandContext *ctx = [[CommandContext alloc] init];
         ctx.command = [command trimWhitespaceAndNewline];
         [_commandProcessor process:ctx];

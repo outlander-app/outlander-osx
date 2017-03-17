@@ -12,5 +12,6 @@
 @property (nonatomic, strong, nullable) NSString *color;
 @property (nonatomic, strong, nullable) NSString *backgroundColor;
 @property (nonatomic, strong, nullable) NSString *filterClass;
+@property (nonatomic, strong, nullable) NSString *soundFile;
 
 @end
