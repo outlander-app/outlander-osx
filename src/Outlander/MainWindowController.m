@@ -47,6 +47,8 @@
     _loginViewController = [[LoginViewController alloc] init];
     
     _loginViewController.cancelCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+
+        _gameContext.settings.password = @"";
         
         [self endSheet];
         return [RACSignal empty];

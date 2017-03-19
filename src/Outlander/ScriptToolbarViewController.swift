@@ -34,7 +34,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     func resumeScript(scriptName:String) {
         for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
-                if button.menu?.title == scriptName {
+                if button.menu?.title == scriptName || scriptName == "all" {
                     button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
                 }
             }
@@ -44,7 +44,7 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     func pauseScript(scriptName:String) {
         for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
-                if button.menu?.title == scriptName {
+                if button.menu?.title == scriptName || scriptName == "all" {
                     button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusPartiallyAvailable")
                 }
             }

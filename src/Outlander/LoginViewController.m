@@ -40,20 +40,24 @@
     
     [self.account.rac_textSignal subscribeNext:^(NSString *val) {
         _context.settings.account = val;
-        NSLog(@"Account: %@", val);
+//        NSLog(@"Account: %@", val);
     }];
     [self.password.rac_textSignal subscribeNext:^(NSString *val) {
         _context.settings.password = val;
-        NSLog(@"Password: %@", val);
+//        NSLog(@"Password: %@", val);
     }];
     [self.character.rac_textSignal subscribeNext:^(NSString *val) {
         _context.settings.character = val;
-        NSLog(@"Character: %@", val);
+//        NSLog(@"Character: %@", val);
     }];
     [self.game.rac_textSignal subscribeNext:^(NSString *val) {
         _context.settings.game = val;
-        NSLog(@"Game: %@", val);
+//        NSLog(@"Game: %@", val);
     }];
+}
+
+-(void)viewDidDisappear {
+    self.password.stringValue = @"";
 }
 
 -(void)viewDidAppear {
@@ -62,7 +66,7 @@
 
 - (void)refreshSettings {
     [self.account setStringValue:_context.settings.account];
-    [self.password setStringValue:_context.settings.password];
+    [self.password setStringValue:@""];
     [self.character setStringValue:_context.settings.character];
     [self.game setStringValue:_context.settings.game];
 }

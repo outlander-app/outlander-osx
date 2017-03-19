@@ -483,7 +483,6 @@
     }
 }
 
-
 - (IBAction)commandSubmit:(MyNSTextField*)sender {
     
     NSString *command = [sender stringValue];
@@ -652,11 +651,13 @@
     [authSignal
      subscribeNext:^(id x) {
          NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
-        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, x]
+         [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, x]
                                 mono:true]
                   to:@"main"];
+         _gameContext.settings.password = @"";
      }
      error:^(NSError *error) {
+         _gameContext.settings.password = @"";
          NSString *msg = [error.userInfo objectForKey:@"message"];
          [self appendError:msg];
          

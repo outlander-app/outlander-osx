@@ -67,9 +67,14 @@ class TriggerHandler : NSObject, ISubscriber {
             
                 if let groups = text[triggerText].groups() {
                     if groups.count > 0 {
-                        let commandContext = CommandContext()
-                        commandContext.command = self.replaceWithGroups(trigger.action ?? "", groups:groups)
-                        self.relay.sendCommand(commandContext)
+                        let command = self.replaceWithGroups(trigger.action ?? "", groups:groups)
+                        let commands = command.splitToCommands()
+
+                        for c in commands {
+                            let commandContext = CommandContext()
+                            commandContext.command = c
+                            self.relay.sendCommand(commandContext)
+                        }
                     }
                 }
             }
