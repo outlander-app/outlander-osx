@@ -464,22 +464,40 @@
     
     [highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
 
-        if(hl.pattern == nil || [hl.pattern isEqualToString:@""]) {
+        if([hl.pattern length] == 0) {
             return;
         }
-    
+
+        // users sometimes enter regex with a ending | which can create an infinite loop
+        // when coupled with playing sounds
+        if([hl.pattern hasSuffix:@"|"]) {
+            hl.pattern = [hl.pattern substringToIndex:[hl.pattern length] - 1];
+        }
+
+        if([hl.pattern length] == 0) {
+            return;
+        }
+
         [[data matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
-            
+
+            if (idx > 1000) {
+                *stop = YES;
+            }
+
             if(res.numberOfRanges > 0) {
 
-                if(hl.soundFile) {
+                NSRange range = [res rangeAtIndex:0];
+                if(range.length == 0) {
+                    return;
+                }
+
+                if([hl.soundFile length] > 0) {
                     CommandContext *ctx = [[CommandContext alloc] init];
                     ctx.isSystemCommand = YES;
                     ctx.command = [NSString stringWithFormat:@"#play %@", hl.soundFile];
                     [_gameContext.events sendCommand:ctx];
                 }
 
-                NSRange range = [res rangeAtIndex:0];
                 NSRange newRange = NSMakeRange(range.location + editedRange.location, range.length);
 
                 if(textStorage.string && textStorage.string.length >= len) {

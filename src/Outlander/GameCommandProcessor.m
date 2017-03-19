@@ -110,15 +110,16 @@
     if(_lastCommandCount > 50) {
         context.tag = NULL;
 
-        if(context.scriptName) {
+        if([context.scriptName length] > 0) {
             context.command = [NSString stringWithFormat:@"#script abort %@", context.scriptName];
+            context.isSystemCommand = YES;
 
-            NSString *msg = [NSString stringWithFormat:@"Possible infinate loop detected, aborting script \"%@\". Please check the commands you are sending for an infinate loop.", context.scriptName];
+            NSString *msg = [NSString stringWithFormat:@"Possible infinite loop detected, aborting script \"%@\". Please check the commands you are sending for an infinite loop.", context.scriptName];
 
             [_gameContext.events echoText:msg mono:YES preset:@"scripterror"];
             
         } else {
-            [_gameContext.events echoText:@"Possible infinate loop detected. Please check the commands you are sending for an infinate loop." mono:YES preset:@"scripterror"];
+            [_gameContext.events echoText:@"Possible infinite loop detected. Please check the commands you are sending for an infinite loop." mono:YES preset:@"scripterror"];
             return;
         }
     }
