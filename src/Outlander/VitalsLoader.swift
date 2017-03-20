@@ -84,4 +84,13 @@ extension NSDictionary {
 
         return defaultVal
     }
+
+    func boolValue(key:String, defaultVal:Bool = false) -> Bool {
+
+        if let value = self[key] as? String {
+            return value.toBool() ?? defaultVal
+        }
+
+        return defaultVal
+    }
 }

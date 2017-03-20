@@ -30,6 +30,7 @@
     PresetLoader *_presetLoader;
     VitalsLoader *_vitalsLoader;
     ClassesLoader *_classesLoader;
+    AppConfigLoader *_appConfigLoader;
 }
 @end
 
@@ -53,6 +54,7 @@
     _presetLoader = [PresetLoader newInstance:_context fileSystem:fileSystem];
     _vitalsLoader = [VitalsLoader newInstance:_context fileSystem:fileSystem];
     _classesLoader = [ClassesLoader newInstance:_context fileSystem:fileSystem];
+    _appConfigLoader = [AppConfigLoader newInstance:_context fileSystem:fileSystem];
     
     return self;
 }
@@ -71,8 +73,6 @@
     [self writeConfigFolders:_context.settings.profile];
     [self writeProfileFolders:_context.settings.profile];
 
-    [self loadConfig];
-    
     [self loadProfile];
     
     [self loadLayout];
@@ -90,6 +90,11 @@
 }
 
 - (void)loadConfig {
+    [_appConfigLoader load];
+}
+
+- (void)saveConfig {
+    [_appConfigLoader save];
 }
 
 - (void)loadLayout {

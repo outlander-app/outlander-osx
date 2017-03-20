@@ -49,11 +49,6 @@
         _context.settings.account = account;
     }
     
-    NSString *pw = [self matchFor:data pattern:@"Password: (.+)"];
-    if(pw && pw.length > 0) {
-        _context.settings.password = pw;
-    }
-    
     NSString *logging = [self matchFor:data pattern:@"Logging: (.+)"];
     if(logging && logging.length > 0 && ([[logging lowercaseString] hasPrefix:@"yes"] || [[logging lowercaseString] hasPrefix:@"true"])) {
         _context.settings.loggingEnabled = YES;
@@ -71,12 +66,11 @@
     
     NSMutableString *profile = [[NSMutableString alloc] init];
     [profile appendFormat:@"Account: %@\n", _context.settings.account];
-//    [profile appendFormat:@"Password: %@\n", _context.settings.password];
     [profile appendFormat:@"Game: %@\n", _context.settings.game];
     [profile appendFormat:@"Character: %@\n", _context.settings.character];
     [profile appendFormat:@"Logging: %@\n", _context.settings.loggingEnabled ? @"yes" : @"no"];
     [profile appendFormat:@"RawLogging: %@\n", _context.settings.rawLoggingEnabled ? @"yes" : @"no"];
-    
+
     NSData *data = [profile dataUsingEncoding:NSUTF8StringEncoding];
     
     [data writeToFile:configFile atomically:YES];

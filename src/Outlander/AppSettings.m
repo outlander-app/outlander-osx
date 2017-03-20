@@ -14,12 +14,13 @@
     self = [super init];
     if(!self) return nil;
     
+    self.defaultProfile = @"Default";
     self.profile = @"Default";
     self.game = @"DR";
     self.account = @"";
     self.password = @"";
     self.character = @"";
-   
+
     self.homeDirectory = @"Outlander";
     self.configFolder = @"Config";
     self.logsFolder = @"Logs";
@@ -27,6 +28,11 @@
     self.scriptsFolder = @"Scripts";
     self.mapsFolder = @"Maps";
     self.soundsFolder = @"Sounds";
+
+    self.loggingEnabled = NO;
+    self.rawLoggingEnabled = NO;
+
+    self.checkForApplicationUpdates = YES;
     
     return self;
 }

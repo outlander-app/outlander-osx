@@ -14,6 +14,7 @@
 - (void)loadProfile:(NSString *)profile;
 - (void)load;
 - (void)loadConfig;
+- (void)saveConfig;
 - (void)saveLayout;
 - (void)saveProfile;
 - (void)saveVariables;

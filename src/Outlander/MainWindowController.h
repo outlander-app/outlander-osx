@@ -7,12 +7,13 @@
 //
 
 #import "Commands.h"
+#import "AppSettings.h"
 
 @protocol ISubscriber;
 
 @interface MainWindowController : NSWindowController <Commands, NSWindowDelegate, ISubscriber>
 
-- (id)init;
+- (id)initWithSettings:(AppSettings *)settings;
 - (void)command:(NSString *)command;
 - (void)showLogin;
 - (void)showProfiles;

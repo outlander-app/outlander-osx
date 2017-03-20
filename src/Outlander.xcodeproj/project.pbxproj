@@ -453,6 +453,8 @@
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
 		F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
 		F9FFE7821E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
+		F9FFE7841E7F801300FD33B8 /* AppConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */; };
+		F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -873,6 +875,7 @@
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
 		F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCommandHandler.swift; sourceTree = "<group>"; };
+		F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1332,6 +1335,7 @@
 				F9A74F1019305D14008F410A /* VariablesLoader.m */,
 				F9B6CD7F1E779CD50085195F /* VitalsLoader.swift */,
 				F9B6CD8B1E7903DA0085195F /* ClassesLoader.swift */,
+				F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1768,6 +1772,7 @@
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
+				F9FFE7841E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
 				F97CD5961ACDC814007E5804 /* Threading.swift in Sources */,
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
@@ -1954,6 +1959,7 @@
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
+				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,

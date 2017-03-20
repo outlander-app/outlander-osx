@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AppSettingsLoader.h"
-#import "LocalFileSystem.h"
 #import "MainWindowController.h"
 #import "UpdateWindowController.h"
 #import "NSString+Categories.h"
@@ -20,7 +19,6 @@
     SQRLUpdater *updater;
     GameContext *gameContext;
     AppSettingsLoader *appSettingsLoader;
-    id<FileSystem>fileSystem;
     UpdateWindowController *updateWindow;
 }
 @end
@@ -29,11 +27,17 @@
 
 - (MainWindowController *)activeWindowController {
     NSWindow *win = [[NSApplication sharedApplication] keyWindow];
-    return win.windowController;
+    MainWindowController *ctrl = win.windowController;
+
+    if(ctrl == nil && windows.count > 0) {
+        return windows[0];
+    }
+
+    return ctrl;
 }
 
 - (IBAction)newAction:(id)sender {
-	MainWindowController *ctrl = [[MainWindowController alloc] init];
+    MainWindowController *ctrl = [[MainWindowController alloc] initWithSettings: gameContext.settings];
     [windows addObject:ctrl];
     [ctrl.window makeKeyAndOrderFront:nil];
 }
@@ -67,18 +71,25 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     windows = [[NSMutableArray alloc] init];
-	MainWindowController *ctrl = [[MainWindowController alloc] init];
+
+    gameContext = [GameContext newInstance];
+    appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:gameContext];
+    [appSettingsLoader loadConfig];
+
+    MainWindowController *ctrl = [[MainWindowController alloc] initWithSettings: gameContext.settings];
     [windows addObject:ctrl];
     
     [ctrl.window makeKeyAndOrderFront:nil];
 
-    fileSystem = [[LocalFileSystem alloc] init];
-    gameContext = [GameContext newInstance];
-    appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:gameContext];
-
     updateWindow = [[UpdateWindowController alloc] init];
 
     [self setupUpdater];
+
+    if(gameContext.settings.checkForApplicationUpdates) {
+        [updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
+    } else {
+        [self logUpdateInfo:@"disabled"];
+    }
 }
 
 - (void)setupUpdater {
@@ -113,8 +124,6 @@
     [updater.checkForUpdatesCommand.errors subscribeNext:^(NSError *error) {
         [self logUpdateInfo:error.localizedDescription withPreset:@"scripterror" echo:YES];
     }];
-
-    [updater.checkForUpdatesCommand execute:RACUnit.defaultUnit];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {

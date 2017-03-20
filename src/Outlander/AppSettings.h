@@ -8,6 +8,7 @@
 
 @interface AppSettings : NSObject
 
+@property (nonatomic, copy) NSString *defaultProfile;
 @property (nonatomic, copy) NSString *profile;
 @property (nonatomic, copy) NSString *game;
 @property (nonatomic, copy) NSString *character;
@@ -16,6 +17,8 @@
 
 @property (nonatomic, assign) BOOL loggingEnabled;
 @property (nonatomic, assign) BOOL rawLoggingEnabled;
+
+@property (nonatomic, assign) BOOL checkForApplicationUpdates;
 
 @property (nonatomic, copy) NSString *homeDirectory;
 @property (nonatomic, copy) NSString *configFolder;

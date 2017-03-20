@@ -36,11 +36,14 @@
     MacroHandler *_macroHandler;
 }
 
-- (id)init {
+- (id)initWithSettings:(AppSettings *)settings {
 	self = [super initWithWindowNibName:NSStringFromClass([self class]) owner:self];
 	if(self == nil) return nil;
     
     _gameContext = [GameContext newInstance];
+    _gameContext.settings.defaultProfile = settings.defaultProfile;
+    _gameContext.settings.profile = settings.defaultProfile;
+    _gameContext.settings.checkForApplicationUpdates = settings.checkForApplicationUpdates;
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] initWith:_gameContext.events]];
     
@@ -248,7 +251,8 @@
     TestViewController *vc = [self currentVC];
     
     _gameContext.layout.windows = [vc getWindows];
-    
+
+    [_appSettingsLoader saveConfig];
     [_appSettingsLoader saveLayout];
     [_appSettingsLoader saveProfile];
     [_appSettingsLoader saveVariables];
