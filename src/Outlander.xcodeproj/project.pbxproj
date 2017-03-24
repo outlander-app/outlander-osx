@@ -76,7 +76,6 @@
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
 		F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
-		F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
@@ -115,7 +114,6 @@
 		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
-		F970BA071BEE16FE0047F6CC /* OutlanderScriptParserTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */; };
 		F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
@@ -230,7 +228,6 @@
 		F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E200192C2B9B00562E32 /* StubFileSystem.m */; };
 		F989E205192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
 		F989E206192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
-		F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */; };
 		F98D4C251CB1A73300E81E70 /* SubstituteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */; };
 		F98D4C261CB1A73300E81E70 /* SubstituteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */; };
 		F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C271CB1A7DF00E81E70 /* Substitute.swift */; };
@@ -475,7 +472,6 @@
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
-		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersViewController.swift; sourceTree = "<group>"; };
@@ -508,7 +504,6 @@
 		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
 		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
-		F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderScriptParserTester.swift; sourceTree = "<group>"; };
 		F971EFD31938806C008AF6A8 /* CommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandRelay.h; sourceTree = "<group>"; };
 		F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandRelay.h; sourceTree = "<group>"; };
 		F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandRelay.m; sourceTree = "<group>"; };
@@ -610,7 +605,6 @@
 		F989E200192C2B9B00562E32 /* StubFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubFileSystem.m; sourceTree = "<group>"; };
 		F989E203192C2E6200562E32 /* Highlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Highlight.h; sourceTree = "<group>"; };
 		F989E204192C2E6200562E32 /* Highlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Highlight.m; sourceTree = "<group>"; };
-		F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContextTester.swift; sourceTree = "<group>"; };
 		F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubstituteLoader.swift; sourceTree = "<group>"; };
 		F98D4C271CB1A7DF00E81E70 /* Substitute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Substitute.swift; sourceTree = "<group>"; };
 		F98F22D119248506008175FD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1156,9 +1150,6 @@
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
 				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
-				F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */,
-				F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */,
-				F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1697,8 +1688,6 @@
 				F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */,
 				F9A8A79A1E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
-				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
-				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
 				F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
@@ -1742,7 +1731,6 @@
 				F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
-				F970BA071BEE16FE0047F6CC /* OutlanderScriptParserTester.swift in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9A8A7911E85C838000A9621 /* ScriptLogLevel.swift in Sources */,
