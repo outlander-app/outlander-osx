@@ -36,18 +36,12 @@
 		F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91761311E328DB90091A617 /* PresetLoaderTester.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
-		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
-		F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
 		F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
 		F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
-		F91A39A8194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
-		F91A39A9194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
 		F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
 		F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
 		F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
 		F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
-		F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
-		F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
 		F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
@@ -74,20 +68,10 @@
 		F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
 		F93462591AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
-		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
-		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
 		F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
-		F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
-		F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
-		F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
-		F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
-		F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
-		F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
-		F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
-		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
@@ -170,8 +154,6 @@
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7E192E50EF00B873D7 /* AliasesTester.m */; };
-		F9772F171940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
-		F9772F181940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
 		F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
@@ -240,36 +222,6 @@
 		F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
 		F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
-		F98782B719420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
-		F98782B819420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
-		F98782BB19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
-		F98782BC19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
-		F98782BF1942128F00D76231 /* IdToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BE1942128F00D76231 /* IdToken.m */; };
-		F98782C01942128F00D76231 /* IdToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BE1942128F00D76231 /* IdToken.m */; };
-		F98782C31942288F00D76231 /* MoveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C21942288F00D76231 /* MoveToken.m */; };
-		F98782C41942288F00D76231 /* MoveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C21942288F00D76231 /* MoveToken.m */; };
-		F98782C7194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
-		F98782C8194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
-		F98782CB194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
-		F98782CC194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
-		F98782CF1942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
-		F98782D01942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
-		F98782D3194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
-		F98782D4194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
-		F98782D71942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
-		F98782D81942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
-		F98782DB1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
-		F98782DC1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
-		F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
-		F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
-		F98782E31942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
-		F98782E41942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
-		F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
-		F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
-		F98782F71942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
-		F98782F81942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
-		F98782FB1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
-		F98782FC1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
 		F988C40F1AF35A74003B4634 /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988C40E1AF35A74003B4634 /* Directions.swift */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -347,16 +299,6 @@
 		F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
 		F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
 		F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
-		F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
-		F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
-		F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
-		F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
-		F9B3AC6919405BD700C081C4 /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6819405BD700C081C4 /* Atom.m */; };
-		F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6819405BD700C081C4 /* Atom.m */; };
-		F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
-		F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
-		F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
-		F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
 		F9B6CD7B1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
 		F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
 		F9B6CD7D1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
@@ -500,18 +442,12 @@
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
-		F91A399E1949FF31006144F8 /* DebugLevelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLevelToken.h; sourceTree = "<group>"; };
-		F91A399F1949FF31006144F8 /* DebugLevelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLevelToken.m; sourceTree = "<group>"; };
 		F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerStatusIndicator.h; sourceTree = "<group>"; };
 		F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStatusIndicator.m; sourceTree = "<group>"; };
-		F91A39A6194B523E006144F8 /* SendToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToken.h; sourceTree = "<group>"; };
-		F91A39A7194B523E006144F8 /* SendToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToken.m; sourceTree = "<group>"; };
 		F91A39AA194BD706006144F8 /* OLPauseCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLPauseCondition.h; sourceTree = "<group>"; };
 		F91A39AB194BD706006144F8 /* OLPauseCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLPauseCondition.m; sourceTree = "<group>"; };
 		F91A39AE194BDE83006144F8 /* ExecuteBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecuteBlock.h; sourceTree = "<group>"; };
 		F91A39AF194BDE83006144F8 /* ExecuteBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecuteBlock.m; sourceTree = "<group>"; };
-		F91A39B2194D2AA2006144F8 /* SaveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToken.h; sourceTree = "<group>"; };
-		F91A39B3194D2AA2006144F8 /* SaveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToken.m; sourceTree = "<group>"; };
 		F91A39C8194DFFA9006144F8 /* SimpleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleQueue.h; sourceTree = "<group>"; };
 		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F91A39CC194E7135006144F8 /* SendCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCommandHandler.h; sourceTree = "<group>"; };
@@ -534,18 +470,8 @@
 		F9316D281AD9E65000880149 /* ScriptRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
-		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
-		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
-		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
-		F94A3FC81948AE0500D6B35D /* GosubToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GosubToken.m; sourceTree = "<group>"; };
-		F94A3FCB1948AE6700D6B35D /* ActionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionToken.h; sourceTree = "<group>"; };
-		F94A3FCC1948AE6700D6B35D /* ActionToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionToken.m; sourceTree = "<group>"; };
-		F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnToken.h; sourceTree = "<group>"; };
-		F94A3FD01948AE9F00D6B35D /* ReturnToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnToken.m; sourceTree = "<group>"; };
-		F94A3FD31948DBC500D6B35D /* CommandsToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandsToken.h; sourceTree = "<group>"; };
-		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
@@ -608,9 +534,6 @@
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
 		F9762F7B192E4F8700B873D7 /* AliasLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasLoader.m; sourceTree = "<group>"; };
 		F9762F7E192E50EF00B873D7 /* AliasesTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasesTester.m; sourceTree = "<group>"; };
-		F9772F151940389E00172083 /* VarToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VarToken.h; sourceTree = "<group>"; };
-		F9772F161940389E00172083 /* VarToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VarToken.m; sourceTree = "<group>"; };
-		F9772F19194038D900172083 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
 		F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TriggerHandler.swift; path = Scripting/TriggerHandler.swift; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
@@ -676,36 +599,6 @@
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
 		F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsViewController.swift; sourceTree = "<group>"; };
 		F982CF601AD7834200BB9574 /* WindowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WindowsViewController.xib; sourceTree = "<group>"; };
-		F98782B519420CB500D76231 /* EchoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoToken.h; sourceTree = "<group>"; };
-		F98782B619420CB500D76231 /* EchoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoToken.m; sourceTree = "<group>"; };
-		F98782B919420E5D00D76231 /* GotoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoToken.h; sourceTree = "<group>"; };
-		F98782BA19420E5D00D76231 /* GotoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoToken.m; sourceTree = "<group>"; };
-		F98782BD1942128F00D76231 /* IdToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdToken.h; sourceTree = "<group>"; };
-		F98782BE1942128F00D76231 /* IdToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdToken.m; sourceTree = "<group>"; };
-		F98782C11942288F00D76231 /* MoveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveToken.h; sourceTree = "<group>"; };
-		F98782C21942288F00D76231 /* MoveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveToken.m; sourceTree = "<group>"; };
-		F98782C5194228C000D76231 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicToken.h; sourceTree = "<group>"; };
-		F98782C6194228C000D76231 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicToken.m; sourceTree = "<group>"; };
-		F98782C9194235EF00D76231 /* TokenSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSingle.h; sourceTree = "<group>"; };
-		F98782CA194235EF00D76231 /* TokenSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenSingle.m; sourceTree = "<group>"; };
-		F98782CD1942499300D76231 /* WaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitToken.h; sourceTree = "<group>"; };
-		F98782CE1942499300D76231 /* WaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitToken.m; sourceTree = "<group>"; };
-		F98782D1194249A400D76231 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
-		F98782D2194249A400D76231 /* TokenList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenList.m; sourceTree = "<group>"; };
-		F98782D51942649600D76231 /* LRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRToken.h; sourceTree = "<group>"; };
-		F98782D61942649600D76231 /* LRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRToken.m; sourceTree = "<group>"; };
-		F98782D91942656C00D76231 /* MatchToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchToken.h; sourceTree = "<group>"; };
-		F98782DA1942656C00D76231 /* MatchToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchToken.m; sourceTree = "<group>"; };
-		F98782DD194269CD00D76231 /* MatchWaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWaitToken.h; sourceTree = "<group>"; };
-		F98782DE194269CD00D76231 /* MatchWaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWaitToken.m; sourceTree = "<group>"; };
-		F98782E11942791B00D76231 /* ExitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExitToken.h; sourceTree = "<group>"; };
-		F98782E21942791B00D76231 /* ExitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExitToken.m; sourceTree = "<group>"; };
-		F98782E919427C3D00D76231 /* NextRoomToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextRoomToken.h; sourceTree = "<group>"; };
-		F98782EA19427C3D00D76231 /* NextRoomToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextRoomToken.m; sourceTree = "<group>"; };
-		F98782F51942AB6200D76231 /* RegexToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexToken.h; sourceTree = "<group>"; };
-		F98782F61942AB6200D76231 /* RegexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexToken.m; sourceTree = "<group>"; };
-		F98782F91946873500D76231 /* WaitForToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitForToken.h; sourceTree = "<group>"; };
-		F98782FA1946873500D76231 /* WaitForToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitForToken.m; sourceTree = "<group>"; };
 		F988C40E1AF35A74003B4634 /* Directions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
@@ -779,16 +672,6 @@
 		F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VitalsViewController.xib; sourceTree = "<group>"; };
 		F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptStreamHandler.swift; sourceTree = "<group>"; };
 		F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseCommandHandler.swift; sourceTree = "<group>"; };
-		F9B3AC5F194046E400C081C4 /* LabelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelToken.h; sourceTree = "<group>"; };
-		F9B3AC60194046E400C081C4 /* LabelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelToken.m; sourceTree = "<group>"; };
-		F9B3AC63194058EE00C081C4 /* AssignmentToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignmentToken.h; sourceTree = "<group>"; };
-		F9B3AC64194058EE00C081C4 /* AssignmentToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssignmentToken.m; sourceTree = "<group>"; };
-		F9B3AC6719405BD700C081C4 /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
-		F9B3AC6819405BD700C081C4 /* Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Atom.m; sourceTree = "<group>"; };
-		F9B3AC6B1940686700C081C4 /* PutToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutToken.h; sourceTree = "<group>"; };
-		F9B3AC6C1940686700C081C4 /* PutToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutToken.m; sourceTree = "<group>"; };
-		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
-		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
 		F9B6CD781E73549B0085195F /* UpdateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateWindowController.h; sourceTree = "<group>"; };
 		F9B6CD791E73549B0085195F /* UpdateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateWindowController.m; sourceTree = "<group>"; };
 		F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindowController.xib; sourceTree = "<group>"; };
@@ -925,75 +808,10 @@
 			path = Scripting;
 			sourceTree = "<group>";
 		};
-		F9772F101940383500172083 /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				F9772F19194038D900172083 /* Token.h */,
-				F94A3FCB1948AE6700D6B35D /* ActionToken.h */,
-				F94A3FCC1948AE6700D6B35D /* ActionToken.m */,
-				F9B3AC63194058EE00C081C4 /* AssignmentToken.h */,
-				F9B3AC64194058EE00C081C4 /* AssignmentToken.m */,
-				F9B3AC6719405BD700C081C4 /* Atom.h */,
-				F9B3AC6819405BD700C081C4 /* Atom.m */,
-				F98782C5194228C000D76231 /* BasicToken.h */,
-				F98782C6194228C000D76231 /* BasicToken.m */,
-				F94A3FD31948DBC500D6B35D /* CommandsToken.h */,
-				F94A3FD41948DBC500D6B35D /* CommandsToken.m */,
-				F91A399E1949FF31006144F8 /* DebugLevelToken.h */,
-				F91A399F1949FF31006144F8 /* DebugLevelToken.m */,
-				F98782B519420CB500D76231 /* EchoToken.h */,
-				F98782B619420CB500D76231 /* EchoToken.m */,
-				F98782E11942791B00D76231 /* ExitToken.h */,
-				F98782E21942791B00D76231 /* ExitToken.m */,
-				F94A3FC71948AE0500D6B35D /* GosubToken.h */,
-				F94A3FC81948AE0500D6B35D /* GosubToken.m */,
-				F98782B919420E5D00D76231 /* GotoToken.h */,
-				F98782BA19420E5D00D76231 /* GotoToken.m */,
-				F98782BD1942128F00D76231 /* IdToken.h */,
-				F98782BE1942128F00D76231 /* IdToken.m */,
-				F9B3AC5F194046E400C081C4 /* LabelToken.h */,
-				F9B3AC60194046E400C081C4 /* LabelToken.m */,
-				F98782D51942649600D76231 /* LRToken.h */,
-				F98782D61942649600D76231 /* LRToken.m */,
-				F98782D91942656C00D76231 /* MatchToken.h */,
-				F98782DA1942656C00D76231 /* MatchToken.m */,
-				F98782DD194269CD00D76231 /* MatchWaitToken.h */,
-				F98782DE194269CD00D76231 /* MatchWaitToken.m */,
-				F98782C11942288F00D76231 /* MoveToken.h */,
-				F98782C21942288F00D76231 /* MoveToken.m */,
-				F98782E919427C3D00D76231 /* NextRoomToken.h */,
-				F98782EA19427C3D00D76231 /* NextRoomToken.m */,
-				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
-				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
-				F9B3AC6B1940686700C081C4 /* PutToken.h */,
-				F9B3AC6C1940686700C081C4 /* PutToken.m */,
-				F98782F51942AB6200D76231 /* RegexToken.h */,
-				F98782F61942AB6200D76231 /* RegexToken.m */,
-				F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */,
-				F94A3FD01948AE9F00D6B35D /* ReturnToken.m */,
-				F91A39B2194D2AA2006144F8 /* SaveToken.h */,
-				F91A39B3194D2AA2006144F8 /* SaveToken.m */,
-				F91A39A6194B523E006144F8 /* SendToken.h */,
-				F91A39A7194B523E006144F8 /* SendToken.m */,
-				F98782D1194249A400D76231 /* TokenList.h */,
-				F98782D2194249A400D76231 /* TokenList.m */,
-				F98782C9194235EF00D76231 /* TokenSingle.h */,
-				F98782CA194235EF00D76231 /* TokenSingle.m */,
-				F9772F151940389E00172083 /* VarToken.h */,
-				F9772F161940389E00172083 /* VarToken.m */,
-				F98782CD1942499300D76231 /* WaitToken.h */,
-				F98782CE1942499300D76231 /* WaitToken.m */,
-				F98782F91946873500D76231 /* WaitForToken.h */,
-				F98782FA1946873500D76231 /* WaitForToken.m */,
-			);
-			name = Tokens;
-			sourceTree = "<group>";
-		};
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
 				F9316D1E1AD9E19E00880149 /* Engine */,
-				F9772F101940383500172083 /* Tokens */,
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 				F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */,
@@ -1009,8 +827,6 @@
 				F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */,
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
 				F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */,
-				F93A1A3E193AEF9F00ED5C2E /* Match.h */,
-				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
 				F91A39AB194BD706006144F8 /* OLPauseCondition.m */,
 				F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */,
@@ -1642,7 +1458,6 @@
 				F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
-				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
@@ -1655,21 +1470,16 @@
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
-				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9B6CD8C1E7903DA0085195F /* ClassesLoader.swift in Sources */,
 				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
-				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F91031511B3D0F140039BDF0 /* Gag.swift in Sources */,
-				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
-				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
-				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
@@ -1679,7 +1489,6 @@
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
-				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
@@ -1689,14 +1498,12 @@
 				F9C178861B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
-				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F917612F1E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F97CD5991ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
 				F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
-				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
@@ -1706,22 +1513,16 @@
 				F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */,
 				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
-				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
-				F98782D3194249A400D76231 /* TokenList.m in Sources */,
 				F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
-				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
-				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
-				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
-				F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F9A8A7991E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
@@ -1729,14 +1530,12 @@
 				F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */,
-				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F988C40F1AF35A74003B4634 /* Directions.swift in Sources */,
 				F9B6CD831E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
-				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
@@ -1745,18 +1544,14 @@
 				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
-				F9772F171940389E00172083 /* VarToken.m in Sources */,
 				F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
 				F9A8A7901E85C838000A9621 /* ScriptLogLevel.swift in Sources */,
 				F9A8A7931E85C864000A9621 /* Script.swift in Sources */,
 				F90CEC211AD4322600204243 /* GameContext.swift in Sources */,
-				F98782D71942649600D76231 /* LRToken.m in Sources */,
-				F98782FB1946873500D76231 /* WaitForToken.m in Sources */,
 				F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
-				F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
@@ -1770,26 +1565,20 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
-				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
-				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
 				F97CD5861ACD27D3007E5804 /* MapLoader.swift in Sources */,
 				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
-				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */,
-				F98782CF1942499300D76231 /* WaitToken.m in Sources */,
-				F98782BB19420E5D00D76231 /* GotoToken.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F98D4C251CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
-				F98782DB1942656C00D76231 /* MatchToken.m in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
@@ -1798,13 +1587,11 @@
 				F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
-				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
 				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */,
 				F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
-				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F9C1787D1B12754E00CC7291 /* TestCommandHandler.swift in Sources */,
 				F97CD5911ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F97CD58B1ACD27D3007E5804 /* TreeNode.swift in Sources */,
@@ -1824,12 +1611,10 @@
 				F90CEC221AD4322600204243 /* GameContext.swift in Sources */,
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
-				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
 				F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */,
-				F98782D81942649600D76231 /* LRToken.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
@@ -1843,18 +1628,14 @@
 				F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
-				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
-				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
-				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
-				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
@@ -1864,16 +1645,12 @@
 				F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
-				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
 				F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
-				F98782D4194249A400D76231 /* TokenList.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
-				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
-				F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */,
 				F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */,
 				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
@@ -1881,17 +1658,13 @@
 				F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
-				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9B6CD8A1E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
 				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
-				F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
-				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */,
 				F959D3DE1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
-				F9772F181940389E00172083 /* VarToken.m in Sources */,
 				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
@@ -1905,7 +1678,6 @@
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
-				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */,
@@ -1914,7 +1686,6 @@
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F9B6CD8D1E7903DA0085195F /* ClassesLoader.swift in Sources */,
-				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
 				F9E1C8B41AE35A8000458029 /* RandomNumbers.swift in Sources */,
@@ -1929,11 +1700,8 @@
 				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
 				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
 				F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
-				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
-				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
-				F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F9B6CD871E78BA430085195F /* ClassSettingsTester.swift in Sources */,
 				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
@@ -1949,12 +1717,9 @@
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
-				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F91031521B3D0F140039BDF0 /* Gag.swift in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
-				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F9FFE7821E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */,
-				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
@@ -1973,7 +1738,6 @@
 				F9C178871B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
-				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
@@ -1983,7 +1747,6 @@
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9A8A7911E85C838000A9621 /* ScriptLogLevel.swift in Sources */,
 				F98D4C261CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
-				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
@@ -1995,9 +1758,6 @@
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */,
-				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,
-				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
-				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
@@ -2009,8 +1769,6 @@
 				F917612D1E328B580091A617 /* PresetLoader.swift in Sources */,
 				F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
-				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
-				F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */,
 				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
