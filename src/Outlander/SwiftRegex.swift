@@ -266,15 +266,15 @@ public func RegexMutable( string: NSString ) -> NSMutableString {
 }
 
 // for switch
-public var lastRegexMatchGroups: [String!]!
-
-public func ~= ( left: String, right: String ) -> Bool {
-    if let groups = SwiftRegex( target: right, pattern: left ).groups() {
-        lastRegexMatchGroups = groups.map { $0 != regexNoGroup ? $0 : nil }
-        return true
-    }
-    return false
-}
+//public var lastRegexMatchGroups: [String!]!
+//
+//public func ~= ( left: String, right: String ) -> Bool {
+//    if let groups = SwiftRegex( target: right, pattern: left ).groups() {
+//        lastRegexMatchGroups = groups.map { $0 != regexNoGroup ? $0 : nil }
+//        return true
+//    }
+//    return false
+//}
 
 // for replacements
 public func ~= ( left: SwiftRegex, right: String ) -> Bool {
