@@ -64,6 +64,18 @@
 
 - (IBAction)checkforUpdatesAction:(id)sender {
 
+//    NSDictionary *dict = @{
+//                           @"releaseName": @"v0.0.1",
+//                           @"releaseNotes": @"Updates\n* Add new `app.cfg` under `~/Documents/Outlander/Config`.  This contains two application wide settings - `defaultProfile` and `checkForApplicationUpdates`.\n* The Password text box in the login view is now being cleared in preparation of allowing saving passwords to the keychain.  This ultimately provides better security for your password.\n\nBugs\n* Triggers will now split commands using `;`\n* Script icons will now properly update with `#script pause all` and `#script resume all`",
+//                           @"updateURL": [NSURL URLWithString:@"http://outlander.com"],
+//                           @"releaseDate": [NSDate date]
+//                           };
+//
+//    NSError *error;
+//    SQRLUpdate *update = [SQRLUpdate modelWithDictionary:dict error:&error];
+//
+//    [updateWindow setUpdater:nil with:update];
+//
 //    [updateWindow.window makeKeyAndOrderFront:nil];
 
     [self checkForUpdates];
