@@ -73,7 +73,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     private func remove(name:String) {
-        let found = self.scripts.find { $0.scriptName == name }
+        let found = self.scripts.find { $0.fileName == name }
         if let idx = found {
             self.scripts.removeAtIndex(idx)
             self.context.events.publish("script:remove", data: ["scriptName":name])
@@ -155,9 +155,9 @@ public class ScriptRunner : NSObject, ISubscriber {
     private func abort(name:String) {
         var names:[String] = []
         for (_, script) in self.scripts.enumerate() {
-            if name == "all" || script.scriptName == name {
+            if name == "all" || script.fileName == name {
 //                script.cancel()
-                names.append(script.scriptName)
+                names.append(script.fileName)
                 
                 if name != "all" {
                     break
@@ -177,7 +177,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     private func pause(name:String) {
         for (_, script) in self.scripts.enumerate() {
             
-            if name == "all" || script.scriptName == name {
+            if name == "all" || script.fileName == name {
 //                script.pause()
 
                 if name != "all" {
@@ -190,7 +190,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     private func resume(name:String) {
         for (_, script) in self.scripts.enumerate() {
             
-            if name == "all" || script.scriptName == name {
+            if name == "all" || script.fileName == name {
 //                script.resume()
 
                 if name != "all" {
@@ -202,7 +202,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     
     private func vars(name:String) {
         for (_, script) in self.scripts.enumerate() {
-            if script.scriptName == name {
+            if script.fileName == name {
 //                script.vars()
                 break
             }
@@ -211,7 +211,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     
     private func debug(name:String, level:ScriptLogLevel) {
         for (_, script) in self.scripts.enumerate() {
-            if script.scriptName == name {
+            if script.fileName == name {
 //                script.setLogLevel(level)
                 break
             }
