@@ -1,0 +1,3 @@
+framework module SwiftParsec {
+    header "SwiftParsec-Swift.h"
+}

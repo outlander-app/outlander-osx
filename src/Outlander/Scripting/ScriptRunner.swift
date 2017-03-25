@@ -66,7 +66,21 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
         
         self.abort(scriptName)
-       
+
+        do {
+            let script = try Script(loader: { (name) in
+                return self.scriptLoader.load(name)
+                }, scriptName, self.context)
+
+            self.scripts.append(script)
+            self.context.events.publish("script:add", data: ["scriptName":script.fileName])
+
+            script.run(self.argsToParams(tokens))
+        }
+        catch {
+        }
+
+
 //        self.loadAsync(scriptName, tokens: tokens)
 
 //        self.context.events.publish("script:add", data: ["scriptName":script.scriptName])

@@ -18,13 +18,6 @@ struct Label {
     var fileName: String
 }
 
-struct ScriptFile {
-    var text: String
-    var name: String
-    var lines: [String]
-    var labels: [String:Label]
-}
-
 struct ScriptLine {
     var originalText: String
     var fileName: String
@@ -34,6 +27,21 @@ struct ScriptLine {
 class ScriptContext {
     var lines: [ScriptLine] = []
     var labels: [String:Label] = [:]
+    var currentLineNumber:Int = -1
+
+    var currentLine:ScriptLine? {
+        get {
+            if currentLineNumber >= lines.count {
+                return nil
+            }
+
+            return lines[currentLineNumber]
+        }
+    }
+
+    func advance() {
+        currentLineNumber += 1
+    }
 }
 
 protocol IScriptLoader {
@@ -45,24 +53,28 @@ class Script : IScript {
     let includeRegex: Regex
 
     let fileName: String
-    let loader: IScriptLoader
+    let loader: (String) -> [String]
+    let gameContext: GameContext
     let context: ScriptContext
 
-    init(loader:IScriptLoader, _ fileName: String) throws {
+    init(loader:(String -> [String]), _ fileName: String, _ gameContext:GameContext) throws {
         self.loader = loader
         self.fileName = fileName
+        self.gameContext = gameContext
         self.context = ScriptContext()
 
         labelRegex = try Regex("^\\s*(\\w+((\\.|-|\\w)+)?):")
         includeRegex = try Regex("^\\s*include (.+)$")
     }
 
-    func run(context:GameContext) {
+    func run(args:[String]) {
         initialize(self.fileName, context: self.context)
+
+        next()
     }
 
     private func initialize(fileName: String, context: ScriptContext) {
-        let lines = self.loader.load(fileName)
+        let lines = self.loader(fileName)
 
         print("line count: \(lines.count)")
 
@@ -96,6 +108,18 @@ class Script : IScript {
         }
     }
 
+    func next() {
+        self.context.advance()
+
+        guard let line = self.context.currentLine  else {
+            return
+        }
+
+        self.gameContext.events.echoText(line.originalText)
+
+        next()
+    }
+
     func gotoLabel(label:String) -> ScriptLine? {
         guard let target = self.context.labels[label] else {
             // throw error that label wasn't found
@@ -106,6 +130,12 @@ class Script : IScript {
         print("Found: \(scriptLine.fileName)(\(scriptLine.lineNumber)) \(scriptLine.originalText)")
         return scriptLine
     }
+}
+
+enum LineResult {
+    case next
+    case goto(label:String)
+    case gosub(label:String, args:[String])
 }
 
 class Regex {
