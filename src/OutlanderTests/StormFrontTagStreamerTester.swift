@@ -158,7 +158,7 @@ class StormFrontTagStreamerTester: QuickSpec {
                 
                 expect(self.settings["Athletics.LearningRate"]).toNot(beNil())
                 let rate = LearningRate.fromDescription("deliberative")
-                expect(self.settings["Athletics.LearningRate"]).to(equal("\(rate.rateId)"))
+                expect(self.settings["Athletics.LearningRate"]).to(equal("\(rate!.rateId)"))
                 
                 expect(self.settings["Athletics.LearningRateName"]).toNot(beNil())
                 expect(self.settings["Athletics.LearningRateName"]).to(equal("deliberative"))
@@ -550,7 +550,7 @@ class StormFrontTagStreamerTester: QuickSpec {
         })
     }
     
-    func streamData(data:[String]) {
+    func streamData(_ data:[String]) {
         let tokenizer = StormFrontTokenizer()
         
         for line in data {

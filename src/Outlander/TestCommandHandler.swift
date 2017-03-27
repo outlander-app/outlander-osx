@@ -15,11 +15,11 @@ class TestCommandHandler : NSObject, CommandHandler {
         return TestCommandHandler()
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#test")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#test")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         NSBeep()
     }
 }

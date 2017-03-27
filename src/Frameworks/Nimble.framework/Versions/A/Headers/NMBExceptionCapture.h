@@ -3,8 +3,8 @@
 
 @interface NMBExceptionCapture : NSObject
 
-- (id)initWithHandler:(void(^)(NSException *))handler finally:(void(^)())finally;
-- (void)tryBlock:(void(^)())unsafeBlock;
+- (nonnull instancetype)initWithHandler:(void(^ _Nullable)(NSException * _Nonnull))handler finally:(void(^ _Nullable)())finally;
+- (void)tryBlock:(__attribute__((noescape)) void(^ _Nonnull)())unsafeBlock NS_SWIFT_NAME(tryBlock(_:));
 
 @end
 

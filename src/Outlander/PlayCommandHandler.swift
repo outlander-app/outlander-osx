@@ -14,7 +14,7 @@ class PlayCommandHandler : NSObject, CommandHandler, NSSoundDelegate {
     var sounds:[NSSound] = []
     var fileSystem:FileSystem
 
-    class func newInstance(fileSystem:FileSystem) -> PlayCommandHandler {
+    class func newInstance(_ fileSystem:FileSystem) -> PlayCommandHandler {
         return PlayCommandHandler(fileSystem: fileSystem)
     }
 
@@ -22,14 +22,14 @@ class PlayCommandHandler : NSObject, CommandHandler, NSSoundDelegate {
         self.fileSystem = fileSystem
     }
 
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#play")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#play")
     }
 
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         let text = command
-            .substringFromIndex(command.startIndex.advancedBy(5))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 5))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
         guard text.characters.count > 0 else {
             removeStoppedSounds()
@@ -46,15 +46,15 @@ class PlayCommandHandler : NSObject, CommandHandler, NSSoundDelegate {
     }
 
     func clear() {
-        for index in sounds.count.stride(through: 1, by: -1) {
+        for index in stride(from: sounds.count, through: 1, by: -1) {
             let sound = sounds[index - 1]
-            if sound.playing {
+            if sound.isPlaying {
                 sound.stop()
             }
         }
     }
 
-    func play(soundFile:String, context:GameContext) {
+    func play(_ soundFile:String, context:GameContext) {
 
         var file = soundFile
 
@@ -76,18 +76,18 @@ class PlayCommandHandler : NSObject, CommandHandler, NSSoundDelegate {
     }
 
     func removeStoppedSounds() {
-        for index in sounds.count.stride(through: 1, by: -1) {
+        for index in stride(from: sounds.count, through: 1, by: -1) {
             let sound = sounds[index - 1]
-            if !sound.playing {
-                sounds.removeAtIndex(index - 1)
+            if !sound.isPlaying {
+                sounds.remove(at: index - 1)
             }
         }
     }
 
-    func sound(sound: NSSound, didFinishPlaying flag: Bool) {
-        if let idx = sounds.indexOf(sound) {
+    func sound(_ sound: NSSound, didFinishPlaying flag: Bool) {
+        if let idx = sounds.index(of: sound) {
             sound.delegate = nil
-            sounds.removeAtIndex(idx)
+            sounds.remove(at: idx)
         }
     }
 }

@@ -24,12 +24,12 @@ public final class MapZone : NSObject {
         roomIdLookup = [:]
     }
     
-    func addRoom(room:MapNode) {
+    func addRoom(_ room:MapNode) {
         rooms.append(room)
         roomIdLookup[room.id] = room
     }
     
-    func mapSize(z:Int, padding:Double) -> NSRect {
+    func mapSize(_ z:Int, padding:Double) -> NSRect {
         
         var maxX:Double = 0
         var minX:Double = 0
@@ -65,7 +65,7 @@ public final class MapZone : NSObject {
         return NSRect(x: width - maxX - (padding / 2.0), y: height - maxY - (padding / 2.0), width: width*1.0, height: height*1.0)
     }
     
-    func roomWithId(id:String) -> MapNode? {
+    func roomWithId(_ id:String) -> MapNode? {
         
         if id.characters.count == 0 {
             return nil
@@ -74,7 +74,7 @@ public final class MapZone : NSObject {
         return roomIdLookup[id]
     }
     
-    func findRoomFrom(id:String, name:String, description:String) -> MapNode? {
+    func findRoomFrom(_ id:String, name:String, description:String) -> MapNode? {
         
         let last = roomIdLookup[id]
         
@@ -100,7 +100,7 @@ public final class MapZone : NSObject {
     }
     
     
-    func findRoomFuzyFrom(currentRoomId:String?, name:String, description:String) -> MapNode? {
+    func findRoomFuzyFrom(_ currentRoomId:String?, name:String, description:String) -> MapNode? {
         
         let trimmed = description
        
@@ -117,7 +117,7 @@ public final class MapZone : NSObject {
         return currentRoom
     }
     
-    func findRoom(name:String, description:String) -> MapNode? {
+    func findRoom(_ name:String, description:String) -> MapNode? {
         
         let trimmed = description
        
@@ -134,14 +134,14 @@ public final class MapZone : NSObject {
         return nil
     }
     
-    func roomsWithNote(note:String) -> [MapNode] {
+    func roomsWithNote(_ note:String) -> [MapNode] {
         
         return self.rooms.filter {
             
             if let notes = $0.notes {
-                let split = notes.lowercaseString.componentsSeparatedByString("|")
+                let split = notes.lowercased().components(separatedBy: "|")
                 let filter = split
-                    .filter { $0.hasPrefix(note.lowercaseString) }
+                    .filter { $0.hasPrefix(note.lowercased()) }
                 
                 return filter.count > 0
             }
@@ -150,14 +150,14 @@ public final class MapZone : NSObject {
         }
     }
     
-    func moveCostForNode(node: MapNode, toNode: MapNode) -> Int {
+    func moveCostForNode(_ node: MapNode, toNode: MapNode) -> Int {
         let index = node.position
         let toIndex = toNode.position
         
         return ((abs(index.x - toIndex.x) > 0 && abs(index.y - toIndex.y) > 0) ? 10 : 14)
     }
     
-    func hValueForNode(node: MapNode, endNode: MapNode) -> Int {
+    func hValueForNode(_ node: MapNode, endNode: MapNode) -> Int {
         let coord1 = node.position
         let coord2 = endNode.position
         

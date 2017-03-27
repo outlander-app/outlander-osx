@@ -9,19 +9,19 @@
 import Foundation
 
 @objc
-public class GameContext : NSObject {
+open class GameContext : NSObject {
     
     class func newInstance() -> GameContext {
         return GameContext()
     }
     
-    public var settings:AppSettings
-    public var pathProvider:AppPathProvider
-    public var layout:Layout?
-    public var vitalsSettings:VitalsSettings
-    public var classSettings:ClassSettings
+    open var settings:AppSettings
+    open var pathProvider:AppPathProvider
+    open var layout:Layout?
+    open var vitalsSettings:VitalsSettings
+    open var classSettings:ClassSettings
     
-    public var mapZone:MapZone? {
+    open var mapZone:MapZone? {
         didSet {
             
             var zoneId = ""
@@ -30,7 +30,7 @@ public class GameContext : NSObject {
                 zoneId = self.mapZone!.id
             }
             
-            let lastId = self.globalVars.cacheObjectForKey("zoneid") as? String ?? ""
+            let lastId = self.globalVars.cacheObject(forKey: "zoneid") as? String ?? ""
             
             if zoneId != lastId {
                 self.globalVars.setCacheObject(zoneId, forKey: "zoneid")
@@ -38,17 +38,17 @@ public class GameContext : NSObject {
         }
     }
 
-    public var maps: [String:MapZone]
+    open var maps: [String:MapZone]
     
-    public var highlights:OLMutableArray
-    public var aliases:OLMutableArray
-    public var macros:OLMutableArray
-    public var triggers:OLMutableArray
-    public var substitutes:OLMutableArray
-    public var gags:OLMutableArray
-    public var presets:[String:ColorPreset]
-    public var globalVars:TSMutableDictionary
-    public var events:EventAggregator
+    open var highlights:OLMutableArray
+    open var aliases:OLMutableArray
+    open var macros:OLMutableArray
+    open var triggers:OLMutableArray
+    open var substitutes:OLMutableArray
+    open var gags:OLMutableArray
+    open var presets:[String:ColorPreset]
+    open var globalVars:TSMutableDictionary
+    open var events:EventAggregator
     
     override init() {
         self.settings = AppSettings()
@@ -69,9 +69,9 @@ public class GameContext : NSObject {
         self.maps = [:]
     }
 
-    public func presetFor(setting: String) -> ColorPreset? {
+    open func presetFor(_ setting: String) -> ColorPreset? {
 
-        let settingToCheck = setting.lowercaseString
+        let settingToCheck = setting.lowercased()
 
         if settingToCheck.characters.count == 0 {
             return ColorPreset("", "#cccccc")
@@ -86,23 +86,23 @@ public class GameContext : NSObject {
 }
 
 @objc
-public class VitalsSettings : NSObject {
-    public var healthColor:String = "#cc0000"
-    public var healthTextColor:String = "#f5f5f5"
-    public var manaColor:String = "#00004B"
-    public var manaTextColor:String = "#f5f5f5"
-    public var staminaColor:String = "#004000"
-    public var staminaTextColor:String = "#f5f5f5"
-    public var concentrationColor:String = "#009999"
-    public var concentrationTextColor:String = "#f5f5f5"
-    public var spiritColor:String = "#400040"
-    public var spiritTextColor:String = "#f5f5f5"
+open class VitalsSettings : NSObject {
+    open var healthColor:String = "#cc0000"
+    open var healthTextColor:String = "#f5f5f5"
+    open var manaColor:String = "#00004B"
+    open var manaTextColor:String = "#f5f5f5"
+    open var staminaColor:String = "#004000"
+    open var staminaTextColor:String = "#f5f5f5"
+    open var concentrationColor:String = "#009999"
+    open var concentrationTextColor:String = "#f5f5f5"
+    open var spiritColor:String = "#400040"
+    open var spiritTextColor:String = "#f5f5f5"
 }
 
 @objc
-public class ClassSettings : NSObject {
+open class ClassSettings : NSObject {
 
-    private var _values:[String:Bool] = [:]
+    fileprivate var _values:[String:Bool] = [:]
 
     func clear() {
         _values.removeAll()
@@ -120,14 +120,14 @@ public class ClassSettings : NSObject {
         }
     }
 
-    func set(key:String, value:Bool) {
-        _values[key.lowercaseString] = value
+    func set(_ key:String, value:Bool) {
+        _values[key.lowercased()] = value
     }
 
-    func parse(values:String) {
+    func parse(_ values:String) {
 
         if values.hasPrefix("+") || values.hasPrefix("-") {
-            let components = values.componentsSeparatedByString(" ")
+            let components = values.components(separatedBy: " ")
 
             for comp in components {
                 let s = parseSetting(comp)
@@ -156,8 +156,8 @@ public class ClassSettings : NSObject {
             items.append(ClassSetting(key: key, value: value))
         }
 
-        return items.sort {
-            $0.key.localizedCaseInsensitiveCompare($1.key) == NSComparisonResult.OrderedAscending
+        return items.sorted {
+            $0.key.localizedCaseInsensitiveCompare($1.key) == ComparisonResult.orderedAscending
         }
     }
 
@@ -173,9 +173,9 @@ public class ClassSettings : NSObject {
         return items
     }
 
-    func parseToggleSetting(val:String) -> ClassSetting? {
+    func parseToggleSetting(_ val:String) -> ClassSetting? {
 
-        let list = val.componentsSeparatedByString(" ")
+        let list = val.components(separatedBy: " ")
 
         if list.count < 2 {
             return nil
@@ -185,16 +185,16 @@ public class ClassSettings : NSObject {
         let symbol:String = list[1]
         let value = symbol.toBool()
 
-        return ClassSetting(key: key.lowercaseString, value: value ?? false)
+        return ClassSetting(key: key.lowercased(), value: value ?? false)
     }
 
-    func parseSetting(val:String) -> ClassSetting {
+    func parseSetting(_ val:String) -> ClassSetting {
 
         let key = val.substringFromIndex(1)
         let symbol:String = val[0]
         let value = symbol.toBool()
 
-        return ClassSetting(key: key.lowercaseString, value: value ?? false)
+        return ClassSetting(key: key.lowercased(), value: value ?? false)
     }
 }
 

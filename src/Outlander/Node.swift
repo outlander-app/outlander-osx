@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class Node : NSObject {
+open class Node : NSObject {
     var name:String
     var value:String?
     var attributes:[String: String]? {
@@ -34,17 +34,17 @@ public class Node : NSObject {
         trimAttributes()
     }
     
-    private var _isTrimming = false
+    fileprivate var _isTrimming = false
     
-    public func hasAttr(key:String) -> Bool {
+    open func hasAttr(_ key:String) -> Bool {
         if let dict = self.attributes {
-            return dict.indexForKey(key) != nil
+            return dict.index(forKey: key) != nil
         }
         
         return false
     }
     
-    public func attr(key:String) -> String? {
+    open func attr(_ key:String) -> String? {
         if hasAttr(key) {
             return self.attributes?[key]
         }
@@ -52,11 +52,11 @@ public class Node : NSObject {
         return nil
     }
     
-    override public var description : String {
+    override open var description : String {
         return "Node name=\(name) value=\(value) attrs=\(attributes)"
     }
     
-    private func trimAttributes() {
+    fileprivate func trimAttributes() {
         
         if self.attributes == nil {
             return

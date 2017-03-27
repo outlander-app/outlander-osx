@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public class ColorPreset : NSObject {
+open class ColorPreset : NSObject {
     var name:String
     var color:String
     var backgroundColor:String?

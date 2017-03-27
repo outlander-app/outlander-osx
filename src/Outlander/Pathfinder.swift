@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class Pathfinder {
+open class Pathfinder {
     
-    func findPath(start:String, target:String, zone:MapZone) -> [String]{
+    func findPath(_ start:String, target:String, zone:MapZone) -> [String]{
         
         var openList:[TreeNode] = []
         var closedList:[TreeNode] = []
@@ -27,7 +27,7 @@ public class Pathfinder {
             print("checking: \(current.id)")
             
             closedList.append(current)
-            openList.removeAtIndex(openList.indexOf(current)!)
+            openList.remove(at: openList.index(of: current)!)
             
             if self.isInList(closedList, node: targetNode) {
                 // found path
@@ -39,7 +39,7 @@ public class Pathfinder {
             
             let sorted = currentMapNode.arcs
                 .filter { $0.destination.characters.count > 0 }
-                .sort { Int($0.destination)! < Int($1.destination)! }
+                .sorted { Int($0.destination)! < Int($1.destination)! }
             
             for arc in sorted {
                 
@@ -78,26 +78,26 @@ public class Pathfinder {
         return []
     }
     
-    func backTrack(path:TreeNode) -> [String] {
+    func backTrack(_ path:TreeNode) -> [String] {
         var shortestPath:[String] = []
         
         var step:TreeNode? = path
         
         repeat {
             if step?.parent != nil {
-                shortestPath.insert(step!.id, atIndex: 0)
+                shortestPath.insert(step!.id, at: 0)
             }
             step = step?.parent
         } while step?.parent != nil
        
         if step != nil {
-            shortestPath.insert(step!.id, atIndex: 0)
+            shortestPath.insert(step!.id, at: 0)
         }
         
         return shortestPath
     }
     
-    func getMoves(ids:[String], zone:MapZone) -> [String] {
+    func getMoves(_ ids:[String], zone:MapZone) -> [String] {
         var moves:[String] = []
         
         var last:MapNode?
@@ -116,15 +116,15 @@ public class Pathfinder {
         return moves
     }
     
-    func nodeWithLowestFScore(list:[TreeNode]) -> TreeNode? {
-        return list.sort { $0.fValue < $1.fValue }.first
+    func nodeWithLowestFScore(_ list:[TreeNode]) -> TreeNode? {
+        return list.sorted { $0.fValue < $1.fValue }.first
     }
     
-    func nodeInList(list:[TreeNode], mapNode:MapNode) -> TreeNode? {
+    func nodeInList(_ list:[TreeNode], mapNode:MapNode) -> TreeNode? {
         return list.filter { $0.id == mapNode.id }.first
     }
     
-    func isInList(list:[TreeNode], node:MapNode) -> Bool {
+    func isInList(_ list:[TreeNode], node:MapNode) -> Bool {
         return list.filter { $0.id == node.id }.count > 0
     }
 }

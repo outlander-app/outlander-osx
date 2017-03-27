@@ -9,16 +9,16 @@
 import Foundation
 
 @objc
-public class ScriptStreamHandler : NSObject, NodeHandler {
+open class ScriptStreamHandler : NSObject, NodeHandler {
     
     class func newInstance() -> ScriptStreamHandler {
         return ScriptStreamHandler()
     }
     
-    public func handle(nodes:[Node], text:String, context:GameContext) {
+    open func handle(_ nodes:[Node], text:String, context:GameContext) {
         var dict:[String:AnyObject] = [:]
-        dict["nodes"] = nodes
-        dict["text"] = text
+        dict["nodes"] = nodes as AnyObject?
+        dict["text"] = text as AnyObject?
         
         context.events.publish("ol:game-stream", data: dict)
     }

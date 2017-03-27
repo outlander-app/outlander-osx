@@ -30,7 +30,7 @@ class TriggersLoaderTester : QuickSpec {
                 loader.load()
                 
                 expect(context.triggers.count()).to(equal(1))
-                let trigger = context.triggers.objectAtIndex(0) as! Trigger
+                let trigger = context.triggers.object(at: 0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
                 expect(trigger.actionClass).to(equal(""))
@@ -42,7 +42,7 @@ class TriggersLoaderTester : QuickSpec {
                 loader.load()
                 
                 expect(context.triggers.count()).to(equal(1))
-                let trigger = context.triggers.objectAtIndex(0) as! Trigger
+                let trigger = context.triggers.object(at: 0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
                 expect(trigger.actionClass).to(equal("people"))
@@ -55,18 +55,18 @@ class TriggersLoaderTester : QuickSpec {
                 
                 expect(context.triggers.count()).to(equal(2))
                 
-                var trigger = context.triggers.objectAtIndex(0) as! Trigger
+                var trigger = context.triggers.object(at: 0) as! Trigger
                 expect(trigger.trigger).to(equal("^hi"))
                 expect(trigger.action).to(equal("say hello"))
                 
-                trigger = context.triggers.objectAtIndex(1) as! Trigger
+                trigger = context.triggers.object(at: 1) as! Trigger
                 expect(trigger.trigger).to(equal("^something"))
                 expect(trigger.action).to(equal("another"))
             }
             
             it("saves trigger") {
                 let trigger = Trigger("^hi", "say hello", "people")
-                context.triggers.addObject(trigger)
+                context.triggers.add(trigger)
                 
                 loader.save()
                 
@@ -75,7 +75,7 @@ class TriggersLoaderTester : QuickSpec {
             
             it("saves trigger without class") {
                 let trigger = Trigger("^hi", "say hello", "")
-                context.triggers.addObject(trigger)
+                context.triggers.add(trigger)
                 
                 loader.save()
                 
@@ -84,10 +84,10 @@ class TriggersLoaderTester : QuickSpec {
             
             it("saves multiple triggers") {
                 var trigger = Trigger("^hi", "say hello", "people")
-                context.triggers.addObject(trigger)
+                context.triggers.add(trigger)
                 
                 trigger = Trigger("^oh", "say I heard ...", "")
-                context.triggers.addObject(trigger)
+                context.triggers.add(trigger)
                 
                 loader.save()
                 

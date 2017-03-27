@@ -10,34 +10,34 @@ import Foundation
 
 @objc
 public protocol INotifyMessage {
-    func notify(message:TextTag)
-    func sendCommand(command:CommandContext)
-    func sendEcho(echo:String)
+    func notify(_ message:TextTag)
+    func sendCommand(_ command:CommandContext)
+    func sendEcho(_ echo:String)
 }
 
 @objc
-public class NotifyMessage : NSObject, INotifyMessage {
+open class NotifyMessage : NSObject, INotifyMessage {
 
     class func newInstance() -> NotifyMessage {
         return NotifyMessage()
     }
 
-    var messageBlock: ((message:TextTag) -> Void)?
-    var commandBlock: ((command:CommandContext) -> Void)?
-    var echoBlock: ((echo:String) -> Void)?
+    var messageBlock: ((_ message:TextTag) -> Void)?
+    var commandBlock: ((_ command:CommandContext) -> Void)?
+    var echoBlock: ((_ echo:String) -> Void)?
 
     public override init() {
     }
 
-    public func notify(message:TextTag) {
-        self.messageBlock?(message: message)
+    open func notify(_ message:TextTag) {
+        self.messageBlock?(message)
     }
 
-    public func sendCommand(command:CommandContext) {
-        self.commandBlock?(command: command)
+    open func sendCommand(_ command:CommandContext) {
+        self.commandBlock?(command)
     }
 
-    public func sendEcho(echo:String) {
-        self.echoBlock?(echo: echo)
+    open func sendEcho(_ echo:String) {
+        self.echoBlock?(echo)
     }
 }

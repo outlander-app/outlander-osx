@@ -9,14 +9,14 @@
 import Foundation
 
 extension Array {
-    func forEach(doThis: (element: Element) -> Void) {
+    func forEach(_ doThis: (_ element: Element) -> Void) {
         for e in self {
-            doThis(element: e)
+            doThis(e)
         }
     }
 
-    func find(includedElement: Element -> Bool) -> Int? {
-        for (idx, element) in self.enumerate() {
+    func find(_ includedElement: (Element) -> Bool) -> Int? {
+        for (idx, element) in self.enumerated() {
             if includedElement(element) {
                 return idx
             }

@@ -9,10 +9,10 @@
 import Foundation
 
 public enum ScriptLogLevel : Int {
-    case None = 0
-    case Gosubs = 1
-    case Wait = 2
-    case If = 3
-    case Vars = 4
-    case Actions = 5
+    case none = 0
+    case gosubs = 1
+    case wait = 2
+    case `if` = 3
+    case vars = 4
+    case actions = 5
 }

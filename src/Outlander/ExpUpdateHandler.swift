@@ -21,10 +21,10 @@ class ExpUpdateHandler : NSObject {
     var emitSetting : ((String,String)->Void)?
     var emitExp : ((SkillExp)->Void)?
     
-    private var parsing = false
-    private var exp_regex = "(\\w.*?):\\s+(\\d+)\\s(\\d+)%\\s(\\w.*?)\\s+\\(\\d{1,}/34\\)"
+    fileprivate var parsing = false
+    fileprivate var exp_regex = "(\\w.*?):\\s+(\\d+)\\s(\\d+)%\\s(\\w.*?)\\s+\\(\\d{1,}/34\\)"
     
-    func handle(nodes:[Node], text:String, context:GameContext) {
+    func handle(_ nodes:[Node], text:String, context:GameContext) {
         
         if !self.parsing {
             if text.hasPrefix(ExpUpdateHandler.start_check) {
@@ -42,7 +42,7 @@ class ExpUpdateHandler : NSObject {
             
             for group in groups {
                 
-                let var_name = group[1].replace(" ", withString: "_")
+                let var_name = group[1]!.replace(" ", withString: "_")
                 
                 let skill = SkillExp()
                 skill.name = var_name

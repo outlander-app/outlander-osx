@@ -13,10 +13,10 @@ extension NSColor {
     convenience init(hex:String) {
         var str = hex
         if(str.hasPrefix("#")) {
-            str = hex.substringFromIndex(hex.startIndex.advancedBy(1))
+            str = hex.substring(from: hex.characters.index(hex.startIndex, offsetBy: 1))
         }
         var rgbValue:UInt32 = 0
-        NSScanner(string: str).scanHexInt(&rgbValue)
+        Scanner(string: str).scanHexInt32(&rgbValue)
         
         self.init(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -42,7 +42,7 @@ extension NSColor {
         let red = Int(round(self.redComponent * 0xFF))
         let grn = Int(round(self.greenComponent * 0xFF))
         let blu = Int(round(self.blueComponent * 0xFF))
-        let hexString = NSString(format: "#%02X%02X%02X", red, grn, blu).lowercaseString
+        let hexString = NSString(format: "#%02X%02X%02X", red, grn, blu).lowercased
         return hexString as String
     }
 }

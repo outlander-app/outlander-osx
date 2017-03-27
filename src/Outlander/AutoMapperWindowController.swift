@@ -9,28 +9,28 @@
 import Cocoa
 
 func loadMap <R> (
-    backgroundClosure: () -> R,
-    mainClosure: (R) -> ())
+    _ backgroundClosure: @escaping () -> R,
+    mainClosure: @escaping (R) -> ())
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async {
         let res = backgroundClosure()
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
             mainClosure(res)
         })
     }
 }
 
-func mainThread(mainClosure: () -> ()) {
-    dispatch_async(dispatch_get_main_queue(), {
+func mainThread(_ mainClosure: @escaping () -> ()) {
+    DispatchQueue.main.async(execute: {
         mainClosure()
     })
 }
 
 class MapsDataSource : NSObject, NSComboBoxDataSource {
     
-    private var maps:[MapInfo] = []
+    fileprivate var maps:[MapInfo] = []
     
-    func loadMaps(mapsFolder:String, mapLoader:MapLoader, loaded: (()->Void)?) {
+    func loadMaps(_ mapsFolder:String, mapLoader:MapLoader, loaded: (()->Void)?) {
         
         { () -> [MapMetaResult] in
             
@@ -43,45 +43,45 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
             for res in results {
                 switch res {
                     
-                case let .Success(mapInfo):
+                case let .success(mapInfo):
                     success.append(mapInfo)
                     
-                case let .Error(error):
+                case let .error(error):
                     print("\(error)")
                 }
             }
             
-            self.maps = success.sort { $0.id.compare($1.id, options: NSStringCompareOptions.NumericSearch, range: $0.id.startIndex..<$0.id.endIndex, locale:nil) == NSComparisonResult.OrderedAscending }
+            self.maps = success.sorted { $0.id.compare($1.id, options: NSString.CompareOptions.numeric, range: $0.id.startIndex..<$0.id.endIndex, locale:nil) == ComparisonResult.orderedAscending }
             
             loaded?()
         }
     }
     
-    func mapForZoneId(id:String) -> MapInfo? {
+    func mapForZoneId(_ id:String) -> MapInfo? {
         return self.maps.filter { $0.id == id }.first
     }
     
-    func mapForFile(file:String) -> MapInfo? {
+    func mapForFile(_ file:String) -> MapInfo? {
         return self.maps.filter { $0.file == file }.first
     }
     
-    func mapAtIndex(index:Int) -> MapInfo {
+    func mapAtIndex(_ index:Int) -> MapInfo {
         return self.maps[index];
     }
     
-    func indexOfMap(id:String) -> Int? {
+    func indexOfMap(_ id:String) -> Int? {
         
         if let info = mapForZoneId(id) {
-            return self.maps.indexOf(info)
+            return self.maps.index(of: info)
         }
         
         return nil
     }
 
-    func initializeMaps(context:GameContext, loader: MapLoader) {
+    func initializeMaps(_ context:GameContext, loader: MapLoader) {
         guard let mapsFolder = context.pathProvider.mapsFolder() else { return }
 
-        let start = NSDate()
+        let start = Date()
 
         let maps = self.maps.filter { $0.zone == nil }
 
@@ -93,17 +93,17 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 let result = loader.load(mapsFolder.stringByAppendingPathComponent(m.file))
                 switch result {
 
-                case let .Success(zone):
+                case let .success(zone):
                     m.zone = zone
 
-                case let .Error(error):
+                case let .error(error):
                     print(error)
                 }
                 results.append(result)
             }
             return results
             }, mainClosure: { result -> () in
-                let diff = NSDate().timeIntervalSinceDate(start)
+                let diff = Date().timeIntervalSince(start)
                 self.maps.forEach { map in
                     context.maps[map.id] = map.zone!
                 }
@@ -114,11 +114,11 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     
     // MARK - NSComboBoxDataSource
     
-    func numberOfItemsInComboBox(aComboBox: NSComboBox) -> Int {
+    func numberOfItems(in aComboBox: NSComboBox) -> Int {
         return self.maps.count
     }
     
-    func comboBox(aComboBox: NSComboBox, objectValueForItemAtIndex index: Int) -> AnyObject? {
+    func comboBox(_ aComboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
         guard index > -1 else { return "" }
 
         let map = self.maps[index]
@@ -135,10 +135,10 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     @IBOutlet weak var mapLevelLabel: NSTextField!
     @IBOutlet weak var nodeNameLabel: NSTextField!
     
-    private var mapsDataSource: MapsDataSource = MapsDataSource()
+    fileprivate var mapsDataSource: MapsDataSource = MapsDataSource()
 
-    private var context:GameContext?
-    private let mapLoader:MapLoader = MapLoader()
+    fileprivate var context:GameContext?
+    fileprivate let mapLoader:MapLoader = MapLoader()
     
     var mapLevel:Int = 0 {
         didSet {
@@ -179,21 +179,21 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             
             if let idx = self.mapsDataSource.indexOfMap(zone.id) {
                 
-                self.mapsComboBox.selectItemAtIndex(idx)
+                self.mapsComboBox.selectItem(at: idx)
                 
                 self.renderMap(zone)
             }
         }
 
-        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), let game = self.context?.globalVars.cacheObjectForKey("game") {
+        if let charname = self.context?.globalVars.cacheObject(forKey: "charactername"), let game = self.context?.globalVars.cacheObject(forKey: "game") {
             self.window?.title = "AutoMapper - \(game): \(charname)"
         }
     }
     
-    func setContext(context:GameContext) {
+    func setContext(_ context:GameContext) {
         self.context = context
 
-        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+        self.context?.globalVars.changed.subscribeNext { (obj:Any?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
 
@@ -211,12 +211,14 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     if let id = changed["roomid"] {
                         if let room = self.context!.mapZone?.roomWithId(id) {
                             
-                            if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                            if room.notes != nil && room.notes!.range(of: ".xml") != nil {
                                 
-                                let groups = room.notes!["(.+\\.xml)"].groups()
+                                guard let groups = room.notes!["(.+\\.xml)"].allGroups().first else {
+                                    return
+                                }
                                 
                                 if groups.count > 1 {
-                                    let mapfile = groups[1]
+                                    let mapfile = groups[1]!
                                     
                                     if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
                                         
@@ -260,13 +262,13 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
     
-    func setZoneFromMap(mapInfo:MapInfo) {
+    func setZoneFromMap(_ mapInfo:MapInfo) {
         if let idx = self.mapsDataSource.indexOfMap(mapInfo.id) {
             
             mainThread {
                 
                 if self.mapsComboBox != nil && self.mapsComboBox.indexOfSelectedItem != idx {
-                    self.mapsComboBox.selectItemAtIndex(idx)
+                    self.mapsComboBox.selectItem(at: idx)
                 }
                 else {
                     
@@ -283,15 +285,15 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
     
-    func findCurrentRoom(zone:MapZone) -> MapNode? {
+    func findCurrentRoom(_ zone:MapZone) -> MapNode? {
         if let ctx = self.context {
             
-            let roomId = ctx.globalVars.cacheObjectForKey("roomid") as? String
+            let roomId = ctx.globalVars.cacheObject(forKey: "roomid") as? String
             
-            var name = ctx.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-            name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
+            var name = ctx.globalVars.cacheObject(forKey: "roomtitle") as? String ?? ""
+            name = name.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
             
-            let description = ctx.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+            let description = ctx.globalVars.cacheObject(forKey: "roomdesc") as? String ?? ""
             
             if let room = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
@@ -316,11 +318,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     self.nodesLabel.stringValue = ""
                 }
                 
-                if let zoneId = self.context!.globalVars.cacheObjectForKey("zoneid") as? String {
+                if let zoneId = self.context!.globalVars.cacheObject(forKey: "zoneid") as? String {
                     
                     if let idx = self.mapsDataSource.indexOfMap(zoneId) {
                         if self.mapsComboBox != nil {
-                            self.mapsComboBox.selectItemAtIndex(idx)
+                            self.mapsComboBox.selectItem(at: idx)
                         } else {
                             self.loadMapFromInfo(self.mapsDataSource.mapAtIndex(idx))
                         }
@@ -332,7 +334,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
 
-    func renderMap(zone:MapZone) {
+    func renderMap(_ zone:MapZone) {
         
         if self.mapView == nil {
             return
@@ -352,11 +354,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         self.nodesLabel.stringValue = "Map Rooms: \(roomCount)"
         
         if let rect = self.mapView?.rectForRoom(self.mapView?.currentRoomId) {
-            self.scrollView.scrollRectToVisible(rect)
+            self.scrollView.scrollToVisible(rect)
         }
     }
     
-    func loadMapFromInfo(info:MapInfo) {
+    func loadMapFromInfo(_ info:MapInfo) {
 
         if let loaded = info.zone {
             self.context?.mapZone = loaded
@@ -380,17 +382,17 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
 
             self.context?.events.echoText("[Automapper]: loading selected map \(info.file)", preset: "automapper")
             
-            let start = NSDate()
+            let start = Date()
 
             loadMap({ () -> MapLoadResult in
                 return self.mapLoader.load(file)
             }, mainClosure: { (result) -> () in
                 
-                let diff = NSDate().timeIntervalSinceDate(start)
+                let diff = Date().timeIntervalSince(start)
                 
                 switch result {
                     
-                case let .Success(zone):
+                case let .success(zone):
 
                     self.context?.events.echoText("[Automapper]: \(zone.name) loaded in \(diff.format(".2")) seconds", preset: "automapper")
                     
@@ -403,7 +405,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                         self.renderMap(zone)
                     }
                     
-                case let .Error(error):
+                case let .error(error):
                     self.context?.events.echoText("[Automapper]: map loaded with error in \(diff.format(".2")) seconds", preset: "automapper")
                     self.context?.events.echoText("\(error)")
                     if self.nodesLabel != nil {
@@ -414,7 +416,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
     
-    @IBAction func mapLevelAction(sender: NSSegmentedControl) {
+    @IBAction func mapLevelAction(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             self.mapLevel += 1
         } else {
@@ -422,7 +424,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         }
     }
     
-    @IBAction func mapZoomAction(sender: NSSegmentedControl) {
+    @IBAction func mapZoomAction(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             self.mapZoom += 0.5
         } else {
@@ -439,7 +441,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         clipView.setBoundsSize(clipViewBounds.size)
     }
     
-    func comboBoxSelectionDidChange(notification: NSNotification) {
+    func comboBoxSelectionDidChange(_ notification: Notification) {
         let idx = self.mapsComboBox.indexOfSelectedItem
         let selectedMap = self.mapsDataSource.mapAtIndex(idx)
         

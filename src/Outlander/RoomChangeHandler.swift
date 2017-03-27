@@ -10,7 +10,7 @@ import Foundation
 
 @objc
 public protocol NodeHandler {
-    func handle(nodes:[Node], text:String, context:GameContext)
+    func handle(_ nodes:[Node], text:String, context:GameContext)
 }
 
 @objc
@@ -18,9 +18,9 @@ class RoomChangeHandler : NSObject, NodeHandler {
     
     var relay:CommandRelay
     
-    private var showAfterPrompt = false
+    fileprivate var showAfterPrompt = false
     
-    class func newInstance(relay:CommandRelay) -> RoomChangeHandler {
+    class func newInstance(_ relay:CommandRelay) -> RoomChangeHandler {
         return RoomChangeHandler(relay)
     }
     
@@ -28,7 +28,7 @@ class RoomChangeHandler : NSObject, NodeHandler {
         self.relay = relay
     }
     
-    func handle(nodes:[Node], text:String, context:GameContext) {
+    func handle(_ nodes:[Node], text:String, context:GameContext) {
         
         if let zone = context.mapZone {
             
@@ -43,12 +43,12 @@ class RoomChangeHandler : NSObject, NodeHandler {
                     
                     self.showAfterPrompt = false
                     
-                    var title = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-                    let desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+                    var title = context.globalVars.cacheObject(forKey: "roomtitle") as? String ?? ""
+                    let desc = context.globalVars.cacheObject(forKey: "roomdesc") as? String ?? ""
                     
-                    title = title.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
+                    title = title.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
                     
-                    let roomId = context.globalVars.cacheObjectForKey("roomid") as? String
+                    let roomId = context.globalVars.cacheObject(forKey: "roomid") as? String
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
                 }
@@ -56,31 +56,31 @@ class RoomChangeHandler : NSObject, NodeHandler {
         }
     }
     
-    func findRoom(context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) {
+    func findRoom(_ context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) {
 
-        let start = NSDate()
+        let start = Date()
 
         if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
             
-            let diff = NSDate().timeIntervalSinceDate(start)
+            let diff = Date().timeIntervalSince(start)
             self.send(context, room: room, diff: diff)
         }
         else {
             if let room = context.findRoomInZones(name, description: description) {
 
-                let diff = NSDate().timeIntervalSinceDate(start)
+                let diff = Date().timeIntervalSince(start)
                 self.send(context, room: room, diff: diff)
             }
         }
     }
     
-    func send(context:GameContext, room:MapNode, diff:Double) {
+    func send(_ context:GameContext, room:MapNode, diff:Double) {
         
         context.globalVars.setCacheObject(room.id, forKey: "roomid")
         
         var tag = TextTag()
         
-        if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+        if context.globalVars.cacheObject(forKey: "debugautomapper") as? String == "1" {
         
             tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
 //            tag.color = "#00ffff"
@@ -88,7 +88,7 @@ class RoomChangeHandler : NSObject, NodeHandler {
             self.relay.sendEcho(tag)
         }
         
-        let exits = room.nonCardinalExists().map { $0.move }.joinWithSeparator(", ")
+        let exits = room.nonCardinalExists().map { $0.move }.joined(separator: ", ")
         
         if exits.characters.count > 0 {
         

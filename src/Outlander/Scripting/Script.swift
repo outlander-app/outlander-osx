@@ -53,7 +53,7 @@ class Script : IScript {
     let gameContext: GameContext
     let context: ScriptContext
 
-    init(loader:(String -> [String]), _ fileName: String, _ gameContext:GameContext) throws {
+    init(loader: @escaping ((String) -> [String]), _ fileName: String, _ gameContext:GameContext) throws {
         self.loader = loader
         self.fileName = fileName
         self.gameContext = gameContext
@@ -63,13 +63,13 @@ class Script : IScript {
         includeRegex = try Regex("^\\s*include (.+)$")
     }
 
-    func run(args:[String]) {
+    func run(_ args:[String]) {
         initialize(self.fileName, context: self.context)
 
         next()
     }
 
-    private func initialize(fileName: String, context: ScriptContext) {
+    fileprivate func initialize(_ fileName: String, context: ScriptContext) {
         let lines = self.loader(fileName)
 
         print("line count: \(lines.count)")
@@ -83,7 +83,7 @@ class Script : IScript {
                 continue
             }
 
-            if let include = includeRegex.firstMatch(line) {
+            if let include = includeRegex.firstMatch(line as NSString) {
                 guard include != fileName else {
                     print("script \(fileName) cannot include itself!")
                     continue
@@ -95,7 +95,7 @@ class Script : IScript {
                 context.lines.append(scriptLine)
             }
 
-            if let label = labelRegex.firstMatch(line) {
+            if let label = labelRegex.firstMatch(line as NSString) {
                 if let existing  = context.labels[label] {
                     print("*** \(fileName)(\(index)): replacing label \(existing.name) ***")
                 }
@@ -116,7 +116,7 @@ class Script : IScript {
         next()
     }
 
-    func gotoLabel(label:String) -> ScriptLine? {
+    func gotoLabel(_ label:String) -> ScriptLine? {
         guard let target = self.context.labels[label] else {
             // throw error that label wasn't found
             return nil

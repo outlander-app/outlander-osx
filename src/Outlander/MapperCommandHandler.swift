@@ -12,12 +12,12 @@ extension GameContext {
 
     func resetMap() {
         if let zone = self.mapZone {
-            var name = self.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-            name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
+            var name = self.globalVars.cacheObject(forKey: "roomtitle") as? String ?? ""
+            name = name.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
 
-            let description = self.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+            let description = self.globalVars.cacheObject(forKey: "roomdesc") as? String ?? ""
 
-            let roomId = self.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+            let roomId = self.globalVars.cacheObject(forKey: "roomid") as? String ?? ""
 
             if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 print("reset: found room \(currentRoom.id)")
@@ -28,7 +28,7 @@ extension GameContext {
         }
     }
 
-    func findRoomInZones(name: String, description: String) -> MapNode? {
+    func findRoomInZones(_ name: String, description: String) -> MapNode? {
 
         for (_, zone) in self.maps {
             let (found, room) = findRoomInZone(zone, name: name, description: description)
@@ -47,7 +47,7 @@ extension GameContext {
         return nil
     }
 
-    private func findRoomInZone(zone: MapZone, name:String, description:String) -> (Bool, MapNode?) {
+    fileprivate func findRoomInZone(_ zone: MapZone, name:String, description:String) -> (Bool, MapNode?) {
 
         if let currentRoom = zone.findRoomFuzyFrom(nil, name: name, description: description) {
             return (true, currentRoom)
@@ -64,14 +64,14 @@ class MapperCommandHandler : NSObject, CommandHandler {
         return MapperCommandHandler()
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#mapper")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#mapper")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         let text = command
-            .substringFromIndex(command.startIndex.advancedBy(7))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 7))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
         if text == "reset" {
             withContext.resetMap()
@@ -82,10 +82,10 @@ class MapperCommandHandler : NSObject, CommandHandler {
 @objc
 class MapperGotoCommandHandler : NSObject, CommandHandler {
     
-    private var startDate = NSDate()
-    private var relay:CommandRelay
+    fileprivate var startDate = Date()
+    fileprivate var relay:CommandRelay
     
-    class func newInstance(relay:CommandRelay) -> MapperGotoCommandHandler {
+    class func newInstance(_ relay:CommandRelay) -> MapperGotoCommandHandler {
         return MapperGotoCommandHandler(relay)
     }
     
@@ -93,32 +93,32 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
         self.relay = relay
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#goto")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#goto")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         
         let area = command
-            .substringFromIndex(command.startIndex.advancedBy(5))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 5))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         self.gotoArea(area, context: withContext)
     }
 
-    func gotoArea(area:String, context:GameContext) {
+    func gotoArea(_ area:String, context:GameContext) {
         
         { () -> [String] in
             
-            self.startDate = NSDate()
+            self.startDate = Date()
             
             if let zone = context.mapZone {
-                var name = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-                name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
+                var name = context.globalVars.cacheObject(forKey: "roomtitle") as? String ?? ""
+                name = name.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
                 
-                let description = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+                let description = context.globalVars.cacheObject(forKey: "roomdesc") as? String ?? ""
              
-                let roomId = context.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+                let roomId = context.globalVars.cacheObject(forKey: "roomid") as? String ?? ""
                 
                 if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
@@ -174,10 +174,10 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
             
         } ~> { (moves) -> () in
             
-            let walk = moves.joinWithSeparator(", ")
+            let walk = moves.joined(separator: ", ")
             
-            if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
-                let diff = NSDate().timeIntervalSinceDate(self.startDate)
+            if context.globalVars.cacheObject(forKey: "debugautomapper") as? String == "1" {
+                let diff = Date().timeIntervalSince(self.startDate)
                 self.sendMessage("Debug: path found in \(diff) seconds")
             }
             
@@ -189,7 +189,7 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
         }
     }
     
-    func sendMessage(message:String) {
+    func sendMessage(_ message:String) {
         let tag = TextTag()
         tag.text = "[AutoMapper] \(message)\n"
 //        tag.color = "#00ffff"
@@ -197,12 +197,12 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
         relay.sendEcho(tag)
     }
     
-    func autoWalk(moves:[String]) {
+    func autoWalk(_ moves:[String]) {
         
         var walk = ""
         
         for move in moves {
-            if move.rangeOfString(" ") != nil {
+            if move.range(of: " ") != nil {
                 walk += " \"\(move)\""
             } else {
                 walk += " \(move)"

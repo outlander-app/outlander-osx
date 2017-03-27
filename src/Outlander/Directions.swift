@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DirectionsView : NSView {
+open class DirectionsView : NSView {
     
     var dir = NSImage(named: "Directions")
     var north = NSImage(named: "North")
@@ -25,63 +25,63 @@ public class DirectionsView : NSView {
     
     var availableDirections:[String] = []
     
-    public func setDirections(dirs:[String]) {
+    open func setDirections(_ dirs:[String]) {
         availableDirections = dirs
         self.needsDisplay = true
     }
     
-    public override var flipped:Bool {
+    open override var isFlipped:Bool {
         get {
             return true
         }
     }
     
-    public override func drawRect(dirtyRect: NSRect) {
+    open override func draw(_ dirtyRect: NSRect) {
         
-        dir?.drawInRect(self.bounds)
+        dir?.draw(in: self.bounds)
         
-        if self.availableDirections.indexOf("north") != nil {
-            north?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "north") != nil {
+            north?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("south") != nil {
-            south?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "south") != nil {
+            south?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("east") != nil {
-            east?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "east") != nil {
+            east?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("west") != nil {
-            west?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "west") != nil {
+            west?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("northeast") != nil {
-            northeast?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "northeast") != nil {
+            northeast?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("northwest") != nil {
-            northwest?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "northwest") != nil {
+            northwest?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("southeast") != nil {
-            southeast?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "southeast") != nil {
+            southeast?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("southwest") != nil {
-            southwest?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "southwest") != nil {
+            southwest?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("up") != nil {
-            up?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "up") != nil {
+            up?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("down") != nil {
-            down?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "down") != nil {
+            down?.draw(in: self.bounds)
         }
         
-        if self.availableDirections.indexOf("out") != nil {
-            out?.drawInRect(self.bounds)
+        if self.availableDirections.index(of: "out") != nil {
+            out?.draw(in: self.bounds)
         }
     }
 }

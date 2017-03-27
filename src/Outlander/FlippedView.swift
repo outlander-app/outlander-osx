@@ -10,18 +10,18 @@ import Foundation
 
 @objc
 class FlippedView : NSView {
-    override var flipped:Bool {
+    override var isFlipped:Bool {
         get {
             return true
         }
     }
     
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
         
 //        NSColor.blackColor().setFill()
 //        
 //        NSRectFill(dirtyRect)
         
-        super.drawRect(dirtyRect)
+        super.draw(dirtyRect)
     }
 }

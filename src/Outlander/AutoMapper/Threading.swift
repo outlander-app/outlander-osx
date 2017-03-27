@@ -8,19 +8,19 @@
 
 import Foundation
 
-infix operator ~> {}
+infix operator ~>
 
 /**
 Executes the lefthand closure on a background thread and,
 upon completion, the righthand closure on the main thread.
 */
 func ~> (
-    backgroundClosure: () -> (),
-    mainClosure:       () -> ())
+    backgroundClosure: @escaping () -> (),
+    mainClosure:       @escaping () -> ())
 {
-    dispatch_async(queue) {
+    queue.async {
         backgroundClosure()
-        dispatch_async(dispatch_get_main_queue(), mainClosure)
+        DispatchQueue.main.async(execute: mainClosure)
     }
 }
 
@@ -30,16 +30,16 @@ upon completion, the righthand closure on the main thread.
 Passes the background closure's output to the main closure.
 */
 func ~> <R> (
-    backgroundClosure: () -> R,
-    mainClosure:       (result: R) -> ())
+    backgroundClosure: @escaping () -> R,
+    mainClosure:       @escaping (_ result: R) -> ())
 {
-    dispatch_async(queue) {
+    queue.async {
         let result = backgroundClosure()
-        dispatch_async(dispatch_get_main_queue(), {
-            mainClosure(result: result)
+        DispatchQueue.main.async(execute: {
+            mainClosure(result)
         })
     }
 }
 
 /** Serial dispatch queue used by the ~> operator. */
-private let queue = dispatch_queue_create("serial-worker", DISPATCH_QUEUE_SERIAL)
+private let queue = DispatchQueue(label: "serial-worker", attributes: [])

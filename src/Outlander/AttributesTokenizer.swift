@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class AttributesTokenizer {
+open class AttributesTokenizer {
     
     struct Attribute {
         var name:String
         var value:String
     }
     
-    public func tokenize(data:String) -> [String:String]{
+    open func tokenize(_ data:String) -> [String:String]{
         var attributes = [String:String]()
         
         let context = ParseContext(atPosition:0, withMarker:data.startIndex, forString:data)
@@ -28,7 +28,7 @@ public class AttributesTokenizer {
         return attributes
     }
     
-    private func scanAttribute(context:ParseContext) -> Attribute?{
+    fileprivate func scanAttribute(_ context:ParseContext) -> Attribute?{
         context.advanceTo { (char) -> Bool in
             return char == "="
         }
@@ -37,7 +37,7 @@ public class AttributesTokenizer {
             return nil
         }
         
-        let name = context.consumedCharacters.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let name = context.consumedCharacters.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         context.advance()
         context.flushConsumedCharacters()

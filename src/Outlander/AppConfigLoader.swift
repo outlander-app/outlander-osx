@@ -11,7 +11,7 @@ import Foundation
 @objc
 class AppConfigLoader : NSObject {
 
-    class func newInstance(context:GameContext, fileSystem:FileSystem) -> AppConfigLoader {
+    class func newInstance(_ context:GameContext, fileSystem:FileSystem) -> AppConfigLoader {
         return AppConfigLoader(context: context, fileSystem: fileSystem)
     }
 
@@ -36,7 +36,7 @@ class AppConfigLoader : NSObject {
         var data:String?
 
         do {
-            data = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+            data = try self.fileSystem.string(withContentsOfFile: configFile, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return
         }

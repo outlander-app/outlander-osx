@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Substitute : NSObject {
+open class Substitute : NSObject {
     var pattern:String?
     var action:String?
     var actionClass:String?

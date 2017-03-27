@@ -14,37 +14,37 @@ class Regex {
 
     init(_ pattern: String) throws {
         self.pattern = pattern
-        self.internalExpression = try NSRegularExpression(pattern: pattern, options: .AnchorsMatchLines)
+        self.internalExpression = try NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
     }
 
-    func test(input: String) -> Bool {
+    func test(_ input: String) -> Bool {
         let matches = matchResults(input)
         return matches.count > 0
     }
 
-    func firstMatch(input: NSString, options: NSMatchingOptions? = nil ) -> String? {
+    func firstMatch(_ input: NSString, options: NSRegularExpression.MatchingOptions? = nil ) -> String? {
         if let match =  matchResults( input as String, options ).first {
-            let range = match.rangeAtIndex(1)
-            return input.substringWithRange(range)
-                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            let range = match.rangeAt(1)
+            return input.substring(with: range)
+                .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
 
         return nil
     }
 
-    func groups(input: NSString, options: NSMatchingOptions? = nil ) -> [String] {
+    func groups(_ input: NSString, options: NSRegularExpression.MatchingOptions? = nil ) -> [String] {
         let matches =  matchResults( input as String, options )
         return matches.map {
-            let range = $0.rangeAtIndex(1)
-            return input.substringWithRange(range)
-                .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            let range = $0.rangeAt(1)
+            return input.substring(with: range)
+                .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
 
-    func matchResults(input: String, _ options: NSMatchingOptions? = nil ) -> [NSTextCheckingResult] {
-        return self.internalExpression.matchesInString(
-            input,
-            options: options ?? NSMatchingOptions(rawValue: 0),
+    func matchResults(_ input: String, _ options: NSRegularExpression.MatchingOptions? = nil ) -> [NSTextCheckingResult] {
+        return self.internalExpression.matches(
+            in: input,
+            options: options ?? NSRegularExpression.MatchingOptions(rawValue: 0),
             range: NSMakeRange(0, input.characters.count) )
     }
 }

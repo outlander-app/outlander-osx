@@ -15,11 +15,11 @@ class BeepCommandHandler : NSObject, CommandHandler {
         return BeepCommandHandler()
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#beep")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#beep")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         NSBeep()
     }
 }
@@ -31,11 +31,11 @@ class FlashCommandHandler : NSObject, CommandHandler {
         return FlashCommandHandler()
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#flash")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#flash")
     }
     
-    func handle(command: String, withContext: GameContext) {
-        NSApplication.sharedApplication().requestUserAttention(NSRequestUserAttentionType.CriticalRequest)
+    func handle(_ command: String, with withContext: GameContext) {
+        NSApplication.shared().requestUserAttention(NSRequestUserAttentionType.criticalRequest)
     }
 }
