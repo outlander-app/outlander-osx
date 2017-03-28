@@ -170,7 +170,9 @@ open class ClassSettings : NSObject {
             }
         }
 
-        return items
+        return items.sorted {
+            $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending
+        }
     }
 
     func parseToggleSetting(_ val:String) -> ClassSetting? {

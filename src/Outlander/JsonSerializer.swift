@@ -221,8 +221,8 @@ open class JSONSerializer {
                 handledValue += "]"
             }
             else if property.displayStyle == Mirror.DisplayStyle.class ||
-                property.displayStyle == Mirror.DisplayStyle.struct ||
-                String(describing: value).contains("#") {
+                property.displayStyle == Mirror.DisplayStyle.struct {
+//                String(describing: value).contains("#") {
                 handledValue = toJson(value)
             }
             else if property.displayStyle == Mirror.DisplayStyle.optional {

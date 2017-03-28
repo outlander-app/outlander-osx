@@ -10,10 +10,10 @@
 
 @interface SkillExp : NSObject
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) LearningRate *mindState;
-@property (nonatomic, strong) NSDecimalNumber *ranks;
-@property (nonatomic, strong) NSDecimalNumber *originalRanks;
+@property (nonatomic, copy, nonnull) NSString *name;
+@property (nonatomic, strong, nonnull) LearningRate *mindState;
+@property (nonatomic, strong, nonnull) NSDecimalNumber *ranks;
+@property (nonatomic, strong, nonnull) NSDecimalNumber *originalRanks;
 @property (nonatomic, assign) BOOL isNew;
 
 @end

@@ -43,9 +43,9 @@ class EchoCommandHandler : NSObject, CommandHandler {
         text = text == nil ? "" : text
         
         let tag = TextTag()
-        tag.text = "\(text)\n"
-        tag.color = foregroundColor
-        tag.backgroundColor = backgroundColor
+        tag.text = "\(text!)\n"
+        tag.color = foregroundColor!
+        tag.backgroundColor = backgroundColor!
         tag.targetWindow = window!.lowercased()
         self.relay.sendEcho(tag)
     }

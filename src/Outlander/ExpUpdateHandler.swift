@@ -43,12 +43,11 @@ class ExpUpdateHandler : NSObject {
             for group in groups {
                 
                 let var_name = group[1]!.replace(" ", withString: "_")
-                
+
                 let skill = SkillExp()
                 skill.name = var_name
-                skill.mindState = LearningRate.fromDescription(group[4])
-                skill.ranks = NSDecimalNumber(string: "\(group[2]).\(group[3])")
-                
+                skill.mindState = LearningRate.fromDescription(group[4]!)!
+                skill.ranks = NSDecimalNumber(string: "\(group[2]!).\(group[3]!)")
                 
                 emitSetting?("\(var_name).Ranks", "\(skill.ranks)")
                 emitSetting?("\(var_name).LearningRate", "\(skill.mindState.rateId)")

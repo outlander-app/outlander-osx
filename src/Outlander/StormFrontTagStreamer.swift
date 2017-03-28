@@ -501,8 +501,8 @@ open class StormFrontTagStreamer : NSObject {
             skill.mindState = rate
             skill.isNew = isNew
             
-            emitSetting?("\(expName).LearningRate", "\(rate?.rateId)")
-            emitSetting?("\(expName).LearningRateName", "\(rate?.desc)")
+            emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+            emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
             
             emitExp?(skill)
             return
@@ -529,8 +529,8 @@ open class StormFrontTagStreamer : NSObject {
         skill.isNew = isNew
         
         emitSetting?("\(expName).Ranks", ranks as String)
-        emitSetting?("\(expName).LearningRate", "\(rate!.rateId)")
-        emitSetting?("\(expName).LearningRateName", "\(rate!.desc)")
+        emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+        emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
         
         emitExp?(skill)
     }
@@ -548,8 +548,8 @@ open class StormFrontTagStreamer : NSObject {
             skill.mindState = rate
             skill.isNew = isNew
             
-            emitSetting?("\(expName).LearningRate", "\(rate?.rateId)")
-            emitSetting?("\(expName).LearningRateName", "\(rate?.desc)")
+            emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
+            emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
             
             emitExp?(skill)
             return
@@ -566,15 +566,15 @@ open class StormFrontTagStreamer : NSObject {
         mindstate[pattern] ~= "$3"
         
         var rate = LearningRate.fromDescription(mindstate as String)
-        
-        if(rate == nil) {
+
+        if rate == nil {
             rate = LearningRate.fromRate(0)
         }
         
         let skill = SkillExp()
         skill.name = expName
         skill.ranks = NSDecimalNumber(string:ranks as String)
-        skill.mindState = rate
+        skill.mindState = rate!
         skill.isNew = isNew
         
         emitSetting?("\(expName).Ranks", ranks as String)
