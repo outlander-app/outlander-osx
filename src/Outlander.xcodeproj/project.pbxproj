@@ -68,6 +68,10 @@
 		F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
 		F93462591AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
+		F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
@@ -235,6 +239,12 @@
 		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F990DC931E88C8E500BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
 		F990DC941E88CA4900BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
+		F990DC961E89E60200BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
+		F990DC971E89E60200BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
+		F990DC981E89E61100BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
+		F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F990DC9B1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
+		F990DC9C1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
 		F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
@@ -410,12 +420,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */,
 				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
 				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
 				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
+				F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
@@ -466,6 +478,7 @@
 		F9316D281AD9E65000880149 /* ScriptRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
+		F93BCBD71E8B586000FFEF5E /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEXML.framework; path = Frameworks/AEXML.framework; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
@@ -610,6 +623,8 @@
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
 		F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
+		F990DC951E89E60200BB0A25 /* FootlessParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FootlessParser.framework; path = Frameworks/FootlessParser.framework; sourceTree = "<group>"; };
+		F990DC9A1E89E62B00BB0A25 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoader.swift; sourceTree = "<group>"; };
 		F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoaderTester.swift; sourceTree = "<group>"; };
@@ -757,12 +772,16 @@
 			files = (
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
+				F990DC981E89E61100BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
+				F990DC961E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
+				F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */,
+				F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -773,8 +792,10 @@
 			files = (
 				F97217BA1DDF831B00E8FC4E /* PEGKit.framework in Frameworks */,
 				F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
+				F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
+				F990DC971E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
@@ -797,6 +818,7 @@
 				F9A8A7A31E861771000A9621 /* Regex.swift */,
 				F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */,
 				F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */,
+				F990DC9A1E89E62B00BB0A25 /* Parser.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1185,6 +1207,8 @@
 			isa = PBXGroup;
 			children = (
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
+				F93BCBD71E8B586000FFEF5E /* AEXML.framework */,
+				F990DC951E89E60200BB0A25 /* FootlessParser.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
 				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
@@ -1483,6 +1507,7 @@
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
 				F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
+				F990DC9B1E89E62B00BB0A25 /* Parser.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
@@ -1701,6 +1726,7 @@
 				F9A8A79A1E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
 				F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
+				F990DC9C1E89E62B00BB0A25 /* Parser.swift in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,

@@ -116,18 +116,19 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if defined(__has_feature) && __has_feature(modules)
 @import Foundation;
-@import Darwin;
 @import ObjectiveC;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
 #pragma clang diagnostic ignored "-Wduplicate-method-arg"
 @class NSCoder;
+@class NSValue;
+@class NSNumber;
 
 /**
   A simple NSException subclass. It’s not required to subclass NSException (since the exception type is represented in the name) but this helps for identifying the exception through runtime type.
 */
-SWIFT_CLASS("_TtC6Nimble23BadInstructionException")
+SWIFT_CLASS_NAMED("BadInstructionException")
 @interface BadInstructionException : NSException
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
@@ -140,7 +141,7 @@ SWIFT_CLASS("_TtC6Nimble23BadInstructionException")
   raiseBadInstructionException
   \endcode function onto the stack.
 */
-+ (kern_return_t)catch_mach_exception_raise_state:(mach_port_t)exception_port exception:(exception_type_t)exception code:(mach_exception_data_type_t const * _Nonnull)code codeCnt:(mach_msg_type_number_t)codeCnt flavor:(int32_t * _Nonnull)flavor old_state:(natural_t const * _Nonnull)old_state old_stateCnt:(mach_msg_type_number_t)old_stateCnt new_state:(thread_state_t _Nonnull)new_state new_stateCnt:(mach_msg_type_number_t * _Nonnull)new_stateCnt;
++ (NSNumber * _Nonnull)receiveReply:(NSValue * _Nonnull)value;
 - (nonnull instancetype)initWithName:(NSExceptionName _Nonnull)aName reason:(NSString * _Nullable)aReason userInfo:(NSDictionary * _Nullable)aUserInfo SWIFT_UNAVAILABLE;
 @end
 
@@ -244,17 +245,7 @@ SWIFT_CLASS("_TtC6Nimble14NMBObjCMatcher")
 
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (id <NMBMatcher> _Nonnull)equalMatcher:(NSObject * _Nonnull)expected;
-@end
-
-
-@interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (NMBObjCMatcher * _Nonnull)beLessThanMatcher:(id <NMBComparable> _Nullable)expected;
-@end
-
-
-@interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (NMBObjCMatcher * _Nonnull)beGreaterThanMatcher:(id <NMBComparable> _Nullable)expected;
++ (NMBObjCMatcher * _Nonnull)containMatcher:(NSArray<NSObject *> * _Nonnull)expected;
 @end
 
 @class NMBObjCRaiseExceptionMatcher;
@@ -263,7 +254,6 @@ SWIFT_CLASS("_TtC6Nimble14NMBObjCMatcher")
 + (NMBObjCRaiseExceptionMatcher * _Nonnull)raiseExceptionMatcher;
 @end
 
-@class NSNumber;
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
 + (NMBObjCBeCloseToMatcher * _Nonnull)beCloseToMatcher:(NSNumber * _Nonnull)expected within:(double)within;
@@ -271,12 +261,12 @@ SWIFT_CLASS("_TtC6Nimble14NMBObjCMatcher")
 
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (NMBObjCMatcher * _Nonnull)haveCountMatcher:(NSNumber * _Nonnull)expected;
++ (NMBObjCMatcher * _Nonnull)beGreaterThanMatcher:(id <NMBComparable> _Nullable)expected;
 @end
 
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (NMBObjCMatcher * _Nonnull)satisfyAnyOfMatcher:(NSArray<NMBObjCMatcher *> * _Nonnull)matchers;
++ (NMBObjCMatcher * _Nonnull)haveCountMatcher:(NSNumber * _Nonnull)expected;
 @end
 
 
@@ -287,6 +277,11 @@ SWIFT_CLASS("_TtC6Nimble14NMBObjCMatcher")
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
 + (id <NMBMatcher> _Nonnull)beAnInstanceOfMatcher:(Class _Nonnull)expected;
+@end
+
+
+@interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
++ (NMBObjCMatcher * _Nonnull)satisfyAnyOfMatcher:(NSArray<NMBObjCMatcher *> * _Nonnull)matchers;
 @end
 
 
@@ -312,12 +307,17 @@ SWIFT_CLASS("_TtC6Nimble14NMBObjCMatcher")
 
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
-+ (NMBObjCMatcher * _Nonnull)containMatcher:(NSArray<NSObject *> * _Nonnull)expected;
++ (id <NMBMatcher> _Nonnull)equalMatcher:(NSObject * _Nonnull)expected;
 @end
 
 
 @interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
 + (NMBObjCMatcher * _Nonnull)endWithMatcher:(id _Nonnull)expected;
+@end
+
+
+@interface NMBObjCMatcher (SWIFT_EXTENSION(Nimble))
++ (NMBObjCMatcher * _Nonnull)beLessThanMatcher:(id <NMBComparable> _Nullable)expected;
 @end
 
 

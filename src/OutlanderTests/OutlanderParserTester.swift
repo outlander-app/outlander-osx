@@ -28,6 +28,11 @@ class OutlanderParserTester : QuickSpec {
 //                let result = try! TokenValue.parser.run(userState: "", sourceName: "source", input: "put something")
 //                expect(result.result.string).to(equal("one two"))
 //            }
+
+            it("parses a label") {
+//                let result = ScriptParser().csvparse("one,two\n")
+//                print(result)
+            }
         }
     }
 }
