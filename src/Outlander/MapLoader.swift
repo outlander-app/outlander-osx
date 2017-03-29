@@ -167,40 +167,4 @@ final class MapLoader {
         
         return MapPosition(x: 0, y: 0, z: 0)
     }
-    
-//    fileprivate func descriptions(_ nodes:[GlimpseXML.Node]) -> [String] {
-//
-//        return nodes
-//            .filter { $0.name == "description" }
-//            .map { $0.text ?? "" }
-//    }
-//    
-//    fileprivate func arcs(_ nodes:[GlimpseXML.Node]) -> [MapArc] {
-//
-//        return nodes
-//            .filter {$0.name == "arc"}
-//            .map {
-//                MapArc(
-//                    exit: $0.attributeValue("exit") ?? "",
-//                    move: $0.attributeValue("move") ?? "",
-//                    destination: $0.attributeValue("destination") ?? "",
-//                    hidden: $0.attributeValue("hidden") == "True")
-//        }
-//    }
-//    
-//    func position(_ items:[GlimpseXML.Node]) -> MapPosition {
-//        
-//        let filtered = items.filter { $0.name == "position" }
-//        
-//        if filtered.count > 0 {
-//            let item = filtered[0]
-//            return MapPosition(
-//                x: Int(item.attributeValue("x")!)!,
-//                y: Int(item.attributeValue("y")!)!,
-//                z: Int(item.attributeValue("z")!)!
-//            )
-//        }
-//        
-//        return MapPosition(x: 0, y: 0, z: 0)
-//    }
 }

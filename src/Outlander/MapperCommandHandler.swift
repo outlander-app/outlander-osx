@@ -23,7 +23,7 @@ extension GameContext {
                 print("reset: found room \(currentRoom.id)")
                 self.globalVars.setCacheObject(currentRoom.id, forKey: "roomid")
             } else {
-                findRoomInZones(name, description: description)
+                _ = findRoomInZones(name, description: description)
             }
         }
     }

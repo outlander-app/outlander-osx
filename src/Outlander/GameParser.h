@@ -47,6 +47,4 @@
 @property (nonatomic, strong) RACSubject *roundtime;
 @property (nonatomic, strong) RACSubject *spell;
 
--(void) parse:(NSString*)data then:(CompleteBlock)block;
-
 @end

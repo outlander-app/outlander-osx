@@ -302,7 +302,7 @@ open class HighlightsViewController: NSViewController, SettingsView, NSTableView
         if (dialog.runModal() == NSModalResponseOK) {
             if let result = dialog.url {
 
-                if result.path != nil && result.path.hasPrefix(_context!.pathProvider.soundsFolder()) {
+                if result.path.hasPrefix(_context!.pathProvider.soundsFolder()) {
                     self.selectedItem?.soundFile = result.lastPathComponent
 
                 } else {

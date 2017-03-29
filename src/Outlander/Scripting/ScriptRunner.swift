@@ -30,10 +30,10 @@ open class ScriptRunner : NSObject, ISubscriber {
         
         super.init()
         
-        context.events.subscribe(self, token: "startscript")
-        context.events.subscribe(self, token: "script")
-        context.events.subscribe(self, token: "ol:game-parse")
-        context.events.subscribe(self, token: "ol:game-stream")
+        _ = context.events.subscribe(self, token: "startscript")
+        _ = context.events.subscribe(self, token: "script")
+        _ = context.events.subscribe(self, token: "ol:game-parse")
+        _ = context.events.subscribe(self, token: "ol:game-stream")
         
         self.context.globalVars.changed.subscribeNext { (obj:Any?) -> Void in
             
