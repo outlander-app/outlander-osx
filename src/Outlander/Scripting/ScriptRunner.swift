@@ -85,12 +85,8 @@ open class ScriptRunner : NSObject, ISubscriber {
         catch {
             self.abort(scriptName)
         }
-
-
-//        self.loadAsync(scriptName, tokens: tokens)
-//        self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
     }
-    
+
     fileprivate func remove(_ name:String) {
         let found = self.scripts.find { $0.fileName == name }
         if let idx = found {

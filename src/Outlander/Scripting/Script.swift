@@ -270,12 +270,9 @@ class Script : IScript {
                 self.notify("exit\n", debug:ScriptLogLevel.gosubs)
                 return .exit
             case .goto(let label):
-                if case let (line, _) = self.gotoLabel(label) {
-                    self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
-                    self.context.currentLineNumber = line
-                    return .next
-                }
-                self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
+                return gotoLabel(label)
+            case .label(let label):
+                self.notify("passing label '\(label)'\n", debug:ScriptLogLevel.gosubs)
                 return .next
             case .pause(let time):
                 self.notify("pausing for \(time) seconds\n", debug:ScriptLogLevel.wait)
@@ -288,15 +285,19 @@ class Script : IScript {
         }
     }
 
-    func gotoLabel(_ label:String) -> (Int, ScriptLine?) {
+    func gotoLabel(_ label:String) -> ScriptExecuteResult {
+
         guard let target = self.context.labels[label] else {
-            // throw error that label wasn't found?
-            return (-1, nil)
+            self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
+            return .exit
         }
 
         let scriptLine = self.context.lines[target.line]
-        print("Found: \(scriptLine.fileName)(\(scriptLine.lineNumber)) \(scriptLine.originalText)")
-        return (target.line, scriptLine)
+
+        self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
+        self.context.currentLineNumber = target.line - 1
+
+        return .next
     }
 }
 
