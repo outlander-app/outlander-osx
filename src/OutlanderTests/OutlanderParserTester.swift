@@ -86,7 +86,7 @@ class OutlanderParserTester : QuickSpec {
                 if case .echo(let text) = result! {
                     expect(text).to(equal(""))
                 } else {
-                    fail("expected pause result")
+                    fail("expected echo result")
                 }
             }
 
@@ -97,7 +97,7 @@ class OutlanderParserTester : QuickSpec {
                 if case .echo(let text) = result! {
                     expect(text).to(equal("abcd"))
                 } else {
-                    fail("expected pause result")
+                    fail("expected echo result")
                 }
             }
 
@@ -108,13 +108,51 @@ class OutlanderParserTester : QuickSpec {
                 if case .echo(let text) = result! {
                     expect(text).to(equal(" abcd"))
                 } else {
-                    fail("expected pause result")
+                    fail("expected echo result")
                 }
             }
 
             it("does not parse echo") {
                 let result = ScriptParser().parse("\n echoabcd \n\n")
                 expect(result).to(beNil())
+            }
+
+            it("parses goto") {
+                let result = ScriptParser().parse("\n goto one \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .goto(let label) = result! {
+                    expect(label).to(equal("one"))
+                } else {
+                    fail("expected goto result")
+                }
+            }
+
+            it("parses goto with variable") {
+                let result = ScriptParser().parse("\n goto %one \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .goto(let label) = result! {
+                    expect(label).to(equal("%one"))
+                } else {
+                    fail("expected goto result")
+                }
+            }
+
+            it("parses exit") {
+                let result = ScriptParser().parse("\n exit \n\n")
+                expect(result).toNot(beNil())
+            }
+
+            it("parses debug with value") {
+                let result = ScriptParser().parse("\n debug 5 \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .debug(let level) = result! {
+                    expect(level).to(equal(5))
+                } else {
+                    fail("expected level result")
+                }
             }
         }
     }

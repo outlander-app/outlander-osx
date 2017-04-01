@@ -18,6 +18,13 @@ extension Parser {
         return parse(x.characters)
     }
 
+    public func res<Result>(_ res:Result) -> Parser<Result> {
+        return Parser<Result> { stream in
+            guard let (_, newStream) = self.parse(stream) else { return nil }
+            return (res, newStream)
+        }
+    }
+
     public func map<Result>(_ f: @escaping (A) -> Result) -> Parser<Result> {
         return Parser<Result> { stream in
             guard let (result, newStream) = self.parse(stream) else { return nil }
@@ -130,11 +137,16 @@ precedencegroup SequencePrecedence {
 }
 
 infix operator <^> : SequencePrecedence
+infix operator <^^> : SequencePrecedence
 infix operator <*> : SequencePrecedence
 infix operator <&> : SequencePrecedence
 infix operator *> : SequencePrecedence
 infix operator <* : SequencePrecedence
 infix operator <|> : SequencePrecedence
+
+public func <^^><A, B>(f: B, rhs: Parser<A>) -> Parser<B> {
+    return rhs.res(f)
+}
 
 public func <^><A, B>(f: @escaping (A) -> B, rhs: Parser<A>) -> Parser<B> {
     return rhs.map(f)
@@ -144,7 +156,6 @@ public func <^><A, B, R>(f: @escaping (A, B) -> R, rhs: Parser<A>) -> Parser<(B)
     return Parser(result: curry(f)) <*> rhs
 }
 
-
 public func <*><A, B>(lhs: Parser<(A) -> B>, rhs: Parser<A>) -> Parser<B> {
     return lhs.followed(by: rhs, combine: { $0($1) })
 }
@@ -152,8 +163,6 @@ public func <*><A, B>(lhs: Parser<(A) -> B>, rhs: Parser<A>) -> Parser<B> {
 public func <&><A, B>(lhs: Parser<A>, rhs: Parser<B>) -> Parser<(A,B)> {
     return lhs.followed(by: rhs, combine: { ($0, $1) })
 }
-
-
 
 public func <*<A, B>(lhs: Parser<A>, rhs: Parser<B>) -> Parser<A> {
     return lhs.followed(by: rhs, combine: { x, _ in x })

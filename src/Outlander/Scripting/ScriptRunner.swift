@@ -175,7 +175,7 @@ open class ScriptRunner : NSObject, ISubscriber {
         var names:[String] = []
         for (_, script) in self.scripts.enumerated() {
             if name == "all" || script.fileName == name {
-//                script.cancel()
+                script.stop()
                 names.append(script.fileName)
                 
                 if name != "all" {
@@ -197,7 +197,7 @@ open class ScriptRunner : NSObject, ISubscriber {
         for (_, script) in self.scripts.enumerated() {
             
             if name == "all" || script.fileName == name {
-//                script.pause()
+                script.pause()
 
                 if name != "all" {
                     break
@@ -210,7 +210,7 @@ open class ScriptRunner : NSObject, ISubscriber {
         for (_, script) in self.scripts.enumerated() {
             
             if name == "all" || script.fileName == name {
-//                script.resume()
+                script.resume()
 
                 if name != "all" {
                     break
@@ -231,7 +231,7 @@ open class ScriptRunner : NSObject, ISubscriber {
     fileprivate func debug(_ name:String, level:ScriptLogLevel) {
         for (_, script) in self.scripts.enumerated() {
             if script.fileName == name {
-//                script.setLogLevel(level)
+                script.setLogLevel(level)
                 break
             }
         }

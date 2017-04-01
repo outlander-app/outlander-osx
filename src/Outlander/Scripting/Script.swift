@@ -8,8 +8,18 @@
 
 import Foundation
 
+func delay(_ delay: Double, _ closure: @escaping () -> ()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+        closure()
+    }
+}
+
 protocol IScript {
     var fileName:String { get }
+    func stop()
+    func resume()
+    func pause()
+    func setLogLevel(_ level:ScriptLogLevel)
 }
 
 struct Label {
@@ -32,7 +42,7 @@ class ScriptContext {
 
     var currentLine:ScriptLine? {
         get {
-            if currentLineNumber >= lines.count {
+            if currentLineNumber == -1 || currentLineNumber >= lines.count {
                 return nil
             }
 
@@ -62,6 +72,10 @@ class Script : IScript {
     let notifyExit: () -> ()
 
     var started:Date?
+    var debugLevel:ScriptLogLevel = ScriptLogLevel.none
+    var stopped = false
+    var paused = false
+    var nextAfterUnpause = false
 
     init(_ loader: @escaping ((String) -> [String]),
          _ fileName: String,
@@ -146,9 +160,9 @@ class Script : IScript {
 
     public func notify(_ text: String, mono:Bool = true, preset:String = "scriptinfo", debug:ScriptLogLevel = ScriptLogLevel.none, scriptLine:Int = -1) {
 
-//        if self.logLevel.rawValue < debug.rawValue {
-//            return
-//        }
+        if self.debugLevel.rawValue < debug.rawValue {
+            return
+        }
 
         let message = TextTag()
         message.text = text
@@ -158,8 +172,9 @@ class Script : IScript {
         message.scriptLine = Int32(scriptLine)
 
         if debug != ScriptLogLevel.none {
-//            let line = self.currentLine != nil ? Int32(self.currentLine!) : -1
-//            message.scriptLine = line
+            if let line = self.context.currentLine {
+                message.scriptLine = Int32(line.lineNumber)
+            }
         }
 
         self.gameContext.events.sendText(message)
@@ -171,16 +186,54 @@ class Script : IScript {
     }
 
     func stop() {
+        self.stopped = true
+        self.context.currentLineNumber = -1
         let diff = Date().timeIntervalSince(self.started!)
         self.sendText(String(format: "[Script '\(self.fileName)' completed after %.02f seconds total run time]\n", diff), preset: "scriptinput")
+    }
+
+    func cancel() {
+        self.stop()
         self.notifyExit()
     }
 
+    func pause() {
+        self.paused = true
+        self.sendText("[Pausing '\(self.fileName)']\n")
+    }
+
+    func resume() {
+        if !self.paused {
+            return
+        }
+
+        self.sendText("[Resuming '\(self.fileName)']\n")
+
+        self.paused = false
+
+        if self.nextAfterUnpause {
+            self.next()
+        }
+    }
+
+    func setLogLevel(_ level:ScriptLogLevel) {
+        self.debugLevel = level
+        self.sendText("[Script '\(self.fileName)' - setting debug level to \(level.rawValue)]\n")
+    }
+
     func next() {
+
+        if self.stopped { return }
+
+        if self.paused {
+            self.nextAfterUnpause = true
+            return
+        }
+        
         self.context.advance()
 
         guard var line = self.context.currentLine else {
-            self.stop()
+            self.cancel()
             return
         }
 
@@ -193,7 +246,7 @@ class Script : IScript {
         switch (result) {
             case .next: next()
             case .wait: return
-            case .exit: self.stop()
+            case .exit: self.cancel()
         }
     }
 
@@ -206,26 +259,44 @@ class Script : IScript {
         print(token)
 
         switch token {
+            case .debug(let level):
+                self.debugLevel = ScriptLogLevel(rawValue: level) ?? ScriptLogLevel.none
+                self.notify("debuglevel \(self.debugLevel.rawValue)\n", debug:ScriptLogLevel.gosubs)
+                return .next
             case .echo(let text):
                 self.gameContext.events.echoText(text)
                 return .next
             case .exit:
                 self.notify("exit\n", debug:ScriptLogLevel.gosubs)
                 return .exit
+            case .goto(let label):
+                if case let (line, _) = self.gotoLabel(label) {
+                    self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
+                    self.context.currentLineNumber = line
+                    return .next
+                }
+                self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
+                return .next
+            case .pause(let time):
+                self.notify("pausing for \(time) seconds\n", debug:ScriptLogLevel.wait)
+                delay(time) {
+                    self.next()
+                }
+                return .wait
             default:
                 return .next
         }
     }
 
-    func gotoLabel(_ label:String) -> ScriptLine? {
+    func gotoLabel(_ label:String) -> (Int, ScriptLine?) {
         guard let target = self.context.labels[label] else {
-            // throw error that label wasn't found
-            return nil
+            // throw error that label wasn't found?
+            return (-1, nil)
         }
 
         let scriptLine = self.context.lines[target.line]
         print("Found: \(scriptLine.fileName)(\(scriptLine.lineNumber)) \(scriptLine.originalText)")
-        return scriptLine
+        return (target.line, scriptLine)
     }
 }
 

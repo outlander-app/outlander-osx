@@ -9,20 +9,21 @@
 import Foundation
 
 enum TokenValue {
+    case debug(Int)
     case label(String)
     case put(String)
     case pause(Double)
     case send(String)
     case echo(String)
     case goto(String)
+    case exit
 
     case variable(String, String)
-    case debug(Double)
     case gosub(String, [String])
     case move(String)
     case nextroom
     case wait
-    case waitfor
+    case waitfor(String)
     case waitforre(String)
     case waiteval(String)
     case match(String)
@@ -30,10 +31,10 @@ enum TokenValue {
     case matchwait(Double)
     case shift
     case save
-    case exit
     case ifArg(Int)
     case random(Double, Double)
     case unvar(String)
+    case action
 }
 
 class ScriptParser {
@@ -58,14 +59,17 @@ class ScriptParser {
 
         let label = TokenValue.label <^> identifier <* char(colon)
 
+        let debug = TokenValue.debug <^> ((symbol("debug") *> int) <|> symbolOnly("debug", 1))
+
         let pause = TokenValue.pause <^> ((symbol("pause") *> double) <|> symbolOnly("pause", 1))
 
         let put = TokenValue.put <^> lineCommand("put")
         let send = TokenValue.send <^> lineCommand("send")
         let echo = TokenValue.echo <^> lineCommand("echo")
         let goto = TokenValue.goto <^> lineCommand("goto")
+        let exit = TokenValue.exit <^^> symbolOnly("exit", "")
 
-        let row = ws.many.optional *> (label <|> put <|> pause <|> echo <|> send <|> goto) <* ws.many.optional
+        let row = ws.many.optional *> (label <|> put <|> pause <|> echo <|> send <|> goto <|> exit <|> debug) <* ws.many.optional
 
         let actualInput = input.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"
         let parseResult = row.run(actualInput)
