@@ -15,6 +15,23 @@ extension Double {
 }
 
 extension String {
+
+    public func trimEnd(_ set:CharacterSet) -> String {
+
+        var count = 0
+
+        for char in self.characters.reversed() {
+
+            if !set.contains(char.unicodeScalar) {
+                break
+            }
+            
+            count = count + 1
+        }
+    
+        return self.substring(from: 0, to: self.characters.count - count)
+    }
+    
     public func trim(_ type:String) -> String {
         let newVal = self.trimPrefix(type)
         return newVal.trimSuffix(type)

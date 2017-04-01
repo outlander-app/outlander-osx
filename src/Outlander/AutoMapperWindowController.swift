@@ -193,7 +193,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     func setContext(_ context:GameContext) {
         self.context = context
 
-        self.context?.globalVars.changed.subscribeNext { (obj:Any?) -> Void in
+        _ = self.context?.globalVars.changed.subscribeNext { (obj:Any?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
 

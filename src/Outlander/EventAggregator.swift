@@ -84,6 +84,14 @@ open class EventAggregator : NSObject {
         tag.preset = preset
         publish("OL:echo", data: ["tag":tag])
     }
+
+    open func sendText(_ tag:TextTag) {
+        let command = CommandContext()
+        command.command = ""
+        command.tag = tag
+        command.scriptName = tag.scriptName
+        sendCommand(command)
+    }
 }
 
 public struct EventHandler {

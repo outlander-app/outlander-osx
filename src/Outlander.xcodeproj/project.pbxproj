@@ -72,6 +72,14 @@
 		F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
 		F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
 		F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F93BCBDD1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
+		F93BCBDE1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
+		F93BCBDF1E8B73C700FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
+		F93BCBE01E8B73C700FFEF5E /* SwiftParsec.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F93BCBE21E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
+		F93BCBE31E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
+		F93BCBE51E8B8BE900FFEF5E /* Parser2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */; };
+		F93BCBE61E8B8BE900FFEF5E /* Parser2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
@@ -415,6 +423,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F93BCBE01E8B73C700FFEF5E /* SwiftParsec.framework in Copy Files */,
 				F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */,
 				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
 				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
@@ -474,6 +483,9 @@
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93BCBD71E8B586000FFEF5E /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEXML.framework; path = Frameworks/AEXML.framework; sourceTree = "<group>"; };
+		F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftParsec.framework; path = Frameworks/SwiftParsec.framework; sourceTree = "<group>"; };
+		F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combinators.swift; sourceTree = "<group>"; };
+		F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser2.swift; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
@@ -766,9 +778,11 @@
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F990DC961E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
+				F93BCBDD1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
+				F93BCBDF1E8B73C700FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */,
@@ -784,6 +798,7 @@
 				F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
+				F93BCBDE1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F990DC971E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
@@ -809,6 +824,8 @@
 				F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */,
 				F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */,
 				F990DC9A1E89E62B00BB0A25 /* Parser.swift */,
+				F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */,
+				F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1188,6 +1205,7 @@
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
 				F93BCBD71E8B586000FFEF5E /* AEXML.framework */,
 				F990DC951E89E60200BB0A25 /* FootlessParser.framework */,
+				F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
 				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
@@ -1451,6 +1469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
+				F93BCBE51E8B8BE900FFEF5E /* Parser2.swift in Sources */,
 				F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
 				F990DC931E88C8E500BB0A25 /* CharacterExtension.swift in Sources */,
@@ -1516,6 +1535,7 @@
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
+				F93BCBE21E8B7F9500FFEF5E /* Combinators.swift in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
 				F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
@@ -1648,6 +1668,7 @@
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
+				F93BCBE31E8B7F9500FFEF5E /* Combinators.swift in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
 				F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
@@ -1676,6 +1697,7 @@
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F93BCBE61E8B8BE900FFEF5E /* Parser2.swift in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,

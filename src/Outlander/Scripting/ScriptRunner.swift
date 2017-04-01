@@ -68,9 +68,14 @@ open class ScriptRunner : NSObject, ISubscriber {
         self.abort(scriptName)
 
         do {
-            let script = try Script(loader: { (name) in
+            let script = try Script({ (name) in
                 return self.scriptLoader.load(name)
-                }, scriptName, self.context)
+                },
+                scriptName,
+                self.context,
+                {
+                    self.abort(scriptName)
+                })
 
             self.scripts.append(script)
             self.context.events.publish("script:add", data: ["scriptName":script.fileName as AnyObject])
@@ -78,11 +83,11 @@ open class ScriptRunner : NSObject, ISubscriber {
             script.run(self.argsToParams(tokens))
         }
         catch {
+            self.abort(scriptName)
         }
 
 
 //        self.loadAsync(scriptName, tokens: tokens)
-
 //        self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
     }
     
