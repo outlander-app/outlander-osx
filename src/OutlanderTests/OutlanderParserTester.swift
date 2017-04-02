@@ -19,6 +19,28 @@ class OutlanderParserTester : QuickSpec {
             beforeEach() {
             }
 
+            it("parses a comment") {
+                let result = ScriptParser().parse("\n#  onetwo:  \n\n")
+                expect(result).toNot(beNil())
+
+                if case .comment(let data) = result! {
+                    expect(data).to(equal("  onetwo:"))
+                } else {
+                    fail("expected comment result")
+                }
+            }
+
+            it("parses a comment") {
+                let result = ScriptParser().parse("\n#echo")
+                expect(result).toNot(beNil())
+
+                if case .comment(let data) = result! {
+                    expect(data).to(equal("echo"))
+                } else {
+                    fail("expected comment result")
+                }
+            }
+
             it("parses a label") {
                 let result = ScriptParser().parse("\n  onetwo:  \n\n")
                 expect(result).toNot(beNil())

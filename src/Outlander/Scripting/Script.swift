@@ -148,6 +148,15 @@ class Script : IScript {
         }
     }
 
+    public func sendCommand(_ command: String) {
+
+        let ctx = CommandContext()
+        ctx.command = command
+        ctx.scriptName = self.fileName
+
+        self.gameContext.events.sendCommand(ctx)
+    }
+
     func sendText(_ text:String, mono:Bool = true, preset:String = "scriptinput", fileName:String = "", scriptLine:Int = -1) {
         let tag = TextTag()
         tag.text = text
@@ -266,6 +275,10 @@ class Script : IScript {
             case .echo(let text):
                 self.gameContext.events.echoText(text)
                 return .next
+            case .put(let text):
+                return self.handlePut(text)
+            case .send(let text):
+                return self.handleSend(text)
             case .exit:
                 self.notify("exit\n", debug:ScriptLogLevel.gosubs)
                 return .exit
@@ -292,11 +305,26 @@ class Script : IScript {
             return .exit
         }
 
-        let scriptLine = self.context.lines[target.line]
+//        let scriptLine = self.context.lines[target.line]
 
         self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
         self.context.currentLineNumber = target.line - 1
 
+        return .next
+    }
+
+    func handlePut(_ text:String) -> ScriptExecuteResult {
+
+        let cmds = text.splitToCommands()
+        for cmd in cmds {
+            self.sendCommand(cmd)
+        }
+
+        return .next
+    }
+
+    func handleSend(_ text:String) -> ScriptExecuteResult {
+        self.sendCommand("#send \(text)")
         return .next
     }
 }

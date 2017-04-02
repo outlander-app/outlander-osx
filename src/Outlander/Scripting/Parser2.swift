@@ -9,32 +9,34 @@
 import Foundation
 
 enum TokenValue {
+    case comment(String)
     case debug(Int)
-    case label(String)
-    case put(String)
-    case pause(Double)
-    case send(String)
     case echo(String)
-    case goto(String)
     case exit
-
-    case variable(String, String)
-    case gosub(String, [String])
+    case goto(String)
+    case label(String)
+    case matchwait(Double)
     case move(String)
     case nextroom
+    case put(String)
+    case pause(Double)
+    case save(String)
+    case send(String)
+    case shift
+    case unvar(String)
     case wait
     case waitfor(String)
     case waitforre(String)
+
+    case variable(String, String)
+    case gosub(String, [String])
     case waiteval(String)
-    case match(String)
-    case matchre(String)
-    case matchwait(Double)
-    case shift
-    case save
+    case match(String, String)
+    case matchre(String, String)
     case ifArg(Int)
     case random(Double, Double)
-    case unvar(String)
     case action
+    case eval
 }
 
 class ScriptParser {
@@ -51,11 +53,15 @@ class ScriptParser {
 
     func parse(_ input:String) -> TokenValue? {
 
+        let any = anyChar.many.map { String($0) }
+
         let int = digit.oneOrMore.map { characters in Int(String(characters))! }
         
         let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
 
         let identifier = (character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }) <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
+
+        let comment = TokenValue.comment <^> (string("#") *> any)
 
         let label = TokenValue.label <^> identifier <* char(colon)
 
@@ -63,13 +69,42 @@ class ScriptParser {
 
         let pause = TokenValue.pause <^> ((symbol("pause") *> double) <|> symbolOnly("pause", 1))
 
-        let put = TokenValue.put <^> lineCommand("put")
-        let send = TokenValue.send <^> lineCommand("send")
+        let matchwait = TokenValue.pause <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
+
         let echo = TokenValue.echo <^> lineCommand("echo")
         let goto = TokenValue.goto <^> lineCommand("goto")
         let exit = TokenValue.exit <^^> symbolOnly("exit", "")
+        let move = TokenValue.move <^> lineCommand("move")
+        let nextroom = TokenValue.nextroom <^^> symbolOnly("nextroom", "")
+        let put = TokenValue.put <^> lineCommand("put")
+        let save = TokenValue.save <^> lineCommand("save")
+        let send = TokenValue.send <^> lineCommand("send")
+        let shift = TokenValue.shift <^^> symbolOnly("shift", "")
+        let unvar = TokenValue.unvar <^> lineCommand("unvar")
+        let wait = TokenValue.wait <^^> symbolOnly("wait", "")
+        let waitfor = TokenValue.waitfor <^> lineCommand("waitfor")
+        let waitforre = TokenValue.waitforre <^> lineCommand("waitforre")
 
-        let row = ws.many.optional *> (label <|> put <|> pause <|> echo <|> send <|> goto <|> exit <|> debug) <* ws.many.optional
+        let row = ws.many.optional *> (
+            comment
+            <|> debug
+            <|> echo
+            <|> exit
+            <|> goto
+            <|> label
+            <|> matchwait
+            <|> move
+            <|> nextroom
+            <|> pause
+            <|> put
+            <|> save
+            <|> send
+            <|> shift
+            <|> unvar
+            <|> wait
+            <|> waitfor
+            <|> waitforre
+        ) <* ws.many.optional
 
         let actualInput = input.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"
         let parseResult = row.run(actualInput)
