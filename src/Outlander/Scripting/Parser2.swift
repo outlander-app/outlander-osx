@@ -59,7 +59,8 @@ class ScriptParser {
         
         let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
 
-        let identifier = (character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }) <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
+        let identifier = (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
+            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
 
         let comment = TokenValue.comment <^> (string("#") *> any)
 
@@ -147,7 +148,7 @@ private let swiftIdentifierStartSet =
 private let swiftIdentifierLetterCharacters =
     swiftIdentifierStartCharacters +
         "0123456789" +
-        "." +
+        ".-" +
         (0x0300...0x036F).stringValue +
         (0x1DC0...0x1DFF).stringValue +
         (0x20D0...0x20FF).stringValue +

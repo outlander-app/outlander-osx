@@ -114,7 +114,7 @@ open class ScriptRunner : NSObject, ISubscriber {
         let text = dict["text"] as! String
         
         for (_, script) in self.scripts.enumerated() {
-//            script.stream(text, nodes: nodes)
+            script.stream(text, nodes)
         }
     }
     
@@ -123,7 +123,7 @@ open class ScriptRunner : NSObject, ISubscriber {
             let text = dict["text"] ?? ""
             
             for (_, script) in self.scripts.enumerated() {
-//                script.stream(text, nodes: [])
+                script.stream(text, [])
             }
         }
     }

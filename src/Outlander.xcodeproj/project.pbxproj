@@ -248,6 +248,8 @@
 		F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F990DC9B1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
 		F990DC9C1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
+		F99C9A2E1E9360FB00318BC4 /* ScriptOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */; };
+		F99C9A2F1E9360FB00318BC4 /* ScriptOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */; };
 		F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
@@ -627,6 +629,7 @@
 		F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
 		F990DC951E89E60200BB0A25 /* FootlessParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FootlessParser.framework; path = Frameworks/FootlessParser.framework; sourceTree = "<group>"; };
 		F990DC9A1E89E62B00BB0A25 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptOperations.swift; sourceTree = "<group>"; };
 		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoader.swift; sourceTree = "<group>"; };
 		F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoaderTester.swift; sourceTree = "<group>"; };
@@ -826,6 +829,7 @@
 				F990DC9A1E89E62B00BB0A25 /* Parser.swift */,
 				F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */,
 				F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */,
+				F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1504,6 +1508,7 @@
 				F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F990DC9B1E89E62B00BB0A25 /* Parser.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
+				F99C9A2E1E9360FB00318BC4 /* ScriptOperations.swift in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
@@ -1683,6 +1688,7 @@
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
 				F9B6CD8A1E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
+				F99C9A2F1E9360FB00318BC4 /* ScriptOperations.swift in Sources */,
 				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,

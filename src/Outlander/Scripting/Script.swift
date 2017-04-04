@@ -14,12 +14,42 @@ func delay(_ delay: Double, _ closure: @escaping () -> ()) {
     }
 }
 
+enum CheckStreamResult {
+    case None
+    case Match(result:String)
+}
+
+protocol IWantStreamInfo {
+
+    var id:String { get }
+
+    func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult
+    func execute(_ script:IScript, _ context:ScriptContext)
+}
+
+protocol IAction : IWantStreamInfo {
+    var enabled:Bool {get set}
+//    var token:ActionToken {get}
+    func vars(context:ScriptContext, vars:Dictionary<String, String>) -> CheckStreamResult
+}
+
+protocol IMatch {
+    var value:String {get}
+    var label:String {get}
+    var groups:[String] {get}
+
+    func isMatch(text:String, _ simplify: (String)->String) -> Bool
+}
+
 protocol IScript {
     var fileName:String { get }
     func stop()
     func resume()
     func pause()
     func setLogLevel(_ level:ScriptLogLevel)
+    func next()
+    func nextAfterRoundtime()
+    func stream(_ text:String, _ nodes:[Node])
 }
 
 struct Label {
@@ -39,6 +69,11 @@ class ScriptContext {
     var lines: [ScriptLine] = []
     var labels: [String:Label] = [:]
     var currentLineNumber:Int = -1
+    var params:[String] = []
+    var paramVars: [String:String] = [:]
+    var variables: [String:String] = [:]
+
+    var globalVar:((String) -> String?) = { _ in nil }
 
     var currentLine:ScriptLine? {
         get {
@@ -52,6 +87,10 @@ class ScriptContext {
 
     func advance() {
         currentLineNumber += 1
+    }
+
+    func simplify(_ text:String) -> String {
+        return text
     }
 }
 
@@ -77,6 +116,8 @@ class Script : IScript {
     var paused = false
     var nextAfterUnpause = false
 
+    private var reactToStream:[IWantStreamInfo]
+
     init(_ loader: @escaping ((String) -> [String]),
          _ fileName: String,
          _ gameContext: GameContext,
@@ -85,10 +126,16 @@ class Script : IScript {
         self.fileName = fileName
         self.gameContext = gameContext
         self.context = ScriptContext()
+        self.context.globalVar = { variable in
+            return gameContext.globalVars.cacheObject(forKey: variable) as? String
+        }
+        
         self.notifyExit = notifyExit
 
         labelRegex = try Regex("^\\s*(\\w+((\\.|-|\\w)+)?):")
         includeRegex = try Regex("^\\s*include (.+)$")
+
+        self.reactToStream = []
     }
 
     func run(_ args:[String]) {
@@ -143,7 +190,7 @@ class Script : IScript {
                 if let existing  = context.labels[label] {
                     sendText("replacing label '\(existing.name)' from '\(existing.fileName)'\n", preset: "scripterror", fileName: fileName, scriptLine: index - 1)
                 }
-                context.labels[label] = Label(name: label, line: context.lines.count - 1, fileName: fileName)
+                context.labels[label.lowercased()] = Label(name: label.lowercased(), line: context.lines.count - 1, fileName: fileName)
             }
         }
     }
@@ -230,6 +277,28 @@ class Script : IScript {
         self.sendText("[Script '\(self.fileName)' - setting debug level to \(level.rawValue)]\n")
     }
 
+    func stream(_ text:String, _ nodes:[Node]) {
+        if (text.characters.count == 0 && nodes.count == 0) || self.paused || self.stopped {
+            return
+        }
+
+        let handlers = self.reactToStream.filter { x in
+            let res = x.stream(text, nodes, self.context)
+            switch res {
+            case .Match:
+                return true
+            default:
+                return false
+            }
+        }
+
+        handlers.forEach { handler in
+            let idx = self.reactToStream.find { $0.id == handler.id  }
+            self.reactToStream.remove(at: idx!)
+            handler.execute(self, self.context)
+        }
+    }
+
     func next() {
 
         if self.stopped { return }
@@ -257,6 +326,10 @@ class Script : IScript {
             case .wait: return
             case .exit: self.cancel()
         }
+    }
+
+    func nextAfterRoundtime() {
+        self.next()
     }
 
     func handleLine(_ line:ScriptLine) -> ScriptExecuteResult {
@@ -287,11 +360,28 @@ class Script : IScript {
             case .label(let label):
                 self.notify("passing label '\(label)'\n", debug:ScriptLogLevel.gosubs)
                 return .next
+            case .move(let dir):
+                self.notify("move \(dir)\n", debug:ScriptLogLevel.wait)
+                self.reactToStream.append(MoveOp())
+                self.sendCommand("\(dir)")
+                return .wait
+            case .nextroom:
+                self.notify("nextroom\n", debug:ScriptLogLevel.wait)
+                self.reactToStream.append(NextRoomOp())
+                return .wait
             case .pause(let time):
                 self.notify("pausing for \(time) seconds\n", debug:ScriptLogLevel.wait)
                 delay(time) {
                     self.next()
                 }
+                return .wait
+            case .waitfor(let text):
+                self.notify("waitfor \(text)\n", debug:ScriptLogLevel.wait)
+                self.reactToStream.append(WaitforOp(text))
+                return .wait
+            case .waitforre(let pattern):
+                self.notify("waitforre \(pattern)\n", debug:ScriptLogLevel.wait)
+                self.reactToStream.append(WaitforReOp(pattern))
                 return .wait
             default:
                 return .next
@@ -300,7 +390,7 @@ class Script : IScript {
 
     func gotoLabel(_ label:String) -> ScriptExecuteResult {
 
-        guard let target = self.context.labels[label] else {
+        guard let target = self.context.labels[label.lowercased()] else {
             self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
             return .exit
         }
