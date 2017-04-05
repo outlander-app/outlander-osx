@@ -235,7 +235,43 @@ class OutlanderParserTester : QuickSpec {
                     }
                     
                 } else {
-                    fail("expected level result")
+                    fail("expected if_x single line result")
+                }
+            }
+
+            it("parses var") {
+                let result = ScriptParser().parse("\n var one two \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .variable(let key, let value) = result! {
+                    expect(key).to(equal("one"))
+                    expect(value).to(equal("two"))
+                } else {
+                    fail("expected variable result")
+                }
+            }
+
+            it("parses setvariable") {
+                let result = ScriptParser().parse("\n setvariable one two \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .variable(let key, let value) = result! {
+                    expect(key).to(equal("one"))
+                    expect(value).to(equal("two"))
+                } else {
+                    fail("expected variable result")
+                }
+            }
+
+            it("parses var without value") {
+                let result = ScriptParser().parse("\n var one \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .variable(let key, let value) = result! {
+                    expect(key).to(equal("one"))
+                    expect(value).to(equal(""))
+                } else {
+                    fail("expected variable result")
                 }
             }
         }

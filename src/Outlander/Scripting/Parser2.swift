@@ -32,8 +32,8 @@ enum TokenValue : Hashable {
     case waitforre(String)
 
     indirect case ifArgSingle(Int, TokenValue)
-
     case variable(String, String)
+
     case gosub(String, [String])
     case waiteval(String)
     case match(String, String)
@@ -42,6 +42,7 @@ enum TokenValue : Hashable {
     case If(String)
     case elseIf(String)
     case Else
+    case ElseSingle
     case random(Double, Double)
     case action
     case eval
@@ -121,6 +122,10 @@ class ScriptParser {
         let waitfor = TokenValue.waitfor <^> lineCommand("waitfor")
         let waitforre = TokenValue.waitforre <^> lineCommand("waitforre")
 
+        let varStart = (symbol("var") <|> symbol("setvariable")) *> identifier
+        let varEnd = (space.oneOrMore *> any).optional
+        let variable = curry({ key, val in TokenValue.variable(key, val ?? "") }) <^> varStart <*> varEnd
+
         let ifArg = stringInSensitive("if_") *> int
 
         let lineCommands =
@@ -137,6 +142,7 @@ class ScriptParser {
             <|> send
             <|> shift
             <|> unvar
+            <|> variable
             <|> wait
             <|> waitfor
             <|> waitforre
