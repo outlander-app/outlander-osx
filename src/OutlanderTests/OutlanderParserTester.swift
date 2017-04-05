@@ -184,7 +184,7 @@ class OutlanderParserTester : QuickSpec {
                 if case .debug(let level) = result! {
                     expect(level).to(equal(5))
                 } else {
-                    fail("expected level result")
+                    fail("expected debug result")
                 }
             }
 
@@ -195,7 +195,7 @@ class OutlanderParserTester : QuickSpec {
                 if case .debug(let level) = result! {
                     expect(level).to(equal(5))
                 } else {
-                    fail("expected level result")
+                    fail("expected debug result")
                 }
             }
 
@@ -206,7 +206,7 @@ class OutlanderParserTester : QuickSpec {
                 if case .debug(let level) = result! {
                     expect(level).to(equal(5))
                 } else {
-                    fail("expected level result")
+                    fail("expected debug result")
                 }
             }
 
@@ -216,6 +216,24 @@ class OutlanderParserTester : QuickSpec {
                 
                 if case .debug(let level) = result! {
                     expect(level).to(equal(5))
+                } else {
+                    fail("expected debug result")
+                }
+            }
+
+            it("parses if_ single line") {
+                let result = ScriptParser().parse("\n if_1 then put hello \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .ifArgSingle(let arg, let token) = result! {
+                    expect(arg).to(equal(1))
+
+                    if case .put(let text) = token {
+                        expect(text).to(equal("hello"))
+                    } else {
+                        fail("expected put result")
+                    }
+                    
                 } else {
                     fail("expected level result")
                 }

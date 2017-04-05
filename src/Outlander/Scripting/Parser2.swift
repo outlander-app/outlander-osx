@@ -31,6 +31,8 @@ enum TokenValue : Hashable {
     case waitfor(String)
     case waitforre(String)
 
+    indirect case ifArgSingle(Int, TokenValue)
+
     case variable(String, String)
     case gosub(String, [String])
     case waiteval(String)
@@ -119,15 +121,14 @@ class ScriptParser {
         let waitfor = TokenValue.waitfor <^> lineCommand("waitfor")
         let waitforre = TokenValue.waitforre <^> lineCommand("waitforre")
 
-        let row = ws.many.optional *> (
-            comment
-            <|> debug
+        let ifArg = stringInSensitive("if_") *> int
+
+        let lineCommands =
+            debug
             <|> debugLevel
             <|> echo
             <|> exit
             <|> goto
-            <|> label
-            <|> matchwait
             <|> move
             <|> nextroom
             <|> pause
@@ -139,6 +140,18 @@ class ScriptParser {
             <|> wait
             <|> waitfor
             <|> waitforre
+
+        let otherCommands =
+            label
+            <|> matchwait
+
+        let ifArgSingle = curry({num, val in TokenValue.ifArgSingle(num, val) }) <^> ifArg <*> (space *> symbol("then") *> lineCommands)
+
+        let row = ws.many.optional *> (
+            comment
+            <|> lineCommands
+            <|> otherCommands
+            <|> ifArgSingle
         ) <* ws.many.optional
 
         let actualInput = input.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"
