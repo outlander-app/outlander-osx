@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
+		F90BD25D1E947E88006E3117 /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25C1E947E88006E3117 /* ScriptTester.swift */; };
 		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
 		F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
 		F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
@@ -59,7 +60,6 @@
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
-		F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82371AEAE732005BBD2F /* ScriptTester.swift */; };
 		F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
@@ -443,6 +443,7 @@
 
 /* Begin PBXFileReference section */
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
+		F90BD25C1E947E88006E3117 /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
@@ -478,7 +479,6 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
-		F92A82371AEAE732005BBD2F /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
 		F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseProfileViewController.swift; sourceTree = "<group>"; };
 		F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
 		F9316D281AD9E65000880149 /* ScriptRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
@@ -1168,6 +1168,7 @@
 			isa = PBXGroup;
 			children = (
 				F9A8A7AA1E861ED5000A9621 /* OutlanderParserTester.swift */,
+				F90BD25C1E947E88006E3117 /* ScriptTester.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1179,7 +1180,6 @@
 				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
-				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1709,7 +1709,6 @@
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
-				F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */,
 				F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
@@ -1771,6 +1770,7 @@
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
+				F90BD25D1E947E88006E3117 /* ScriptTester.swift in Sources */,
 				F990DC941E88CA4900BB0A25 /* CharacterExtension.swift in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9A8A7911E85C838000A9621 /* ScriptLogLevel.swift in Sources */,

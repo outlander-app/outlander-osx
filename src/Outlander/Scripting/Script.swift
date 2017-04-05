@@ -116,6 +116,7 @@ class Script : IScript {
     var paused = false
     var nextAfterUnpause = false
 
+    private var tokenHandlers:[TokenValue:(TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
 
     init(_ loader: @escaping ((String) -> [String]),
@@ -136,6 +137,20 @@ class Script : IScript {
         includeRegex = try Regex("^\\s*include (.+)$")
 
         self.reactToStream = []
+        self.tokenHandlers = [:]
+        self.tokenHandlers[.debug(0)] = self.handleDebug
+        self.tokenHandlers[.echo("")] = self.handleEcho
+        self.tokenHandlers[.exit] = self.handleExit
+        self.tokenHandlers[.goto("")] = self.handleGoto
+        self.tokenHandlers[.label("")] = self.handleLabel
+        self.tokenHandlers[.move("")] = self.handleMove
+        self.tokenHandlers[.nextroom] = self.handleNextroom
+        self.tokenHandlers[.pause(0)] = self.handlePause
+        self.tokenHandlers[.put("")] = self.handlePut
+        self.tokenHandlers[.send("")] = self.handleSend
+        self.tokenHandlers[.wait] = self.handleWait
+        self.tokenHandlers[.waitfor("")] = self.handleWaitfor
+        self.tokenHandlers[.waitforre("")] = self.handleWaitforre
     }
 
     func run(_ args:[String]) {
@@ -175,11 +190,11 @@ class Script : IScript {
             if let include = includeRegex.firstMatch(line as NSString) {
                 let includeName = include.trimmingCharacters(in: CharacterSet.whitespaces).trimSuffix(".cmd")
                 guard includeName != fileName else {
-                    sendText("script '\(fileName)' cannot include itself!\n", preset: "scripterror", fileName: fileName, scriptLine: index - 1)
+                    sendText("script '\(fileName)' cannot include itself!\n", preset: "scripterror", fileName: fileName, scriptLine: index)
                     continue
                 }
                 print("\(includeName)(\(index))")
-                self.notify("including '\(includeName)'\n", debug: ScriptLogLevel.gosubs, scriptLine: index - 1)
+                self.notify("including '\(includeName)'\n", debug: ScriptLogLevel.gosubs, scriptLine: index)
                 initialize(includeName, context: context)
             } else {
                 let scriptLine = ScriptLine(originalText: line.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), fileName: fileName, lineNumber: index, token: nil)
@@ -188,7 +203,7 @@ class Script : IScript {
 
             if let label = labelRegex.firstMatch(line as NSString) {
                 if let existing  = context.labels[label] {
-                    sendText("replacing label '\(existing.name)' from '\(existing.fileName)'\n", preset: "scripterror", fileName: fileName, scriptLine: index - 1)
+                    sendText("replacing label '\(existing.name)' from '\(existing.fileName)'\n", preset: "scripterror", fileName: fileName, scriptLine: index)
                 }
                 context.labels[label.lowercased()] = Label(name: label.lowercased(), line: context.lines.count - 1, fileName: fileName)
             }
@@ -242,6 +257,9 @@ class Script : IScript {
     }
 
     func stop() {
+
+        if self.stopped { return }
+        
         self.stopped = true
         self.context.currentLineNumber = -1
         let diff = Date().timeIntervalSince(self.started!)
@@ -338,64 +356,54 @@ class Script : IScript {
             return .next
         }
 
-        print(token)
-
-        switch token {
-            case .debug(let level):
-                self.debugLevel = ScriptLogLevel(rawValue: level) ?? ScriptLogLevel.none
-                self.notify("debuglevel \(self.debugLevel.rawValue)\n", debug:ScriptLogLevel.gosubs)
-                return .next
-            case .echo(let text):
-                self.gameContext.events.echoText(text)
-                return .next
-            case .put(let text):
-                return self.handlePut(text)
-            case .send(let text):
-                return self.handleSend(text)
-            case .exit:
-                self.notify("exit\n", debug:ScriptLogLevel.gosubs)
-                return .exit
-            case .goto(let label):
-                return gotoLabel(label)
-            case .label(let label):
-                self.notify("passing label '\(label)'\n", debug:ScriptLogLevel.gosubs)
-                return .next
-            case .move(let dir):
-                self.notify("move \(dir)\n", debug:ScriptLogLevel.wait)
-                self.reactToStream.append(MoveOp())
-                self.sendCommand("\(dir)")
-                return .wait
-            case .nextroom:
-                self.notify("nextroom\n", debug:ScriptLogLevel.wait)
-                self.reactToStream.append(NextRoomOp())
-                return .wait
-            case .pause(let time):
-                self.notify("pausing for \(time) seconds\n", debug:ScriptLogLevel.wait)
-                delay(time) {
-                    self.next()
-                }
-                return .wait
-            case .waitfor(let text):
-                self.notify("waitfor \(text)\n", debug:ScriptLogLevel.wait)
-                self.reactToStream.append(WaitforOp(text))
-                return .wait
-            case .waitforre(let pattern):
-                self.notify("waitforre \(pattern)\n", debug:ScriptLogLevel.wait)
-                self.reactToStream.append(WaitforReOp(pattern))
-                return .wait
-            default:
-                return .next
+        if let handler = self.tokenHandlers[token] {
+            return handler(token)
         }
+
+        self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber - 1)
+        return .exit
     }
 
-    func gotoLabel(_ label:String) -> ScriptExecuteResult {
+    func handleDebug(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .debug(level) = token else {
+            return .next
+        }
+
+        self.debugLevel = ScriptLogLevel(rawValue: level) ?? ScriptLogLevel.none
+        self.notify("debug \(self.debugLevel.rawValue)\n", debug:ScriptLogLevel.gosubs)
+
+        return .next
+    }
+
+    func handleEcho(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .echo(text) = token else {
+            return .next
+        }
+
+        self.gameContext.events.echoText(text)
+        return .next
+    }
+
+    func handleExit(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case .exit = token else {
+            return .next
+        }
+
+        self.notify("exit\n", debug:ScriptLogLevel.gosubs)
+
+        return .exit
+    }
+
+    func handleGoto(_ token:TokenValue) -> ScriptExecuteResult {
+
+        guard case let .goto(label) = token else {
+            return .next
+        }
 
         guard let target = self.context.labels[label.lowercased()] else {
             self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
             return .exit
         }
-
-//        let scriptLine = self.context.lines[target.line]
 
         self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
         self.context.currentLineNumber = target.line - 1
@@ -403,7 +411,56 @@ class Script : IScript {
         return .next
     }
 
-    func handlePut(_ text:String) -> ScriptExecuteResult {
+    func handleLabel(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .label(label) = token else {
+            return .next
+        }
+
+        self.notify("passing label '\(label)'\n", debug:ScriptLogLevel.gosubs)
+        return .next
+    }
+
+    func handleMove(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .move(dir) = token else {
+            return .next
+        }
+
+        self.notify("move \(dir)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(MoveOp())
+        self.sendCommand("\(dir)")
+
+        return .wait
+    }
+
+    func handleNextroom(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case .nextroom = token else {
+            return .next
+        }
+
+        self.notify("nextroom\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(NextRoomOp())
+
+        return .wait
+    }
+
+    func handlePause(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .pause(duration) = token else {
+            return .next
+        }
+
+        self.notify("pausing for \(duration) seconds\n", debug:ScriptLogLevel.wait)
+        delay(duration) {
+            self.next()
+        }
+
+        return .wait
+    }
+
+    func handlePut(_ token:TokenValue) -> ScriptExecuteResult {
+
+        guard case let .put(text) = token else {
+            return .next
+        }
 
         let cmds = text.splitToCommands()
         for cmd in cmds {
@@ -413,9 +470,42 @@ class Script : IScript {
         return .next
     }
 
-    func handleSend(_ text:String) -> ScriptExecuteResult {
+    func handleSend(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .send(text) = token else {
+            return .next
+        }
         self.sendCommand("#send \(text)")
         return .next
+    }
+
+    func handleWait(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case .wait = token else {
+            return .next
+        }
+
+        self.notify("wait for prompt\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitforPromptOp())
+        return .wait
+    }
+
+    func handleWaitfor(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .waitfor(text) = token else {
+            return .next
+        }
+
+        self.notify("waitfor \(text)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitforOp(text))
+        return .wait
+    }
+
+    func handleWaitforre(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .waitforre(pattern) = token else {
+            return .next
+        }
+
+        self.notify("waitforre \(pattern)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitforReOp(pattern))
+        return .wait
     }
 }
 

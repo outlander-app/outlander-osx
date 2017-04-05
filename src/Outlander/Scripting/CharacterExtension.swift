@@ -31,6 +31,16 @@ extension Character {
 
         }
     }
+
+    var lowercase: Character {
+        let str = String(self).lowercased()
+        return str[str.startIndex]
+    }
+
+    var uppercase: Character {
+        let str = String(self).uppercased()
+        return str[str.startIndex]
+    }
 }
 
 extension Sequence where Iterator.Element == Int {

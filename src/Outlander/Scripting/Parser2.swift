@@ -8,7 +8,10 @@
 
 import Foundation
 
-enum TokenValue {
+enum TokenValue : Hashable {
+
+    typealias RawValue = Int
+    
     case comment(String)
     case debug(Int)
     case echo(String)
@@ -18,8 +21,8 @@ enum TokenValue {
     case matchwait(Double)
     case move(String)
     case nextroom
-    case put(String)
     case pause(Double)
+    case put(String)
     case save(String)
     case send(String)
     case shift
@@ -34,9 +37,38 @@ enum TokenValue {
     case match(String, String)
     case matchre(String, String)
     case ifArg(Int)
+    case If(String)
+    case elseIf(String)
+    case Else
     case random(Double, Double)
     case action
     case eval
+
+    var rawValue: RawValue {
+        switch self {
+        case .comment: return 1
+        case .debug: return 2
+        case .echo: return 3
+        case .exit: return 4
+        case .goto: return 5
+        case .label: return 6
+        case .pause: return 7
+        case .put: return 8
+        case .send: return 10
+        case .waitfor: return 15
+        case .waitforre: return 16
+//        default: fatalError("TokenValue is not valid")
+        default: return -1
+        }
+    }
+
+    var hashValue: Int {
+        return self.rawValue.hashValue
+    }
+
+    static func == (lhs: TokenValue, rhs: TokenValue) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
 }
 
 class ScriptParser {
@@ -67,6 +99,7 @@ class ScriptParser {
         let label = TokenValue.label <^> identifier <* char(colon)
 
         let debug = TokenValue.debug <^> ((symbol("debug") *> int) <|> symbolOnly("debug", 1))
+        let debugLevel = TokenValue.debug <^> ((symbol("debuglevel") *> int) <|> symbolOnly("debuglevel", 1))
 
         let pause = TokenValue.pause <^> ((symbol("pause") *> double) <|> symbolOnly("pause", 1))
 
@@ -89,6 +122,7 @@ class ScriptParser {
         let row = ws.many.optional *> (
             comment
             <|> debug
+            <|> debugLevel
             <|> echo
             <|> exit
             <|> goto
@@ -118,7 +152,7 @@ class ScriptParser {
     }
 
     public func symbol(_ s:String) -> Parser<String> {
-        return (string(s) <* space)
+        return (stringInSensitive(s) <* space)
     }
 
     public func lineCommand(_ s:String) -> Parser<String> {
@@ -127,7 +161,7 @@ class ScriptParser {
     }
 
     public func symbolOnly<A>(_ s:String, _ val:A) -> Parser<A> {
-        return (string(s) *> newline *> result(val))
+        return (stringInSensitive(s) *> newline *> result(val))
     }
 
     public func result<A>(_ res:A) -> Parser<A> {

@@ -117,6 +117,20 @@ public func string(_ string: String) -> Parser<String> {
     }
 }
 
+public func stringInSensitive(_ string: String) -> Parser<String> {
+    return Parser<String> { stream in
+        var remainder = stream
+        
+        for char in string.characters {
+            guard let (_, newRemainder) = character(condition: { $0 == char.lowercase || $0 == char.uppercase }).parse(remainder) else {
+                return nil
+            }
+            remainder = newRemainder
+        }
+        return (string, remainder)
+    }
+}
+
 public func noneOf(_ list: [Character]) -> Parser<String> {
     return Parser<String> { stream in
         var result: [Character] = []
@@ -129,6 +143,11 @@ public func noneOf(_ list: [Character]) -> Parser<String> {
 
         return (String(result), remainder)
     }
+}
+
+// Delay creation of parser until it is needed
+public func lazy <T> (_ f: @autoclosure @escaping () -> Parser<T>) -> Parser<T> {
+    return Parser { input in f().parse(input) }
 }
 
 precedencegroup SequencePrecedence {

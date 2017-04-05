@@ -123,6 +123,17 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
 
+            it("parses ECHO") {
+                let result = ScriptParser().parse("ECHO Hello World \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .echo(let text) = result! {
+                    expect(text).to(equal("Hello World"))
+                } else {
+                    fail("expected echo result")
+                }
+            }
+
             it("parses echo with leading spaces") {
                 let result = ScriptParser().parse("\n echo  abcd \n\n")
                 expect(result).toNot(beNil())
@@ -168,6 +179,39 @@ class OutlanderParserTester : QuickSpec {
 
             it("parses debug with value") {
                 let result = ScriptParser().parse("\n debug 5 \n\n")
+                expect(result).toNot(beNil())
+
+                if case .debug(let level) = result! {
+                    expect(level).to(equal(5))
+                } else {
+                    fail("expected level result")
+                }
+            }
+
+            it("parses difference case debug") {
+                let result = ScriptParser().parse("\n DEBUG 5 \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .debug(let level) = result! {
+                    expect(level).to(equal(5))
+                } else {
+                    fail("expected level result")
+                }
+            }
+
+            it("parses difference case debug") {
+                let result = ScriptParser().parse("\n Debug 5 \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .debug(let level) = result! {
+                    expect(level).to(equal(5))
+                } else {
+                    fail("expected level result")
+                }
+            }
+
+            it("parses difference case debug") {
+                let result = ScriptParser().parse("\n dEbUG 5 \n\n")
                 expect(result).toNot(beNil())
                 
                 if case .debug(let level) = result! {
