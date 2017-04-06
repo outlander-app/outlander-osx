@@ -120,8 +120,12 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         btn.menu?.addItem(debugMenu)
         btn.menu?.item(at: 4)?.image = NSImage(named: "NSStatusNone")
         
-        btn.menu?.addItem(createMenuItem("Vars", textColor: NSColor.black))
+        btn.menu?.addItem(createMenuItem("Trace", textColor: NSColor.black))
         btn.menu?.item(at: 5)?.image = NSImage(named: "NSStatusNone")
+
+        btn.menu?.addItem(createMenuItem("Vars", textColor: NSColor.black))
+        btn.menu?.item(at: 6)?.image = NSImage(named: "NSStatusNone")
+
         self.view.subviews.append(btn)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ScriptToolbarViewController.popUpSelectionChanged(_:)), name: NSNotification.Name.NSMenuDidSendAction, object: btn.menu)
@@ -176,11 +180,11 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     func setContext(_ context:GameContext) {
         self.context = context
         
-        self.context?.events.subscribe(self, token: "script:add")
-        self.context?.events.subscribe(self, token: "script:resume")
-        self.context?.events.subscribe(self, token: "script:pause")
-        self.context?.events.subscribe(self, token: "script:remove")
-        self.context?.events.subscribe(self, token: "script:removeAll")
-        self.context?.events.subscribe(self, token: "script:debug")
+        _ = self.context?.events.subscribe(self, token: "script:add")
+        _ = self.context?.events.subscribe(self, token: "script:resume")
+        _ = self.context?.events.subscribe(self, token: "script:pause")
+        _ = self.context?.events.subscribe(self, token: "script:remove")
+        _ = self.context?.events.subscribe(self, token: "script:removeAll")
+        _ = self.context?.events.subscribe(self, token: "script:debug")
     }
 }

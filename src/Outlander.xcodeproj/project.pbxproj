@@ -10,6 +10,8 @@
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BD25D1E947E88006E3117 /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25C1E947E88006E3117 /* ScriptTester.swift */; };
+		F90BD25F1E95F7F1006E3117 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25E1E95F7F1006E3117 /* Stack.swift */; };
+		F90BD2601E95F7F1006E3117 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25E1E95F7F1006E3117 /* Stack.swift */; };
 		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
 		F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
 		F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
@@ -444,6 +446,7 @@
 /* Begin PBXFileReference section */
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
 		F90BD25C1E947E88006E3117 /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
+		F90BD25E1E95F7F1006E3117 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
@@ -830,6 +833,7 @@
 				F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */,
 				F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */,
 				F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */,
+				F90BD25E1E95F7F1006E3117 /* Stack.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1512,6 +1516,7 @@
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F90BD25F1E95F7F1006E3117 /* Stack.swift in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
@@ -1650,6 +1655,7 @@
 				F96ECDD2193565CE00787CB9 /* HighlightCommandTester.m in Sources */,
 				F9A8A79D1E85CBDE000A9621 /* SwiftRegex.swift in Sources */,
 				F9DF148F1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
+				F90BD2601E95F7F1006E3117 /* Stack.swift in Sources */,
 				F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */,
 				F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,

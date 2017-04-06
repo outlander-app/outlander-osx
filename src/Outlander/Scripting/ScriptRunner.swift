@@ -148,6 +148,9 @@ open class ScriptRunner : NSObject, ISubscriber {
                 self.resume(scriptName)
                 self.context.events.publish("script:resume", data: ["scriptName":scriptName as AnyObject])
             }
+            else if action == "trace" {
+                self.stackTrace(scriptName)
+            }
             else if action == "vars" {
                 self.vars(scriptName)
             }
@@ -219,6 +222,15 @@ open class ScriptRunner : NSObject, ISubscriber {
         for (_, script) in self.scripts.enumerated() {
             if script.fileName == name {
                 script.vars()
+                break
+            }
+        }
+    }
+
+    fileprivate func stackTrace(_ name:String) {
+        for (_, script) in self.scripts.enumerated() {
+            if script.fileName == name {
+                script.showStackTrace()
                 break
             }
         }

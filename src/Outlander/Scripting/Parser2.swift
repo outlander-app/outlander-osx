@@ -50,6 +50,7 @@ enum TokenValue : Hashable {
     case random(Double, Double)
     case action
     case eval
+    case function(String, [String])
 
     var rawValue: RawValue {
         switch self {

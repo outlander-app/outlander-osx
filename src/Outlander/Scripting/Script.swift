@@ -51,6 +51,7 @@ protocol IScript {
     func nextAfterRoundtime()
     func stream(_ text:String, _ nodes:[Node])
     func vars()
+    func showStackTrace()
 }
 
 struct Label {
@@ -123,6 +124,8 @@ class Script : IScript {
     private var args:[String]
     private var argVars:[String:String]
     private var variables:[String:String]
+    private var regexVars:[String:String]
+    private var stackTrace:Stack<ScriptLine>
     private var lastToken:TokenValue?
 
     init(_ loader: @escaping ((String) -> [String]),
@@ -145,7 +148,9 @@ class Script : IScript {
         self.reactToStream = []
         self.args = []
         self.argVars = [:]
+        self.regexVars = [:]
         self.variables = [:]
+        self.stackTrace = Stack<ScriptLine>(30)
         
         self.tokenHandlers = [:]
         self.tokenHandlers[.comment("")] = self.handleComment
@@ -355,6 +360,16 @@ class Script : IScript {
         self.sendText("+---------------------------------------------------------+\n", mono: true, preset: "scriptinfo")
     }
 
+    func showStackTrace() {
+        self.sendText("+----- Tracing '\(self.fileName)' -----------------------------------+\n", mono: true, preset: "scriptinfo")
+
+        for line in self.stackTrace.items {
+            self.sendText("[\(line.fileName)(\(line.lineNumber))]: \(line.originalText)\n", mono: true, preset: "scriptinfo")
+        }
+
+        self.sendText("+---------------------------------------------------------+\n", mono: true, preset: "scriptinfo")
+    }
+
     func stop() {
 
         if self.stopped { return }
@@ -435,6 +450,8 @@ class Script : IScript {
         if line.token == nil {
             line.token = ScriptParser().parse(line.originalText)
         }
+
+        self.stackTrace.push(line)
 
         let result = handleLine(line)
 
