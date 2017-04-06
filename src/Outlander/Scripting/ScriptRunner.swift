@@ -218,7 +218,7 @@ open class ScriptRunner : NSObject, ISubscriber {
     fileprivate func vars(_ name:String) {
         for (_, script) in self.scripts.enumerated() {
             if script.fileName == name {
-//                script.vars()
+                script.vars()
                 break
             }
         }

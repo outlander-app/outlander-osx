@@ -50,6 +50,7 @@ protocol IScript {
     func next()
     func nextAfterRoundtime()
     func stream(_ text:String, _ nodes:[Node])
+    func vars()
 }
 
 struct Label {
@@ -119,6 +120,11 @@ class Script : IScript {
     private var tokenHandlers:[TokenValue:(TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
 
+    private var args:[String]
+    private var argVars:[String:String]
+    private var variables:[String:String]
+    private var lastToken:TokenValue?
+
     init(_ loader: @escaping ((String) -> [String]),
          _ fileName: String,
          _ gameContext: GameContext,
@@ -137,23 +143,36 @@ class Script : IScript {
         includeRegex = try Regex("^\\s*include (.+)$")
 
         self.reactToStream = []
+        self.args = []
+        self.argVars = [:]
+        self.variables = [:]
+        
         self.tokenHandlers = [:]
+        self.tokenHandlers[.comment("")] = self.handleComment
         self.tokenHandlers[.debug(0)] = self.handleDebug
         self.tokenHandlers[.echo("")] = self.handleEcho
         self.tokenHandlers[.exit] = self.handleExit
         self.tokenHandlers[.goto("")] = self.handleGoto
+        self.tokenHandlers[.ifArgSingle(0, .comment(""))] = self.handleIfArgSingle
         self.tokenHandlers[.label("")] = self.handleLabel
         self.tokenHandlers[.move("")] = self.handleMove
         self.tokenHandlers[.nextroom] = self.handleNextroom
         self.tokenHandlers[.pause(0)] = self.handlePause
         self.tokenHandlers[.put("")] = self.handlePut
+        self.tokenHandlers[.save("")] = self.handleSave
         self.tokenHandlers[.send("")] = self.handleSend
+        self.tokenHandlers[.shift] = self.handleShift
+        self.tokenHandlers[.unvar("")] = self.handleUnvar
         self.tokenHandlers[.wait] = self.handleWait
         self.tokenHandlers[.waitfor("")] = self.handleWaitfor
         self.tokenHandlers[.waitforre("")] = self.handleWaitforre
+        self.tokenHandlers[.variable("", "")] = self.handleVariable
     }
 
     func run(_ args:[String]) {
+
+        self.args = args
+        self.updateArgumentVars()
 
         self.started = Date()
 
@@ -162,8 +181,13 @@ class Script : IScript {
         let formattedDate = dateFormatter.string(from: self.started!)
 
         self.sendText(String(format:"[Starting '\(self.fileName)' at \(formattedDate)]\n"))
+        self.sendText(String(format:"[\(Date()) - started]\n"))
         
         initialize(self.fileName, context: self.context)
+
+        self.sendText(String(format:"[\(Date()) - initialized]\n"))
+
+        self.variables["scriptname"] = self.fileName
 
         next()
     }
@@ -254,6 +278,81 @@ class Script : IScript {
     func printInfo() {
         let diff = Date().timeIntervalSince(self.started!)
         self.sendText(String(format: "[Script '\(self.fileName)' running for %.02f seconds]\n", diff), preset: "scriptinput")
+    }
+
+    func varsForDisplay() -> [String] {
+        var vars:[String] = []
+
+        for (key, value) in self.argVars {
+            vars.append("\(key): \(value)")
+        }
+
+        for (key, value) in self.variables {
+            vars.append("\(key): \(value)")
+        }
+
+        return vars.sorted { $0 < $1 }
+    }
+
+    func shiftArgumentVars() -> Bool {
+        guard let _ = self.args.first else {
+            return false
+        }
+
+        self.args.remove(at: 0)
+        self.updateArgumentVars()
+        return true
+    }
+
+    func updateArgumentVars() {
+        self.argVars = [:]
+
+        var all = ""
+
+        for param in self.args {
+            if param.contains(" ") {
+                all += " \"\(param)\""
+            } else {
+                all += " \(param)"
+            }
+        }
+
+        self.argVars["0"] = all.trimmingCharacters(in: CharacterSet.whitespaces)
+
+        for (index, param) in self.args.enumerated() {
+            self.argVars["\(index+1)"] = param
+        }
+
+        let originalCount = self.args.count
+
+        let maxArgs = 9
+
+        let diff = maxArgs - originalCount
+
+        if(diff > 0) {
+            let start = maxArgs - diff
+            for index in start..<(maxArgs) {
+                self.argVars["\(index+1)"] = ""
+            }
+        }
+
+        self.variables["argcount"] = "\(originalCount)"
+    }
+
+    func vars() {
+        let display = self.varsForDisplay()
+
+        let diff = Date().timeIntervalSince(self.started!)
+        self.sendText(
+            String(format:"+----- '\(self.fileName)' variables (running for %.02f seconds) -----+\n", diff),
+                mono: true,
+                preset: "scriptinfo")
+
+        for v in display {
+            self.sendText("|  \(v)\n", mono: true, preset: "scriptinfo")
+        }
+
+        self.sendText("+---------------------------------------------------------+\n", mono: true, preset: "scriptinfo")
     }
 
     func stop() {
@@ -356,6 +455,8 @@ class Script : IScript {
             return .next
         }
 
+        self.lastToken = token
+
         if let handler = self.tokenHandlers[token] {
             return handler(token)
         }
@@ -364,6 +465,23 @@ class Script : IScript {
         return .exit
     }
 
+    func handleToken(_ token:TokenValue) -> ScriptExecuteResult {
+        if let handler = self.tokenHandlers[token] {
+            return handler(token)
+        }
+
+        self.sendText("No handler for script token: '\(token)'\n", preset: "scripterror", fileName: self.fileName)
+        return .exit
+    }
+
+    func handleComment(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case .comment(_) = token else {
+            return .next
+        }
+
+        return .next
+    }
+    
     func handleDebug(_ token:TokenValue) -> ScriptExecuteResult {
         guard case let .debug(level) = token else {
             return .next
@@ -407,6 +525,22 @@ class Script : IScript {
 
         self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
         self.context.currentLineNumber = target.line - 1
+
+        return .next
+    }
+
+    func handleIfArgSingle(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .ifArgSingle(count, lineToken) = token else {
+            return .next
+        }
+
+        let hasArgs = self.args.count >= count
+        
+        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+
+        if hasArgs {
+            return handleToken(lineToken)
+        }
 
         return .next
     }
@@ -470,11 +604,46 @@ class Script : IScript {
         return .next
     }
 
+    func handleSave(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .save(text) = token else {
+            return .next
+        }
+        self.notify("save \(text) to %s\n", debug:ScriptLogLevel.wait)
+        self.variables["s"] = text
+        return .next
+    }
+
     func handleSend(_ token:TokenValue) -> ScriptExecuteResult {
         guard case let .send(text) = token else {
             return .next
         }
         self.sendCommand("#send \(text)")
+        return .next
+    }
+
+    func handleShift(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case .shift = token else {
+            return .next
+        }
+
+        self.notify("shift\n", debug:ScriptLogLevel.vars)
+
+        if !self.shiftArgumentVars() {
+            self.sendText("No more script arguments to shift!\n", preset: "scripterror")
+            return .exit
+        }
+        
+        return .next
+    }
+
+    func handleUnvar(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .unvar(key) = token else {
+            return .next
+        }
+
+        self.notify("deleting variable \(key)\n", debug:ScriptLogLevel.wait)
+        self.variables.removeValue(forKey: key)
+
         return .next
     }
 
@@ -506,6 +675,17 @@ class Script : IScript {
         self.notify("waitforre \(pattern)\n", debug:ScriptLogLevel.wait)
         self.reactToStream.append(WaitforReOp(pattern))
         return .wait
+    }
+
+    func handleVariable(_ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .variable(key, value) = token else {
+            return .next
+        }
+
+        self.notify("setvariable \(key) \(value)\n", debug:ScriptLogLevel.vars)
+        self.variables[key] = value
+
+        return .next
     }
 }
 

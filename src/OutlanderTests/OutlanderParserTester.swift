@@ -274,6 +274,28 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected variable result")
                 }
             }
+
+            it("parses left brace {") {
+                let result = ScriptParser().parse("\n { \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .token(let token) = result! {
+                    expect(token).to(equal("{"))
+                } else {
+                    fail("expected {")
+                }
+            }
+
+            it("parses right brace }") {
+                let result = ScriptParser().parse("\n } \n\n")
+                expect(result).toNot(beNil())
+                
+                if case .token(let token) = result! {
+                    expect(token).to(equal("}"))
+                } else {
+                    fail("expected }")
+                }
+            }
         }
     }
 }

@@ -11,14 +11,15 @@ import Foundation
 enum TokenValue : Hashable {
 
     typealias RawValue = Int
-    
+
+    // have handlers
     case comment(String)
     case debug(Int)
     case echo(String)
     case exit
     case goto(String)
+    indirect case ifArgSingle(Int, TokenValue)
     case label(String)
-    case matchwait(Double)
     case move(String)
     case nextroom
     case pause(Double)
@@ -26,14 +27,17 @@ enum TokenValue : Hashable {
     case save(String)
     case send(String)
     case shift
+    case token(String)
     case unvar(String)
     case wait
     case waitfor(String)
     case waitforre(String)
-
-    indirect case ifArgSingle(Int, TokenValue)
     case variable(String, String)
 
+    // parsed but need handlers
+    case matchwait(Double)
+
+    // not parsed
     case gosub(String, [String])
     case waiteval(String)
     case match(String, String)
@@ -54,12 +58,20 @@ enum TokenValue : Hashable {
         case .echo: return 3
         case .exit: return 4
         case .goto: return 5
+        case .ifArgSingle: return 99
         case .label: return 6
-        case .pause: return 7
-        case .put: return 8
-        case .send: return 10
-        case .waitfor: return 15
-        case .waitforre: return 16
+        case .move: return 7
+        case .nextroom: return 8
+        case .pause: return 9
+        case .put: return 10
+        case .save: return 11
+        case .send: return 12
+        case .shift: return 13
+        case .unvar: return 14
+        case .wait: return 15
+        case .waitfor: return 16
+        case .waitforre: return 17
+        case .variable: return 20
 //        default: fatalError("TokenValue is not valid")
         default: return -1
         }
@@ -108,6 +120,7 @@ class ScriptParser {
 
         let matchwait = TokenValue.pause <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
 
+        let deleteVar = TokenValue.unvar <^> lineCommand("deletevariable")
         let echo = TokenValue.echo <^> lineCommand("echo")
         let goto = TokenValue.goto <^> lineCommand("goto")
         let exit = TokenValue.exit <^^> symbolOnly("exit", "")
@@ -126,11 +139,13 @@ class ScriptParser {
         let varEnd = (space.oneOrMore *> any).optional
         let variable = curry({ key, val in TokenValue.variable(key, val ?? "") }) <^> varStart <*> varEnd
 
-        let ifArg = stringInSensitive("if_") *> int
+        let braceLeft = TokenValue.token <^> symbolOnly("{", "{")
+        let braceRight = TokenValue.token <^> symbolOnly("}", "}")
 
         let lineCommands =
             debug
             <|> debugLevel
+            <|> deleteVar
             <|> echo
             <|> exit
             <|> goto
@@ -151,6 +166,7 @@ class ScriptParser {
             label
             <|> matchwait
 
+        let ifArg = stringInSensitive("if_") *> int
         let ifArgSingle = curry({num, val in TokenValue.ifArgSingle(num, val) }) <^> ifArg <*> (space *> symbol("then") *> lineCommands)
 
         let row = ws.many.optional *> (
@@ -158,6 +174,8 @@ class ScriptParser {
             <|> lineCommands
             <|> otherCommands
             <|> ifArgSingle
+            <|> braceLeft
+            <|> braceRight
         ) <* ws.many.optional
 
         let actualInput = input.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) + "\n"

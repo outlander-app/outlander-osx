@@ -307,6 +307,8 @@
         _viewModel.spell = val;
     }];
 
+//    [_spelltimeNotifier set:@"some spell"];
+
 //    __CommandTextField.maxHistoryLength = 3;
 
 //    NSMutableArray *tags = [[NSMutableArray alloc] init];
