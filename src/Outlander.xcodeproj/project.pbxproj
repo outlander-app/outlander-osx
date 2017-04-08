@@ -388,6 +388,11 @@
 		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
+		F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
+		F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
+		F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */; };
+		F9F19C491E9813F000AC3F29 /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C481E9813F000AC3F29 /* ObjC.m */; };
+		F9F19C4A1E9813F000AC3F29 /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C481E9813F000AC3F29 /* ObjC.m */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
@@ -750,6 +755,10 @@
 		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
 		F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandlerTester.swift; sourceTree = "<group>"; };
 		F9E86BCD1AEC78700065E04A /* EventAggregator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAggregator.swift; sourceTree = "<group>"; };
+		F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluator.swift; sourceTree = "<group>"; };
+		F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
+		F9F19C471E9813F000AC3F29 /* ObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC.h; sourceTree = "<group>"; };
+		F9F19C481E9813F000AC3F29 /* ObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjC.m; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
 		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
 		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
@@ -821,6 +830,7 @@
 		F9316D1E1AD9E19E00880149 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */,
 				F9316D281AD9E65000880149 /* ScriptRunner.swift */,
 				F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */,
 				F9A8A78C1E85C7F1000A9621 /* NotifyMessage.swift */,
@@ -1054,6 +1064,8 @@
 				F98D4C271CB1A7DF00E81E70 /* Substitute.swift */,
 				F917612E1E328BCB0091A617 /* ColorPreset.swift */,
 				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
+				F9F19C471E9813F000AC3F29 /* ObjC.h */,
+				F9F19C481E9813F000AC3F29 /* ObjC.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1173,6 +1185,7 @@
 			children = (
 				F9A8A7AA1E861ED5000A9621 /* OutlanderParserTester.swift */,
 				F90BD25C1E947E88006E3117 /* ScriptTester.swift */,
+				F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1583,6 +1596,7 @@
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
+				F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
@@ -1596,6 +1610,7 @@
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A8A7A71E8617DC000A9621 /* OutlanderParser.swift in Sources */,
+				F9F19C491E9813F000AC3F29 /* ObjC.m in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
 				F97CD5861ACD27D3007E5804 /* MapLoader.swift in Sources */,
 				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
@@ -1666,6 +1681,7 @@
 				F9A8A7AC1E861ED5000A9621 /* OutlanderParserTester.swift in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
+				F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
@@ -1709,6 +1725,7 @@
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F9F19C4A1E9813F000AC3F29 /* ObjC.m in Sources */,
 				F93BCBE61E8B8BE900FFEF5E /* Parser2.swift in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
@@ -1747,6 +1764,7 @@
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
 				F9A8A7A81E8617DC000A9621 /* OutlanderParser.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */,
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,

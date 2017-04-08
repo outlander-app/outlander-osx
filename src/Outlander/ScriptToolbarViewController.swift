@@ -108,7 +108,9 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         btn.menu?.item(at: 2)?.image = NSImage(named: "NSStatusPartiallyAvailable")
         btn.menu?.addItem(createMenuItem("Abort", textColor: NSColor.black))
         btn.menu?.item(at: 3)?.image = NSImage(named: "NSStatusUnavailable")
-        
+
+        btn.menu?.insertItem(NSMenuItem.separator(), at: 4)
+
         let debugMenu = createMenuItem("Debug", textColor: NSColor.black)
         debugMenu.submenu = NSMenu(title: scriptName)
         debugMenu.submenu?.addItem(createSubMenuItem("0. Debug off", textColor: NSColor.black, tag: ScriptLogLevel.none))
@@ -118,13 +120,13 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
         debugMenu.submenu?.addItem(createSubMenuItem("4. Math, variables", textColor: NSColor.black, tag: ScriptLogLevel.vars))
         debugMenu.submenu?.addItem(createSubMenuItem("5. Actions", textColor: NSColor.black, tag: ScriptLogLevel.actions))
         btn.menu?.addItem(debugMenu)
-        btn.menu?.item(at: 4)?.image = NSImage(named: "NSStatusNone")
+        btn.menu?.item(at: 5)?.image = NSImage(named: "NSStatusNone")
         
         btn.menu?.addItem(createMenuItem("Trace", textColor: NSColor.black))
-        btn.menu?.item(at: 5)?.image = NSImage(named: "NSStatusNone")
+        btn.menu?.item(at: 6)?.image = NSImage(named: "NSStatusNone")
 
         btn.menu?.addItem(createMenuItem("Vars", textColor: NSColor.black))
-        btn.menu?.item(at: 6)?.image = NSImage(named: "NSStatusNone")
+        btn.menu?.item(at: 7)?.image = NSImage(named: "NSStatusNone")
 
         self.view.subviews.append(btn)
 

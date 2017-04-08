@@ -25,6 +25,14 @@ class Stack<T> {
         return stack.last
     }
 
+    var last2:T? {
+        if stack.count < 2 {
+            return nil
+        }
+        
+        return stack[stack.count - 2]
+    }
+
     var count:Int {
         return stack.count
     }
@@ -32,7 +40,7 @@ class Stack<T> {
     func push(_ item:T) {
         stack.append(item)
 
-        if stack.count > self.maxCapacity {
+        if self.maxCapacity > 0 && stack.count > self.maxCapacity {
             stack.removeFirst()
         }
     }

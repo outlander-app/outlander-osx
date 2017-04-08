@@ -145,6 +145,42 @@ public func noneOf(_ list: [Character]) -> Parser<String> {
     }
 }
 
+public func noneOf(_ strings:[String]) -> Parser<String> {
+    let strings = strings.map { ($0, $0.characters.map { $0.uppercase }) }
+    return Parser { stream in
+
+        guard let _ = stream.first else {
+            return ("", stream)
+        }
+
+        var count = 0
+
+        for next in stream {
+            for (_, characters) in strings {
+                guard characters.first == next.uppercase else { continue }
+                let offset = characters.count
+                guard stream.count >= offset + count else { continue }
+
+                let startIndex = stream.index(stream.startIndex, offsetBy: count)
+                let endIndex = stream.index(stream.startIndex, offsetBy: offset + count)
+
+                guard endIndex <= stream.endIndex else { continue }
+                let peek = stream[startIndex..<endIndex].map { $0.uppercase }
+
+                if characters.elementsEqual(peek) {
+                    let res = String(stream[stream.startIndex..<startIndex])
+                    let remainder = stream.dropFirst(count)
+                    return (res, remainder)
+                }
+            }
+
+            count += 1
+        }
+
+        return (String(stream), String("")!.characters)
+    }
+}
+
 // Delay creation of parser until it is needed
 public func lazy <T> (_ f: @autoclosure @escaping () -> Parser<T>) -> Parser<T> {
     return Parser { input in f().parse(input) }

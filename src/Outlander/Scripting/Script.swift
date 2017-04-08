@@ -60,11 +60,19 @@ struct Label {
     var fileName: String
 }
 
-struct ScriptLine {
+class ScriptLine {
     var originalText: String
     var fileName: String
     var lineNumber: Int
     var token:TokenValue?
+    var endOfBlock:Int?
+    var ifResult:Bool?
+
+    init(originalText:String, fileName:String, lineNumber:Int) {
+        self.originalText = originalText
+        self.fileName = fileName
+        self.lineNumber = lineNumber
+    }
 }
 
 class ScriptContext {
@@ -74,12 +82,14 @@ class ScriptContext {
     var params:[String] = []
     var paramVars: [String:String] = [:]
     var variables: [String:String] = [:]
+    var ifStack:Stack<ScriptLine> = Stack<ScriptLine>()
+    var ifResultStack:Stack<Bool> = Stack<Bool>()
 
     var globalVar:((String) -> String?) = { _ in nil }
 
     var currentLine:ScriptLine? {
         get {
-            if currentLineNumber == -1 || currentLineNumber >= lines.count {
+            if currentLineNumber < 0 || currentLineNumber >= lines.count {
                 return nil
             }
 
@@ -87,8 +97,148 @@ class ScriptContext {
         }
     }
 
+    var previousLine:ScriptLine? {
+        if currentLineNumber - 1 < 0 {
+            return nil
+        }
+
+        return lines[currentLineNumber - 1]
+    }
+
+    func consumeToken(_ token:String) -> Bool {
+        self.advance()
+        return currentLineTokenValueIs(token)
+    }
+
+    func currentLineTokenValueIs(_ token:String) -> Bool {
+        guard let line = self.currentLine else {
+            return false
+        }
+
+        if line.token == nil {
+            line.token = ScriptParser().parse(line.originalText)
+        }
+
+        guard let t = line.token else {
+            return false
+        }
+        guard case let .token(v) = t else {
+            return false
+        }
+
+        return v == token
+    }
+
+    func pushCurrentLineToIfStack() -> Bool {
+        guard let line = self.currentLine else {
+            return false
+        }
+
+        return pushLineToIfStack(line)
+    }
+
+    func pushLineToIfStack(_ line:ScriptLine) -> Bool {
+        self.ifStack.push(line)
+        return true
+    }
+
+    func popIfStack() -> Bool {
+        guard self.ifStack.hasItems() else {
+            return false
+        }
+        
+        _ = self.ifStack.pop()
+        return true
+    }
+
     func advance() {
         currentLineNumber += 1
+    }
+
+    func advanceToEndOfBlock() -> Bool {
+
+        guard let target = self.ifStack.last else {
+            return false
+        }
+
+        if let endOfBlock = target.endOfBlock {
+            self.currentLineNumber = endOfBlock
+            return true
+        }
+
+        while currentLineNumber < lines.count {
+
+            self.advance()
+
+            guard let line = self.currentLine else {
+                return false
+            }
+
+            guard let currentIf = self.ifStack.last else {
+                return false
+            }
+
+            if line.token == nil {
+                line.token = ScriptParser().parse(line.originalText)
+            }
+
+            guard let lineToken = line.token else {
+                continue
+            }
+
+            switch lineToken {
+            case .token(let element):
+                if element == "}" {
+
+                    if currentIf.lineNumber == target.lineNumber {
+                        _ = self.popIfStack()
+                        currentIf.endOfBlock = self.currentLineNumber
+                        return true
+                    }
+                    
+                    if !self.popIfStack() {
+                        return false
+                    }
+                }
+            case .ifArg:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .ifArgNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            case .If:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .ifNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            case .Else:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .elseNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            default:
+                continue
+            }
+        }
+
+        return false
     }
 
     func simplify(_ text:String) -> String {
@@ -100,6 +250,7 @@ enum ScriptExecuteResult {
     case next
     case wait
     case exit
+    case advanceToEndOfBlock
 }
 
 class Script : IScript {
@@ -118,7 +269,7 @@ class Script : IScript {
     var paused = false
     var nextAfterUnpause = false
 
-    private var tokenHandlers:[TokenValue:(TokenValue)->ScriptExecuteResult]
+    private var tokenHandlers:[TokenValue:(ScriptLine,TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
 
     private var args:[String]
@@ -126,7 +277,32 @@ class Script : IScript {
     private var variables:[String:String]
     private var regexVars:[String:String]
     private var stackTrace:Stack<ScriptLine>
-    private var lastToken:TokenValue?
+    private var popIfResultStackAfterNext = false
+
+    private var evaluator:ExpressionEvaluator
+
+    private var lastLine:ScriptLine? {
+        return stackTrace.last2
+    }
+
+    private var lastTokenWasIf:Bool {
+        guard let lastToken = self.lastLine?.token else {
+            return false
+        }
+
+        switch lastToken {
+        case .ifArg: return true
+        case .ifArgSingle: return true
+        case .ifArgNeedsBrace: return true
+        case .ifSingle: return true
+        case .If: return true
+        case .ifNeedsBrace: return true
+        case .elseIfSingle: return true
+        case .elseIf: return true
+        case .elseIfNeedsBrace: return true
+        default: return false
+        }
+    }
 
     init(_ loader: @escaping ((String) -> [String]),
          _ fileName: String,
@@ -151,14 +327,26 @@ class Script : IScript {
         self.regexVars = [:]
         self.variables = [:]
         self.stackTrace = Stack<ScriptLine>(30)
+        self.evaluator = ExpressionEvaluator()
         
         self.tokenHandlers = [:]
         self.tokenHandlers[.comment("")] = self.handleComment
         self.tokenHandlers[.debug(0)] = self.handleDebug
+        self.tokenHandlers[.elseSingle(.comment(""))] = self.handleElseSingle
+        self.tokenHandlers[.Else] = self.handleElse
+        self.tokenHandlers[.elseNeedsBrace] = self.handleElseNeedsBrace
         self.tokenHandlers[.echo("")] = self.handleEcho
+        self.tokenHandlers[.elseIfSingle("", .comment(""))] = self.handleElseIfSingle
+        self.tokenHandlers[.elseIf("")] = self.handleElseIf
+        self.tokenHandlers[.elseIfNeedsBrace("")] = self.handleElseIfNeedsBrace
         self.tokenHandlers[.exit] = self.handleExit
         self.tokenHandlers[.goto("")] = self.handleGoto
         self.tokenHandlers[.ifArgSingle(0, .comment(""))] = self.handleIfArgSingle
+        self.tokenHandlers[.ifArg(0)] = self.handleIfArg
+        self.tokenHandlers[.ifArgNeedsBrace(0)] = self.handleIfArgNeedsBrace
+        self.tokenHandlers[.ifSingle("", .comment(""))] = self.handleIfSingle
+        self.tokenHandlers[.If("")] = self.handleIf
+        self.tokenHandlers[.ifNeedsBrace("")] = self.handleIfNeedsBrace
         self.tokenHandlers[.label("")] = self.handleLabel
         self.tokenHandlers[.move("")] = self.handleMove
         self.tokenHandlers[.nextroom] = self.handleNextroom
@@ -167,6 +355,7 @@ class Script : IScript {
         self.tokenHandlers[.save("")] = self.handleSave
         self.tokenHandlers[.send("")] = self.handleSend
         self.tokenHandlers[.shift] = self.handleShift
+        self.tokenHandlers[.token("")] = self.handleToken
         self.tokenHandlers[.unvar("")] = self.handleUnvar
         self.tokenHandlers[.wait] = self.handleWait
         self.tokenHandlers[.waitfor("")] = self.handleWaitfor
@@ -226,7 +415,10 @@ class Script : IScript {
                 self.notify("including '\(includeName)'\n", debug: ScriptLogLevel.gosubs, scriptLine: index)
                 initialize(includeName, context: context)
             } else {
-                let scriptLine = ScriptLine(originalText: line.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), fileName: fileName, lineNumber: index, token: nil)
+                let scriptLine = ScriptLine(
+                    originalText: line.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+                    fileName: fileName,
+                    lineNumber: index)
                 context.lines.append(scriptLine)
             }
 
@@ -271,7 +463,7 @@ class Script : IScript {
         message.preset = preset
         message.scriptLine = Int32(scriptLine)
 
-        if debug != ScriptLogLevel.none {
+        if debug != ScriptLogLevel.none && scriptLine < 0 {
             if let line = self.context.currentLine {
                 message.scriptLine = Int32(line.lineNumber)
             }
@@ -442,7 +634,7 @@ class Script : IScript {
         
         self.context.advance()
 
-        guard var line = self.context.currentLine else {
+        guard let line = self.context.currentLine else {
             self.cancel()
             return
         }
@@ -459,6 +651,15 @@ class Script : IScript {
             case .next: next()
             case .wait: return
             case .exit: self.cancel()
+            case .advanceToEndOfBlock:
+                if self.context.advanceToEndOfBlock() {
+                    self.next()
+                } else {
+                    if let line = self.context.currentLine {
+                        self.sendText("Unable to match end of block\n", preset: "scripterror", fileName: line.fileName, scriptLine: line.lineNumber)
+                    }
+                    self.cancel()
+                }
         }
     }
 
@@ -468,30 +669,28 @@ class Script : IScript {
 
     func handleLine(_ line:ScriptLine) -> ScriptExecuteResult {
         guard let token = line.token else {
-            self.sendText("Unknown command: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber - 1)
+            self.sendText("Unknown command: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
             return .next
         }
 
-        self.lastToken = token
-
         if let handler = self.tokenHandlers[token] {
-            return handler(token)
+            return handler(line, token)
         }
 
-        self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber - 1)
+        self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
         return .exit
     }
 
-    func handleToken(_ token:TokenValue) -> ScriptExecuteResult {
+    func executeToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         if let handler = self.tokenHandlers[token] {
-            return handler(token)
+            return handler(line, token)
         }
 
         self.sendText("No handler for script token: '\(token)'\n", preset: "scripterror", fileName: self.fileName)
         return .exit
     }
 
-    func handleComment(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleComment(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .comment(_) = token else {
             return .next
         }
@@ -499,7 +698,7 @@ class Script : IScript {
         return .next
     }
     
-    func handleDebug(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleDebug(_line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .debug(level) = token else {
             return .next
         }
@@ -510,7 +709,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleEcho(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleEcho(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .echo(text) = token else {
             return .next
         }
@@ -519,7 +718,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleExit(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleExit(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .exit = token else {
             return .next
         }
@@ -529,7 +728,7 @@ class Script : IScript {
         return .exit
     }
 
-    func handleGoto(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleGoto(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
 
         guard case let .goto(label) = token else {
             return .next
@@ -540,29 +739,338 @@ class Script : IScript {
             return .exit
         }
 
+        self.context.ifStack.clear()
+
         self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
         self.context.currentLineNumber = target.line - 1
 
         return .next
     }
 
-    func handleIfArgSingle(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleIfArgSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .ifArgSingle(count, lineToken) = token else {
             return .next
         }
 
         let hasArgs = self.args.count >= count
-        
+        line.ifResult = hasArgs
+
         self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
 
         if hasArgs {
-            return handleToken(lineToken)
+            return executeToken(line, lineToken)
         }
 
         return .next
     }
 
-    func handleLabel(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleIfArgNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .ifArgNeedsBrace(count) = token else {
+            return .next
+        }
+
+        let hasArgs = self.args.count >= count
+
+        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+
+        let ifLine = self.context.currentLine!
+
+        if !self.context.consumeToken("{") {
+            self.sendText("Expecting opening bracket\n", preset: "scripterror", fileName: self.fileName, scriptLine: ifLine.lineNumber + 1)
+            return .exit
+        }
+
+        _ = self.context.pushLineToIfStack(ifLine)
+        line.ifResult = hasArgs
+
+        if hasArgs {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleIfArg(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .ifArg(count) = token else {
+            return .next
+        }
+
+        let hasArgs = self.args.count >= count
+        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+
+        _ = self.context.pushCurrentLineToIfStack()
+        line.ifResult = hasArgs
+
+        if hasArgs {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleIfSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .ifSingle(exp, lineToken) = token else {
+            return .next
+        }
+
+        let result = self.evaluator.evaluateLogic(exp)
+        line.ifResult = result
+
+        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+
+        if result {
+            return executeToken(line, lineToken)
+        }
+
+        return .next
+    }
+
+    func handleIf(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .If(exp) = token else {
+            return .next
+        }
+
+        _ = self.context.pushCurrentLineToIfStack()
+
+        let result = self.evaluator.evaluateLogic(exp)
+        line.ifResult = result
+
+        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+
+        if result {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleIfNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .ifNeedsBrace(exp) = token else {
+            return .next
+        }
+
+        if !self.context.consumeToken("{") {
+            self.sendText("Expecting opening bracket\n", preset: "scripterror", fileName: line.fileName, scriptLine: line.lineNumber + 1)
+            return .exit
+        }
+
+        _ = self.context.pushLineToIfStack(line)
+
+        let result = self.evaluator.evaluateLogic(exp)
+        line.ifResult = result
+
+        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+
+        if result {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleElseIfSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .elseIfSingle(exp, lineToken) = token else {
+            return .next
+        }
+
+        guard self.lastTokenWasIf else {
+            self.sendText("Expected previous command to be an 'if' or 'else if'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .exit
+        }
+
+        var execute = false
+        var result = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        } else {
+            result = true
+        }
+
+        if execute {
+            result = self.evaluator.evaluateLogic(exp)
+            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+        } else {
+            self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
+        }
+
+        line.ifResult = result
+
+        if execute && result {
+            return executeToken(line, lineToken)
+        }
+
+        return .next
+    }
+
+    func handleElseIf(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .elseIf(exp) = token else {
+            return .next
+        }
+
+        _ = self.context.pushCurrentLineToIfStack()
+
+        var execute = false
+        var result = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        } else {
+            result = true
+        }
+
+        if execute {
+            result = self.evaluator.evaluateLogic(exp)
+            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+        } else {
+            self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
+        }
+
+        line.ifResult = result
+
+        if execute && result {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleElseIfNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .elseIfNeedsBrace(exp) = token else {
+            return .next
+        }
+
+        if !self.context.consumeToken("{") {
+            self.sendText("Expecting opening bracket\n", preset: "scripterror", fileName: line.fileName, scriptLine: line.lineNumber + 1)
+            return .exit
+        }
+
+        _ = self.context.pushLineToIfStack(line)
+
+        var execute = false
+        var result = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        } else {
+            result = true
+        }
+
+        if execute {
+            result = self.evaluator.evaluateLogic(exp)
+            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+        } else {
+            self.notify("else if: skipping\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+        }
+
+        line.ifResult = result
+
+        if execute && result {
+            return .next
+        }
+
+        return .advanceToEndOfBlock
+    }
+
+    func handleElseSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .elseSingle(lineToken) = token else {
+            return .next
+        }
+
+        guard self.lastTokenWasIf else {
+            self.sendText("Expected previous command to be an 'if' or 'else if'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .exit
+        }
+
+        var execute = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        }
+
+        line.ifResult = execute
+
+        self.notify("else: \(execute)\n", debug:ScriptLogLevel.if)
+
+        if execute {
+            return executeToken(line, lineToken)
+        }
+
+        return .next
+    }
+    
+    func handleElse(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case .Else = token else {
+            return .next
+        }
+
+        guard self.lastTokenWasIf else {
+            self.sendText("Expected previous command to be an 'if' or 'else if'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .exit
+        }
+
+        var execute = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        }
+
+        _ = self.context.pushLineToIfStack(line)
+        line.ifResult = execute
+
+        self.notify("else: \(execute)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+
+        if execute { return .next }
+        return .advanceToEndOfBlock
+    }
+    
+    func handleElseNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case .elseNeedsBrace = token else {
+            return .next
+        }
+
+        guard self.lastTokenWasIf else {
+            self.sendText("Expected previous command to be an 'if' or 'else if'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .exit
+        }
+
+        if !self.context.consumeToken("{") {
+            self.sendText("Expecting opening bracket\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber + 1)
+            return .exit
+        }
+
+        var execute = false
+
+        if self.lastLine!.ifResult == false {
+            execute = true
+        }
+
+        _ = self.context.pushLineToIfStack(line)
+        line.ifResult = execute
+
+        self.notify("else: \(execute)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+
+        if execute { return .next }
+        return .advanceToEndOfBlock
+    }
+
+    func handleToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .token(t) = token else {
+            return .next
+        }
+
+        if t == "}" && !self.context.popIfStack() {
+
+            let line = self.context.currentLine!
+            self.sendText("End brace encountered without matching beginning block\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+
+            return .exit
+        }
+
+        return .next
+    }
+
+    func handleLabel(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .label(label) = token else {
             return .next
         }
@@ -571,7 +1079,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleMove(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleMove(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .move(dir) = token else {
             return .next
         }
@@ -583,7 +1091,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handleNextroom(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleNextroom(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .nextroom = token else {
             return .next
         }
@@ -594,7 +1102,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handlePause(_ token:TokenValue) -> ScriptExecuteResult {
+    func handlePause(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .pause(duration) = token else {
             return .next
         }
@@ -607,7 +1115,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handlePut(_ token:TokenValue) -> ScriptExecuteResult {
+    func handlePut(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
 
         guard case let .put(text) = token else {
             return .next
@@ -621,7 +1129,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleSave(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleSave(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .save(text) = token else {
             return .next
         }
@@ -630,7 +1138,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleSend(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleSend(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .send(text) = token else {
             return .next
         }
@@ -638,7 +1146,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleShift(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleShift(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .shift = token else {
             return .next
         }
@@ -653,7 +1161,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleUnvar(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleUnvar(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .unvar(key) = token else {
             return .next
         }
@@ -664,7 +1172,7 @@ class Script : IScript {
         return .next
     }
 
-    func handleWait(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleWait(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .wait = token else {
             return .next
         }
@@ -674,7 +1182,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handleWaitfor(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleWaitfor(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .waitfor(text) = token else {
             return .next
         }
@@ -684,7 +1192,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handleWaitforre(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleWaitforre(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .waitforre(pattern) = token else {
             return .next
         }
@@ -694,7 +1202,7 @@ class Script : IScript {
         return .wait
     }
 
-    func handleVariable(_ token:TokenValue) -> ScriptExecuteResult {
+    func handleVariable(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .variable(key, value) = token else {
             return .next
         }

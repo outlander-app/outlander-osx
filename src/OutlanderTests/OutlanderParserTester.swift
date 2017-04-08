@@ -221,7 +221,7 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
 
-            it("parses if_ single line") {
+            it("parses if_x single line") {
                 let result = ScriptParser().parse("\n if_1 then put hello \n\n")
                 expect(result).toNot(beNil())
                 
@@ -239,12 +239,323 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
 
+            it("parses if_x multi line") {
+                guard let result = ScriptParser().parse("\n if_1 { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+
+                if case .ifArg(let arg) = result {
+                    expect(arg).to(equal(1))
+                } else {
+                    fail("expected if_x result")
+                }
+            }
+
+            it("parses if_x multi line") {
+                guard let result = ScriptParser().parse("\n if_1{ \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+
+                if case .ifArg(let arg) = result {
+                    expect(arg).to(equal(1))
+                } else {
+                    fail("expected if_x result")
+                }
+            }
+
+            it("parses if_x multi line") {
+                guard let result = ScriptParser().parse("\n if_1 then { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+
+                if case .ifArg(let arg) = result {
+                    expect(arg).to(equal(1))
+                } else {
+                    fail("expected if_x result")
+                }
+            }
+
+            it("parses if_x multi line") {
+                guard let result = ScriptParser().parse("\n if_1  then  { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+
+                if case .ifArg(let arg) = result {
+                    expect(arg).to(equal(1))
+                } else {
+                    fail("expected if_x result")
+                }
+            }
+
+            it("parses if_x multi line") {
+                let result = ScriptParser().parse("\n if_1then  { \n\n")
+                expect(result).to(beNil())
+            }
+
+            it("parses if single line") {
+                guard let result = ScriptParser().parse("\n if abcd then put hello \n\n") else {
+                    fail("expected if single line result")
+                    return
+                }
+                
+                if case .ifSingle(let exp, let token) = result {
+                    expect(exp).to(equal("abcd"))
+
+                    if case .put(let text) = token {
+                        expect(text).to(equal("hello"))
+                    } else {
+                        fail("expected put result")
+                    }
+                    
+                } else {
+                    fail("expected if single line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if abcd { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+
+                if case .If(let exp) = result {
+                    expect(exp).to(equal("abcd"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if abcd \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .ifNeedsBrace(let exp) = result {
+                    expect(exp).to(equal("abcd"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if abcd then { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .If(let exp) = result {
+                    expect(exp).to(equal("abcd"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if  abcd  then{ \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .If(let exp) = result {
+                    expect(exp).to(equal("abcd"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if abcd{ \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .If(let exp) = result {
+                    expect(exp).to(equal("abcd"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line") {
+                guard let result = ScriptParser().parse("\n if %one >= $then.LearningRate { \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .If(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line - stuff after brace") {
+                let result = ScriptParser().parse("\n if abcd then { aslkdjfasf \n\n")
+                expect(result).to(beNil())
+            }
+
+            it("parses if multi line - then no brace") {
+                guard let result = ScriptParser().parse("\n if %one >= $then.LearningRate then \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .ifNeedsBrace(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses if multi line - no then no brace") {
+                guard let result = ScriptParser().parse("\n if %one >= $then.LearningRate \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .ifNeedsBrace(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected if line result")
+                }
+            }
+
+            it("parses else if single line") {
+                guard let result = ScriptParser().parse("\n else if abcd then put hello \n\n") else {
+                    fail("expected else if single line result")
+                    return
+                }
+                
+                if case .elseIfSingle(let exp, let token) = result {
+                    expect(exp).to(equal("abcd"))
+
+                    if case .put(let text) = token {
+                        expect(text).to(equal("hello"))
+                    } else {
+                        fail("expected put result")
+                    }
+                    
+                } else {
+                    fail("expected else if single line result")
+                }
+            }
+
+            it("parses else if multi line - no then no brace") {
+                guard let result = ScriptParser().parse("\n else if %one >= $then.LearningRate \n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .elseIfNeedsBrace(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected else if line result")
+                }
+            }
+
+            it("parses else if multi line - brace") {
+                guard let result = ScriptParser().parse("\n else if %one >= $then.LearningRate {\n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .elseIf(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected else if line result")
+                }
+            }
+
+            it("parses else if multi line - then brace") {
+                guard let result = ScriptParser().parse("\n else if %one >= $then.LearningRate then {\n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .elseIf(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected else if line result")
+                }
+            }
+
+            it("parses else if multi line - then") {
+                guard let result = ScriptParser().parse("\n else if %one >= $then.LearningRate then\n\n") else {
+                    fail("expected if line result")
+                    return
+                }
+                
+                if case .elseIfNeedsBrace(let exp) = result {
+                    expect(exp).to(equal("%one >= $then.LearningRate"))
+                } else {
+                    fail("expected else if line result")
+                }
+            }
+
+            it("parses else single") {
+                guard let result = ScriptParser().parse("\n else put hello \n\n") else {
+                    fail("expected else line result")
+                    return
+                }
+
+                if case .elseSingle(let token) = result {
+                    if case .put(let text) = token {
+                        expect(text).to(equal("hello"))
+                    } else {
+                        fail("expected put result")
+                    }
+                } else {
+                    fail("expected else single line result")
+                }
+            }
+
+            it("parses else multi line - no brace") {
+                guard let result = ScriptParser().parse("\n else \n\n") else {
+                    fail("expected else line result")
+                    return
+                }
+
+                guard case .elseNeedsBrace = result else {
+                    fail("expected else line result")
+                    return
+                }
+            }
+
+            it("parses else multi line - with brace") {
+                guard let result = ScriptParser().parse("\n else {\n\n") else {
+                    fail("expected else line result")
+                    return
+                }
+
+                guard case .Else = result else {
+                    fail("expected else line result")
+                    return
+                }
+            }
+
             it("parses var") {
                 let result = ScriptParser().parse("\n var one two \n\n")
                 expect(result).toNot(beNil())
                 
                 if case .variable(let key, let value) = result! {
                     expect(key).to(equal("one"))
+                    expect(value).to(equal("two"))
+                } else {
+                    fail("expected variable result")
+                }
+            }
+
+            it("parses var") {
+                let result = ScriptParser().parse("\n var one.two two \n\n")
+                expect(result).toNot(beNil())
+
+                if case .variable(let key, let value) = result! {
+                    expect(key).to(equal("one.two"))
                     expect(value).to(equal("two"))
                 } else {
                     fail("expected variable result")

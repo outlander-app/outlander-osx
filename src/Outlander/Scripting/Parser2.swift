@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum Expression {
+    case value(String)
+    case function(String, [String])
+    indirect case exp(Expression,Expression)
+}
+
 enum TokenValue : Hashable {
 
     typealias RawValue = Int
@@ -19,6 +25,14 @@ enum TokenValue : Hashable {
     case exit
     case goto(String)
     indirect case ifArgSingle(Int, TokenValue)
+    case ifArg(Int)
+    case ifArgNeedsBrace(Int)
+    indirect case ifSingle(String, TokenValue)
+    case If(String)
+    case ifNeedsBrace(String)
+    case Else
+    case elseNeedsBrace
+    indirect case elseSingle(TokenValue)
     case label(String)
     case move(String)
     case nextroom
@@ -38,15 +52,14 @@ enum TokenValue : Hashable {
     case matchwait(Double)
 
     // not parsed
+    case elseIf(String)
+    case elseIfNeedsBrace(String)
+    indirect case elseIfSingle(String, TokenValue)
     case gosub(String, [String])
+    case Return
     case waiteval(String)
     case match(String, String)
     case matchre(String, String)
-    case ifArg(Int)
-    case If(String)
-    case elseIf(String)
-    case Else
-    case ElseSingle
     case random(Double, Double)
     case action
     case eval
@@ -57,9 +70,20 @@ enum TokenValue : Hashable {
         case .comment: return 1
         case .debug: return 2
         case .echo: return 3
+        case .elseSingle: return 50
+        case .Else: return 51
+        case .elseNeedsBrace: return 52
+        case .elseIf: return 53
+        case .elseIfNeedsBrace: return 54
+        case .elseIfSingle: return 55
         case .exit: return 4
         case .goto: return 5
-        case .ifArgSingle: return 99
+        case .ifArgSingle: return 98
+        case .ifArg: return 99
+        case .ifArgNeedsBrace: return 100
+        case .ifSingle: return 101
+        case .If: return 102
+        case .ifNeedsBrace: return 103
         case .label: return 6
         case .move: return 7
         case .nextroom: return 8
@@ -68,6 +92,7 @@ enum TokenValue : Hashable {
         case .save: return 11
         case .send: return 12
         case .shift: return 13
+        case .token: return 133
         case .unvar: return 14
         case .wait: return 15
         case .waitfor: return 16
@@ -167,14 +192,44 @@ class ScriptParser {
             label
             <|> matchwait
 
+        let thenToken = symbol("then") *> lineCommands
+
         let ifArg = stringInSensitive("if_") *> int
-        let ifArgSingle = curry({num, val in TokenValue.ifArgSingle(num, val) }) <^> ifArg <*> (space *> symbol("then") *> lineCommands)
+        let ifArgSingle = curry({num, val in TokenValue.ifArgSingle(num, val)}) <^> ifArg <*> (space.many *> thenToken)
+        let ifArgMulti = TokenValue.ifArg <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* space.many <* char("{") <* newline
+        let ifArgMultiNeedsBrace = TokenValue.ifArgNeedsBrace <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* newline
+
+        let ifExp = symbol("if") *> noneOf([" then", "{", "\n"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
+        let ifSingle = curry({exp, val in TokenValue.ifSingle(exp, val)}) <^> ifExp <* space.many <*> thenToken
+
+        let ifMulti = TokenValue.If <^> ifExp <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* char("{") <* newline
+        let ifMultiNeedsBrace = TokenValue.ifNeedsBrace <^> ifExp <* (space.oneOrMore <* stringInSensitive("then")).optional <* newline
+
+        let elseIf = symbol("else") *> ifExp
+        let elseIfSingle = curry({exp, val in TokenValue.elseIfSingle(exp, val)}) <^> elseIf <*> (space.many *> thenToken)
+        let elseIfMulti = TokenValue.elseIf <^> (symbol("else") *> ifExp <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* char("{") <* newline)
+        let elseIfMultiNeedsBrace = TokenValue.elseIfNeedsBrace <^> (symbol("else") *> ifExp <* (space.oneOrMore <* stringInSensitive("then")).optional <* newline)
+
+        let elseSingle = TokenValue.elseSingle <^> (symbol("else") *> space.many *> lineCommands)
+        let elseMulti = TokenValue.Else <^^> stringInSensitive("else") <* space.many <* char("{") <* newline
+        let elseMultiNeedsBrace = TokenValue.elseNeedsBrace <^^> stringInSensitive("else") <* newline
 
         let row = ws.many.optional *> (
             comment
             <|> lineCommands
             <|> otherCommands
             <|> ifArgSingle
+            <|> ifArgMulti
+            <|> ifArgMultiNeedsBrace
+            <|> ifSingle
+            <|> ifMulti
+            <|> ifMultiNeedsBrace
+            <|> elseIfSingle
+            <|> elseIfMulti
+            <|> elseIfMultiNeedsBrace
+            <|> elseMulti
+            <|> elseMultiNeedsBrace
+            <|> elseSingle
             <|> braceLeft
             <|> braceRight
         ) <* ws.many.optional
@@ -199,13 +254,7 @@ class ScriptParser {
     }
 
     public func symbolOnly<A>(_ s:String, _ val:A) -> Parser<A> {
-        return (stringInSensitive(s) *> newline *> result(val))
-    }
-
-    public func result<A>(_ res:A) -> Parser<A> {
-        return Parser { stream in
-            return (res, stream)
-        }
+        return (stringInSensitive(s) *> newline *> Parser(result: val))
     }
 }
 
