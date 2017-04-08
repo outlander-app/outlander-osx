@@ -9,14 +9,14 @@
 import Foundation
 
 @objc
-public protocol INotifyMessage {
+protocol INotifyMessage {
     func notify(_ message:TextTag)
     func sendCommand(_ command:CommandContext)
     func sendEcho(_ echo:String)
 }
 
 @objc
-open class NotifyMessage : NSObject, INotifyMessage {
+class NotifyMessage : NSObject, INotifyMessage {
 
     class func newInstance() -> NotifyMessage {
         return NotifyMessage()
@@ -26,18 +26,15 @@ open class NotifyMessage : NSObject, INotifyMessage {
     var commandBlock: ((_ command:CommandContext) -> Void)?
     var echoBlock: ((_ echo:String) -> Void)?
 
-    public override init() {
-    }
-
-    open func notify(_ message:TextTag) {
+    func notify(_ message:TextTag) {
         self.messageBlock?(message)
     }
 
-    open func sendCommand(_ command:CommandContext) {
+    func sendCommand(_ command:CommandContext) {
         self.commandBlock?(command)
     }
 
-    open func sendEcho(_ echo:String) {
+    func sendEcho(_ echo:String) {
         self.echoBlock?(echo)
     }
 }

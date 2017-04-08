@@ -258,6 +258,7 @@ class Script : IScript {
     let includeRegex: Regex
 
     let fileName: String
+    let notifier:INotifyMessage
     let loader: (String) -> [String]
     let gameContext: GameContext
     let context: ScriptContext
@@ -304,10 +305,13 @@ class Script : IScript {
         }
     }
 
-    init(_ loader: @escaping ((String) -> [String]),
+    init(_ notifier:INotifyMessage,
+         _ loader: @escaping ((String) -> [String]),
          _ fileName: String,
          _ gameContext: GameContext,
          _ notifyExit: @escaping ()->()) throws {
+
+        self.notifier = notifier
         self.loader = loader
         self.fileName = fileName
         self.gameContext = gameContext
@@ -437,7 +441,7 @@ class Script : IScript {
         ctx.command = command
         ctx.scriptName = self.fileName
 
-        self.gameContext.events.sendCommand(ctx)
+        self.notifier.sendCommand(ctx)
     }
 
     func sendText(_ text:String, mono:Bool = true, preset:String = "scriptinput", fileName:String = "", scriptLine:Int = -1) {
@@ -447,7 +451,7 @@ class Script : IScript {
         tag.preset = preset
         tag.scriptName = fileName
         tag.scriptLine = Int32(scriptLine)
-        self.gameContext.events.sendText(tag)
+        self.notifier.notify(tag)
     }
 
     public func notify(_ text: String, mono:Bool = true, preset:String = "scriptinfo", debug:ScriptLogLevel = ScriptLogLevel.none, scriptLine:Int = -1) {
@@ -469,7 +473,7 @@ class Script : IScript {
             }
         }
 
-        self.gameContext.events.sendText(message)
+        self.notifier.notify(message)
     }
 
     func printInfo() {
@@ -714,7 +718,7 @@ class Script : IScript {
             return .next
         }
 
-        self.gameContext.events.echoText(text)
+        self.notifier.sendEcho(text)
         return .next
     }
 

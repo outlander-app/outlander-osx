@@ -10,33 +10,58 @@ import Foundation
 import Nimble
 import Quick
 
-enum SomeValue : Hashable {
+class RecordingNotifier : INotifyMessage {
 
-    typealias RawValue = Int
+    var messages:[String] = []
 
-    case first
-    case second(String)
-    case third(String,String)
+    func notify(_ message:TextTag) {
 
-    var rawValue: RawValue {
-        switch self {
-            case .first: return 0
-            case .second: return 1
-            case .third: return 2
+        if message.text.contains("Starting") {
+            return
         }
+
+        if message.text.contains("started") {
+            return
+        }
+
+        if message.text.contains("completed after") {
+            return
+        }
+
+        if message.text.contains("initialized") {
+            return
+        }
+
+        self.messages.append(message.text)
     }
 
-    var hashValue: Int {
-        return self.rawValue.hashValue
+    func sendCommand(_ command:CommandContext) {
+        self.messages.append(command.command)
     }
 
-    static func == (lhs:SomeValue, rhs:SomeValue) -> Bool {
-        return lhs.rawValue == rhs.rawValue
+    func sendEcho(_ echo:String) {
+        self.messages.append(echo)
+    }
+
+    func clear() {
+        messages.removeAll()
     }
 }
 
-class SomeEnums {
-    var lookup:[SomeValue:(SomeValue) -> Bool] = [:]
+class StubScriptLoader {
+    var script:[String] = []
+
+    func load() -> [String] {
+        return script
+    }
+
+    func set(_ text:String) {
+        script = text.components(separatedBy: "\n")
+    }
+
+    func set(_ lines:[String]) {
+        script = lines
+    }
 }
 
 class ScriptTester : QuickSpec {
@@ -45,41 +70,125 @@ class ScriptTester : QuickSpec {
 
         describe("the script") {
 
+            let context = GameContext()
+            let loader = StubScriptLoader()
+            let notifier = RecordingNotifier()
+            var script = try! Script(
+                notifier,
+                {_ in loader.load()},
+                "Script",
+                context,
+                { print("done") })
+
             beforeEach() {
+                notifier.clear()
+                script = try! Script(
+                    notifier,
+                    {_ in loader.load()},
+                    "Script",
+                    context,
+                    { print("done") })
             }
 
-            it("does something") {
-                let enums = SomeEnums()
-                enums.lookup[.first] = {e in
-                    return true
+            describe("debug") {
+                it("basic debug") {
+                    loader.set("debug 5")
+                    script.run([])
+                    expect(notifier.messages).to(equal(["debug 5\n"]))
                 }
-
-                let val = SomeValue.first
-                expect(enums.lookup[val]!(val)).to(beTrue())
             }
 
-            it("does something") {
-
-                let enums = SomeEnums()
-                enums.lookup[.second("")] = {e in
-                    return true
+            describe("echo") {
+                it("basic text") {
+                    loader.set("echo hi")
+                    script.run([])
+                    expect(notifier.messages).to(equal(["hi"]))
                 }
-
-                let val = SomeValue.second("testing")
-                expect(enums.lookup[val]!(val)).to(beTrue())
             }
 
-            it("does something") {
-
-                func someFunc(in:SomeValue) -> Bool {
-                    return true
+            describe("if") {
+                it("nested ifs") {
+                    loader.set([
+                        "if_1 {",
+                            "echo one",
+                            "if 1 == 1 {",
+                                "echo two",
+                            "}",
+                            "echo after",
+                        "}"
+                    ])
+                    script.run(["abcd"])
+                    expect(notifier.messages).to(equal([
+                        "one",
+                        "two",
+                        "after"
+                    ]))
                 }
-                
-                let enums = SomeEnums()
-                enums.lookup[.third("", "")] = someFunc
+            }
 
-                let val = SomeValue.third("testing", "one")
-                expect(enums.lookup[val]!(val)).to(beTrue())
+            describe("if else") {
+                it("single line if else") {
+                    loader.set([
+                        "if 1 == 2 then echo one",
+                        "else echo two"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["two"]))
+                }
+
+                it("single line if else") {
+                    loader.set([
+                        "if 1 == 1 then echo one",
+                        "else echo two"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["one"]))
+                }
+
+                it("multi line else") {
+                    loader.set([
+                        "if 1 > 1 {",
+                            "echo one",
+                            "echo five",
+                        "}",
+                        "else",
+                        "{",
+                            "echo two",
+                            "echo three",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["two", "three"]))
+                }
+
+                it("multi line else") {
+                    loader.set([
+                        "if 1 > 1 then echo one",
+                        "else",
+                        "{",
+                        "echo two",
+                        "echo three",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["two", "three"]))
+                }
+
+                it("multi line else") {
+                    loader.set([
+                        "if 1 > 1",
+                        "{",
+                            "echo one",
+                            "echo five",
+                        "}",
+                        "else {",
+                            "echo two",
+                            "echo three",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["two", "three"]))
+                }
             }
         }
     }

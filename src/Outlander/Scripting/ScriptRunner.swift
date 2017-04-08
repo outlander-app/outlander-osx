@@ -68,8 +68,10 @@ open class ScriptRunner : NSObject, ISubscriber {
         self.abort(scriptName)
 
         do {
-            let script = try Script({ (name) in
-                return self.scriptLoader.load(name)
+            let script = try Script(
+                self.notifier,
+                { name in
+                    return self.scriptLoader.load(name)
                 },
                 scriptName,
                 self.context,
