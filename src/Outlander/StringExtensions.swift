@@ -118,6 +118,16 @@ extension String {
         return nil
     }
 
+    func toDouble() -> Double? {
+        enum F {
+            static let formatter = NumberFormatter()
+        }
+        if let number = F.formatter.number(from: self) {
+            return number.doubleValue
+        }
+        return nil
+    }
+
     func substringFromIndex(_ index:Int) -> String {
         return self.substring(from: self.characters.index(self.startIndex, offsetBy: index))
     }

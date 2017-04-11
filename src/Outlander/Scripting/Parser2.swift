@@ -127,6 +127,16 @@ enum TokenValue : Hashable {
         }
     }
 
+    var isSingleToken: Bool {
+        switch self {
+        case .ifArgSingle: return true
+        case .ifSingle: return true
+        case .elseIfSingle: return true
+        case .elseSingle: return true
+        default: return false
+        }
+    }
+
     var hashValue: Int {
         return self.rawValue.hashValue
     }

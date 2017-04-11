@@ -90,7 +90,7 @@ class ScriptTester : QuickSpec {
                 it("basic text") {
                     loader.set("echo hi")
                     script.run([])
-                    expect(notifier.messages).to(equal(["hi"]))
+                    expect(notifier.messages).to(equal(["hi\n"]))
                 }
             }
 
@@ -108,10 +108,10 @@ class ScriptTester : QuickSpec {
                     ])
                     script.run(["abcd"])
                     expect(notifier.messages).to(equal([
-                        "one",
-                        "two",
-                        "after",
-                        "after two"
+                        "one\n",
+                        "two\n",
+                        "after\n",
+                        "after two\n"
                     ]))
                 }
             }
@@ -123,7 +123,7 @@ class ScriptTester : QuickSpec {
                         "else echo two"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["two"]))
+                    expect(notifier.messages).to(equal(["two\n"]))
                 }
 
                 it("single line if else") {
@@ -132,7 +132,7 @@ class ScriptTester : QuickSpec {
                         "else echo two"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["one"]))
+                    expect(notifier.messages).to(equal(["one\n"]))
                 }
 
                 it("multi line else") {
@@ -148,7 +148,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["two", "three"]))
+                    expect(notifier.messages).to(equal(["two\n", "three\n"]))
                 }
 
                 it("multi line else") {
@@ -161,7 +161,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["two", "three"]))
+                    expect(notifier.messages).to(equal(["two\n", "three\n"]))
                 }
 
                 it("multi line else") {
@@ -177,28 +177,96 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["two", "three"]))
+                    expect(notifier.messages).to(equal(["two\n", "three\n"]))
                 }
             }
 
             describe("else if") {
-                it("multi line if else") {
+                it("single line") {
                     loader.set([
                         "if 1 > 2",
                         "{",
                             "echo one",
                             "echo two",
                         "}",
-                        "else if 2 > 2 {",
-                            "echo three",
-                        "}",
+                        "else if 2 == 2 then echo three",
                         "else {",
                             "echo four",
                             "echo five",
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["four", "five"]))
+                    expect(notifier.messages).to(equal(["three\n"]))
+                }
+
+                it("single line") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 == 2 then",
+                        "{",
+                            "echo three",
+                        "}",
+                        "else echo four",
+                        "exit",
+                        "}",
+                        "echo after",
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["three\n"]))
+                }
+
+                it("single line") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 == 2 then",
+                        "{",
+                            "echo three",
+                        "}",
+                        "else echo four",
+                        "exit",
+                        "}",
+                        "echo after",
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["three\n"]))
+                }
+
+                it("single line") {
+                    loader.set([
+                        "if 1 < 2 then echo one",
+                        "else if 2 == 2  then echo two",
+                        "else echo three",
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["one\n"]))
+                }
+
+                it("single line") {
+                    loader.set([
+                        "if 1 > 2 then echo one",
+                        "else if 2 == 2  then echo two",
+                        "else echo three",
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["two\n"]))
+                }
+
+                it("single line") {
+                    loader.set([
+                        "if 1 > 2 then echo one",
+                        "else if 2 > 2  then echo two",
+                        "else echo three",
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["three\n"]))
                 }
 
                 it("multi line if else") {
@@ -220,7 +288,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["five", "six"]))
+                    expect(notifier.messages).to(equal(["five\n", "six\n"]))
                 }
 
                 it("multi line if else") {
@@ -239,7 +307,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["three"]))
+                    expect(notifier.messages).to(equal(["three\n"]))
                 }
 
                 it("multi line if else") {
@@ -261,7 +329,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["three"]))
+                    expect(notifier.messages).to(equal(["three\n"]))
                 }
 
                 it("multi line if else") {
@@ -283,7 +351,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["one", "two"]))
+                    expect(notifier.messages).to(equal(["one\n", "two\n"]))
                 }
 
                 it("multi line if else - nested") {
@@ -312,7 +380,7 @@ class ScriptTester : QuickSpec {
                         "}"
                     ])
                     script.run([])
-                    expect(notifier.messages).to(equal(["one", "two", "another", "after"]))
+                    expect(notifier.messages).to(equal(["one\n", "two\n", "another\n", "after\n"]))
                 }
             }
         }

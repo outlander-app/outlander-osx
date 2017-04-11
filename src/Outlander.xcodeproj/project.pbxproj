@@ -409,6 +409,8 @@
 		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
+		F9FF20101E9C9B40004C7C9F /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */; };
+		F9FF20111E9C9B40004C7C9F /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */; };
 		F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
 		F9FFE7821E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
 		F9FFE7841E7F801300FD33B8 /* AppConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */; };
@@ -778,6 +780,7 @@
 		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
+		F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
 		F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCommandHandler.swift; sourceTree = "<group>"; };
 		F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -844,6 +847,7 @@
 				F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */,
 				F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */,
 				F90BD25E1E95F7F1006E3117 /* Stack.swift */,
+				F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1625,6 +1629,7 @@
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F98D4C251CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
+				F9FF20101E9C9B40004C7C9F /* ScriptContext.swift in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
@@ -1816,6 +1821,7 @@
 				F90CEC191AD037CE00204243 /* MapView.swift in Sources */,
 				F91031551B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
+				F9FF20111E9C9B40004C7C9F /* ScriptContext.swift in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F917612D1E328B580091A617 /* PresetLoader.swift in Sources */,
