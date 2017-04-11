@@ -16,19 +16,7 @@ class RecordingNotifier : INotifyMessage {
 
     func notify(_ message:TextTag) {
 
-        if message.text.contains("Starting") {
-            return
-        }
-
-        if message.text.contains("started") {
-            return
-        }
-
-        if message.text.contains("completed after") {
-            return
-        }
-
-        if message.text.contains("initialized") {
+        if message.text.containsAny(["Starting", "started", "completed after", "initialized"]) {
             return
         }
 
@@ -115,13 +103,15 @@ class ScriptTester : QuickSpec {
                                 "echo two",
                             "}",
                             "echo after",
-                        "}"
+                        "}",
+                        "echo after two"
                     ])
                     script.run(["abcd"])
                     expect(notifier.messages).to(equal([
                         "one",
                         "two",
-                        "after"
+                        "after",
+                        "after two"
                     ]))
                 }
             }
@@ -188,6 +178,141 @@ class ScriptTester : QuickSpec {
                     ])
                     script.run([])
                     expect(notifier.messages).to(equal(["two", "three"]))
+                }
+            }
+
+            describe("else if") {
+                it("multi line if else") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 > 2 {",
+                            "echo three",
+                        "}",
+                        "else {",
+                            "echo four",
+                            "echo five",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["four", "five"]))
+                }
+
+                it("multi line if else") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 > 2 {",
+                            "echo three",
+                        "}",
+                        "else if 2 > 2 {",
+                            "echo four",
+                        "}",
+                        "else {",
+                            "echo five",
+                            "echo six",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["five", "six"]))
+                }
+
+                it("multi line if else") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo three",
+                        "}",
+                        "else {",
+                            "echo four",
+                            "echo five",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["three"]))
+                }
+
+                it("multi line if else") {
+                    loader.set([
+                        "if 1 > 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo three",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo six",
+                        "}",
+                        "else {",
+                            "echo four",
+                            "echo five",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["three"]))
+                }
+
+                it("multi line if else") {
+                    loader.set([
+                        "if 1 < 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo three",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo six",
+                        "}",
+                        "else {",
+                            "echo four",
+                            "echo five",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["one", "two"]))
+                }
+
+                it("multi line if else - nested") {
+                    loader.set([
+                        "if 1 < 2",
+                        "{",
+                            "echo one",
+                            "echo two",
+                            "if 1 == 2 {",
+                                "echo middle",
+                            "}",
+                            "else if 1 == 1 {",
+                                "echo another",
+                            "}",
+                            "echo after",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo three",
+                        "}",
+                        "else if 2 == 2 {",
+                            "echo six",
+                        "}",
+                        "else {",
+                            "echo four",
+                            "echo five",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["one", "two", "another", "after"]))
                 }
             }
         }

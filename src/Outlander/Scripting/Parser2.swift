@@ -103,6 +103,30 @@ enum TokenValue : Hashable {
         }
     }
 
+    var isIfToken: Bool {
+        switch self {
+        case .ifArg: return true
+        case .ifArgSingle: return true
+        case .ifArgNeedsBrace: return true
+        case .ifSingle: return true
+        case .If: return true
+        case .ifNeedsBrace: return true
+        case .elseIfSingle: return true
+        case .elseIf: return true
+        case .elseIfNeedsBrace: return true
+        default: return false
+        }
+    }
+
+    var isElseToken: Bool {
+        switch self {
+        case .elseSingle: return true
+        case .Else: return true
+        case .elseNeedsBrace: return true
+        default: return false
+        }
+    }
+
     var hashValue: Int {
         return self.rawValue.hashValue
     }

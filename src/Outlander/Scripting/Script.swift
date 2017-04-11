@@ -142,21 +142,24 @@ class ScriptContext {
         return true
     }
 
-    func popIfStack() -> Bool {
+    func popIfStack() -> (Bool, ScriptLine?) {
         guard self.ifStack.hasItems() else {
-            return false
+            return (false, nil)
         }
-        
-        _ = self.ifStack.pop()
-        return true
+
+        let line = self.ifStack.pop()
+        return (true, line)
     }
 
     func advance() {
         currentLineNumber += 1
     }
 
-    func advanceToEndOfBlock() -> Bool {
+    func retreat() {
+        currentLineNumber -= 1
+    }
 
+    func advanceToNextBlock() -> Bool {
         guard let target = self.ifStack.last else {
             return false
         }
@@ -195,11 +198,13 @@ class ScriptContext {
                         currentIf.endOfBlock = self.currentLineNumber
                         return true
                     }
-                    
-                    if !self.popIfStack() {
+
+                    let (popped, _) = self.popIfStack()
+                    if !popped {
                         return false
                     }
                 }
+            case .ifArgSingle: return true
             case .ifArg:
                 if !self.pushCurrentLineToIfStack() {
                     return false
@@ -211,6 +216,7 @@ class ScriptContext {
                 if !self.consumeToken("{") {
                     return false
                 }
+            case .ifSingle: return true
             case .If:
                 if !self.pushCurrentLineToIfStack() {
                     return false
@@ -222,6 +228,7 @@ class ScriptContext {
                 if !self.consumeToken("{") {
                     return false
                 }
+            case .elseSingle: return true
             case .Else:
                 if !self.pushCurrentLineToIfStack() {
                     return false
@@ -237,6 +244,40 @@ class ScriptContext {
                 continue
             }
         }
+        
+        return false
+    }
+
+    func advanceToEndOfBlock() -> Bool {
+
+        while currentLineNumber < lines.count {
+
+            self.advance()
+
+            guard let line = self.currentLine else {
+                return false
+            }
+
+            if line.token == nil {
+                line.token = ScriptParser().parse(line.originalText)
+            }
+
+            guard let lineToken = line.token else {
+                return false
+            }
+
+            if lineToken.isIfToken || lineToken.isElseToken {
+                self.pushCurrentLineToIfStack()
+                if !self.advanceToNextBlock() {
+                    return false
+                }
+                continue
+            }
+            else {
+                self.retreat()
+                return true
+            }
+        }
 
         return false
     }
@@ -250,6 +291,7 @@ enum ScriptExecuteResult {
     case next
     case wait
     case exit
+    case advanceToNextBlock
     case advanceToEndOfBlock
 }
 
@@ -278,7 +320,6 @@ class Script : IScript {
     private var variables:[String:String]
     private var regexVars:[String:String]
     private var stackTrace:Stack<ScriptLine>
-    private var popIfResultStackAfterNext = false
 
     private var evaluator:ExpressionEvaluator
 
@@ -291,18 +332,7 @@ class Script : IScript {
             return false
         }
 
-        switch lastToken {
-        case .ifArg: return true
-        case .ifArgSingle: return true
-        case .ifArgNeedsBrace: return true
-        case .ifSingle: return true
-        case .If: return true
-        case .ifNeedsBrace: return true
-        case .elseIfSingle: return true
-        case .elseIf: return true
-        case .elseIfNeedsBrace: return true
-        default: return false
-        }
+        return lastToken.isIfToken
     }
 
     init(_ notifier:INotifyMessage,
@@ -655,6 +685,15 @@ class Script : IScript {
             case .next: next()
             case .wait: return
             case .exit: self.cancel()
+            case .advanceToNextBlock:
+                if self.context.advanceToNextBlock() {
+                    self.next()
+                } else {
+                    if let line = self.context.currentLine {
+                        self.sendText("Unable to match next block\n", preset: "scripterror", fileName: line.fileName, scriptLine: line.lineNumber)
+                    }
+                    self.cancel()
+                }
             case .advanceToEndOfBlock:
                 if self.context.advanceToEndOfBlock() {
                     self.next()
@@ -845,7 +884,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleIfNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -869,7 +908,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleElseIfSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -936,7 +975,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleElseIfNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -973,7 +1012,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleElseSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -992,17 +1031,15 @@ class Script : IScript {
             execute = true
         }
 
-        line.ifResult = execute
-
         self.notify("else: \(execute)\n", debug:ScriptLogLevel.if)
 
         if execute {
             return executeToken(line, lineToken)
         }
-
+        
         return .next
     }
-    
+
     func handleElse(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .Else = token else {
             return .next
@@ -1020,14 +1057,13 @@ class Script : IScript {
         }
 
         _ = self.context.pushLineToIfStack(line)
-        line.ifResult = execute
 
         self.notify("else: \(execute)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
 
         if execute { return .next }
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
-    
+
     func handleElseNeedsBrace(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .elseNeedsBrace = token else {
             return .next
@@ -1050,12 +1086,11 @@ class Script : IScript {
         }
 
         _ = self.context.pushLineToIfStack(line)
-        line.ifResult = execute
 
         self.notify("else: \(execute)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
 
         if execute { return .next }
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -1063,12 +1098,19 @@ class Script : IScript {
             return .next
         }
 
-        if t == "}" && !self.context.popIfStack() {
+        if t == "}" {
 
-            let line = self.context.currentLine!
-            self.sendText("End brace encountered without matching beginning block\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            let (popped, ifLine) = self.context.popIfStack()
+            if !popped {
+                let line = self.context.currentLine!
+                self.sendText("End brace encountered without matching beginning block\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
 
-            return .exit
+                return .exit
+            }
+
+            if ifLine?.ifResult == true {
+                return .advanceToEndOfBlock
+            }
         }
 
         return .next

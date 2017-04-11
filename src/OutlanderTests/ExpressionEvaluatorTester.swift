@@ -27,7 +27,7 @@ class ExpressionEvaluatorTester : QuickSpec {
                     expect(result).to(beFalse())
                 }
 
-                it("evals nothing") {
+                it("evals single value") {
                     let result = evaluator.evaluateLogic("3")
                     expect(result).to(beFalse())
                 }

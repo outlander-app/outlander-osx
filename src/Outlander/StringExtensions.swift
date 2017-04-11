@@ -16,12 +16,22 @@ extension Double {
 
 extension String {
 
-    func contains(find: String) -> Bool{
+    func contains(_ find: String) -> Bool {
         return self.range(of: find) != nil
     }
 
-    func containsIgnoringCase(find: String) -> Bool{
+    func containsIgnoringCase(_ find: String) -> Bool {
         return self.range(of: find, options: .caseInsensitive) != nil
+    }
+
+    func containsAny(_ list: [String]) -> Bool {
+        for item in list {
+            if self.contains(item) {
+                return true
+            }
+        }
+
+        return false
     }
 
     public func trimEnd(_ set:CharacterSet) -> String {
