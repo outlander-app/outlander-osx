@@ -83,6 +83,14 @@ open class GameContext : NSObject {
 
         return ColorPreset("", "#cccccc")
     }
+
+    func variable(_ key:String) -> String {
+        return self.globalVars.cacheObject(forKey: key) as? String ?? ""
+    }
+
+    func variable(_ key:String, _ value:String) {
+        self.globalVars.setCacheObject(value, forKey: key)
+    }
 }
 
 @objc

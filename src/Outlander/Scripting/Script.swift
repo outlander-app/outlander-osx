@@ -33,12 +33,18 @@ protocol IAction : IWantStreamInfo {
     func vars(context:ScriptContext, vars:Dictionary<String, String>) -> CheckStreamResult
 }
 
-protocol IMatch {
-    var value:String {get}
-    var label:String {get}
-    var groups:[String] {get}
+class GosubContext {
+    var label:Label
+    var line:ScriptLine
+    var params:[String]
+    var isGosub:Bool
 
-    func isMatch(text:String, _ simplify: (String)->String) -> Bool
+    init(_ label:Label, _ line:ScriptLine, _ params:[String], _ isGosub:Bool = false) {
+        self.label = label
+        self.line = line
+        self.params = params
+        self.isGosub = isGosub
+    }
 }
 
 protocol IScript {
@@ -52,12 +58,6 @@ protocol IScript {
     func stream(_ text:String, _ nodes:[Node])
     func vars()
     func showStackTrace()
-}
-
-struct Label {
-    var name: String
-    var line: Int
-    var fileName: String
 }
 
 class ScriptLine {
@@ -103,11 +103,12 @@ class Script : IScript {
     private var tokenHandlers:[TokenValue:(ScriptLine,TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
 
-    private var args:[String]
-    private var argVars:[String:String]
-    private var variables:[String:String]
-    private var regexVars:[String:String]
     private var stackTrace:Stack<ScriptLine>
+    private var matchStack:[IMatch]
+    private var matchwait:Matchwait?
+
+    private var gosub:GosubContext?
+    private var gosubStack:Stack<GosubContext>
 
     private var evaluator:ExpressionEvaluator
 
@@ -133,23 +134,20 @@ class Script : IScript {
         self.loader = loader
         self.fileName = fileName
         self.gameContext = gameContext
-        self.context = ScriptContext()
-        self.context.globalVar = { variable in
-            return gameContext.globalVars.cacheObject(forKey: variable) as? String
-        }
-        
+        self.context = ScriptContext({
+            return gameContext.globalVars.copyValues() as! [String:String]
+        })
+
         self.notifyExit = notifyExit
 
         labelRegex = try Regex("^\\s*(\\w+((\\.|-|\\w)+)?):")
         includeRegex = try Regex("^\\s*include (.+)$")
 
         self.reactToStream = []
-        self.args = []
-        self.argVars = [:]
-        self.regexVars = [:]
-        self.variables = [:]
         self.stackTrace = Stack<ScriptLine>(30)
+        self.matchStack = []
         self.evaluator = ExpressionEvaluator()
+        self.gosubStack = Stack<GosubContext>(100)
         
         self.tokenHandlers = [:]
         self.tokenHandlers[.comment("")] = self.handleComment
@@ -170,6 +168,9 @@ class Script : IScript {
         self.tokenHandlers[.If("")] = self.handleIf
         self.tokenHandlers[.ifNeedsBrace("")] = self.handleIfNeedsBrace
         self.tokenHandlers[.label("")] = self.handleLabel
+        self.tokenHandlers[.match("", "")] = self.handleMatch
+        self.tokenHandlers[.matchre("", "")] = self.handleMatchre
+        self.tokenHandlers[.matchwait(0)] = self.handleMatchwait
         self.tokenHandlers[.move("")] = self.handleMove
         self.tokenHandlers[.nextroom] = self.handleNextroom
         self.tokenHandlers[.pause(0)] = self.handlePause
@@ -187,8 +188,8 @@ class Script : IScript {
 
     func run(_ args:[String]) {
 
-        self.args = args
-        self.updateArgumentVars()
+        self.context.args = args
+        self.context.updateArgumentVars()
 
         self.started = Date()
 
@@ -203,7 +204,7 @@ class Script : IScript {
 
         self.sendText(String(format:"[\(Date()) - initialized]\n"))
 
-        self.variables["scriptname"] = self.fileName
+        self.context.variables["scriptname"] = self.fileName
 
         next()
     }
@@ -302,60 +303,15 @@ class Script : IScript {
     func varsForDisplay() -> [String] {
         var vars:[String] = []
 
-        for (key, value) in self.argVars {
+        for (key, value) in self.context.argVars {
             vars.append("\(key): \(value)")
         }
 
-        for (key, value) in self.variables {
+        for (key, value) in self.context.variables {
             vars.append("\(key): \(value)")
         }
 
         return vars.sorted { $0 < $1 }
-    }
-
-    func shiftArgumentVars() -> Bool {
-        guard let _ = self.args.first else {
-            return false
-        }
-
-        self.args.remove(at: 0)
-        self.updateArgumentVars()
-        return true
-    }
-
-    func updateArgumentVars() {
-        self.argVars = [:]
-
-        var all = ""
-
-        for param in self.args {
-            if param.contains(" ") {
-                all += " \"\(param)\""
-            } else {
-                all += " \(param)"
-            }
-        }
-
-        self.argVars["0"] = all.trimmingCharacters(in: CharacterSet.whitespaces)
-
-        for (index, param) in self.args.enumerated() {
-            self.argVars["\(index+1)"] = param
-        }
-
-        let originalCount = self.args.count
-
-        let maxArgs = 9
-
-        let diff = maxArgs - originalCount
-
-        if(diff > 0) {
-            let start = maxArgs - diff
-            for index in start..<(maxArgs) {
-                self.argVars["\(index+1)"] = ""
-            }
-        }
-
-        self.variables["argcount"] = "\(originalCount)"
     }
 
     func vars() {
@@ -443,6 +399,41 @@ class Script : IScript {
             self.reactToStream.remove(at: idx!)
             handler.execute(self, self.context)
         }
+
+        self.checkMatches(text)
+    }
+
+    func checkMatches(_ text:String) {
+        guard let _ = self.matchwait else {
+            return
+        }
+
+        var foundMatch:IMatch? = nil
+
+        for match in self.matchStack {
+            if match.isMatch(text, self.context.simplify) {
+                foundMatch = match
+                break
+            }
+        }
+
+        guard let match = foundMatch else {
+            return
+        }
+        
+        self.matchwait = nil
+        self.matchStack.removeAll()
+
+        let label = self.context.simplify(match.label)
+        self.notify("match \(label)\n", debug:ScriptLogLevel.wait)
+
+        let result = self.gotoLabel(label, match.groups)
+
+        switch result {
+        case .exit: self.cancel()
+        case .next: self.nextAfterRoundtime()
+        default: return
+        }
     }
 
     func next() {
@@ -498,7 +489,7 @@ class Script : IScript {
         if let roundtime = self.context.roundtime {
             if roundtime > 0 {
                 delay(roundtime) {
-                    self.next()
+                    self.nextAfterRoundtime()
                 }
                 return
             }
@@ -514,13 +505,6 @@ class Script : IScript {
         }
 
         return executeToken(line, token)
-
-//        if let handler = self.tokenHandlers[token] {
-//            return handler(line, token)
-//        }
-//
-//        self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
-//        return .exit
     }
 
     func executeToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -528,7 +512,7 @@ class Script : IScript {
             return handler(line, token)
         }
 
-        self.sendText("No handler for script token: '\(token)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+        self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
         return .exit
     }
 
@@ -556,9 +540,11 @@ class Script : IScript {
             return .next
         }
 
-        self.notify("echo \(text)\n", debug:ScriptLogLevel.vars)
+        let result = self.context.simplify(text)
 
-        self.notifier.sendEcho("\(text)\n")
+        self.notify("echo \(result)\n", debug:ScriptLogLevel.vars)
+
+        self.notifier.sendEcho("\(result)\n")
         return .next
     }
 
@@ -572,23 +558,33 @@ class Script : IScript {
         return .exit
     }
 
-    func handleGoto(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+    func gotoLabel(_ label:String, _ params:[String], isGosub:Bool = false) -> ScriptExecuteResult {
+        let result = self.context.simplify(label)
 
-        guard case let .goto(label) = token else {
-            return .next
-        }
-
-        guard let target = self.context.labels[label.lowercased()] else {
-            self.notify("label '\(label)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
+        guard let target = self.context.labels[result.lowercased()] else {
+            self.notify("label '\(result)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
             return .exit
         }
 
         self.context.ifStack.clear()
 
-        self.notify("goto '\(label)'\n", debug:ScriptLogLevel.gosubs)
+        self.notify("goto '\(result)'\n", debug:ScriptLogLevel.gosubs)
         self.context.currentLineNumber = target.line - 1
 
+        let line = self.context.lines[target.line]
+        self.gosub = GosubContext(target, line, params, isGosub)
+
+        // TODO: set parameter variables to ScriptContext
+
         return .next
+    }
+
+    func handleGoto(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .goto(label) = token else {
+            return .next
+        }
+
+        return gotoLabel(label, [])
     }
 
     func handleIfArgSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -596,10 +592,10 @@ class Script : IScript {
             return .next
         }
 
-        let hasArgs = self.args.count >= count
+        let hasArgs = self.context.args.count >= count
         line.ifResult = hasArgs
 
-        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+        self.notify("if_\(count) \(self.context.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
 
         if hasArgs {
             return executeToken(line, lineToken)
@@ -613,9 +609,9 @@ class Script : IScript {
             return .next
         }
 
-        let hasArgs = self.args.count >= count
+        let hasArgs = self.context.args.count >= count
 
-        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+        self.notify("if_\(count) \(self.context.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
 
         let ifLine = self.context.currentLine!
 
@@ -631,7 +627,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleIfArg(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -639,8 +635,8 @@ class Script : IScript {
             return .next
         }
 
-        let hasArgs = self.args.count >= count
-        self.notify("if_\(count) \(self.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
+        let hasArgs = self.context.args.count >= count
+        self.notify("if_\(count) \(self.context.args.count) >= \(count) = \(hasArgs)\n", debug:ScriptLogLevel.if)
 
         _ = self.context.pushCurrentLineToIfStack()
         line.ifResult = hasArgs
@@ -649,7 +645,7 @@ class Script : IScript {
             return .next
         }
 
-        return .advanceToEndOfBlock
+        return .advanceToNextBlock
     }
 
     func handleIfSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -657,10 +653,11 @@ class Script : IScript {
             return .next
         }
 
-        let result = self.evaluator.evaluateLogic(exp)
+        let simplified = self.context.simplify(exp)
+        let result = self.evaluator.evaluateLogic(simplified)
         line.ifResult = result
 
-        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
 
         if result {
             return executeToken(line, lineToken)
@@ -676,10 +673,11 @@ class Script : IScript {
 
         _ = self.context.pushCurrentLineToIfStack()
 
-        let result = self.evaluator.evaluateLogic(exp)
+        let simplified = self.context.simplify(exp)
+        let result = self.evaluator.evaluateLogic(simplified)
         line.ifResult = result
 
-        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
 
         if result {
             return .next
@@ -700,10 +698,11 @@ class Script : IScript {
 
         _ = self.context.pushLineToIfStack(line)
 
-        let result = self.evaluator.evaluateLogic(exp)
+        let simplified = self.context.simplify(exp)
+        let result = self.evaluator.evaluateLogic(simplified)
         line.ifResult = result
 
-        self.notify("if: \(exp) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
 
         if result {
             return .next
@@ -732,8 +731,9 @@ class Script : IScript {
         }
 
         if execute {
-            result = self.evaluator.evaluateLogic(exp)
-            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+            let simplified = self.context.simplify(exp)
+            result = self.evaluator.evaluateLogic(simplified)
+            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
         }
@@ -764,8 +764,9 @@ class Script : IScript {
         }
 
         if execute {
-            result = self.evaluator.evaluateLogic(exp)
-            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if)
+            let simplified = self.context.simplify(exp)
+            result = self.evaluator.evaluateLogic(simplified)
+            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
         }
@@ -801,8 +802,9 @@ class Script : IScript {
         }
 
         if execute {
-            result = self.evaluator.evaluateLogic(exp)
-            self.notify("else if: \(exp) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+            let simplified = self.context.simplify(exp)
+            result = self.evaluator.evaluateLogic(simplified)
+            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
         }
@@ -926,14 +928,59 @@ class Script : IScript {
         return .next
     }
 
+    func handleMatch(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .match(label, value) = token else {
+            return .next
+        }
+
+        self.matchStack.append(MatchMessage(label, value))
+        return .next
+    }
+    
+    func handleMatchre(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .matchre(label, value) = token else {
+            return .next
+        }
+
+        self.matchStack.append(MatchreMessage(label, value))
+        return .next
+    }
+
+    func handleMatchwait(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .matchwait(timeout) = token else {
+            return .next
+        }
+
+        let time = timeout > 0 ? "\(timeout)" : ""
+        self.notify("matchwait \(time)\n", debug:ScriptLogLevel.wait)
+
+        let token = Matchwait()
+        self.matchwait = token
+
+        if timeout > 0 {
+            delay(timeout) {
+                if let match = self.matchwait, match.id == token.id {
+                    self.matchwait = nil
+                    self.matchStack.removeAll()
+                    self.notify("matchwait timeout\n", debug: ScriptLogLevel.wait)
+                    self.nextAfterRoundtime()
+                }
+            }
+        }
+
+        return .wait
+    }
+
     func handleMove(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .move(dir) = token else {
             return .next
         }
 
-        self.notify("move \(dir)\n", debug:ScriptLogLevel.wait)
+        let result = self.context.simplify(dir)
+
+        self.notify("move \(result)\n", debug:ScriptLogLevel.wait)
         self.reactToStream.append(MoveOp())
-        self.sendCommand("\(dir)")
+        self.sendCommand("\(result)")
 
         return .wait
     }
@@ -968,7 +1015,9 @@ class Script : IScript {
             return .next
         }
 
-        let cmds = text.splitToCommands()
+        let result = self.context.simplify(text)
+
+        let cmds = result.splitToCommands()
         for cmd in cmds {
             self.sendCommand(cmd)
         }
@@ -980,8 +1029,9 @@ class Script : IScript {
         guard case let .save(text) = token else {
             return .next
         }
-        self.notify("save \(text) to %s\n", debug:ScriptLogLevel.wait)
-        self.variables["s"] = text
+        let result = self.context.simplify(text)
+        self.notify("save \(result) to %s\n", debug:ScriptLogLevel.wait)
+        self.context.variables["s"] = result
         return .next
     }
 
@@ -989,7 +1039,8 @@ class Script : IScript {
         guard case let .send(text) = token else {
             return .next
         }
-        self.sendCommand("#send \(text)")
+        let result = self.context.simplify(text)
+        self.sendCommand("#send \(result)")
         return .next
     }
 
@@ -1000,7 +1051,7 @@ class Script : IScript {
 
         self.notify("shift\n", debug:ScriptLogLevel.vars)
 
-        if !self.shiftArgumentVars() {
+        if !self.context.shiftArgumentVars() {
             self.sendText("No more script arguments to shift!\n", preset: "scripterror")
             return .exit
         }
@@ -1013,8 +1064,10 @@ class Script : IScript {
             return .next
         }
 
-        self.notify("deleting variable \(key)\n", debug:ScriptLogLevel.wait)
-        self.variables.removeValue(forKey: key)
+        let result = self.context.simplify(key)
+
+        self.notify("deleting variable \(result)\n", debug:ScriptLogLevel.wait)
+        self.context.variables.removeValue(forKey: result)
 
         return .next
     }
@@ -1034,8 +1087,10 @@ class Script : IScript {
             return .next
         }
 
-        self.notify("waitfor \(text)\n", debug:ScriptLogLevel.wait)
-        self.reactToStream.append(WaitforOp(text))
+        let result = self.context.simplify(text)
+
+        self.notify("waitfor \(result)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitforOp(result))
         return .wait
     }
 
@@ -1044,8 +1099,10 @@ class Script : IScript {
             return .next
         }
 
-        self.notify("waitforre \(pattern)\n", debug:ScriptLogLevel.wait)
-        self.reactToStream.append(WaitforReOp(pattern))
+        let result = self.context.simplify(pattern)
+
+        self.notify("waitforre \(result)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitforReOp(result))
         return .wait
     }
 
@@ -1054,8 +1111,10 @@ class Script : IScript {
             return .next
         }
 
-        self.notify("setvariable \(key) \(value)\n", debug:ScriptLogLevel.vars)
-        self.variables[key] = value
+        let result = self.context.simplify(key)
+
+        self.notify("setvariable \(result) \(value)\n", debug:ScriptLogLevel.vars)
+        self.context.variables[result] = value
 
         return .next
     }

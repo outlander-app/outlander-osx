@@ -269,6 +269,26 @@ class ScriptTester : QuickSpec {
                     expect(notifier.messages).to(equal(["three\n"]))
                 }
 
+//                it("arg single line") {
+//                    loader.set([
+//                        "if_1 then echo one",
+//                        "else if_2 then echo two",
+//                        "else echo three",
+//                    ])
+//                    script.run(["one"])
+//                    expect(notifier.messages).to(equal(["one\n"]))
+//                }
+//
+//                it("arg single line") {
+//                    loader.set([
+//                        "if_1 then echo one",
+//                        "else if_2 then echo two",
+//                        "else echo three",
+//                    ])
+//                    script.run(["one", "two"])
+//                    expect(notifier.messages).to(equal(["two\n"]))
+//                }
+
                 it("multi line if else") {
                     loader.set([
                         "if 1 > 2",
@@ -381,6 +401,45 @@ class ScriptTester : QuickSpec {
                     ])
                     script.run([])
                     expect(notifier.messages).to(equal(["one\n", "two\n", "another\n", "after\n"]))
+                }
+            }
+
+            describe("evaluated ifs") {
+                it("replaces variables in expression") {
+                    loader.set([
+                        "if %one > $two {",
+                            "echo one",
+                        "}",
+                        "else echo two"
+                    ])
+                    script.context.variables["one"] = "3"
+                    context.variable("two", "2")
+                    script.run([])
+                    expect(notifier.messages).to(equal(["one\n"]))
+                }
+
+                it("replaces variables in expression") {
+                    loader.set([
+                        "if \"%guild\" = \"Ranger\" || \"%guild\" = \"Thief\" {",
+                            "echo Yep",
+                        "}",
+                        "else echo Other"
+                    ])
+                    script.context.variables["guild"] = "Thief"
+                    script.run([])
+                    expect(notifier.messages).to(equal(["Yep\n"]))
+                }
+
+                it("replaces variables in expression") {
+                    loader.set([
+                        "if \"%guild\" = \"Ranger\" || \"%guild\" = \"Thief\" || \"%guild\" == \"Cleric\" {",
+                            "echo Yep",
+                        "}",
+                        "else echo Other"
+                    ])
+                    script.context.variables["guild"] = "Cleric"
+                    script.run([])
+                    expect(notifier.messages).to(equal(["Yep\n"]))
                 }
             }
         }

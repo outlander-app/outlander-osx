@@ -608,5 +608,101 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
         }
+
+        describe("gosub") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n gosub one three four\n\n") else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                guard case let .gosub(label, args) = result else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                expect(label).to(equal("one"))
+                expect(args).to(equal(["three", "four"]))
+            }
+
+            it("variable for label") {
+                guard let result = ScriptParser().parse("\n gosub %one.two three four\n\n") else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                guard case let .gosub(label, args) = result else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                expect(label).to(equal("%one.two"))
+                expect(args).to(equal(["three", "four"]))
+            }
+        }
+
+        describe("match") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n match one abcd \n\n") else {
+                    fail("expected match line result")
+                    return
+                }
+
+                guard case let .match(label, val) = result else {
+                    fail("expected match line result")
+                    return
+                }
+
+                expect(label).to(equal("one"))
+                expect(val).to(equal("abcd"))
+            }
+
+            it("basic") {
+                guard let result = ScriptParser().parse("\n match one.two abcd 12345 asldfkj \n\n") else {
+                    fail("expected match line result")
+                    return
+                }
+
+                guard case let .match(label, val) = result else {
+                    fail("expected match line result")
+                    return
+                }
+
+                expect(label).to(equal("one.two"))
+                expect(val).to(equal("abcd 12345 asldfkj"))
+            }
+        }
+
+        describe("matchre") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n matchre one abcd|123 \n\n") else {
+                    fail("expected match line result")
+                    return
+                }
+
+                guard case let .matchre(label, val) = result else {
+                    fail("expected match line result")
+                    return
+                }
+
+                expect(label).to(equal("one"))
+                expect(val).to(equal("abcd|123"))
+            }
+
+            it("basic") {
+                guard let result = ScriptParser().parse("\n matchre one.two ^Stow what|^You must unload|^You get some \n\n") else {
+                    fail("expected matchre line result")
+                    return
+                }
+
+                guard case let .matchre(label, val) = result else {
+                    fail("expected matchre line result")
+                    return
+                }
+
+                expect(label).to(equal("one.two"))
+                expect(val).to(equal("^Stow what|^You must unload|^You get some"))
+            }
+        }
     }
 }

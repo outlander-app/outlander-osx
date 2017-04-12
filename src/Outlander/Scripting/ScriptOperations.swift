@@ -13,7 +13,7 @@ class MoveOp : IWantStreamInfo {
     public var id = ""
 
     init() {
-        self.id = NSUUID().uuidString
+        self.id = UUID().uuidString
     }
 
     func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
@@ -28,7 +28,7 @@ class MoveOp : IWantStreamInfo {
     }
 
     func execute(_ script:IScript, _ context:ScriptContext) {
-        script.next()
+        script.nextAfterRoundtime()
     }
 }
 
@@ -37,7 +37,7 @@ class NextRoomOp : IWantStreamInfo {
     public var id = ""
 
     init() {
-        self.id = NSUUID().uuidString
+        self.id = UUID().uuidString
     }
 
     func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
@@ -63,7 +63,7 @@ class WaitforOp : IWantStreamInfo {
     let target:String
 
     init(_ target:String) {
-        self.id = NSUUID().uuidString
+        self.id = UUID().uuidString
         self.target = target
     }
 
@@ -82,35 +82,32 @@ class WaitforReOp : IWantStreamInfo {
 
     public var id = ""
     var pattern:String
-    var groups:[String?]
+    var groups:[String]
 
     init(_ pattern:String) {
-        self.id = NSUUID().uuidString
+        self.id = UUID().uuidString
         self.pattern = pattern
         self.groups = []
     }
 
     func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
         let pattern = context.simplify(self.pattern)
-        if let groups = text[pattern].allGroups().first {
-            self.groups = groups
-        }
+        self.groups = text[pattern].firstGroup()
         return groups.count > 0 ? CheckStreamResult.Match(result: text) : CheckStreamResult.None
     }
 
     func execute(_ script:IScript, _ context:ScriptContext) {
-//        context.setRegexVars(grps)
+        context.setRegexVars(self.groups)
         script.nextAfterRoundtime()
     }
 }
-
 
 class WaitforPromptOp : IWantStreamInfo {
 
     public var id = ""
 
     init() {
-        self.id = NSUUID().uuidString
+        self.id = UUID().uuidString
     }
 
     func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {

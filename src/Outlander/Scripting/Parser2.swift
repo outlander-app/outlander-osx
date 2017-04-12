@@ -30,10 +30,16 @@ enum TokenValue : Hashable {
     indirect case ifSingle(String, TokenValue)
     case If(String)
     case ifNeedsBrace(String)
+    case elseIf(String)
+    case elseIfNeedsBrace(String)
+    indirect case elseIfSingle(String, TokenValue)
     case Else
     case elseNeedsBrace
     indirect case elseSingle(TokenValue)
     case label(String)
+    case match(String, String)
+    case matchre(String, String)
+    case matchwait(Double)
     case move(String)
     case nextroom
     case pause(Double)
@@ -49,20 +55,16 @@ enum TokenValue : Hashable {
     case variable(String, String)
 
     // parsed but need handlers
-    case matchwait(Double)
+    case gosub(String, [String])
 
     // not parsed
-    case elseIf(String)
-    case elseIfNeedsBrace(String)
-    indirect case elseIfSingle(String, TokenValue)
-    case gosub(String, [String])
     case Return
     case waiteval(String)
-    case match(String, String)
-    case matchre(String, String)
-    case random(Double, Double)
+    case random(String, String)
     case action
-    case eval
+    case actionToggle(String, String)
+    case eval(String, String)
+    case evalMath(String, String)
     case function(String, [String])
 
     var rawValue: RawValue {
@@ -78,6 +80,7 @@ enum TokenValue : Hashable {
         case .elseIfSingle: return 55
         case .exit: return 4
         case .goto: return 5
+        case .gosub: return 97
         case .ifArgSingle: return 98
         case .ifArg: return 99
         case .ifArgNeedsBrace: return 100
@@ -85,6 +88,9 @@ enum TokenValue : Hashable {
         case .If: return 102
         case .ifNeedsBrace: return 103
         case .label: return 6
+        case .match: return 71
+        case .matchre: return 72
+        case .matchwait: return 73
         case .move: return 7
         case .nextroom: return 8
         case .pause: return 9
@@ -158,6 +164,8 @@ class ScriptParser {
     
     let digit = character(condition: { CharacterSet.decimalDigits.contains($0.unicodeScalar) })
 
+    let variableCharacters = CharacterSet(charactersIn: "$%&")
+
     func parse(_ input:String) -> TokenValue? {
 
         let any = anyChar.many.map { String($0) }
@@ -169,6 +177,8 @@ class ScriptParser {
         let identifier = (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
             <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
 
+        let variableIdentifier = (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
+
         let comment = TokenValue.comment <^> (string("#") *> any)
 
         let label = TokenValue.label <^> identifier <* char(colon)
@@ -178,7 +188,18 @@ class ScriptParser {
 
         let pause = TokenValue.pause <^> ((symbol("pause") *> double) <|> symbolOnly("pause", 1))
 
-        let matchwait = TokenValue.pause <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
+        let matchStart = symbol("match") *> identifier <* space
+        let match = TokenValue.match <^> matchStart <*> noneOf(["\n"])
+
+        let matchreStart = symbol("matchre") *> identifier <* space
+        let matchre = TokenValue.matchre <^> matchreStart <*> noneOf(["\n"])
+        
+        let matchwait = TokenValue.matchwait <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
+
+        let args = noneOf(["\n"]).map { str in str.components(separatedBy: " ") }
+
+        let gosubStart = symbol("gosub") *> (identifier <|> variableIdentifier) <* space
+        let gosub = curry({ label, args in TokenValue.gosub(label, args) }) <^> gosubStart <*> args
 
         let deleteVar = TokenValue.unvar <^> lineCommand("deletevariable")
         let echo = TokenValue.echo <^> lineCommand("echo")
@@ -209,6 +230,7 @@ class ScriptParser {
             <|> echo
             <|> exit
             <|> goto
+            <|> gosub
             <|> move
             <|> nextroom
             <|> pause
@@ -224,6 +246,8 @@ class ScriptParser {
 
         let otherCommands =
             label
+            <|> match
+            <|> matchre
             <|> matchwait
 
         let thenToken = symbol("then") *> lineCommands

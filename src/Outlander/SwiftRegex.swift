@@ -139,6 +139,19 @@ open class SwiftRegex: Sequence, IteratorProtocol {
         return matchResults( options: options ).map { targetStrings(match: $0) }
     }
 
+    open func firstGroup( options: NSRegularExpression.MatchingOptions? = nil ) -> [String] {
+        let result = matchResults( options: options ).map { targetStrings(match: $0) }.first
+        var groups:[String] = []
+        if let matches = result {
+            for match in matches {
+                if let m = match {
+                    groups.append(m)
+                }
+            }
+        }
+        return groups
+    }
+
     public func dictionary( options: NSRegularExpression.MatchingOptions? = nil ) -> Dictionary<String,String> {
         var out = [String:String]()
         for groups in self {

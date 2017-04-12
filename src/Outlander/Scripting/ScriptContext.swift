@@ -8,17 +8,31 @@
 
 import Foundation
 
+struct Label {
+    var name: String
+    var line: Int
+    var fileName: String
+}
+
 class ScriptContext {
     var lines: [ScriptLine] = []
     var labels: [String:Label] = [:]
     var currentLineNumber:Int = -1
-    var params:[String] = []
-    var paramVars: [String:String] = [:]
-    var variables: [String:String] = [:]
+    var args:[String] = []
+    var argVars:[String:String] = [:]
+    var variables:[String:String] = [:]
+    var actionVars:[String:String] = [:]
+    var regexVars:[String:String] = [:]
+
     var ifStack:Stack<ScriptLine> = Stack<ScriptLine>()
     var ifResultStack:Stack<Bool> = Stack<Bool>()
 
-    var globalVar:((String) -> String?) = { _ in nil }
+    var globalVars:(()->[String:String])
+    var variableEvaluator:VariableEvaluator = VariableEvaluator()
+
+    init(_ globalVars: @escaping ()->[String:String]) {
+        self.globalVars = globalVars
+    }
 
     var currentLine:ScriptLine? {
         get {
@@ -39,7 +53,52 @@ class ScriptContext {
     }
 
     var roundtime:Double? {
-        return self.globalVar("roundtime")?.toDouble()
+        return self.globalVars()["roundtime"]?.toDouble()
+    }
+
+    func shiftArgumentVars() -> Bool {
+        guard let _ = self.args.first else {
+            return false
+        }
+
+        self.args.remove(at: 0)
+        self.updateArgumentVars()
+        return true
+    }
+
+    func updateArgumentVars() {
+        self.argVars = [:]
+
+        var all = ""
+
+        for param in self.args {
+            if param.contains(" ") {
+                all += " \"\(param)\""
+            } else {
+                all += " \(param)"
+            }
+        }
+
+        self.argVars["0"] = all.trimmingCharacters(in: CharacterSet.whitespaces)
+
+        for (index, param) in self.args.enumerated() {
+            self.argVars["\(index+1)"] = param
+        }
+
+        let originalCount = self.args.count
+
+        let maxArgs = 9
+
+        let diff = maxArgs - originalCount
+
+        if(diff > 0) {
+            let start = maxArgs - diff
+            for index in start..<(maxArgs) {
+                self.argVars["\(index+1)"] = ""
+            }
+        }
+
+        self.variables["argcount"] = "\(originalCount)"
     }
 
     func consumeToken(_ token:String) -> Bool {
@@ -224,6 +283,14 @@ class ScriptContext {
     }
     
     func simplify(_ text:String) -> String {
-        return text
+        return self.variableEvaluator.eval(text, self)
+    }
+
+    func setRegexVars(_ vars:[String]) {
+        self.regexVars = [:]
+
+        for (index, param) in vars.enumerated() {
+            self.regexVars["\(index)"] = param
+        }
     }
 }
