@@ -23,6 +23,7 @@ class ScriptContext {
     var variables:[String:String] = [:]
     var actionVars:[String:String] = [:]
     var regexVars:[String:String] = [:]
+    var labelVars:[String:String] = [:]
 
     var ifStack:Stack<ScriptLine> = Stack<ScriptLine>()
     var ifResultStack:Stack<Bool> = Stack<Bool>()
@@ -283,7 +284,30 @@ class ScriptContext {
     }
     
     func simplify(_ text:String) -> String {
-        return self.variableEvaluator.eval(text, self)
+        return self.variableEvaluator.eval(text, self.defaultSettings())
+    }
+
+    func simplifyAction(_ text:String) -> String {
+        return self.variableEvaluator.eval(text, self.actionSettings())
+    }
+
+    func actionSettings() -> VariableContext {
+        let ctx = VariableContext()
+        ctx.add("$", "\\$", self.actionVars)
+        ctx.add("%", "%", self.variables)
+        ctx.add("%", "%", self.argVars)
+        ctx.add("$", "\\$", self.globalVars())
+        return ctx
+    }
+
+    func defaultSettings() -> VariableContext {
+        let ctx = VariableContext()
+        ctx.add("$", "\\$", self.regexVars)
+        ctx.add("&", "&", self.labelVars)
+        ctx.add("%", "%", self.variables)
+        ctx.add("%", "%", self.argVars)
+        ctx.add("$", "\\$", self.globalVars())
+        return ctx
     }
 
     func setRegexVars(_ vars:[String]) {
@@ -291,6 +315,14 @@ class ScriptContext {
 
         for (index, param) in vars.enumerated() {
             self.regexVars["\(index)"] = param
+        }
+    }
+
+    func setLabelVars(_ vars:[String]) {
+        self.labelVars = [:]
+
+        for (index, param) in vars.enumerated() {
+            self.labelVars["\(index)"] = param
         }
     }
 }

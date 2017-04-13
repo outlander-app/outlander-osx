@@ -25,12 +25,16 @@ class VariableEvaluatorTester : QuickSpec {
             beforeEach() {
             }
 
+            func simplify(_ text:String) -> String {
+                return evaluator.eval(text, context.defaultSettings())
+            }
+
             describe("evals") {
                 it("longer variables first") {
                     gameContext.variable("lefthandnoun", "tongs")
                     gameContext.variable("lefthand", "icesteel tongs")
 
-                    let result = evaluator.eval("put $lefthandnoun", context)
+                    let result = simplify("put $lefthandnoun")
 
                     expect(result).to(equal("put tongs"))
                 }
@@ -40,7 +44,7 @@ class VariableEvaluatorTester : QuickSpec {
 
                     context.variables["magicToTrain"] = "Arcana"
 
-                    let result = evaluator.eval("$%magicToTrain.LearningRate", context)
+                    let result = simplify("$%magicToTrain.LearningRate")
 
                     expect(result).to(equal("34"))
                 }
@@ -51,7 +55,7 @@ class VariableEvaluatorTester : QuickSpec {
                     context.variables["percentsign"] = "%"
                     context.variables["storecode"] = "Chab"
 
-                    let result = evaluator.eval("%percentsign%storecodeQuant", context)
+                    let result = simplify("%percentsign%storecodeQuant")
 
                     expect(result).to(equal("2"))
                 }
@@ -60,7 +64,7 @@ class VariableEvaluatorTester : QuickSpec {
                     gameContext.variable("magicToTrain", "Arcana")
                     gameContext.variable("Arcana.LearningRate", "34")
 
-                    let result = evaluator.eval("$$magicToTrain.LearningRate", context)
+                    let result = simplify("$$magicToTrain.LearningRate")
 
                     expect(result).to(equal("34"))
                 }
@@ -68,7 +72,7 @@ class VariableEvaluatorTester : QuickSpec {
                 it("properly breaks with non-matched local variables") {
                     context.variables["yy"] = "xx"
 
-                    let result = evaluator.eval("%%yy-var", context)
+                    let result = simplify("%%yy-var")
 
                     expect(result).to(equal("%xx-var"))
                 }

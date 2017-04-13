@@ -36,6 +36,7 @@ enum TokenValue : Hashable {
     case Else
     case elseNeedsBrace
     indirect case elseSingle(TokenValue)
+    case gosub(String, String)
     case label(String)
     case match(String, String)
     case matchre(String, String)
@@ -44,6 +45,7 @@ enum TokenValue : Hashable {
     case nextroom
     case pause(Double)
     case put(String)
+    case Return
     case save(String)
     case send(String)
     case shift
@@ -55,10 +57,8 @@ enum TokenValue : Hashable {
     case variable(String, String)
 
     // parsed but need handlers
-    case gosub(String, [String])
 
     // not parsed
-    case Return
     case waiteval(String)
     case random(String, String)
     case action
@@ -95,6 +95,7 @@ enum TokenValue : Hashable {
         case .nextroom: return 8
         case .pause: return 9
         case .put: return 10
+        case .Return: return 1000
         case .save: return 11
         case .send: return 12
         case .shift: return 13
@@ -196,10 +197,10 @@ class ScriptParser {
         
         let matchwait = TokenValue.matchwait <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
 
-        let args = noneOf(["\n"]).map { str in str.components(separatedBy: " ") }
+        let args = noneOf(["\n"])
 
-        let gosubStart = symbol("gosub") *> (identifier <|> variableIdentifier) <* space
-        let gosub = curry({ label, args in TokenValue.gosub(label, args) }) <^> gosubStart <*> args
+        let gosubStart = symbol("gosub") *> (identifier <|> variableIdentifier)
+        let gosub = curry({ label, args in TokenValue.gosub(label, args != nil ? args! : "") }) <^> gosubStart <*> (space *> args).optional
 
         let deleteVar = TokenValue.unvar <^> lineCommand("deletevariable")
         let echo = TokenValue.echo <^> lineCommand("echo")
@@ -208,6 +209,7 @@ class ScriptParser {
         let move = TokenValue.move <^> lineCommand("move")
         let nextroom = TokenValue.nextroom <^^> symbolOnly("nextroom", "")
         let put = TokenValue.put <^> lineCommand("put")
+        let returnToken = TokenValue.Return <^^> symbolOnly("return", "")
         let save = TokenValue.save <^> lineCommand("save")
         let send = TokenValue.send <^> lineCommand("send")
         let shift = TokenValue.shift <^^> symbolOnly("shift", "")
@@ -235,6 +237,7 @@ class ScriptParser {
             <|> nextroom
             <|> pause
             <|> put
+            <|> returnToken
             <|> save
             <|> send
             <|> shift

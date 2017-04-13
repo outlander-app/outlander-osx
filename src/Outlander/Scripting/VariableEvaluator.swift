@@ -8,9 +8,34 @@
 
 import Foundation
 
+struct VariableSetting {
+    var token:String
+    var replaceToken:String
+    var values:[String:String]
+}
+
+class VariableContext {
+    var settings:[VariableSetting] = []
+
+    var keys:[String] {
+        return settings.map { $0.token }.unique()
+    }
+
+    func add(_ token:String, _ replaceToken:String, _ values:[String:String]) {
+        self.settings.append(VariableSetting(token: token, replaceToken: replaceToken, values: values))
+    }
+}
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: [Iterator.Element: Bool] = [:]
+        return self.filter { seen.updateValue(true, forKey: $0) == nil }
+    }
+}
+
 class VariableEvaluator {
 
-    func eval(_ input:String, _ context:ScriptContext) -> String {
+    func eval(_ input:String, _ context:VariableContext) -> String {
         let mutable = input.mutable
 
         var count = 0
@@ -22,37 +47,26 @@ class VariableEvaluator {
             last = String(mutable)
             simplifyImpl(mutable, context)
             count += 1
-        } while count < maxIterations && last != mutable as String && hasPotentialVars(mutable)
+        } while count < maxIterations && last != mutable as String && hasPotentialVars(mutable, context)
 
         return String(mutable)
     }
 
-    private func hasPotentialVars(_ mutable:NSMutableString) -> Bool {
+    private func hasPotentialVars(_ mutable:NSMutableString, _ context:VariableContext) -> Bool {
 
-        if (mutable.range(of: "$").location != NSNotFound) { return true }
-        if (mutable.range(of: "%").location != NSNotFound) { return true }
-        if (mutable.range(of: "&").location != NSNotFound) { return true }
+        for key in context.keys {
+            if mutable.range(of: key).location != NSNotFound { return true }
+        }
 
         return false
     }
 
-    private func simplifyImpl(_ mutable:NSMutableString, _ context:ScriptContext) {
+    private func simplifyImpl(_ mutable:NSMutableString, _ context:VariableContext) {
 
-        if context.actionVars.count > 0 && mutable.range(of: "$").location != NSNotFound {
-            self.replace("\\$", mutable, context.actionVars)
-        }
-
-        if context.regexVars.count > 0 && mutable.range(of: "$").location != NSNotFound {
-            self.replace("\\$", mutable, context.regexVars)
-        }
-
-        if mutable.range(of: "%").location != NSNotFound {
-            self.replace("%", mutable, context.variables)
-            self.replace("%", mutable, context.argVars)
-        }
-
-        if mutable.range(of: "$").location != NSNotFound {
-            self.replace("\\$", mutable, context.globalVars())
+        for setting in context.settings {
+            if setting.values.count > 0 && mutable.range(of: setting.token).location != NSNotFound {
+                self.replace(setting.replaceToken, mutable, setting.values)
+            }
         }
     }
 

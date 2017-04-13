@@ -38,6 +38,8 @@ class GosubContext {
     var line:ScriptLine
     var params:[String]
     var isGosub:Bool
+    var returnToLine:ScriptLine?
+    var returnToIndex:Int?
 
     init(_ label:Label, _ line:ScriptLine, _ params:[String], _ isGosub:Bool = false) {
         self.label = label
@@ -161,6 +163,7 @@ class Script : IScript {
         self.tokenHandlers[.elseIfNeedsBrace("")] = self.handleElseIfNeedsBrace
         self.tokenHandlers[.exit] = self.handleExit
         self.tokenHandlers[.goto("")] = self.handleGoto
+        self.tokenHandlers[.gosub("", "")] = self.handleGosub
         self.tokenHandlers[.ifArgSingle(0, .comment(""))] = self.handleIfArgSingle
         self.tokenHandlers[.ifArg(0)] = self.handleIfArg
         self.tokenHandlers[.ifArgNeedsBrace(0)] = self.handleIfArgNeedsBrace
@@ -175,6 +178,7 @@ class Script : IScript {
         self.tokenHandlers[.nextroom] = self.handleNextroom
         self.tokenHandlers[.pause(0)] = self.handlePause
         self.tokenHandlers[.put("")] = self.handlePut
+        self.tokenHandlers[.Return] = self.handleReturn
         self.tokenHandlers[.save("")] = self.handleSave
         self.tokenHandlers[.send("")] = self.handleSend
         self.tokenHandlers[.shift] = self.handleShift
@@ -558,7 +562,7 @@ class Script : IScript {
         return .exit
     }
 
-    func gotoLabel(_ label:String, _ params:[String], isGosub:Bool = false) -> ScriptExecuteResult {
+    func gotoLabel(_ label:String, _ params:[String], _ isGosub:Bool = false) -> ScriptExecuteResult {
         let result = self.context.simplify(label)
 
         guard let target = self.context.labels[result.lowercased()] else {
@@ -568,13 +572,24 @@ class Script : IScript {
 
         self.context.ifStack.clear()
 
-        self.notify("goto '\(result)'\n", debug:ScriptLogLevel.gosubs)
+        let command = isGosub ? "gosub" : "goto"
+
+        self.notify("\(command) '\(result)'\n", debug:ScriptLogLevel.gosubs)
+
+        let currentLine = self.context.currentLine!
+        let currentLineNumber = self.context.currentLineNumber
         self.context.currentLineNumber = target.line - 1
 
         let line = self.context.lines[target.line]
-        self.gosub = GosubContext(target, line, params, isGosub)
+        let gosubContext = GosubContext(target, line, params, isGosub)
+        self.gosub = gosubContext
 
-        // TODO: set parameter variables to ScriptContext
+        if isGosub {
+            gosubContext.returnToLine = currentLine
+            gosubContext.returnToIndex = currentLineNumber
+            self.context.setLabelVars(params)
+            self.gosubStack.push(gosubContext)
+        }
 
         return .next
     }
@@ -585,6 +600,19 @@ class Script : IScript {
         }
 
         return gotoLabel(label, [])
+    }
+
+    func handleGosub(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .gosub(label, args) = token else {
+            return .next
+        }
+
+        let result = self.context.simplify(args)
+
+        var split = [result]
+        split.append(contentsOf: result.components(separatedBy: " "))
+
+        return gotoLabel(label, split, true)
     }
 
     func handleIfArgSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
@@ -1022,6 +1050,27 @@ class Script : IScript {
             self.sendCommand(cmd)
         }
 
+        return .next
+    }
+
+    func handleReturn(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case .Return = token else {
+            return .next
+        }
+
+        guard let ctx = self.gosubStack.pop(), let returnToLine = ctx.returnToLine, let returnToIndex = ctx.returnToIndex else {
+            self.sendText("no gosub to return to!\n", preset: "scripterror")
+            return .exit
+        }
+
+        if let prev = self.gosubStack.last {
+            self.gosub = prev
+            self.context.setLabelVars(prev.params)
+        }
+
+        self.notify("returning to line \(returnToLine.lineNumber)\n", debug:ScriptLogLevel.gosubs)
+
+        self.context.currentLineNumber = returnToIndex
         return .next
     }
 

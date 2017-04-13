@@ -45,7 +45,8 @@ class Stack<T> {
         }
     }
 
-    func pop() -> T {
+    func pop() -> T? {
+        guard hasItems() else { return nil }
         return stack.removeLast()
     }
 

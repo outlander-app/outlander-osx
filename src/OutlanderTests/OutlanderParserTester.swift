@@ -622,7 +622,22 @@ class OutlanderParserTester : QuickSpec {
                 }
 
                 expect(label).to(equal("one"))
-                expect(args).to(equal(["three", "four"]))
+                expect(args).to(equal("three four"))
+            }
+            
+            it("zero arguments") {
+                guard let result = ScriptParser().parse("gosub one") else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                guard case let .gosub(label, args) = result else {
+                    fail("expected gosub result")
+                    return
+                }
+
+                expect(label).to(equal("one"))
+                expect(args).to(equal(""))
             }
 
             it("variable for label") {
@@ -637,7 +652,7 @@ class OutlanderParserTester : QuickSpec {
                 }
 
                 expect(label).to(equal("%one.two"))
-                expect(args).to(equal(["three", "four"]))
+                expect(args).to(equal("three four"))
             }
         }
 
