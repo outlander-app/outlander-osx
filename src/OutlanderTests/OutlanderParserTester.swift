@@ -856,7 +856,7 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected result")
                     return
                 }
-                expect(result).to(equal("abcd one two"))
+                expect(result).to(equal("\"abcd one two\""))
                 expect(String(rest)).to(equal(" rest"))
             }
 
@@ -865,17 +865,37 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected result")
                     return
                 }
-                expect(result).to(equal("abcd \\\"one two"))
+                expect(result).to(equal("\"abcd \\\"one two\""))
                 expect(String(rest)).to(equal(" rest"))
             }
 
-            it("args") {
-                guard let (result, rest) = ScriptParser().args().run("\"abcd \\\"one two\", \"three four\", %one.two rest") else {
+            it("function args") {
+                guard let (result, rest) = ScriptParser().functionArgs().run("\"abcd \\\"one two\", \"three four\", %one.two rest") else {
                     fail("expected result")
                     return
                 }
-                expect(result).to(equal(["abcd \\\"one two", "three four", "%one.two"]))
+                expect(result).to(equal(["\"abcd \\\"one two\"", "\"three four\"", "%one.two"]))
                 expect(String(rest)).to(equal(" rest"))
+            }
+
+            it("contains") {
+                guard let result = ScriptParser().parse("\n if contains(\"abcd\", \"three four\") { \n\n") else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .If(exp) = result else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .function(name, args) = exp else {
+                    fail("expected function line result")
+                    return
+                }
+
+                expect(name).to(equal("contains"))
+                expect(args).to(equal("\"abcd\", \"three four\""))
             }
 
             it("matchre") {
@@ -899,7 +919,7 @@ class OutlanderParserTester : QuickSpec {
             }
 
             it("matchre with regex") {
-                guard let result = ScriptParser().parse("\n if matchre(\"%dir\", \"^(search|swim) \") { \n\n") else {
+                guard let result = ScriptParser().parse("\n if matchre  (\"%dir\", \"^(search|swim) \") { \n\n") else {
                     fail("expected if function line result")
                     return
                 }
@@ -916,6 +936,26 @@ class OutlanderParserTester : QuickSpec {
 
                 expect(name).to(equal("matchre"))
                 expect(args).to(equal("\"%dir\", \"^(search|swim) \""))
+            }
+
+            it("matchre with regex and variable") {
+                guard let result = ScriptParser().parse("\n if matchre( %dir,  \"^(search|swim) \"  ) { \n\n") else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .If(exp) = result else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .function(name, args) = exp else {
+                    fail("expected function line result")
+                    return
+                }
+
+                expect(name).to(equal("matchre"))
+                expect(args).to(equal("%dir, \"^(search|swim) \""))
             }
         }
     }

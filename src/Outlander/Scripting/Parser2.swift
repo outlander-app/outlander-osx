@@ -277,7 +277,7 @@ class ScriptParser {
         let ifArgMultiNeedsBrace = TokenValue.ifArgNeedsBrace <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* newline
 
         let anyExp = Expression.value <^> noneOf(["\n"])
-        let ifExp2 = expFunction("matchre") <|> anyExp
+        let ifExp2 = expFunction(["contains", "matchre"]) <|> anyExp
 
         let ifExpStart = symbol("if") *> noneOf([" then", "{", "\n"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
         let ifExp = chain(ifExpStart, ifExp2)
@@ -342,14 +342,14 @@ class ScriptParser {
         return (stringInSensitive(s) *> newline *> Parser(result: val))
     }
 
-    public func args() -> Parser<[String]> {
+    public func functionArgs() -> Parser<[String]> {
         let next = space.many.optional *> char(",") *> space.many.optional *> quoteOrVariable()
         let line = curry({a,b in [a] + b}) <^> quoteOrVariable() <*> next.many
         return line
     }
 
     public func quote() -> Parser<String> {
-        return block("\"", "\"")
+        return block("\"", "\"").map { "\"\($0)\"" }
     }
 
     public func quoteOrWord() -> Parser<String> {
@@ -372,13 +372,15 @@ class ScriptParser {
         return quoteOr(noneOf([t]))
     }
 
-    public func expFunction(_ name:String) -> Parser<Expression> {
-        return Expression.function <^> (stringInSensitive(name) <&> (space.many.optional *> char(leftParen) *> noneOf([")"]) <* space.many.optional <* char(rightParen)))
+    public func function(_ names:[String]) -> Parser<(String, String)> {
+        let args = self.functionArgs().map { $0.joined(separator: ", ") }
+        let res = (anyOf(names) <&> (space.many.optional *> char(leftParen) *> space.many.optional *> args <* space.many.optional <* char(rightParen)))
+        return res
     }
-}
 
-func combineArgs(_ args:[String]) -> String {
-    return ""
+    public func expFunction(_ names:[String]) -> Parser<Expression> {
+        return Expression.function <^> function(names)
+    }
 }
 
 private let swiftIdentifierStartCharacters =

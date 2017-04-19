@@ -110,17 +110,6 @@ public func block(_ start:Character, _ end:Character) -> Parser<String> {
     return block
 }
 
-public func until(_ oops:Character) -> Parser<String> {
-    let anyChar = character(condition: { !CharacterSet.newlines.contains($0.unicodeScalar) }).map { String($0) }
-    let escaped:Parser<String> = string("\\")
-    let terminator = noneOf([oops])
-
-    let block = (curry({ (a: String, b: String) in a + b }) <^> escaped <*> anyChar) <|> terminator
-    //let blocks = {values in values.joined()} <^> block.many
-
-    return block
-}
-
 public func curry<A, B, C>(_ f: @escaping (A, B) -> C) -> (A) -> (B) -> C {
     return { x in { y in f(x, y) } }
 }
@@ -169,6 +158,17 @@ public func stringInSensitive(_ string: String) -> Parser<String> {
             remainder = newRemainder
         }
         return (string, remainder)
+    }
+}
+
+public func anyOf(_ list:[String]) -> Parser<String> {
+    return Parser<String> { stream in
+        for item in list {
+            if let (res, remainder) = stringInSensitive(item).parse(stream) {
+                return (res, remainder)
+            }
+        }
+        return ("", stream)
     }
 }
 
@@ -227,9 +227,14 @@ public func lazy <T> (_ f: @autoclosure @escaping () -> Parser<T>) -> Parser<T> 
     return Parser { input in f().parse(input) }
 }
 
+precedencegroup ApplyGroup {
+    associativity: right
+    higherThan: ComparisonPrecedence
+}
+
 precedencegroup SequencePrecedence {
     associativity: left
-    higherThan: AdditionPrecedence
+    higherThan: ApplyGroup
 }
 
 infix operator <^> : SequencePrecedence
@@ -238,7 +243,7 @@ infix operator <*> : SequencePrecedence
 infix operator <&> : SequencePrecedence
 infix operator *> : SequencePrecedence
 infix operator <* : SequencePrecedence
-infix operator <|> : SequencePrecedence
+infix operator <|> : ApplyGroup
 infix operator >>- : SequencePrecedence
 
 public func <^^><A, B>(f: B, rhs: Parser<A>) -> Parser<B> {
