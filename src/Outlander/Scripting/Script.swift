@@ -158,18 +158,18 @@ class Script : IScript {
         self.tokenHandlers[.Else] = self.handleElse
         self.tokenHandlers[.elseNeedsBrace] = self.handleElseNeedsBrace
         self.tokenHandlers[.echo("")] = self.handleEcho
-        self.tokenHandlers[.elseIfSingle("", .comment(""))] = self.handleElseIfSingle
-        self.tokenHandlers[.elseIf("")] = self.handleElseIf
-        self.tokenHandlers[.elseIfNeedsBrace("")] = self.handleElseIfNeedsBrace
+        self.tokenHandlers[.elseIfSingle(.value(""), .comment(""))] = self.handleElseIfSingle
+        self.tokenHandlers[.elseIf(.value(""))] = self.handleElseIf
+        self.tokenHandlers[.elseIfNeedsBrace(.value(""))] = self.handleElseIfNeedsBrace
         self.tokenHandlers[.exit] = self.handleExit
         self.tokenHandlers[.goto("")] = self.handleGoto
         self.tokenHandlers[.gosub("", "")] = self.handleGosub
         self.tokenHandlers[.ifArgSingle(0, .comment(""))] = self.handleIfArgSingle
         self.tokenHandlers[.ifArg(0)] = self.handleIfArg
         self.tokenHandlers[.ifArgNeedsBrace(0)] = self.handleIfArgNeedsBrace
-        self.tokenHandlers[.ifSingle("", .comment(""))] = self.handleIfSingle
-        self.tokenHandlers[.If("")] = self.handleIf
-        self.tokenHandlers[.ifNeedsBrace("")] = self.handleIfNeedsBrace
+        self.tokenHandlers[.ifSingle(.value(""), .comment(""))] = self.handleIfSingle
+        self.tokenHandlers[.If(.value(""))] = self.handleIf
+        self.tokenHandlers[.ifNeedsBrace(.value(""))] = self.handleIfNeedsBrace
         self.tokenHandlers[.label("")] = self.handleLabel
         self.tokenHandlers[.match("", "")] = self.handleMatch
         self.tokenHandlers[.matchre("", "")] = self.handleMatchre
@@ -185,6 +185,7 @@ class Script : IScript {
         self.tokenHandlers[.token("")] = self.handleToken
         self.tokenHandlers[.unvar("")] = self.handleUnvar
         self.tokenHandlers[.wait] = self.handleWait
+        self.tokenHandlers[.waiteval("")] = self.handleWaitEval
         self.tokenHandlers[.waitfor("")] = self.handleWaitfor
         self.tokenHandlers[.waitforre("")] = self.handleWaitforre
         self.tokenHandlers[.variable("", "")] = self.handleVariable
@@ -584,10 +585,11 @@ class Script : IScript {
         let gosubContext = GosubContext(target, line, params, isGosub)
         self.gosub = gosubContext
 
+        self.context.setLabelVars(params)
+
         if isGosub {
             gosubContext.returnToLine = currentLine
             gosubContext.returnToIndex = currentLineNumber
-            self.context.setLabelVars(params)
             self.gosubStack.push(gosubContext)
         }
 
@@ -681,8 +683,7 @@ class Script : IScript {
             return .next
         }
 
-        let simplified = self.context.simplify(exp)
-        let result = self.evaluator.evaluateLogic(simplified)
+        let (simplified, result) = self.evaluate(exp)
         line.ifResult = result
 
         self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
@@ -701,8 +702,7 @@ class Script : IScript {
 
         _ = self.context.pushCurrentLineToIfStack()
 
-        let simplified = self.context.simplify(exp)
-        let result = self.evaluator.evaluateLogic(simplified)
+        let (simplified, result) = self.evaluate(exp)
         line.ifResult = result
 
         self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
@@ -726,8 +726,7 @@ class Script : IScript {
 
         _ = self.context.pushLineToIfStack(line)
 
-        let simplified = self.context.simplify(exp)
-        let result = self.evaluator.evaluateLogic(simplified)
+        let (simplified, result) = self.evaluate(exp)
         line.ifResult = result
 
         self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
@@ -759,8 +758,8 @@ class Script : IScript {
         }
 
         if execute {
-            let simplified = self.context.simplify(exp)
-            result = self.evaluator.evaluateLogic(simplified)
+            let (simplified, res) = self.evaluate(exp)
+            result = res
             self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
@@ -792,8 +791,8 @@ class Script : IScript {
         }
 
         if execute {
-            let simplified = self.context.simplify(exp)
-            result = self.evaluator.evaluateLogic(simplified)
+            let (simplified, res) = self.evaluate(exp)
+            result = res
             self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
@@ -830,8 +829,8 @@ class Script : IScript {
         }
 
         if execute {
-            let simplified = self.context.simplify(exp)
-            result = self.evaluator.evaluateLogic(simplified)
+            let (simplified, res) = self.evaluate(exp)
+            result = res
             self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
@@ -1131,6 +1130,16 @@ class Script : IScript {
         return .wait
     }
 
+    func handleWaitEval(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .waiteval(exp) = token else {
+            return .next
+        }
+
+        self.notify("waiteval \(exp)\n", debug:ScriptLogLevel.wait)
+        self.reactToStream.append(WaitEvalOp(exp))
+        return .wait
+    }
+
     func handleWaitfor(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .waitfor(text) = token else {
             return .next
@@ -1166,5 +1175,15 @@ class Script : IScript {
         self.context.variables[result] = value
 
         return .next
+    }
+
+    func evaluate(_ e:Expression) -> (String, Bool) {
+        switch e {
+        case .value(let val):
+            let simp = self.context.simplify(val)
+            return (simp, self.evaluator.evaluateLogic(simp))
+        case .function(let name, _):
+            return (name, false)
+        }
     }
 }

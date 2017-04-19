@@ -301,18 +301,23 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected if single line result")
                     return
                 }
-                
-                if case .ifSingle(let exp, let token) = result {
-                    expect(exp).to(equal("abcd"))
 
-                    if case .put(let text) = token {
-                        expect(text).to(equal("hello"))
-                    } else {
-                        fail("expected put result")
-                    }
-                    
-                } else {
+                guard case let .ifSingle(exp, token) = result else {
                     fail("expected if single line result")
+                    return
+                }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
+
+                if case .put(let text) = token {
+                    expect(text).to(equal("hello"))
+                } else {
+                    fail("expected put result")
                 }
             }
 
@@ -322,11 +327,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
 
-                if case .If(let exp) = result {
-                    expect(exp).to(equal("abcd"))
-                } else {
+                guard case let .If(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
             }
 
             it("parses if multi line") {
@@ -334,12 +345,18 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected if line result")
                     return
                 }
-                
-                if case .ifNeedsBrace(let exp) = result {
-                    expect(exp).to(equal("abcd"))
-                } else {
+
+                guard case let .ifNeedsBrace(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
             }
 
             it("parses if multi line") {
@@ -348,11 +365,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .If(let exp) = result {
-                    expect(exp).to(equal("abcd"))
-                } else {
+                guard case let .If(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
             }
 
             it("parses if multi line") {
@@ -361,11 +384,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .If(let exp) = result {
-                    expect(exp).to(equal("abcd"))
-                } else {
+                guard case let .If(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
             }
 
             it("parses if multi line") {
@@ -374,11 +403,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .If(let exp) = result {
-                    expect(exp).to(equal("abcd"))
-                } else {
+                guard case let .If(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
             }
 
             it("parses if multi line") {
@@ -387,11 +422,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .If(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
+                guard case let .If(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses if multi line - stuff after brace") {
@@ -405,11 +446,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .ifNeedsBrace(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
+                guard case let .ifNeedsBrace(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses if multi line - no then no brace") {
@@ -417,12 +464,18 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected if line result")
                     return
                 }
-                
-                if case .ifNeedsBrace(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
+
+                guard case let .ifNeedsBrace(exp) = result else {
                     fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses else if single line") {
@@ -430,19 +483,25 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected else if single line result")
                     return
                 }
-                
-                if case .elseIfSingle(let exp, let token) = result {
-                    expect(exp).to(equal("abcd"))
 
-                    if case .put(let text) = token {
-                        expect(text).to(equal("hello"))
-                    } else {
-                        fail("expected put result")
-                    }
-                    
-                } else {
-                    fail("expected else if single line result")
+                guard case let .elseIfSingle(exp, token) = result else {
+                    fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("abcd"))
+
+                guard case let .put(text) = token else {
+                    fail("expected put result")
+                    return
+                }
+
+                expect(text).to(equal("hello"))
             }
 
             it("parses else if multi line - no then no brace") {
@@ -450,12 +509,18 @@ class OutlanderParserTester : QuickSpec {
                     fail("expected if line result")
                     return
                 }
-                
-                if case .elseIfNeedsBrace(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
-                    fail("expected else if line result")
+
+                guard case let .elseIfNeedsBrace(exp) = result else {
+                    fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses else if multi line - brace") {
@@ -464,11 +529,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .elseIf(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
-                    fail("expected else if line result")
+                guard case let .elseIf(exp) = result else {
+                    fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses else if multi line - then brace") {
@@ -477,11 +548,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .elseIf(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
-                    fail("expected else if line result")
+                guard case let .elseIf(exp) = result else {
+                    fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses else if multi line - then") {
@@ -490,11 +567,17 @@ class OutlanderParserTester : QuickSpec {
                     return
                 }
                 
-                if case .elseIfNeedsBrace(let exp) = result {
-                    expect(exp).to(equal("%one >= $then.LearningRate"))
-                } else {
-                    fail("expected else if line result")
+                guard case let .elseIfNeedsBrace(exp) = result else {
+                    fail("expected if line result")
+                    return
                 }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value expression result")
+                    return
+                }
+
+                expect(val).to(equal("%one >= $then.LearningRate"))
             }
 
             it("parses else single") {
@@ -717,6 +800,122 @@ class OutlanderParserTester : QuickSpec {
 
                 expect(label).to(equal("one.two"))
                 expect(val).to(equal("^Stow what|^You must unload|^You get some"))
+            }
+        }
+
+        describe("random") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n random 1 2 \n\n") else {
+                    fail("expected random line result")
+                    return
+                }
+
+                guard case let .random(min, max) = result else {
+                    fail("expected random line result")
+                    return
+                }
+
+                expect(min).to(equal("1"))
+                expect(max).to(equal("2"))
+            }
+
+            it("variables") {
+                guard let result = ScriptParser().parse("\n random %one.two %three \n\n") else {
+                    fail("expected random line result")
+                    return
+                }
+
+                guard case let .random(min, max) = result else {
+                    fail("expected random line result")
+                    return
+                }
+
+                expect(min).to(equal("%one.two"))
+                expect(max).to(equal("%three"))
+            }
+
+            it("one variable") {
+                guard let result = ScriptParser().parse("\n random 3 %three \n\n") else {
+                    fail("expected random line result")
+                    return
+                }
+
+                guard case let .random(min, max) = result else {
+                    fail("expected random line result")
+                    return
+                }
+
+                expect(min).to(equal("3"))
+                expect(max).to(equal("%three"))
+            }
+        }
+
+        describe("functions") {
+            it("quotes") {
+                guard let (result, rest) = ScriptParser().quote().run("\"abcd one two\" rest") else {
+                    fail("expected result")
+                    return
+                }
+                expect(result).to(equal("abcd one two"))
+                expect(String(rest)).to(equal(" rest"))
+            }
+
+            it("quotes handles escapes") {
+                guard let (result, rest) = ScriptParser().quote().run("\"abcd \\\"one two\" rest") else {
+                    fail("expected result")
+                    return
+                }
+                expect(result).to(equal("abcd \\\"one two"))
+                expect(String(rest)).to(equal(" rest"))
+            }
+
+            it("args") {
+                guard let (result, rest) = ScriptParser().args().run("\"abcd \\\"one two\", \"three four\", %one.two rest") else {
+                    fail("expected result")
+                    return
+                }
+                expect(result).to(equal(["abcd \\\"one two", "three four", "%one.two"]))
+                expect(String(rest)).to(equal(" rest"))
+            }
+
+            it("matchre") {
+                guard let result = ScriptParser().parse("\n if matchre(\"abcd\", \"three four\") { \n\n") else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .If(exp) = result else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .function(name, args) = exp else {
+                    fail("expected function line result")
+                    return
+                }
+
+                expect(name).to(equal("matchre"))
+                expect(args).to(equal("\"abcd\", \"three four\""))
+            }
+
+            it("matchre with regex") {
+                guard let result = ScriptParser().parse("\n if matchre(\"%dir\", \"^(search|swim) \") { \n\n") else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .If(exp) = result else {
+                    fail("expected if function line result")
+                    return
+                }
+
+                guard case let .function(name, args) = exp else {
+                    fail("expected function line result")
+                    return
+                }
+
+                expect(name).to(equal("matchre"))
+                expect(args).to(equal("\"%dir\", \"^(search|swim) \""))
             }
         }
     }

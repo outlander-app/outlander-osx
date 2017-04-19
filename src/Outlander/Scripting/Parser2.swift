@@ -10,8 +10,7 @@ import Foundation
 
 enum Expression {
     case value(String)
-    case function(String, [String])
-    indirect case exp(Expression,Expression)
+    case function(String, String)
 }
 
 enum TokenValue : Hashable {
@@ -27,12 +26,12 @@ enum TokenValue : Hashable {
     indirect case ifArgSingle(Int, TokenValue)
     case ifArg(Int)
     case ifArgNeedsBrace(Int)
-    indirect case ifSingle(String, TokenValue)
-    case If(String)
-    case ifNeedsBrace(String)
-    case elseIf(String)
-    case elseIfNeedsBrace(String)
-    indirect case elseIfSingle(String, TokenValue)
+    indirect case ifSingle(Expression, TokenValue)
+    case If(Expression)
+    case ifNeedsBrace(Expression)
+    case elseIf(Expression)
+    case elseIfNeedsBrace(Expression)
+    indirect case elseIfSingle(Expression, TokenValue)
     case Else
     case elseNeedsBrace
     indirect case elseSingle(TokenValue)
@@ -52,20 +51,20 @@ enum TokenValue : Hashable {
     case token(String)
     case unvar(String)
     case wait
+    case waiteval(String)
     case waitfor(String)
     case waitforre(String)
     case variable(String, String)
 
     // parsed but need handlers
+    case random(String, String)
 
     // not parsed
-    case waiteval(String)
-    case random(String, String)
     case action
     case actionToggle(String, String)
     case eval(String, String)
     case evalMath(String, String)
-    case function(String, [String])
+    case math
 
     var rawValue: RawValue {
         switch self {
@@ -102,6 +101,7 @@ enum TokenValue : Hashable {
         case .token: return 133
         case .unvar: return 14
         case .wait: return 15
+        case .waiteval: return 15
         case .waitfor: return 16
         case .waitforre: return 17
         case .variable: return 20
@@ -162,10 +162,21 @@ class ScriptParser {
     let anyChar = character(condition: { !CharacterSet.newlines.contains($0.unicodeScalar) })
 
     let colon:Character = ":"
+    let leftParen:Character = "("
+    let rightParen:Character = ")"
     
     let digit = character(condition: { CharacterSet.decimalDigits.contains($0.unicodeScalar) })
 
     let variableCharacters = CharacterSet(charactersIn: "$%&")
+
+    var identifier:Parser<String> {
+        return (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
+            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
+    }
+
+    var variableIdentifier:Parser<String> {
+        return (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
+    }
 
     func parse(_ input:String) -> TokenValue? {
 
@@ -175,10 +186,10 @@ class ScriptParser {
         
         let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
 
-        let identifier = (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
-            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
-
-        let variableIdentifier = (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
+//        let identifier = (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
+//            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
+//
+//        let variableIdentifier = (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
 
         let comment = TokenValue.comment <^> (string("#") *> any)
 
@@ -202,6 +213,8 @@ class ScriptParser {
         let gosubStart = symbol("gosub") *> (identifier <|> variableIdentifier)
         let gosub = curry({ label, args in TokenValue.gosub(label, args != nil ? args! : "") }) <^> gosubStart <*> (space *> args).optional
 
+        let random = TokenValue.random <^> (symbol("random") *> noneOf([" "]) <&> (space *> noneOf(["\n"])))
+
         let deleteVar = TokenValue.unvar <^> lineCommand("deletevariable")
         let echo = TokenValue.echo <^> lineCommand("echo")
         let goto = TokenValue.goto <^> lineCommand("goto")
@@ -215,6 +228,7 @@ class ScriptParser {
         let shift = TokenValue.shift <^^> symbolOnly("shift", "")
         let unvar = TokenValue.unvar <^> lineCommand("unvar")
         let wait = TokenValue.wait <^^> symbolOnly("wait", "")
+        let waiteval = TokenValue.waiteval <^> lineCommand("waiteval")
         let waitfor = TokenValue.waitfor <^> lineCommand("waitfor")
         let waitforre = TokenValue.waitforre <^> lineCommand("waitforre")
 
@@ -241,9 +255,11 @@ class ScriptParser {
             <|> save
             <|> send
             <|> shift
+            <|> random
             <|> unvar
             <|> variable
             <|> wait
+            <|> waiteval
             <|> waitfor
             <|> waitforre
 
@@ -260,7 +276,11 @@ class ScriptParser {
         let ifArgMulti = TokenValue.ifArg <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* space.many <* char("{") <* newline
         let ifArgMultiNeedsBrace = TokenValue.ifArgNeedsBrace <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* newline
 
-        let ifExp = symbol("if") *> noneOf([" then", "{", "\n"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
+        let anyExp = Expression.value <^> noneOf(["\n"])
+        let ifExp2 = expFunction("matchre") <|> anyExp
+
+        let ifExpStart = symbol("if") *> noneOf([" then", "{", "\n"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
+        let ifExp = chain(ifExpStart, ifExp2)
         let ifSingle = curry({exp, val in TokenValue.ifSingle(exp, val)}) <^> ifExp <* space.many <*> thenToken
 
         let ifMulti = TokenValue.If <^> ifExp <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* char("{") <* newline
@@ -301,8 +321,12 @@ class ScriptParser {
         return parseResult?.0
     }
 
-    public func char(_ c:Character) -> Parser<Character> {
-        return character(condition: { $0 == c })
+    public func chain<Result>(_ a:Parser<String>, _ f:Parser<Result>) -> Parser<Result> {
+        return Parser { stream in
+            guard let (result, newStream) = a.parse(stream) else { return nil }
+            guard let (res2, _) = f.parse(result.characters) else { return nil }
+            return (res2, newStream)
+        }
     }
 
     public func symbol(_ s:String) -> Parser<String> {
@@ -317,6 +341,44 @@ class ScriptParser {
     public func symbolOnly<A>(_ s:String, _ val:A) -> Parser<A> {
         return (stringInSensitive(s) *> newline *> Parser(result: val))
     }
+
+    public func args() -> Parser<[String]> {
+        let next = space.many.optional *> char(",") *> space.many.optional *> quoteOrVariable()
+        let line = curry({a,b in [a] + b}) <^> quoteOrVariable() <*> next.many
+        return line
+    }
+
+    public func quote() -> Parser<String> {
+        return block("\"", "\"")
+    }
+
+    public func quoteOrWord() -> Parser<String> {
+        return quoteOr(word())
+    }
+
+    public func quoteOrVariable() -> Parser<String> {
+        return quoteOr(variableIdentifier)
+    }
+
+    public func quoteOr(_ parser:Parser<String>) -> Parser<String> {
+        return quote() <|> parser
+    }
+
+    public func word() -> Parser<String> {
+        return anyChar.many.map { String($0) }
+    }
+
+    public func notTermiator(_ t:String) -> Parser<String> {
+        return quoteOr(noneOf([t]))
+    }
+
+    public func expFunction(_ name:String) -> Parser<Expression> {
+        return Expression.function <^> (stringInSensitive(name) <&> (space.many.optional *> char(leftParen) *> noneOf([")"]) <* space.many.optional <* char(rightParen)))
+    }
+}
+
+func combineArgs(_ args:[String]) -> String {
+    return ""
 }
 
 private let swiftIdentifierStartCharacters =

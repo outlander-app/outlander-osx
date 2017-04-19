@@ -32,6 +32,13 @@ extension Parser {
         }
     }
 
+    public func flatMap<Result>(_ f: @escaping (A) -> Parser<Result>) -> Parser<Result> {
+        return Parser<Result> { stream in
+            guard let (result, newStream) = self.parse(stream) else { return nil }
+            return f(result).parse(newStream)
+        }
+    }
+
     public var many: Parser<[A]> {
         return Parser<[A]> { stream in
             var result: [A] = []
@@ -87,6 +94,33 @@ extension Parser {
     }
 }
 
+public func unescape(_ value: String, _ what: Character) -> String {
+    let slash = "\\"
+    return ([slash] + [String(what)]).reduce(value) {
+        return $0.replace(slash + $1, withString: $1)
+    }
+}
+
+public func block(_ start:Character, _ end:Character) -> Parser<String> {
+    let startBlock = char(start)
+    let endBlock = char(end)
+    let escapedEnd = "\\" + String(end)
+    let escaped = (string(escapedEnd) *> Parser(result: escapedEnd)) <|> not(end).map { String($0) }
+    let block = startBlock *> escaped.many.map { $0.joined() } <* endBlock
+    return block
+}
+
+public func until(_ oops:Character) -> Parser<String> {
+    let anyChar = character(condition: { !CharacterSet.newlines.contains($0.unicodeScalar) }).map { String($0) }
+    let escaped:Parser<String> = string("\\")
+    let terminator = noneOf([oops])
+
+    let block = (curry({ (a: String, b: String) in a + b }) <^> escaped <*> anyChar) <|> terminator
+    //let blocks = {values in values.joined()} <^> block.many
+
+    return block
+}
+
 public func curry<A, B, C>(_ f: @escaping (A, B) -> C) -> (A) -> (B) -> C {
     return { x in { y in f(x, y) } }
 }
@@ -95,12 +129,19 @@ func curry<A, B, C, R>(_ f: @escaping (A, B, C) -> R) -> (A) -> (B) -> (C) -> R 
     return { a in { b in { c in f(a, b, c) } } }
 }
 
-
 public func character(condition: @escaping (Character) -> Bool) -> Parser<Character> {
     return Parser { stream in
         guard let char = stream.first, condition(char) else { return nil }
         return (char, stream.dropFirst())
     }
+}
+
+public func not(_ c:Character) -> Parser<Character> {
+    return character(condition: { $0 != c })
+}
+
+public func char(_ c:Character) -> Parser<Character> {
+    return character(condition: { $0 == c })
 }
 
 public func string(_ string: String) -> Parser<String> {
@@ -198,6 +239,7 @@ infix operator <&> : SequencePrecedence
 infix operator *> : SequencePrecedence
 infix operator <* : SequencePrecedence
 infix operator <|> : SequencePrecedence
+infix operator >>- : SequencePrecedence
 
 public func <^^><A, B>(f: B, rhs: Parser<A>) -> Parser<B> {
     return rhs.res(f)
@@ -229,4 +271,8 @@ public func *><A, B>(lhs: Parser<A>, rhs: Parser<B>) -> Parser<B> {
 
 public func <|><A>(lhs: Parser<A>, rhs: Parser<A>) -> Parser<A> {
     return lhs.or(rhs)
+}
+
+public func >>-<A, R>(lhs: Parser<A>, rhs: @escaping (A)->Parser<R>) -> Parser<R> {
+    return lhs.flatMap(rhs)
 }

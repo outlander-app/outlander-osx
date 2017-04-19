@@ -57,6 +57,37 @@ class NextRoomOp : IWantStreamInfo {
     }
 }
 
+class WaitEvalOp : IWantStreamInfo {
+
+    var id = ""
+    private let evaluator:ExpressionEvaluator
+    private var expression:String
+
+    init(_ expression:String) {
+        self.id = UUID().uuidString
+        self.evaluator = ExpressionEvaluator()
+        self.expression = expression
+    }
+
+    func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
+
+        for n in nodes {
+            if n.name == "prompt" {
+                let simplified = context.simplify(self.expression)
+                if evaluator.evaluateLogic(simplified) {
+                    return CheckStreamResult.Match(result: "true")
+                }
+            }
+        }
+
+        return CheckStreamResult.None
+    }
+
+    func execute(_ script:IScript, _ context:ScriptContext) {
+        script.nextAfterRoundtime()
+    }
+}
+
 class WaitforOp : IWantStreamInfo {
 
     public var id = ""
