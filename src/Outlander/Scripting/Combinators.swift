@@ -168,7 +168,7 @@ public func anyOf(_ list:[String]) -> Parser<String> {
                 return (res, remainder)
             }
         }
-        return ("", stream)
+        return nil
     }
 }
 

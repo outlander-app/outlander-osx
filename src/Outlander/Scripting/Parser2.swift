@@ -58,16 +58,18 @@ enum TokenValue : Hashable {
 
     // parsed but need handlers
     case random(String, String)
+    case action(String, String, String)
+    case actionToggle(String, String)
 
     // not parsed
-    case action
-    case actionToggle(String, String)
     case eval(String, String)
     case evalMath(String, String)
     case math
 
     var rawValue: RawValue {
         switch self {
+        case .action: return 200
+        case .actionToggle: return 201
         case .comment: return 1
         case .debug: return 2
         case .echo: return 3
@@ -263,8 +265,24 @@ class ScriptParser {
             <|> waitfor
             <|> waitforre
 
+        let action = curry({cmd,pattern in TokenValue.action("", cmd, pattern)})
+            <^> (symbol("action") *> noneOf(["when"])).map { $0.trimEnd(CharacterSet.whitespaces) }
+            <*> (symbol("when") *> any)
+
+        let actionWithClass = curry({cls, cmd,pattern in TokenValue.action(cls, cmd, pattern)})
+            <^> (symbol("action") *> block("(", ")"))
+            <*> noneOf(["when"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
+            <*> (symbol("when") *> any)
+
+        let actionToggle = curry({cls,toggle in TokenValue.actionToggle(cls, toggle)})
+            <^> (symbol("action") *> block("(", ")") <* space.many)
+            <*> (variableIdentifier <|> anyOf(["on", "off"]))
+
         let otherCommands =
-            label
+            actionToggle
+            <|> actionWithClass
+            <|> action
+            <|> label
             <|> match
             <|> matchre
             <|> matchwait
@@ -294,6 +312,7 @@ class ScriptParser {
         let elseSingle = TokenValue.elseSingle <^> (symbol("else") *> space.many *> lineCommands)
         let elseMulti = TokenValue.Else <^^> stringInSensitive("else") <* space.many <* char("{") <* newline
         let elseMultiNeedsBrace = TokenValue.elseNeedsBrace <^^> stringInSensitive("else") <* newline
+
 
         let row = ws.many.optional *> (
             comment
@@ -340,6 +359,12 @@ class ScriptParser {
 
     public func symbolOnly<A>(_ s:String, _ val:A) -> Parser<A> {
         return (stringInSensitive(s) *> newline *> Parser(result: val))
+    }
+
+    public func multiCommands(_ p:Parser<TokenValue>) -> Parser<[TokenValue]> {
+        let next = space.many.optional *> char(",") *> space.many.optional *> p
+        let line = curry({a,b in [a] + b}) <^> p <*> next.many
+        return line
     }
 
     public func functionArgs() -> Parser<[String]> {

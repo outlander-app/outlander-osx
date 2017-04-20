@@ -958,5 +958,116 @@ class OutlanderParserTester : QuickSpec {
                 expect(args).to(equal("%dir, \"^(search|swim) \""))
             }
         }
+
+        describe("actions") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n action var one two when abcd \n\n") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .action(cls, cmd, pattern) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal(""))
+                expect(cmd).to(equal("var one two"))
+                expect(pattern).to(equal("abcd"))
+            }
+
+            it("multi commands") {
+                guard let result = ScriptParser().parse("\n action var one two;var three four when abcd \n\n") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .action(cls, cmd, pattern) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal(""))
+                expect(cmd).to(equal("var one two;var three four"))
+                expect(pattern).to(equal("abcd"))
+            }
+
+            it("regex") {
+                guard let result = ScriptParser().parse("action put #beep;put #flash when ^(.+) (say|says|asks|exlaims|whispers)") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .action(cls, cmd, pattern) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal(""))
+                expect(cmd).to(equal("put #beep;put #flash"))
+                expect(pattern).to(equal("^(.+) (say|says|asks|exlaims|whispers)"))
+            }
+
+            it("regex with class") {
+                guard let result = ScriptParser().parse("action (talk) put #beep;put #flash when ^(.+) (say|says|asks|exlaims|whispers)") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .action(cls, cmd, pattern) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal("talk"))
+                expect(cmd).to(equal("put #beep;put #flash"))
+                expect(pattern).to(equal("^(.+) (say|says|asks|exlaims|whispers)"))
+            }
+
+            it("toggle on") {
+                guard let result = ScriptParser().parse("action (talk) on") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .actionToggle(cls, toggle) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal("talk"))
+                expect(toggle).to(equal("on"))
+            }
+
+            it("toggle off") {
+                guard let result = ScriptParser().parse("action (talk) off") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .actionToggle(cls, toggle) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal("talk"))
+                expect(toggle).to(equal("off"))
+            }
+
+            it("toggle variable") {
+                guard let result = ScriptParser().parse("action (talk) %toggle") else {
+                    fail("expected action line result")
+                    return
+                }
+
+                guard case let .actionToggle(cls, toggle) = result else {
+                    fail("expected action line result")
+                    return
+                }
+
+                expect(cls).to(equal("talk"))
+                expect(toggle).to(equal("%toggle"))
+            }
+        }
     }
 }

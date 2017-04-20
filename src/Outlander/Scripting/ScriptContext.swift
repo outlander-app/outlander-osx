@@ -325,4 +325,12 @@ class ScriptContext {
             self.labelVars["\(index)"] = param
         }
     }
+    
+    func setActionVars(_ vars:[String]) {
+        self.actionVars = [:]
+
+        for (index, param) in vars.enumerated() {
+            self.actionVars["\(index)"] = param
+        }
+    }
 }

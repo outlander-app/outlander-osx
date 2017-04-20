@@ -28,9 +28,9 @@ protocol IWantStreamInfo {
 }
 
 protocol IAction : IWantStreamInfo {
+    var name:String {get}
     var enabled:Bool {get set}
-//    var token:ActionToken {get}
-    func vars(context:ScriptContext, vars:Dictionary<String, String>) -> CheckStreamResult
+    func vars(context:ScriptContext, vars:[String:String]) -> CheckStreamResult
 }
 
 class GosubContext {
@@ -60,6 +60,7 @@ protocol IScript {
     func stream(_ text:String, _ nodes:[Node])
     func vars()
     func showStackTrace()
+    func executeToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult
 }
 
 class ScriptLine {
@@ -105,7 +106,10 @@ class Script : IScript {
     private var tokenHandlers:[TokenValue:(ScriptLine,TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
 
+    private var actions:[IAction]
+
     private var stackTrace:Stack<ScriptLine>
+
     private var matchStack:[IMatch]
     private var matchwait:Matchwait?
 
@@ -147,6 +151,7 @@ class Script : IScript {
         includeRegex = try Regex("^\\s*include (.+)$")
 
         self.reactToStream = []
+        self.actions = []
         self.stackTrace = Stack<ScriptLine>(30)
         self.matchStack = []
         self.evaluator = ExpressionEvaluator()
@@ -154,6 +159,8 @@ class Script : IScript {
         self.gosubStack = Stack<GosubContext>(100)
         
         self.tokenHandlers = [:]
+        self.tokenHandlers[.action("", "", "")] = self.handleAction
+        self.tokenHandlers[.actionToggle("", "")] = self.handleActionToggle
         self.tokenHandlers[.comment("")] = self.handleComment
         self.tokenHandlers[.debug(0)] = self.handleDebug
         self.tokenHandlers[.elseSingle(.comment(""))] = self.handleElseSingle
@@ -391,6 +398,8 @@ class Script : IScript {
             return
         }
 
+        self.checkActions(text, nodes)
+
         let handlers = self.reactToStream.filter { x in
             let res = x.stream(text, nodes, self.context)
             switch res {
@@ -408,6 +417,28 @@ class Script : IScript {
         }
 
         self.checkMatches(text)
+    }
+
+    func checkActions(_ text:String, _ nodes:[Node]) {
+        let actions = self.actions.filter { x in
+
+            if !x.enabled {
+                return false
+            }
+
+            let res = x.stream(text, nodes, self.context)
+            switch res {
+            case .Match(let x):
+                self.notify(x, debug:ScriptLogLevel.actions)
+                return true
+            default:
+                return false
+            }
+        }
+
+        actions.forEach { action in
+            action.execute(self, self.context)
+        }
     }
 
     func checkMatches(_ text:String) {
@@ -521,6 +552,32 @@ class Script : IScript {
 
         self.sendText("No handler for script token: '\(line.originalText)'\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
         return .exit
+    }
+
+    func handleAction(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .action(cls, cmd, pattern) = token else {
+            return .next
+        }
+
+        let actionOp = ActionOp(cls, cmd, pattern, self.context.currentLine!)
+        self.actions.append(actionOp)
+
+        return .next
+    }
+
+    func handleActionToggle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .actionToggle(cls, toggle) = token else {
+            return .next
+        }
+
+        let simp = self.context.simplify(toggle)
+        let enabled = simp.trimmingCharacters(in: CharacterSet.whitespaces).lowercased() == "on"
+
+        if var action = self.actions.filter({ $0.name == cls }).first {
+            action.enabled = enabled
+        }
+
+        return .next
     }
 
     func handleComment(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {

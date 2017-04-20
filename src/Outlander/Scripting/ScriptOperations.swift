@@ -8,9 +8,73 @@
 
 import Foundation
 
+class ActionOp : IAction {
+    var id = ""
+    var enabled:Bool
+
+    var name:String
+    var command:String
+    var pattern:String
+    var scriptLine:ScriptLine
+
+    var commands:[TokenValue]
+
+    var groups:[String]
+
+    init(_ name:String, _ command:String, _ pattern:String, _ scriptLine:ScriptLine) {
+        self.id = UUID().uuidString
+        self.enabled = true
+
+        self.name = name
+        self.command = command
+        self.pattern = pattern
+        self.scriptLine = scriptLine
+
+        self.commands = []
+
+        self.groups = []
+    }
+
+    func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
+
+        guard self.pattern.characters.count > 0 else {
+            return CheckStreamResult.None
+        }
+
+        self.groups = text[self.pattern].firstGroup()
+
+        return self.groups.count > 0
+            ? CheckStreamResult.Match(result: "action (\(self.scriptLine.lineNumber)) triggered by:\(text)\n")
+            : CheckStreamResult.None
+    }
+
+    func execute(_ script:IScript, _ context:ScriptContext) {
+        context.setActionVars(self.groups)
+        let simp = context.simplifyAction(self.command)
+        let cmds = simp.splitToCommands()
+
+        let parser = ScriptParser()
+
+        for cmd in cmds {
+            if let token = parser.parse(cmd) {
+                print(token)
+                let result = script.executeToken(self.scriptLine, token)
+                switch result {
+                case .exit: script.stop()
+                default: continue
+                }
+            }
+        }
+    }
+
+    func vars(context:ScriptContext, vars:[String:String]) -> CheckStreamResult {
+        return CheckStreamResult.None
+    }
+}
+
 class MoveOp : IWantStreamInfo {
 
-    public var id = ""
+    var id = ""
 
     init() {
         self.id = UUID().uuidString
