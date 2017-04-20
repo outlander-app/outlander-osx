@@ -222,6 +222,8 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F982103B1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */; };
+		F982103C1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */; };
 		F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
@@ -622,6 +624,7 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
 		F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsViewController.swift; sourceTree = "<group>"; };
 		F982CF601AD7834200BB9574 /* WindowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WindowsViewController.xib; sourceTree = "<group>"; };
 		F988C40E1AF35A74003B4634 /* Directions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
@@ -858,6 +861,7 @@
 				F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */,
 				F9A685921E9DC5F3005C9175 /* Matches.swift */,
 				F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */,
+				F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1651,6 +1655,7 @@
 				F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
+				F982103B1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */,
 				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */,
 				F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
@@ -1679,6 +1684,7 @@
 				F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F982103C1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */,
 				F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,

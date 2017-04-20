@@ -113,6 +113,7 @@ class Script : IScript {
     private var gosubStack:Stack<GosubContext>
 
     private var evaluator:ExpressionEvaluator
+    private var funcEvaluator:FunctionEvaluator
 
     private var lastLine:ScriptLine? {
         return stackTrace.last2
@@ -149,6 +150,7 @@ class Script : IScript {
         self.stackTrace = Stack<ScriptLine>(30)
         self.matchStack = []
         self.evaluator = ExpressionEvaluator()
+        self.funcEvaluator = FunctionEvaluator(self.context.simplify)
         self.gosubStack = Stack<GosubContext>(100)
         
         self.tokenHandlers = [:]
@@ -683,12 +685,16 @@ class Script : IScript {
             return .next
         }
 
-        let (simplified, result) = self.evaluate(exp)
-        line.ifResult = result
+        let result = self.funcEvaluator.evaluate(exp)
+        line.ifResult = result.result
 
-        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
+        if result.groups.count > 0 {
+            self.context.setRegexVars(result.groups)
+        }
 
-        if result {
+        self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
+
+        if result.result {
             return executeToken(line, lineToken)
         }
 
@@ -702,12 +708,16 @@ class Script : IScript {
 
         _ = self.context.pushCurrentLineToIfStack()
 
-        let (simplified, result) = self.evaluate(exp)
-        line.ifResult = result
+        let result = self.funcEvaluator.evaluate(exp)
+        line.ifResult = result.result
 
-        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
+        if result.groups.count > 0 {
+            self.context.setRegexVars(result.groups)
+        }
 
-        if result {
+        self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
+
+        if result.result {
             return .next
         }
 
@@ -726,12 +736,16 @@ class Script : IScript {
 
         _ = self.context.pushLineToIfStack(line)
 
-        let (simplified, result) = self.evaluate(exp)
-        line.ifResult = result
+        let result = self.funcEvaluator.evaluate(exp)
+        line.ifResult = result.result
 
-        self.notify("if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+        if result.groups.count > 0 {
+            self.context.setRegexVars(result.groups)
+        }
 
-        if result {
+        self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+
+        if result.result {
             return .next
         }
 
@@ -758,9 +772,14 @@ class Script : IScript {
         }
 
         if execute {
-            let (simplified, res) = self.evaluate(exp)
-            result = res
-            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
+            let res = self.funcEvaluator.evaluate(exp)
+            result = res.result
+
+            if res.groups.count > 0 {
+                self.context.setRegexVars(res.groups)
+            }
+
+            self.notify("else if: \(res.text) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
         }
@@ -791,9 +810,14 @@ class Script : IScript {
         }
 
         if execute {
-            let (simplified, res) = self.evaluate(exp)
-            result = res
-            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if)
+            let res = self.funcEvaluator.evaluate(exp)
+            result = res.result
+
+            if res.groups.count > 0 {
+                self.context.setRegexVars(res.groups)
+            }
+
+            self.notify("else if: \(res.text) = \(result)\n", debug:ScriptLogLevel.if)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if)
         }
@@ -829,9 +853,14 @@ class Script : IScript {
         }
 
         if execute {
-            let (simplified, res) = self.evaluate(exp)
-            result = res
-            self.notify("else if: \(simplified) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
+            let res = self.funcEvaluator.evaluate(exp)
+            result = res.result
+
+            if res.groups.count > 0 {
+                self.context.setRegexVars(res.groups)
+            }
+
+            self.notify("else if: \(res.text) = \(result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
         } else {
             self.notify("else if: skipping\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
         }
@@ -1175,15 +1204,5 @@ class Script : IScript {
         self.context.variables[result] = value
 
         return .next
-    }
-
-    func evaluate(_ e:Expression) -> (String, Bool) {
-        switch e {
-        case .value(let val):
-            let simp = self.context.simplify(val)
-            return (simp, self.evaluator.evaluateLogic(simp))
-        case .function(let name, _):
-            return (name, false)
-        }
     }
 }
