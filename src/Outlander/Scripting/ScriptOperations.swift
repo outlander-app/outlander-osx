@@ -61,6 +61,9 @@ class ActionOp : IAction {
                 print(token)
                 let result = script.executeToken(self.scriptLine, token)
                 switch result {
+                case .next:
+                    script.next()
+                    return
                 case .exit: script.stop()
                 default: continue
                 }

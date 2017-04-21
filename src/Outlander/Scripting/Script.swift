@@ -8,10 +8,10 @@
 
 import Foundation
 
-func delay(_ delay: Double, _ closure: @escaping () -> ()) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-        closure()
-    }
+func delay(_ delay: Double, _ closure: @escaping () -> ()) -> DispatchWorkItem {
+    let task = DispatchWorkItem { closure() }
+    DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: task)
+    return task
 }
 
 enum CheckStreamResult {
@@ -102,6 +102,8 @@ class Script : IScript {
     var stopped = false
     var paused = false
     var nextAfterUnpause = false
+
+    var delayedTask:DispatchWorkItem?
 
     private var tokenHandlers:[TokenValue:(ScriptLine,TokenValue)->ScriptExecuteResult]
     private var reactToStream:[IWantStreamInfo]
@@ -530,7 +532,7 @@ class Script : IScript {
     func nextAfterRoundtime() {
         if let roundtime = self.context.roundtime {
             if roundtime > 0 {
-                delay(roundtime) {
+                self.delayedTask = delay(roundtime) {
                     self.nextAfterRoundtime()
                 }
                 return
@@ -644,6 +646,9 @@ class Script : IScript {
         }
 
         self.context.ifStack.clear()
+        self.delayedTask?.cancel()
+        self.matchwait = nil
+        self.matchStack.removeAll()
 
         let command = isGosub ? "gosub" : "goto"
 
@@ -1112,7 +1117,7 @@ class Script : IScript {
         self.matchwait = token
 
         if timeout > 0 {
-            delay(timeout) {
+            self.delayedTask = delay(timeout) {
                 if let match = self.matchwait, match.id == token.id {
                     self.matchwait = nil
                     self.matchStack.removeAll()
@@ -1210,7 +1215,7 @@ class Script : IScript {
         }
 
         self.notify("pausing for \(duration) seconds\n", debug:ScriptLogLevel.wait)
-        delay(duration) {
+        self.delayedTask = delay(duration) {
             self.next()
         }
 
