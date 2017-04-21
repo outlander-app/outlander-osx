@@ -850,6 +850,104 @@ class OutlanderParserTester : QuickSpec {
             }
         }
 
+        describe("math") {
+            it("add") {
+                guard let result = ScriptParser().parse("math avar add 3") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("add"))
+                expect(number).to(equal("3"))
+            }
+
+            it("add - variable number") {
+                guard let result = ScriptParser().parse("math avar add %somevar") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("add"))
+                expect(number).to(equal("%somevar"))
+            }
+
+            it("subtract") {
+                guard let result = ScriptParser().parse("math avar subtract %somevar") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("subtract"))
+                expect(number).to(equal("%somevar"))
+            }
+
+            it("multiply") {
+                guard let result = ScriptParser().parse("math avar multiply %somevar") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("multiply"))
+                expect(number).to(equal("%somevar"))
+            }
+
+            it("divide") {
+                guard let result = ScriptParser().parse("math avar divide %somevar") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("divide"))
+                expect(number).to(equal("%somevar"))
+            }
+
+            it("modulus") {
+                guard let result = ScriptParser().parse("math avar modulus %somevar") else {
+                    fail("expected math line result")
+                    return
+                }
+
+                guard case let .math(variable, function, number) = result else {
+                    fail("expected math line result")
+                    return
+                }
+
+                expect(variable).to(equal("avar"))
+                expect(function).to(equal("modulus"))
+                expect(number).to(equal("%somevar"))
+            }
+        }
+
         describe("functions") {
             it("quotes") {
                 guard let (result, rest) = ScriptParser().quote().run("\"abcd one two\" rest") else {

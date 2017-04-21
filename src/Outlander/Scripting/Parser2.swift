@@ -18,6 +18,8 @@ enum TokenValue : Hashable {
     typealias RawValue = Int
 
     // have handlers
+    case action(String, String, String)
+    case actionToggle(String, String)
     case comment(String)
     case debug(Int)
     case echo(String)
@@ -40,10 +42,12 @@ enum TokenValue : Hashable {
     case match(String, String)
     case matchre(String, String)
     case matchwait(Double)
+    case math(String, String, String)
     case move(String)
     case nextroom
     case pause(Double)
     case put(String)
+    case random(String, String)
     case Return
     case save(String)
     case send(String)
@@ -57,14 +61,10 @@ enum TokenValue : Hashable {
     case variable(String, String)
 
     // parsed but need handlers
-    case random(String, String)
-    case action(String, String, String)
-    case actionToggle(String, String)
 
     // not parsed
-    case eval(String, String)
-    case evalMath(String, String)
-    case math
+    case eval(String, Expression)
+    case evalMath(String, Expression)
 
     var rawValue: RawValue {
         switch self {
@@ -89,6 +89,7 @@ enum TokenValue : Hashable {
         case .If: return 102
         case .ifNeedsBrace: return 103
         case .label: return 6
+        case .math: return 70
         case .match: return 71
         case .matchre: return 72
         case .matchwait: return 73
@@ -96,7 +97,8 @@ enum TokenValue : Hashable {
         case .nextroom: return 8
         case .pause: return 9
         case .put: return 10
-        case .Return: return 1000
+        case .random: return 1000
+        case .Return: return 1001
         case .save: return 11
         case .send: return 12
         case .shift: return 13
@@ -188,11 +190,6 @@ class ScriptParser {
         
         let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
 
-//        let identifier = (character(condition: { swiftIdentifierStartSet.contains($0.unicodeScalar) })
-//            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).many.map { String($0) }.optional).map { s, r in String(s) + String(r ?? "") }
-//
-//        let variableIdentifier = (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
-
         let comment = TokenValue.comment <^> (string("#") *> any)
 
         let label = TokenValue.label <^> identifier <* char(colon)
@@ -216,6 +213,9 @@ class ScriptParser {
         let gosub = curry({ label, args in TokenValue.gosub(label, args != nil ? args! : "") }) <^> gosubStart <*> (space *> args).optional
 
         let random = TokenValue.random <^> (symbol("random") *> noneOf([" "]) <&> (space *> noneOf(["\n"])))
+
+        let math = curry({variable,function,number in TokenValue.math(variable, function, number)})
+            <^> (symbol("math") *> identifier <* space.many) <*> anyOf(["add", "subtract", "multiply", "divide", "modulus", "set"]) <*> (space.many *> any)
 
         let deleteVar = TokenValue.unvar <^> lineCommand("deletevariable")
         let echo = TokenValue.echo <^> lineCommand("echo")
@@ -249,6 +249,7 @@ class ScriptParser {
             <|> exit
             <|> goto
             <|> gosub
+            <|> math
             <|> move
             <|> nextroom
             <|> pause

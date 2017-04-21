@@ -183,10 +183,12 @@ class Script : IScript {
         self.tokenHandlers[.match("", "")] = self.handleMatch
         self.tokenHandlers[.matchre("", "")] = self.handleMatchre
         self.tokenHandlers[.matchwait(0)] = self.handleMatchwait
+        self.tokenHandlers[.math("", "", "")] = self.handleMath
         self.tokenHandlers[.move("")] = self.handleMove
         self.tokenHandlers[.nextroom] = self.handleNextroom
         self.tokenHandlers[.pause(0)] = self.handlePause
         self.tokenHandlers[.put("")] = self.handlePut
+        self.tokenHandlers[.random("", "")] = self.handleRandom
         self.tokenHandlers[.Return] = self.handleReturn
         self.tokenHandlers[.save("")] = self.handleSave
         self.tokenHandlers[.send("")] = self.handleSend
@@ -1084,6 +1086,60 @@ class Script : IScript {
         return .wait
     }
 
+    func handleMath(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .math(variable, function, number) = token else {
+            return .next
+        }
+
+        let existing = self.context.variables[variable] ?? "0"
+        let resolved = context.simplify(existing)
+
+        guard let existingNum = resolved.toDouble() else {
+            self.sendText("unable to convert '\(resolved)' to a number\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .next
+        }
+
+        guard let num = context.simplify(number).toDouble() else {
+            self.sendText("unable to convert '\(number)' to a number\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .next
+        }
+
+        var result:Double = 0
+
+        switch function.lowercased() {
+        case "set":
+            result = num
+            break
+        case "add":
+            result = existingNum + num
+            break
+        case "subtract":
+            result = existingNum - num
+            break
+        case "multiply":
+            result = existingNum * num
+            break
+        case "divide":
+            if num == 0 {
+                self.sendText("cannot divide by zero!\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+                return .next
+            }
+            result = existingNum / num
+            break
+        case "modulus":
+            result = existingNum.truncatingRemainder(dividingBy: num)
+            break
+        default:
+            self.sendText("unknown math function '\(function)'\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .next
+        }
+
+        self.notify("math \(variable): \(existingNum) \(function) \(num) = \(result)\n", debug:ScriptLogLevel.vars)
+        self.context.variables[variable] = "\(result)"
+
+        return .next
+    }
+
     func handleMove(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case let .move(dir) = token else {
             return .next
@@ -1138,13 +1194,39 @@ class Script : IScript {
         return .next
     }
 
+    func handleRandom(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .random(min, max) = token else {
+            return .next
+        }
+
+        let rMin = self.context.simplify(min)
+        let rMax = self.context.simplify(max)
+
+        guard let minN = Int(rMin), let maxN = Int(rMax) else {
+            return .next
+        }
+
+        guard minN < maxN else {
+            self.sendText("min is larger than max!\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .next
+        }
+
+        let diceRoll = randomNumberFrom(minN..<maxN+1)
+
+        self.notify("random (\(minN), \(maxN)) = \(diceRoll) \n", debug:ScriptLogLevel.vars)
+
+        self.context.variables["r"] = "\(diceRoll)"
+
+        return .next
+    }
+
     func handleReturn(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
         guard case .Return = token else {
             return .next
         }
 
         guard let ctx = self.gosubStack.pop(), let returnToLine = ctx.returnToLine, let returnToIndex = ctx.returnToIndex else {
-            self.sendText("no gosub to return to!\n", preset: "scripterror")
+            self.sendText("no gosub to return to!\n", preset: "scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
             return .exit
         }
 
