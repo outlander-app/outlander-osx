@@ -41,10 +41,11 @@ class ActionOp : IAction {
             return CheckStreamResult.None
         }
 
-        self.groups = text[self.pattern].firstGroup()
+        let simp = context.simplify(self.pattern)
+        self.groups = text[simp].firstGroup()
 
         return self.groups.count > 0
-            ? CheckStreamResult.Match(result: "action (\(self.scriptLine.lineNumber)) triggered by:\(text)\n")
+            ? CheckStreamResult.Match(result: "action (line \(self.scriptLine.lineNumber)) triggered by:\(text)\n")
             : CheckStreamResult.None
     }
 

@@ -134,17 +134,6 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
 
-            it("parses echo with leading spaces") {
-                let result = ScriptParser().parse("\n echo  abcd \n\n")
-                expect(result).toNot(beNil())
-                
-                if case .echo(let text) = result! {
-                    expect(text).to(equal(" abcd"))
-                } else {
-                    fail("expected echo result")
-                }
-            }
-
             it("does not parse echo") {
                 let result = ScriptParser().parse("\n echoabcd \n\n")
                 expect(result).to(beNil())
@@ -1165,6 +1154,49 @@ class OutlanderParserTester : QuickSpec {
 
                 expect(cls).to(equal("talk"))
                 expect(toggle).to(equal("%toggle"))
+            }
+        }
+
+        describe("eval") {
+            it("basic") {
+                guard let result = ScriptParser().parse("\n eval   var   $webbed = 1") else {
+                    fail("expected eval line result")
+                    return
+                }
+
+                guard case let .eval(variable, exp) = result else {
+                    fail("expected eval line result")
+                    return
+                }
+
+                guard case let .value(val) = exp else {
+                    fail("expected value line result")
+                    return
+                }
+
+                expect(variable).to(equal("var"))
+                expect(val).to(equal("$webbed = 1"))
+            }
+
+            it("contains") {
+                guard let result = ScriptParser().parse("\n eval var contains(\"abcd\", \"three four\") { \n\n") else {
+                    fail("expected eval line result")
+                    return
+                }
+
+                guard case let .eval(variable, exp) = result else {
+                    fail("expected eval line result")
+                    return
+                }
+
+                guard case let .function(name, args) = exp else {
+                    fail("expected function line result")
+                    return
+                }
+
+                expect(variable).to(equal("var"))
+                expect(name).to(equal("contains"))
+                expect(args).to(equal("\"abcd\", \"three four\""))
             }
         }
     }

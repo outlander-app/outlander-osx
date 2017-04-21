@@ -170,6 +170,8 @@ class Script : IScript {
         self.tokenHandlers[.elseIfSingle(.value(""), .comment(""))] = self.handleElseIfSingle
         self.tokenHandlers[.elseIf(.value(""))] = self.handleElseIf
         self.tokenHandlers[.elseIfNeedsBrace(.value(""))] = self.handleElseIfNeedsBrace
+        self.tokenHandlers[.eval("", .value(""))] = self.handleEval
+        self.tokenHandlers[.evalMath("", .value(""))] = self.handleEvalMath
         self.tokenHandlers[.exit] = self.handleExit
         self.tokenHandlers[.goto("")] = self.handleGoto
         self.tokenHandlers[.gosub("", "")] = self.handleGosub
@@ -561,6 +563,12 @@ class Script : IScript {
             return .next
         }
 
+        let classText = cls.characters.count > 0 ? " (\(cls))" : ""
+        let resPattern = self.context.simplify(pattern)
+
+        let res = "action\(classText) \(cmd) when \(resPattern)\n"
+        self.notify(res, debug:ScriptLogLevel.actions)
+
         let actionOp = ActionOp(cls, cmd, pattern, self.context.currentLine!)
         self.actions.append(actionOp)
 
@@ -574,6 +582,9 @@ class Script : IScript {
 
         let simp = self.context.simplify(toggle)
         let enabled = simp.trimmingCharacters(in: CharacterSet.whitespaces).lowercased() == "on"
+
+        let res = "action (\(cls)) \(toggle)\n"
+        self.notify(res, debug:ScriptLogLevel.actions)
 
         if var action = self.actions.filter({ $0.name == cls }).first {
             action.enabled = enabled
@@ -745,7 +756,7 @@ class Script : IScript {
         }
 
         let result = self.funcEvaluator.evaluate(exp)
-        line.ifResult = result.result
+        line.ifResult = result.result.toBool() == true
 
         if result.groups.count > 0 {
             self.context.setRegexVars(result.groups)
@@ -753,7 +764,7 @@ class Script : IScript {
 
         self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
 
-        if result.result {
+        if line.ifResult == true {
             return executeToken(line, lineToken)
         }
 
@@ -768,7 +779,7 @@ class Script : IScript {
         _ = self.context.pushCurrentLineToIfStack()
 
         let result = self.funcEvaluator.evaluate(exp)
-        line.ifResult = result.result
+        line.ifResult = result.result.toBool() == true
 
         if result.groups.count > 0 {
             self.context.setRegexVars(result.groups)
@@ -776,7 +787,7 @@ class Script : IScript {
 
         self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
 
-        if result.result {
+        if line.ifResult == true {
             return .next
         }
 
@@ -796,7 +807,7 @@ class Script : IScript {
         _ = self.context.pushLineToIfStack(line)
 
         let result = self.funcEvaluator.evaluate(exp)
-        line.ifResult = result.result
+        line.ifResult = result.result.toBool() == true
 
         if result.groups.count > 0 {
             self.context.setRegexVars(result.groups)
@@ -804,7 +815,7 @@ class Script : IScript {
 
         self.notify("if: \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if, scriptLine: line.lineNumber)
 
-        if result.result {
+        if line.ifResult == true {
             return .next
         }
 
@@ -832,7 +843,7 @@ class Script : IScript {
 
         if execute {
             let res = self.funcEvaluator.evaluate(exp)
-            result = res.result
+            result = res.result.toBool() == true
 
             if res.groups.count > 0 {
                 self.context.setRegexVars(res.groups)
@@ -870,7 +881,7 @@ class Script : IScript {
 
         if execute {
             let res = self.funcEvaluator.evaluate(exp)
-            result = res.result
+            result = res.result.toBool() == true
 
             if res.groups.count > 0 {
                 self.context.setRegexVars(res.groups)
@@ -913,7 +924,7 @@ class Script : IScript {
 
         if execute {
             let res = self.funcEvaluator.evaluate(exp)
-            result = res.result
+            result = res.result.toBool() == true
 
             if res.groups.count > 0 {
                 self.context.setRegexVars(res.groups)
@@ -1009,6 +1020,34 @@ class Script : IScript {
 
         if execute { return .next }
         return .advanceToNextBlock
+    }
+
+    func handleEval(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .eval(variable, expression) = token else {
+            return .next
+        }
+
+        let result = self.funcEvaluator.evaluate(expression)
+
+        self.notify("eval \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
+
+        self.context.variables[variable] = result.result
+
+        return .next
+    }
+
+    func handleEvalMath(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
+        guard case let .evalMath(variable, expression) = token else {
+            return .next
+        }
+
+        let result = self.funcEvaluator.evaluateValue(expression)
+
+        self.notify("evalmath \(result.text) = \(result.result)\n", debug:ScriptLogLevel.if)
+
+        self.context.variables[variable] = result.result
+
+        return .next
     }
 
     func handleToken(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {

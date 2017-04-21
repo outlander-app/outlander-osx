@@ -11,6 +11,7 @@ import Foundation
 enum Expression {
     case value(String)
     case function(String, String)
+    indirect case expression(Expression)
 }
 
 enum TokenValue : Hashable {
@@ -37,6 +38,8 @@ enum TokenValue : Hashable {
     case Else
     case elseNeedsBrace
     indirect case elseSingle(TokenValue)
+    case eval(String, Expression)
+    case evalMath(String, Expression)
     case gosub(String, String)
     case label(String)
     case match(String, String)
@@ -63,8 +66,6 @@ enum TokenValue : Hashable {
     // parsed but need handlers
 
     // not parsed
-    case eval(String, Expression)
-    case evalMath(String, Expression)
 
     var rawValue: RawValue {
         switch self {
@@ -79,6 +80,8 @@ enum TokenValue : Hashable {
         case .elseIf: return 53
         case .elseIfNeedsBrace: return 54
         case .elseIfSingle: return 55
+        case .eval: return 400
+        case .evalMath: return 401
         case .exit: return 4
         case .goto: return 5
         case .gosub: return 97
@@ -241,11 +244,35 @@ class ScriptParser {
         let braceLeft = TokenValue.token <^> symbolOnly("{", "{")
         let braceRight = TokenValue.token <^> symbolOnly("}", "}")
 
+        let functionNames = [
+            "contains",
+            "countsplit",
+            "count",
+            "endsWith",
+            "indexOf",
+            "length",
+            "len",
+            "matchre",
+            "replacere",
+            "startsWith",
+            "tolower",
+            "toupper",
+            "trim"
+        ]
+
+        let anyExp = Expression.value <^> noneOf(["\n"])
+        let expression = expFunction(functionNames) <|> anyExp
+
+        let eval = TokenValue.eval <^> (symbol("eval") *> identifier <* space.oneOrMore) <*> expression
+        let evalMath = TokenValue.evalMath <^> (symbol("evalmath") *> identifier <* space.oneOrMore) <*> expression
+
         let lineCommands =
             debug
             <|> debugLevel
             <|> deleteVar
             <|> echo
+            <|> eval
+            <|> evalMath
             <|> exit
             <|> goto
             <|> gosub
@@ -295,11 +322,8 @@ class ScriptParser {
         let ifArgMulti = TokenValue.ifArg <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* space.many <* char("{") <* newline
         let ifArgMultiNeedsBrace = TokenValue.ifArgNeedsBrace <^> ifArg <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* newline
 
-        let anyExp = Expression.value <^> noneOf(["\n"])
-        let ifExp2 = expFunction(["contains", "matchre"]) <|> anyExp
-
         let ifExpStart = symbol("if") *> noneOf([" then", "{", "\n"]).map { $0.trimmingCharacters(in: CharacterSet.whitespaces) }
-        let ifExp = chain(ifExpStart, ifExp2)
+        let ifExp = chain(ifExpStart, expression)
         let ifSingle = curry({exp, val in TokenValue.ifSingle(exp, val)}) <^> ifExp <* space.many <*> thenToken
 
         let ifMulti = TokenValue.If <^> ifExp <* (space.oneOrMore <* stringInSensitive("then") <* space.many).optional <* char("{") <* newline
@@ -313,7 +337,6 @@ class ScriptParser {
         let elseSingle = TokenValue.elseSingle <^> (symbol("else") *> space.many *> lineCommands)
         let elseMulti = TokenValue.Else <^^> stringInSensitive("else") <* space.many <* char("{") <* newline
         let elseMultiNeedsBrace = TokenValue.elseNeedsBrace <^^> stringInSensitive("else") <* newline
-
 
         let row = ws.many.optional *> (
             comment
@@ -350,7 +373,7 @@ class ScriptParser {
     }
 
     public func symbol(_ s:String) -> Parser<String> {
-        return (stringInSensitive(s) <* space)
+        return stringInSensitive(s) <* space.oneOrMore
     }
 
     public func lineCommand(_ s:String) -> Parser<String> {
