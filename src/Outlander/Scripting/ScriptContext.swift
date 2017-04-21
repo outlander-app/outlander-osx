@@ -263,6 +263,11 @@ class ScriptContext {
                 return false
             }
 
+            if !self.ifStack.hasItems() && lineToken.isTopLevelIf {
+                self.retreat()
+                return true
+            }
+
             if lineToken.isSingleToken {
                 continue
             }

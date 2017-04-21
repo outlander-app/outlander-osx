@@ -151,6 +151,18 @@ enum TokenValue : Hashable {
         }
     }
 
+    var isTopLevelIf: Bool {
+        switch self {
+        case .ifArg: return true
+        case .ifArgSingle: return true
+        case .ifArgNeedsBrace: return true
+        case .ifSingle: return true
+        case .If: return true
+        case .ifNeedsBrace: return true
+        default: return false
+        }
+    }
+
     var hashValue: Int {
         return self.rawValue.hashValue
     }

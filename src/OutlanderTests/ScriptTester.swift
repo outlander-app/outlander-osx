@@ -114,6 +114,23 @@ class ScriptTester : QuickSpec {
                         "after two\n"
                     ]))
                 }
+
+                it("consecutive") {
+                    loader.set([
+                        "if_1 {",
+                            "echo one",
+                        "}",
+                        "if_1 then echo two",
+                        "else echo three",
+                        "echo four"
+                    ])
+                    script.run(["abcd"])
+                    expect(notifier.messages).to(equal([
+                        "one\n",
+                        "two\n",
+                        "four\n",
+                    ]))
+                }
             }
 
             describe("if else") {
