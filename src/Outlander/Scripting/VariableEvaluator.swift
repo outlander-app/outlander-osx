@@ -12,6 +12,7 @@ struct VariableSetting {
     var token:String
     var replaceToken:String
     var values:[String:String]
+    var sortedKeys:[String]
 }
 
 class VariableContext {
@@ -22,7 +23,8 @@ class VariableContext {
     }
 
     func add(_ token:String, _ replaceToken:String, _ values:[String:String]) {
-        self.settings.append(VariableSetting(token: token, replaceToken: replaceToken, values: values))
+        let sortedKeys = values.keys.sorted(by: { $0.0.characters.count > $0.1.characters.count })
+        self.settings.append(VariableSetting(token: token, replaceToken: replaceToken, values: values, sortedKeys: sortedKeys))
     }
 }
 
@@ -39,7 +41,7 @@ class VariableEvaluator {
         let mutable = input.mutable
 
         var count = 0
-        let maxIterations = 15
+        let maxIterations = 7
 
         var last:String? = nil
 
@@ -47,7 +49,9 @@ class VariableEvaluator {
             last = String(mutable)
             simplifyImpl(mutable, context)
             count += 1
-        } while count < maxIterations && last != mutable as String && hasPotentialVars(mutable, context)
+        } while count < maxIterations && last != String(mutable) && hasPotentialVars(mutable, context)
+
+//        print(count)
 
         return String(mutable)
     }
@@ -65,19 +69,19 @@ class VariableEvaluator {
 
         for setting in context.settings {
             if setting.values.count > 0 && mutable.range(of: setting.token).location != NSNotFound {
-                self.replace(setting.replaceToken, mutable, setting.values)
+                self.replace(setting.token, setting.replaceToken, mutable, setting.values, setting.sortedKeys)
             }
         }
     }
 
-    private func replace(_ prefix:String, _ target:NSMutableString, _ dict:[String:String]) {
+    private func replace(_ token:String, _ prefix:String, _ target:NSMutableString, _ dict:[String:String], _ sortedKeys:[String]) {
 
-        let sortedKeys = dict.keys.sorted(by: { $0.0.characters.count > $0.1.characters.count })
+        var last = ""
 
         func doReplace() {
             for key in sortedKeys {
 
-                let replaceCanidate = "\(prefix.trimPrefix("\\"))\(key)"
+                let replaceCanidate = "\(token)\(key)"
 
                 if target.contains(replaceCanidate) {
                     target["\(prefix)\(key)"] ~= dict[key] ?? ""
@@ -86,13 +90,16 @@ class VariableEvaluator {
             }
         }
 
-        let maxIterations = 15
+        let maxIterations = 7
         var count = 0
 
         repeat {
+            last = String(target)
             doReplace()
             count += 1
         }
-        while count < maxIterations && target.contains(prefix.trimPrefix("\\"))
+        while count < maxIterations && last != String(target) && target.contains(token)
+
+//        print("inner count: \(count)")
     }
 }

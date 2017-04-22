@@ -212,8 +212,11 @@ class Script : IScript {
     }
 
     func run(_ args:[String]) {
-
         self.context.args = args
+        self.runImpl()
+    }
+
+    private func runImpl() {
         self.context.updateArgumentVars()
 
         self.started = Date()
@@ -234,7 +237,7 @@ class Script : IScript {
         next()
     }
 
-    fileprivate func initialize(_ fileName: String, context: ScriptContext) {
+    private func initialize(_ fileName: String, context: ScriptContext) {
         let lines = self.loader(fileName)
 
 //        print("line count: \(lines.count)")
@@ -406,6 +409,8 @@ class Script : IScript {
         self.sendText("[Script '\(self.fileName)' - setting debug level to \(level.rawValue)]\n")
     }
 
+    var streamQueue = DispatchQueue(label: "com.script.queue", qos: .userInitiated, target: nil)
+
     func stream(_ text:String, _ nodes:[Node]) {
         if (text.characters.count == 0 && nodes.count == 0) || self.paused || self.stopped {
             return
@@ -471,13 +476,13 @@ class Script : IScript {
         guard let match = foundMatch else {
             return
         }
-        
+
         self.matchwait = nil
         self.matchStack.removeAll()
 
         let label = self.context.simplify(match.label)
-        self.notify("match \(label)\n", debug:ScriptLogLevel.wait)
 
+        self.notify("match \(label)\n", debug:ScriptLogLevel.wait)
         let result = self.gotoLabel(label, match.groups)
 
         switch result {
@@ -578,7 +583,7 @@ class Script : IScript {
         let res = "action\(classText) \(cmd) when \(resPattern)\n"
         self.notify(res, debug:ScriptLogLevel.actions)
 
-        let actionOp = ActionOp(cls, cmd, pattern, self.context.currentLine!)
+        let actionOp = ActionOp(cls, cmd, resPattern, self.context.currentLine!)
         self.actions.append(actionOp)
 
         return .next
@@ -592,7 +597,7 @@ class Script : IScript {
         let simp = self.context.simplify(toggle)
         let enabled = simp.trimmingCharacters(in: CharacterSet.whitespaces).lowercased() == "on"
 
-        let res = "action (\(cls)) \(toggle)\n"
+        let res = "action (\(cls)) \(simp)\n"
         self.notify(res, debug:ScriptLogLevel.actions)
 
         if var action = self.actions.filter({ $0.name == cls }).first {
@@ -647,8 +652,13 @@ class Script : IScript {
     func gotoLabel(_ label:String, _ params:[String], _ isGosub:Bool = false) -> ScriptExecuteResult {
         let result = self.context.simplify(label)
 
+        guard let currentLine = self.context.currentLine else {
+            self.sendText("Tried to goto \(result) but had no 'currentLine'", preset:"scripterror", fileName: self.fileName)
+            return .exit
+        }
+
         guard let target = self.context.labels[result.lowercased()] else {
-            self.sendText("label '\(result)' not found\n", preset: "scripterror", fileName: self.fileName, scriptLine: self.context.currentLine!.lineNumber)
+            self.sendText("label '\(result)' not found\n", preset: "scripterror", fileName: self.fileName, scriptLine: currentLine.lineNumber)
             return .exit
         }
 
@@ -660,7 +670,6 @@ class Script : IScript {
 
         self.notify("\(command) '\(result)'\n", debug:ScriptLogLevel.gosubs)
 
-        let currentLine = self.context.currentLine!
         let currentLineNumber = self.context.currentLineNumber
         self.context.currentLineNumber = target.line - 1
 
@@ -694,12 +703,24 @@ class Script : IScript {
             return .next
         }
 
-        let result = self.context.simplify(args)
+        if self.gosubStack.count >= 100 {
+            self.sendText("Potential infinite loop of 100+ gosubs - use gosub clear if this is intended\n", preset:"scripterror", fileName: self.fileName, scriptLine: line.lineNumber)
+            return .exit
+        }
 
-        var split = [result]
-        split.append(contentsOf: result.components(separatedBy: " "))
+        let labelResult = self.context.simplify(label)
+        if labelResult.trimmingCharacters(in: CharacterSet.whitespaces).lowercased() == "clear" {
+            self.notify("gosub clear\n", debug:ScriptLogLevel.gosubs)
+            self.gosubStack.clear()
+            return .next
+        }
 
-        return gotoLabel(label, split, true)
+        let argsResult = self.context.simplify(args)
+
+        var split = [argsResult]
+        split.append(contentsOf: argsResult.components(separatedBy: " "))
+
+        return gotoLabel(labelResult, split, true)
     }
 
     func handleIfArgSingle(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {

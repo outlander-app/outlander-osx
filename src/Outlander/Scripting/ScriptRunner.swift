@@ -82,9 +82,8 @@ open class ScriptRunner : NSObject, ISubscriber {
             self.scripts.append(script)
             self.context.events.publish("script:add", data: ["scriptName":script.fileName as AnyObject])
 
-            DispatchQueue.global(qos: .background).async {
-                script.run(self.argsToParams(tokens))
-            }
+            let params = self.argsToParams(tokens)
+            script.run(params)
         }
         catch {
             self.abort(scriptName)
@@ -116,7 +115,7 @@ open class ScriptRunner : NSObject, ISubscriber {
     func stream(_ dict:[String:AnyObject]) {
         let nodes = dict["nodes"] as! [Node]
         let text = dict["text"] as! String
-        
+
         for (_, script) in self.scripts.enumerated() {
             script.stream(text, nodes)
         }
@@ -125,7 +124,7 @@ open class ScriptRunner : NSObject, ISubscriber {
     func parse(_ userInfo:[String:AnyObject]) {
         if let dict = userInfo as? [String:String] {
             let text = dict["text"] ?? ""
-            
+
             for (_, script) in self.scripts.enumerated() {
                 script.stream(text, [])
             }

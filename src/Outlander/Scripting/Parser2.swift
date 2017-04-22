@@ -194,7 +194,8 @@ class ScriptParser {
     }
 
     var variableIdentifier:Parser<String> {
-        return (character(condition: { self.variableCharacters.contains($0.unicodeScalar) }) <&> identifier).map { s, r in String(s) + r }
+        return (character(condition: { self.variableCharacters.contains($0.unicodeScalar) })
+            <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).oneOrMore.map { String($0) }).map { s, r in String(s) + r }
     }
 
     func parse(_ input:String) -> TokenValue? {

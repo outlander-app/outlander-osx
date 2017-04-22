@@ -30,6 +30,13 @@ class VariableEvaluatorTester : QuickSpec {
             }
 
             describe("evals") {
+                it("breaks early") {
+                    gameContext.variable("lefthandnoun", "tongs")
+                    gameContext.variable("lefthand", "icesteel tongs")
+
+                    let result = simplify(".*small blunt skill\\.$")
+                    expect(result).to(equal(".*small blunt skill\\.$"))
+                }
                 it("label vars") {
                     context.labelVars["0"] = "one"
 

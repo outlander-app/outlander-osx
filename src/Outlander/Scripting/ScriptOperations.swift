@@ -41,8 +41,8 @@ class ActionOp : IAction {
             return CheckStreamResult.None
         }
 
-        let simp = context.simplify(self.pattern)
-        self.groups = text[simp].firstGroup()
+//        let simp = context.simplify(self.pattern)
+        self.groups = text[self.pattern].firstGroup()
 
         return self.groups.count > 0
             ? CheckStreamResult.Match(result: "action (line \(self.scriptLine.lineNumber)) triggered by:\(text)\n")
@@ -62,6 +62,9 @@ class ActionOp : IAction {
                 let result = script.executeToken(self.scriptLine, token)
                 switch result {
                 case .next:
+                    guard case .goto = token else {
+                        continue
+                    }
                     script.next()
                     return
                 case .exit: script.stop()
@@ -222,5 +225,31 @@ class WaitforPromptOp : IWantStreamInfo {
 
     func execute(_ script:IScript, _ context:ScriptContext) {
         script.nextAfterRoundtime()
+    }
+}
+
+class AfterPromptOp : IWantStreamInfo {
+
+    public var id = ""
+    private let closure:()->()
+
+    init(_ closure:@escaping ()->()) {
+        self.id = UUID().uuidString
+        self.closure = closure
+    }
+
+    func stream(_ text:String, _ nodes:[Node], _ context:ScriptContext) -> CheckStreamResult {
+
+        for n in nodes {
+            if n.name == "prompt" {
+                return CheckStreamResult.Match(result: text)
+            }
+        }
+
+        return CheckStreamResult.None
+    }
+
+    func execute(_ script:IScript, _ context:ScriptContext) {
+        self.closure()
     }
 }
