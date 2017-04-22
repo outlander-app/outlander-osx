@@ -40,12 +40,17 @@ class GosubContext {
     var isGosub:Bool
     var returnToLine:ScriptLine?
     var returnToIndex:Int?
+    var previousIfStack:Stack<ScriptLine> = Stack<ScriptLine>()
 
-    init(_ label:Label, _ line:ScriptLine, _ params:[String], _ isGosub:Bool = false) {
+    init(_ label:Label, _ line:ScriptLine, _ params:[String], _ previousIfStack:Stack<ScriptLine>, _ isGosub:Bool = false) {
         self.label = label
         self.line = line
         self.params = params
         self.isGosub = isGosub
+
+        for line in previousIfStack.items {
+            self.previousIfStack.push(line)
+        }
     }
 }
 
@@ -186,11 +191,11 @@ class Script : IScript {
         self.tokenHandlers[.label("")] = self.handleLabel
         self.tokenHandlers[.match("", "")] = self.handleMatch
         self.tokenHandlers[.matchre("", "")] = self.handleMatchre
-        self.tokenHandlers[.matchwait(0)] = self.handleMatchwait
+        self.tokenHandlers[.matchwait("")] = self.handleMatchwait
         self.tokenHandlers[.math("", "", "")] = self.handleMath
         self.tokenHandlers[.move("")] = self.handleMove
         self.tokenHandlers[.nextroom] = self.handleNextroom
-        self.tokenHandlers[.pause(0)] = self.handlePause
+        self.tokenHandlers[.pause("")] = self.handlePause
         self.tokenHandlers[.put("")] = self.handlePut
         self.tokenHandlers[.random("", "")] = self.handleRandom
         self.tokenHandlers[.Return] = self.handleReturn
@@ -361,6 +366,8 @@ class Script : IScript {
     }
 
     func stop() {
+
+        self.delayedTask?.cancel()
 
         if self.stopped { return }
         
@@ -641,11 +648,10 @@ class Script : IScript {
         let result = self.context.simplify(label)
 
         guard let target = self.context.labels[result.lowercased()] else {
-            self.notify("label '\(result)' not found", preset: "scripterror", debug:ScriptLogLevel.gosubs)
+            self.sendText("label '\(result)' not found\n", preset: "scripterror", fileName: self.fileName, scriptLine: self.context.currentLine!.lineNumber)
             return .exit
         }
 
-        self.context.ifStack.clear()
         self.delayedTask?.cancel()
         self.matchwait = nil
         self.matchStack.removeAll()
@@ -659,8 +665,10 @@ class Script : IScript {
         self.context.currentLineNumber = target.line - 1
 
         let line = self.context.lines[target.line]
-        let gosubContext = GosubContext(target, line, params, isGosub)
+        let gosubContext = GosubContext(target, line, params, self.context.ifStack, isGosub)
         self.gosub = gosubContext
+
+        self.context.ifStack.clear()
 
         self.context.setLabelVars(params)
 
@@ -1106,8 +1114,14 @@ class Script : IScript {
     }
 
     func handleMatchwait(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
-        guard case let .matchwait(timeout) = token else {
+        guard case let .matchwait(str) = token else {
             return .next
+        }
+
+        var timeout:Double = -1
+
+        if let num = self.context.simplify(str).toDouble() {
+            timeout = num
         }
 
         let time = timeout > 0 ? "\(timeout)" : ""
@@ -1210,13 +1224,19 @@ class Script : IScript {
     }
 
     func handlePause(_ line:ScriptLine, _ token:TokenValue) -> ScriptExecuteResult {
-        guard case let .pause(duration) = token else {
+        guard case let .pause(str) = token else {
             return .next
+        }
+
+        var duration:Double = 1
+
+        if let num = self.context.simplify(str).toDouble() {
+            duration = num
         }
 
         self.notify("pausing for \(duration) seconds\n", debug:ScriptLogLevel.wait)
         self.delayedTask = delay(duration) {
-            self.next()
+            self.nextAfterRoundtime()
         }
 
         return .wait
@@ -1278,6 +1298,8 @@ class Script : IScript {
             self.gosub = prev
             self.context.setLabelVars(prev.params)
         }
+
+        self.context.ifStack = ctx.previousIfStack
 
         self.notify("returning to line \(returnToLine.lineNumber)\n", debug:ScriptLogLevel.gosubs)
 
@@ -1382,9 +1404,10 @@ class Script : IScript {
         }
 
         let result = self.context.simplify(key)
+        let val = self.context.simplify(value)
 
-        self.notify("setvariable \(result) \(value)\n", debug:ScriptLogLevel.vars)
-        self.context.variables[result] = value
+        self.notify("setvariable \(result) \(val)\n", debug:ScriptLogLevel.vars)
+        self.context.variables[result] = val
 
         return .next
     }

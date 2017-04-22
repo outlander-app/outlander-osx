@@ -82,7 +82,9 @@ open class ScriptRunner : NSObject, ISubscriber {
             self.scripts.append(script)
             self.context.events.publish("script:add", data: ["scriptName":script.fileName as AnyObject])
 
-            script.run(self.argsToParams(tokens))
+            DispatchQueue.global(qos: .background).async {
+                script.run(self.argsToParams(tokens))
+            }
         }
         catch {
             self.abort(scriptName)

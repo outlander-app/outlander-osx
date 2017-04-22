@@ -73,7 +73,7 @@ class OutlanderParserTester : QuickSpec {
                 expect(result).toNot(beNil())
 
                 if case .pause(let time) = result! {
-                    expect(time).to(equal(1))
+                    expect(time).to(equal(""))
                 } else {
                     fail("expected pause result")
                 }
@@ -84,7 +84,7 @@ class OutlanderParserTester : QuickSpec {
                 expect(result).toNot(beNil())
 
                 if case .pause(let time) = result! {
-                    expect(time).to(equal(3))
+                    expect(time).to(equal("3"))
                 } else {
                     fail("expected pause result")
                 }
@@ -95,7 +95,7 @@ class OutlanderParserTester : QuickSpec {
                 expect(result).toNot(beNil())
 
                 if case .pause(let time) = result! {
-                    expect(time).to(equal(0.5))
+                    expect(time).to(equal("0.5"))
                 } else {
                     fail("expected pause result")
                 }

@@ -94,6 +94,18 @@ class ScriptTester : QuickSpec {
                 }
             }
 
+            describe("variables") {
+                it("label vars") {
+                    loader.set([
+                        "var one &0",
+                        "echo %one"
+                    ])
+                    script.context.labelVars["0"] = "hi"
+                    script.run([])
+                    expect(notifier.messages).to(equal(["hi\n"]))
+                }
+            }
+
             describe("if") {
                 it("nested ifs") {
                     loader.set([
@@ -129,6 +141,25 @@ class ScriptTester : QuickSpec {
                         "one\n",
                         "two\n",
                         "four\n",
+                    ]))
+                }
+
+                it("command between") {
+                    loader.set([
+                        "if_1 {",
+                            "echo one",
+                        "}",
+                        "echo two",
+                        "if_1 then echo three",
+                        "else echo four",
+                        "echo five"
+                    ])
+                    script.run(["abcd"])
+                    expect(notifier.messages).to(equal([
+                        "one\n",
+                        "two\n",
+                        "three\n",
+                        "five\n"
                     ]))
                 }
             }
@@ -457,6 +488,78 @@ class ScriptTester : QuickSpec {
                     script.context.variables["guild"] = "Cleric"
                     script.run([])
                     expect(notifier.messages).to(equal(["Yep\n"]))
+                }
+            }
+
+            describe("if") {
+                it("if matchre sets regex variables") {
+                    loader.set([
+                        "if matchre(\"swim north\", \"^(search|swim) \") then",
+                        "{",
+                            "echo $1",
+                        "}"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal(["swim\n"]))
+                }
+            }
+
+            describe("gosub") {
+                it("restores if stack") {
+                    loader.set([
+                        "if 3 > 2 {",
+                            "gosub one",
+                        "}",
+                        "goto end",
+                        "one:",
+                            "echo gosub",
+                            "return",
+                        "end:"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal([
+                        "gosub\n"
+                    ]))
+                }
+
+                it("restores nested if stack") {
+                    loader.set([
+                        "if 3 > 2 {",
+                            "if 3 > 2 {",
+                                "gosub one",
+                                "gosub two",
+                                "echo one",
+                            "}",
+                            "gosub three",
+                            "echo two",
+                        "}",
+                        "gosub four",
+                        "echo three",
+                        "goto end",
+                        "one:",
+                            "echo gosub 1",
+                            "return",
+                        "two:",
+                            "echo gosub 2",
+                            "return",
+                        "three:",
+                            "echo gosub 3",
+                            "return",
+                        "four:",
+                            "echo gosub 4",
+                            "return",
+                        "end:"
+                    ])
+                    script.run([])
+                    expect(notifier.messages).to(equal([
+                        "gosub 1\n",
+                        "gosub 2\n",
+                        "one\n",
+                        "gosub 3\n",
+                        "two\n",
+                        "gosub 4\n",
+                        "three\n"
+                    ]))
                 }
             }
         }

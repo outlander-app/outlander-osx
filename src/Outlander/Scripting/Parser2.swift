@@ -44,11 +44,11 @@ enum TokenValue : Hashable {
     case label(String)
     case match(String, String)
     case matchre(String, String)
-    case matchwait(Double)
+    case matchwait(String)
     case math(String, String, String)
     case move(String)
     case nextroom
-    case pause(Double)
+    case pause(String)
     case put(String)
     case random(String, String)
     case Return
@@ -203,7 +203,7 @@ class ScriptParser {
 
         let int = digit.oneOrMore.map { characters in Int(String(characters))! }
         
-        let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
+//        let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
 
         let comment = TokenValue.comment <^> (string("#") *> any)
 
@@ -212,7 +212,7 @@ class ScriptParser {
         let debug = TokenValue.debug <^> ((symbol("debug") *> int) <|> symbolOnly("debug", 1))
         let debugLevel = TokenValue.debug <^> ((symbol("debuglevel") *> int) <|> symbolOnly("debuglevel", 1))
 
-        let pause = TokenValue.pause <^> ((symbol("pause") *> double) <|> symbolOnly("pause", 1))
+        let pause = TokenValue.pause <^> ((symbol("pause") *> any) <|> symbolOnly("pause", ""))
 
         let matchStart = symbol("match") *> identifier <* space
         let match = TokenValue.match <^> matchStart <*> noneOf(["\n"])
@@ -220,7 +220,7 @@ class ScriptParser {
         let matchreStart = symbol("matchre") *> identifier <* space
         let matchre = TokenValue.matchre <^> matchreStart <*> noneOf(["\n"])
         
-        let matchwait = TokenValue.matchwait <^> ((symbol("matchwait") *> double) <|> symbolOnly("matchwait", -1))
+        let matchwait = TokenValue.matchwait <^> ((symbol("matchwait") *> any) <|> symbolOnly("matchwait", ""))
 
         let args = noneOf(["\n"])
 
