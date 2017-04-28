@@ -29,6 +29,8 @@ protocol IWantStreamInfo {
 
 protocol IAction : IWantStreamInfo {
     var name:String {get}
+    var pattern:String {get set}
+    var originalPattern:String {get}
     var enabled:Bool {get set}
     func vars(context:ScriptContext, vars:[String:String]) -> CheckStreamResult
 }
@@ -583,7 +585,7 @@ class Script : IScript {
         let res = "action\(classText) \(cmd) when \(resPattern)\n"
         self.notify(res, debug:ScriptLogLevel.actions)
 
-        let actionOp = ActionOp(cls, cmd, resPattern, self.context.currentLine!)
+        let actionOp = ActionOp(cls, cmd, pattern, resPattern, self.context.currentLine!)
         self.actions.append(actionOp)
 
         return .next
@@ -601,6 +603,9 @@ class Script : IScript {
         self.notify(res, debug:ScriptLogLevel.actions)
 
         if var action = self.actions.filter({ $0.name == cls }).first {
+            if enabled {
+                action.pattern = self.context.simplify(action.originalPattern)
+            }
             action.enabled = enabled
         }
 
@@ -1214,7 +1219,12 @@ class Script : IScript {
         }
 
         self.notify("math \(variable): \(existingNum) \(function) \(num) = \(result)\n", debug:ScriptLogLevel.vars)
-        self.context.variables[variable] = "\(result)"
+
+        if result == rint(result) {
+            self.context.variables[variable] = "\(Int(result))"
+        } else {
+            self.context.variables[variable] = "\(result)"
+        }
 
         return .next
     }

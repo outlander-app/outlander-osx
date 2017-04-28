@@ -14,6 +14,7 @@ class ActionOp : IAction {
 
     var name:String
     var command:String
+    var originalPattern:String
     var pattern:String
     var scriptLine:ScriptLine
 
@@ -21,12 +22,13 @@ class ActionOp : IAction {
 
     var groups:[String]
 
-    init(_ name:String, _ command:String, _ pattern:String, _ scriptLine:ScriptLine) {
+    init(_ name:String, _ command:String, _ originalPattern:String, _ pattern:String, _ scriptLine:ScriptLine) {
         self.id = UUID().uuidString
         self.enabled = true
 
         self.name = name
         self.command = command
+        self.originalPattern = originalPattern
         self.pattern = pattern
         self.scriptLine = scriptLine
 
@@ -41,6 +43,7 @@ class ActionOp : IAction {
             return CheckStreamResult.None
         }
 
+        // this causes too much lag - need to handle this async
 //        let simp = context.simplify(self.pattern)
         self.groups = text[self.pattern].firstGroup()
 

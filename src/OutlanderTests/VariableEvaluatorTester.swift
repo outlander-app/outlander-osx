@@ -91,6 +91,44 @@ class VariableEvaluatorTester : QuickSpec {
 
                     expect(result).to(equal("%xx-var"))
                 }
+
+                it("indexes") {
+                    context.variables["one"] = "one|two|three"
+                    context.variables["two"] = "2"
+
+                    let result = simplify("%one[%two]")
+
+                    expect(result).to(equal("three"))
+                }
+
+                it("indexes two") {
+                    context.variables["one"] = "one|two|three"
+                    context.variables["two"] = "2"
+
+                    context.variables["one"] = "one|two|three"
+                    context.variables["three"] = "0"
+
+                    let result = simplify("%one[%two] %one(%three)")
+
+                    expect(result).to(equal("three one"))
+                }
+
+                it("no variables") {
+                    context.variables["one"] = "one|two|three"
+                    context.variables["two"] = "2"
+
+                    context.variables["one"] = "one|two|three"
+                    context.variables["three"] = "0"
+
+                    let result = simplify("one two three")
+
+                    expect(result).to(equal("one two three"))
+                }
+
+                it("indexes") {
+                    let vars = ScriptParser().parseVariables("abcd two %one(10) %two[$four] askdfjasf$^&")
+                    expect(vars.count).to(equal(5))
+                }
             }
         }
     }

@@ -504,6 +504,26 @@ class ScriptTester : QuickSpec {
                 }
             }
 
+            describe("math") {
+                it("trunkates .0") {
+                    loader.set([
+                        "math test add 5",
+                    ])
+                    script.context.variables["test"] = "10"
+                    script.run([])
+                    expect(script.context.variables["test"]).to(equal("15"))
+                }
+
+                it("add fractions") {
+                    loader.set([
+                        "math test add 5.5",
+                    ])
+                    script.context.variables["test"] = "10.2"
+                    script.run([])
+                    expect(script.context.variables["test"]).to(equal("15.7"))
+                }
+            }
+
             describe("gosub") {
                 it("restores if stack") {
                     loader.set([

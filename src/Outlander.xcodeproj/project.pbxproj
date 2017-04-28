@@ -395,6 +395,7 @@
 		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
+		F9E884A01EB314220037BFE0 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */; };
 		F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
 		F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
 		F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */; };
@@ -768,6 +769,7 @@
 		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
 		F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandlerTester.swift; sourceTree = "<group>"; };
 		F9E86BCD1AEC78700065E04A /* EventAggregator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAggregator.swift; sourceTree = "<group>"; };
+		F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluator.swift; sourceTree = "<group>"; };
 		F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
 		F9F19C471E9813F000AC3F29 /* ObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC.h; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 				F9A685921E9DC5F3005C9175 /* Matches.swift */,
 				F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */,
 				F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */,
+				F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */,
 			);
 			name = Engine;
 			path = Scripting;
@@ -1588,6 +1591,7 @@
 				F9A8A7991E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
+				F9E884A01EB314220037BFE0 /* NumberExtensions.swift in Sources */,
 				F9A685961E9DDDE2005C9175 /* VariableEvaluator.swift in Sources */,
 				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,

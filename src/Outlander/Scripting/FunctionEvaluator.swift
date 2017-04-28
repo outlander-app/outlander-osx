@@ -47,7 +47,14 @@ class FunctionEvaluator {
             guard let result:Double = self.evaluator.evaluateValue(simp) else {
                 return EvalResult(text: simp, result: "0", groups: [])
             }
-            return EvalResult(text: simp, result: "\(result)", groups: [])
+
+            var res = "\(result)"
+
+            if result == rint(result) {
+                res = "\(Int(result))"
+            }
+            
+            return EvalResult(text: simp, result: res, groups: [])
         case .function(let name, let args):
             let simp = self.simplify(args)
             let (result, groups) = executeFunction(name, simp)

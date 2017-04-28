@@ -38,6 +38,39 @@ extension Sequence where Iterator.Element: Hashable {
 class VariableEvaluator {
 
     func eval(_ input:String, _ context:VariableContext) -> String {
+
+        var results:[String] = []
+
+        let vars = ScriptParser().parseVariables(input)
+
+        for v in vars {
+            switch v {
+            case let .value(val): results.append(val)
+            case let .indexed(target, idx):
+                let evaledTarget = evalStr(target, context)
+                let evaledIdx = evalStr(idx, context)
+
+                guard let idxNum = Int(evaledIdx) else {
+                    results.append("\(target)[\(idx)]")
+                    continue
+                }
+
+                let list = evaledTarget.components(separatedBy: "|")
+                guard idxNum < list.count else {
+                    results.append("\(target)[\(idx)]")
+                    continue
+                }
+
+                let val = list[idxNum]
+                results.append(val)
+            }
+        }
+
+        let combined = results.joined(separator: " ")
+        return evalStr(combined, context)
+    }
+
+    func evalStr(_ input:String, _ context:VariableContext) -> String {
         let mutable = input.mutable
 
         var count = 0

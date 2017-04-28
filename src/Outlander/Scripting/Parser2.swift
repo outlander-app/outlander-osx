@@ -430,10 +430,6 @@ class ScriptParser {
         return anyChar.many.map { String($0) }
     }
 
-    public func notTermiator(_ t:String) -> Parser<String> {
-        return quoteOr(noneOf([t]))
-    }
-
     public func function(_ names:[String]) -> Parser<(String, String)> {
         let args = self.functionArgs().map { $0.joined(separator: ", ") }
         let res = (anyOf(names) <&> (space.many.optional *> char(leftParen) *> space.many.optional *> args <* space.many.optional <* char(rightParen)))
@@ -443,6 +439,39 @@ class ScriptParser {
     public func expFunction(_ names:[String]) -> Parser<Expression> {
         return Expression.function <^> function(names)
     }
+
+    public func indexedVariable() -> Parser<Variable> {
+//        let any = anyChar.many.map { String($0) }
+//        let index = Variable.indexed <^> (variableIdentifier <* anyOf(["(", "["])) <*> (variableIdentifier <* anyOf([")", "]"]))
+//        let singleVar = Variable.value <^> any
+//        return (index <|> singleVar).oneOrMore
+
+        let number = digit.oneOrMore.map { String($0) }
+        let varOrNumber = variableIdentifier <|> number
+        let indexed = Variable.indexed <^> (variableIdentifier <* anyOf(["[", "("])) <*> (varOrNumber <* anyOf(["]", ")"]))
+        return indexed
+    }
+
+    public func parseVariables(_ input:String) -> [Variable] {
+        var results:[Variable] = []
+        let lines = input.trimmingCharacters(in: CharacterSet.whitespaces).components(separatedBy: " ")
+
+        for line in lines {
+            guard let (result, _) = indexedVariable().run(line) else {
+                results.append(Variable.value(line))
+                continue
+            }
+
+            results.append(result)
+        }
+
+        return results
+    }
+}
+
+enum Variable {
+    case value(String)
+    case indexed(String, String)
 }
 
 private let swiftIdentifierStartCharacters =
