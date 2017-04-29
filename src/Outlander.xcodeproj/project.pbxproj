@@ -74,10 +74,6 @@
 		F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
 		F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
 		F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F93BCBDD1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
-		F93BCBDE1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
-		F93BCBDF1E8B73C700FFEF5E /* SwiftParsec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; };
-		F93BCBE01E8B73C700FFEF5E /* SwiftParsec.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F93BCBE21E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
 		F93BCBE31E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
 		F93BCBE51E8B8BE900FFEF5E /* Parser2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */; };
@@ -246,10 +242,6 @@
 		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F990DC931E88C8E500BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
 		F990DC941E88CA4900BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
-		F990DC961E89E60200BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
-		F990DC971E89E60200BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
-		F990DC981E89E61100BB0A25 /* FootlessParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; };
-		F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F990DC951E89E60200BB0A25 /* FootlessParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F990DC9B1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
 		F990DC9C1E89E62B00BB0A25 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC9A1E89E62B00BB0A25 /* Parser.swift */; };
 		F99C9A2E1E9360FB00318BC4 /* ScriptOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */; };
@@ -442,8 +434,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F93BCBE01E8B73C700FFEF5E /* SwiftParsec.framework in Copy Files */,
-				F990DC991E89E61100BB0A25 /* FootlessParser.framework in Copy Files */,
 				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
 				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
@@ -503,7 +493,6 @@
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93BCBD71E8B586000FFEF5E /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEXML.framework; path = Frameworks/AEXML.framework; sourceTree = "<group>"; };
-		F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftParsec.framework; path = Frameworks/SwiftParsec.framework; sourceTree = "<group>"; };
 		F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combinators.swift; sourceTree = "<group>"; };
 		F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser2.swift; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
@@ -646,7 +635,6 @@
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
 		F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
-		F990DC951E89E60200BB0A25 /* FootlessParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FootlessParser.framework; path = Frameworks/FootlessParser.framework; sourceTree = "<group>"; };
 		F990DC9A1E89E62B00BB0A25 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptOperations.swift; sourceTree = "<group>"; };
 		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
@@ -805,15 +793,11 @@
 			files = (
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
-				F990DC981E89E61100BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
-				F990DC961E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
-				F93BCBDD1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
-				F93BCBDF1E8B73C700FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */,
@@ -829,9 +813,7 @@
 				F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
-				F93BCBDE1E8B73C100FFEF5E /* SwiftParsec.framework in Frameworks */,
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
-				F990DC971E89E60200BB0A25 /* FootlessParser.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
@@ -1247,8 +1229,6 @@
 			children = (
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
 				F93BCBD71E8B586000FFEF5E /* AEXML.framework */,
-				F990DC951E89E60200BB0A25 /* FootlessParser.framework */,
-				F93BCBDC1E8B73C100FFEF5E /* SwiftParsec.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
 				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
