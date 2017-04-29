@@ -210,7 +210,7 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
         }
         
         let context = CommandContext()
-        context.command = ".automapper2 " + walk
+        context.command = ".automapper " + walk
         relay.sendCommand(context)
     }
 }

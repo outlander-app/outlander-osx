@@ -228,11 +228,11 @@ class Script : IScript {
         let formattedDate = dateFormatter.string(from: self.started!)
 
         self.sendText(String(format:"[Starting '\(self.fileName)' at \(formattedDate)]\n"))
-        self.sendText(String(format:"[\(Date()) - started]\n"))
-        
+//        self.sendText(String(format:"[\(Date()) - started]\n"))
+
         initialize(self.fileName, context: self.context)
 
-        self.sendText(String(format:"[\(Date()) - initialized]\n"))
+//        self.sendText(String(format:"[\(Date()) - initialized]\n"))
 
         self.context.variables["scriptname"] = self.fileName
 
