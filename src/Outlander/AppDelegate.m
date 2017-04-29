@@ -119,7 +119,9 @@
 
     NSString *osVersionString = [NSString stringWithFormat:@"%ld.%ld.%ld", (long)osVersion.majorVersion, (long)osVersion.minorVersion, (long)osVersion.patchVersion];
 
-    components.query = [[NSString stringWithFormat:@"version=v%@&os=%@", version, osVersionString] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+    NSString *prerelease = gameContext.settings.downloadPreReleaseVersions ? @"true" : @"false";
+
+    components.query = [[NSString stringWithFormat:@"version=v%@&os=%@&prerelease=%@", version, osVersionString, prerelease] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
     
     [self logUpdateInfo:[NSString stringWithFormat:@"Update URL %@", components.URL] withPreset:@"" echo:NO];
 

@@ -33,6 +33,7 @@
     self.rawLoggingEnabled = NO;
 
     self.checkForApplicationUpdates = YES;
+    self.downloadPreReleaseVersions = NO;
     
     return self;
 }

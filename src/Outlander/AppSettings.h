@@ -19,6 +19,7 @@
 @property (nonatomic, assign) BOOL rawLoggingEnabled;
 
 @property (nonatomic, assign) BOOL checkForApplicationUpdates;
+@property (nonatomic, assign) BOOL downloadPreReleaseVersions;
 
 @property (nonatomic, copy) NSString *homeDirectory;
 @property (nonatomic, copy) NSString *configFolder;

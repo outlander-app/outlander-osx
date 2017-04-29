@@ -29,6 +29,7 @@ class AppConfigLoader : NSObject {
         if !self.fileSystem.fileExists(configFile) {
             context.settings.profile = "Default"
             context.settings.checkForApplicationUpdates = true
+            context.settings.downloadPreReleaseVersions = false
             return
         }
 
@@ -49,6 +50,7 @@ class AppConfigLoader : NSObject {
 
             context.settings.defaultProfile = dict.stringValue("defaultProfile", defaultVal: "Default")
             context.settings.checkForApplicationUpdates = dict.boolValue("checkForApplicationUpdates", defaultVal: true)
+            context.settings.downloadPreReleaseVersions = dict.boolValue("downloadPreReleaseVersions", defaultVal: false)
         }
         catch {
         }
@@ -59,7 +61,8 @@ class AppConfigLoader : NSObject {
 
         let settings = BasicSettings(
             defaultProfile: self.context.settings.defaultProfile,
-            checkForApplicationUpdates: self.context.settings.checkForApplicationUpdates ? "yes" : "no")
+            checkForApplicationUpdates: self.context.settings.checkForApplicationUpdates ? "yes" : "no",
+            downloadPreReleaseVersions: self.context.settings.downloadPreReleaseVersions ? "yes" : "no")
 
         let json = JSONSerializer.toJson(settings, prettify: true)
 
@@ -69,5 +72,6 @@ class AppConfigLoader : NSObject {
     struct BasicSettings {
         var defaultProfile:String
         var checkForApplicationUpdates:String
+        var downloadPreReleaseVersions:String
     }
 }
