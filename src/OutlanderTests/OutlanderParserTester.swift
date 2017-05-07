@@ -177,6 +177,17 @@ class OutlanderParserTester : QuickSpec {
                 }
             }
 
+            it("parses debug level with value") {
+                let result = ScriptParser().parse("\n debug level 5 \n\n")
+                expect(result).toNot(beNil())
+
+                if case .debug(let level) = result! {
+                    expect(level).to(equal(5))
+                } else {
+                    fail("expected debug result")
+                }
+            }
+
             it("parses difference case debug") {
                 let result = ScriptParser().parse("\n DEBUG 5 \n\n")
                 expect(result).toNot(beNil())

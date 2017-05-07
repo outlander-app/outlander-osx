@@ -403,9 +403,9 @@
 //                [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
 //            });
 //            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
-//            NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
-//            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0 inModes:modes];
-            [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
+            NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
+            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0 inModes:modes];
+//            [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
         }
     });
 }

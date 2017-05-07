@@ -198,34 +198,36 @@ class ScriptParser {
             <&> character(condition: { swiftIdentifierLetterSet.contains($0.unicodeScalar) }).oneOrMore.map { String($0) }).map { s, r in String(s) + r }
     }
 
+    var identifierOrVariable:Parser<String> {
+        return identifier <|> variableIdentifier
+    }
+
     func parse(_ input:String) -> TokenValue? {
 
         let any = anyChar.many.map { String($0) }
 
         let int = digit.oneOrMore.map { characters in Int(String(characters))! }
         
-//        let double = curry({ x, y in Double("\(x).\(y ?? 0)")! }) <^> int <*> (char(".") *> int).optional
-
         let comment = TokenValue.comment <^> (string("#") *> any)
 
         let label = TokenValue.label <^> identifier <* char(colon)
 
-        let debug = TokenValue.debug <^> ((symbol("debug") *> int) <|> symbolOnly("debug", 1))
+        let debug = TokenValue.debug <^> ((symbol("debug") *> symbol("level").optional *> int) <|> symbolOnly("debug", 1))
         let debugLevel = TokenValue.debug <^> ((symbol("debuglevel") *> int) <|> symbolOnly("debuglevel", 1))
 
         let pause = TokenValue.pause <^> ((symbol("pause") *> any) <|> symbolOnly("pause", ""))
 
-        let matchStart = symbol("match") *> identifier <* space
+        let matchStart = symbol("match") *> identifierOrVariable <* space
         let match = TokenValue.match <^> matchStart <*> noneOf(["\n"])
 
-        let matchreStart = symbol("matchre") *> identifier <* space
+        let matchreStart = symbol("matchre") *> identifierOrVariable <* space
         let matchre = TokenValue.matchre <^> matchreStart <*> noneOf(["\n"])
         
         let matchwait = TokenValue.matchwait <^> ((symbol("matchwait") *> any) <|> symbolOnly("matchwait", ""))
 
         let args = noneOf(["\n"])
 
-        let gosubStart = symbol("gosub") *> (identifier <|> variableIdentifier)
+        let gosubStart = symbol("gosub") *> identifierOrVariable
         let gosub = curry({ label, args in TokenValue.gosub(label, args != nil ? args! : "") }) <^> gosubStart <*> (space *> args).optional
 
         let random = TokenValue.random <^> (symbol("random") *> noneOf([" "]) <&> (space *> noneOf(["\n"])))
