@@ -15,35 +15,35 @@ class AuthBuilder : NSObject {
         return AuthBuilder()
     }
     
-    func build(account:String, hash: NSData) -> NSData {
+    func build(_ account:String, hash: Data) -> Data {
         let data = NSMutableData()
         
         data.appendByte(0x41) // A
         data.appendByte(0x09) // tab
         
-        let accountData = account.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        let accountData = account.data(using: String.Encoding.utf8, allowLossyConversion: true)
         
-        data.appendBytes(accountData!.bytes, length: accountData!.length)
+        data.append((accountData! as NSData).bytes, length: accountData!.count)
         data.appendByte(0x09) // tab
         
-        data.appendBytes(hash.bytes, length: hash.length)
+        data.append((hash as NSData).bytes, length: hash.count)
         
         data.appendByte(0x0A) // newline
         
-        return data
+        return data as Data
     }
 }
 
 extension NSMutableData {
     
-    func appendByteArray(let bytes: [UInt8]) {
+    func appendByteArray(_ bytes: [UInt8]) {
         for b in bytes {
             self.appendByte(b)
         }
     }
     
-    func appendByte(b: UInt8) {
+    func appendByte(_ b: UInt8) {
         var b2 = b
-        self.appendBytes(&b2, length: 1)
+        self.append(&b2, length: 1)
     }
 }

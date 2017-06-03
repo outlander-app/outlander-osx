@@ -15,10 +15,10 @@ class StubCommandRelay : NSObject, CommandRelay {
     
     var echos:[TextTag] = []
     
-    func sendCommand(ctx:CommandContext) {
+    func sendCommand(_ ctx:CommandContext) {
     }
     
-    func sendEcho(tag:TextTag) {
+    func sendEcho(_ tag:TextTag) {
         self.echos.append(tag)
     }
 }
@@ -46,7 +46,7 @@ class EchoCommandHandlerTester: QuickSpec {
             }
             
             it("sets target window") {
-                handler?.handle("#echo >Log something to log", withContext: context!)
+                handler?.handle("#echo >Log something to log", with: context!)
                 
                 expect(relay?.echos.count).to(equal(1))
                 expect(relay?.echos[0].text).to(equal("something to log\n"))
@@ -54,7 +54,7 @@ class EchoCommandHandlerTester: QuickSpec {
             }
             
             it("sets foreground color") {
-                handler?.handle("#echo #efefef something to log", withContext: context!)
+                handler?.handle("#echo #efefef something to log", with: context!)
                 
                 expect(relay?.echos.count).to(equal(1))
                 expect(relay?.echos[0].text).to(equal("something to log\n"))
@@ -63,7 +63,7 @@ class EchoCommandHandlerTester: QuickSpec {
             }
             
             it("sets background color") {
-                handler?.handle("#echo #efefef,#ffffff something to log", withContext: context!)
+                handler?.handle("#echo #efefef,#ffffff something to log", with: context!)
                 
                 expect(relay?.echos.count).to(equal(1))
                 expect(relay?.echos[0].text).to(equal("something to log\n"))
@@ -72,7 +72,7 @@ class EchoCommandHandlerTester: QuickSpec {
             }
             
             it("sends echo without options") {
-                handler?.handle("#echo something to log", withContext: context!)
+                handler?.handle("#echo something to log", with: context!)
                 
                 expect(relay?.echos.count).to(equal(1))
                 expect(relay?.echos[0].text).to(equal("something to log\n"))

@@ -107,7 +107,7 @@ class ClassSettingsTester : QuickSpec {
 
                 settings.parse("-one +three -four +five")
 
-                expect(settings.disabled()).to(equal(["one", "four"]))
+                expect(settings.disabled()).to(equal(["four", "one"]))
             }
 
             it("sets target off") {

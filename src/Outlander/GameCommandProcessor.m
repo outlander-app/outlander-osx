@@ -126,6 +126,10 @@
 
     _lastCommandDate = [NSDate date];
 
+//    if([context.command length] == 0) {
+//        return;
+//    }
+//
     if(!context.isSystemCommand) {
         [_gameContext.globalVars setCacheObject:context.command forKey:@"lastcommand"];
     }

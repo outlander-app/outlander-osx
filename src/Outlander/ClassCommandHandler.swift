@@ -10,9 +10,9 @@ import Foundation
 
 class ClassCommandHandler : NSObject, CommandHandler {
     
-    private var relay:CommandRelay
+    fileprivate var relay:CommandRelay
     
-    class func newInstance(relay:CommandRelay) -> ClassCommandHandler {
+    class func newInstance(_ relay:CommandRelay) -> ClassCommandHandler {
         return ClassCommandHandler(relay)
     }
     
@@ -20,15 +20,15 @@ class ClassCommandHandler : NSObject, CommandHandler {
         self.relay = relay
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#class")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#class")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
 
         let cmd = command
-            .substringFromIndex(command.startIndex.advancedBy(6))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 6))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
         if cmd.hasPrefix("clear") {
             withContext.classSettings.clear()

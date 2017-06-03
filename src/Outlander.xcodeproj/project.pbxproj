@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
+		F90BD25D1E947E88006E3117 /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25C1E947E88006E3117 /* ScriptTester.swift */; };
+		F90BD25F1E95F7F1006E3117 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25E1E95F7F1006E3117 /* Stack.swift */; };
+		F90BD2601E95F7F1006E3117 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BD25E1E95F7F1006E3117 /* Stack.swift */; };
 		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
 		F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5801ACD27D3007E5804 /* MapNode.swift */; };
 		F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD57F1ACD27D3007E5804 /* MapLoader.swift */; };
@@ -36,18 +39,12 @@
 		F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91761311E328DB90091A617 /* PresetLoaderTester.swift */; };
 		F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */; };
 		F91A371D19284E0900C6FD64 /* woodsword2.icns in Resources */ = {isa = PBXBuildFile; fileRef = F91A371C19284E0900C6FD64 /* woodsword2.icns */; };
-		F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
-		F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A399F1949FF31006144F8 /* DebugLevelToken.m */; };
 		F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
 		F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */; };
-		F91A39A8194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
-		F91A39A9194B523E006144F8 /* SendToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39A7194B523E006144F8 /* SendToken.m */; };
 		F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
 		F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AB194BD706006144F8 /* OLPauseCondition.m */; };
 		F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
 		F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39AF194BDE83006144F8 /* ExecuteBlock.m */; };
-		F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
-		F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39B3194D2AA2006144F8 /* SaveToken.m */; };
 		F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
@@ -65,40 +62,33 @@
 		F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */; };
 		F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC0192B3484006C71F9 /* MyWindow.m */; };
 		F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */; };
-		F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82371AEAE732005BBD2F /* ScriptTester.swift */; };
 		F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
-		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
-		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
-		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
-		F9316D251AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
-		F9316D261AD9E1D400880149 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D211AD9E1D400880149 /* Actor.swift */; };
-		F9316D271AD9E1D400880149 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D211AD9E1D400880149 /* Actor.swift */; };
 		F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
 		F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D281AD9E65000880149 /* ScriptRunner.swift */; };
 		F93462591AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
-		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
-		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
+		F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; };
+		F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F93BCBD71E8B586000FFEF5E /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F93BCBE21E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
+		F93BCBE31E8B7F9500FFEF5E /* Combinators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */; };
+		F93BCBE51E8B8BE900FFEF5E /* Parser2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */; };
+		F93BCBE61E8B8BE900FFEF5E /* Parser2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
 		F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
-		F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
-		F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FC81948AE0500D6B35D /* GosubToken.m */; };
-		F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
-		F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FCC1948AE6700D6B35D /* ActionToken.m */; };
-		F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
-		F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD01948AE9F00D6B35D /* ReturnToken.m */; };
-		F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
-		F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD41948DBC500D6B35D /* CommandsToken.m */; };
 		F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F94A3FD81949495E00D6B35D /* SimpleStack.m */; };
 		F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
 		F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */; };
-		F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */; };
+		F953762E1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */; };
+		F953762F1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */; };
+		F95376311EE1E1F2000FDA16 /* StreamTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
@@ -137,9 +127,6 @@
 		F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDD819356A6C00787CB9 /* OLMutableArray.m */; };
 		F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
 		F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */; };
-		F970BA071BEE16FE0047F6CC /* OutlanderScriptParserTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */; };
-		F970BA091BEE64590047F6CC /* TokenToMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970BA081BEE64590047F6CC /* TokenToMessage.swift */; };
-		F970BA0A1BEE64600047F6CC /* TokenToMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F970BA081BEE64590047F6CC /* TokenToMessage.swift */; };
 		F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
@@ -148,8 +135,6 @@
 		F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
-		F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
-		F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
 		F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
 		F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
 		F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; };
@@ -161,7 +146,6 @@
 		F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217C01DDF833700E8FC4E /* Quick.framework */; };
 		F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
 		F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -178,8 +162,6 @@
 		F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7D192E4F8700B873D7 /* AliasLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7B192E4F8700B873D7 /* AliasLoader.m */; };
 		F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7E192E50EF00B873D7 /* AliasesTester.m */; };
-		F9772F171940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
-		F9772F181940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
 		F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
@@ -194,13 +176,8 @@
 		F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C6F1892CE1400E2C318 /* GameConnection.m */; };
 		F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C731893562800E2C318 /* NSString+Categories.m */; };
 		F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C731893562800E2C318 /* NSString+Categories.m */; };
-		F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C781893808F00E2C318 /* HTMLNode.m */; };
-		F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C781893808F00E2C318 /* HTMLNode.m */; };
-		F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C7A1893808F00E2C318 /* HTMLParser.m */; };
-		F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C7A1893808F00E2C318 /* HTMLParser.m */; };
 		F97A5C831893962E00E2C318 /* GameParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C821893962E00E2C318 /* GameParser.m */; };
 		F97A5C841893962E00E2C318 /* GameParser.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C821893962E00E2C318 /* GameParser.m */; };
-		F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C86189397DA00E2C318 /* GameParserTester.m */; };
 		F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C891893AFDF00E2C318 /* TextTag.m */; };
 		F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C891893AFDF00E2C318 /* TextTag.m */; };
 		F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C8D1894918F00E2C318 /* GameStream.m */; };
@@ -244,40 +221,12 @@
 		F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D591908CE4800137896 /* ExpTrackerTester.m */; };
 		F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D5D1908D8FC00137896 /* SkillExpTester.m */; };
 		F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9818D60190D75E800137896 /* TextViewControllerTester.m */; };
+		F982103B1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */; };
+		F982103C1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */; };
 		F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
 		F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
-		F98782B719420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
-		F98782B819420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
-		F98782BB19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
-		F98782BC19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
-		F98782BF1942128F00D76231 /* IdToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BE1942128F00D76231 /* IdToken.m */; };
-		F98782C01942128F00D76231 /* IdToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BE1942128F00D76231 /* IdToken.m */; };
-		F98782C31942288F00D76231 /* MoveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C21942288F00D76231 /* MoveToken.m */; };
-		F98782C41942288F00D76231 /* MoveToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C21942288F00D76231 /* MoveToken.m */; };
-		F98782C7194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
-		F98782C8194228C000D76231 /* BasicToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782C6194228C000D76231 /* BasicToken.m */; };
-		F98782CB194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
-		F98782CC194235EF00D76231 /* TokenSingle.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CA194235EF00D76231 /* TokenSingle.m */; };
-		F98782CF1942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
-		F98782D01942499300D76231 /* WaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782CE1942499300D76231 /* WaitToken.m */; };
-		F98782D3194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
-		F98782D4194249A400D76231 /* TokenList.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D2194249A400D76231 /* TokenList.m */; };
-		F98782D71942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
-		F98782D81942649600D76231 /* LRToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782D61942649600D76231 /* LRToken.m */; };
-		F98782DB1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
-		F98782DC1942656C00D76231 /* MatchToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DA1942656C00D76231 /* MatchToken.m */; };
-		F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
-		F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782DE194269CD00D76231 /* MatchWaitToken.m */; };
-		F98782E31942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
-		F98782E41942791B00D76231 /* ExitToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782E21942791B00D76231 /* ExitToken.m */; };
-		F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
-		F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782EA19427C3D00D76231 /* NextRoomToken.m */; };
-		F98782F71942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
-		F98782F81942AB6200D76231 /* RegexToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782F61942AB6200D76231 /* RegexToken.m */; };
-		F98782FB1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
-		F98782FC1946873500D76231 /* WaitForToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782FA1946873500D76231 /* WaitForToken.m */; };
 		F988C40F1AF35A74003B4634 /* Directions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F988C40E1AF35A74003B4634 /* Directions.swift */; };
 		F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F0192C254800562E32 /* HighlightsLoader.m */; };
 		F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E1F8192C27AD00562E32 /* LocalFileSystem.m */; };
@@ -286,7 +235,6 @@
 		F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E200192C2B9B00562E32 /* StubFileSystem.m */; };
 		F989E205192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
 		F989E206192C2E6200562E32 /* Highlight.m in Sources */ = {isa = PBXBuildFile; fileRef = F989E204192C2E6200562E32 /* Highlight.m */; };
-		F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */; };
 		F98D4C251CB1A73300E81E70 /* SubstituteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */; };
 		F98D4C261CB1A73300E81E70 /* SubstituteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */; };
 		F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98D4C271CB1A7DF00E81E70 /* Substitute.swift */; };
@@ -295,6 +243,10 @@
 		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
+		F990DC931E88C8E500BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
+		F990DC941E88CA4900BB0A25 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */; };
+		F99C9A2E1E9360FB00318BC4 /* ScriptOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */; };
+		F99C9A2F1E9360FB00318BC4 /* ScriptOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */; };
 		F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
@@ -314,6 +266,11 @@
 		F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454B191C573200920F0E /* AppPathProvider.m */; };
 		F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
 		F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A3454F191C59D500920F0E /* ProfileLoader.m */; };
+		F9A685931E9DC5F3005C9175 /* Matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A685921E9DC5F3005C9175 /* Matches.swift */; };
+		F9A685941E9DC5F3005C9175 /* Matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A685921E9DC5F3005C9175 /* Matches.swift */; };
+		F9A685961E9DDDE2005C9175 /* VariableEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */; };
+		F9A685971E9DDDE2005C9175 /* VariableEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */; };
+		F9A685991E9DE6DE005C9175 /* VariableEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A685981E9DE6DE005C9175 /* VariableEvaluatorTester.swift */; };
 		F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F0D192ED272008F410A /* VariableReplacerTester.m */; };
 		F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F1019305D14008F410A /* VariablesLoader.m */; };
 		F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A74F1019305D14008F410A /* VariablesLoader.m */; };
@@ -322,6 +279,21 @@
 		F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */; };
 		F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
 		F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */ = {isa = PBXBuildFile; fileRef = F9A79E561927FDA0000AF892 /* Roundtime.m */; };
+		F9A8A78D1E85C7F1000A9621 /* NotifyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A78C1E85C7F1000A9621 /* NotifyMessage.swift */; };
+		F9A8A78E1E85C7F1000A9621 /* NotifyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A78C1E85C7F1000A9621 /* NotifyMessage.swift */; };
+		F9A8A7901E85C838000A9621 /* ScriptLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A78F1E85C838000A9621 /* ScriptLogLevel.swift */; };
+		F9A8A7911E85C838000A9621 /* ScriptLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A78F1E85C838000A9621 /* ScriptLogLevel.swift */; };
+		F9A8A7931E85C864000A9621 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7921E85C864000A9621 /* Script.swift */; };
+		F9A8A7941E85C864000A9621 /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7921E85C864000A9621 /* Script.swift */; };
+		F9A8A7991E85CAA0000A9621 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7981E85CAA0000A9621 /* ArrayExtensions.swift */; };
+		F9A8A79A1E85CAA0000A9621 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7981E85CAA0000A9621 /* ArrayExtensions.swift */; };
+		F9A8A79C1E85CBDE000A9621 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A79B1E85CBDE000A9621 /* SwiftRegex.swift */; };
+		F9A8A79D1E85CBDE000A9621 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A79B1E85CBDE000A9621 /* SwiftRegex.swift */; };
+		F9A8A7A41E861771000A9621 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7A31E861771000A9621 /* Regex.swift */; };
+		F9A8A7A51E861771000A9621 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7A31E861771000A9621 /* Regex.swift */; };
+		F9A8A7A71E8617DC000A9621 /* OutlanderParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */; };
+		F9A8A7A81E8617DC000A9621 /* OutlanderParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */; };
+		F9A8A7AC1E861ED5000A9621 /* OutlanderParserTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8A7AA1E861ED5000A9621 /* OutlanderParserTester.swift */; };
 		F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */; };
 		F9A8DD131AC14B0E009A2F67 /* AttributesTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */; };
@@ -343,20 +315,8 @@
 		F9AE6AA118A07EA600A11EE9 /* VitalsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */; };
 		F9B2C7B11ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
 		F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */; };
-		F9B2C7B41ADDBB2800B7E81A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B31ADDBB2800B7E81A /* Messages.swift */; };
-		F9B2C7B51ADDBB2800B7E81A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B31ADDBB2800B7E81A /* Messages.swift */; };
 		F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
 		F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */; };
-		F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
-		F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC60194046E400C081C4 /* LabelToken.m */; };
-		F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
-		F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC64194058EE00C081C4 /* AssignmentToken.m */; };
-		F9B3AC6919405BD700C081C4 /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6819405BD700C081C4 /* Atom.m */; };
-		F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6819405BD700C081C4 /* Atom.m */; };
-		F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
-		F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC6C1940686700C081C4 /* PutToken.m */; };
-		F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
-		F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B3AC701940C5CE00C081C4 /* PauseToken.m */; };
 		F9B6CD7B1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
 		F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B6CD791E73549B0085195F /* UpdateWindowController.m */; };
 		F9B6CD7D1E73549B0085195F /* UpdateWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */; };
@@ -376,8 +336,6 @@
 		F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */; };
 		F9B9BFE81ABD5DA000CB44B6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE71ABD5DA000CB44B6 /* Node.swift */; };
 		F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFE71ABD5DA000CB44B6 /* Node.swift */; };
-		F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */; };
-		F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */; };
 		F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
 		F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */; };
 		F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */; };
@@ -401,9 +359,6 @@
 		F9CB31111903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
 		F9CB311419032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
 		F9CB311519032EDE004587A5 /* LearningRate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB311319032EDE004587A5 /* LearningRate.m */; };
-		F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
-		F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; };
-		F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CF926A1890832800449548 /* Cocoa.framework */; };
 		F9CF92751890832800449548 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9CF92731890832800449548 /* InfoPlist.strings */; };
 		F9CF92771890832800449548 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CF92761890832800449548 /* main.m */; };
@@ -430,11 +385,15 @@
 		F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */; };
 		F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */; };
 		F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */; };
-		F9E4DD691B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
-		F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */; };
 		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
+		F9E884A01EB314220037BFE0 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */; };
+		F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
+		F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */; };
+		F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */; };
+		F9F19C491E9813F000AC3F29 /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C481E9813F000AC3F29 /* ObjC.m */; };
+		F9F19C4A1E9813F000AC3F29 /* ObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F19C481E9813F000AC3F29 /* ObjC.m */; };
 		F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D827195335AF005B9D68 /* MacrosLoader.m */; };
 		F9F3D82C1953364F005B9D68 /* Macro.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F3D82B1953364F005B9D68 /* Macro.m */; };
@@ -451,6 +410,8 @@
 		F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */; };
 		F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FD07EF18977A380087D813 /* NSView+Categories.m */; };
+		F9FF20101E9C9B40004C7C9F /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */; };
+		F9FF20111E9C9B40004C7C9F /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */; };
 		F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
 		F9FFE7821E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */; };
 		F9FFE7841E7F801300FD33B8 /* AppConfigLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */; };
@@ -480,8 +441,7 @@
 				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
-				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
-				F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */,
+				F93BCBDB1E8B586900FFEF5E /* AEXML.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
@@ -491,6 +451,8 @@
 
 /* Begin PBXFileReference section */
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
+		F90BD25C1E947E88006E3117 /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
+		F90BD25E1E95F7F1006E3117 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
 		F90CEC201AD4322600204243 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
@@ -504,18 +466,12 @@
 		F91A37191928325E00C6FD64 /* SpelltimeNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpelltimeNotifier.h; sourceTree = "<group>"; };
 		F91A371A1928325E00C6FD64 /* SpelltimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpelltimeNotifier.m; sourceTree = "<group>"; };
 		F91A371C19284E0900C6FD64 /* woodsword2.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = woodsword2.icns; path = ../woodsword2.icns; sourceTree = "<group>"; };
-		F91A399E1949FF31006144F8 /* DebugLevelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLevelToken.h; sourceTree = "<group>"; };
-		F91A399F1949FF31006144F8 /* DebugLevelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLevelToken.m; sourceTree = "<group>"; };
 		F91A39A2194B4F5F006144F8 /* PlayerStatusIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerStatusIndicator.h; sourceTree = "<group>"; };
 		F91A39A3194B4F5F006144F8 /* PlayerStatusIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStatusIndicator.m; sourceTree = "<group>"; };
-		F91A39A6194B523E006144F8 /* SendToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendToken.h; sourceTree = "<group>"; };
-		F91A39A7194B523E006144F8 /* SendToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendToken.m; sourceTree = "<group>"; };
 		F91A39AA194BD706006144F8 /* OLPauseCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLPauseCondition.h; sourceTree = "<group>"; };
 		F91A39AB194BD706006144F8 /* OLPauseCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLPauseCondition.m; sourceTree = "<group>"; };
 		F91A39AE194BDE83006144F8 /* ExecuteBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecuteBlock.h; sourceTree = "<group>"; };
 		F91A39AF194BDE83006144F8 /* ExecuteBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecuteBlock.m; sourceTree = "<group>"; };
-		F91A39B2194D2AA2006144F8 /* SaveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveToken.h; sourceTree = "<group>"; };
-		F91A39B3194D2AA2006144F8 /* SaveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveToken.m; sourceTree = "<group>"; };
 		F91A39C8194DFFA9006144F8 /* SimpleQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleQueue.h; sourceTree = "<group>"; };
 		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F91A39CC194E7135006144F8 /* SendCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCommandHandler.h; sourceTree = "<group>"; };
@@ -532,31 +488,21 @@
 		F92A4FC0192B3484006C71F9 /* MyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindow.m; sourceTree = "<group>"; };
 		F92A4FC2192B35DC006C71F9 /* MyNSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNSTextView.h; sourceTree = "<group>"; };
 		F92A4FC3192B35DC006C71F9 /* MyNSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNSTextView.m; sourceTree = "<group>"; };
-		F92A82371AEAE732005BBD2F /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
 		F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseProfileViewController.swift; sourceTree = "<group>"; };
 		F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
-		F9316D1F1AD9E1D400880149 /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
-		F9316D201AD9E1D400880149 /* OutlanderStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderStandard.swift; sourceTree = "<group>"; };
-		F9316D211AD9E1D400880149 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		F9316D281AD9E65000880149 /* ScriptRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptRunner.swift; sourceTree = "<group>"; };
 		F93462571AC3DB7700B10ADF /* Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Layout.h; sourceTree = "<group>"; };
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
-		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
-		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		F93BCBD71E8B586000FFEF5E /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AEXML.framework; path = Frameworks/AEXML.framework; sourceTree = "<group>"; };
+		F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combinators.swift; sourceTree = "<group>"; };
+		F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser2.swift; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
-		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
-		F94A3FC81948AE0500D6B35D /* GosubToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GosubToken.m; sourceTree = "<group>"; };
-		F94A3FCB1948AE6700D6B35D /* ActionToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionToken.h; sourceTree = "<group>"; };
-		F94A3FCC1948AE6700D6B35D /* ActionToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionToken.m; sourceTree = "<group>"; };
-		F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturnToken.h; sourceTree = "<group>"; };
-		F94A3FD01948AE9F00D6B35D /* ReturnToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturnToken.m; sourceTree = "<group>"; };
-		F94A3FD31948DBC500D6B35D /* CommandsToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandsToken.h; sourceTree = "<group>"; };
-		F94A3FD41948DBC500D6B35D /* CommandsToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandsToken.m; sourceTree = "<group>"; };
 		F94A3FD71949495E00D6B35D /* SimpleStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleStack.h; sourceTree = "<group>"; };
 		F94A3FD81949495E00D6B35D /* SimpleStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleStack.m; sourceTree = "<group>"; };
 		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
-		F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
+		F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTokenizer.swift; sourceTree = "<group>"; };
+		F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTokenizerTester.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersViewController.swift; sourceTree = "<group>"; };
@@ -589,8 +535,6 @@
 		F96ECDD819356A6C00787CB9 /* OLMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLMutableArray.m; sourceTree = "<group>"; };
 		F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasCommandHandler.h; sourceTree = "<group>"; };
 		F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasCommandHandler.m; sourceTree = "<group>"; };
-		F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderScriptParserTester.swift; sourceTree = "<group>"; };
-		F970BA081BEE64590047F6CC /* TokenToMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenToMessage.swift; sourceTree = "<group>"; };
 		F971EFD31938806C008AF6A8 /* CommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandRelay.h; sourceTree = "<group>"; };
 		F971EFD4193880B6008AF6A8 /* GameCommandRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCommandRelay.h; sourceTree = "<group>"; };
 		F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCommandRelay.m; sourceTree = "<group>"; };
@@ -601,7 +545,6 @@
 		F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PEGKitAdditions.h"; sourceTree = "<group>"; };
 		F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PEGKitAdditions.m"; sourceTree = "<group>"; };
 		F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Frameworks/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
-		F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlimpseXML.framework; path = Frameworks/GlimpseXML.framework; sourceTree = "<group>"; };
 		F97217AC1DDF831B00E8FC4E /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Frameworks/Mantle.framework; sourceTree = "<group>"; };
 		F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		F97217AE1DDF831B00E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PEGKit.framework; path = Frameworks/PEGKit.framework; sourceTree = "<group>"; };
@@ -616,9 +559,6 @@
 		F9762F7A192E4F8700B873D7 /* AliasLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliasLoader.h; sourceTree = "<group>"; };
 		F9762F7B192E4F8700B873D7 /* AliasLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasLoader.m; sourceTree = "<group>"; };
 		F9762F7E192E50EF00B873D7 /* AliasesTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliasesTester.m; sourceTree = "<group>"; };
-		F9772F151940389E00172083 /* VarToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VarToken.h; sourceTree = "<group>"; };
-		F9772F161940389E00172083 /* VarToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VarToken.m; sourceTree = "<group>"; };
-		F9772F19194038D900172083 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
 		F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TriggerHandler.swift; path = Scripting/TriggerHandler.swift; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
@@ -637,13 +577,8 @@
 		F97A5C6F1892CE1400E2C318 /* GameConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameConnection.m; sourceTree = "<group>"; };
 		F97A5C721893562800E2C318 /* NSString+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Categories.h"; sourceTree = "<group>"; };
 		F97A5C731893562800E2C318 /* NSString+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Categories.m"; sourceTree = "<group>"; };
-		F97A5C771893808F00E2C318 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
-		F97A5C781893808F00E2C318 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
-		F97A5C791893808F00E2C318 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
-		F97A5C7A1893808F00E2C318 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
 		F97A5C811893962E00E2C318 /* GameParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameParser.h; sourceTree = "<group>"; };
 		F97A5C821893962E00E2C318 /* GameParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameParser.m; sourceTree = "<group>"; };
-		F97A5C86189397DA00E2C318 /* GameParserTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameParserTester.m; sourceTree = "<group>"; };
 		F97A5C881893AFDF00E2C318 /* TextTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextTag.h; sourceTree = "<group>"; };
 		F97A5C891893AFDF00E2C318 /* TextTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextTag.m; sourceTree = "<group>"; };
 		F97A5C8C1894918F00E2C318 /* GameStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStream.h; sourceTree = "<group>"; };
@@ -682,38 +617,9 @@
 		F9818D591908CE4800137896 /* ExpTrackerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpTrackerTester.m; sourceTree = "<group>"; };
 		F9818D5D1908D8FC00137896 /* SkillExpTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExpTester.m; sourceTree = "<group>"; };
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
+		F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionEvaluator.swift; sourceTree = "<group>"; };
 		F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsViewController.swift; sourceTree = "<group>"; };
 		F982CF601AD7834200BB9574 /* WindowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WindowsViewController.xib; sourceTree = "<group>"; };
-		F98782B519420CB500D76231 /* EchoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoToken.h; sourceTree = "<group>"; };
-		F98782B619420CB500D76231 /* EchoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoToken.m; sourceTree = "<group>"; };
-		F98782B919420E5D00D76231 /* GotoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoToken.h; sourceTree = "<group>"; };
-		F98782BA19420E5D00D76231 /* GotoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GotoToken.m; sourceTree = "<group>"; };
-		F98782BD1942128F00D76231 /* IdToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdToken.h; sourceTree = "<group>"; };
-		F98782BE1942128F00D76231 /* IdToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdToken.m; sourceTree = "<group>"; };
-		F98782C11942288F00D76231 /* MoveToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveToken.h; sourceTree = "<group>"; };
-		F98782C21942288F00D76231 /* MoveToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveToken.m; sourceTree = "<group>"; };
-		F98782C5194228C000D76231 /* BasicToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicToken.h; sourceTree = "<group>"; };
-		F98782C6194228C000D76231 /* BasicToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicToken.m; sourceTree = "<group>"; };
-		F98782C9194235EF00D76231 /* TokenSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenSingle.h; sourceTree = "<group>"; };
-		F98782CA194235EF00D76231 /* TokenSingle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenSingle.m; sourceTree = "<group>"; };
-		F98782CD1942499300D76231 /* WaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitToken.h; sourceTree = "<group>"; };
-		F98782CE1942499300D76231 /* WaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitToken.m; sourceTree = "<group>"; };
-		F98782D1194249A400D76231 /* TokenList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenList.h; sourceTree = "<group>"; };
-		F98782D2194249A400D76231 /* TokenList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenList.m; sourceTree = "<group>"; };
-		F98782D51942649600D76231 /* LRToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRToken.h; sourceTree = "<group>"; };
-		F98782D61942649600D76231 /* LRToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRToken.m; sourceTree = "<group>"; };
-		F98782D91942656C00D76231 /* MatchToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchToken.h; sourceTree = "<group>"; };
-		F98782DA1942656C00D76231 /* MatchToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchToken.m; sourceTree = "<group>"; };
-		F98782DD194269CD00D76231 /* MatchWaitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchWaitToken.h; sourceTree = "<group>"; };
-		F98782DE194269CD00D76231 /* MatchWaitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchWaitToken.m; sourceTree = "<group>"; };
-		F98782E11942791B00D76231 /* ExitToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExitToken.h; sourceTree = "<group>"; };
-		F98782E21942791B00D76231 /* ExitToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExitToken.m; sourceTree = "<group>"; };
-		F98782E919427C3D00D76231 /* NextRoomToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextRoomToken.h; sourceTree = "<group>"; };
-		F98782EA19427C3D00D76231 /* NextRoomToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextRoomToken.m; sourceTree = "<group>"; };
-		F98782F51942AB6200D76231 /* RegexToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexToken.h; sourceTree = "<group>"; };
-		F98782F61942AB6200D76231 /* RegexToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexToken.m; sourceTree = "<group>"; };
-		F98782F91946873500D76231 /* WaitForToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitForToken.h; sourceTree = "<group>"; };
-		F98782FA1946873500D76231 /* WaitForToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitForToken.m; sourceTree = "<group>"; };
 		F988C40E1AF35A74003B4634 /* Directions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Directions.swift; sourceTree = "<group>"; };
 		F989E1EF192C254800562E32 /* HighlightsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighlightsLoader.h; sourceTree = "<group>"; };
 		F989E1F0192C254800562E32 /* HighlightsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HighlightsLoader.m; sourceTree = "<group>"; };
@@ -725,13 +631,14 @@
 		F989E200192C2B9B00562E32 /* StubFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StubFileSystem.m; sourceTree = "<group>"; };
 		F989E203192C2E6200562E32 /* Highlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Highlight.h; sourceTree = "<group>"; };
 		F989E204192C2E6200562E32 /* Highlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Highlight.m; sourceTree = "<group>"; };
-		F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContextTester.swift; sourceTree = "<group>"; };
 		F98D4C241CB1A73300E81E70 /* SubstituteLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubstituteLoader.swift; sourceTree = "<group>"; };
 		F98D4C271CB1A7DF00E81E70 /* Substitute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Substitute.swift; sourceTree = "<group>"; };
 		F98F22D119248506008175FD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
+		F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
+		F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptOperations.swift; sourceTree = "<group>"; };
 		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoader.swift; sourceTree = "<group>"; };
 		F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoaderTester.swift; sourceTree = "<group>"; };
@@ -749,6 +656,9 @@
 		F9A3454B191C573200920F0E /* AppPathProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPathProvider.m; sourceTree = "<group>"; };
 		F9A3454E191C59D500920F0E /* ProfileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileLoader.h; sourceTree = "<group>"; };
 		F9A3454F191C59D500920F0E /* ProfileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileLoader.m; sourceTree = "<group>"; };
+		F9A685921E9DC5F3005C9175 /* Matches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matches.swift; sourceTree = "<group>"; };
+		F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableEvaluator.swift; sourceTree = "<group>"; };
+		F9A685981E9DE6DE005C9175 /* VariableEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableEvaluatorTester.swift; sourceTree = "<group>"; };
 		F9A74F0D192ED272008F410A /* VariableReplacerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariableReplacerTester.m; sourceTree = "<group>"; };
 		F9A74F0F19305D14008F410A /* VariablesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariablesLoader.h; sourceTree = "<group>"; };
 		F9A74F1019305D14008F410A /* VariablesLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariablesLoader.m; sourceTree = "<group>"; };
@@ -757,6 +667,14 @@
 		F9A79E521927F7D6000AF892 /* RoundtimeNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundtimeNotifier.m; sourceTree = "<group>"; };
 		F9A79E551927FDA0000AF892 /* Roundtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Roundtime.h; sourceTree = "<group>"; };
 		F9A79E561927FDA0000AF892 /* Roundtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Roundtime.m; sourceTree = "<group>"; };
+		F9A8A78C1E85C7F1000A9621 /* NotifyMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotifyMessage.swift; sourceTree = "<group>"; };
+		F9A8A78F1E85C838000A9621 /* ScriptLogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptLogLevel.swift; sourceTree = "<group>"; };
+		F9A8A7921E85C864000A9621 /* Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Script.swift; sourceTree = "<group>"; };
+		F9A8A7981E85CAA0000A9621 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
+		F9A8A79B1E85CBDE000A9621 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
+		F9A8A7A31E861771000A9621 /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderParser.swift; sourceTree = "<group>"; };
+		F9A8A7AA1E861ED5000A9621 /* OutlanderParserTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderParserTester.swift; sourceTree = "<group>"; };
 		F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizer.swift; sourceTree = "<group>"; };
 		F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributesTokenizerTester.swift; sourceTree = "<group>"; };
 		F9A8DD271AC1FDC5009A2F67 /* NSTextView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+Categories.h"; sourceTree = "<group>"; };
@@ -781,18 +699,7 @@
 		F9AE6A9E18A07EA600A11EE9 /* VitalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VitalsViewController.m; sourceTree = "<group>"; };
 		F9AE6A9F18A07EA600A11EE9 /* VitalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VitalsViewController.xib; sourceTree = "<group>"; };
 		F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptStreamHandler.swift; sourceTree = "<group>"; };
-		F9B2C7B31ADDBB2800B7E81A /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseCommandHandler.swift; sourceTree = "<group>"; };
-		F9B3AC5F194046E400C081C4 /* LabelToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelToken.h; sourceTree = "<group>"; };
-		F9B3AC60194046E400C081C4 /* LabelToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelToken.m; sourceTree = "<group>"; };
-		F9B3AC63194058EE00C081C4 /* AssignmentToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssignmentToken.h; sourceTree = "<group>"; };
-		F9B3AC64194058EE00C081C4 /* AssignmentToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssignmentToken.m; sourceTree = "<group>"; };
-		F9B3AC6719405BD700C081C4 /* Atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Atom.h; sourceTree = "<group>"; };
-		F9B3AC6819405BD700C081C4 /* Atom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Atom.m; sourceTree = "<group>"; };
-		F9B3AC6B1940686700C081C4 /* PutToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutToken.h; sourceTree = "<group>"; };
-		F9B3AC6C1940686700C081C4 /* PutToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PutToken.m; sourceTree = "<group>"; };
-		F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseToken.h; sourceTree = "<group>"; };
-		F9B3AC701940C5CE00C081C4 /* PauseToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseToken.m; sourceTree = "<group>"; };
 		F9B6CD781E73549B0085195F /* UpdateWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateWindowController.h; sourceTree = "<group>"; };
 		F9B6CD791E73549B0085195F /* UpdateWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateWindowController.m; sourceTree = "<group>"; };
 		F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindowController.xib; sourceTree = "<group>"; };
@@ -806,7 +713,6 @@
 		F9B9BFE01ABD558F00CB44B6 /* GameServer2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer2.swift; sourceTree = "<group>"; };
 		F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizer.swift; sourceTree = "<group>"; };
 		F9B9BFE71ABD5DA000CB44B6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		F9B9BFF11ABD726000CB44B6 /* StormFrontTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTokenizerTester.swift; sourceTree = "<group>"; };
 		F9BF6AEF193A90880075A12F /* EventRelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRelay.h; sourceTree = "<group>"; };
@@ -826,7 +732,6 @@
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
 		F9CB311219032EDE004587A5 /* LearningRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearningRate.h; sourceTree = "<group>"; };
 		F9CB311319032EDE004587A5 /* LearningRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearningRate.m; sourceTree = "<group>"; };
-		F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OysterKit.framework; path = Frameworks/OysterKit.framework; sourceTree = "<group>"; };
 		F9CF92671890832800449548 /* Outlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Outlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9CF926A1890832800449548 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		F9CF926D1890832800449548 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -853,8 +758,12 @@
 		F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
 		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
 		F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandlerTester.swift; sourceTree = "<group>"; };
-		F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreCaseKeywords.swift; sourceTree = "<group>"; };
 		F9E86BCD1AEC78700065E04A /* EventAggregator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAggregator.swift; sourceTree = "<group>"; };
+		F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
+		F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluator.swift; sourceTree = "<group>"; };
+		F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluatorTester.swift; sourceTree = "<group>"; };
+		F9F19C471E9813F000AC3F29 /* ObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC.h; sourceTree = "<group>"; };
+		F9F19C481E9813F000AC3F29 /* ObjC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjC.m; sourceTree = "<group>"; };
 		F9F3D826195335AF005B9D68 /* MacrosLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacrosLoader.h; sourceTree = "<group>"; };
 		F9F3D827195335AF005B9D68 /* MacrosLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacrosLoader.m; sourceTree = "<group>"; };
 		F9F3D82A1953364F005B9D68 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
@@ -874,6 +783,7 @@
 		F9F4469C1ABD8478003ECAD2 /* RoomObjsTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomObjsTags.m; sourceTree = "<group>"; };
 		F9FD07EE18977A380087D813 /* NSView+Categories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Categories.h"; sourceTree = "<group>"; };
 		F9FD07EF18977A380087D813 /* NSView+Categories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Categories.m"; sourceTree = "<group>"; };
+		F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
 		F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCommandHandler.swift; sourceTree = "<group>"; };
 		F9FFE7831E7F801300FD33B8 /* AppConfigLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -885,14 +795,14 @@
 			files = (
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
-				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
-				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
+				F93BCBD81E8B586000FFEF5E /* AEXML.framework in Frameworks */,
+				F93BCBDA1E8B586900FFEF5E /* AEXML.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -903,15 +813,14 @@
 			files = (
 				F97217BA1DDF831B00E8FC4E /* PEGKit.framework in Frameworks */,
 				F97217B81DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
+				F93BCBD91E8B586000FFEF5E /* AEXML.framework in Frameworks */,
 				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
-				F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */,
-				F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,88 +830,33 @@
 		F9316D1E1AD9E19E00880149 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
-				F9316D1F1AD9E1D400880149 /* ScriptContext.swift */,
-				F9316D201AD9E1D400880149 /* OutlanderStandard.swift */,
-				F9316D211AD9E1D400880149 /* Actor.swift */,
+				F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */,
 				F9316D281AD9E65000880149 /* ScriptRunner.swift */,
 				F9B2C7B01ADCE9A100B7E81A /* ScriptStreamHandler.swift */,
-				F9B2C7B31ADDBB2800B7E81A /* Messages.swift */,
-				F9E4DD681B0060430094DD08 /* IgnoreCaseKeywords.swift */,
-				F970BA081BEE64590047F6CC /* TokenToMessage.swift */,
+				F9A8A78C1E85C7F1000A9621 /* NotifyMessage.swift */,
+				F9A8A78F1E85C838000A9621 /* ScriptLogLevel.swift */,
+				F9A8A7921E85C864000A9621 /* Script.swift */,
+				F9A8A7A31E861771000A9621 /* Regex.swift */,
+				F9A8A7A61E8617DC000A9621 /* OutlanderParser.swift */,
+				F990DC921E88C8E500BB0A25 /* CharacterExtension.swift */,
+				F93BCBE11E8B7F9500FFEF5E /* Combinators.swift */,
+				F93BCBE41E8B8BE900FFEF5E /* Parser2.swift */,
+				F99C9A2D1E9360FB00318BC4 /* ScriptOperations.swift */,
+				F90BD25E1E95F7F1006E3117 /* Stack.swift */,
+				F9FF200F1E9C9B40004C7C9F /* ScriptContext.swift */,
+				F9A685921E9DC5F3005C9175 /* Matches.swift */,
+				F9A685951E9DDDE2005C9175 /* VariableEvaluator.swift */,
+				F982103A1EA7C5FB0012FCE6 /* FunctionEvaluator.swift */,
+				F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */,
 			);
 			name = Engine;
 			path = Scripting;
-			sourceTree = "<group>";
-		};
-		F9772F101940383500172083 /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				F9772F19194038D900172083 /* Token.h */,
-				F94A3FCB1948AE6700D6B35D /* ActionToken.h */,
-				F94A3FCC1948AE6700D6B35D /* ActionToken.m */,
-				F9B3AC63194058EE00C081C4 /* AssignmentToken.h */,
-				F9B3AC64194058EE00C081C4 /* AssignmentToken.m */,
-				F9B3AC6719405BD700C081C4 /* Atom.h */,
-				F9B3AC6819405BD700C081C4 /* Atom.m */,
-				F98782C5194228C000D76231 /* BasicToken.h */,
-				F98782C6194228C000D76231 /* BasicToken.m */,
-				F94A3FD31948DBC500D6B35D /* CommandsToken.h */,
-				F94A3FD41948DBC500D6B35D /* CommandsToken.m */,
-				F91A399E1949FF31006144F8 /* DebugLevelToken.h */,
-				F91A399F1949FF31006144F8 /* DebugLevelToken.m */,
-				F98782B519420CB500D76231 /* EchoToken.h */,
-				F98782B619420CB500D76231 /* EchoToken.m */,
-				F98782E11942791B00D76231 /* ExitToken.h */,
-				F98782E21942791B00D76231 /* ExitToken.m */,
-				F94A3FC71948AE0500D6B35D /* GosubToken.h */,
-				F94A3FC81948AE0500D6B35D /* GosubToken.m */,
-				F98782B919420E5D00D76231 /* GotoToken.h */,
-				F98782BA19420E5D00D76231 /* GotoToken.m */,
-				F98782BD1942128F00D76231 /* IdToken.h */,
-				F98782BE1942128F00D76231 /* IdToken.m */,
-				F9B3AC5F194046E400C081C4 /* LabelToken.h */,
-				F9B3AC60194046E400C081C4 /* LabelToken.m */,
-				F98782D51942649600D76231 /* LRToken.h */,
-				F98782D61942649600D76231 /* LRToken.m */,
-				F98782D91942656C00D76231 /* MatchToken.h */,
-				F98782DA1942656C00D76231 /* MatchToken.m */,
-				F98782DD194269CD00D76231 /* MatchWaitToken.h */,
-				F98782DE194269CD00D76231 /* MatchWaitToken.m */,
-				F98782C11942288F00D76231 /* MoveToken.h */,
-				F98782C21942288F00D76231 /* MoveToken.m */,
-				F98782E919427C3D00D76231 /* NextRoomToken.h */,
-				F98782EA19427C3D00D76231 /* NextRoomToken.m */,
-				F9B3AC6F1940C5CE00C081C4 /* PauseToken.h */,
-				F9B3AC701940C5CE00C081C4 /* PauseToken.m */,
-				F9B3AC6B1940686700C081C4 /* PutToken.h */,
-				F9B3AC6C1940686700C081C4 /* PutToken.m */,
-				F98782F51942AB6200D76231 /* RegexToken.h */,
-				F98782F61942AB6200D76231 /* RegexToken.m */,
-				F94A3FCF1948AE9F00D6B35D /* ReturnToken.h */,
-				F94A3FD01948AE9F00D6B35D /* ReturnToken.m */,
-				F91A39B2194D2AA2006144F8 /* SaveToken.h */,
-				F91A39B3194D2AA2006144F8 /* SaveToken.m */,
-				F91A39A6194B523E006144F8 /* SendToken.h */,
-				F91A39A7194B523E006144F8 /* SendToken.m */,
-				F98782D1194249A400D76231 /* TokenList.h */,
-				F98782D2194249A400D76231 /* TokenList.m */,
-				F98782C9194235EF00D76231 /* TokenSingle.h */,
-				F98782CA194235EF00D76231 /* TokenSingle.m */,
-				F9772F151940389E00172083 /* VarToken.h */,
-				F9772F161940389E00172083 /* VarToken.m */,
-				F98782CD1942499300D76231 /* WaitToken.h */,
-				F98782CE1942499300D76231 /* WaitToken.m */,
-				F98782F91946873500D76231 /* WaitForToken.h */,
-				F98782FA1946873500D76231 /* WaitForToken.m */,
-			);
-			name = Tokens;
 			sourceTree = "<group>";
 		};
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
 				F9316D1E1AD9E19E00880149 /* Engine */,
-				F9772F101940383500172083 /* Tokens */,
 				F96ECDDB19359ECE00787CB9 /* AliasCommandHandler.h */,
 				F96ECDDC19359ECE00787CB9 /* AliasCommandHandler.m */,
 				F9E1C8AF1AE2FD9200458029 /* BeepCommandHandler.swift */,
@@ -1018,8 +872,6 @@
 				F96ECDD3193565F100787CB9 /* HighlightCommandHandler.h */,
 				F96ECDD4193565F100787CB9 /* HighlightCommandHandler.m */,
 				F97CD58C1ACD29A4007E5804 /* MapperCommandHandler.swift */,
-				F93A1A3E193AEF9F00ED5C2E /* Match.h */,
-				F93A1A3F193AEF9F00ED5C2E /* Match.m */,
 				F91A39AA194BD706006144F8 /* OLPauseCondition.h */,
 				F91A39AB194BD706006144F8 /* OLPauseCondition.m */,
 				F9B2C7B61ADED1B900B7E81A /* ParseCommandHandler.swift */,
@@ -1048,12 +900,14 @@
 		F97A5C1B1890A08400E2C318 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				F9A8A79B1E85CBDE000A9621 /* SwiftRegex.swift */,
 				F9A8DD0F1AC14AA7009A2F67 /* AttributesTokenizer.swift */,
 				F9B9BFE71ABD5DA000CB44B6 /* Node.swift */,
 				F9B9BFED1ABD5DD700CB44B6 /* StringExtensions.swift */,
 				F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */,
 				F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */,
-				F9B9BFEA1ABD5DBE00CB44B6 /* SwiftRegex.swift */,
+				F9A8A7981E85CAA0000A9621 /* ArrayExtensions.swift */,
+				F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1215,19 +1069,10 @@
 				F98D4C271CB1A7DF00E81E70 /* Substitute.swift */,
 				F917612E1E328BCB0091A617 /* ColorPreset.swift */,
 				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
+				F9F19C471E9813F000AC3F29 /* ObjC.h */,
+				F9F19C481E9813F000AC3F29 /* ObjC.m */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		F97A5C761893808F00E2C318 /* HTML */ = {
-			isa = PBXGroup;
-			children = (
-				F97A5C771893808F00E2C318 /* HTMLNode.h */,
-				F97A5C781893808F00E2C318 /* HTMLNode.m */,
-				F97A5C791893808F00E2C318 /* HTMLParser.h */,
-				F97A5C7A1893808F00E2C318 /* HTMLParser.m */,
-			);
-			path = HTML;
 			sourceTree = "<group>";
 		};
 		F97A5CAC1895E72D00E2C318 /* Controls */ = {
@@ -1340,6 +1185,17 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		F9A8A7A91E861EC1000A9621 /* Scripting */ = {
+			isa = PBXGroup;
+			children = (
+				F9A8A7AA1E861ED5000A9621 /* OutlanderParserTester.swift */,
+				F90BD25C1E947E88006E3117 /* ScriptTester.swift */,
+				F9F19C451E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift */,
+				F9A685981E9DE6DE005C9175 /* VariableEvaluatorTester.swift */,
+			);
+			name = Scripting;
+			sourceTree = "<group>";
+		};
 		F9B9BFF01ABD724600CB44B6 /* Text */ = {
 			isa = PBXGroup;
 			children = (
@@ -1347,10 +1203,7 @@
 				F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */,
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
-				F92A82371AEAE732005BBD2F /* ScriptTester.swift */,
-				F970BA061BEE16FE0047F6CC /* OutlanderScriptParserTester.swift */,
-				F94F8B771C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift */,
-				F98D4C221CAB006A00E81E70 /* ScriptContextTester.swift */,
+				F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1378,16 +1231,15 @@
 			isa = PBXGroup;
 			children = (
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
+				F93BCBD71E8B586000FFEF5E /* AEXML.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
 				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
-				F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */,
 				F97217AC1DDF831B00E8FC4E /* Mantle.framework */,
 				F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */,
 				F97217AE1DDF831B00E8FC4E /* PEGKit.framework */,
 				F97217AF1DDF831B00E8FC4E /* ReactiveCocoa.framework */,
 				F97217B01DDF831B00E8FC4E /* Squirrel.framework */,
-				F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
@@ -1415,7 +1267,6 @@
 				F97CD5731ACD2598007E5804 /* AutoMapper */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
-				F97A5C761893808F00E2C318 /* HTML */,
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
 				F97A5C5C1891AADB00E2C318 /* Support */,
@@ -1444,6 +1295,7 @@
 			isa = PBXGroup;
 			children = (
 				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
+				F9A8A7A91E861EC1000A9621 /* Scripting */,
 				F9B9BFF01ABD724600CB44B6 /* Text */,
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
@@ -1451,7 +1303,6 @@
 				F9B6CD851E78BA430085195F /* ClassSettingsTester.swift */,
 				F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
-				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F959D3D51AC7264300B2A659 /* MacroTester.m */,
@@ -1532,11 +1383,11 @@
 				TargetAttributes = {
 					F9CF92661890832800449548 = {
 						DevelopmentTeam = 9TZ225FMST;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					F9CF92871890832800449548 = {
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0820;
 						TestTargetID = F9CF92661890832800449548;
 					};
 				};
@@ -1644,52 +1495,47 @@
 			buildActionMask = 2147483647;
 			files = (
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
+				F93BCBE51E8B8BE900FFEF5E /* Parser2.swift in Sources */,
 				F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
+				F990DC931E88C8E500BB0A25 /* CharacterExtension.swift in Sources */,
 				F97A5CC41896C21600E2C318 /* TextViewController.m in Sources */,
-				F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */,
 				F9F4469D1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
 				F97A5C9E1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F96ECDBE1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
-				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
-				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F91031541B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
+				F9A685931E9DC5F3005C9175 /* Matches.swift in Sources */,
 				F97CD5851ACD27D3007E5804 /* MapArc.swift in Sources */,
 				F9AE6AA018A07EA600A11EE9 /* VitalsViewController.m in Sources */,
 				F9A345331913398800920F0E /* WindowDataService.m in Sources */,
 				F9B2C7B11ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F9A34550191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
-				F9316D261AD9E1D400880149 /* Actor.swift in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
-				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9B6CD8C1E7903DA0085195F /* ClassesLoader.swift in Sources */,
 				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
 				F9CB311419032EDE004587A5 /* LearningRate.m in Sources */,
-				F9B3AC65194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F9A345401919D83900920F0E /* AppSettings.m in Sources */,
 				F91A39B0194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F91031511B3D0F140039BDF0 /* Gag.swift in Sources */,
-				F98782C31942288F00D76231 /* MoveToken.m in Sources */,
 				F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F9B9BFEE1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
-				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
-				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
 				F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9AE6A88189E218F00A11EE9 /* MMScroller.m in Sources */,
+				F99C9A2E1E9360FB00318BC4 /* ScriptOperations.swift in Sources */,
 				F9316D291AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F90BD25F1E95F7F1006E3117 /* Stack.swift in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
-				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
 				F97CD58A1ACD27D3007E5804 /* Pathfinder.swift in Sources */,
@@ -1699,14 +1545,12 @@
 				F9C178861B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F96ECDCB1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
-				F94A3FD11948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F917612F1E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F97CD5991ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
 				F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
-				F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC71934E23A00787CB9 /* CommandContext.m in Sources */,
 				F9F3D828195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F92A4FC4192B35DC006C71F9 /* MyNSTextView.m in Sources */,
@@ -1714,63 +1558,57 @@
 				F94A3FD91949495E00D6B35D /* SimpleStack.m in Sources */,
 				F91A371B1928325E00C6FD64 /* SpelltimeNotifier.m in Sources */,
 				F9E1C8B31AE35A8000458029 /* RandomNumbers.swift in Sources */,
-				F97A5C7D1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F97A5C831893962E00E2C318 /* GameParser.m in Sources */,
-				F9B3AC61194046E400C081C4 /* LabelToken.m in Sources */,
-				F98782D3194249A400D76231 /* TokenList.m in Sources */,
 				F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
 				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
-				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
+				F93BCBE21E8B7F9500FFEF5E /* Combinators.swift in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
-				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
-				F98782DF194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A3453C1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F9A8DD101AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9AE6A9818A0001300A11EE9 /* ProgressBarViewController.m in Sources */,
-				F94A3FD51948DBC600D6B35D /* CommandsToken.m in Sources */,
+				F9A8A7991E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9AE6A91189FFE6100A11EE9 /* MyProgressBar.m in Sources */,
 				F97A5C5F1891AB7D00E2C318 /* SignalSocket.m in Sources */,
+				F9E884A01EB314220037BFE0 /* NumberExtensions.swift in Sources */,
+				F9A685961E9DDDE2005C9175 /* VariableEvaluator.swift in Sources */,
 				F971EFD6193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
 				F94E78E61E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F96ECDC319345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F98D4C281CB1A7DF00E81E70 /* Substitute.swift in Sources */,
-				F91A39B4194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F97A5C8E1894918F00E2C318 /* GameStream.m in Sources */,
 				F982CF611AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F96ECDDD19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F988C40F1AF35A74003B4634 /* Directions.swift in Sources */,
 				F9B6CD831E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
-				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F9B6CD801E779CD50085195F /* VitalsLoader.swift in Sources */,
-				F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F90CEC181AD037CE00204243 /* MapView.swift in Sources */,
 				F9A8DD291AC1FDC5009A2F67 /* NSTextView+Categories.m in Sources */,
 				F9ACB138192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
 				F9CF927E1890832800449548 /* AppDelegate.m in Sources */,
-				F9772F171940389E00172083 /* VarToken.m in Sources */,
 				F9B9BFE51ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F97A5C501890DFB400E2C318 /* TestViewController.m in Sources */,
 				F97A5C631891F2C400E2C318 /* AuthenticationServer.m in Sources */,
-				F970BA091BEE64590047F6CC /* TokenToMessage.swift in Sources */,
+				F9A8A7901E85C838000A9621 /* ScriptLogLevel.swift in Sources */,
+				F9A8A7931E85C864000A9621 /* Script.swift in Sources */,
 				F90CEC211AD4322600204243 /* GameContext.swift in Sources */,
-				F98782D71942649600D76231 /* LRToken.m in Sources */,
-				F98782FB1946873500D76231 /* WaitForToken.m in Sources */,
 				F91A39A4194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
 				F9BF6AF2193A914B0075A12F /* GameEventRelay.m in Sources */,
-				F98782EB19427C3D00D76231 /* NextRoomToken.m in Sources */,
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
+				F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
+				F953762E1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
 				F9DF148E1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
+				F9A8A78D1E85C7F1000A9621 /* NotifyMessage.swift in Sources */,
 				F92A4FC1192B3484006C71F9 /* MyWindow.m in Sources */,
 				F9FFE7841E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F97A5C701892CE1400E2C318 /* GameConnection.m in Sources */,
@@ -1778,28 +1616,24 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
-				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
-				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
+				F9A8A7A71E8617DC000A9621 /* OutlanderParser.swift in Sources */,
+				F9F19C491E9813F000AC3F29 /* ObjC.m in Sources */,
 				F9F3D82C1953364F005B9D68 /* Macro.m in Sources */,
-				F98782BF1942128F00D76231 /* IdToken.m in Sources */,
-				F9E4DD691B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */,
 				F97CD5861ACD27D3007E5804 /* MapLoader.swift in Sources */,
 				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
-				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
+				F9A8A7A41E861771000A9621 /* Regex.swift in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */,
-				F98782CF1942499300D76231 /* WaitToken.m in Sources */,
-				F98782BB19420E5D00D76231 /* GotoToken.m in Sources */,
 				F97A5C741893562800E2C318 /* NSString+Categories.m in Sources */,
 				F97A5CBB1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F9A79E531927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
 				F9818D561908CA0200137896 /* ExpTracker.m in Sources */,
 				F98D4C251CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
 				F96ECDD5193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
-				F98782DB1942656C00D76231 /* MatchToken.m in Sources */,
+				F9FF20101E9C9B40004C7C9F /* ScriptContext.swift in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
@@ -1808,18 +1642,17 @@
 				F90CEC1E1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F9AE6A8A189E218F00A11EE9 /* MMScrollView.m in Sources */,
 				F9A3454C191C573200920F0E /* AppPathProvider.m in Sources */,
-				F91A39A8194B523E006144F8 /* SendToken.m in Sources */,
+				F982103B1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */,
 				F9D6A6EF1ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F92A823B1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */,
 				F9B2C7B71ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
-				F9B2C7B41ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F97A5C671892388D00E2C318 /* GameServer.m in Sources */,
 				F96ECDD919356A6C00787CB9 /* OLMutableArray.m in Sources */,
-				F91A39A01949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F9C1787D1B12754E00CC7291 /* TestCommandHandler.swift in Sources */,
 				F97CD5911ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
 				F97CD58B1ACD27D3007E5804 /* TreeNode.swift in Sources */,
 				F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */,
+				F9A8A79C1E85CBDE000A9621 /* SwiftRegex.swift in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */,
@@ -1832,39 +1665,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				F90CEC221AD4322600204243 /* GameContext.swift in Sources */,
+				F9A8A7A51E861771000A9621 /* Regex.swift in Sources */,
 				F97A5C931895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F9A3454D191C573200920F0E /* AppPathProvider.m in Sources */,
-				F98782E0194269CD00D76231 /* MatchWaitToken.m in Sources */,
 				F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */,
 				F9B9BFE91ABD5DA000CB44B6 /* Node.swift in Sources */,
 				F96ECDBF1934585400787CB9 /* ScriptCommandHandler.m in Sources */,
+				F982103C1EA7C5FB0012FCE6 /* FunctionEvaluator.swift in Sources */,
 				F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */,
-				F98782D81942649600D76231 /* LRToken.m in Sources */,
 				F96ECDDE19359ECE00787CB9 /* AliasCommandHandler.m in Sources */,
 				F98F22D519248506008175FD /* LoginViewController.m in Sources */,
 				F9818D571908CA0200137896 /* ExpTracker.m in Sources */,
 				F989E206192C2E6200562E32 /* Highlight.m in Sources */,
 				F9A345301913390400920F0E /* WindowData.m in Sources */,
-				F97A5C7C1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F96ECDD2193565CE00787CB9 /* HighlightCommandTester.m in Sources */,
+				F9A8A79D1E85CBDE000A9621 /* SwiftRegex.swift in Sources */,
 				F9DF148F1AF84E7F000A05FB /* EchoCommandHandler.swift in Sources */,
+				F90BD2601E95F7F1006E3117 /* Stack.swift in Sources */,
 				F9BF6AF6193A941B0075A12F /* StubEventRelay.m in Sources */,
 				F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
-				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
-				F94A3FCE1948AE6700D6B35D /* ActionToken.m in Sources */,
-				F970BA0A1BEE64600047F6CC /* TokenToMessage.swift in Sources */,
 				F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
+				F9A8A7AC1E861ED5000A9621 /* OutlanderParserTester.swift in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
+				F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
-				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
-				F98782C8194228C000D76231 /* BasicToken.m in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9CB311519032EDE004587A5 /* LearningRate.m in Sources */,
@@ -1874,77 +1705,65 @@
 				F90CEC141ACEEECA00204243 /* MapPosition.swift in Sources */,
 				F97A5CC51896C21600E2C318 /* TextViewController.m in Sources */,
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
-				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
-				F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */,
+				F93BCBE31E8B7F9500FFEF5E /* Combinators.swift in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
 				F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */,
 				F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */,
-				F98782D4194249A400D76231 /* TokenList.m in Sources */,
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
-				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
-				F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */,
 				F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */,
 				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
 				F9CB31111903238B004587A5 /* SkillExp.m in Sources */,
 				F92A4FBB192A56BC006C71F9 /* MyNSTextFieldTester.m in Sources */,
 				F9D6A6F51ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
-				F9316D251AD9E1D400880149 /* OutlanderStandard.swift in Sources */,
 				F934625A1AC3DB7700B10ADF /* Layout.m in Sources */,
 				F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */,
-				F94A3FCA1948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9B6CD8A1E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
-				F9B2C7B51ADDBB2800B7E81A /* Messages.swift in Sources */,
 				F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */,
+				F99C9A2F1E9360FB00318BC4 /* ScriptOperations.swift in Sources */,
 				F9B9BFE31ABD5CC300CB44B6 /* GameServer2.swift in Sources */,
 				F96ECDD6193565F100787CB9 /* HighlightCommandHandler.m in Sources */,
-				F91A39A11949FF31006144F8 /* DebugLevelToken.m in Sources */,
 				F989E1FA192C27AD00562E32 /* LocalFileSystem.m in Sources */,
-				F9B3AC66194058EE00C081C4 /* AssignmentToken.m in Sources */,
 				F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */,
 				F959D3DE1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */,
-				F9772F181940389E00172083 /* VarToken.m in Sources */,
-				F97A5C7E1893808F00E2C318 /* HTMLParser.m in Sources */,
 				F9A3453D1919CC1300920F0E /* AppSettingsLoader.m in Sources */,
 				F97A5C9F1895C10100E2C318 /* CharacterViewModel.m in Sources */,
 				F91434661B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */,
 				F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */,
+				F9A8A78E1E85C7F1000A9621 /* NotifyMessage.swift in Sources */,
+				F9A685991E9DE6DE005C9175 /* VariableEvaluatorTester.swift in Sources */,
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
+				F9F19C4A1E9813F000AC3F29 /* ObjC.m in Sources */,
+				F93BCBE61E8B8BE900FFEF5E /* Parser2.swift in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
-				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
-				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,
 				F9ACB139192ECD1A006D3548 /* GameCommandProcessor.m in Sources */,
-				F92A82381AEAE732005BBD2F /* ScriptTester.swift in Sources */,
+				F9A685971E9DDDE2005C9175 /* VariableEvaluator.swift in Sources */,
 				F9B2C7B21ADCE9A100B7E81A /* ScriptStreamHandler.swift in Sources */,
 				F91A39B1194BDE83006144F8 /* ExecuteBlock.m in Sources */,
 				F9BF6AF3193A914B0075A12F /* GameEventRelay.m in Sources */,
 				F9D6A6F01ACBC8AB00FEA665 /* HighlightsViewController.swift in Sources */,
 				F9B6CD8D1E7903DA0085195F /* ClassesLoader.swift in Sources */,
-				F98782E41942791B00D76231 /* ExitToken.m in Sources */,
+				F9A685941E9DC5F3005C9175 /* Matches.swift in Sources */,
 				F9A345341913398800920F0E /* WindowDataService.m in Sources */,
 				F92A4FBE192ADAE4006C71F9 /* AppSettingsTester.m in Sources */,
 				F9E1C8B41AE35A8000458029 /* RandomNumbers.swift in Sources */,
 				F9F3D8351953C384005B9D68 /* MacroHandler.m in Sources */,
 				F9F4469E1ABD8478003ECAD2 /* RoomObjsTags.m in Sources */,
+				F9A8A7941E85C864000A9621 /* Script.swift in Sources */,
 				F9316D2A1AD9E65000880149 /* ScriptRunner.swift in Sources */,
 				F9818D5E1908D8FC00137896 /* SkillExpTester.m in Sources */,
 				F9D2B1831E20473B00733E24 /* HighlightsLoader.m in Sources */,
+				F9A8A79A1E85CAA0000A9621 /* ArrayExtensions.swift in Sources */,
 				F9A79E581927FDA0000AF892 /* Roundtime.m in Sources */,
-				F94F8B781C0DFD7900C4D36B /* ExpressionEvaluatorTester.swift in Sources */,
-				F98D4C231CAB006A00E81E70 /* ScriptContextTester.swift in Sources */,
 				F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
-				F98782BC19420E5D00D76231 /* GotoToken.m in Sources */,
-				F98782D01942499300D76231 /* WaitToken.m in Sources */,
 				F9AE6A8B189E218F00A11EE9 /* MMScrollView.m in Sources */,
-				F97A5C87189397DA00E2C318 /* GameParserTester.m in Sources */,
-				F91A39B5194D2AA2006144F8 /* SaveToken.m in Sources */,
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F9B6CD871E78BA430085195F /* ClassSettingsTester.swift in Sources */,
 				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
@@ -1952,22 +1771,20 @@
 				F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
-				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */,
 				F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
+				F9A8A7A81E8617DC000A9621 /* OutlanderParser.swift in Sources */,
+				F95376311EE1E1F2000FDA16 /* StreamTokenizerTester.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */,
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
 				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
-				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
-				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F91031521B3D0F140039BDF0 /* Gag.swift in Sources */,
 				F9AE6A89189E218F00A11EE9 /* MMScroller.m in Sources */,
-				F9B3AC62194046E400C081C4 /* LabelToken.m in Sources */,
 				F9FFE7821E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */,
-				F98782CC194235EF00D76231 /* TokenSingle.m in Sources */,
 				F94A3FDA1949495E00D6B35D /* SimpleStack.m in Sources */,
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
@@ -1986,16 +1803,16 @@
 				F9C178871B140F2A00CC7291 /* FlippedView.swift in Sources */,
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
-				F94A3FD21948AE9F00D6B35D /* ReturnToken.m in Sources */,
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
-				F970BA071BEE16FE0047F6CC /* OutlanderScriptParserTester.swift in Sources */,
 				F97CD5921ACD9813007E5804 /* AutoMapperWindowController.swift in Sources */,
+				F90BD25D1E947E88006E3117 /* ScriptTester.swift in Sources */,
+				F990DC941E88CA4900BB0A25 /* CharacterExtension.swift in Sources */,
 				F9A79E541927F7D6000AF892 /* RoundtimeNotifier.m in Sources */,
+				F9A8A7911E85C838000A9621 /* ScriptLogLevel.swift in Sources */,
 				F98D4C261CB1A73300E81E70 /* SubstituteLoader.swift in Sources */,
-				F98782F81942AB6200D76231 /* RegexToken.m in Sources */,
 				F9A345451919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9A34551191C59D500920F0E /* ProfileLoader.m in Sources */,
 				F959D3E21AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
@@ -2006,23 +1823,20 @@
 				F97A5C711892CE1400E2C318 /* GameConnection.m in Sources */,
 				F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */,
 				F97A5C8B1893AFDF00E2C318 /* TextTag.m in Sources */,
+				F953762F1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */,
 				F9BFF56D1E0EFFEE009E5473 /* SubstituteTester.m in Sources */,
-				F98782EC19427C3D00D76231 /* NextRoomToken.m in Sources */,
-				F98782DC1942656C00D76231 /* MatchToken.m in Sources */,
-				F98782B819420CB500D76231 /* EchoToken.m in Sources */,
 				F989E1FE192C2AA100562E32 /* HighlightsLoaderTester.m in Sources */,
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
 				F90CEC191AD037CE00204243 /* MapView.swift in Sources */,
 				F91031551B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
+				F9FF20111E9C9B40004C7C9F /* ScriptContext.swift in Sources */,
 				F989E201192C2B9B00562E32 /* StubFileSystem.m in Sources */,
 				F9F3D829195335AF005B9D68 /* MacrosLoader.m in Sources */,
 				F917612D1E328B580091A617 /* PresetLoader.swift in Sources */,
 				F9B2C7B81ADED1B900B7E81A /* ParseCommandHandler.swift in Sources */,
 				F97A5C751893562800E2C318 /* NSString+Categories.m in Sources */,
-				F98782C41942288F00D76231 /* MoveToken.m in Sources */,
-				F9B3AC6E1940686700C081C4 /* PutToken.m in Sources */,
 				F96ECDDA19356A6C00787CB9 /* OLMutableArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2204,7 +2018,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2225,7 +2039,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Outlander/Outlander-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2254,8 +2068,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/Outlander-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2300,7 +2114,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -2341,7 +2155,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "mcbride.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Outlander/OutlanderTests-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Outlander.app/Contents/MacOS/Outlander";
 				WRAPPER_EXTENSION = xctest;
 			};

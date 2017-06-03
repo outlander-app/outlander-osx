@@ -8,36 +8,36 @@
 
 import Cocoa
 
-public class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSource {
+open class TriggersViewController: NSViewController, SettingsView, NSTableViewDataSource {
     
     @IBOutlet weak var tableView: NSTableView!
-    private var _context:GameContext?
-    private var _appSettingsLoader:AppSettingsLoader?
+    fileprivate var _context:GameContext?
+    fileprivate var _appSettingsLoader:AppSettingsLoader?
    
-    public var selectedItem:Trigger? {
+    open var selectedItem:Trigger? {
         willSet {
-            self.willChangeValueForKey("selectedItem")
+            self.willChangeValue(forKey: "selectedItem")
         }
         didSet {
-            self.didChangeValueForKey("selectedItem")
+            self.didChangeValue(forKey: "selectedItem")
         }
     }
     
-    public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
+    open override class func automaticallyNotifiesObservers(forKey key: String) -> Bool {
         if key == "selectedItem" {
             return true
         } else {
-            return super.automaticallyNotifiesObserversForKey(key)
+            return super.automaticallyNotifiesObservers(forKey: key)
         }
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
+        self.tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
     }
     
-    public override func controlTextDidChange(obj: NSNotification) {
+    open override func controlTextDidChange(_ obj: Notification) {
         if let item = self.selectedItem {
             let textField = obj.object as! NSTextField
             if(textField.tag == 1) {
@@ -52,24 +52,24 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
         }
     }
     
-    public func save() {
+    open func save() {
         _appSettingsLoader!.saveTriggers()
     }
 
-    public func setContext(context:GameContext) {
+    open func setContext(_ context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
     }
 
-    @IBAction func addRemoveAction(sender: NSSegmentedControl) {
+    @IBAction func addRemoveAction(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             let trigger = Trigger("", "", "")
-            _context!.triggers.addObject(trigger)
+            _context!.triggers.add(trigger)
             
-            let idx = NSIndexSet(index: _context!.triggers.count() - 1)
+            let idx = IndexSet(integer: _context!.triggers.count() - 1)
             self.tableView.reloadData()
             self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
-            self.tableView.scrollRowToVisible(idx.firstIndex)
+            self.tableView.scrollRowToVisible(idx.first!)
         } else {
             
             if self.tableView.selectedRow < 0 || self.tableView.selectedRow >= _context!.triggers.count() {
@@ -78,37 +78,37 @@ public class TriggersViewController: NSViewController, SettingsView, NSTableView
             
             self.selectedItem = nil;
             
-            let item:Trigger = _context!.triggers.objectAtIndex(self.tableView.selectedRow) as! Trigger
-            _context!.triggers.removeObject(item)
+            let item:Trigger = _context!.triggers.object(at: self.tableView.selectedRow) as! Trigger
+            _context!.triggers.remove(item)
             
             self.tableView.reloadData()
         }
     }
     
     // MARK: NSTableViewDataSource
-    public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    open func numberOfRows(in tableView: NSTableView) -> Int {
         return _context!.triggers.count()
     }
     
-    public func tableViewSelectionDidChange(notification:NSNotification) {
+    open func tableViewSelectionDidChange(_ notification:Notification) {
         let selectedRow = self.tableView.selectedRow
         if(selectedRow > -1
             && selectedRow < _context!.triggers.count()) {
                 self.selectedItem =
-                    _context!.triggers.objectAtIndex(selectedRow) as? Trigger;
+                    _context!.triggers.object(at: selectedRow) as? Trigger;
         }
         else {
             self.selectedItem = nil;
         }
     }
     
-    public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+    open func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         if (row >= _context!.triggers.count()){
             return "";
         }
         
-        let item = _context!.triggers.objectAtIndex(row) as! Trigger
+        let item = _context!.triggers.object(at: row) as! Trigger
         
         var res:String = ""
         

@@ -15,17 +15,17 @@ class ParseCommandHandler : NSObject, CommandHandler {
         return ParseCommandHandler()
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#parse")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#parse")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         let text = command
-            .substringFromIndex(command.startIndex.advancedBy(6))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 6))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        let dict = ["text": text]
-        
+        let dict:[String:AnyObject] = ["text": text as AnyObject]
+
         withContext.events.publish("ol:game-parse", data: dict)
     }
 }

@@ -84,6 +84,7 @@
     
     _tagStreamer.emitClearStream = ^(NSString *window) {
         CommandContext *ctx = [[CommandContext alloc] init];
+        ctx.isSystemCommand = YES;
         ctx.command = [NSString stringWithFormat:@"#window clear %@", window];
         
         [_commandRelay sendCommand:ctx];

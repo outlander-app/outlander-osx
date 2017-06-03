@@ -10,8 +10,8 @@ import Cocoa
 
 class WindowsViewController: NSViewController, SettingsView {
     
-    private var _context:GameContext?
-    private var _appSettingsLoader:AppSettingsLoader?
+    fileprivate var _context:GameContext?
+    fileprivate var _appSettingsLoader:AppSettingsLoader?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class WindowsViewController: NSViewController, SettingsView {
     func save() {
     }
     
-    func setContext(context:GameContext) {
+    func setContext(_ context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
     }

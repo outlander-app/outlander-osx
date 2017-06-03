@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -rf ./Carthage/Build/Mac/
 carthage update --platform osx
 
 if [ $? -eq 0 ]

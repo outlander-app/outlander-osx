@@ -11,7 +11,7 @@ import Foundation
 @objc
 class TriggersLoader : NSObject {
     
-    class func newInstance(context:GameContext, fileSystem:FileSystem) -> TriggersLoader {
+    class func newInstance(_ context:GameContext, fileSystem:FileSystem) -> TriggersLoader {
         return TriggersLoader(context: context, fileSystem: fileSystem)
     }
     
@@ -29,7 +29,7 @@ class TriggersLoader : NSObject {
         var data:String?
         
         do {
-            data = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+            data = try self.fileSystem.string(withContentsOfFile: configFile, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return
         }
@@ -42,23 +42,23 @@ class TriggersLoader : NSObject {
         
         let pattern = "^#trigger \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
-        let target = SwiftRegex(target: data!, pattern: pattern, options: [NSRegularExpressionOptions.AnchorsMatchLines, NSRegularExpressionOptions.CaseInsensitive])
+        let target = SwiftRegex(target: NSMutableString(string: data!), pattern: pattern, options: [NSRegularExpression.Options.anchorsMatchLines, NSRegularExpression.Options.caseInsensitive])
         
         let groups = target.allGroups()
         
         for group in groups {
             if group.count == 4 {
-                let trigger = group[1]
-                let action = group[2]
+                let trigger = group[1]!
+                let action = group[2]!
                 var className = ""
                 
-                if group[3] != regexNoGroup {
-                    className = group[3]
+                if group[3] != nil {
+                    className = group[3]!
                 }
                 
                 let item = Trigger(trigger, action, className)
                 
-                self.context.triggers.addObject(item)
+                self.context.triggers.add(item)
             }
         }
     }
@@ -69,7 +69,7 @@ class TriggersLoader : NSObject {
         
         var triggers = ""
         
-        self.context.triggers.enumerateObjectsUsingBlock({ object, index, stop in
+        self.context.triggers.enumerateObjects({ object, index, stop in
             let trigger = object as! Trigger
             let triggerText = trigger.trigger != nil ? trigger.trigger! : ""
             let action = trigger.action != nil ? trigger.action! : ""

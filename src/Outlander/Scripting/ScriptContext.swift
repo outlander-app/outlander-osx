@@ -1,608 +1,341 @@
 //
 //  ScriptContext.swift
-//  Scripter
+//  Outlander
 //
-//  Created by Joseph McBride on 11/17/14.
-//  Copyright (c) 2014 Joe McBride. All rights reserved.
+//  Created by Joseph McBride on 4/10/17.
+//  Copyright © 2017 Joe McBride. All rights reserved.
 //
 
 import Foundation
-import OysterKit
 
-public class Stack<T>
-{
-    var stack:[T] = []
-    
-    public func push(item:T) {
-        stack.append(item)
-    }
-    
-    public func pop() -> T {
-        return stack.removeLast()
-    }
-    
-    public func lastItem() -> T? {
-        return stack.last
-    }
-    
-    public func hasItems() -> Bool {
-        return stack.count > 0
-    }
-    
-    public func count() -> Int {
-        return stack.count
-    }
-    
-    public func clear() {
-        stack.removeAll(keepCapacity: true)
-    }
+struct Label {
+    var name: String
+    var line: Int
+    var fileName: String
 }
 
-public struct GosubContext {
-    var label:LabelToken
-    var labelIndex:Int
-    var returnLine:Int
-    var returnIndex:Int
-    var params:[String]
-    var isGosub:Bool
-    var marker:TokenSequence
-    var current:AnyGenerator<Token>
-}
-
-public class ScriptContext {
-    var tree:[Token]
-    var marker:TokenSequence
-    var results:Array<Token>
-    var current:AnyGenerator<Token>
-    var gosubContext:GosubContext?
-    var gosubStack:Stack<GosubContext>
+class ScriptContext {
+    var lines: [ScriptLine] = []
+    var labels: [String:Label] = [:]
+    var currentLineNumber:Int = -1
+    var args:[String] = []
+    var argVars:[String:String] = [:]
+    var variables:[String:String] = [:]
     var actionVars:[String:String] = [:]
     var regexVars:[String:String] = [:]
+    var labelVars:[String:String] = [:]
 
-    private var lastTopIfResult = false
-    private var lastToken:Token?
-    
-    private var variables:[String:String] = [:]
-    private var params:[String]
-    private var paramVars:[String:String] = [:]
-    
-    private var globalVars:(()->[String:String])?
-    
-    init(_ tree:[Token], globalVars:(()->[String:String])?, params:[String]) {
-        self.tree = tree
-        self.marker = TokenSequence()
-        self.marker.tree = self.tree
-        self.current = self.marker.generate()
-        self.results = Array<Token>()
+    var ifStack:Stack<ScriptLine> = Stack<ScriptLine>()
+    var ifResultStack:Stack<Bool> = Stack<Bool>()
+
+    var globalVars:(()->[String:String])
+    var variableEvaluator:VariableEvaluator = VariableEvaluator()
+
+    init(_ globalVars: @escaping ()->[String:String]) {
         self.globalVars = globalVars
-        self.gosubStack = Stack<GosubContext>()
-       
-        self.params = params
-        self.updateParamVars()
     }
-    
-    public func shiftParamVars() -> Bool {
-        var res = false
-        
-        if let _ = self.params.first {
-            self.params.removeAtIndex(0)
-            self.updateParamVars()
-            res = true
+
+    var currentLine:ScriptLine? {
+        get {
+            if currentLineNumber < 0 || currentLineNumber >= lines.count {
+                return nil
+            }
+
+            return lines[currentLineNumber]
         }
-        
-        return res
     }
-    
-    private func updateParamVars() {
-        self.paramVars = [:]
-        
+
+    var previousLine:ScriptLine? {
+        if currentLineNumber - 1 < 0 {
+            return nil
+        }
+
+        return lines[currentLineNumber - 1]
+    }
+
+    var roundtime:Double? {
+        return self.globalVars()["roundtime"]?.toDouble()
+    }
+
+    func shiftArgumentVars() -> Bool {
+        guard let _ = self.args.first else {
+            return false
+        }
+
+        self.args.remove(at: 0)
+        self.updateArgumentVars()
+        return true
+    }
+
+    func updateArgumentVars() {
+        self.argVars = [:]
+
         var all = ""
-        
-        for param in self.params {
-            if param.rangeOfString(" ") != nil {
+
+        for param in self.args {
+            if param.contains(" ") {
                 all += " \"\(param)\""
             } else {
                 all += " \(param)"
             }
         }
-        
-        self.paramVars["0"] = all.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        
-        for (index, param) in self.params.enumerate() {
-            self.paramVars["\(index+1)"] = param
+
+        self.argVars["0"] = all.trimmingCharacters(in: CharacterSet.whitespaces)
+
+        for (index, param) in self.args.enumerated() {
+            self.argVars["\(index+1)"] = param
         }
-        
-        let originalCount = self.params.count
-        
+
+        let originalCount = self.args.count
+
         let maxArgs = 9
-        
+
         let diff = maxArgs - originalCount
-        
+
         if(diff > 0) {
             let start = maxArgs - diff
             for index in start..<(maxArgs) {
-                self.paramVars["\(index+1)"] = ""
+                self.argVars["\(index+1)"] = ""
             }
         }
-        
+
         self.variables["argcount"] = "\(originalCount)"
     }
-    
-    public func varsForDisplay() -> [String] {
-        var vars:[String] = []
-        
-        for (key, value) in self.paramVars {
-            vars.append("\(key): \(value)")
+
+    func consumeToken(_ token:String) -> Bool {
+        self.advance()
+        return currentLineTokenValueIs(token)
+    }
+
+    func currentLineTokenValueIs(_ token:String) -> Bool {
+        guard let line = self.currentLine else {
+            return false
         }
-        
-        for (key, value) in self.variables {
-            vars.append("\(key): \(value)")
+
+        if line.token == nil {
+            line.token = ScriptParser().parse(line.originalText)
         }
-        
-        return vars
-    }
-    
-    public func execute() {
-//        seq.currentIdx = 1
-        
-        for t in marker {
-            evalToken(t)
+
+        guard let t = line.token else {
+            return false
         }
+        guard case let .token(v) = t else {
+            return false
+        }
+
+        return v == token
     }
-    
-    public func getParamVar(identifier:String) -> String? {
-        return self.paramVars[identifier]
+
+    func pushCurrentLineToIfStack() -> Bool {
+        guard let line = self.currentLine else {
+            return false
+        }
+
+        return pushLineToIfStack(line)
     }
-    
-    public func getVariable(identifier:String) -> String? {
-        return self.variables[identifier]
+
+    func pushLineToIfStack(_ line:ScriptLine) -> Bool {
+        self.ifStack.push(line)
+        return true
     }
-    
-    public func setVariable(identifier:String, value:String) {
-        self.variables[identifier] = value
+
+    func popIfStack() -> (Bool, ScriptLine?) {
+        guard self.ifStack.hasItems() else {
+            return (false, nil)
+        }
+
+        let line = self.ifStack.pop()
+        return (true, line)
     }
-    
-    public func removeVariable(identifier:String) {
-        self.variables.removeValueForKey(identifier)
+
+    func advance() {
+        currentLineNumber += 1
     }
-    
-    public func localVarsCopy() -> [String:String] {
-        let copy = self.variables
-        return copy
+
+    func retreat() {
+        currentLineNumber -= 1
     }
-    
-    public func gotoLabel(label:String, params:[String], previousLine:Int, isGosub:Bool = false) -> Bool {
-        
-        if isGosub && label.lowercaseString == "clear" {
-            
-            self.gosubStack.clear()
-            
+
+    func advanceToNextBlock() -> Bool {
+        guard let target = self.ifStack.last else {
+            return false
+        }
+
+        if let endOfBlock = target.endOfBlock {
+            self.currentLineNumber = endOfBlock
             return true
         }
-        
-        let returnIdx = self.marker.currentIdx
-        
-        let seq = TokenSequence()
-        seq.tree = self.tree
-        let cur = seq.generate()
-        
-        var found = false
-        
-        let trimmed = label.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).lowercaseString
-        
-        while let token = cur.next() {
-            if let labelToken = token as? LabelToken where labelToken.characters.lowercaseString == trimmed {
-                found = true
-                
-                if params.count > 0 || isGosub {
-                    
-                    let gosub = GosubContext(
-                        label: labelToken,
-                        labelIndex: self.marker.currentIdx,
-                        returnLine: previousLine,
-                        returnIndex:returnIdx,
-                        params: params,
-                        isGosub: isGosub,
-                        marker: self.marker,
-                        current: self.current)
 
-                    self.setRegexVars(params)
+        while currentLineNumber < lines.count {
 
-                    if isGosub && self.gosubContext != nil && self.gosubContext!.isGosub {
-                        self.gosubStack.push(self.gosubContext!)
+            self.advance()
+
+            guard let line = self.currentLine else {
+                return false
+            }
+
+            guard let currentIf = self.ifStack.last else {
+                return false
+            }
+
+            if line.token == nil {
+                line.token = ScriptParser().parse(line.originalText)
+            }
+
+            guard let lineToken = line.token else {
+                continue
+            }
+
+            switch lineToken {
+            case .token(let element):
+                if element == "}" {
+
+                    if currentIf.lineNumber == target.lineNumber {
+                        _ = self.popIfStack()
+                        currentIf.endOfBlock = self.currentLineNumber
+                        return true
                     }
-                    
-                    self.gosubContext = gosub
-                    
-                    if isGosub {
-                        self.gosubStack.push(gosub)
+
+                    let (popped, _) = self.popIfStack()
+                    if !popped {
+                        return false
                     }
                 }
-                
-                break
+            case .ifArgSingle: return true
+            case .ifArg:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .ifArgNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            case .ifSingle: return true
+            case .If:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .ifNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            case .elseSingle: return true
+            case .Else:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+            case .elseNeedsBrace:
+                if !self.pushCurrentLineToIfStack() {
+                    return false
+                }
+                if !self.consumeToken("{") {
+                    return false
+                }
+            default:
+                continue
+            }
+        }
+
+        return false
+    }
+
+    func advanceToEndOfBlock() -> Bool {
+
+        while currentLineNumber < lines.count {
+
+            self.advance()
+
+            guard let line = self.currentLine else {
+                return false
+            }
+
+            if line.token == nil {
+                line.token = ScriptParser().parse(line.originalText)
+            }
+
+            guard let lineToken = line.token else {
+                return false
+            }
+
+            if !self.ifStack.hasItems() && lineToken.isTopLevelIf {
+                self.retreat()
+                return true
+            }
+
+            if lineToken.isSingleToken {
+                continue
+            }
+
+            if lineToken.isIfToken || lineToken.isElseToken {
+                _ = self.pushCurrentLineToIfStack()
+                if !self.advanceToNextBlock() {
+                    return false
+                }
+                continue
+            }
+            else {
+                self.retreat()
+                return true
             }
         }
         
-        seq.currentIdx -= 1
-        
-        if found {
-            self.marker = seq
-            self.current = cur
-        }
-        
-        return found
+        return false
+    }
+    
+    func simplify(_ text:String) -> String {
+        return self.variableEvaluator.eval(text, self.defaultSettings())
     }
 
-    public func setRegexVars(vars:[String]) {
+    func simplifyAction(_ text:String) -> String {
+        return self.variableEvaluator.eval(text, self.actionSettings())
+    }
+
+    func actionSettings() -> VariableContext {
+        let ctx = VariableContext()
+        ctx.add("$", "\\$", self.actionVars)
+        ctx.add("%", "%", self.variables)
+        ctx.add("%", "%", self.argVars)
+        ctx.add("$", "\\$", self.globalVars())
+        return ctx
+    }
+
+    func defaultSettings() -> VariableContext {
+        let ctx = VariableContext()
+        ctx.add("$", "\\$", self.regexVars)
+        ctx.add("&", "&", self.labelVars)
+        ctx.add("%", "%", self.variables)
+        ctx.add("%", "%", self.argVars)
+        ctx.add("$", "\\$", self.globalVars())
+        return ctx
+    }
+
+    func setRegexVars(_ vars:[String]) {
         self.regexVars = [:]
-        
-        for (index, param) in vars.enumerate() {
+
+        for (index, param) in vars.enumerated() {
             self.regexVars["\(index)"] = param
         }
     }
-    
-    public func popGosub() -> GosubContext? {
-        if self.gosubStack.hasItems() {
-            let last = self.gosubStack.pop()
-            self.marker = last.marker
-            self.current = last.current
-            self.gosubContext = self.gosubStack.lastItem()
-            return last
-        }
-        return nil
-    }
-    
-    public func roundtime() -> Double? {
-        return self.globalVars?()["roundtime"]?.toDouble()
-    }
-    
-    public func next() -> Token? {
-        let nextToken = self.current.next()
-        
-        if let token = nextToken {
-            evalToken(token)
-        }
-        
-        self.lastToken = nextToken
-        return nextToken
-    }
-    
-    public func evalToken(token:Token) {
-        if(token is BranchToken) {
-            let branchToken = token as! BranchToken
-            if(!evalIf(branchToken)) {
-                let last = self.marker.branchStack.lastItem()!
-                if last.sequence.branchStack.hasItems() {
-                    last.sequence.branchStack.pop()
-                } else {
-                    self.marker.branchStack.pop()
-                }
-            }
-        }
-        
-        if token is EvalCommandToken {
-           self.evalEvalCommand(token as! EvalCommandToken)
-        }
 
-        if !(token.name == "whitespace") {
-            self.results.append(token)
-        }
-    }
-    
-    private func evalEvalCommand(token:EvalCommandToken) {
-        let evaluator = ExpressionEvaluator()
-        token.lastResult = evaluator.eval(self, token.expression, self.simplify)
-    }
-    
-    private func evalIf(token:BranchToken) -> Bool {
-        if let count = token.argumentCheck {
-            let result = self.params.count >= count
-            token.lastResult = ExpressionEvalResult(
-                result:EvalResult.Boolean(val:result),
-                info:"\(self.params.count) >= \(count) = \(result)",
-                matchGroups: nil)
-            return result
-        }
-        
-        let lastBranchToken = self.lastToken as? BranchToken
-        var lastBranchResult = false
-        
-        if let lastBToken = lastBranchToken {
-            lastBranchResult = getBoolResult(lastBToken.lastResult?.result)
-        }
-        
-        let evaluator = ExpressionEvaluator()
-        
-        if token.name == "if" && token.expression.count > 0 {
-            let res = evaluator.eval(self, token.expression, self.simplify)
-            token.lastResult = res
-            lastTopIfResult = getBoolResult(res.result)
+    func setLabelVars(_ vars:[String]) {
+        self.labelVars = [:]
 
-            if let groups = res.matchGroups {
-                self.regexVars = [:]
-                for (index, param) in groups.enumerate() {
-                    self.regexVars["\(index)"] = param
-                }
-            }
-            
-            return lastTopIfResult
-        } else if token.name == "elseif" && !lastTopIfResult && lastBranchToken != nil && !lastBranchResult {
-           
-            if token.expression.count > 0 {
-                let res = evaluator.eval(self, token.expression, self.simplify)
-                token.lastResult = res
+        for (index, param) in vars.enumerated() {
+            self.labelVars["\(index)"] = param
+        }
+    }
+    
+    func setActionVars(_ vars:[String]) {
+        self.actionVars = [:]
 
-                if let groups = res.matchGroups {
-                    self.regexVars = [:]
-                    for (index, param) in groups.enumerate() {
-                        self.regexVars["\(index)"] = param
-                    }
-                }
-                
-                return getBoolResult(res.result)
-            }
-            
-            token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: true), info:"true", matchGroups:nil)
-            return true
+        for (index, param) in vars.enumerated() {
+            self.actionVars["\(index)"] = param
         }
-       
-        token.lastResult = ExpressionEvalResult(result:EvalResult.Boolean(val: false), info:"false", matchGroups:nil)
-        return false
-    }
-    
-    public func getBoolResult(result:EvalResult?) -> Bool {
-        
-        if result == nil {
-            return false
-        }
-        
-        switch(result!) {
-        case .Boolean(let x):
-            return x
-        default:
-            return false
-        }
-    }
-    
-    public func simplify(data:String) -> String {
-        
-        let mutable = RegexMutable(data)
-        
-        var count = 0
-        let maxIterations = 15
-        
-        var last:String? = nil
-        
-        repeat {
-            last = String(mutable)
-            simplifyImpl(mutable)
-            count += 1
-        } while count < maxIterations && last != mutable && hasPotentialVars(mutable)
-        
-        return String(mutable)
-    }
-    
-    private func hasPotentialVars(mutable:NSMutableString)->Bool {
-        
-        if (mutable.rangeOfString("$").location != NSNotFound) { return true }
-        if (mutable.rangeOfString("%").location != NSNotFound) { return true }
-        
-        return false
-    }
-    
-    private func simplifyImpl(mutable:NSMutableString)->Void {
-
-        if self.actionVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-            self.replace("\\$", target: mutable, dict: self.actionVars)
-        }
-        
-        if self.regexVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-
-            self.replace("\\$", target: mutable, dict: self.regexVars)
-        }
-
-        if mutable.rangeOfString("%").location != NSNotFound {
-            
-            self.replace("%", target: mutable, dict: self.variables)
-            self.replace("%", target: mutable, dict: self.paramVars)
-        }
-        
-        if mutable.rangeOfString("$").location != NSNotFound && self.globalVars != nil {
-            
-            self.replace("\\$", target: mutable, dict: self.globalVars!())
-        }
-    }
-    
-    private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
-        
-        let sortedKeys = dict.keys.sort({ $0.0.characters.count > $0.1.characters.count })
-        
-        func doReplace() {
-            for key in sortedKeys {
-                
-                let replaceCanidate = "\(prefix.trimPrefix("\\"))\(key)"
-                
-                if target.containsString(replaceCanidate) {
-                    target["\(prefix)\(key)"] ~= dict[key] ?? ""
-                    break
-                }
-            }
-        }
-        
-        let maxIterations = 15
-        var count = 0
-        
-        repeat {
-            doReplace()
-            count += 1
-        }
-        while count < maxIterations && target.containsString(prefix.trimPrefix("\\"))
-    }
-    
-    public func simplify(tokens:Array<Token>) -> String {
-        var text = ""
-        
-        for t in tokens {
-            
-            if t.name == "quoted-string" {
-                let res = self.simplify(t.characters)
-                text += "\"\(res)\""
-            }
-            else if let idx = t as? IndexerToken {
-                
-                let replaced = self.simplify(idx.variable)
-               
-                var options = replaced.componentsSeparatedByString("|")
-                let indexer = Int(self.simplify(idx.indexer)) ?? -1
-                if indexer > -1 && options.count > indexer {
-                    text += options[indexer]
-                } else {
-                    text += replaced
-                }
-                
-            } else {
-                text += t.characters
-            }
-        }
-        
-        return self.simplify(text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()))
-    }
-    
-    public func simplifyEach(tokens:Array<Token>) -> String {
-        var result = ""
-        
-        for t in tokens {
-            if t is WhiteSpaceToken {
-                result += t.characters
-            }
-            else if t.name == "quoted-string" {
-                let res = self.simplify(t.characters)
-                result += "\"\(res)\""
-            }
-            else if let idx = t as? IndexerToken {
-                
-                let replaced = self.simplify(idx.variable)
-               
-                var options = replaced.componentsSeparatedByString("|")
-                let indexer = Int(self.simplify(idx.indexer)) ?? -1
-                if indexer > -1 && options.count > indexer {
-                    result += options[indexer]
-                } else {
-                    result += replaced
-                }
-                
-            } else {
-                result += self.simplify(t.characters)
-            }
-        }
-        
-        return result
-    }
-}
-
-struct BranchContext {
-    var sequence:BranchTokenSequence
-    var generator:AnyGenerator<Token>
-}
-
-class TokenSequence : SequenceType {
-    var tree:[Token]
-    var currentIdx:Int
-    var branchStack:Stack<BranchContext>
-    
-    init () {
-        currentIdx = -1
-        tree = [Token]()
-        branchStack = Stack<BranchContext>()
-    }
-    
-    func generate() -> AnyGenerator<Token> {
-        return AnyGenerator(body: {
-            if let b = self.branchStack.lastItem() {
-                if let next = b.generator.next() {
-                    return next
-                } else {
-                    self.branchStack.pop()
-                }
-            }
-            
-            let bodyToken = self.getNext()
-            if let nextToken = bodyToken {
-                if let branchToken = nextToken as? BranchToken {
-                    let seq = BranchTokenSequence(branchToken)
-                    let generator = seq.generate()
-                    self.branchStack.push(BranchContext(sequence: seq, generator: generator))
-                }
-                return nextToken
-            } else {
-                return .None
-            }
-        })
-    }
-    
-    func getNext() -> Token? {
-        var token:Token?
-        self.currentIdx += 1
-        if(self.currentIdx > -1 && self.currentIdx < self.tree.count) {
-            token = self.tree[self.currentIdx]
-        }
-        
-        if let _ = token as? WhiteSpaceToken {
-            token = getNext()
-        }
-        
-        return token
-    }
-}
-
-class BranchTokenSequence : SequenceType {
-    var token:BranchToken
-    var branchStack:Stack<BranchContext>
-    var currentIndex:Int
-    
-    init (_ token:BranchToken) {
-        self.token = token
-        currentIndex = -1
-        branchStack = Stack<BranchContext>()
-    }
-    
-    func generate() -> AnyGenerator<Token> {
-        return AnyGenerator<Token>(body: {
-            if let b = self.branchStack.lastItem() {
-                if let next = b.generator.next() {
-                    return next
-                } else {
-                    self.branchStack.pop()
-                }
-            }
-            
-            let bodyToken = self.getNext()
-            if let nextToken = bodyToken {
-                if let branchToken = nextToken as? BranchToken {
-                    let seq = BranchTokenSequence(branchToken)
-                    let generator = seq.generate()
-                    self.branchStack.push(BranchContext(sequence: seq, generator: generator))
-                    return branchToken
-                }
-                
-                return nextToken
-            } else {
-                return .None
-            }
-        })
-    }
-    
-    func getNext() -> Token? {
-        var token:Token?
-        self.currentIndex += 1
-        if(self.currentIndex < self.token.body.count) {
-            token = self.token.body[self.currentIndex]
-        }
-        
-        if let _ = token as? WhiteSpaceToken {
-            token = getNext()
-        }
-        
-        return token
     }
 }

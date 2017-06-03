@@ -11,7 +11,7 @@ import Foundation
 @objc
 class SubstituteLoader : NSObject {
     
-    class func newInstance(context:GameContext, fileSystem:FileSystem) -> SubstituteLoader {
+    class func newInstance(_ context:GameContext, fileSystem:FileSystem) -> SubstituteLoader {
         return SubstituteLoader(context: context, fileSystem: fileSystem)
     }
     
@@ -29,7 +29,7 @@ class SubstituteLoader : NSObject {
         var data:String?
         
         do {
-            data = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+            data = try self.fileSystem.string(withContentsOfFile: configFile, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return
         }
@@ -42,23 +42,23 @@ class SubstituteLoader : NSObject {
         
         let pattern = "^#subs \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?$"
         
-        let target = SwiftRegex(target: data!, pattern: pattern, options: [NSRegularExpressionOptions.AnchorsMatchLines, NSRegularExpressionOptions.CaseInsensitive])
+        let target = SwiftRegex(target: NSMutableString(string: data!), pattern: pattern, options: [NSRegularExpression.Options.anchorsMatchLines, NSRegularExpression.Options.caseInsensitive])
         
         let groups = target.allGroups()
         
         for group in groups {
             if group.count == 4 {
-                let sub = group[1]
-                let action = group[2]
+                let sub = group[1]!
+                let action = group[2]!
                 var className = ""
                 
-                if group[3] != regexNoGroup {
-                    className = group[3]
+                if group[3] != nil {
+                    className = group[3]!
                 }
                 
                 let item = Substitute(sub, action, className)
                 
-                self.context.substitutes.addObject(item)
+                self.context.substitutes.add(item)
             }
         }
     }
@@ -68,7 +68,7 @@ class SubstituteLoader : NSObject {
         
         var subs = ""
         
-        self.context.substitutes.enumerateObjectsUsingBlock({ object, index, stop in
+        self.context.substitutes.enumerateObjects({ object, index, stop in
             let sub = object as! Substitute
             let pattern = sub.pattern != nil ? sub.pattern! : ""
             let action = sub.action != nil ? sub.action! : ""

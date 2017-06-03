@@ -32,12 +32,12 @@ class HighlightCellView: NSView {
         }
     }
     
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
         
         let strokeWidth:CGFloat = 3.5
         
         NSBezierPath.setDefaultLineWidth(strokeWidth)
-        NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.RoundLineCapStyle)
+        NSBezierPath.setDefaultLineCapStyle(NSLineCapStyle.roundLineCapStyle)
         
         if let bg = backgroundColor {
             bg.setFill()
@@ -49,10 +49,10 @@ class HighlightCellView: NSView {
             self.selectedColor.setStroke()
             let border = NSBezierPath()
             let borderRect = NSMakeRect(self.bounds.origin.x, self.bounds.origin.y, self.bounds.width-2, self.bounds.height)
-            border.appendBezierPathWithRect(borderRect)
+            border.appendRect(borderRect)
             border.stroke()
         }
         
-        super.drawRect(dirtyRect)
+        super.draw(dirtyRect)
     }
 }

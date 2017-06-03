@@ -9,14 +9,14 @@
 import Foundation
 
 enum OperationType {
-    case Insert, Delete, Noop
+    case insert, delete, noop
     
     var description: String {
         get {
             switch self {
-            case .Insert: return "+"
-            case .Delete: return "-"
-            case .Noop: return "="
+            case .insert: return "+"
+            case .delete: return "-"
+            case .noop: return "="
             }
         }
     }
@@ -28,15 +28,15 @@ struct Operation<T> {
     let elements: [T]
     
     var elementsString: String {
-        return elements.map { "\($0)" }.joinWithSeparator("")
+        return elements.map { "\($0)" }.joined(separator: "")
     }
     
     var description: String {
         get {
             switch type {
-            case .Insert:
+            case .insert:
                 return "[+\(elementsString)]"
-            case .Delete:
+            case .delete:
                 return "[-\(elementsString)]"
             default:
                 return "\(elementsString)"
@@ -51,11 +51,11 @@ struct Operation<T> {
 /// - parameter before: Old list of elements.
 /// - parameter after: New list of elements
 /// - returns: A list of operation (insert, delete, noop) to transform the list *before* to the list *after*.
-func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operation<T>] {
+func diff<T>(_ before: [T], after: [T]) -> [Operation<T>] where T: Equatable, T: Hashable {
     // Create map of indices for every element
     var beforeIndices = [T: [Int]]()
-    for (index, elem) in before.enumerate() {
-        var indices = beforeIndices.indexForKey(elem) != nil ? beforeIndices[elem]! : [Int]()
+    for (index, elem) in before.enumerated() {
+        var indices = beforeIndices.index(forKey: elem) != nil ? beforeIndices[elem]! : [Int]()
         indices.append(index)
         beforeIndices[elem] = indices
     }
@@ -64,7 +64,7 @@ func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operat
     var afterStart = 0
     var maxOverlayLength = 0
     var overlay = [Int: Int]() // remembers *overlayLength* of previous element
-    for (index, elem) in after.enumerate() {
+    for (index, elem) in after.enumerated() {
         var _overlay = [Int: Int]()
         // Element must be in *before* list
         if let elemIndices = beforeIndices[elem] {
@@ -89,16 +89,16 @@ func diff<T where T: Equatable, T: Hashable>(before: [T], after: [T]) -> [Operat
     if maxOverlayLength == 0 {
         // No overlay; remove before and add after elements
         if before.count > 0 {
-            operations.append(Operation(type: .Delete, elements: before))
+            operations.append(Operation(type: .delete, elements: before))
         }
         if after.count > 0 {
-            operations.append(Operation(type: .Insert, elements: after))
+            operations.append(Operation(type: .insert, elements: after))
         }
     } else {
         // Recursive call with elements before overlay
         operations += diff(Array(before[0..<beforeStart]), after: Array(after[0..<afterStart]))
         // Noop for longest overlay
-        operations.append(Operation(type: .Noop, elements: Array(after[afterStart..<afterStart+maxOverlayLength])))
+        operations.append(Operation(type: .noop, elements: Array(after[afterStart..<afterStart+maxOverlayLength])))
         // Recursive call with elements after overlay
         operations += diff(Array(before[beforeStart+maxOverlayLength..<before.count]), after: Array(after[afterStart+maxOverlayLength..<after.count]))
     }

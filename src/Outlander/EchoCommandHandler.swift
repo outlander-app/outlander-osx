@@ -11,9 +11,9 @@ import Foundation
 @objc
 class EchoCommandHandler : NSObject, CommandHandler {
     
-    private var relay:CommandRelay
+    fileprivate var relay:CommandRelay
     
-    class func newInstance(relay:CommandRelay) -> EchoCommandHandler {
+    class func newInstance(_ relay:CommandRelay) -> EchoCommandHandler {
         return EchoCommandHandler(relay)
     }
     
@@ -21,32 +21,32 @@ class EchoCommandHandler : NSObject, CommandHandler {
         self.relay = relay
     }
     
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#echo")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#echo")
     }
     
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
         let echo = command
-            .substringFromIndex(command.startIndex.advancedBy(5))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 5))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        var groups = echo["^(>(\\w+)\\s)?((#[a-fA-F0-9]+)(,(#[a-fA-F0-9]+))?\\s)?(.*)"].groups()
+        var groups = echo["^(>(\\w+)\\s)?((#[a-fA-F0-9]+)(,(#[a-fA-F0-9]+))?\\s)?(.*)"].allGroups().first!
         
         var window = groups[2]
         var foregroundColor = groups[4]
         var backgroundColor = groups[6]
         var text = groups[7]
         
-        window = window == regexNoGroup ? "" : window
-        foregroundColor = foregroundColor == regexNoGroup ? "" : foregroundColor
-        backgroundColor = backgroundColor == regexNoGroup ? "" : backgroundColor
-        text = text == regexNoGroup ? "" : text
+        window = window == nil ? "" : window
+        foregroundColor = foregroundColor == nil ? "" : foregroundColor
+        backgroundColor = backgroundColor == nil ? "" : backgroundColor
+        text = text == nil ? "" : text
         
         let tag = TextTag()
-        tag.text = "\(text)\n"
-        tag.color = foregroundColor
-        tag.backgroundColor = backgroundColor
-        tag.targetWindow = window.lowercaseString
+        tag.text = "\(text!)\n"
+        tag.color = foregroundColor!
+        tag.backgroundColor = backgroundColor!
+        tag.targetWindow = window!.lowercased()
         self.relay.sendEcho(tag)
     }
 }

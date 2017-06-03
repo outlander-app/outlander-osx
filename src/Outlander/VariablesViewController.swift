@@ -8,22 +8,22 @@
 
 import Cocoa
 
-public class GlobalVariable : NSObject {
+open class GlobalVariable : NSObject {
     var name:String {
         willSet {
-            self.willChangeValueForKey("name")
+            self.willChangeValue(forKey: "name")
         }
         didSet {
-            self.didChangeValueForKey("name")
+            self.didChangeValue(forKey: "name")
         }
     }
     
     var val:String {
         willSet {
-            self.willChangeValueForKey("val")
+            self.willChangeValue(forKey: "val")
         }
         didSet {
-            self.didChangeValueForKey("val")
+            self.didChangeValue(forKey: "val")
         }
     }
     
@@ -32,72 +32,72 @@ public class GlobalVariable : NSObject {
         self.val = val
     }
     
-    public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
+    open override class func automaticallyNotifiesObservers(forKey key: String) -> Bool {
         if key == "name" || key == "val" {
             return true
         } else {
-            return super.automaticallyNotifiesObserversForKey(key)
+            return super.automaticallyNotifiesObservers(forKey: key)
         }
     }
 }
 
-public class VariablesViewController: NSViewController, SettingsView, NSTableViewDataSource {
+open class VariablesViewController: NSViewController, SettingsView, NSTableViewDataSource {
 
     @IBOutlet weak var tableView: NSTableView!
     
-    private var _context:GameContext?
-    private var _appSettingsLoader:AppSettingsLoader?
+    fileprivate var _context:GameContext?
+    fileprivate var _appSettingsLoader:AppSettingsLoader?
     
-    private var _globalVars:[GlobalVariable] = []
+    fileprivate var _globalVars:[GlobalVariable] = []
     
-    public var selectedItem:GlobalVariable? {
+    open var selectedItem:GlobalVariable? {
         willSet {
-            self.willChangeValueForKey("selectedItem")
+            self.willChangeValue(forKey: "selectedItem")
         }
         didSet {
-            self.didChangeValueForKey("selectedItem")
+            self.didChangeValue(forKey: "selectedItem")
         }
     }
     
-    public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
+    open override class func automaticallyNotifiesObservers(forKey key: String) -> Bool {
         if key == "selectedItem" {
             return true
         } else {
-            return super.automaticallyNotifiesObserversForKey(key)
+            return super.automaticallyNotifiesObservers(forKey: key)
         }
     }
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         self.reloadVars()
     }
     
-    public func save() {
+    open func save() {
     }
     
-    public func setContext(context:GameContext) {
+    open func setContext(_ context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
     }
     
-    private func reloadVars(){
+    fileprivate func reloadVars(){
         let vars = _context!.globalVars.copyValues()
       
         _globalVars = []
         
-        for key in vars {
+        for key in vars! {
             let global = GlobalVariable(key.0 as! String, key.1 as! String)
             _globalVars.append(global)
         }
         
-        _globalVars = _globalVars.sort {
+        _globalVars = _globalVars.sorted {
             $0.name.localizedCaseInsensitiveCompare($1.name)
-                == NSComparisonResult.OrderedAscending
+                == ComparisonResult.orderedAscending
         }
         
         self.tableView.reloadData()
     }
     
-    @IBAction func addRemoveAction(sender: NSSegmentedControl) {
+    @IBAction func addRemoveAction(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
            
             let global = GlobalVariable("", "")
@@ -106,10 +106,10 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
             
             let count = _globalVars.count - 1;
             
-            let idx = NSIndexSet(index: count)
+            let idx = IndexSet(integer: count)
             self.tableView.reloadData()
             self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
-            self.tableView.scrollRowToVisible(idx.firstIndex)
+            self.tableView.scrollRowToVisible(idx.first!)
         } else {
             
             let count = _globalVars.count
@@ -123,7 +123,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
             
             self.selectedItem = nil;
             
-            _context!.globalVars.removeObjectForKey(item.name)
+            _context!.globalVars.removeObject(forKey: item.name)
             
             self.reloadVars()
         }
@@ -131,11 +131,11 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
     
     // MARK: NSTableViewDataSource
     
-    public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    open func numberOfRows(in tableView: NSTableView) -> Int {
         return _globalVars.count;
     }
     
-    public func tableViewSelectionDidChange(notification:NSNotification) {
+    open func tableViewSelectionDidChange(_ notification:Notification) {
         let selectedRow = self.tableView.selectedRow
         if(selectedRow > -1
             && selectedRow < _globalVars.count) {
@@ -147,7 +147,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
         }
     }
     
-    public func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row: Int) -> AnyObject? {
+    open func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         
         if row >= _globalVars.count {
             return "";

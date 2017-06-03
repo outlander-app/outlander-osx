@@ -7,3 +7,4 @@ podfile.lock
 gemfile.lock
 xcuserdata
 .idea
+*.orig

@@ -8,8 +8,6 @@
 
 #import "TestViewController.h"
 #import "VitalsViewController.h"
-#import "HTMLNode.h"
-#import "HTMLParser.h"
 #import "TextTag.h"
 #import "NSString+Categories.h"
 #import "NSColor+Categories.h"
@@ -308,6 +306,8 @@
     [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
+
+//    [_spelltimeNotifier set:@"some spell"];
 
 //    __CommandTextField.maxHistoryLength = 3;
 

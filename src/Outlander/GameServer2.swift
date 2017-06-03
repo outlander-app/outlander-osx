@@ -8,62 +8,62 @@
 
 import Foundation
 
-public class Connection : NSObject, NSStreamDelegate {
+open class Connection : NSObject, StreamDelegate {
     
-    private var inputStream: NSInputStream?
-    private var outputStream: NSOutputStream?
+    fileprivate var inputStream: InputStream?
+    fileprivate var outputStream: OutputStream?
     
-    func connect(host:String, port:Int) {
+    func connect(_ host:String, port:Int) {
         print("connecting...")
         
-        NSStream.getStreamsToHostWithName(host, port: port, inputStream: &inputStream, outputStream: &outputStream)
+        Stream.getStreamsToHost(withName: host, port: port, inputStream: &inputStream, outputStream: &outputStream)
         
         self.inputStream?.delegate = self
         self.outputStream?.delegate = self
         
-        self.inputStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
-        self.outputStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        self.inputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+        self.outputStream?.schedule(in: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
         
         self.inputStream?.open()
         self.outputStream?.open()
     }
     
-    public func writeData(str:String) {
+    open func writeData(_ str:String) {
         let test = str + "\r\n"
         print("writing: \(test)")
-        let data = test.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-        self.outputStream?.write(UnsafePointer<UInt8>(data.bytes), maxLength: data.length)
+        let data = test.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+        self.outputStream?.write((data as NSData).bytes.bindMemory(to: UInt8.self, capacity: data.count), maxLength: data.count)
     }
     
-    public func stream(stream: NSStream, handleEvent eventCode: NSStreamEvent) {
+    open func stream(_ stream: Stream, handle eventCode: Stream.Event) {
         print("stream event: \(eventCode)")
         
         switch(eventCode) {
-        case NSStreamEvent.OpenCompleted:
+        case Stream.Event.openCompleted:
             print("Stream opened")
-        case NSStreamEvent.HasBytesAvailable:
+        case Stream.Event.hasBytesAvailable:
             print("bytes")
             readBytes(stream)
-        case NSStreamEvent.ErrorOccurred:
+        case Stream.Event.errorOccurred:
             print("error")
-        case NSStreamEvent.EndEncountered:
+        case Stream.Event.endEncountered:
             print("end")
             stream.close()
-            stream.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+            stream.remove(from: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
         default:
             print("unknown event!")
         }
     }
     
-    private func readBytes(theStream:NSStream){
+    fileprivate func readBytes(_ theStream:Stream){
         if (theStream == inputStream) {
             
-            var buffer = [UInt8](count: 1024, repeatedValue: 0)
+            var buffer = [UInt8](repeating: 0, count: 1024)
             
             while inputStream!.hasBytesAvailable {
                 let length = inputStream!.read(&buffer, maxLength: buffer.count)
                 if(length > 0) {
-                    let data = NSString(bytes: buffer, length: length, encoding: NSUTF8StringEncoding)
+                    let data = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf8.rawValue)
                     print("recieved data: \(data)")
                 }
             }

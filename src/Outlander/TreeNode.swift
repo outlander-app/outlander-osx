@@ -9,7 +9,7 @@
 import Foundation
 
 @objc(OLTreeNode)
-public class TreeNode : NSObject {
+open class TreeNode : NSObject {
     var id:String
     var parent:TreeNode?
     
@@ -20,20 +20,20 @@ public class TreeNode : NSObject {
     
     // Heuristic Value
     @objc
-    public var hValue: Int = 0
+    open var hValue: Int = 0
     
     // Move Cost
     @objc
-    public var gValue: Int = 0
+    open var gValue: Int = 0
     
     // The total cost (h + g)
     @objc
-    public var fValue: Int {
+    open var fValue: Int {
         return hValue + gValue
     }
     
     @objc
-    public override var hashValue : Int {
+    open override var hashValue : Int {
         return self.id.hashValue
     }
 }

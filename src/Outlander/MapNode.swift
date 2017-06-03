@@ -17,7 +17,7 @@ final class MapNode {
     var arcs:[MapArc]
     var position:MapPosition
     
-    private let cardinalDirs = [
+    fileprivate let cardinalDirs = [
         "north",
         "south",
         "east",
@@ -40,7 +40,7 @@ final class MapNode {
         self.arcs = arcs
     }
     
-    func arcWithId(id:String) -> MapArc? {
+    func arcWithId(_ id:String) -> MapArc? {
         return arcs.filter { $0.destination == id }.first
     }
     
@@ -48,7 +48,7 @@ final class MapNode {
         return arcs.filter { !self.cardinalDirs.contains($0.exit) }
     }
     
-    func hasMatchingDescription(description:String) -> Bool {
+    func hasMatchingDescription(_ description:String) -> Bool {
 
         for desc in descriptions {
             

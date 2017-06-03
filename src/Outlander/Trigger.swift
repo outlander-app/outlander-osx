@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Trigger : NSObject {
+open class Trigger : NSObject {
     var trigger:String?
     var action:String?
     var actionClass:String?

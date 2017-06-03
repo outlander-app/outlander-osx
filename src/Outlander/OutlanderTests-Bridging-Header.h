@@ -29,3 +29,4 @@
 @import PEGKit;
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "StubFileSystem.h"
+#import "ObjC.h"

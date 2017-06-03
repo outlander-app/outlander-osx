@@ -18,8 +18,8 @@ class PresetLoaderTester : QuickSpec {
         let context = GameContext()
         let loader = PresetLoader(context: context, fileSystem: fileSystem)
 
-        func presetAtIndex(index: Int) -> ColorPreset {
-            var sorted = context.presets.sort { $0.0 < $1.0 }
+        func presetAtIndex(_ index: Int) -> ColorPreset {
+            var sorted = context.presets.sorted { $0.0 < $1.0 }
             return sorted[index].1
         }
 

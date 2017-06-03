@@ -11,7 +11,7 @@ import Foundation
 @objc
 class VitalsLoader : NSObject {
     
-    class func newInstance(context:GameContext, fileSystem:FileSystem) -> VitalsLoader {
+    class func newInstance(_ context:GameContext, fileSystem:FileSystem) -> VitalsLoader {
         return VitalsLoader(context: context, fileSystem: fileSystem)
     }
     
@@ -34,7 +34,7 @@ class VitalsLoader : NSObject {
         var json:String?
 
         do {
-            json = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+            json = try self.fileSystem.string(withContentsOfFile: configFile, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return
         }
@@ -76,7 +76,7 @@ class VitalsLoader : NSObject {
 }
 
 extension NSDictionary {
-    func stringValue(key:String, defaultVal:String = "") -> String {
+    func stringValue(_ key:String, defaultVal:String = "") -> String {
 
         if let value = self[key] as? String {
             return value
@@ -85,7 +85,7 @@ extension NSDictionary {
         return defaultVal
     }
 
-    func boolValue(key:String, defaultVal:Bool = false) -> Bool {
+    func boolValue(_ key:String, defaultVal:Bool = false) -> Bool {
 
         if let value = self[key] as? String {
             return value.toBool() ?? defaultVal

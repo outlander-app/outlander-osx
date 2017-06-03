@@ -9,17 +9,17 @@
 import Foundation
 
 @objc protocol TokenRecieverDelegate {
-    func didRecieveToken(token:Node)
+    func didRecieveToken(_ token:Node)
 }
 
-@objc public class ParseContext : NSObject {
+@objc open class ParseContext : NSObject {
     var nodes = [Node]()
     var consumedCharacters : String {
         let substring = __sourceString[__startIndex..<__currentIndex]
         return substring
     }
     
-    private let __sourceString : String
+    fileprivate let __sourceString : String
     let sourceLength:Int
     
     var current : Character
@@ -28,7 +28,7 @@ import Foundation
     
     var scanAdvanced = false
     
-    private var __marker : IndexingGenerator<String.CharacterView> {
+    fileprivate var __marker : IndexingIterator<String.CharacterView> {
         didSet {
             scanAdvanced = true
         }
@@ -38,8 +38,8 @@ import Foundation
         return current == eot
     }
     
-    private var __startIndex : String.Index
-    private var __currentIndex : String.Index
+    fileprivate var __startIndex : String.Index
+    fileprivate var __currentIndex : String.Index
     
     var startPosition : Int
     var currentPosition : Int
@@ -56,7 +56,7 @@ import Foundation
         
         current = eot
         
-        __marker = __sourceString.characters.generate()
+        __marker = __sourceString.characters.makeIterator()
         if let first = __marker.next() {
             current = first
             next = __marker.next()
@@ -73,8 +73,8 @@ import Foundation
         startPosition = currentPosition
     }
     
-    func createNode(children:[Node]? = nil) {
-        let node = Node(tagName.lowercaseString, value, attributes)
+    func createNode(_ children:[Node]? = nil) {
+        let node = Node(tagName.lowercased(), value, attributes)
         
         if let c = children {
             node.children = c
@@ -90,7 +90,7 @@ import Foundation
     //
     // Moves forward in the supplied string
     //
-    public func advance(){
+    open func advance(){
         if next != nil {
             current = next!
             next = __marker.next()
@@ -99,12 +99,12 @@ import Foundation
         }
         
         if(!complete) {
-            __currentIndex = __currentIndex.successor()
+            __currentIndex = __sourceString.characters.index(after: __currentIndex)
             currentPosition += 1
         }
     }
     
-    public func advanceTo(match:(Character)->Bool) {
+    open func advanceTo(_ match:(Character)->Bool) {
         while !complete {
             if match(current) {
                 return
@@ -113,33 +113,33 @@ import Foundation
         }
     }
     
-    public func advanceToIndex(index:String.Index) {
+    open func advanceToIndex(_ index:String.Index) {
         while(!complete && __currentIndex < index) {
             advance()
             //println("(\(complete)) adanceToIdx: \(index)  cur=\(__currentIndex)")
         }
     }
     
-    public override var description : String {
+    open override var description : String {
         return "Started at: \(startPosition), now at: \(currentPosition), having consumed \(consumedCharacters) and holding \(nodes)"
     }
 }
 
-@objc public class StormFrontTokenizer : NSObject {
+@objc open class StormFrontTokenizer : NSObject {
     
     class func newInstance() -> StormFrontTokenizer {
         return StormFrontTokenizer()
     }
     
-    private let attrTokenizer = AttributesTokenizer()
+    fileprivate let attrTokenizer = AttributesTokenizer()
     
-    private var  __contextStack = [ParseContext]()
+    fileprivate var  __contextStack = [ParseContext]()
     
     override init(){
         super.init()
     }
     
-    public func tokenize(input:String) -> [Node] {
+    open func tokenize(_ input:String) -> [Node] {
         
         let context = ParseContext(atPosition: 0, withMarker:input.startIndex, forString:input)
         
@@ -149,26 +149,26 @@ import Foundation
         return nodes
     }
     
-    private func scanContext(ctx:ParseContext) -> [Node] {
+    fileprivate func scanContext(_ ctx:ParseContext) -> [Node] {
         while !ctx.complete {
             scanTag(ctx)
         }
         return ctx.nodes
     }
     
-    private func pushContext(context:ParseContext, range:Range<String.Index>) -> [Node] {
+    fileprivate func pushContext(_ context:ParseContext, range:Range<String.Index>) -> [Node] {
         let newStr = context.__sourceString[range]
         let newContext = ParseContext(atPosition: 0, withMarker:newStr.startIndex, forString:newStr)
         return scanContext(newContext)
     }
     
-    private func scanTag(context:ParseContext) {
+    fileprivate func scanTag(_ context:ParseContext) {
         
         if context.startPosition == context.currentPosition
             && context.currentPosition == context.sourceLength - 1
             && context.current !=  "\r\n" {
             let length = context.sourceLength - 1
-            let data = context.__sourceString.substringFromIndex(context.__sourceString.startIndex.advancedBy(length))
+            let data = context.__sourceString.substring(from: context.__sourceString.characters.index(context.__sourceString.startIndex, offsetBy: length))
             let token = Node("text", data, nil)
             context.nodes.append(token)
             context.advance()
@@ -239,12 +239,12 @@ import Foundation
             // new tag
             //println("\n\n****new tag!****\n")
             let checker = "</\(context.tagName)>"
-            let endRange = context.__sourceString.rangeOfString(checker)
-            let childNodes = pushContext(context, range: context.__startIndex ..< endRange!.startIndex)
+            let endRange = context.__sourceString.range(of: checker)
+            let childNodes = pushContext(context, range: context.__startIndex ..< endRange!.lowerBound)
             context.createNode(childNodes)
             
             // advance to end of closing tag
-            context.advanceToIndex(endRange!.endIndex)
+            context.advanceToIndex(endRange!.upperBound)
             context.flushConsumedCharacters()
             return
         }

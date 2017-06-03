@@ -14,19 +14,19 @@ class PresetCommandHandler : NSObject, CommandHandler {
         return PresetCommandHandler()
     }
 
-    func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#preset")
+    func canHandle(_ command: String) -> Bool {
+        return command.lowercased().hasPrefix("#preset")
     }
 
-    func handle(command: String, withContext: GameContext) {
+    func handle(_ command: String, with withContext: GameContext) {
 
         let text = command
-            .substringFromIndex(command.startIndex.advancedBy(7))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            .substring(from: command.characters.index(command.startIndex, offsetBy: 7))
+            .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-        let options = text.componentsSeparatedByString(" ")
+        let options = text.components(separatedBy: " ")
 
-        if options.count > 0 && options[0].lowercaseString == "reload" {
+        if options.count > 0 && options[0].lowercased() == "reload" {
             let loader = PresetLoader.newInstance(withContext, fileSystem: LocalFileSystem())
             loader.load()
             withContext.events.echoText("Preset colors reloaded", mono: true, preset: "")
@@ -36,7 +36,7 @@ class PresetCommandHandler : NSObject, CommandHandler {
         handleAddUpdate(options, context: withContext)
     }
 
-    func handleAddUpdate(options: [String], context: GameContext) {
+    func handleAddUpdate(_ options: [String], context: GameContext) {
         guard options.count > 2 else {
             context.events.echoText("You must provide a preset name and value", mono: true, preset: "scripterror")
             return

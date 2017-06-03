@@ -188,7 +188,7 @@
         NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
         NSString *version = dict[@"CFBundleShortVersionString"];
         
-        [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Alpha", charInfo, version]];
+        [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Beta", charInfo, version]];
     }];
     
     _loginViewController.context = _gameContext;

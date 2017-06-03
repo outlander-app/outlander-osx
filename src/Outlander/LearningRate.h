@@ -9,13 +9,13 @@
 @interface LearningRate : NSObject
 
 @property (nonatomic, assign) UInt16 rateId;
-@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy, nonnull) NSString *desc;
 
-+(NSDictionary*)learningRates;
-+(LearningRate *)fromRate:(UInt16)rate;
-+(LearningRate *)fromDescription:(NSString *)desc;
++(NSDictionary* _Nonnull)learningRates;
++(LearningRate * _Nonnull)fromRate:(UInt16)rate;
++(LearningRate * _Nullable)fromDescription:(NSString * _Nonnull)desc;
 
-+(id)learningRate:(UInt16)rateId description:(NSString *)description;
--(id)initWith:(UInt16)rateId description:(NSString *)description;
++(id _Nonnull)learningRate:(UInt16)rateId description:(NSString * _Nonnull)description;
+-(id _Nonnull)initWith:(UInt16)rateId description:(NSString *_Nonnull)description;
 
 @end

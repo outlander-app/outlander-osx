@@ -25,7 +25,7 @@
     self.configFolder = @"Config";
     self.logsFolder = @"Logs";
     self.profilesFolder = @"Profiles";
-    self.scriptsFolder = @"Scripts";
+    self.scriptsFolder = @"Scripts-PreRelease";
     self.mapsFolder = @"Maps";
     self.soundsFolder = @"Sounds";
 

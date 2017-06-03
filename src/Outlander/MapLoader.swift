@@ -7,16 +7,21 @@
 //
 
 import Foundation
-import GlimpseXML
+//import GlimpseXML
+import AEXML
+
+enum MapErrors : Error {
+    case noFile
+}
 
 enum MapLoadResult {
-    case Success(MapZone)
-    case Error(ErrorType)
+    case success(MapZone)
+    case error(Error)
 }
 
 enum MapMetaResult {
-    case Success(MapInfo)
-    case Error(ErrorType)
+    case success(MapInfo)
+    case error(Error)
 }
 
 final class MapInfo {
@@ -42,10 +47,10 @@ func ==(lhs: MapInfo, rhs: MapInfo) -> Bool {
 
 final class MapLoader {
     
-    func loadFolder(folder: String) -> [MapMetaResult] {
+    func loadFolder(_ folder: String) -> [MapMetaResult] {
         
-        let fileManager = NSFileManager.defaultManager()
-        let enumerator:NSDirectoryEnumerator? = fileManager.enumeratorAtPath(folder)
+        let fileManager = FileManager.default
+        let enumerator:FileManager.DirectoryEnumerator? = fileManager.enumerator(atPath: folder)
         
         var files:[String] = []
         
@@ -58,99 +63,105 @@ final class MapLoader {
         return files.map { self.loadMeta($0, folder: folder) }
     }
     
-    func loadMeta(file: String, folder: String) -> MapMetaResult {
+    func loadMeta(_ file: String, folder: String) -> MapMetaResult {
         
         print("Loading \(file)")
         
         let filePath = folder.stringByAppendingPathComponent(file)
 
-        do {
-            let doc = try GlimpseXML.Document.parseFile(filePath)
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
+            return MapMetaResult.error(MapErrors.noFile)
+        }
 
-            let id = doc.rootElement.attributeValue("id", namespace: nil)!
-            let name = doc.rootElement.attributeValue("name", namespace: nil)!
-            
-            return MapMetaResult.Success(
-                MapInfo(id, name: name, file: file)
+        do {
+            let doc = try AEXMLDocument(xml: data)
+
+            let id = doc.root.attributes["id"]
+            let name = doc.root.attributes["name"]
+
+            return MapMetaResult.success(
+                MapInfo(id!, name: name!, file: file)
             )
         } catch let error {
-            return MapMetaResult.Error(error)
+            return MapMetaResult.error(error)
         }
     }
     
-    func load(filePath: String) -> MapLoadResult {
+    func load(_ filePath: String) -> MapLoadResult {
 
         do {
-            let doc = try GlimpseXML.Document.parseFile(filePath)
 
-            let id = doc.rootElement.attributeValue("id")!
-            let name = doc.rootElement.attributeValue("name")!
-            
-            let mapZone = MapZone(id, name)
-
-            let roomNodes = try doc.xpath("/zone/node")
-
-            for n in roomNodes {
-                let desc = self.descriptions(n.children)
-                let position = self.position(n.children)
-                let arcs = self.arcs(n.children)
-                let room =  MapNode(
-                    id: n.attributeValue("id")!,
-                    name: n.attributeValue("name")!,
-                    descriptions: desc,
-                    notes: n.attributeValue("note"),
-                    color: n.attributeValue("color"),
-                    position: position,
-                    arcs: arcs)
-
-                mapZone.addRoom(room)
+            guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
+                return MapLoadResult.error(MapErrors.noFile)
             }
 
-            let labelNodes = try doc.xpath("/zone/label")
-            mapZone.labels = labelNodes.map {
-                let text = $0.attributeValue("text") ?? ""
-                let position = self.position($0.children)
+            let doc = try AEXMLDocument(xml: data)
 
-                return MapLabel(text: text, position: position)
+            let id = doc.root.attributes["id"]
+            let name = doc.root.attributes["name"]
+
+            let mapZone = MapZone(id!, name!)
+
+            if let roomNodes = doc.root["node"].all {
+                for n in roomNodes {
+
+                    let room = MapNode(
+                        id: n.attributes["id"]!,
+                        name: n.attributes["name"]!,
+                        descriptions: self.description(n.children),
+                        notes: n.attributes["note"],
+                        color: n.attributes["color"],
+                        position: self.position(n.children),
+                        arcs: self.arcs(n.children)
+                    )
+
+                    mapZone.addRoom(room)
+                }
             }
 
-            return MapLoadResult.Success(mapZone)
+            if let labels = doc.root["label"].all {
+                mapZone.labels = labels.map {
+                    let text = $0.attributes["text"] ?? ""
+                    let position = self.position($0.children)
+
+                    return MapLabel(text: text, position: position)
+                }
+            }
+
+            return MapLoadResult.success(mapZone)
         }
         catch let error {
-            return MapLoadResult.Error(error)
+            return MapLoadResult.error(error)
         }
     }
-    
-    private func descriptions(nodes:[GlimpseXML.Node]) -> [String] {
 
+    fileprivate func description(_ nodes:[AEXMLElement]) -> [String] {
         return nodes
             .filter { $0.name == "description" }
-            .map { $0.text ?? "" }
+            .map { $0.value ?? "" }
     }
-    
-    private func arcs(nodes:[GlimpseXML.Node]) -> [MapArc] {
 
+    fileprivate func arcs(_ nodes:[AEXMLElement]) -> [MapArc] {
         return nodes
-            .filter {$0.name == "arc"}
+            .filter { $0.name == "arc" }
             .map {
                 MapArc(
-                    exit: $0.attributeValue("exit") ?? "",
-                    move: $0.attributeValue("move") ?? "",
-                    destination: $0.attributeValue("destination") ?? "",
-                    hidden: $0.attributeValue("hidden") == "True")
-        }
+                    exit: $0.attributes["exit"] ?? "",
+                    move: $0.attributes["move"] ?? "",
+                    destination: $0.attributes["destination"] ?? "",
+                    hidden: $0.attributes["hidden"] == "True")
+            }
     }
-    
-    func position(items:[GlimpseXML.Node]) -> MapPosition {
-        
-        let filtered = items.filter { $0.name == "position" }
+
+    fileprivate func position(_ nodes:[AEXMLElement]) -> MapPosition {
+        let filtered = nodes.filter { $0.name == "position" }
         
         if filtered.count > 0 {
             let item = filtered[0]
             return MapPosition(
-                x: Int(item.attributeValue("x")!)!,
-                y: Int(item.attributeValue("y")!)!,
-                z: Int(item.attributeValue("z")!)!
+                x: Int(item.attributes["x"]!)!,
+                y: Int(item.attributes["y"]!)!,
+                z: Int(item.attributes["z"]!)!
             )
         }
         

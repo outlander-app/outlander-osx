@@ -9,19 +9,19 @@
 import Foundation
 
 @objc
-public class StormFrontTagStreamer : NSObject {
+open class StormFrontTagStreamer : NSObject {
     
-    private var tags:[TextTag]
-    private var lastNode:Node?
+    fileprivate var tags:[TextTag]
+    fileprivate var lastNode:Node?
     
-    private var mono = false
-    private var bold = false
+    fileprivate var mono = false
+    fileprivate var bold = false
    
-    private var lastStreamId = ""
-    private var inStream = false
-    private var ignoreNextEot = false
+    fileprivate var lastStreamId = ""
+    fileprivate var inStream = false
+    fileprivate var ignoreNextEot = false
     
-    private let ignoredEot = [
+    fileprivate let ignoredEot = [
         "app",
         "clearstream",
         "compass",
@@ -42,21 +42,21 @@ public class StormFrontTagStreamer : NSObject {
         "switchquickbar"
     ]
     
-    private let ignoreNextEotList = [
+    fileprivate let ignoreNextEotList = [
         "experience",
         "inv",
         "popstream",
         "room"
     ]
     
-    private let roomTags = [
+    fileprivate let roomTags = [
         "roomdesc",
         "roomobjs",
         "roomplayers",
         "roomexits"
     ]
     
-    private let dirMap = [
+    fileprivate let dirMap = [
         "n": "north",
         "s": "south",
         "e": "east",
@@ -70,16 +70,16 @@ public class StormFrontTagStreamer : NSObject {
         "out": "out"
     ]
     
-    public var isSetup = true
-    public var emitSetting : ((String,String)->Void)?
-    public var emitExp : ((SkillExp)->Void)?
-    public var emitRoundtime : ((Roundtime)->Void)?
-    public var emitRoom : (()->Void)?
-    public var emitProcessNode : ((Node)->Void)?
-    public var emitSpell : ((String)->Void)?
-    public var emitVitals : ((Vitals)->Void)?
-    public var emitWindow : ((String,String?,String?)->Void)?
-    public var emitClearStream : ((String)->Void)?
+    open var isSetup = true
+    open var emitSetting : ((String,String)->Void)?
+    open var emitExp : ((SkillExp)->Void)?
+    open var emitRoundtime : ((Roundtime)->Void)?
+    open var emitRoom : (()->Void)?
+    open var emitProcessNode : ((Node)->Void)?
+    open var emitSpell : ((String)->Void)?
+    open var emitVitals : ((Vitals)->Void)?
+    open var emitWindow : ((String,String?,String?)->Void)?
+    open var emitClearStream : ((String)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -89,7 +89,7 @@ public class StormFrontTagStreamer : NSObject {
         tags = []
     }
     
-    public func stream(nodes:[Node]) -> [TextTag] {
+    open func stream(_ nodes:[Node]) -> [TextTag] {
         let tags:[TextTag] = nodes
             .map { (node) -> TextTag? in
                 self.processNode(node)
@@ -125,11 +125,11 @@ public class StormFrontTagStreamer : NSObject {
 //        return [tag]
     }
     
-    public func streamSingle(node:Node) -> Array<TextTag> {
+    open func streamSingle(_ node:Node) -> Array<TextTag> {
         return stream([node])
     }
     
-    public func processNode(node:Node) {
+    open func processNode(_ node:Node) {
         if emitSetting == nil {
             return
         }
@@ -141,12 +141,12 @@ public class StormFrontTagStreamer : NSObject {
             emitSetting?("prompt", node.value?.replace("&gt;", withString: ">") ?? "")
             emitSetting?("gametime", node.attr("time") ?? "")
             
-            let today = NSDate().timeIntervalSince1970
+            let today = Date().timeIntervalSince1970
             emitSetting?("gametimeupdate", "\(today)")
             
         case _ where node.name == "roundtime":
             let roundtime = Roundtime()
-            roundtime.time = NSDate(timeIntervalSince1970: NSTimeInterval(Int(node.attr("value")!)!))
+            roundtime.time = Date(timeIntervalSince1970: TimeInterval(Int(node.attr("value")!)!))
             emitRoundtime?(roundtime)
             
         case _ where node.name == "component":
@@ -233,7 +233,7 @@ public class StormFrontTagStreamer : NSObject {
             }
             
         case _ where node.name == "indicator":
-            let id = node.attr("id")?.substringFromIndex(4).lowercaseString ?? ""
+            let id = node.attr("id")?.substringFromIndex(4).lowercased() ?? ""
             let visible = node.attr("visible") == "y" ? "1" : "0"
             
             if id.characters.count == 0 {
@@ -264,19 +264,19 @@ public class StormFrontTagStreamer : NSObject {
             let id = node.attr("id")
             var subtitle = node.attr("subtitle")
             if id == "main" && subtitle != nil && subtitle!.characters.count > 3 {
-                subtitle = subtitle!.substringFromIndex(subtitle!.startIndex.advancedBy(3))
+                subtitle = subtitle!.substring(from: subtitle!.characters.index(subtitle!.startIndex, offsetBy: 3))
                 if let t = subtitle {
                     emitSetting?("roomtitle", t)
                 }
             }
             
             if let win = id {
-                emitWindow?(win.lowercaseString, node.attr("title"), node.attr("ifClosed"))
+                emitWindow?(win.lowercased(), node.attr("title"), node.attr("ifClosed"))
             }
         
         case _ where node.name == "clearstream":
             if let id = node.attr("id") {
-                emitClearStream?(id.lowercaseString)
+                emitClearStream?(id.lowercased())
             }
             
         case _ where node.name == "dialogdata" && node.attr("id") == "minivitals":
@@ -289,7 +289,7 @@ public class StormFrontTagStreamer : NSObject {
                 emitSetting?(name, value)
                
                 let send = Vitals(name, value: UInt16(Int(value)!))
-                emitVitals?(send)
+                emitVitals?(send!)
             }
             
         case _ where node.name == "app":
@@ -302,7 +302,7 @@ public class StormFrontTagStreamer : NSObject {
         }
     }
     
-    public func tagForNode(node:Node) -> TextTag? {
+    open func tagForNode(_ node:Node) -> TextTag? {
         var tag:TextTag? = nil
         
         switch node.name {
@@ -313,7 +313,7 @@ public class StormFrontTagStreamer : NSObject {
             tag?.targetWindow = lastStreamId
             if inStream {
                 if lastStreamId == "logons" || lastStreamId == "death" {
-                    tag?.text = tag?.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    tag?.text = tag?.text.trimmingCharacters(in: CharacterSet.whitespaces)
                 }
             }
            
@@ -367,7 +367,7 @@ public class StormFrontTagStreamer : NSObject {
         case _ where node.name == "pushstream":
             inStream = true
             if let id = node.attr("id") {
-                lastStreamId = id.lowercaseString
+                lastStreamId = id.lowercased()
             }
             
         case _ where node.name == "popstream":
@@ -430,7 +430,7 @@ public class StormFrontTagStreamer : NSObject {
         return tag
     }
     
-    public func nodeChildValuesRecursive(node:Node) -> String {
+    open func nodeChildValuesRecursive(_ node:Node) -> String {
         
         var result = ""
        
@@ -445,7 +445,7 @@ public class StormFrontTagStreamer : NSObject {
         return result
     }
     
-    public func nodeChildValues(node:Node) -> String {
+    open func nodeChildValues(_ node:Node) -> String {
         
         var result = ""
        
@@ -458,7 +458,7 @@ public class StormFrontTagStreamer : NSObject {
         return result
     }
 
-    public func nodeChildValuesWithBold(node:Node) -> (String, String, Int) {
+    open func nodeChildValuesWithBold(_ node:Node) -> (String, String, Int) {
         
         var result = ""
         var monsters = ""
@@ -489,15 +489,15 @@ public class StormFrontTagStreamer : NSObject {
         return (result, monsters, monsterCount)
     }
     
-    public func parseExpBrief(compId:String, data:String, isNew:Bool) {
-        let expName = compId.substringFromIndex(compId.startIndex.advancedBy(4))
+    open func parseExpBrief(_ compId:String, data:String, isNew:Bool) {
+        let expName = compId.substring(from: compId.characters.index(compId.startIndex, offsetBy: 4))
         
         if data.characters.count == 0 {
             
             let rate = LearningRate.fromRate(0)
             let skill = SkillExp()
             skill.name = expName
-            skill.ranks = NSDecimalNumber(double: 0.0)
+            skill.ranks = NSDecimalNumber(value: 0.0 as Double)
             skill.mindState = rate
             skill.isNew = isNew
             
@@ -510,17 +510,17 @@ public class StormFrontTagStreamer : NSObject {
         
         let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s+\\[\\s?(\\d+)?.*";
         
-        let trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let trimmed = data.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
       
-        let ranks = RegexMutable(trimmed)
+        let ranks = trimmed.mutable
         ranks[pattern] ~= "$1.$2"
         
-        let mindstate = RegexMutable(trimmed)
+        let mindstate = trimmed.mutable
         mindstate[pattern] ~= "$3"
         
         let mindstateNumber = NSDecimalNumber(string: mindstate as String)
         
-        let rate = LearningRate.fromRate(mindstateNumber.unsignedShortValue)
+        let rate = LearningRate.fromRate(mindstateNumber.uint16Value)
         
         let skill = SkillExp()
         skill.name = expName
@@ -535,16 +535,16 @@ public class StormFrontTagStreamer : NSObject {
         emitExp?(skill)
     }
     
-    public func parseExp(compId:String, data:String, isNew:Bool) {
+    open func parseExp(_ compId:String, data:String, isNew:Bool) {
         
-        let expName = compId.substringFromIndex(compId.startIndex.advancedBy(4))
+        let expName = compId.substring(from: compId.characters.index(compId.startIndex, offsetBy: 4))
         
         if data.characters.count == 0 {
             
             let rate = LearningRate.fromRate(0)
             let skill = SkillExp()
             skill.name = expName
-            skill.ranks = NSDecimalNumber(double: 0.0)
+            skill.ranks = NSDecimalNumber(value: 0.0 as Double)
             skill.mindState = rate
             skill.isNew = isNew
             
@@ -557,34 +557,34 @@ public class StormFrontTagStreamer : NSObject {
         
         let pattern = ".+:\\s+(\\d+)\\s(\\d+)%\\s(\\w.*)?.*";
         
-        let trimmed = data.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let trimmed = data.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
       
-        let ranks = RegexMutable(trimmed)
+        let ranks = trimmed.mutable
         ranks[pattern] ~= "$1.$2"
         
-        let mindstate = RegexMutable(trimmed)
+        let mindstate = trimmed.mutable
         mindstate[pattern] ~= "$3"
         
         var rate = LearningRate.fromDescription(mindstate as String)
-        
-        if(rate == nil) {
+
+        if rate == nil {
             rate = LearningRate.fromRate(0)
         }
         
         let skill = SkillExp()
         skill.name = expName
         skill.ranks = NSDecimalNumber(string:ranks as String)
-        skill.mindState = rate
+        skill.mindState = rate!
         skill.isNew = isNew
         
         emitSetting?("\(expName).Ranks", ranks as String)
-        emitSetting?("\(expName).LearningRate", "\(rate.rateId)")
-        emitSetting?("\(expName).LearningRateName", "\(rate.desc)")
+        emitSetting?("\(expName).LearningRate", "\(rate!.rateId)")
+        emitSetting?("\(expName).LearningRateName", "\(rate!.desc)")
         
         emitExp?(skill)
     }
     
-    func emitTag(node:Node) -> TextTag? {
+    func emitTag(_ node:Node) -> TextTag? {
         let tag:TextTag? = TextTag()
         var text = node.value?.replace("&gt;", withString: ">")
         text = text?.replace("&lt;", withString: "<")

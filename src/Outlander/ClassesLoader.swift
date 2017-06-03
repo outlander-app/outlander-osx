@@ -11,7 +11,7 @@ import Foundation
 @objc
 class ClassesLoader : NSObject {
 
-    class func newInstance(context:GameContext, fileSystem:FileSystem) -> ClassesLoader {
+    class func newInstance(_ context:GameContext, fileSystem:FileSystem) -> ClassesLoader {
         return ClassesLoader(context: context, fileSystem: fileSystem)
     }
 
@@ -29,7 +29,7 @@ class ClassesLoader : NSObject {
         var data:String?
 
         do {
-            data = try self.fileSystem.stringWithContentsOfFile(configFile, encoding: NSUTF8StringEncoding)
+            data = try self.fileSystem.string(withContentsOfFile: configFile, encoding: String.Encoding.utf8.rawValue)
         } catch {
             return
         }
@@ -42,14 +42,14 @@ class ClassesLoader : NSObject {
 
         let pattern = "^#class \\{(.*?)\\} \\{(.*?)\\}$"
 
-        let target = SwiftRegex(target: data!, pattern: pattern, options: [NSRegularExpressionOptions.AnchorsMatchLines, NSRegularExpressionOptions.CaseInsensitive])
+        let target = SwiftRegex(target: NSMutableString(string: data!), pattern: pattern, options: [NSRegularExpression.Options.anchorsMatchLines, NSRegularExpression.Options.caseInsensitive])
 
         let groups = target.allGroups()
 
         for group in groups {
             if group.count == 3 {
-                let key = group[1]
-                let val = group[2].toBool()
+                let key = group[1]!
+                let val = group[2]!.toBool()
 
                 self.context.classSettings.set(key, value: val ?? false)
             }

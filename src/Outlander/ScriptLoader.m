@@ -28,13 +28,13 @@
     return self;
 }
 
-- (NSString *)load:(NSString *)scriptName {
+- (NSArray<NSString *> *)load:(NSString *)scriptName {
     
     NSString *fileName = [NSString stringWithFormat:@"%@%@", [scriptName trimWhitespaceAndNewline], @".cmd"];
     NSString *file = [_context.pathProvider.scriptsFolder stringByAppendingPathComponent:fileName];
 
     if (![_fileSystem fileExists:file]) {
-        return @"";
+        return @[];
     }
     
     NSError *err;
@@ -45,8 +45,14 @@
                              mono:true
                            preset:@"scripterror"];
     }
-    
-    return data;
+
+    if (data == nil) {
+        return @[];
+    }
+
+    data = [data stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+
+    return [data componentsSeparatedByString:@"\n"];
 }
 
 - (BOOL)exists:(NSString *)scriptName {

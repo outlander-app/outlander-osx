@@ -9,9 +9,9 @@
 import Foundation
 
 @objc
-public class ScriptRunner : NSObject, ISubscriber {
+open class ScriptRunner : NSObject, ISubscriber {
     
-    class func newInstance(context:GameContext, notifier:INotifyMessage) -> ScriptRunner {
+    class func newInstance(_ context:GameContext, notifier:INotifyMessage) -> ScriptRunner {
         return ScriptRunner(context: context, notifier: notifier)
     }
     
@@ -19,7 +19,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     var context:GameContext
     var scriptLoader:ScriptLoader
    
-    private var scripts:[IScript]
+    fileprivate var scripts:[IScript]
     
     init(context:GameContext, notifier:INotifyMessage) {
         
@@ -30,12 +30,12 @@ public class ScriptRunner : NSObject, ISubscriber {
         
         super.init()
         
-        context.events.subscribe(self, token: "startscript")
-        context.events.subscribe(self, token: "script")
-        context.events.subscribe(self, token: "ol:game-parse")
-        context.events.subscribe(self, token: "ol:game-stream")
+        _ = context.events.subscribe(self, token: "startscript")
+        _ = context.events.subscribe(self, token: "script")
+        _ = context.events.subscribe(self, token: "ol:game-parse")
+        _ = context.events.subscribe(self, token: "ol:game-stream")
         
-        self.context.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+        self.context.globalVars.changed.subscribeNext { (obj:Any?) -> Void in
             
             if let changed = obj as? Dictionary<String, String> {
                 self.notifyVars(changed)
@@ -43,7 +43,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    public func handle(token:String, data:[String:AnyObject]) {
+    open func handle(_ token:String, data:[String:AnyObject]) {
         if token == "ol:game-stream" {
             self.stream(data)
         } else if token == "ol:game-parse" {
@@ -55,7 +55,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    func start(dict:[String:AnyObject]) {
+    func start(_ dict:[String:AnyObject]) {
         
         let scriptName = dict["target"] as! String
         let tokens = dict["args"] as? NSArray;
@@ -66,67 +66,39 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
         
         self.abort(scriptName)
-       
-        self.loadAsync(scriptName, tokens: tokens)
-    }
-    
-    struct ScriptLoadResult {
-        var script:IScript?
-        var params:[String]
-        var scriptText:String?
-    }
-    
-    func loadAsync(scriptName:String, tokens:NSArray?) {
-        { () -> ScriptLoadResult in
-            var script:IScript?
-            var params:[String] = []
-            var scriptText:String?
-            
-            if let text = self.scriptLoader.load(scriptName) {
-                
-                params = self.argsToParams(tokens)
-                script = Script(scriptName, self.notifier)
-                scriptText = text
-            }
-            
-            return ScriptLoadResult(script: script,  params: params, scriptText: scriptText)
-        } ~> { res -> () in
-          
-            self.runScript(res)
-            
-//            let diff = NSDate().timeIntervalSinceDate(start)
-//            
-//            println("\(scriptName) loaded in \(diff)")
-        }
-    }
-    
-    private func runScript(res:ScriptLoadResult) {
-        
-        if var script = res.script {
+
+        do {
+            let script = try Script(
+                self.notifier,
+                { name in
+                    return self.scriptLoader.load(name)
+                },
+                scriptName,
+                self.context,
+                {
+                    self.abort(scriptName)
+                })
+
             self.scripts.append(script)
-            
-            script.completed = { (name, msg) in
-                print(msg)
-                self.remove(name)
-            }
-            
-            script.run(res.scriptText!, globalVars: { () -> [String:String] in
-                return self.context.globalVars.copyValues() as! [String:String]
-            }, params: res.params)
-            
-            self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
+            self.context.events.publish("script:add", data: ["scriptName":script.fileName as AnyObject])
+
+            let params = self.argsToParams(tokens)
+            script.run(params)
+        }
+        catch {
+            self.abort(scriptName)
         }
     }
-    
-    private func remove(name:String) {
-        let found = self.scripts.find { $0.scriptName == name }
+
+    fileprivate func remove(_ name:String) {
+        let found = self.scripts.find { $0.fileName == name }
         if let idx = found {
-            self.scripts.removeAtIndex(idx)
-            self.context.events.publish("script:remove", data: ["scriptName":name])
+            self.scripts.remove(at: idx)
+            self.context.events.publish("script:remove", data: ["scriptName":name as AnyObject])
         }
     }
     
-    func argsToParams(args:NSArray?) -> [String] {
+    func argsToParams(_ args:NSArray?) -> [String] {
         if let input = args {
             var params:[String] = []
             
@@ -140,26 +112,26 @@ public class ScriptRunner : NSObject, ISubscriber {
         return []
     }
     
-    func stream(dict:[String:AnyObject]) {
+    func stream(_ dict:[String:AnyObject]) {
         let nodes = dict["nodes"] as! [Node]
         let text = dict["text"] as! String
-        
-        for (_, script) in self.scripts.enumerate() {
-            script.stream(text, nodes: nodes)
+
+        for (_, script) in self.scripts.enumerated() {
+            script.stream(text, nodes)
         }
     }
     
-    func parse(userInfo:[String:AnyObject]) {
+    func parse(_ userInfo:[String:AnyObject]) {
         if let dict = userInfo as? [String:String] {
             let text = dict["text"] ?? ""
-            
-            for (_, script) in self.scripts.enumerate() {
-                script.stream(text, nodes: [])
+
+            for (_, script) in self.scripts.enumerated() {
+                script.stream(text, [])
             }
         }
     }
     
-    func manage(userInfo:[String:AnyObject]) {
+    func manage(_ userInfo:[String:AnyObject]) {
         if let dict = userInfo as? [String:String] {
             let scriptName = dict["target"]!
             let action = dict["action"]!
@@ -173,23 +145,26 @@ public class ScriptRunner : NSObject, ISubscriber {
             }
             else if action == "pause" {
                 self.pause(scriptName)
-                self.context.events.publish("script:pause", data: ["scriptName":scriptName])
+                self.context.events.publish("script:pause", data: ["scriptName":scriptName as AnyObject])
             }
             else if action == "resume" {
                 self.resume(scriptName)
-                self.context.events.publish("script:resume", data: ["scriptName":scriptName])
+                self.context.events.publish("script:resume", data: ["scriptName":scriptName as AnyObject])
+            }
+            else if action == "trace" {
+                self.stackTrace(scriptName)
             }
             else if action == "vars" {
                 self.vars(scriptName)
             }
             else if action == "debug" {
                 let levelNum = Int(dict["param"] ?? "")
-                let level = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
+                let level = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.none
                 self.debug(scriptName, level: level)
-                
+
                 var data = [String:AnyObject]()
-                data["scriptName"] = scriptName
-                data["level"] = level.rawValue
+                data["scriptName"] = scriptName as AnyObject?
+                data["level"] = level.rawValue as AnyObject?
                 
                 self.context.events.publish("script:debug", data: data)
             } else if action == "list" {
@@ -198,12 +173,12 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func abort(name:String) {
+    fileprivate func abort(_ name:String) {
         var names:[String] = []
-        for (_, script) in self.scripts.enumerate() {
-            if name == "all" || script.scriptName == name {
-                script.cancel()
-                names.append(script.scriptName)
+        for (_, script) in self.scripts.enumerated() {
+            if name == "all" || script.fileName == name {
+                script.stop()
+                names.append(script.fileName)
                 
                 if name != "all" {
                     break
@@ -220,12 +195,12 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func pause(name:String) {
-        for (_, script) in self.scripts.enumerate() {
+    fileprivate func pause(_ name:String) {
+        for (_, script) in self.scripts.enumerated() {
             
-            if name == "all" || script.scriptName == name {
+            if name == "all" || script.fileName == name {
                 script.pause()
-                
+
                 if name != "all" {
                     break
                 }
@@ -233,12 +208,12 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func resume(name:String) {
-        for (_, script) in self.scripts.enumerate() {
+    fileprivate func resume(_ name:String) {
+        for (_, script) in self.scripts.enumerated() {
             
-            if name == "all" || script.scriptName == name {
+            if name == "all" || script.fileName == name {
                 script.resume()
-                
+
                 if name != "all" {
                     break
                 }
@@ -246,27 +221,36 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func vars(name:String) {
-        for (_, script) in self.scripts.enumerate() {
-            if script.scriptName == name {
+    fileprivate func vars(_ name:String) {
+        for (_, script) in self.scripts.enumerated() {
+            if script.fileName == name {
                 script.vars()
                 break
             }
         }
     }
+
+    fileprivate func stackTrace(_ name:String) {
+        for (_, script) in self.scripts.enumerated() {
+            if script.fileName == name {
+                script.showStackTrace()
+                break
+            }
+        }
+    }
     
-    private func debug(name:String, level:ScriptLogLevel) {
-        for (_, script) in self.scripts.enumerate() {
-            if script.scriptName == name {
+    fileprivate func debug(_ name:String, level:ScriptLogLevel) {
+        for (_, script) in self.scripts.enumerated() {
+            if script.fileName == name {
                 script.setLogLevel(level)
                 break
             }
         }
     }
     
-    private func listAll() {
-        for (_, script) in self.scripts.enumerate() {
-            script.printInfo()
+    fileprivate func listAll() {
+        for (_, script) in self.scripts.enumerated() {
+//            script.printInfo()
         }
         
         if self.scripts.count == 0 {
@@ -274,9 +258,9 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func notifyVars(vars:[String:String]) {
-        for (_, script) in self.scripts.enumerate() {
-            script.varsChanged(vars)
+    fileprivate func notifyVars(_ vars:[String:String]) {
+        for (_, script) in self.scripts.enumerated() {
+//            script.varsChanged(vars)
         }
     }
 }

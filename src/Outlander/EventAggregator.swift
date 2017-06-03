@@ -10,21 +10,21 @@ import Foundation
 
 @objc
 public protocol ISubscriber {
-    func handle(token:String, data:Dictionary<String, AnyObject>)
+    func handle(_ token:String, data:Dictionary<String, AnyObject>)
 }
 
 @objc
-public class EventAggregator : NSObject {
+open class EventAggregator : NSObject {
     
-    private var handlers:[EventHandler]
+    fileprivate var handlers:[EventHandler]
     
     override init() {
         handlers = []
     }
     
-    public func subscribe(subscriber:ISubscriber, token:String) -> String {
+    open func subscribe(_ subscriber:ISubscriber, token:String) -> String {
         
-        let id = NSUUID().UUIDString
+        let id = UUID().uuidString
         
         let handler = EventHandler(
             id: id,
@@ -37,29 +37,29 @@ public class EventAggregator : NSObject {
         return id
     }
     
-    public func unSubscribe(id:String) {
+    open func unSubscribe(_ id:String) {
         let idx = self.handlers.find { $0.id == id }
         if let found = idx {
-            self.handlers.removeAtIndex(found)
+            self.handlers.remove(at: found)
         }
     }
     
-    public func unSubscribeListener(subscriber:ISubscriber) {
+    open func unSubscribeListener(_ subscriber:ISubscriber) {
         let res = self.handlers.filter { $0.subscriber === subscriber }
         
         for sub in res {
             let idx = self.handlers.find { $0.id == sub.id }
             if let found = idx {
-                self.handlers.removeAtIndex(found)
+                self.handlers.remove(at: found)
             }
         }
     }
     
-    public func unSubscribeAll() {
+    open func unSubscribeAll() {
         self.handlers = []
     }
     
-    public func publish(token:String, data:Dictionary<String, AnyObject>) {
+    open func publish(_ token:String, data:Dictionary<String, AnyObject>) {
         let events = self.handlers.filter { $0.token == token }
         
         for ev in events {
@@ -69,19 +69,23 @@ public class EventAggregator : NSObject {
         }
     }
 
-    public func sendCommand(context:CommandContext) {
+    open func sendCommand(_ context:CommandContext) {
         publish("OL:command", data: ["command":context])
     }
 
-    public func sendEcho(tag:TextTag) {
+    open func sendEcho(_ tag:TextTag) {
         publish("OL:echo", data: ["tag":tag])
     }
 
-    public func echoText(text:String, mono: Bool = false, preset: String = "") {
+    open func echoText(_ text:String, mono: Bool = false, preset: String = "") {
         let tag = TextTag()
         tag.text = "\(text)\n"
         tag.mono = mono
         tag.preset = preset
+        publish("OL:echo", data: ["tag":tag])
+    }
+
+    open func sendText(_ tag:TextTag) {
         publish("OL:echo", data: ["tag":tag])
     }
 }

@@ -8,73 +8,73 @@
 
 import Cocoa
 
-public class HighlightsViewController: NSViewController, SettingsView, NSTableViewDataSource, NSSoundDelegate {
+open class HighlightsViewController: NSViewController, SettingsView, NSTableViewDataSource, NSSoundDelegate {
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var backgroundColorWell: NSColorWell!
     @IBOutlet weak var soundButton: NSButton!
 
-    private var _context:GameContext?
-    private var _appSettingsLoader:AppSettingsLoader?
-    private var _fileSystem:FileSystem?
-    private var _sound:NSSound?
+    fileprivate var _context:GameContext?
+    fileprivate var _appSettingsLoader:AppSettingsLoader?
+    fileprivate var _fileSystem:FileSystem?
+    fileprivate var _sound:NSSound?
     
-    public var selectedItem:Highlight? {
+    open var selectedItem:Highlight? {
         willSet {
-            self.willChangeValueForKey("selectedItem")
+            self.willChangeValue(forKey: "selectedItem")
         }
         didSet {
-            self.didChangeValueForKey("selectedItem")
+            self.didChangeValue(forKey: "selectedItem")
             
             if let item = selectedItem {
                 if item.color != nil && item.color!.characters.count > 0 {
                     colorWell.color = NSColor(hex: item.color!)
                 } else {
-                    colorWell.color = NSColor.blackColor()
+                    colorWell.color = NSColor.black
                 }
                 
                 if item.backgroundColor != nil && item.backgroundColor!.characters.count > 0 {
                     backgroundColorWell.color = NSColor(hex: item.backgroundColor!)
                 } else {
-                    backgroundColorWell.color = NSColor.blackColor()
+                    backgroundColorWell.color = NSColor.black
                 }
             }
         }
     }
     
-    public override class func automaticallyNotifiesObserversForKey(key: String) -> Bool {
+    open override class func automaticallyNotifiesObservers(forKey key: String) -> Bool {
         if key == "selectedItem" {
             return true
         } else {
-            return super.automaticallyNotifiesObserversForKey(key)
+            return super.automaticallyNotifiesObservers(forKey: key)
         }
     }
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        let nib = NSNib(nibNamed: "HighlightCellView", bundle: NSBundle.mainBundle())
-        tableView.registerNib(nib!, forIdentifier: "highlightCellView")
+        let nib = NSNib(nibNamed: "HighlightCellView", bundle: Bundle.main)
+        tableView.register(nib!, forIdentifier: "highlightCellView")
     }
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         _fileSystem = LocalFileSystem()
-        self.tableView.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
+        self.tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
     }
     
-    public func save() {
+    open func save() {
         _appSettingsLoader!.saveHighlights()
         stopSound()
         removeSound()
     }
     
-    public func setContext(context:GameContext) {
+    open func setContext(_ context:GameContext) {
         _context = context
         _appSettingsLoader = AppSettingsLoader(context: _context)
     }
 
-    public override func controlTextDidChange(obj: NSNotification) {
+    open override func controlTextDidChange(_ obj: Notification) {
         if let item = self.selectedItem {
             
             let textField = obj.object as! NSTextField
@@ -122,21 +122,21 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         self.reloadTargetRowColumn(self.tableView.selectedRow, column: 0)
     }
     
-    func reloadTargetRowColumn(row:Int, column:Int) {
-        let indexSet = NSIndexSet(index: row)
-        let columnSet = NSIndexSet(index: column)
-        self.tableView.reloadDataForRowIndexes(indexSet, columnIndexes: columnSet)
+    func reloadTargetRowColumn(_ row:Int, column:Int) {
+        let indexSet = IndexSet(integer: row)
+        let columnSet = IndexSet(integer: column)
+        self.tableView.reloadData(forRowIndexes: indexSet, columnIndexes: columnSet)
     }
     
-    @IBAction func addRemoveAction(sender: NSSegmentedControl) {
+    @IBAction func addRemoveAction(_ sender: NSSegmentedControl) {
         if sender.selectedSegment == 0 {
             let highlight = Highlight()
             highlight.color = "#0000ff"
-            _context!.highlights.addObject(highlight)
+            _context!.highlights.add(highlight)
            
-            let idx = NSIndexSet(index: _context!.highlights.count() - 1)
+            let idx = IndexSet(integer: _context!.highlights.count() - 1)
             self.tableView.reloadData()
-            self.tableView.scrollRowToVisible(idx.firstIndex)
+            self.tableView.scrollRowToVisible(idx.first!)
             self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
         } else {
             
@@ -148,14 +148,14 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
 
             self.selectedItem = nil
 
-            let item: Highlight = _context!.highlights.objectAtIndex(selectedRow) as! Highlight
-            _context!.highlights.removeObject(item)
+            let item: Highlight = _context!.highlights.object(at: selectedRow) as! Highlight
+            _context!.highlights.remove(item)
 
             self.tableView.reloadData()
 
             if _context!.highlights.count() > 0 {
-                let idx = NSIndexSet(index: 0)
-                self.tableView.scrollRowToVisible(idx.firstIndex)
+                let idx = IndexSet(integer: 0)
+                self.tableView.scrollRowToVisible(idx.first!)
                 self.tableView.selectRowIndexes(idx, byExtendingSelection: false)
             }
         }
@@ -163,11 +163,11 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
 
     // MARK: NSTableViewDataSource
 
-    public func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    open func numberOfRows(in tableView: NSTableView) -> Int {
         return _context!.highlights.count()
     }
     
-    public func tableViewSelectionDidChange(notification:NSNotification) {
+    open func tableViewSelectionDidChange(_ notification:Notification) {
 
         stopSound()
         removeSound()
@@ -175,14 +175,14 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         var lastIdx = -1
         
         if let last = self.selectedItem {
-            lastIdx = _context?.highlights.indexOfObject(last) ?? -1
+            lastIdx = _context?.highlights.index(of: last) ?? -1
         }
         
         let selectedRow = self.tableView.selectedRow
         if(selectedRow > -1
             && selectedRow < _context!.highlights.count()) {
                 self.selectedItem =
-                    _context!.highlights.objectAtIndex(selectedRow) as? Highlight;
+                    _context!.highlights.object(at: selectedRow) as? Highlight;
         }
         else {
             self.selectedItem = nil;
@@ -195,12 +195,12 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         self.reloadSelectedRow()
     }
     
-    public func tableView(tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView {
-        let cell = tableView.makeViewWithIdentifier("highlightCellView", owner: self) as? HighlightCellView
+    open func tableView(_ tableView: NSTableView, viewForTableColumn: NSTableColumn, row: Int) -> NSView {
+        let cell = tableView.make(withIdentifier: "highlightCellView", owner: self) as? HighlightCellView
         
         if(row > -1 && row < _context!.highlights.count()) {
             
-            if let hl = _context!.highlights.objectAtIndex(row) as? Highlight {
+            if let hl = _context!.highlights.object(at: row) as? Highlight {
                
                 cell?.pattern.stringValue = hl.pattern ?? ""
                 cell?.filterClass.stringValue = hl.filterClass ?? ""
@@ -238,13 +238,13 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         return cell ?? NSView()
     }
 
-    @IBAction func toggleSoundAction(sender: AnyObject) {
+    @IBAction func toggleSoundAction(_ sender: AnyObject) {
         guard self.selectedItem != nil else {
             stopSound()
             return
         }
 
-        if _sound != nil && _sound!.playing {
+        if _sound != nil && _sound!.isPlaying {
             stopSound()
         }
         else {
@@ -268,7 +268,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         }
     }
 
-    public func sound(sound: NSSound, didFinishPlaying flag: Bool) {
+    open func sound(_ sound: NSSound, didFinishPlaying flag: Bool) {
         soundButton.image = NSImage(named: "Play")
     }
 
@@ -288,7 +288,7 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         _sound = nil
     }
 
-    @IBAction func browseForSoundAction(sender: AnyObject) {
+    @IBAction func browseForSoundAction(_ sender: AnyObject) {
         let dialog = NSOpenPanel();
 
         dialog.title                   = "Choose a sound file";
@@ -300,9 +300,9 @@ public class HighlightsViewController: NSViewController, SettingsView, NSTableVi
         dialog.allowedFileTypes        = ["mp3", "wav"];
 
         if (dialog.runModal() == NSModalResponseOK) {
-            if let result = dialog.URL {
+            if let result = dialog.url {
 
-                if result.path != nil && result.path!.hasPrefix(_context!.pathProvider.soundsFolder()) {
+                if result.path.hasPrefix(_context!.pathProvider.soundsFolder()) {
                     self.selectedItem?.soundFile = result.lastPathComponent
 
                 } else {
