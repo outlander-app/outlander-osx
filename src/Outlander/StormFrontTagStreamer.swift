@@ -80,6 +80,7 @@ public class StormFrontTagStreamer : NSObject {
     public var emitVitals : ((Vitals)->Void)?
     public var emitWindow : ((String,String?,String?)->Void)?
     public var emitClearStream : ((String)->Void)?
+    public var emitLaunchUrl : ((String)->Void)?
     
     class func newInstance() -> StormFrontTagStreamer {
         return StormFrontTagStreamer()
@@ -133,7 +134,7 @@ public class StormFrontTagStreamer : NSObject {
         if emitSetting == nil {
             return
         }
-        
+
         switch node.name {
             
             
@@ -295,7 +296,10 @@ public class StormFrontTagStreamer : NSObject {
         case _ where node.name == "app":
             emitSetting?("charactername", node.attr("char") ?? "")
             emitSetting?("game", node.attr("game") ?? "")
-            
+
+        case _ where node.name == "launchurl":
+            emitLaunchUrl?(node.attr("src") ?? "")
+
         default:
             // do nothing
             return

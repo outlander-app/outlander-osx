@@ -97,6 +97,16 @@
         };
         [_gameContext.events publish:@"OL:window:ensure" data:win];
     };
+
+    _tagStreamer.emitLaunchUrl = ^(NSString *url) {
+
+        if ([url hasPrefix:@"/forums"]) {
+            url = [NSString stringWithFormat:@"http://play.net%@", url];
+        }
+
+        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+        [[NSWorkspace sharedWorkspace] openURL:[req URL]];
+    };
     
     _vitals = _gameParser.vitals;
     _indicators = _gameParser.indicators;
@@ -126,6 +136,13 @@
     }];
     
     return self;
+}
+
+- (void)openLink:(NSURLRequest *)request {
+    NSString *scheme = [[request URL] scheme];
+    if ([scheme hasPrefix:@"http"]) {
+        [[NSWorkspace sharedWorkspace] openURL:[request URL]];
+    }
 }
 
 -(void) publish:(id)item {

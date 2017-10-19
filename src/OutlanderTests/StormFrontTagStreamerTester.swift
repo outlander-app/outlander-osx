@@ -17,6 +17,7 @@ class StormFrontTagStreamerTester: QuickSpec {
     var tags = [TextTag]()
     var exp = [SkillExp]()
     var settings = [String: String]()
+    var urls = [String]()
     
     override func spec() {
         
@@ -26,15 +27,20 @@ class StormFrontTagStreamerTester: QuickSpec {
                 self.nodes = []
                 self.tags = []
                 self.exp = []
+                self.urls = []
                 self.settings = [String: String]()
                 self.streamer = StormFrontTagStreamer()
-                
+
                 self.streamer.emitSetting = { (key,value) in
                     self.settings[key] = value
                 }
                 
                 self.streamer.emitExp = { (exp) in
                     self.exp.append(exp)
+                }
+
+                self.streamer.emitLaunchUrl = { (url) in
+                    self.urls.append(url)
                 }
             })
             
@@ -547,9 +553,21 @@ class StormFrontTagStreamerTester: QuickSpec {
                 expect(text3).to(equal("\r\n"))
                 expect(window3).to(beNil())
             }
+
+            it("streams LaunchURL") {
+                let data = [
+                    "<LaunchURL src=\"/forums/touchdown.asp?uname=W_SOMENAME&gcode=DR&charindex=12345&tcode=20171018210057&hmac=6ddff35799b500f3a77986f4323eb77\" />",
+                ]
+
+                self.streamData(data)
+
+                expect(self.tags.count).to(equal(1))
+                expect(self.urls.count).to(equal(1))
+                expect(self.urls.first).to(equal("/forums/touchdown.asp?uname=W_SOMENAME&gcode=DR&charindex=12345&tcode=20171018210057&hmac=6ddff35799b500f3a77986f4323eb77"))
+            }
         })
     }
-    
+
     func streamData(data:[String]) {
         let tokenizer = StormFrontTokenizer()
         

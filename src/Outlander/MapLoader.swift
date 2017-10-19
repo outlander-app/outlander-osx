@@ -43,15 +43,27 @@ func ==(lhs: MapInfo, rhs: MapInfo) -> Bool {
 final class MapLoader {
     
     func loadFolder(folder: String) -> [MapMetaResult] {
-        
+
+        let directoryURL = NSURL(fileURLWithPath: folder, isDirectory: true)
         let fileManager = NSFileManager.defaultManager()
-        let enumerator:NSDirectoryEnumerator? = fileManager.enumeratorAtPath(folder)
-        
+
+        let options: NSDirectoryEnumerationOptions = [.SkipsHiddenFiles, .SkipsSubdirectoryDescendants]
+
+        let enumerator = fileManager.enumeratorAtURL(
+            directoryURL,
+            includingPropertiesForKeys: [NSURLNameKey],
+            options: options,
+            errorHandler: { (url, error) -> Bool in
+                print("directoryEnumerator error at \(url): ", error)
+                return true
+        })
+
         var files:[String] = []
-        
-        while let element = enumerator?.nextObject() as? String {
-            if element.hasSuffix(".xml") {
-                files.append(element)
+
+        while let element = enumerator?.nextObject() as? NSURL {
+            print(element)
+            if (element.lastPathComponent?.hasSuffix(".xml")) == true {
+                files.append(element.lastPathComponent!)
             }
         }
         
