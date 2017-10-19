@@ -17,6 +17,7 @@ Outlander supports Genie map files.  View maps via the `⌘M` shortcut.  Mouse o
 * Put the maps in the `/Documents/Outlander/Maps` folder
 * You will also need the `automapper.cmd` script found listed under the [example scripts](#example-scripts)
     * Create a new script file named `automapper.cmd`, paste in the text from the gist, and save it to `/Documents/Outlander/Scripts`
+* Use `svn update` from the folder created with the `svn checkout` command to fetch the latest maps
 
 #### Automapper FAQ
 > The automapper sometimes gets stuck, is this normal?
