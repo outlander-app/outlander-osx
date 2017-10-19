@@ -13,9 +13,8 @@ Outlander supports Genie map files.  View maps via the `⌘M` shortcut.  Mouse o
 * ex: `#goto 123`  `#goto bank`
 
 #### Automapper Installation
-* [Manually Download the map files](http://sourceforge.net/projects/geniemapsfordr/files/) (click on the Download Maps.zip link) and put them in the `/Documents/Outlander/Maps` folder.
-![image](https://cloud.githubusercontent.com/assets/255007/18225669/bfe60d00-71ac-11e6-9c15-16712142465a.png)
-* You can also use svn: `$ svn checkout http://svn.code.sf.net/p/geniemapsfordr/Genie3Maps/trunk Maps`
+* Use svn from terminal to download maps: `$ svn checkout http://svn.code.sf.net/p/geniemapsfordr/Genie3Maps/trunk Maps`
+* Put the maps in the `/Documents/Outlander/Maps` folder
 * You will also need the `automapper.cmd` script found listed under the [example scripts](#example-scripts)
     * Create a new script file named `automapper.cmd`, paste in the text from the gist, and save it to `/Documents/Outlander/Scripts`
 
