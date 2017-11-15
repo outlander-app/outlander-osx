@@ -349,7 +349,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
         
         let roomCount = zone.rooms.count
         
-        self.nodesLabel.stringValue = "Map Rooms: \(roomCount)"
+        self.nodesLabel.stringValue = "Map \(zone.id). \(zone.name), Rooms: \(roomCount)"
         
         if let rect = self.mapView?.rectForRoom(self.mapView?.currentRoomId) {
             self.scrollView.scrollRectToVisible(rect)

@@ -138,13 +138,6 @@
     return self;
 }
 
-- (void)openLink:(NSURLRequest *)request {
-    NSString *scheme = [[request URL] scheme];
-    if ([scheme hasPrefix:@"http"]) {
-        [[NSWorkspace sharedWorkspace] openURL:[request URL]];
-    }
-}
-
 -(void) publish:(id)item {
     [_mainSubject sendNext:item];
 }

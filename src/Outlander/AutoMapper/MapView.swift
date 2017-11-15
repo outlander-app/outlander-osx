@@ -52,10 +52,9 @@ class MapView: NSView {
         self.mapZone = mapZone
         self.rect = rect
         self.nodeLookup = [:]
-        
-        self.trackingArea = createTrackingArea()
-        self.addTrackingArea(self.trackingArea!)
-        
+
+        self.updateTrackingAreas()
+
         self.needsDisplay = true
     }
     

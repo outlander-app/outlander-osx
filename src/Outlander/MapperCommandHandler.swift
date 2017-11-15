@@ -76,6 +76,9 @@ class MapperCommandHandler : NSObject, CommandHandler {
         if text == "reset" {
             withContext.resetMap()
         }
+        else if text == "reload" {
+            withContext.events.publish("OL:map:reload", data: [:])
+        }
     }
 }
 

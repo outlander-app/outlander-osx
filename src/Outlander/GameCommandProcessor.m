@@ -68,6 +68,7 @@
     [_handlers addObject:[PresetCommandHandler newInstance]];
     [_handlers addObject:[ClassCommandHandler newInstance:relay]];
     [_handlers addObject:[PlayCommandHandler newInstance:[[LocalFileSystem alloc] init]]];
+    [_handlers addObject:[BugCommandHandler newInstance]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];

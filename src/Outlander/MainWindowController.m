@@ -105,6 +105,7 @@
     }];
     
     [_gameContext.events subscribe:self token:@"disconnected"];
+    [_gameContext.events subscribe:self token:@"OL:map:reload"];
     
 	return self;
 }
@@ -124,6 +125,10 @@
 - (void)handle:(NSString * __nonnull)token data:(NSDictionary * __nonnull)data {
     if ([token isEqualToString:@"disconnected"]) {
         [self saveSettings];
+    }
+
+    if([token isEqualToString:@"OL:map:reload"]) {
+        [_autoMapperWindowController loadMaps];
     }
 }
 

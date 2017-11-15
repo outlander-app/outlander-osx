@@ -61,7 +61,6 @@ final class MapLoader {
         var files:[String] = []
 
         while let element = enumerator?.nextObject() as? NSURL {
-            print(element)
             if (element.lastPathComponent?.hasSuffix(".xml")) == true {
                 files.append(element.lastPathComponent!)
             }
