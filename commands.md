@@ -29,6 +29,7 @@ Yes - the Genie map files have several commands that are not yet fully supported
 * `#alias <name> <replacement>`
     * setup an alias
     * ex: `#alias l2 load arrows`
+* `#bug` - opens the website to submit a bug
 * `#class`
     * `#class (list|load|save|clear)`
     * `#class combat on` - this activates the `combat` class
@@ -42,6 +43,9 @@ Yes - the Genie map files have several commands that are not yet fully supported
 * `#highlight`
     * add highlight
     * ex: `#highlight #AD0000 a silver clenched fist`
+* `#mapper`
+    * `#mapper reset` - will attempt to find what room/map your character is located in
+    * `#mapper reload` - will reload map files from disk
 * `#script (abort|pause|resume|vars) <script name\>`
     * control running scripts
     * ex: #script pause forage
