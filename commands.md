@@ -46,8 +46,10 @@ Yes - the Genie map files have several commands that are not yet fully supported
 * `#mapper`
     * `#mapper reset` - will attempt to find what room/map your character is located in
     * `#mapper reload` - will reload map files from disk
-* `#script (abort|pause|resume|vars) <script name\>`
+* `#script (abort|pause|resume|vars) <script name>`
     * control running scripts
+    * to control all scripts use `all` for the script name: `#script <action> all`
+    * ex: #script pause all
     * ex: #script pause forage
     * ex: #script resume forage
     * ex: #script vars forage
