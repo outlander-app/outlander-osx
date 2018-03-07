@@ -347,12 +347,12 @@
     if(text.text == nil || text.text.length == 0 || [self matchesGag:text.text]) {
         return;
     }
-    
+
     text.text = [self processSubs:text.text];
     NSAttributedString *attr = [self stringFromTag:text];
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         BOOL endswithNewline = [self endsWithNewline:textView];
         BOOL timestamp = textView.displayTimestamp && (textView.textStorage.length == 0 || endswithNewline);
 
