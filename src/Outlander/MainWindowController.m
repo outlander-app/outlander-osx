@@ -200,7 +200,7 @@
 
     [self printSettings];
 
-    //[self.window makeFirstResponder:vc._CommandTextField];
+    [self.window makeFirstResponder:vc._CommandTextField];
     //[vc._CommandTextField becomeFirstResponder];
 }
 
