@@ -486,8 +486,13 @@
 - (IBAction)commandSubmit:(MyNSTextField*)sender {
     
     NSString *command = [sender stringValue];
-    if([command length] == 0) return;
     
+    // On enter, send previous command.
+    if([command length] == 0) {
+        [sender previousHistory];
+        command = [sender stringValue];
+    }
+
     if(command.length > 3)
         [sender commitHistory];
     
