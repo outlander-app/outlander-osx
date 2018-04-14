@@ -284,13 +284,10 @@
         
     } else if([command isEqualToString:@"preferences"]){
         
-        [_settingsWindowController.window setParentWindow:self.window];
-        [_settingsWindowController.window makeKeyAndOrderFront:self];
-        
+        [_settingsWindowController showWindow:self];
     } else if([command isEqualToString:@"showAutoMapper"]){
         
-        [_autoMapperWindowController.window setParentWindow:self.window];
-        [_autoMapperWindowController.window makeKeyAndOrderFront:self];
+        [_autoMapperWindowController showWindow:self];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [_autoMapperWindowController setSelectedZone];
