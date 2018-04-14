@@ -334,12 +334,30 @@
     
     NSString *fontName = self.fontName;
     double fontSize = self.fontSize;
-    if(text.mono){
+
+    if(fontName == nil) {
+    }
+
+    if(text.mono) {
         fontName = self.monoFontName;
         fontSize = self.monoFontSize;
+
+        if(fontName == nil) {
+            fontName = @"Menlo";
+        }
     }
-    [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
     
+    NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+
+    if(font == nil) {
+        fontName = @"Helvetica";
+        if(text.mono) {
+            fontName = @"Menlo";
+        }
+        font = [NSFont fontWithName:fontName size:fontSize];
+    }
+
+    [attr addAttribute:NSFontAttributeName value:font range:range];
     return attr;
 }
 

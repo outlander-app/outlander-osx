@@ -13,6 +13,42 @@ enum StreamToken {
     indirect case tag(String, [Attribute], [StreamToken])
 }
 
+extension StreamToken {
+
+    func name() -> String? {
+        switch self {
+        case .text: return nil
+        case .tag( let name, _, _):
+            return name
+        }
+    }
+
+    func hasAttr(_ key:String) -> Bool {
+        return attr(key) != nil
+    }
+
+    func attr(_ key:String) -> String? {
+        switch self {
+        case .text: return nil
+        case .tag( _, let attrs, _):
+            for attr in attrs {
+                if attr.key == key {
+                    return attr.value
+                }
+            }
+            return nil
+        }
+    }
+    
+    func value() -> String? {
+        switch self {
+        case .text(let text): return text
+        case .tag(_, _, let children):
+            return children.flatMap({$0.value()}).joined(separator: ",")
+        }
+    }
+}
+
 struct Attribute {
     var key:String
     var value:String
@@ -31,8 +67,12 @@ class StreamTokenizer {
     let rightTag:Character = ">"
     let spaceChar:Character = " "
     let slash:Character = "/"
-    
+
     let notOpenTag = character(condition: { $0 != "<" })
+
+    class func newInstance() -> StreamTokenizer {
+        return StreamTokenizer()
+    }
 
     func tokenize(_ input:String) -> [StreamToken] {
         var tokens:[StreamToken] = []
@@ -45,6 +85,12 @@ class StreamTokenizer {
                 hasMore = false
                 continue
             }
+
+            guard remainder.count != result.1.count else {
+                hasMore = false
+                continue
+            }
+
             tokens.append(result.0)
             remainder = result.1
 
@@ -63,12 +109,12 @@ class StreamTokenizer {
 
         let name = noneOf([" ", "/>", ">"])
         let openTag = char(leftTag) *> name
-        let selfCloseEndTag = string("/>")
+        let selfCloseEndTag = space.many *> string("/>")
 
         let attributeStart = space.many *> noneOf([equal, slash, rightTag]) <* char(equal)
         let attribute = Attribute.init <^> attributeStart <*> quote()
 
-        let attributes = space.many *> attribute.many
+        let attributes = space.many *> attribute.many <* space.many
 
         let selfClosingTag = curry({name, attrs in StreamToken.tag(name, attrs, []) }) <^> openTag <*> attributes <* selfCloseEndTag
 
@@ -86,7 +132,7 @@ class StreamTokenizer {
         let row = selfClosingTag <|> tagWithNoChild <|> tagWithTextChild <|> tagWithChildren2 <|> tagWithChildren <|> text
 
         var actualInput = handleNonEscapedQuotes(input)
-        actualInput = actualInput.trimEnd(CharacterSet.newlines) + "\n"
+        actualInput = actualInput.trimEnd(CharacterSet.newlines)
         let parseResult = row.run(actualInput)
         return parseResult
     }

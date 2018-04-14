@@ -4,6 +4,7 @@
 
 @import Foundation;
 
+#import "GameServer.h"
 #import "TextTag.h"
 #import "LearningRate.h"
 #import "SkillExp.h"

@@ -7,4 +7,5 @@
 //
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
+    @property (strong) id activity;
 @end

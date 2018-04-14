@@ -291,6 +291,43 @@ class StreamTokenizerTester: QuickSpec {
                 expect(children1.count).to(equal(0))
             }
 
+            it("tokenizes anchor tags") {
+                let tokens = StreamTokenizer().tokenize("<popBold/>     <a href='https://store.play.net/store/purchase/dr'>Simucoin Store</a>    <a href='http://forums.play.net/calendar?game=dragonrealms'>Events Calendar</a>     <a href='https://drwiki.play.net/mediawiki/index.php/Category:New_player_guides'>Starter Guides</a>")
+
+                expect(tokens.count).to(equal(8))
+
+                guard case let .tag(name, _, _) = tokens[0] else {
+                    fail("expected tag token")
+                    return
+                }
+                expect(name).to(equal("popBold"))
+
+                guard case let .text(text) = tokens[1] else {
+                    fail("expected text token")
+                    return
+                }
+                expect(text).to(equal("     "))
+
+//                expect(attrs.count).to(equal(4))
+//                expect(attrs[1].key).to(equal("id"))
+//                expect(attrs[1].value).to(equal("minivitals"))
+            }
+
+            it("tokenizes preset tag") {
+                let tokens = StreamTokenizer().tokenize("<pushStream id=\"whispers\"/><preset id=\"whisper\">You whisper to Arneson,</preset> \"What?\"")
+
+                expect(tokens.count).to(equal(3))
+            }
+
+            it("tokenizes streamWindow tag") {
+                let tokens = StreamTokenizer().tokenize("<streamWindow id='group' title='Group' location='center' resident='true' ifClosed='' />")
+                expect(tokens.count).to(equal(2))
+            }
+
+            it("tokenizes tag with spaces after attribute") {
+                let tokens = StreamTokenizer().tokenize("<streamWindow id='group'  ></streamWindow>")
+                expect(tokens.count).to(equal(2))
+            }
         })
     }
 }

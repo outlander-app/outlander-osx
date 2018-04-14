@@ -89,6 +89,8 @@
 		F953762E1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */; };
 		F953762F1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */; };
 		F95376311EE1E1F2000FDA16 /* StreamTokenizerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */; };
+		F95376331EE26642000FDA16 /* TokenStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95376321EE26642000FDA16 /* TokenStreamer.swift */; };
+		F95376341EE26642000FDA16 /* TokenStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95376321EE26642000FDA16 /* TokenStreamer.swift */; };
 		F955389F1B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */; };
 		F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */; };
@@ -386,6 +388,11 @@
 		F9E307741AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */; };
 		F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */; };
 		F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F3D85A1957E54A005B9D68 /* Carbon.framework */; };
+		F9E6CC6C1EEB45B7000B6963 /* TokenStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E6CC6B1EEB45B7000B6963 /* TokenStreamerTester.swift */; };
+		F9E6CC6E1EEB5B1D000B6963 /* GameStream2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E6CC6D1EEB5B1D000B6963 /* GameStream2.swift */; };
+		F9E6CC6F1EEB5B1D000B6963 /* GameStream2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E6CC6D1EEB5B1D000B6963 /* GameStream2.swift */; };
+		F9E6CC711EEB6A99000B6963 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E6CC701EEB6A99000B6963 /* Queue.swift */; };
+		F9E6CC721EEB6A99000B6963 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E6CC701EEB6A99000B6963 /* Queue.swift */; };
 		F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E86BCD1AEC78700065E04A /* EventAggregator.swift */; };
 		F9E884A01EB314220037BFE0 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */; };
@@ -503,6 +510,7 @@
 		F94E78E51E37DFF60095CBF8 /* PresetCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetCommandHandler.swift; sourceTree = "<group>"; };
 		F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTokenizer.swift; sourceTree = "<group>"; };
 		F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamTokenizerTester.swift; sourceTree = "<group>"; };
+		F95376321EE26642000FDA16 /* TokenStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenStreamer.swift; sourceTree = "<group>"; };
 		F955389D1B27EFB5007DCCD4 /* CharacterStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterStatusViewController.swift; sourceTree = "<group>"; };
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersViewController.swift; sourceTree = "<group>"; };
@@ -758,6 +766,9 @@
 		F9E1C8B21AE35A8000458029 /* RandomNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumbers.swift; sourceTree = "<group>"; };
 		F9E307721AE9F0A6003018BD /* ExpUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandler.swift; sourceTree = "<group>"; };
 		F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpUpdateHandlerTester.swift; sourceTree = "<group>"; };
+		F9E6CC6B1EEB45B7000B6963 /* TokenStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenStreamerTester.swift; sourceTree = "<group>"; };
+		F9E6CC6D1EEB5B1D000B6963 /* GameStream2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStream2.swift; sourceTree = "<group>"; };
+		F9E6CC701EEB6A99000B6963 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F9E86BCD1AEC78700065E04A /* EventAggregator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAggregator.swift; sourceTree = "<group>"; };
 		F9E8849F1EB314220037BFE0 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		F9F19C421E980C0300AC3F29 /* ExpressionEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpressionEvaluator.swift; sourceTree = "<group>"; };
@@ -908,6 +919,8 @@
 				F9B9BFE41ABD5D8500CB44B6 /* StormFrontTokenizer.swift */,
 				F9A8A7981E85CAA0000A9621 /* ArrayExtensions.swift */,
 				F953762D1EE1DE91000FDA16 /* StreamTokenizer.swift */,
+				F95376321EE26642000FDA16 /* TokenStreamer.swift */,
+				F9E6CC701EEB6A99000B6963 /* Queue.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1071,6 +1084,7 @@
 				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
 				F9F19C471E9813F000AC3F29 /* ObjC.h */,
 				F9F19C481E9813F000AC3F29 /* ObjC.m */,
+				F9E6CC6D1EEB5B1D000B6963 /* GameStream2.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1204,6 +1218,7 @@
 				F9A8DD121AC14B0E009A2F67 /* AttributesTokenizerTester.swift */,
 				F9E307751AE9F3C2003018BD /* ExpUpdateHandlerTester.swift */,
 				F95376301EE1E1F2000FDA16 /* StreamTokenizerTester.swift */,
+				F9E6CC6B1EEB45B7000B6963 /* TokenStreamerTester.swift */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -1547,6 +1562,7 @@
 				F9CB31101903238B004587A5 /* SkillExp.m in Sources */,
 				F917612F1E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
+				F9E6CC711EEB6A99000B6963 /* Queue.swift in Sources */,
 				F9E86BCE1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F989E1F1192C254800562E32 /* HighlightsLoader.m in Sources */,
 				F97CD5991ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
@@ -1604,6 +1620,7 @@
 				F97A5C921895086C00E2C318 /* NSColor+Categories.m in Sources */,
 				F91434651B0C3F8600AD392A /* WindowCommandHandler.swift in Sources */,
 				F9F19C431E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
+				F9E6CC6E1EEB5B1D000B6963 /* GameStream2.swift in Sources */,
 				F93462591AC3DB7700B10ADF /* Layout.m in Sources */,
 				F953762E1EE1DE91000FDA16 /* StreamTokenizer.swift in Sources */,
 				F97A5CBF1896384A00E2C318 /* MyThumb.m in Sources */,
@@ -1636,6 +1653,7 @@
 				F9FF20101E9C9B40004C7C9F /* ScriptContext.swift in Sources */,
 				F9CF92771890832800449548 /* main.m in Sources */,
 				F9762F78192E4EEB00B873D7 /* Alias.m in Sources */,
+				F95376331EE26642000FDA16 /* TokenStreamer.swift in Sources */,
 				F9C2910A189AB86000F70224 /* Vitals.m in Sources */,
 				F917612C1E328B580091A617 /* PresetLoader.swift in Sources */,
 				F9F3D8341953C384005B9D68 /* MacroHandler.m in Sources */,
@@ -1695,6 +1713,7 @@
 				F9F19C441E980C0300AC3F29 /* ExpressionEvaluator.swift in Sources */,
 				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
+				F9E6CC6C1EEB45B7000B6963 /* TokenStreamerTester.swift in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
 				F97A5C9B18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
@@ -1778,6 +1797,7 @@
 				F9A8A7A81E8617DC000A9621 /* OutlanderParser.swift in Sources */,
 				F95376311EE1E1F2000FDA16 /* StreamTokenizerTester.swift in Sources */,
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
+				F9E6CC721EEB6A99000B6963 /* Queue.swift in Sources */,
 				F9F19C461E980D7F00AC3F29 /* ExpressionEvaluatorTester.swift in Sources */,
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
@@ -1804,6 +1824,7 @@
 				F97A5CC01896384A00E2C318 /* MyThumb.m in Sources */,
 				F9269A9D1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F97CD58E1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
+				F95376341EE26642000FDA16 /* TokenStreamer.swift in Sources */,
 				F9A2C1771B22B67F005B9B6C /* TriggersLoaderTester.swift in Sources */,
 				F9A8DD111AC14AA7009A2F67 /* AttributesTokenizer.swift in Sources */,
 				F9818D61190D75E800137896 /* TextViewControllerTester.m in Sources */,
@@ -1829,6 +1850,7 @@
 				F9C2910B189AB86000F70224 /* Vitals.m in Sources */,
 				F97CD5971ACDC814007E5804 /* Threading.swift in Sources */,
 				F90CEC191AD037CE00204243 /* MapView.swift in Sources */,
+				F9E6CC6F1EEB5B1D000B6963 /* GameStream2.swift in Sources */,
 				F91031551B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
 				F9AE6A87189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9FF20111E9C9B40004C7C9F /* ScriptContext.swift in Sources */,

@@ -33,17 +33,17 @@
 #import "NSArray+PEGKitAdditions.h"
 
 @interface TestViewController ()
+    @property GameContext *_gameContext;
+    @property RoundtimeNotifier *_roundtimeNotifier;
+    @property SpelltimeNotifier *_spelltimeNotifier;
 @end
 
 @implementation TestViewController {
-    GameContext *_gameContext;
     ScriptRunner *_scriptRunner;
     NotifyMessage *_notifier;
     VitalsViewController *_vitalsViewController;
     ScriptToolbarViewController *_scriptToolbarViewController;
     ExpTracker *_expTracker;
-    RoundtimeNotifier *_roundtimeNotifier;
-    SpelltimeNotifier *_spelltimeNotifier;
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
     BOOL _isApplicationActive;
@@ -52,9 +52,9 @@
 -(id)initWithContext:(GameContext *)gameContext {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
-    
-    _gameContext = gameContext;
 
+    self._gameContext = gameContext;
+    
     @weakify(self)
     
     _notifier = [NotifyMessage newInstance];
@@ -74,20 +74,20 @@
         [self append:tag to:@"main"];
     };
     
-    _scriptRunner = [ScriptRunner newInstance: _gameContext notifier: _notifier];
+    _scriptRunner = [ScriptRunner newInstance: self._gameContext notifier: _notifier];
     
     _vitalsViewController = [[VitalsViewController alloc] init];
     _scriptToolbarViewController = [[ScriptToolbarViewController alloc] initWithNibName:@"ScriptToolbarViewController" bundle:[NSBundle mainBundle]];
     _windows = [[TSMutableDictionary alloc] initWithName:@"gamewindows"];
     _server = [[AuthenticationServer alloc]init];
     _expTracker = [[ExpTracker alloc] init];
-    _roundtimeNotifier = [[RoundtimeNotifier alloc] initWith:_gameContext];
-    _spelltimeNotifier = [[SpelltimeNotifier alloc] initWith:_gameContext];
+    self._roundtimeNotifier = [[RoundtimeNotifier alloc] initWith:self._gameContext];
+    self._spelltimeNotifier = [[SpelltimeNotifier alloc] initWith:self._gameContext];
     _variablesReplacer = [[VariableReplacer alloc] init];
-    _commandProcessor = [[GameCommandProcessor alloc] initWith:_gameContext and:_variablesReplacer];
+    _commandProcessor = [[GameCommandProcessor alloc] initWith:self._gameContext and:_variablesReplacer];
     
     [[_commandProcessor.processed subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(CommandContext *x) {
-        [_gameStream sendCommand:x.command];
+        [_gameStream2 sendWithCommand:x.command];
         
         TextTag *tag = x.tag;
         if(!tag) {
@@ -254,7 +254,7 @@
 }
 
 - (void)reloadTheme {
-    NSColor *themeColor = [NSColor colorWithHexString:_gameContext.layout.primaryWindow.backgroundColor];
+    NSColor *themeColor = [NSColor colorWithHexString:self._gameContext.layout.primaryWindow.backgroundColor];
 
     MyView *theView = (MyView *)self.view;
     theView.backgroundColor = themeColor;
@@ -262,11 +262,11 @@
     _ViewContainer.backgroundColor = themeColor;
     _scriptToolbarView.backgroundColor = themeColor;
 
-    [_vitalsViewController updateColor:@"health" foreground:_gameContext.vitalsSettings.healthTextColor background:_gameContext.vitalsSettings.healthColor];
-    [_vitalsViewController updateColor:@"mana" foreground:_gameContext.vitalsSettings.manaTextColor background:_gameContext.vitalsSettings.manaColor];
-    [_vitalsViewController updateColor:@"stamina" foreground:_gameContext.vitalsSettings.staminaTextColor background:_gameContext.vitalsSettings.staminaColor];
-    [_vitalsViewController updateColor:@"concentration" foreground:_gameContext.vitalsSettings.concentrationTextColor background:_gameContext.vitalsSettings.concentrationColor];
-    [_vitalsViewController updateColor:@"spirit" foreground:_gameContext.vitalsSettings.spiritTextColor background:_gameContext.vitalsSettings.spiritColor];
+    [_vitalsViewController updateColor:@"health" foreground:self._gameContext.vitalsSettings.healthTextColor background:self._gameContext.vitalsSettings.healthColor];
+    [_vitalsViewController updateColor:@"mana" foreground:self._gameContext.vitalsSettings.manaTextColor background:self._gameContext.vitalsSettings.manaColor];
+    [_vitalsViewController updateColor:@"stamina" foreground:self._gameContext.vitalsSettings.staminaTextColor background:self._gameContext.vitalsSettings.staminaColor];
+    [_vitalsViewController updateColor:@"concentration" foreground:self._gameContext.vitalsSettings.concentrationTextColor background:self._gameContext.vitalsSettings.concentrationColor];
+    [_vitalsViewController updateColor:@"spirit" foreground:self._gameContext.vitalsSettings.spiritTextColor background:self._gameContext.vitalsSettings.spiritColor];
 }
 
 - (void)awakeFromNib {
@@ -285,13 +285,13 @@
     [_scriptToolbarViewController.view fixLeftEdge:YES];
     [_scriptToolbarViewController.view fixWidth:NO];
     [_scriptToolbarViewController.view fixHeight:NO];
-    [_scriptToolbarViewController setContext:_gameContext];
+    [_scriptToolbarViewController setContext:self._gameContext];
 
     [self reloadTheme];
    
     [self loadWindows];
     
-    [[_roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
+    [[self._roundtimeNotifier.notification subscribeOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(Roundtime *rt) {
         
         self._CommandTextField.progress = rt.percent;
         
@@ -303,7 +303,7 @@
         }
     }];
     
-    [_spelltimeNotifier.notification subscribeNext:^(NSString *val) {
+    [self._spelltimeNotifier.notification subscribeNext:^(NSString *val) {
         _viewModel.spell = val;
     }];
 
@@ -348,7 +348,7 @@
 }
 
 - (void)loadWindows {
-    NSArray *windows = [_gameContext.layout.windows reversedArray];
+    NSArray *windows = [self._gameContext.layout.windows reversedArray];
     
     [windows enumerateObjectsUsingBlock:^(WindowData *obj, NSUInteger idx, BOOL *stop) {
         [self addWindow:obj withNotification:NO];
@@ -380,7 +380,7 @@
     [controller setBorderColor:[NSColor colorWithHexString:window.borderColor]];
     [controller setShowBorder:window.showBorder];
     
-    controller.gameContext = _gameContext;
+    controller.gameContext = self._gameContext;
     [controller.command subscribeNext:^(CommandContext *ctx) {
         [_commandProcessor process:ctx];
     }];
@@ -554,7 +554,7 @@
         return;
     }
 
-    NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
+    NSString *prompt = [self._gameContext.globalVars cacheObjectForKey:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
@@ -570,82 +570,150 @@
 
 - (IBAction)connect:(id)sender {
     
-    if(![_gameContext.settings isValid]) {
+    if(![self._gameContext.settings isValid]) {
         [self appendError:@"Invalid credentials.  Please provide all required credentials."];
         return;
     }
     
-    if(_gameStream) {
-        [_gameStream complete];
+    if(_gameStream2) {
+        [_gameStream2 disconnect];
     }
-    
-    _gameStream = [[GameStream alloc] initWithContext:_gameContext];
-    
-    [_gameStream.connected subscribeNext:^(NSString *message) {
+
+//    _gameStream = [[GameStream alloc] initWithContext:_gameContext];
+
+    @weakify(self);
+
+    _gameStream2 = [GameStream2 newInstance:self._gameContext];
+    _gameStream2.connected = ^(NSString *message) {
+        @strongify(self);
         NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
         [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, message]
                                 mono:true]
                   to:@"main"];
-    }];
-    
-    [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
-        NSString *time = [_gameContext.globalVars cacheObjectForKey:@"gametime"];
-        NSString *updated = [_gameContext.globalVars cacheObjectForKey:@"gametimeupdate"];
+    };
+
+    _gameStream2.disconnected = ^{
+        @strongify(self);
+        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
+                                mono:true]
+                  to:@"main"];
+        [self._gameContext.events publish:@"disconnected" data:@{}];
+    };
+
+    _gameStream2.text = ^(NSArray<TextTag *> * _Nonnull tags) {
+        @strongify(self);
+
+        self.viewModel.righthand = [NSString stringWithFormat:@"R: %@", [self._gameContext.globalVars cacheObjectForKey:@"righthand"]];
+        self.viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [self._gameContext.globalVars cacheObjectForKey:@"lefthand"]];
+
+        for (TextTag *tag in tags) {
+            NSString *target = [self windowForTarget:tag.targetWindow];
+            [self append:tag to:target];
+        }
+    };
+
+    _gameStream2.variable = ^(NSString * _Nonnull key, NSString * _Nonnull value) {
+        @strongify(self);
+        [self._gameContext.globalVars setCacheObject:value forKey:key];
+    };
+
+    _gameStream2.clearStream = ^(NSString * _Nonnull window) {
+        @strongify(self);
+        [self clearWindow:window];
+    };
+
+    _gameStream2.roundtime = ^(Roundtime * _Nonnull rt) {
+        @strongify(self);
+
+        NSString *time = [self._gameContext.globalVars cacheObjectForKey:@"gametime"];
+        NSString *updated = [self._gameContext.globalVars cacheObjectForKey:@"gametimeupdate"];
         
         NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
         NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
         
         NSTimeInterval diff = t - offset;
         double rounded = ceil(diff);
-        
-        [_roundtimeNotifier set:rounded];
-    }];
-    
-    [_gameStream.spell.signal subscribeNext:^(NSString *spell) {
-        [_spelltimeNotifier set:spell];
-    }];
-    
-    [_gameStream.room.signal subscribeNext:^(id x) {
-        [self updateRoom];
-    }];
-    
-    [_gameStream.vitals subscribeNext:^(Vitals *vitals) {
-        NSLog(@"Vitals: %@", vitals);
+
+        [self._roundtimeNotifier set:rounded];
+    };
+
+    _gameStream2.spell = ^(NSString * _Nonnull spell) {
+        @strongify(self);
+        [self._spelltimeNotifier set:spell];
+    };
+
+    _gameStream2.vitals = ^(Vitals * _Nonnull vitals) {
+        @strongify(self);
         [_vitalsViewController updateValue:vitals.name
                                       text:[[NSString stringWithFormat:@"%@ %hu%%", vitals.name, vitals.value] capitalizedString]
                                      value:vitals.value];
-    }];
-    [_gameStream.exp subscribeNext:^(SkillExp *skillExp) {
-        [_expTracker update:skillExp];
-        NSArray *result = [_expTracker.skillsWithExp.rac_sequence map:^id(SkillExp *value) {
-            TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\r\n", value.description]
-                                      mono:true];
-            if(value.isNew) {
-                tag.color = @"#66FFFF";
-            }
-            return tag;
-        }].array;
-        
-        NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
-        
-        if(_expTracker.startOfTracking == nil) {
-            _expTracker.startOfTracking = [NSDate date];
-        }
-        
-        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
-        
-        unsigned int seconds = (unsigned int)round(secondsBetween);
-        NSLog(@"seconds: %u", seconds);
-        NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
-                            seconds / 3600, (seconds / 60) % 60, seconds % 60];
-        
-        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES]];
-        [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
-        [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
-        
-        [self set:@"experience" withTags:tags];
-    }];
-    
+    };
+
+//    [_gameStream.connected subscribeNext:^(NSString *message) {
+//        NSString *dateFormat =[@"%@" stringFromDateFormat:@"HH:mm"];
+//        [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, message]
+//                                mono:true]
+//                  to:@"main"];
+//    }];
+//    
+//    [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
+//        NSString *time = [_gameContext.globalVars cacheObjectForKey:@"gametime"];
+//        NSString *updated = [_gameContext.globalVars cacheObjectForKey:@"gametimeupdate"];
+//        
+//        NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
+//        NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
+//        
+//        NSTimeInterval diff = t - offset;
+//        double rounded = ceil(diff);
+//        
+//        [_roundtimeNotifier set:rounded];
+//    }];
+//    
+//    [_gameStream.spell.signal subscribeNext:^(NSString *spell) {
+//        [_spelltimeNotifier set:spell];
+//    }];
+//    
+//    [_gameStream.room.signal subscribeNext:^(id x) {
+//        [self updateRoom];
+//    }];
+//    
+//    [_gameStream.vitals subscribeNext:^(Vitals *vitals) {
+//        NSLog(@"Vitals: %@", vitals);
+//        [_vitalsViewController updateValue:vitals.name
+//                                      text:[[NSString stringWithFormat:@"%@ %hu%%", vitals.name, vitals.value] capitalizedString]
+//                                     value:vitals.value];
+//    }];
+//    [_gameStream.exp subscribeNext:^(SkillExp *skillExp) {
+//        [_expTracker update:skillExp];
+//        NSArray *result = [_expTracker.skillsWithExp.rac_sequence map:^id(SkillExp *value) {
+//            TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\r\n", value.description]
+//                                      mono:true];
+//            if(value.isNew) {
+//                tag.color = @"#66FFFF";
+//            }
+//            return tag;
+//        }].array;
+//        
+//        NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
+//        
+//        if(_expTracker.startOfTracking == nil) {
+//            _expTracker.startOfTracking = [NSDate date];
+//        }
+//        
+//        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
+//        
+//        unsigned int seconds = (unsigned int)round(secondsBetween);
+//        NSLog(@"seconds: %u", seconds);
+//        NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
+//                            seconds / 3600, (seconds / 60) % 60, seconds % 60];
+//        
+//        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES]];
+//        [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
+//        [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
+//        
+//        [self set:@"experience" withTags:tags];
+//    }];
+
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
     
     [authSignal
@@ -654,10 +722,10 @@
          [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, x]
                                 mono:true]
                   to:@"main"];
-         _gameContext.settings.password = @"";
+         self._gameContext.settings.password = @"";
      }
      error:^(NSError *error) {
-         _gameContext.settings.password = @"";
+         self._gameContext.settings.password = @"";
          NSString *msg = [error.userInfo objectForKey:@"message"];
          [self appendError:msg];
          
@@ -666,47 +734,55 @@
              [self appendError:authMsg];
          }
          
-         if (_gameStream) {
-            [_gameStream unsubscribe];
-         }
+//         if (_gameStream) {
+//            [_gameStream unsubscribe];
+//         }
      }
      completed:^{
         [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
     }];
-    
-    [[[_server authenticate:_gameContext.settings.account
-                   password:_gameContext.settings.password
-                       game:_gameContext.settings.game
-                  character:_gameContext.settings.character]
-    flattenMap:^RACStream *(GameConnection *connection) {
-        NSLog(@"Connection: %@", connection);
-        RACMulticastConnection *conn = [_gameStream connect:connection];
-        return [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
-    }]
-    subscribeNext:^(NSArray *tags) {
-        
-        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
-        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
-        
-        for (TextTag *tag in tags) {
-            NSString *target = [self windowForTarget:tag.targetWindow];
-            [self append:tag to:target];
-        }
-        
-    } completed:^{
-        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
-                                mono:true]
-                  to:@"main"];
-        
-        if(_gameStream) {
-            [_gameStream unsubscribe];
-            _gameStream = nil;
-        }
-        
-        [_gameContext.events publish:@"disconnected" data:@{}];
+
+    [[_server authenticate:self._gameContext.settings.account
+                   password:self._gameContext.settings.password
+                       game:self._gameContext.settings.game
+                  character:self._gameContext.settings.character]
+    subscribeNext:^(GameConnection *connection) {
+        [_gameStream2 connectWithKey:connection.key host:connection.host port:connection.port];
     }];
+    
+//    [[[_server authenticate:_gameContext.settings.account
+//                   password:_gameContext.settings.password
+//                       game:_gameContext.settings.game
+//                  character:_gameContext.settings.character]
+//    flattenMap:^RACStream *(GameConnection *connection) {
+//        NSLog(@"Connection: %@", connection);
+//        RACMulticastConnection *conn = [_gameStream connect:connection];
+//        return [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
+//    }]
+//    subscribeNext:^(NSArray *tags) {
+//        
+//        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
+//        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
+//        
+//        for (TextTag *tag in tags) {
+//            NSString *target = [self windowForTarget:tag.targetWindow];
+//            [self append:tag to:target];
+//        }
+//        
+//    } completed:^{
+//        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
+//                                mono:true]
+//                  to:@"main"];
+//        
+//        if(_gameStream) {
+//            [_gameStream unsubscribe];
+//            _gameStream = nil;
+//        }
+//        
+//        [_gameContext.events publish:@"disconnected" data:@{}];
+//    }];
 }
 
 - (void)appendError:(NSString *)msg {
@@ -717,11 +793,11 @@
 }
 
 - (void)updateRoom {
-    NSString *name = [_gameContext.globalVars cacheObjectForKey:@"roomtitle"];
-    NSString *desc = [_gameContext.globalVars cacheObjectForKey:@"roomdesc"];
-    NSString *objects = [_gameContext.globalVars cacheObjectForKey:@"roomobjsorig"];
-    NSString *exits = [_gameContext.globalVars cacheObjectForKey:@"roomexits"];
-    NSString *players = [_gameContext.globalVars cacheObjectForKey:@"roomplayers"];
+    NSString *name = [self._gameContext.globalVars cacheObjectForKey:@"roomtitle"];
+    NSString *desc = [self._gameContext.globalVars cacheObjectForKey:@"roomdesc"];
+    NSString *objects = [self._gameContext.globalVars cacheObjectForKey:@"roomobjsorig"];
+    NSString *exits = [self._gameContext.globalVars cacheObjectForKey:@"roomexits"];
+    NSString *players = [self._gameContext.globalVars cacheObjectForKey:@"roomplayers"];
     
     NSMutableArray *tags = [[NSMutableArray alloc] init];
     
@@ -767,7 +843,7 @@
     NSMutableArray *dirs = [NSMutableArray new];
     
     for (NSString *option in options) {
-        NSString *res = [_gameContext.globalVars cacheObjectForKey:option];
+        NSString *res = [self._gameContext.globalVars cacheObjectForKey:option];
         if ([res isEqualToString:@"1"]) {
             [dirs addObject:option];
         }
@@ -790,20 +866,20 @@
         isRaw = YES;
     }
 
-    if(isRaw && !_gameContext.settings.rawLoggingEnabled) {
+    if(isRaw && !self._gameContext.settings.rawLoggingEnabled) {
         return;
     }
 
-    if(!isRaw && !_gameContext.settings.loggingEnabled) {
+    if(!isRaw && !self._gameContext.settings.loggingEnabled) {
         return;
     }
 
     NSString *ending = isRaw ? @"-raw" : @"";
     
-    NSString *logsDir = _gameContext.pathProvider.logsFolder;
+    NSString *logsDir = self._gameContext.pathProvider.logsFolder;
     NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@%@.txt",
-                          _gameContext.settings.character,
-                          _gameContext.settings.game,
+                          self._gameContext.settings.character,
+                          self._gameContext.settings.game,
                           [@"%@" stringFromDateFormat:@"yyyy-MM-dd"],
                           ending];
     

@@ -171,7 +171,10 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     
     func popUpSelectionChanged(_ notification:Notification) {
         if let menuItem = notification.userInfo?["MenuItem"] as? NSMenuItem {
-            let action = menuItem.attributedTitle!.string.lowercased()
+            let action = menuItem.attributedTitle?.string.lowercased() ?? ""
+            if action == "" {
+                return
+            }
             self.context?.events.publish("script", data: ["target":menuItem.menu!.title as AnyObject, "action":action as AnyObject])
         }
     }

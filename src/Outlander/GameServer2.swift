@@ -64,7 +64,7 @@ open class Connection : NSObject, StreamDelegate {
                 let length = inputStream!.read(&buffer, maxLength: buffer.count)
                 if(length > 0) {
                     let data = NSString(bytes: buffer, length: length, encoding: String.Encoding.utf8.rawValue)
-                    print("recieved data: \(data)")
+                    print("recieved data: \(String(describing: data))")
                 }
             }
         }

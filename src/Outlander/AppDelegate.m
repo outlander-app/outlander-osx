@@ -82,6 +82,11 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(beginActivityWithOptions:reason:)]) {
+        self.activity = [[NSProcessInfo processInfo] beginActivityWithOptions:0x00FFFFFF reason:@"Disable app nap"];
+    }
+
     windows = [[NSMutableArray alloc] init];
 
     gameContext = [GameContext newInstance];

@@ -19,6 +19,7 @@
 @interface TestViewController : NSViewController <Commands, ISubscriber> {
     AuthenticationServer *_server;
     GameStream *_gameStream;
+    GameStream2 *_gameStream2;
     TSMutableDictionary *_windows;
 }
 
