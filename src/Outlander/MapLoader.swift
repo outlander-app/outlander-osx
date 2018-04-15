@@ -136,7 +136,7 @@ final class MapLoader {
 
         return nodes
             .filter { $0.name == "description" }
-            .map { $0.text ?? "" }
+            .map { $0.text?.replace("\"", withString: "").replace(";", withString: "") ?? "" }
     }
     
     private func arcs(nodes:[GlimpseXML.Node]) -> [MapArc] {

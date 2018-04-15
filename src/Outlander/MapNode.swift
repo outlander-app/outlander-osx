@@ -50,9 +50,11 @@ final class MapNode {
     
     func hasMatchingDescription(description:String) -> Bool {
 
+        let mod = description.replace("\"", withString: "").replace(";", withString: "")
+
         for desc in descriptions {
             
-            if desc.hasPrefix(description) {
+            if desc.hasPrefix(mod) {
                 return true
             }
             
