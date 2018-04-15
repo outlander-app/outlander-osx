@@ -39,7 +39,7 @@
 - (IBAction)newAction:(id)sender {
     MainWindowController *ctrl = [[MainWindowController alloc] initWithSettings: gameContext.settings];
     [windows addObject:ctrl];
-    [ctrl.window makeKeyAndOrderFront:nil];
+    [ctrl showWindow:nil];
 }
 
 - (IBAction)connectAction:(id)sender {
@@ -76,7 +76,7 @@
 //
 //    [updateWindow setUpdater:nil with:update];
 //
-//    [updateWindow.window makeKeyAndOrderFront:nil];
+//    [updateWindow showWindow:nil];
 
     [self checkForUpdates];
 }
@@ -91,7 +91,7 @@
     MainWindowController *ctrl = [[MainWindowController alloc] initWithSettings: gameContext.settings];
     [windows addObject:ctrl];
     
-    [ctrl.window makeKeyAndOrderFront:nil];
+    [ctrl showWindow:nil];
 
     updateWindow = [[UpdateWindowController alloc] init];
 
@@ -132,7 +132,7 @@
         [self logUpdateInfo:[NSString stringWithFormat:@"Update ready to install: %@", downloadedUpdate.update.releaseName]];
 
         [updateWindow setUpdater:updater with:downloadedUpdate.update];
-        [updateWindow.window makeKeyAndOrderFront:nil];
+        [updateWindow showWindow:nil];
     }];
 
     [updater.checkForUpdatesCommand.errors subscribeNext:^(NSError *error) {
@@ -160,16 +160,16 @@
                        context:(void *)context {
 
     if(object.state == SQRLUpdaterStateIdle) {
-        [self logUpdateInfo: @"Idle" withPreset:@"appupdates" echo:NO];
+        [self logUpdateInfo: @"You are running the latest version of Outlander."];
     }
     else if(object.state == SQRLUpdaterStateCheckingForUpdate) {
-        [self logUpdateInfo: @"Checking for Application Update"];
+        [self logUpdateInfo: @"Checking for Outlander updates..."];
     }
     else if(object.state == SQRLUpdaterStateDownloadingUpdate) {
-        [self logUpdateInfo: @"Downloading Application Update"];
+        [self logUpdateInfo: @"Downloading Outlander update..."];
     }
     else if(object.state == SQRLUpdaterStateAwaitingRelaunch) {
-        [self logUpdateInfo: @"Awaiting Relaunch for Application Update"];
+        [self logUpdateInfo: @"Awaiting Outlander relaunch to update to the latest version."];
     }
 }
 
