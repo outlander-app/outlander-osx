@@ -41,7 +41,14 @@
 	if(self == nil) return nil;
     
     _gameContext = [GameContext newInstance];
-    _gameContext.settings = settings;
+
+    _gameContext.settings.defaultProfile = settings.defaultProfile;
+    _gameContext.settings.profile = settings.defaultProfile;
+    _gameContext.settings.checkForApplicationUpdates = settings.checkForApplicationUpdates;
+    _gameContext.settings.variableDateFormat = settings.variableDateFormat;
+    _gameContext.settings.variableTimeFormat = settings.variableTimeFormat;
+    _gameContext.settings.variableDatetimeFormat = settings.variableDatetimeFormat;
+    
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] initWith:_gameContext.events]];
     
