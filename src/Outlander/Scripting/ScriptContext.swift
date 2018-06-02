@@ -365,80 +365,18 @@ public class ScriptContext {
     }
     
     public func simplify(data:String) -> String {
-        
-        let mutable = RegexMutable(data)
-        
-        var count = 0
-        let maxIterations = 15
-        
-        var last:String? = nil
-        
-        repeat {
-            last = String(mutable)
-            simplifyImpl(mutable)
-            count += 1
-        } while count < maxIterations && last != mutable && hasPotentialVars(mutable)
-        
-        return String(mutable)
-    }
-    
-    private func hasPotentialVars(mutable:NSMutableString)->Bool {
-        
-        if (mutable.rangeOfString("$").location != NSNotFound) { return true }
-        if (mutable.rangeOfString("%").location != NSNotFound) { return true }
-        
-        return false
-    }
-    
-    private func simplifyImpl(mutable:NSMutableString)->Void {
 
-        if self.actionVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-            self.replace("\\$", target: mutable, dict: self.actionVars)
-        }
-        
-        if self.regexVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-
-            self.replace("\\$", target: mutable, dict: self.regexVars)
-        }
-
-        if mutable.rangeOfString("%").location != NSNotFound {
-            
-            self.replace("%", target: mutable, dict: self.variables)
-            self.replace("%", target: mutable, dict: self.paramVars)
-        }
-        
-        if mutable.rangeOfString("$").location != NSNotFound && self.globalVars != nil {
-            
-            self.replace("\\$", target: mutable, dict: self.globalVars!())
-        }
+        return VariableReplacer2()
+            .simplify(
+                data,
+                self.globalVars != nil ? self.globalVars!() : [:],
+                self.regexVars,
+                self.actionVars,
+                self.variables,
+                self.paramVars
+            )
     }
-    
-    private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
-        
-        let sortedKeys = dict.keys.sort({ $0.0.characters.count > $0.1.characters.count })
-        
-        func doReplace() {
-            for key in sortedKeys {
-                
-                let replaceCanidate = "\(prefix.trimPrefix("\\"))\(key)"
-                
-                if target.containsString(replaceCanidate) {
-                    target["\(prefix)\(key)"] ~= dict[key] ?? ""
-                    break
-                }
-            }
-        }
-        
-        let maxIterations = 15
-        var count = 0
-        
-        repeat {
-            doReplace()
-            count += 1
-        }
-        while count < maxIterations && target.containsString(prefix.trimPrefix("\\"))
-    }
-    
+
     public func simplify(tokens:Array<Token>) -> String {
         var text = ""
         

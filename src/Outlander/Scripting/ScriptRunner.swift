@@ -18,7 +18,7 @@ public class ScriptRunner : NSObject, ISubscriber {
     var notifier:INotifyMessage
     var context:GameContext
     var scriptLoader:ScriptLoader
-   
+
     private var scripts:[IScript]
     
     init(context:GameContext, notifier:INotifyMessage) {
@@ -111,9 +111,9 @@ public class ScriptRunner : NSObject, ISubscriber {
             }
             
             script.run(res.scriptText!, globalVars: { () -> [String:String] in
-                return self.context.globalVars.copyValues() as! [String:String]
+                return self.context.globalVarsCopy()
             }, params: res.params)
-            
+
             self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
         }
     }

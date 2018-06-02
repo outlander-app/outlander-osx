@@ -13,17 +13,23 @@
 #import "Outlander-Swift.h"
 @import PEGKit;
 
+@interface VariableReplacer() {
+}
+@end
+
 @implementation VariableReplacer
 
-- (NSString *)replace:(NSString *)data withContext:(GameContext *)context {
-    data = [self replaceGlobalVar:data withContext:context];
-    data = [self replaceAlias:data withContext:context];
-    data = [self replaceGlobalVar:data withContext:context];
-    return data;
+- (id)init {
+    self = [super init];
+    if (self == nil) return nil;
+    return self;
 }
 
-- (NSString *)replaceGlobalVar:(NSString *)data withContext:(GameContext *)context {
-    return [self replaceVars:data withDict:context.globalVars andPattern:@"\\$([a-zA-z0-9\\.]+)"];
+- (NSString *)replace:(NSString *)data withContext:(GameContext *)context {
+    VariableReplacer2 *replacer = [VariableReplacer2 newInstance];
+    data = [replacer simplify:data :context.globalVarsCopy :@{} :@{} :@{} :@{}];
+    data = [self replaceAlias:data withContext:context];
+    return [replacer simplify:data :context.globalVarsCopy :@{} :@{} :@{} :@{}];
 }
 
 - (NSString *)replaceAlias:(NSString *)data withContext:(GameContext *)context {
@@ -86,37 +92,4 @@
     return [str trimWhitespace];
 }
 
-- (NSString *)replaceLocalVars:(NSString *)data withVars:(TSMutableDictionary *)dict {
-    return [self replaceVars:data withDict:dict andPattern:@"\\%([a-zA-z0-9\\.]+)"];
-}
-
-- (NSString *)replaceLocalArgumentVars:(NSString *)data withVars:(TSMutableDictionary *)dict {
-    return [self replaceVars:data withDict:dict andPattern:@"\\$([0-9\\.]+)"];
-}
-
-- (NSString *)replaceVars:(NSString *)data withDict:(TSMutableDictionary *)dict andPattern:(NSString *)pattern {
-    NSMutableString *str = [data mutableCopy];
-    
-    [[str matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
-        
-        if(res.numberOfRanges < 2) return;
-        
-        NSString *value = [dict cacheObjectForKey:[data substringWithRange:[res rangeAtIndex:1]]];
-        
-        if(!value) return;
-        
-        NSString *pattern = [[data substringWithRange:[res rangeAtIndex:0]] stringByReplacingOccurrencesOfString:@"$" withString:@"\\$"];
-        
-        [self replace:str withTemplate:value andPattern:pattern];
-    }];
-    
-    return str;
-}
-
-- (void) replace: (NSMutableString *)data withTemplate:(NSString *)template andPattern:(NSString *)pattern {
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                           options:NSRegularExpressionCaseInsensitive
-                                                                             error:nil];
-    [regex replaceMatchesInString:data options:0 range:NSMakeRange(0, [data length]) withTemplate:template];
-}
 @end

@@ -29,6 +29,10 @@
 @property (nonatomic, copy) NSString *mapsFolder;
 @property (nonatomic, copy) NSString *soundsFolder;
 
+@property (nonatomic, copy) NSString *variableDateFormat;
+@property (nonatomic, copy) NSString *variableTimeFormat;
+@property (nonatomic, copy) NSString *variableDatetimeFormat;
+
 - (BOOL)isValid;
 
 @end

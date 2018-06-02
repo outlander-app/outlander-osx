@@ -54,6 +54,7 @@
     [_handlers addObject:[[ScriptHandler alloc] initWith:[[GameEventRelay alloc] initWith:context.events]]];
     [_handlers addObject:[[ScriptCommandHandler alloc] init]];
     [_handlers addObject:[[VarCommandHandler alloc] init]];
+    [_handlers addObject:[LogCommandHandler newInstance:relay]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
     [_handlers addObject:[[SendCommandHandler alloc] initWith:relay]];
