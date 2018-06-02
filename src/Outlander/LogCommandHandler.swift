@@ -68,11 +68,6 @@ class LogCommandHandler : NSObject, CommandHandler {
         do {
             let filePath = "\(withContext.pathProvider.logsFolder())"
             let file = NSURL(fileURLWithPath: filePath).URLByAppendingPathComponent(fileName)!
-
-            let tag = TextTag()
-            tag.text = "logging to \(file.absoluteURL): \(text)\n"
-            self.relay.sendEcho(tag)
-
             try text.appendLineToURL(file)
         }
         catch {

@@ -88,21 +88,21 @@ public class GameContext : NSObject {
 
     public func globalVarsCopy() -> [String:String] {
 
-        let now = NSDate()
+//        let now = NSDate()
+//
+//        self.dateFormatter.dateFormat = self.settings.variableDateFormat
+//        let formattedDate = self.dateFormatter.stringFromDate(now)
+//
+//        self.dateFormatter.dateFormat = self.settings.variableTimeFormat
+//        let formattedTime = self.dateFormatter.stringFromDate(now)
+//
+//        self.dateFormatter.dateFormat = self.settings.variableDatetimeFormat
+//        let formattedDateTime = self.dateFormatter.stringFromDate(now)
+//
+//        self.globalVars.setCacheObject(formattedDate, forKey: "date")
+//        self.globalVars.setCacheObject(formattedTime, forKey: "time")
+//        self.globalVars.setCacheObject(formattedDateTime, forKey: "datetime")
 
-        self.dateFormatter.dateFormat = self.settings.variableDateFormat
-        let formattedDate = self.dateFormatter.stringFromDate(now)
-
-        self.dateFormatter.dateFormat = self.settings.variableTimeFormat
-        let formattedTime = self.dateFormatter.stringFromDate(now)
-
-        self.dateFormatter.dateFormat = self.settings.variableDatetimeFormat
-        let formattedDateTime = self.dateFormatter.stringFromDate(now)
-
-        self.globalVars.setCacheObject(formattedDate, forKey: "date")
-        self.globalVars.setCacheObject(formattedTime, forKey: "time")
-        self.globalVars.setCacheObject(formattedDateTime, forKey: "datetime")
-        
         return self.globalVars.copyValues() as! [String:String]
     }
 }
