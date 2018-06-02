@@ -13,7 +13,5 @@
 @interface VariableReplacer : NSObject
 
 - (NSString *)replace:(NSString *)data withContext:(GameContext *)context;
-- (NSString *)replaceLocalVars:(NSString *)data withVars:(TSMutableDictionary *)dict;
-- (NSString *)replaceLocalArgumentVars:(NSString *)data withVars:(TSMutableDictionary *)dict;
 
 @end

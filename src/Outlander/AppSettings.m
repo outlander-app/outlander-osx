@@ -34,6 +34,10 @@
 
     self.checkForApplicationUpdates = YES;
     self.downloadPreReleaseVersions = NO;
+
+    self.variableDateFormat = @"yyyy-MM-dd";
+    self.variableTimeFormat = @"hh:mm:ss a";
+    self.variableDatetimeFormat = @"yyyy-MM-dd hh:mm:ss a";
     
     return self;
 }
