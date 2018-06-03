@@ -78,9 +78,7 @@
     [_notification sendNext:sendValue];
     
     NSString *time = [@(_count) stringValue];
-    
-    // this is causing issues - is getting a deadlock
-    [_gameContext.globalVars setCacheObject:time forKey:@"spelltime"];
+    [_gameContext.globalVars set:time forKey:@"spelltime"];
 }
 
 @end

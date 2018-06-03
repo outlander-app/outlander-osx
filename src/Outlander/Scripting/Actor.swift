@@ -54,7 +54,7 @@ public protocol IScript : IAcceptMessage {
     
     var completed:((String, String?)->Void)? {get set}
     
-    func run(script:String, globalVars:(()->[String:String])?, params:[String])
+    func run(script:String, context:GameContext, params:[String])
   
     func printInfo()
     func cancel()
@@ -340,7 +340,7 @@ public class Script : IScript {
         }
     }
     
-    public func run(script:String, globalVars:(()->[String:String])?, params:[String]) {
+    public func run(script:String, context:GameContext, params:[String]) {
         
         self.started = NSDate()
         
@@ -373,7 +373,7 @@ public class Script : IScript {
                     return
                 }
                 
-                self.context = ScriptContext(tokens, globalVars: globalVars, params: params)
+                self.context = ScriptContext(tokens, context: context, params: params)
                 self.context!.marker.currentIdx = -1
                 self.context!.setVariable("scriptname", value: self.scriptName)
                 self.moveNext()

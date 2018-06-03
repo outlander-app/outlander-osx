@@ -34,15 +34,9 @@ public class ScriptRunner : NSObject, ISubscriber {
         context.events.subscribe(self, token: "script")
         context.events.subscribe(self, token: "ol:game-parse")
         context.events.subscribe(self, token: "ol:game-stream")
-        
-        self.context.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
-            
-            if let changed = obj as? Dictionary<String, String> {
-                self.notifyVars(changed)
-            }
-        }
+        context.events.subscribe(self, token: "variable:changed")
     }
-    
+
     public func handle(token:String, data:[String:AnyObject]) {
         if token == "ol:game-stream" {
             self.stream(data)
@@ -52,6 +46,10 @@ public class ScriptRunner : NSObject, ISubscriber {
             self.start(data)
         } else if token == "script" {
             self.manage(data)
+        } else if token == "variable:changed" {
+            if let changed = data as? Dictionary<String, String> {
+                self.notifyVars(changed)
+            }
         }
     }
     
@@ -110,9 +108,7 @@ public class ScriptRunner : NSObject, ISubscriber {
                 self.remove(name)
             }
             
-            script.run(res.scriptText!, globalVars: { () -> [String:String] in
-                return self.context.globalVarsCopy()
-            }, params: res.params)
+            script.run(res.scriptText!, context: self.context, params: res.params)
 
             self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
         }

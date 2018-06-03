@@ -41,7 +41,7 @@
         return;
     }
     
-    [_context.globalVars removeAllObjects];
+    [_context.globalVars removeAll];
     [self setDefaults];
     
     NSString *pattern = @"^#var \\{(.*)\\} \\{(.*)\\}$";
@@ -49,20 +49,20 @@
         if(res.numberOfRanges > 1) {
             NSString *key = [data substringWithRange:[res rangeAtIndex:1]];
             NSString *value = [data substringWithRange:[res rangeAtIndex:2]];
-            [_context.globalVars setCacheObject:value forKey:key];
+            [_context.globalVars set:value forKey:key];
         }
     }];
    
     // ensure that roundtime is always zero when reloaded
-    [_context.globalVars setCacheObject:@"0" forKey:@"roundtime"];
+    [_context.globalVars set:@"0" forKey:@"roundtime"];
 }
 
 - (void)setDefaults {
-    [_context.globalVars setCacheObject:@">" forKey: @"prompt"];
-    [_context.globalVars setCacheObject:@"Empty" forKey: @"lefthand"];
-    [_context.globalVars setCacheObject:@"Empty" forKey: @"righthand"];
-    [_context.globalVars setCacheObject:@"None" forKey: @"preparedspell"];
-    [_context.globalVars setCacheObject:@"0" forKey: @"tdp"];
+    [_context.globalVars set:@">" forKey: @"prompt"];
+    [_context.globalVars set:@"Empty" forKey: @"lefthand"];
+    [_context.globalVars set:@"Empty" forKey: @"righthand"];
+    [_context.globalVars set:@"None" forKey: @"preparedspell"];
+    [_context.globalVars set:@"0" forKey: @"tdp"];
 }
 
 - (void)save {
@@ -70,11 +70,11 @@
     NSString *configFile = [_context.pathProvider.profileFolder stringByAppendingPathComponent:@"variables.cfg"];
     
     NSMutableString *str = [[NSMutableString alloc] init];
-    
-    [_context.globalVars.allKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
-        [str appendFormat:@"#var {%@} {%@}\n", key, [_context.globalVars cacheObjectForKey:key]];
+
+    [_context.globalVars.alphabeticalKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        [str appendFormat:@"#var {%@} {%@}\n", key, [_context.globalVars get:key]];
     }];
-    
+
     [_fileSystem write:str toFile:configFile];
 }
 

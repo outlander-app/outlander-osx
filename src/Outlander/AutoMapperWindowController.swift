@@ -126,7 +126,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
     }
 }
 
-class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
+class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISubscriber {
     
     @IBOutlet weak var mapsComboBox: NSComboBox!
     @IBOutlet weak var nodesLabel: NSTextField!
@@ -185,79 +185,125 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
             }
         }
 
-        if let charname = self.context?.globalVars.cacheObjectForKey("charactername"), let game = self.context?.globalVars.cacheObjectForKey("game") {
+        if let charname = self.context?.globalVars["charactername"], let game = self.context?.globalVars["game"] {
             self.window?.title = "AutoMapper - \(game): \(charname)"
         }
     }
-    
-    func setContext(context:GameContext) {
-        self.context = context
 
-        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
-            
-            if let changed = obj as? Dictionary<String, String> {
+    internal func handle(token:String, data:[String:AnyObject]) {
+        if(token != "variable:changed") { return }
 
-                if changed.keys.first == "zoneid" {
-                    if let zoneId = changed["zoneid"] {
-                        
-                        if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
-                            self.setZoneFromMap(mapInfo)
-                        }
+        if let changed = data as? [String:String] {
+            switch changed.keys.first ?? "" {
+            case "zoneid":
+                if let zoneId = changed["zoneid"] {
+                    if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
+                        self.setZoneFromMap(mapInfo)
                     }
                 }
-                
-                if changed.keys.first == "roomid" {
-                    
-                    if let id = changed["roomid"] {
-                        if let room = self.context!.mapZone?.roomWithId(id) {
+                break
+            case "roomid":
+                if let id = changed["roomid"] {
+                    if let room = self.context!.mapZone?.roomWithId(id) {
+                        
+                        if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
                             
-                            if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                            let groups = room.notes!["(.+\\.xml)"].groups()
+                            
+                            if groups.count > 1 {
+                                let mapfile = groups[1]
                                 
-                                let groups = room.notes!["(.+\\.xml)"].groups()
-                                
-                                if groups.count > 1 {
-                                    let mapfile = groups[1]
-                                    
-                                    if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
-                                        
-                                        self.setZoneFromMap(mapInfo)
-                                    }
+                                if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+                                    self.setZoneFromMap(mapInfo)
                                 }
-                            } else {
-                                mainThread {
-                                    if self.mapView != nil {
-                                        self.mapView.mapLevel = room.position.z
-                                        self.mapView.currentRoomId = id
-                                        
-                                        
-//                                        if let rect = self.mapView?.rectForRoom(roomId) {
-//                                            
-//                                            var bounds = self.scrollView.convertRect(rect, toView: self.mapView!)
-//                                            var bounds2 = self.scrollView.bounds
-//                                            println("visible bounds: \(bounds) // \(rect) // \(bounds2)")
-//                                            
-////                                            var contentBounds = self.scrollView.contentView.bounds
-////                                            var visRect = self.scrollView.contentView.documentVisibleRect
-////                                            
-////                                            var mapFrame = self.mapView.frame
-////                                            
-////                                            var frame = self.scrollView.contentView.frame
-////                                            var mapRect = self.mapView.rect!
-////                                            var midXPoint = bounds.size.width/2.0
-////                                            var midYPoint = bounds.size.height/2.0
-////                                            println("\(self.mapView.rect!) :: \(midXPoint),\(midYPoint)")
-//                                            self.scrollView.contentView.scrollPoint(NSPoint(x: bounds.origin.x, y: bounds.origin.y))
-//                                            self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
-//                                            //self.scrollView.scrollRectToVisible(rect)
-//                                        }
-                                    }
+                            }
+                        } else {
+                            mainThread {
+                                if self.mapView != nil {
+                                    self.mapView.mapLevel = room.position.z
+                                    self.mapView.currentRoomId = id
                                 }
                             }
                         }
                     }
                 }
+                break
+            default:
+                break
             }
         }
+    }
+
+    func setContext(context:GameContext) {
+        self.context = context
+
+        self.context?.events.subscribe(self, token: "variable:changed")
+
+//        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
+//            
+//            if let changed = obj as? Dictionary<String, String> {
+//
+//                if changed.keys.first == "zoneid" {
+//                    if let zoneId = changed["zoneid"] {
+//                        
+//                        if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
+//                            self.setZoneFromMap(mapInfo)
+//                        }
+//                    }
+//                }
+//                
+//                if changed.keys.first == "roomid" {
+//                    
+//                    if let id = changed["roomid"] {
+//                        if let room = self.context!.mapZone?.roomWithId(id) {
+//                            
+//                            if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+//                                
+//                                let groups = room.notes!["(.+\\.xml)"].groups()
+//                                
+//                                if groups.count > 1 {
+//                                    let mapfile = groups[1]
+//                                    
+//                                    if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+//                                        
+//                                        self.setZoneFromMap(mapInfo)
+//                                    }
+//                                }
+//                            } else {
+//                                mainThread {
+//                                    if self.mapView != nil {
+//                                        self.mapView.mapLevel = room.position.z
+//                                        self.mapView.currentRoomId = id
+//                                        
+//                                        
+////                                        if let rect = self.mapView?.rectForRoom(roomId) {
+////                                            
+////                                            var bounds = self.scrollView.convertRect(rect, toView: self.mapView!)
+////                                            var bounds2 = self.scrollView.bounds
+////                                            println("visible bounds: \(bounds) // \(rect) // \(bounds2)")
+////                                            
+//////                                            var contentBounds = self.scrollView.contentView.bounds
+//////                                            var visRect = self.scrollView.contentView.documentVisibleRect
+//////                                            
+//////                                            var mapFrame = self.mapView.frame
+//////                                            
+//////                                            var frame = self.scrollView.contentView.frame
+//////                                            var mapRect = self.mapView.rect!
+//////                                            var midXPoint = bounds.size.width/2.0
+//////                                            var midYPoint = bounds.size.height/2.0
+//////                                            println("\(self.mapView.rect!) :: \(midXPoint),\(midYPoint)")
+////                                            self.scrollView.contentView.scrollPoint(NSPoint(x: bounds.origin.x, y: bounds.origin.y))
+////                                            self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
+////                                            //self.scrollView.scrollRectToVisible(rect)
+////                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
     
     func setZoneFromMap(mapInfo:MapInfo) {
@@ -286,16 +332,16 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
     func findCurrentRoom(zone:MapZone) -> MapNode? {
         if let ctx = self.context {
             
-            let roomId = ctx.globalVars.cacheObjectForKey("roomid") as? String
+            let roomId = ctx.globalVars["roomid"]
             
-            var name = ctx.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+            var name = ctx.globalVars["roomtitle"] ?? ""
             name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
             
-            let description = ctx.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+            let description = ctx.globalVars["roomdesc"] ?? ""
             
             if let room = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
-                ctx.globalVars.setCacheObject(room.id, forKey: "roomid")
+                ctx.globalVars["roomid"] = room.id
                 
                 return room
             }
@@ -316,7 +362,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource {
                     self.nodesLabel.stringValue = ""
                 }
                 
-                if let zoneId = self.context!.globalVars.cacheObjectForKey("zoneid") as? String {
+                if let zoneId = self.context!.globalVars["zoneid"] {
                     
                     if let idx = self.mapsDataSource.indexOfMap(zoneId) {
                         if self.mapsComboBox != nil {

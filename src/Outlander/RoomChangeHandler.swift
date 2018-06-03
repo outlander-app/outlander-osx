@@ -43,12 +43,12 @@ class RoomChangeHandler : NSObject, NodeHandler {
                     
                     self.showAfterPrompt = false
                     
-                    var title = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
-                    let desc = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+                    var title = context.globalVars["roomtitle"] ?? ""
+                    let desc = context.globalVars["roomdesc"] ?? ""
                     
                     title = title.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
                     
-                    let roomId = context.globalVars.cacheObjectForKey("roomid") as? String
+                    let roomId = context.globalVars["roomid"]
                     
                     self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
                 }
@@ -76,11 +76,11 @@ class RoomChangeHandler : NSObject, NodeHandler {
     
     func send(context:GameContext, room:MapNode, diff:Double) {
         
-        context.globalVars.setCacheObject(room.id, forKey: "roomid")
+        context.globalVars["roomid"] = room.id
         
         var tag = TextTag()
         
-        if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+        if context.globalVars["debugautomapper"] == "1" {
         
             tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
 //            tag.color = "#00ffff"

@@ -80,12 +80,11 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
     }
     
     private func reloadVars(){
-        let vars = _context!.globalVars.copyValues()
-      
+
         _globalVars = []
         
-        for key in vars {
-            let global = GlobalVariable(key.0 as! String, key.1 as! String)
+        for key in _context!.globalVars {
+            let global = GlobalVariable(key.0, key.1.rawValue ?? "")
             _globalVars.append(global)
         }
         
@@ -123,7 +122,7 @@ public class VariablesViewController: NSViewController, SettingsView, NSTableVie
             
             self.selectedItem = nil;
             
-            _context!.globalVars.removeObjectForKey(item.name)
+            _context!.globalVars.removeValueForKey(item.name)
             
             self.reloadVars()
         }

@@ -57,7 +57,7 @@
     [_handlers addObject:[LogCommandHandler newInstance:relay]];
     [_handlers addObject:[[HighlightCommandHandler alloc] init]];
     [_handlers addObject:[[AliasCommandHandler alloc] init]];
-    [_handlers addObject:[[SendCommandHandler alloc] initWith:relay]];
+    [_handlers addObject:[[SendCommandHandler alloc] initWith:_gameContext]];
     [_handlers addObject:[EchoCommandHandler newInstance:relay]];
     [_handlers addObject:[MapperCommandHandler newInstance]];
     [_handlers addObject:[MapperGotoCommandHandler newInstance:relay]];
@@ -129,7 +129,7 @@
     _lastCommandDate = [NSDate date];
 
     if(!context.isSystemCommand) {
-        [_gameContext.globalVars setCacheObject:context.command forKey:@"lastcommand"];
+        [_gameContext.globalVars set:context.command forKey:@"lastcommand"];
     }
 
     context.command = [_replacer replace:context.command withContext:_gameContext];

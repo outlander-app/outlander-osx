@@ -52,8 +52,6 @@
 		F91A39CB194DFFA9006144F8 /* SimpleQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39C9194DFFA9006144F8 /* SimpleQueue.m */; };
 		F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
 		F91A39CF194E7135006144F8 /* SendCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39CD194E7135006144F8 /* SendCommandHandler.m */; };
-		F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
-		F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D1194E8916006144F8 /* SendQueueProcessor.m */; };
 		F91A39D71951E8A9006144F8 /* TestViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */; };
 		F91ADCDE1ACA63C100B78327 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */; };
 		F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */; };
@@ -70,6 +68,11 @@
 		F92A823C1AEB061C005BBD2F /* ChooseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */; };
 		F92A823D1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
 		F92A823E1AEB061C005BBD2F /* ChooseProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */; };
+		F92C1D5E20C258E20076BF19 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C1D5D20C258E20076BF19 /* Utilities.swift */; };
+		F92C1D5F20C258E20076BF19 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C1D5D20C258E20076BF19 /* Utilities.swift */; };
+		F92C1D6120C26A0F0076BF19 /* GlobalVariablesTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C1D6020C26A0F0076BF19 /* GlobalVariablesTester.swift */; };
+		F92C1D6320C386170076BF19 /* SendQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C1D6220C386170076BF19 /* SendQueue.swift */; };
+		F92C1D6420C386170076BF19 /* SendQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C1D6220C386170076BF19 /* SendQueue.swift */; };
 		F9316D221AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D1F1AD9E1D400880149 /* ScriptContext.swift */; };
 		F9316D241AD9E1D400880149 /* OutlanderStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9316D201AD9E1D400880149 /* OutlanderStandard.swift */; };
@@ -525,8 +528,6 @@
 		F91A39C9194DFFA9006144F8 /* SimpleQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleQueue.m; sourceTree = "<group>"; };
 		F91A39CC194E7135006144F8 /* SendCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCommandHandler.h; sourceTree = "<group>"; };
 		F91A39CD194E7135006144F8 /* SendCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCommandHandler.m; sourceTree = "<group>"; };
-		F91A39D0194E8916006144F8 /* SendQueueProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendQueueProcessor.h; sourceTree = "<group>"; };
-		F91A39D1194E8916006144F8 /* SendQueueProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendQueueProcessor.m; sourceTree = "<group>"; };
 		F91A39D51951E8A9006144F8 /* TestViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewControllerTests.m; sourceTree = "<group>"; };
 		F91ADCDC1ACA63C100B78327 /* VariablesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesViewController.swift; sourceTree = "<group>"; };
 		F91ADCDD1ACA63C100B78327 /* VariablesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VariablesViewController.xib; sourceTree = "<group>"; };
@@ -540,6 +541,9 @@
 		F92A82371AEAE732005BBD2F /* ScriptTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptTester.swift; sourceTree = "<group>"; };
 		F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseProfileViewController.swift; sourceTree = "<group>"; };
 		F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseProfileViewController.xib; sourceTree = "<group>"; };
+		F92C1D5D20C258E20076BF19 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		F92C1D6020C26A0F0076BF19 /* GlobalVariablesTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesTester.swift; sourceTree = "<group>"; };
+		F92C1D6220C386170076BF19 /* SendQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendQueue.swift; sourceTree = "<group>"; };
 		F9316D1F1AD9E1D400880149 /* ScriptContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptContext.swift; sourceTree = "<group>"; };
 		F9316D201AD9E1D400880149 /* OutlanderStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlanderStandard.swift; sourceTree = "<group>"; };
 		F9316D211AD9E1D400880149 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
@@ -1039,8 +1043,6 @@
 				F96ECDB519343F5B00787CB9 /* ScriptLoader.m */,
 				F91A39CC194E7135006144F8 /* SendCommandHandler.h */,
 				F91A39CD194E7135006144F8 /* SendCommandHandler.m */,
-				F91A39D0194E8916006144F8 /* SendQueueProcessor.h */,
-				F91A39D1194E8916006144F8 /* SendQueueProcessor.m */,
 				F96ECDC91934E6EB00787CB9 /* VarCommandHandler.h */,
 				F96ECDCA1934E6EB00787CB9 /* VarCommandHandler.m */,
 				F91434641B0C3F8600AD392A /* WindowCommandHandler.swift */,
@@ -1051,6 +1053,7 @@
 				F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */,
 				F9AA1EFD1FBC11FE0031CF60 /* BugCommandHandler.swift */,
 				F931A37420C1B261000DCE53 /* LogCommandHandler.swift */,
+				F92C1D6220C386170076BF19 /* SendQueue.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1226,6 +1229,7 @@
 				F917612E1E328BCB0091A617 /* ColorPreset.swift */,
 				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
 				F931A37720C2012A000DCE53 /* VariableReplacer2.swift */,
+				F92C1D5D20C258E20076BF19 /* Utilities.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1463,6 +1467,7 @@
 				F9DF14901AF8589C000A05FB /* EchoCommandHandlerTester.swift */,
 				F9818D591908CE4800137896 /* ExpTrackerTester.m */,
 				F97A5C86189397DA00E2C318 /* GameParserTester.m */,
+				F92C1D6020C26A0F0076BF19 /* GlobalVariablesTester.swift */,
 				F96ECDD1193565CE00787CB9 /* HighlightCommandTester.m */,
 				F989E1FC192C2AA100562E32 /* HighlightsLoaderTester.m */,
 				F959D3D51AC7264300B2A659 /* MacroTester.m */,
@@ -1665,6 +1670,7 @@
 				F98782B719420CB500D76231 /* EchoToken.m in Sources */,
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
+				F92C1D5E20C258E20076BF19 /* Utilities.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F91031541B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
@@ -1700,6 +1706,7 @@
 				F9E1C8B01AE2FD9200458029 /* BeepCommandHandler.swift in Sources */,
 				F97A5C8A1893AFDF00E2C318 /* TextTag.m in Sources */,
 				F989E205192C2E6200562E32 /* Highlight.m in Sources */,
+				F92C1D6320C386170076BF19 /* SendQueue.swift in Sources */,
 				F9B3AC711940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F9AE6A86189E218F00A11EE9 /* MMDrawingUtils.m in Sources */,
 				F9A79E571927FDA0000AF892 /* Roundtime.m in Sources */,
@@ -1732,7 +1739,6 @@
 				F98782D3194249A400D76231 /* TokenList.m in Sources */,
 				F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */,
 				F9F3D8481957BA92005B9D68 /* SettingsWindowController.m in Sources */,
-				F91A39D2194E8916006144F8 /* SendQueueProcessor.m in Sources */,
 				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
@@ -1874,7 +1880,7 @@
 				F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
 				F97A5CA71895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F91A39A5194B4F5F006144F8 /* PlayerStatusIndicator.m in Sources */,
-				F91A39D3194E8916006144F8 /* SendQueueProcessor.m in Sources */,
+				F92C1D6420C386170076BF19 /* SendQueue.swift in Sources */,
 				F91761301E328BCB0091A617 /* ColorPreset.swift in Sources */,
 				F94A3FD61948DBC600D6B35D /* CommandsToken.m in Sources */,
 				F90CEC1F1AD2281900204243 /* RoomChangeHandler.swift in Sources */,
@@ -1898,6 +1904,7 @@
 				F97A5CA31895E06400E2C318 /* MyView.m in Sources */,
 				F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */,
 				F96ECDC81934E23A00787CB9 /* CommandContext.m in Sources */,
+				F92C1D5F20C258E20076BF19 /* Utilities.swift in Sources */,
 				F9B3AC6A19405BD700C081C4 /* Atom.m in Sources */,
 				F9C1787E1B12754E00CC7291 /* TestCommandHandler.swift in Sources */,
 				F9B9BFE61ABD5D8500CB44B6 /* StormFrontTokenizer.swift in Sources */,
@@ -1932,6 +1939,7 @@
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
+				F92C1D6120C26A0F0076BF19 /* GlobalVariablesTester.swift in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
 				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,

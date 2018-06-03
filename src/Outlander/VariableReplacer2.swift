@@ -8,6 +8,25 @@
 
 import Foundation
 
+protocol StringProtocol : Equatable, Comparable {
+    var characters: String.CharacterView { get }
+}
+extension String : StringProtocol {}
+
+extension Dictionary where Key:StringProtocol {
+    var keysByLength : [Key] {
+        return self.keys.sort({ $0.0.characters.count > $0.1.characters.count })
+    }
+
+    var keysByAlpha : [Key] {
+        return self.keys.sort({ $0.0 < $0.1 })
+    }
+
+    func getValue(key:Key) -> Value? {
+        return self[key]
+    }
+}
+
 @objc
 public class VariableReplacer2 : NSObject {
     
@@ -17,7 +36,7 @@ public class VariableReplacer2 : NSObject {
 
     public func simplify(
         data:String,
-        _ globalVars:[String:String],
+        _ globalVars:GlobalVariables,
         _ regexVars:[String:String] = [:],
         _ actionVars:[String:String] = [:],
         _ variables:[String:String] = [:],
@@ -50,7 +69,7 @@ public class VariableReplacer2 : NSObject {
 
     private func simplifyImpl(
         mutable:NSMutableString,
-        _ globalVars:[String:String],
+        _ globalVars:GlobalVariables,
         _ regexVars:[String:String] = [:],
         _ actionVars:[String:String] = [:],
         _ variables:[String:String] = [:],
@@ -58,37 +77,39 @@ public class VariableReplacer2 : NSObject {
         )->Void {
 
         if actionVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
-            self.replace("\\$", target: mutable, dict: actionVars)
+            self.replace("\\$", target: mutable, dict: actionVars.getValue, sortedKeys: actionVars.keysByLength)
         }
 
         if regexVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
 
-            self.replace("\\$", target: mutable, dict: regexVars)
+            self.replace("\\$", target: mutable, dict: regexVars.getValue, sortedKeys: regexVars.keysByLength)
         }
 
         if mutable.rangeOfString("%").location != NSNotFound {
 
-            self.replace("%", target: mutable, dict: variables)
-            self.replace("%", target: mutable, dict: paramVars)
+            self.replace("%", target: mutable, dict: variables.getValue, sortedKeys: variables.keysByLength)
+            self.replace("%", target: mutable, dict: paramVars.getValue, sortedKeys: paramVars.keysByLength)
         }
 
         if globalVars.count > 0 && mutable.rangeOfString("$").location != NSNotFound {
 
-            self.replace("\\$", target: mutable, dict: globalVars)
+            self.replace(
+                "\\$",
+                target: mutable,
+                dict: globalVars.get,
+                sortedKeys: globalVars.keys)
         }
     }
 
-    private func replace(prefix:String, target:NSMutableString, dict:[String:String]) {
-
-        let sortedKeys = dict.keys.sort({ $0.0.characters.count > $0.1.characters.count })
+    private func replace(prefix:String, target:NSMutableString, dict:(String)->String?, sortedKeys:[String]) {
 
         func doReplace() {
             for key in sortedKeys {
 
-                let replaceCanidate = "\(prefix.trimPrefix("\\"))\(key)"
+                let replaceCandidate = "\(prefix.trimPrefix("\\"))\(key)"
 
-                if target.containsString(replaceCanidate) {
-                    target["\(prefix)\(key)"] ~= dict[key] ?? ""
+                if target.containsString(replaceCandidate) {
+                    target["\(prefix)\(key)"] ~= dict(key) ?? ""
                     break
                 }
             }

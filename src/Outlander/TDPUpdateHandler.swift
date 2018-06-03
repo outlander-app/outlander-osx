@@ -18,13 +18,13 @@ class TDPUpdateHandler : NSObject {
     func handle(nodes:[Node], text:String, context:GameContext) {
         if let groups = text["Time Development Points: (\\d+)"].groups() {
             if groups.count > 1 {
-                context.globalVars.setCacheObject(groups[1], forKey: "tdp")
+                context.globalVars["tdp"] = groups[1]
             }
         }
         
         if let groups = text["TDPs : (\\d+)"].groups() {
             if groups.count > 1 {
-                context.globalVars.setCacheObject(groups[1], forKey: "tdp")
+                context.globalVars["tdp"] = groups[1]
             }
         }
     }
