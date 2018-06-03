@@ -191,7 +191,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
     }
 
     internal func handle(token:String, data:[String:AnyObject]) {
-        if(token != "variable:changed") { return }
+        guard token == "variable:changed" else { return }
 
         if let changed = data as? [String:String] {
             switch changed.keys.first ?? "" {
@@ -236,74 +236,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
 
     func setContext(context:GameContext) {
         self.context = context
-
         self.context?.events.subscribe(self, token: "variable:changed")
-
-//        self.context?.globalVars.changed.subscribeNext { (obj:AnyObject?) -> Void in
-//            
-//            if let changed = obj as? Dictionary<String, String> {
-//
-//                if changed.keys.first == "zoneid" {
-//                    if let zoneId = changed["zoneid"] {
-//                        
-//                        if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
-//                            self.setZoneFromMap(mapInfo)
-//                        }
-//                    }
-//                }
-//                
-//                if changed.keys.first == "roomid" {
-//                    
-//                    if let id = changed["roomid"] {
-//                        if let room = self.context!.mapZone?.roomWithId(id) {
-//                            
-//                            if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
-//                                
-//                                let groups = room.notes!["(.+\\.xml)"].groups()
-//                                
-//                                if groups.count > 1 {
-//                                    let mapfile = groups[1]
-//                                    
-//                                    if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
-//                                        
-//                                        self.setZoneFromMap(mapInfo)
-//                                    }
-//                                }
-//                            } else {
-//                                mainThread {
-//                                    if self.mapView != nil {
-//                                        self.mapView.mapLevel = room.position.z
-//                                        self.mapView.currentRoomId = id
-//                                        
-//                                        
-////                                        if let rect = self.mapView?.rectForRoom(roomId) {
-////                                            
-////                                            var bounds = self.scrollView.convertRect(rect, toView: self.mapView!)
-////                                            var bounds2 = self.scrollView.bounds
-////                                            println("visible bounds: \(bounds) // \(rect) // \(bounds2)")
-////                                            
-//////                                            var contentBounds = self.scrollView.contentView.bounds
-//////                                            var visRect = self.scrollView.contentView.documentVisibleRect
-//////                                            
-//////                                            var mapFrame = self.mapView.frame
-//////                                            
-//////                                            var frame = self.scrollView.contentView.frame
-//////                                            var mapRect = self.mapView.rect!
-//////                                            var midXPoint = bounds.size.width/2.0
-//////                                            var midYPoint = bounds.size.height/2.0
-//////                                            println("\(self.mapView.rect!) :: \(midXPoint),\(midYPoint)")
-////                                            self.scrollView.contentView.scrollPoint(NSPoint(x: bounds.origin.x, y: bounds.origin.y))
-////                                            self.scrollView.reflectScrolledClipView(self.scrollView.contentView)
-////                                            //self.scrollView.scrollRectToVisible(rect)
-////                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
     
     func setZoneFromMap(mapInfo:MapInfo) {

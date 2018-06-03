@@ -207,40 +207,11 @@
     
     [self.window setTitle:[NSString stringWithFormat:@"Outlander %@ Alpha", version]];
     
-//    @weakify(self);
-
-//    [[_gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
-//        
-//        @strongify(self);
-//       
-//        NSString *charInfo = @"";
-//        NSString *game = [_gameContext.globalVars cacheObjectForKey:@"game"];
-//        NSString *character = [_gameContext.globalVars cacheObjectForKey:@"charactername"];
-//        
-//        if (game == nil) {
-//            game = @"";
-//        }
-//        
-//        if (character == nil) {
-//           character = @"";
-//        }
-//        
-//        if (game.length > 0 && character.length > 0) {
-//            charInfo = [NSString stringWithFormat:@"%@: %@ - ", game, character];
-//        }
-//        
-//        NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
-//        NSString *version = dict[@"CFBundleShortVersionString"];
-//        
-//        [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Alpha", charInfo, version]];
-//    }];
-
     _loginViewController.context = _gameContext;
 
     [self printSettings];
 
     [self.window makeFirstResponder:vc._CommandTextField];
-    //[vc._CommandTextField becomeFirstResponder];
 }
 
 -(void)echoText:(NSString *)text withMono:(BOOL)mono {

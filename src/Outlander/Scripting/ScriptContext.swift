@@ -66,7 +66,6 @@ public class ScriptContext {
     private var params:[String]
     private var paramVars:[String:String] = [:]
     
-//    private var globalVars:(()->[String:String])?
     private var context:GameContext
 
     init(_ tree:[Token], context:GameContext, params:[String]) {
@@ -255,7 +254,6 @@ public class ScriptContext {
     
     public func roundtime() -> Double? {
         return self.context.globalVars["roundtime"]?.toDouble()
-//        return self.globalVars?()["roundtime"]?.toDouble()
     }
     
     public func next() -> Token? {

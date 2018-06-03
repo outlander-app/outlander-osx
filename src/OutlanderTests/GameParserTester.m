@@ -211,9 +211,9 @@ describe(@"GameParser", ^{
             [_parser parse:data then:^(NSArray* res) {
             }];
 
-            expect(@([_context.globalVars cacheDoesContain:@"roomdesc"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"roomdesc"])).to(beTrue());
 
-            NSString *roomDesc = [_context.globalVars cacheObjectForKey:@"roomdesc"];
+            NSString *roomDesc = [_context.globalVars get:@"roomdesc"];
             expect(roomDesc).to(equal(@"For a moment you lose your sense of direction.  Bending down to gain a better perspective of the lie of the land, you manage to identify several landmarks and reorient yourself."));
         });
 
@@ -227,9 +227,9 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"roomobjs"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"roomobjs"])).to(beTrue());
             
-            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"roomobjs"];
+            NSString *roomObjs = [_context.globalVars get:@"roomobjs"];
             expect(roomObjs).to(equal(@"You also see a two auroch caravan with several things on it."));
         });
         
@@ -243,9 +243,9 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
             
-            expect(@([_context.globalVars cacheDoesContain:@"preparedspell"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"preparedspell"])).to(beTrue());
             
-            NSString *roomObjs = [_context.globalVars cacheObjectForKey:@"preparedspell"];
+            NSString *roomObjs = [_context.globalVars get:@"preparedspell"];
             expect(roomObjs).to(equal(@"None"));
         });
 
@@ -259,11 +259,11 @@ describe(@"GameParser", ^{
             
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"lefthand"])).to(beTrue());
 
-            expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"longsword"));
-            expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@"41807070"));
-            expect([_context.globalVars cacheObjectForKey:@"lefthandnoun"]).to(equal(@"longsword"));
+            expect([_context.globalVars get:@"lefthand"]).to(equal(@"longsword"));
+            expect([_context.globalVars get:@"lefthandid"]).to(equal(@"41807070"));
+            expect([_context.globalVars get:@"lefthandnoun"]).to(equal(@"longsword"));
         });
         
         it(@"should set left global var as Empty", ^{
@@ -276,13 +276,13 @@ describe(@"GameParser", ^{
             
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"lefthand"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"lefthandid"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"lefthandnoun"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"lefthand"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"lefthandid"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"lefthandnoun"])).to(beTrue());
 
-            expect([_context.globalVars cacheObjectForKey:@"lefthand"]).to(equal(@"Empty"));
-            expect([_context.globalVars cacheObjectForKey:@"lefthandid"]).to(equal(@""));
-            expect([_context.globalVars cacheObjectForKey:@"lefthandnoun"]).to(equal(@""));
+            expect([_context.globalVars get:@"lefthand"]).to(equal(@"Empty"));
+            expect([_context.globalVars get:@"lefthandid"]).to(beNil());
+            expect([_context.globalVars get:@"lefthandnoun"]).to(beNil());
         });
         
         it(@"should set right global var", ^{
@@ -295,13 +295,13 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthand"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthandid"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthandnoun"])).to(beTrue());
 
-            expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"longsword"));
-            expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@"41807070"));
-            expect([_context.globalVars cacheObjectForKey:@"righthandnoun"]).to(equal(@"longsword"));
+            expect([_context.globalVars get:@"righthand"]).to(equal(@"longsword"));
+            expect([_context.globalVars get:@"righthandid"]).to(equal(@"41807070"));
+            expect([_context.globalVars get:@"righthandnoun"]).to(equal(@"longsword"));
         });
         
         it(@"should set right global var as Empty", ^{
@@ -314,13 +314,13 @@ describe(@"GameParser", ^{
 
             expect(results).to(haveCount(0));
 
-            expect(@([_context.globalVars cacheDoesContain:@"righthand"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandid"])).to(beTrue());
-            expect(@([_context.globalVars cacheDoesContain:@"righthandnoun"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthand"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthandid"])).to(beTrue());
+            expect(@([_context.globalVars hasKey:@"righthandnoun"])).to(beTrue());
 
-            expect([_context.globalVars cacheObjectForKey:@"righthand"]).to(equal(@"Empty"));
-            expect([_context.globalVars cacheObjectForKey:@"righthandid"]).to(equal(@""));
-            expect([_context.globalVars cacheObjectForKey:@"righthandnoun"]).to(equal(@""));
+            expect([_context.globalVars get:@"righthand"]).to(equal(@"Empty"));
+            expect([_context.globalVars get:@"righthandid"]).to(beNil());
+            expect([_context.globalVars get:@"righthandnoun"]).to(beNil());
         });
         
         it(@"should signal arrivals", ^{
@@ -417,7 +417,7 @@ describe(@"GameParser", ^{
             
             expect(results).to(haveCount(0));
 
-            expect([_context.globalVars cacheObjectForKey:@"roomtitle"]).to(equal(@"[Ranger Guild, Longhouse]"));
+            expect([_context.globalVars get:@"roomtitle"]).to(equal(@"[Ranger Guild, Longhouse]"));
         });
         
         it(@"should signal concentration vitals", ^{
@@ -441,7 +441,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"concentration"));
             expect(@(tag.value)).to(equal(@(98)));
             
-            expect([_context.globalVars cacheObjectForKey:@"concentration"]).to(equal(@"98"));
+            expect([_context.globalVars get:@"concentration"]).to(equal(@"98"));
         });
         
         it(@"should signal health vitals", ^{
@@ -465,7 +465,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"health"));
             expect(@(tag.value)).to(equal(@(98)));
             
-            expect([_context.globalVars cacheObjectForKey:@"health"]).to(equal(@"98"));
+            expect([_context.globalVars get:@"health"]).to(equal(@"98"));
         });
         
         it(@"should set exp global variables", ^{
@@ -478,9 +478,9 @@ describe(@"GameParser", ^{
             
             expect(parseResults).to(haveCount(0));
             
-            NSString *ranks = [_context.globalVars cacheObjectForKey:@"Athletics.Ranks"];
-            NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRate"];
-            NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Athletics.LearningRateName"];
+            NSString *ranks = [_context.globalVars get:@"Athletics.Ranks"];
+            NSString *learningRate = [_context.globalVars get:@"Athletics.LearningRate"];
+            NSString *learningRateName = [_context.globalVars get:@"Athletics.LearningRateName"];
 
             expect(ranks).toNot(beNil());
             expect(learningRate).toNot(beNil());
@@ -501,9 +501,9 @@ describe(@"GameParser", ^{
 
             expect(parseResults).to(haveCount(0));
             
-            NSString *ranks = [_context.globalVars cacheObjectForKey:@"Life_Magic.Ranks"];
-            NSString *learningRate = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRate"];
-            NSString *learningRateName = [_context.globalVars cacheObjectForKey:@"Life_Magic.LearningRateName"];
+            NSString *ranks = [_context.globalVars get:@"Life_Magic.Ranks"];
+            NSString *learningRate = [_context.globalVars get:@"Life_Magic.LearningRate"];
+            NSString *learningRateName = [_context.globalVars get:@"Life_Magic.LearningRateName"];
             
             expect(ranks).toNot(beNil());
             expect(learningRate).toNot(beNil());
@@ -656,7 +656,7 @@ describe(@"GameParser", ^{
             expect(parseResults).to(haveCount(0));
             expect(@(signaled)).to(beTrue());
 
-            expect([_context.globalVars cacheObjectForKey:@"tdp"]).to(equal(@"197"));
+            expect([_context.globalVars get:@"tdp"]).to(equal(@"197"));
         });
         
         it(@"should parse app data", ^{
@@ -669,8 +669,8 @@ describe(@"GameParser", ^{
 
             expect(parseResults).to(haveCount(0));
 
-            expect([_context.globalVars cacheObjectForKey:@"charactername"]).to(equal(@"Tayek"));
-            expect([_context.globalVars cacheObjectForKey:@"game"]).to(equal(@"DR"));
+            expect([_context.globalVars get:@"charactername"]).to(equal(@"Tayek"));
+            expect([_context.globalVars get:@"game"]).to(equal(@"DR"));
         });
         
         it(@"should add newline before 'you also see'", ^{
@@ -738,7 +738,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"kneeling"));
             expect(tag.value).to(equal(@"1"));
             
-            expect([_context.globalVars cacheObjectForKey:@"kneeling"]).to(equal(@"1"));
+            expect([_context.globalVars get:@"kneeling"]).to(equal(@"1"));
         });
         
         it(@"should signal dead indicator", ^{
@@ -761,7 +761,7 @@ describe(@"GameParser", ^{
             expect(tag.name).to(equal(@"dead"));
             expect(tag.value).to(equal(@"0"));
             
-            expect([_context.globalVars cacheObjectForKey:@"dead"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"dead"]).to(equal(@"0"));
         });
         
         it(@"should add directional values", ^{
@@ -780,17 +780,17 @@ describe(@"GameParser", ^{
             expect(parseResults).to(haveCount(0));
             expect(signalResults).to(haveCount(@1));
 
-            expect([_context.globalVars cacheObjectForKey:@"north"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"south"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"east"]).to(equal(@"1"));
-            expect([_context.globalVars cacheObjectForKey:@"west"]).to(equal(@"1"));
-            expect([_context.globalVars cacheObjectForKey:@"northeast"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"northwest"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"southeast"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"southwest"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"up"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"down"]).to(equal(@"0"));
-            expect([_context.globalVars cacheObjectForKey:@"out"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"north"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"south"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"east"]).to(equal(@"1"));
+            expect([_context.globalVars get:@"west"]).to(equal(@"1"));
+            expect([_context.globalVars get:@"northeast"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"northwest"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"southeast"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"southwest"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"up"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"down"]).to(equal(@"0"));
+            expect([_context.globalVars get:@"out"]).to(equal(@"0"));
         });
         
         it(@"sets monstercount and monsterlist global vars", ^{
@@ -804,8 +804,8 @@ describe(@"GameParser", ^{
             
             expect(parseResults).to(haveCount(0));
 
-            expect([_context.globalVars cacheObjectForKey:@"monstercount"]).to(equal(@"2"));
-            expect([_context.globalVars cacheObjectForKey:@"monsterlist"]).to(equal(@"a musk hog,a musk hog"));
+            expect([_context.globalVars get:@"monstercount"]).to(equal(@"2"));
+            expect([_context.globalVars get:@"monsterlist"]).to(equal(@"a musk hog,a musk hog"));
         });
         
         it(@"sets roomobjorig global vars", ^{
@@ -819,7 +819,7 @@ describe(@"GameParser", ^{
             
             expect(parseResults).to(haveCount(0));
 
-            expect([_context.globalVars cacheObjectForKey:@"roomobjsorig"]).to(equal(@"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>."));
+            expect([_context.globalVars get:@"roomobjsorig"]).to(equal(@"You also see <pushbold></pushbold>a musk hog<popbold></popbold> and <pushbold></pushbold>a musk hog<popbold></popbold>."));
         });
         
         it(@"sets roomexits global var", ^{
@@ -833,7 +833,7 @@ describe(@"GameParser", ^{
             
             expect(parseResults).to(haveCount(0));
 
-            expect([_context.globalVars cacheObjectForKey:@"roomexits"]).to(equal(@"Obvious paths: north, west, northwest."));
+            expect([_context.globalVars get:@"roomexits"]).to(equal(@"Obvious paths: north, west, northwest."));
         });
         
         it(@"parses <d/> items", ^{

@@ -16,12 +16,20 @@ struct MessageTestContext<T: Message> {
 
 class OutlanderScriptParserTester : QuickSpec {
     
-    func buildMessage<T: Message>(script:String, _ globalVars: (()->[String:String])? = nil) -> MessageTestContext<T> {
+    func buildMessage<T: Message>(script:String, _ globalVars:[String:String]? = nil) -> MessageTestContext<T> {
         
         let parser = OutlanderScriptParser()
         let toMessage = TokenToMessage()
+
+        let gameContext = GameContext()
+
+        if globalVars != nil {
+            for pair in globalVars! {
+                gameContext.globalVars[pair.0] = pair.1
+            }
+        }
         
-        let context = ScriptContext([], globalVars: globalVars, params: [])
+        let context = ScriptContext([], context: gameContext, params: [])
         
         let tokens = parser.parseString(script)
         expect(tokens.count).to(equal(1))
@@ -89,10 +97,7 @@ class OutlanderScriptParserTester : QuickSpec {
             
             it("goto message") {
                 let script = "goto $alabel one $two"
-                let vars = { () -> [String:String] in
-                    let res:[String:String] = ["alabel":"mylabel", "two":"three"]
-                    return res
-                }
+                let vars:[String:String] = ["alabel":"mylabel", "two":"three"]
                 let ctx:MessageTestContext<GotoMessage> = self.buildMessage(script, vars)
                 
                 expect(ctx.message.name).to(equal("goto"))
@@ -192,10 +197,7 @@ class OutlanderScriptParserTester : QuickSpec {
             
             it("save message") {
                 let script = "save $something"
-                let vars = { () -> [String:String] in
-                    let res:[String:String] = ["something":"abcd"]
-                    return res
-                }
+                let vars:[String:String] = ["something":"abcd"]
                 let ctx:MessageTestContext<SaveMessage> = self.buildMessage(script, vars)
                 
                 expect(ctx.message.name).to(equal("save"))
@@ -204,10 +206,7 @@ class OutlanderScriptParserTester : QuickSpec {
             
             it("send message") {
                 let script = "send echo $something"
-                let vars = { () -> [String:String] in
-                    let res:[String:String] = ["something":"abcd"]
-                    return res
-                }
+                let vars:[String:String] = ["something":"abcd"]
                 let ctx:MessageTestContext<SendMessage> = self.buildMessage(script, vars)
                 
                 expect(ctx.message.name).to(equal("send"))
@@ -216,7 +215,7 @@ class OutlanderScriptParserTester : QuickSpec {
             
             it("unar message") {
                 let script = "unvar myvar"
-                let ctx:MessageTestContext<UnVarMessage> = self.buildMessage(script, nil)
+                let ctx:MessageTestContext<UnVarMessage> = self.buildMessage(script)
                 
                 expect(ctx.message.name).to(equal("unvar"))
                 expect(ctx.message.identifier).to(equal("myvar"))

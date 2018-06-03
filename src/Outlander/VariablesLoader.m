@@ -35,7 +35,7 @@
     NSString *data = [_fileSystem stringWithContentsOfFile:configFile encoding:NSUTF8StringEncoding error:&error];
     
     if(!data || error) {
-        if (_context.globalVars.count == 0) {
+        if (_context.globalVars.hasOnlyDynamicValues || _context.globalVars.count == 0) {
             [self setDefaults];
         }
         return;

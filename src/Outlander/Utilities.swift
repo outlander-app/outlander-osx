@@ -38,6 +38,13 @@ public enum DynamicValue {
     case value(String?)
     case dynamic(FuncValue)
 
+    var isDynamic:Bool {
+        switch self {
+        case .dynamic: return true
+        default: return false
+        }
+    }
+
     var rawValue:String? {
         switch self {
         case .none: return nil
@@ -78,6 +85,13 @@ public class GlobalVariables : ConcurrentDictionary {
         dynamicKeys.removeAll()
         super.removeAll()
         self.setDynamics()
+    }
+
+    override public func removeValueForKey(key: String) {
+        if let index = dynamicKeys.indexOf(key) {
+            dynamicKeys.removeAtIndex(index)
+        }
+        super.removeValueForKey(key)
     }
 
     private func setDynamics() {
@@ -122,6 +136,18 @@ public class ConcurrentDictionary : NSObject, SequenceType {
         return self.internalDictionary.keysByAlpha
     }
 
+    public var hasOnlyDynamicValues : Bool {
+
+        for pair in internalDictionary {
+            switch pair.1 {
+            case .value: return false
+            default: continue
+            }
+        }
+        
+        return true
+    }
+
     public func sortedKeys(predicate: (String, String)->Bool) -> [String] {
         return self.internalDictionary.keys.sort({ predicate($0.0, $0.1) })
     }
@@ -150,6 +176,10 @@ public class ConcurrentDictionary : NSObject, SequenceType {
         let val:DynamicValue = .dynamic(value)
         self.internalDictionary[key] = val
         self.notify(key, val)
+    }
+
+    public func hasKey(key:String) -> Bool {
+        return self.internalDictionary.keysByLength.contains(key)
     }
 
     public func removeAll() {

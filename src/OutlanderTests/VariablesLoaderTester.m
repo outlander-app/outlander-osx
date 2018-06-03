@@ -31,7 +31,7 @@ describe(@"Variables Loader", ^{
         theLoader = [[VariablesLoader alloc] initWithContext:theContext andFileSystem:theFileSystem];
        
         // default vars
-        originalCount = 6;
+        originalCount = 9;
     });
     
     context(@"load", ^{
@@ -43,7 +43,7 @@ describe(@"Variables Loader", ^{
             [theLoader load];
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
 
-            expect([theContext.globalVars cacheObjectForKey:@"key"]).to(equal(@"some value"));
+            expect([theContext.globalVars get:@"key"]).to(equal(@"some value"));
         });
         
         it(@"should parse multiple vars", ^{
@@ -53,8 +53,8 @@ describe(@"Variables Loader", ^{
             [theLoader load];
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 2)));
 
-            expect([theContext.globalVars cacheObjectForKey:@"key1"]).to(equal(@"some value"));
-            expect([theContext.globalVars cacheObjectForKey:@"key2"]).to(equal(@"some other value"));
+            expect([theContext.globalVars get:@"key1"]).to(equal(@"some value"));
+            expect([theContext.globalVars get:@"key2"]).to(equal(@"some other value"));
         });
     });
     
@@ -65,6 +65,11 @@ describe(@"Variables Loader", ^{
             NSString *result = @"#var {lefthand} {Empty}\n#var {preparedspell} {None}\n#var {prompt} {>}\n#var {righthand} {Empty}\n#var {tdp} {0}\n";
            
             [theLoader load];
+
+            [theContext.globalVars removeValueForKey:@"date"];
+            [theContext.globalVars removeValueForKey:@"datetime"];
+            [theContext.globalVars removeValueForKey:@"time"];
+            
             [theLoader save];
             
             NSString *path = [[theContext.pathProvider profileFolder] stringByAppendingPathComponent:@"variables.cfg"];

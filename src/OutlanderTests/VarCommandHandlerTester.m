@@ -46,7 +46,7 @@ describe(@"var command handler", ^{
         it(@"sets global var", ^{
             [theHandler handle:@"#var one two" withContext:theContext];
             
-            NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
+            NSString *value = [theContext.globalVars get:@"one"];
             expect(value).to(equal(@"two"));
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
         });
@@ -54,7 +54,7 @@ describe(@"var command handler", ^{
         it(@"sets global var", ^{
             [theHandler handle:@"#var one two three four" withContext:theContext];
             
-            NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
+            NSString *value = [theContext.globalVars get:@"one"];
             expect(value).to(equal(@"two three four"));
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
         });
@@ -62,13 +62,13 @@ describe(@"var command handler", ^{
         it(@"updates existing global var", ^{
             [theHandler handle:@"#var one two" withContext:theContext];
             
-            NSString *value = [theContext.globalVars cacheObjectForKey:@"one"];
+            NSString *value = [theContext.globalVars get:@"one"];
             expect(value).to(equal(@"two"));
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
 
             [theHandler handle:@"#var one three" withContext:theContext];
             
-            value = [theContext.globalVars cacheObjectForKey:@"one"];
+            value = [theContext.globalVars get:@"one"];
             expect(value).to(equal(@"three"));
 
             expect(@(theContext.globalVars.count)).to(equal(@(originalCount + 1)));
