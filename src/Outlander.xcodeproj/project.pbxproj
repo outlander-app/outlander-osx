@@ -403,6 +403,8 @@
 		F9C178871B140F2A00CC7291 /* FlippedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C178851B140F2A00CC7291 /* FlippedView.swift */; };
 		F9C2910A189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
+		F9C651C720C64CB300746661 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C620C64CB300746661 /* Clock.swift */; };
+		F9C651C820C64CB300746661 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C620C64CB300746661 /* Clock.swift */; };
 		F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CB31101903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
@@ -833,6 +835,7 @@
 		F9C178851B140F2A00CC7291 /* FlippedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlippedView.swift; sourceTree = "<group>"; };
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
+		F9C651C620C64CB300746661 /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBuilder.swift; sourceTree = "<group>"; };
 		F9CB310E1903238B004587A5 /* SkillExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillExp.h; sourceTree = "<group>"; };
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
@@ -1230,6 +1233,7 @@
 				F9B6CD821E779F9C0085195F /* JsonSerializer.swift */,
 				F931A37720C2012A000DCE53 /* VariableReplacer2.swift */,
 				F92C1D5D20C258E20076BF19 /* Utilities.swift */,
+				F9C651C620C64CB300746661 /* Clock.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1671,6 +1675,7 @@
 				F97A5C7B1893808F00E2C318 /* HTMLNode.m in Sources */,
 				F9269A9C1AD7A5D900E35690 /* MapLabel.swift in Sources */,
 				F92C1D5E20C258E20076BF19 /* Utilities.swift in Sources */,
+				F9C651C720C64CB300746661 /* Clock.swift in Sources */,
 				F97CD5881ACD27D3007E5804 /* MapPosition.swift in Sources */,
 				F9C178811B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F91031541B3D0F710039BDF0 /* GagsLoader.swift in Sources */,
@@ -1971,6 +1976,7 @@
 				F9A74F0E192ED272008F410A /* VariableReplacerTester.m in Sources */,
 				F9B6CD871E78BA430085195F /* ClassSettingsTester.swift in Sources */,
 				F97CD59A1ACDD8C6007E5804 /* SimpleDiff.swift in Sources */,
+				F9C651C820C64CB300746661 /* Clock.swift in Sources */,
 				F931A37920C2012A000DCE53 /* VariableReplacer2.swift in Sources */,
 				F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */,
 				F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */,

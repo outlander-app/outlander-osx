@@ -12,7 +12,7 @@ import Foundation
 public class GameContext : NSObject {
     
     class func newInstance() -> GameContext {
-        return GameContext()
+        return GameContext(Clock())
     }
 
     public var settings:AppSettings
@@ -49,8 +49,8 @@ public class GameContext : NSObject {
     public var presets:[String:ColorPreset]
     public var globalVars:GlobalVariables
     public var events:EventAggregator
-    
-    override init() {
+
+    init(_ clock:IClock) {
         self.settings = AppSettings()
         self.pathProvider = AppPathProvider(settings: settings)
         self.highlights = OLMutableArray()
@@ -60,7 +60,7 @@ public class GameContext : NSObject {
         self.substitutes = OLMutableArray()
         self.gags = OLMutableArray()
         self.presets = [:]
-        self.globalVars = GlobalVariables("com.outlander.globalVars", Clock(), self.settings)
+        self.globalVars = GlobalVariables("com.outlander.globalVars", clock, self.settings)
 
         self.vitalsSettings = VitalsSettings()
         self.classSettings = ClassSettings()
@@ -73,6 +73,10 @@ public class GameContext : NSObject {
         self.globalVars.listen { (key, value) in
             self.events.publish("variable:changed", data: [key : value ?? ""])
         }
+    }
+
+    override convenience init() {
+        self.init(Clock())
     }
 
     public func presetFor(setting: String) -> ColorPreset? {

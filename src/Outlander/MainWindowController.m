@@ -42,12 +42,7 @@
     
     _gameContext = [GameContext newInstance];
 
-    _gameContext.settings.defaultProfile = settings.defaultProfile;
-    _gameContext.settings.profile = settings.defaultProfile;
-    _gameContext.settings.checkForApplicationUpdates = settings.checkForApplicationUpdates;
-    _gameContext.settings.variableDateFormat = settings.variableDateFormat;
-    _gameContext.settings.variableTimeFormat = settings.variableTimeFormat;
-    _gameContext.settings.variableDatetimeFormat = settings.variableDatetimeFormat;
+    [_gameContext.settings copyFrom:settings];
 
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] initWith:_gameContext.events]];
@@ -139,7 +134,7 @@
 
     if([token isEqualToString:@"variable:changed"]) {
         [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            NSLog(@"global var2 changed: %@:%@", key, obj);
+            NSLog(@"%@::%@", key, obj);
         }];
 
         if(!([data objectForKey:@"game"] || [data objectForKey:@"charactername"])) {

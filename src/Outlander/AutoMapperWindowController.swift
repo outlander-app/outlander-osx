@@ -192,44 +192,39 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
 
     internal func handle(token:String, data:[String:AnyObject]) {
         guard token == "variable:changed" else { return }
+        guard let changed = data as? [String:String] else { return }
 
-        if let changed = data as? [String:String] {
-            switch changed.keys.first ?? "" {
-            case "zoneid":
-                if let zoneId = changed["zoneid"] {
-                    if let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
-                        self.setZoneFromMap(mapInfo)
-                    }
-                }
-                break
-            case "roomid":
-                if let id = changed["roomid"] {
-                    if let room = self.context!.mapZone?.roomWithId(id) {
+        let key = changed.keys.first ?? ""
+        if key == "zoneid" {
+            if let zoneId = changed["zoneid"], let mapInfo = self.mapsDataSource.mapForZoneId(zoneId) {
+                self.setZoneFromMap(mapInfo)
+            }
+        }
+
+        if key == "roomid" {
+            if let id = changed["roomid"] {
+                if let room = self.context!.mapZone?.roomWithId(id) {
+
+                    if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
                         
-                        if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                        let groups = room.notes!["(.+\\.xml)"].groups()
+                        
+                        if groups.count > 1 {
+                            let mapfile = groups[1]
                             
-                            let groups = room.notes!["(.+\\.xml)"].groups()
-                            
-                            if groups.count > 1 {
-                                let mapfile = groups[1]
-                                
-                                if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
-                                    self.setZoneFromMap(mapInfo)
-                                }
+                            if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+                                self.setZoneFromMap(mapInfo)
                             }
-                        } else {
-                            mainThread {
-                                if self.mapView != nil {
-                                    self.mapView.mapLevel = room.position.z
-                                    self.mapView.currentRoomId = id
-                                }
+                        }
+                    } else {
+                        mainThread {
+                            if self.mapView != nil {
+                                self.mapView.mapLevel = room.position.z
+                                self.mapView.currentRoomId = id
                             }
                         }
                     }
                 }
-                break
-            default:
-                break
             }
         }
     }

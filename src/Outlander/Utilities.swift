@@ -8,42 +8,12 @@
 
 import Foundation
 
-@objc
-public protocol IClock {
-    var now:NSDate { get }
-}
-
-@objc
-public class Clock : NSObject, IClock {
-
-    private var get:()->NSDate
-
-    override convenience init() {
-        self.init({ NSDate() })
-    }
-
-    init(_ get:()->NSDate) {
-        self.get = get
-    }
-    
-    public var now:NSDate {
-        return self.get()
-    }
-}
-
 public typealias FuncValue = ()->String?
 
 public enum DynamicValue {
     case none
     case value(String?)
     case dynamic(FuncValue)
-
-    var isDynamic:Bool {
-        switch self {
-        case .dynamic: return true
-        default: return false
-        }
-    }
 
     var rawValue:String? {
         switch self {
