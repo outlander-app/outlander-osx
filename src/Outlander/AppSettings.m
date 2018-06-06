@@ -50,4 +50,22 @@
         && self.character && self.character.length > 0;
 }
 
+- (void)copyFrom:(AppSettings *)settings {
+    self.defaultProfile = settings.defaultProfile;
+    self.profile = settings.profile;
+    self.game = settings.game;
+    self.account = settings.account;
+    self.character = settings.character;
+
+    self.loggingEnabled = settings.loggingEnabled;
+    self.rawLoggingEnabled = settings.rawLoggingEnabled;
+
+    self.checkForApplicationUpdates = settings.checkForApplicationUpdates;
+    self.downloadPreReleaseVersions = settings.downloadPreReleaseVersions;
+
+    self.variableDateFormat = settings.variableDateFormat;
+    self.variableTimeFormat = settings.variableTimeFormat;
+    self.variableDatetimeFormat = settings.variableDatetimeFormat;
+}
+
 @end

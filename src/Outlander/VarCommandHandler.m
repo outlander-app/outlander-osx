@@ -24,7 +24,7 @@
         NSString *key = commands[0];
         NSString *value = [self items:commands after:0];
 
-        [context.globalVars setCacheObject:value forKey:key];
+        [context.globalVars set:value forKey:key];
     }
 }
 

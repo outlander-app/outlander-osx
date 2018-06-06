@@ -12,10 +12,8 @@ import Foundation
 public class GameContext : NSObject {
     
     class func newInstance() -> GameContext {
-        return GameContext()
+        return GameContext(Clock())
     }
-
-    private let dateFormatter = NSDateFormatter()
 
     public var settings:AppSettings
     public var pathProvider:AppPathProvider
@@ -32,10 +30,10 @@ public class GameContext : NSObject {
                 zoneId = self.mapZone!.id
             }
             
-            let lastId = self.globalVars.cacheObjectForKey("zoneid") as? String ?? ""
+            let lastId = self.globalVars["zoneid"] ?? ""
             
             if zoneId != lastId {
-                self.globalVars.setCacheObject(zoneId, forKey: "zoneid")
+                self.globalVars["zoneid"] = zoneId
             }
         }
     }
@@ -49,10 +47,10 @@ public class GameContext : NSObject {
     public var substitutes:OLMutableArray
     public var gags:OLMutableArray
     public var presets:[String:ColorPreset]
-    public var globalVars:TSMutableDictionary
+    public var globalVars:GlobalVariables
     public var events:EventAggregator
-    
-    override init() {
+
+    init(_ clock:IClock) {
         self.settings = AppSettings()
         self.pathProvider = AppPathProvider(settings: settings)
         self.highlights = OLMutableArray()
@@ -62,13 +60,23 @@ public class GameContext : NSObject {
         self.substitutes = OLMutableArray()
         self.gags = OLMutableArray()
         self.presets = [:]
-        self.globalVars = TSMutableDictionary(name: "com.outlander.globalvars")
+        self.globalVars = GlobalVariables("com.outlander.globalVars", clock, self.settings)
 
         self.vitalsSettings = VitalsSettings()
         self.classSettings = ClassSettings()
         
         self.events = EventAggregator()
         self.maps = [:]
+
+        super.init()
+
+        self.globalVars.listen { (key, value) in
+            self.events.publish("variable:changed", data: [key : value ?? ""])
+        }
+    }
+
+    override convenience init() {
+        self.init(Clock())
     }
 
     public func presetFor(setting: String) -> ColorPreset? {
@@ -84,26 +92,6 @@ public class GameContext : NSObject {
         }
 
         return ColorPreset("", "#cccccc")
-    }
-
-    public func globalVarsCopy() -> [String:String] {
-
-//        let now = NSDate()
-//
-//        self.dateFormatter.dateFormat = self.settings.variableDateFormat
-//        let formattedDate = self.dateFormatter.stringFromDate(now)
-//
-//        self.dateFormatter.dateFormat = self.settings.variableTimeFormat
-//        let formattedTime = self.dateFormatter.stringFromDate(now)
-//
-//        self.dateFormatter.dateFormat = self.settings.variableDatetimeFormat
-//        let formattedDateTime = self.dateFormatter.stringFromDate(now)
-//
-//        self.globalVars.setCacheObject(formattedDate, forKey: "date")
-//        self.globalVars.setCacheObject(formattedTime, forKey: "time")
-//        self.globalVars.setCacheObject(formattedDateTime, forKey: "datetime")
-
-        return self.globalVars.copyValues() as! [String:String]
     }
 }
 

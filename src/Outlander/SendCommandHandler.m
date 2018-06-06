@@ -8,26 +8,22 @@
 
 #import "SendCommandHandler.h"
 #import "CommandContext.h"
-#import "GameCommandRelay.h"
 #import "NSString+Categories.h"
-#import "SimpleQueue.h"
-#import "SendQueueProcessor.h"
+#import "Outlander-Swift.h"
 
 @interface SendCommandHandler () {
-    id<CommandRelay> _commandRelay;
-    SimpleQueue *_queue;
-    SendQueueProcessor *_sendProcessor;
+    SendQueue *_sendQueue;
 }
 @end
 
 @implementation SendCommandHandler
 
-- (instancetype)initWith:(id<CommandRelay>)relay {
+- (instancetype)initWith:(GameContext *)context {
     self = [super init];
     if (!self) return nil;
-  
-    _queue = [[SimpleQueue alloc] init];
-    _commandRelay = relay;
+
+    _sendQueue = [SendQueue newInstance:context];
+
     return self;
 }
 
@@ -37,35 +33,7 @@
 
 - (void)handle:(NSString *)command withContext:(GameContext *)context {
     NSString *msg = [command substringFromIndex:5];
-    [_queue queue:msg];
-    
-    _sendProcessor = [[SendQueueProcessor alloc] init];
-    
-    [_sendProcessor configure:context with:^{
-        [self sendAll];
-    }];
-    
-    [_sendProcessor process];
-}
-
-- (void)sendAll {
-    
-    id msg = nil;
-    
-    while ((msg = [_queue dequeue])) {
-        
-        NSArray *commands = [msg splitToCommands];
-        
-        [commands enumerateObjectsUsingBlock:^(NSString *command, NSUInteger idx, BOOL *stop) {
-            CommandContext *ctx = [[CommandContext alloc] init];
-            ctx.command = [command trimWhitespaceAndNewline];
-            ctx.tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", ctx.command] mono:YES];
-//            ctx.tag.color = @"#ACFF2F";
-            ctx.tag.preset = @"sendinput";
-            ctx.isSystemCommand = YES;
-            [_commandRelay sendCommand:ctx];
-        }];
-    }
+    [_sendQueue enqueue:msg];
 }
 
 @end

@@ -559,7 +559,7 @@
         return;
     }
 
-    NSString *prompt = [_gameContext.globalVars cacheObjectForKey:@"prompt"];
+    NSString *prompt = [_gameContext.globalVars get:@"prompt"];
     
     TextViewController *controller = [_windows cacheObjectForKey:key];
     
@@ -594,8 +594,8 @@
     }];
     
     [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
-        NSString *time = [_gameContext.globalVars cacheObjectForKey:@"gametime"];
-        NSString *updated = [_gameContext.globalVars cacheObjectForKey:@"gametimeupdate"];
+        NSString *time = [_gameContext.globalVars get:@"gametime"];
+        NSString *updated = [_gameContext.globalVars get:@"gametimeupdate"];
         
         NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
         NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
@@ -644,7 +644,7 @@
         NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
                             seconds / 3600, (seconds / 60) % 60, seconds % 60];
         
-        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars cacheObjectForKey:@"tdp"]] mono:YES]];
+        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars get:@"tdp"]] mono:YES]];
         [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
         [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
         
@@ -692,8 +692,8 @@
     }]
     subscribeNext:^(NSArray *tags) {
         
-        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars cacheObjectForKey:@"righthand"]];
-        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars cacheObjectForKey:@"lefthand"]];
+        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars get:@"righthand"]];
+        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars get:@"lefthand"]];
         
         for (TextTag *tag in tags) {
             NSString *target = [self windowForTarget:tag.targetWindow];
@@ -722,11 +722,11 @@
 }
 
 - (void)updateRoom {
-    NSString *name = [_gameContext.globalVars cacheObjectForKey:@"roomtitle"];
-    NSString *desc = [_gameContext.globalVars cacheObjectForKey:@"roomdesc"];
-    NSString *objects = [_gameContext.globalVars cacheObjectForKey:@"roomobjsorig"];
-    NSString *exits = [_gameContext.globalVars cacheObjectForKey:@"roomexits"];
-    NSString *players = [_gameContext.globalVars cacheObjectForKey:@"roomplayers"];
+    NSString *name = [_gameContext.globalVars get:@"roomtitle"];
+    NSString *desc = [_gameContext.globalVars get:@"roomdesc"];
+    NSString *objects = [_gameContext.globalVars get:@"roomobjsorig"];
+    NSString *exits = [_gameContext.globalVars get:@"roomexits"];
+    NSString *players = [_gameContext.globalVars get:@"roomplayers"];
     
     NSMutableArray *tags = [[NSMutableArray alloc] init];
     
@@ -772,7 +772,7 @@
     NSMutableArray *dirs = [NSMutableArray new];
     
     for (NSString *option in options) {
-        NSString *res = [_gameContext.globalVars cacheObjectForKey:option];
+        NSString *res = [_gameContext.globalVars get:option];
         if ([res isEqualToString:@"1"]) {
             [dirs addObject:option];
         }

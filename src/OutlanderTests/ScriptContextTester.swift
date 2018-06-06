@@ -14,17 +14,20 @@ import Nimble
 class ScriptContextTester : QuickSpec {
     
     override func spec() {
+
+        var context:GameContext = GameContext()
         
         describe("script context") {
             
             beforeEach {
+                context = GameContext()
             }
             
             it("shift updates argcount") {
                 
                 let paramVars = ["one", "two", "three four"]
                 
-                let context = ScriptContext([], globalVars: nil, params: paramVars)
+                let context = ScriptContext([], context: context, params: paramVars)
                 
                 expect(context.getVariable("argcount")).to(equal("3"))
                 
@@ -42,7 +45,7 @@ class ScriptContextTester : QuickSpec {
                 
                 let paramVars = ["one", "two", "three four"]
                 
-                let context = ScriptContext([], globalVars: nil, params: paramVars)
+                let context = ScriptContext([], context: context, params: paramVars)
                 
                 expect(context.getParamVar("0")).to(equal("one two \"three four\""))
                 expect(context.getParamVar("1")).to(equal("one"))
@@ -54,7 +57,7 @@ class ScriptContextTester : QuickSpec {
                 
                 let paramVars = ["one", "two", "three four"]
                 
-                let context = ScriptContext([], globalVars: nil, params: paramVars)
+                let context = ScriptContext([], context: context, params: paramVars)
                 
                 context.shiftParamVars()
                 
@@ -68,7 +71,7 @@ class ScriptContextTester : QuickSpec {
                 
                 let paramVars = ["one", "two", "three four"]
                 
-                let context = ScriptContext([], globalVars: nil, params: paramVars)
+                let context = ScriptContext([], context: context, params: paramVars)
                 
                 context.shiftParamVars()
                 context.shiftParamVars()

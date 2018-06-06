@@ -27,9 +27,9 @@
 
 - (NSString *)replace:(NSString *)data withContext:(GameContext *)context {
     VariableReplacer2 *replacer = [VariableReplacer2 newInstance];
-    data = [replacer simplify:data :context.globalVarsCopy :@{} :@{} :@{} :@{}];
+    data = [replacer simplify:data :context.globalVars :@{} :@{} :@{} :@{}];
     data = [self replaceAlias:data withContext:context];
-    return [replacer simplify:data :context.globalVarsCopy :@{} :@{} :@{} :@{}];
+    return [replacer simplify:data :context.globalVars :@{} :@{} :@{} :@{}];
 }
 
 - (NSString *)replaceAlias:(NSString *)data withContext:(GameContext *)context {

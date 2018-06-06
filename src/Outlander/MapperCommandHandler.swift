@@ -12,16 +12,16 @@ extension GameContext {
 
     func resetMap() {
         if let zone = self.mapZone {
-            var name = self.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+            var name = self.globalVars["roomtitle"] ?? ""
             name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
 
-            let description = self.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+            let description = self.globalVars["roomdesc"] ?? ""
 
-            let roomId = self.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+            let roomId = self.globalVars["roomid"] ?? ""
 
             if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 print("reset: found room \(currentRoom.id)")
-                self.globalVars.setCacheObject(currentRoom.id, forKey: "roomid")
+                self.globalVars["roomid"] = currentRoom.id
             } else {
                 findRoomInZones(name, description: description)
             }
@@ -116,12 +116,12 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
             self.startDate = NSDate()
             
             if let zone = context.mapZone {
-                var name = context.globalVars.cacheObjectForKey("roomtitle") as? String ?? ""
+                var name = context.globalVars["roomtitle"] ?? ""
                 name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
                 
-                let description = context.globalVars.cacheObjectForKey("roomdesc") as? String ?? ""
+                let description = context.globalVars["roomdesc"] ?? ""
              
-                let roomId = context.globalVars.cacheObjectForKey("roomid") as? String ?? ""
+                let roomId = context.globalVars["roomid"] ?? ""
                 
                 if let currentRoom = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
                 
@@ -179,7 +179,7 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
             
             let walk = moves.joinWithSeparator(", ")
             
-            if context.globalVars.cacheObjectForKey("debugautomapper") as? String == "1" {
+            if context.globalVars["debugautomapper"] == "1" {
                 let diff = NSDate().timeIntervalSinceDate(self.startDate)
                 self.sendMessage("Debug: path found in \(diff) seconds")
             }

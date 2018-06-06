@@ -81,7 +81,7 @@
 - (void)send:(Roundtime *)rt {
     
     [_notification sendNext:rt];
-    [_gameContext.globalVars setCacheObject:[@(rt.value) stringValue] forKey:@"roundtime"];
+    [_gameContext.globalVars set:[@(rt.value) stringValue] forKey:@"roundtime"];
 }
 
 @end

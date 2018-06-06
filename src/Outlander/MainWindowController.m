@@ -42,13 +42,8 @@
     
     _gameContext = [GameContext newInstance];
 
-    _gameContext.settings.defaultProfile = settings.defaultProfile;
-    _gameContext.settings.profile = settings.defaultProfile;
-    _gameContext.settings.checkForApplicationUpdates = settings.checkForApplicationUpdates;
-    _gameContext.settings.variableDateFormat = settings.variableDateFormat;
-    _gameContext.settings.variableTimeFormat = settings.variableTimeFormat;
-    _gameContext.settings.variableDatetimeFormat = settings.variableDatetimeFormat;
-    
+    [_gameContext.settings copyFrom:settings];
+
     _appSettingsLoader = [[AppSettingsLoader alloc] initWithContext:_gameContext];
     _macroHandler = [[MacroHandler alloc] initWith:_gameContext and:[[GameCommandRelay alloc] initWith:_gameContext.events]];
     
@@ -111,7 +106,8 @@
     
     [_gameContext.events subscribe:self token:@"disconnected"];
     [_gameContext.events subscribe:self token:@"OL:map:reload"];
-    
+    [_gameContext.events subscribe:self token:@"variable:changed"];
+
 	return self;
 }
 
@@ -134,6 +130,39 @@
 
     if([token isEqualToString:@"OL:map:reload"]) {
         [_autoMapperWindowController loadMaps];
+    }
+
+    if([token isEqualToString:@"variable:changed"]) {
+        [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSLog(@"%@::%@", key, obj);
+        }];
+
+        if(!([data objectForKey:@"game"] || [data objectForKey:@"charactername"])) {
+            return;
+        }
+
+        NSString *charInfo = @"";
+        NSString *game = [_gameContext.globalVars get:@"game"];
+        NSString *character = [_gameContext.globalVars get:@"charactername"];
+        
+        if (game == nil) {
+            game = @"";
+        }
+        
+        if (character == nil) {
+           character = @"";
+        }
+        
+        if (game.length > 0 && character.length > 0) {
+            charInfo = [NSString stringWithFormat:@"%@: %@ - ", game, character];
+        }
+        
+        NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
+        NSString *version = dict[@"CFBundleShortVersionString"];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Alpha", charInfo, version]];
+        });
     }
 }
 
@@ -173,40 +202,11 @@
     
     [self.window setTitle:[NSString stringWithFormat:@"Outlander %@ Alpha", version]];
     
-    @weakify(self);
-    
-    [[_gameContext.globalVars.changed throttle:0.5]subscribeNext:^(id x) {
-        
-        @strongify(self);
-       
-        NSString *charInfo = @"";
-        NSString *game = [_gameContext.globalVars cacheObjectForKey:@"game"];
-        NSString *character = [_gameContext.globalVars cacheObjectForKey:@"charactername"];
-        
-        if (game == nil) {
-            game = @"";
-        }
-        
-        if (character == nil) {
-           character = @"";
-        }
-        
-        if (game.length > 0 && character.length > 0) {
-            charInfo = [NSString stringWithFormat:@"%@: %@ - ", game, character];
-        }
-        
-        NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
-        NSString *version = dict[@"CFBundleShortVersionString"];
-        
-        [self.window setTitle:[NSString stringWithFormat:@"%@Outlander %@ Alpha", charInfo, version]];
-    }];
-    
     _loginViewController.context = _gameContext;
 
     [self printSettings];
 
     [self.window makeFirstResponder:vc._CommandTextField];
-    //[vc._CommandTextField becomeFirstResponder];
 }
 
 -(void)echoText:(NSString *)text withMono:(BOOL)mono {

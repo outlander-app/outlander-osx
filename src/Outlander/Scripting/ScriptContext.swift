@@ -66,16 +66,16 @@ public class ScriptContext {
     private var params:[String]
     private var paramVars:[String:String] = [:]
     
-    private var globalVars:(()->[String:String])?
-    
-    init(_ tree:[Token], globalVars:(()->[String:String])?, params:[String]) {
+    private var context:GameContext
+
+    init(_ tree:[Token], context:GameContext, params:[String]) {
         self.tree = tree
         self.marker = TokenSequence()
         self.marker.tree = self.tree
         self.current = self.marker.generate()
         self.results = Array<Token>()
-        self.globalVars = globalVars
         self.gosubStack = Stack<GosubContext>()
+        self.context = context
        
         self.params = params
         self.updateParamVars()
@@ -253,7 +253,7 @@ public class ScriptContext {
     }
     
     public func roundtime() -> Double? {
-        return self.globalVars?()["roundtime"]?.toDouble()
+        return self.context.globalVars["roundtime"]?.toDouble()
     }
     
     public func next() -> Token? {
@@ -369,7 +369,7 @@ public class ScriptContext {
         return VariableReplacer2()
             .simplify(
                 data,
-                self.globalVars != nil ? self.globalVars!() : [:],
+                self.context.globalVars,
                 self.regexVars,
                 self.actionVars,
                 self.variables,

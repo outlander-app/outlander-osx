@@ -51,7 +51,7 @@
     _triggerHandler = [TriggerHandler newInstance:context relay:_commandRelay];
     
     _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value){
-        [_gameContext.globalVars setCacheObject:value forKey:key];
+        [_gameContext.globalVars set:value forKey:key];
     };
     
     _expUpdateHandler.emitExp = ^(SkillExp *exp) {
@@ -59,7 +59,7 @@
     };
     
     _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
-        [_gameContext.globalVars setCacheObject:value forKey:key];
+        [_gameContext.globalVars set:value forKey:key];
     };
     
     _tagStreamer.emitExp = ^(SkillExp *exp) {

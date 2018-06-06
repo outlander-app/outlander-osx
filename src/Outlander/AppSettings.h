@@ -34,5 +34,6 @@
 @property (nonatomic, copy) NSString *variableDatetimeFormat;
 
 - (BOOL)isValid;
+- (void)copyFrom:(AppSettings *)settings;
 
 @end
