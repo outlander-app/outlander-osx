@@ -16,36 +16,39 @@ class ScriptToolbarViewController: NSViewController, SettingsView, ISubscriber {
     private var fontSize: CGFloat = 12
 
     func handle(token:String, data:Dictionary<String, AnyObject>) {
+
+        let scriptName = data["scriptName"] as? String ?? ""
+        let except = data["except"] as? [String] ?? []
+
         mainThread { () -> () in
             if token == "script:add" {
-                self.addScript(data["scriptName"] as! String)
+                self.addScript(scriptName)
             } else if token == "script:resume" {
-                self.resumeScript(data["scriptName"] as! String)
+                self.resumeScript(scriptName, except)
             } else if token == "script:pause" {
-                self.pauseScript(data["scriptName"] as! String)
+                self.pauseScript(scriptName, except)
             } else if token == "script:remove" {
-                self.removeScript(data["scriptName"] as! String)
+                self.removeScript(scriptName)
             } else if token == "script:removeAll" {
                 self.removeAll()
             }
         }
     }
     
-    func resumeScript(scriptName:String) {
-        for view in self.view.subviews {
-            if let button = view as? NSPopUpButton {
-                if button.menu?.title == scriptName || scriptName == "all" {
-                    button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusAvailable")
-                }
-            }
-        }
+    func resumeScript(scriptName:String, _ except:[String]) {
+        self.setStatus("NSStatusAvailable", scriptName, except)
     }
     
-    func pauseScript(scriptName:String) {
+    func pauseScript(scriptName:String, _ except:[String]) {
+        self.setStatus("NSStatusPartiallyAvailable", scriptName, except)
+    }
+
+    private func setStatus(status:String, _ scriptName:String, _ except:[String]) {
         for view in self.view.subviews {
             if let button = view as? NSPopUpButton {
-                if button.menu?.title == scriptName || scriptName == "all" {
-                    button.menu?.itemAtIndex(0)?.image = NSImage(named: "NSStatusPartiallyAvailable")
+                let title = button.menu?.title ?? ""
+                if title == scriptName || (scriptName == "all" && !except.contains(title)) {
+                    button.menu?.itemAtIndex(0)?.image = NSImage(named: status)
                 }
             }
         }

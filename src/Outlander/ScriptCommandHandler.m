@@ -22,15 +22,24 @@
     
     if(commands && commands.count > 1) {
         
-        NSString *target = commands[1];
         NSString *action = commands[0];
+        NSString *target = commands[1];
         NSString *param = @"";
-        
+        NSMutableArray<NSString *> *param2 = [NSMutableArray new];
+
         if (commands.count > 2) {
             param = commands[2];
         }
+
+        if (commands.count > 3) {
+            [commands enumerateObjectsUsingBlock:^(NSString* _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if(idx > 2) {
+                    [param2 addObject:obj];
+                }
+            }];
+        }
         
-        NSDictionary *dict = @{ @"target": target, @"action": action, @"param": param};
+        NSDictionary *dict = @{ @"target": target, @"action": action, @"param": param, @"param2": param2};
         [context.events publish: @"script" data: dict];
     }
 }

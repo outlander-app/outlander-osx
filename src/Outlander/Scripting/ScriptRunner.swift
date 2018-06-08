@@ -63,8 +63,8 @@ public class ScriptRunner : NSObject, ISubscriber {
             return
         }
         
-        self.abort(scriptName)
-       
+        self.abort(scriptName, [])
+
         self.loadAsync(scriptName, tokens: tokens)
     }
     
@@ -156,48 +156,50 @@ public class ScriptRunner : NSObject, ISubscriber {
     }
     
     func manage(userInfo:[String:AnyObject]) {
-        if let dict = userInfo as? [String:String] {
-            let scriptName = dict["target"]!
-            let action = dict["action"]!
+        let scriptName = userInfo["target"] as! String
+        let action = userInfo["action"] as! String
+        let param1 = userInfo["param"] as? String ?? ""
+        let param2 = userInfo["param2"] as? [String] ?? []
+
+        let except:[String] = param1 == "except" ? param2 : []
+        
+        if action == "abort" {
+            self.abort(scriptName, except)
             
-            if action == "abort" {
-                self.abort(scriptName)
-                
-                if scriptName == "all" {
-                    self.context.events.publish("script:removeAll", data: [:])
-                }
+            if scriptName == "all" && except.count == 0 {
+                self.context.events.publish("script:removeAll", data: ["except":except])
             }
-            else if action == "pause" {
-                self.pause(scriptName)
-                self.context.events.publish("script:pause", data: ["scriptName":scriptName])
-            }
-            else if action == "resume" {
-                self.resume(scriptName)
-                self.context.events.publish("script:resume", data: ["scriptName":scriptName])
-            }
-            else if action == "vars" {
-                self.vars(scriptName)
-            }
-            else if action == "debug" {
-                let levelNum = Int(dict["param"] ?? "")
-                let level = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
-                self.debug(scriptName, level: level)
-                
-                var data = [String:AnyObject]()
-                data["scriptName"] = scriptName
-                data["level"] = level.rawValue
-                
-                self.context.events.publish("script:debug", data: data)
-            } else if action == "list" {
-                self.listAll()
-            }
+        }
+        else if action == "pause" {
+            self.pause(scriptName, except)
+            self.context.events.publish("script:pause", data: ["scriptName":scriptName, "except":except])
+        }
+        else if action == "resume" {
+            self.resume(scriptName, except)
+            self.context.events.publish("script:resume", data: ["scriptName":scriptName, "except":except])
+        }
+        else if action == "vars" {
+            self.vars(scriptName)
+        }
+        else if action == "debug" {
+            let levelNum = Int(param1)
+            let level = ScriptLogLevel(rawValue: levelNum ?? -1) ?? ScriptLogLevel.None
+            self.debug(scriptName, level: level)
+            
+            var data = [String:AnyObject]()
+            data["scriptName"] = scriptName
+            data["level"] = level.rawValue
+            
+            self.context.events.publish("script:debug", data: data)
+        } else if action == "list" {
+            self.listAll()
         }
     }
     
-    private func abort(name:String) {
+    private func abort(name:String, _ except:[String]) {
         var names:[String] = []
         for (_, script) in self.scripts.enumerate() {
-            if name == "all" || script.scriptName == name {
+            if (name == "all" && !except.contains(script.scriptName)) || script.scriptName == name {
                 script.cancel()
                 names.append(script.scriptName)
                 
@@ -207,7 +209,7 @@ public class ScriptRunner : NSObject, ISubscriber {
             }
         }
         
-        if name == "all" {
+        if name == "all" && except.count == 0 {
             self.scripts = []
         } else {
             for n in names {
@@ -216,10 +218,10 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func pause(name:String) {
+    private func pause(name:String, _ except:[String]) {
         for (_, script) in self.scripts.enumerate() {
             
-            if name == "all" || script.scriptName == name {
+            if (name == "all" && !except.contains(script.scriptName)) || script.scriptName == name {
                 script.pause()
                 
                 if name != "all" {
@@ -229,10 +231,10 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
     }
     
-    private func resume(name:String) {
+    private func resume(name:String, _ except:[String]) {
         for (_, script) in self.scripts.enumerate() {
             
-            if name == "all" || script.scriptName == name {
+            if (name == "all" && !except.contains(script.scriptName)) || script.scriptName == name {
                 script.resume()
                 
                 if name != "all" {
