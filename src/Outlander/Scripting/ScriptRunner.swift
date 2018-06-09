@@ -64,6 +64,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         }
         
         self.abort(scriptName, [])
+        self.updateActiveScriptVars()
 
         self.loadAsync(scriptName, tokens: tokens)
     }
@@ -111,6 +112,7 @@ public class ScriptRunner : NSObject, ISubscriber {
             script.run(res.scriptText!, context: self.context, params: res.params)
 
             self.context.events.publish("script:add", data: ["scriptName":script.scriptName])
+            self.updateActiveScriptVars()
         }
     }
     
@@ -119,6 +121,7 @@ public class ScriptRunner : NSObject, ISubscriber {
         if let idx = found {
             self.scripts.removeAtIndex(idx)
             self.context.events.publish("script:remove", data: ["scriptName":name])
+            self.updateActiveScriptVars()
         }
     }
     
@@ -194,6 +197,8 @@ public class ScriptRunner : NSObject, ISubscriber {
         } else if action == "list" {
             self.listAll()
         }
+
+        self.updateActiveScriptVars()
     }
     
     private func abort(name:String, _ except:[String]) {
@@ -276,5 +281,24 @@ public class ScriptRunner : NSObject, ISubscriber {
         for (_, script) in self.scripts.enumerate() {
             script.varsChanged(vars)
         }
+    }
+
+    private func updateActiveScriptVars() {
+        var scriptNames:[String] = []
+        var activeNames:[String] = []
+        var pausedNames:[String] = []
+
+        for (_, script) in self.scripts.enumerate() {
+            scriptNames.append(script.scriptName)
+            if script.paused {
+                pausedNames.append(script.scriptName)
+            } else {
+                activeNames.append(script.scriptName)
+            }
+        }
+
+        self.context.globalVars["scriptlist"] = scriptNames.joinWithSeparator(" ")
+        self.context.globalVars["activescriptlist"] = activeNames.joinWithSeparator(" ")
+        self.context.globalVars["pausedscriptlist"] = pausedNames.joinWithSeparator(" ")
     }
 }

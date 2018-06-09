@@ -51,6 +51,7 @@ public protocol IAcceptMessage {
 public protocol IScript : IAcceptMessage {
     var scriptName:String { get }
     var logLevel:ScriptLogLevel { get }
+    var paused:Bool { get }
     
     var completed:((String, String?)->Void)? {get set}
     
