@@ -202,26 +202,24 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
         }
 
         if key == "roomid" {
-            if let id = changed["roomid"] {
-                if let room = self.context!.mapZone?.roomWithId(id) {
+            if let id = changed["roomid"], let room = self.context!.mapZone?.roomWithId(id) {
 
-                    if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+                    
+                    let groups = room.notes!["(.+\\.xml)"].groups()
+                    
+                    if groups.count > 1 {
+                        let mapfile = groups[1]
                         
-                        let groups = room.notes!["(.+\\.xml)"].groups()
-                        
-                        if groups.count > 1 {
-                            let mapfile = groups[1]
-                            
-                            if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
-                                self.setZoneFromMap(mapInfo)
-                            }
+                        if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+                            self.setZoneFromMap(mapInfo)
                         }
-                    } else {
-                        mainThread {
-                            if self.mapView != nil {
-                                self.mapView.mapLevel = room.position.z
-                                self.mapView.currentRoomId = id
-                            }
+                    }
+                } else {
+                    mainThread {
+                        if self.mapView != nil {
+                            self.mapView.mapLevel = room.position.z
+                            self.mapView.currentRoomId = id
                         }
                     }
                 }
@@ -268,9 +266,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
             let description = ctx.globalVars["roomdesc"] ?? ""
             
             if let room = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
-                
-                ctx.globalVars["roomid"] = room.id
-                
+
+                if roomId != room.id {
+                    ctx.globalVars["roomid"] = room.id
+                }
+
                 return room
             }
         }
@@ -334,7 +334,7 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
 
         if let loaded = info.zone {
             self.context?.mapZone = loaded
-            
+
             info.zone = loaded
             
             if self.mapView != nil {
@@ -417,15 +417,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
         let idx = self.mapsComboBox.indexOfSelectedItem
         let selectedMap = self.mapsDataSource.mapAtIndex(idx)
         
-        if selectedMap.zone != nil {
-            
+        if self.context?.mapZone != selectedMap.zone {
+            self.loadMapFromInfo(selectedMap)
+
+        } else if selectedMap.zone != nil {
             self.renderMap(selectedMap.zone!)
-            
-            self.context?.mapZone = selectedMap.zone!
-            
-            return
         }
-        
-        self.loadMapFromInfo(selectedMap)
     }
 }

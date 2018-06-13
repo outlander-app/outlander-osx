@@ -405,6 +405,8 @@
 		F9C2910B189AB86000F70224 /* Vitals.m in Sources */ = {isa = PBXBuildFile; fileRef = F9C29109189AB86000F70224 /* Vitals.m */; };
 		F9C651C720C64CB300746661 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C620C64CB300746661 /* Clock.swift */; };
 		F9C651C820C64CB300746661 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C620C64CB300746661 /* Clock.swift */; };
+		F9C651CA20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */; };
+		F9C651CB20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */; };
 		F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CB31101903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
@@ -836,6 +838,7 @@
 		F9C29108189AB86000F70224 /* Vitals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitals.h; sourceTree = "<group>"; };
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9C651C620C64CB300746661 /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
+		F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestXmlCommandHandler.swift; sourceTree = "<group>"; };
 		F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBuilder.swift; sourceTree = "<group>"; };
 		F9CB310E1903238B004587A5 /* SkillExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillExp.h; sourceTree = "<group>"; };
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
@@ -1056,6 +1059,7 @@
 				F9FFE7801E7C7BD400FD33B8 /* PlayCommandHandler.swift */,
 				F9AA1EFD1FBC11FE0031CF60 /* BugCommandHandler.swift */,
 				F931A37420C1B261000DCE53 /* LogCommandHandler.swift */,
+				F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */,
 				F92C1D6220C386170076BF19 /* SendQueue.swift */,
 			);
 			name = Scripting;
@@ -1803,6 +1807,7 @@
 				F9FD07F018977A380087D813 /* NSView+Categories.m in Sources */,
 				F97CD58D1ACD29A4007E5804 /* MapperCommandHandler.swift in Sources */,
 				F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */,
+				F9C651CA20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */,
 				F98782E31942791B00D76231 /* ExitToken.m in Sources */,
 				F9A345441919DADA00920F0E /* ConfigLoader.m in Sources */,
 				F9B9BFEB1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
@@ -2007,6 +2012,7 @@
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,
 				F98D4C291CB1A7DF00E81E70 /* Substitute.swift in Sources */,
 				F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */,
+				F9C651CB20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */,
 				F9B9BFEF1ABD5DD700CB44B6 /* StringExtensions.swift in Sources */,
 				F9C178821B1398DA00CC7291 /* ScriptToolbarViewController.swift in Sources */,
 				F90CEC121ACEEEC100204243 /* MapLoader.swift in Sources */,

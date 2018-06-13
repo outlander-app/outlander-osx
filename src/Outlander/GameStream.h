@@ -11,7 +11,9 @@
 #import "Shared.h"
 #import "Outlander-Swift.h"
 
-@interface GameStream : NSObject <InfoStream> {
+@protocol ISubscriber;
+
+@interface GameStream : NSObject <InfoStream, ISubscriber> {
     GameServer *_gameServer;
     GameParser *_gameParser;
 }

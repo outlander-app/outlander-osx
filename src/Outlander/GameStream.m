@@ -134,8 +134,15 @@
         id<RACSubscriber> sub = (id<RACSubscriber>)_connected;
         [sub sendNext:x];
     }];
-    
+
+    [_gameContext.events subscribe:self token:@"ol:testxml"];
+
     return self;
+}
+
+- (void)handle:(NSString *)token data:(NSDictionary *)data {
+    NSString *xml = [data objectForKey:@"xml"];
+    [self processXml:xml];
 }
 
 -(void) publish:(id)item {
@@ -146,6 +153,7 @@
     [_gameServer disconnect];
     [_triggerHandler unsubscribe];
     [_mainSubject sendCompleted];
+    [_gameContext.events unSubscribeListener:self];
 }
 
 -(void) unsubscribe {
@@ -166,32 +174,36 @@
                   toHost:connection.host
                   onPort:connection.port]
      subscribeNext:^(NSString *rawXml) {
-         
-         TextTag *rawTag = [TextTag tagFor:rawXml mono:YES];
-         rawTag.targetWindow = @"raw";
-         
-         NSArray *rawArray = [NSArray arrayWithObjects:rawTag, nil];
-         [_mainSubject sendNext:rawArray];
 
-         NSArray *nodes = [_tokenizer tokenize:rawXml];
-         NSArray *tags = [_tagStreamer stream:nodes];
-         
-         [_mainSubject sendNext:tags];
-         
-         NSString *rawText = [self textForTagList:tags];
+         [self processXml:rawXml];
 
-         [_triggerHandler handle:nodes text:rawText context:_gameContext];
-         [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
-         [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
-         [_expUpdateHandler handle:nodes text:rawText context:_gameContext];
-         [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
-         
      } completed:^{
          [self unsubscribe];
          [_mainSubject sendCompleted];
      }];
     
     return _subject;
+}
+
+-(void)processXml:(NSString *)rawXml {
+     TextTag *rawTag = [TextTag tagFor:rawXml mono:YES];
+     rawTag.targetWindow = @"raw";
+     
+     NSArray *rawArray = [NSArray arrayWithObjects:rawTag, nil];
+     [_mainSubject sendNext:rawArray];
+
+     NSArray *nodes = [_tokenizer tokenize:rawXml];
+     NSArray *tags = [_tagStreamer stream:nodes];
+     
+     [_mainSubject sendNext:tags];
+     
+     NSString *rawText = [self textForTagList:tags];
+
+     [_triggerHandler handle:nodes text:rawText context:_gameContext];
+     [_roomChangeHandler handle:nodes text:rawText context:_gameContext];
+     [_tdpUpdateHandler handle:nodes text:rawText context:_gameContext];
+     [_expUpdateHandler handle:nodes text:rawText context:_gameContext];
+     [_scriptStreamHandler handle:nodes text:rawText context:_gameContext];
 }
 
 -(NSString *)textForTagList:(NSArray *)tags {

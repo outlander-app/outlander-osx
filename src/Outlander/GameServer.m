@@ -27,7 +27,7 @@
     _subject = [RACSubject subject];
     _connected = [RACSubject subject];
     _matchedToken = NO;
-    
+
     return self;
 }
 
@@ -56,6 +56,7 @@
 - (void) disconnect {
     [_connected sendCompleted];
     [_subject sendCompleted];
+    [_gameContext.events unSubscribeListener:self];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port {
