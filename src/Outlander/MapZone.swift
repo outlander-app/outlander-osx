@@ -58,8 +58,8 @@ public final class MapZone : NSObject {
         let width:Double = abs(maxX) + abs(minX) + padding
         let height:Double = abs(maxY) + abs(minY) + padding
         
-        print("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
-       
+//        print("maxX: \(maxX) minX: \(minX) maxY: \(maxY) minY: \(minY) || (\(width),\(height))")
+
         // set origin x,y to the point on screen where were the most points can fit on screen
         // between maxX and maxY
         return NSRect(x: width - maxX - (padding / 2.0), y: height - maxY - (padding / 2.0), width: width*1.0, height: height*1.0)

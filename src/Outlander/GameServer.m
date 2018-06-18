@@ -27,7 +27,7 @@
     _subject = [RACSubject subject];
     _connected = [RACSubject subject];
     _matchedToken = NO;
-    
+
     return self;
 }
 

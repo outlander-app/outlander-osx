@@ -16,7 +16,7 @@ class TestCommandHandler : NSObject, CommandHandler {
     }
     
     func canHandle(command: String) -> Bool {
-        return command.lowercaseString.hasPrefix("#test")
+        return command.lowercaseString.hasPrefix("#test ")
     }
     
     func handle(command: String, withContext: GameContext) {

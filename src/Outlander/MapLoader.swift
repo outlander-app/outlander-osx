@@ -77,16 +77,22 @@ final class MapLoader {
 
         do {
             let doc = try GlimpseXML.Document.parseFile(filePath)
-
             let id = doc.rootElement.attributeValue("id", namespace: nil)!
             let name = doc.rootElement.attributeValue("name", namespace: nil)!
-            
             return MapMetaResult.Success(
                 MapInfo(id, name: name, file: file)
             )
         } catch let error {
             return MapMetaResult.Error(error)
         }
+    }
+
+    func measure<A>(name: String = "", _ block: () throws -> A) throws -> A {
+        let startTime = CACurrentMediaTime()
+        let result = try block()
+        let timeElapsed = CACurrentMediaTime() - startTime
+        print("Time: \(name) - \(timeElapsed)")
+        return result
     }
     
     func load(filePath: String) -> MapLoadResult {
