@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface NSString (Categories)
++ (NSDateFormatter*) dateFormatter;
+
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc;
 - (BOOL) containsString: (NSString *) substring;
 - (NSString *) trimNewLine;

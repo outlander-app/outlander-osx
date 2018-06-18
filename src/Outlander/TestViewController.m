@@ -337,6 +337,8 @@
 //    
 //    [self set:@"room" withTags:tags];
 //    [self set:@"thoughts" withTags:tags];
+
+    [self connectStream];
 }
 
 - (void)removeAllWindows {
@@ -579,9 +581,15 @@
         [self appendError:@"Invalid credentials.  Please provide all required credentials."];
         return;
     }
-    
+
+//    [self connectStream];
+    [self authenticate];
+}
+
+- (void)connectStream {
+
     if(_gameStream) {
-        [_gameStream complete];
+        [_gameStream reset];
     }
     
     _gameStream = [[GameStream alloc] initWithContext:_gameContext];
@@ -592,11 +600,19 @@
                                 mono:true]
                   to:@"main"];
     }];
+
+    [_gameStream.disconnected subscribeNext:^(NSString *message) {
+        [self append:[TextTag tagFor:[@"[%@] disconnected from game server\n" stringFromDateFormat:@"HH:mm"]
+                                mono:true]
+                  to:@"main"];
+
+        [_gameContext.events publish:@"disconnected" data:@{}];
+    }];
     
     [_gameStream.roundtime subscribeNext:^(Roundtime *rt) {
         NSString *time = [_gameContext.globalVars get:@"gametime"];
         NSString *updated = [_gameContext.globalVars get:@"gametimeupdate"];
-        
+
         NSTimeInterval t = [rt.time timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[time doubleValue]]];
         NSTimeInterval offset = [[NSDate date] timeIntervalSinceDate:[NSDate dateWithTimeIntervalSince1970:[updated doubleValue]]];
         
@@ -606,11 +622,11 @@
         [_roundtimeNotifier set:rounded];
     }];
     
-    [_gameStream.spell.signal subscribeNext:^(NSString *spell) {
+    [_gameStream.spell subscribeNext:^(NSString *spell) {
         [_spelltimeNotifier set:spell];
     }];
     
-    [_gameStream.room.signal subscribeNext:^(id x) {
+    [_gameStream.room subscribeNext:^(id x) {
         [self updateRoom];
     }];
     
@@ -650,7 +666,21 @@
         
         [self set:@"experience" withTags:tags];
     }];
-    
+
+    [[_gameStream.subject.signal deliverOn:[RACScheduler mainThreadScheduler]]
+        subscribeNext:^(NSArray *tags) {
+
+            _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars get:@"righthand"]];
+            _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars get:@"lefthand"]];
+            
+            for (TextTag *tag in tags) {
+                NSString *target = [self windowForTarget:tag.targetWindow];
+                [self append:tag to:target];
+            }
+        }];
+}
+
+- (void)authenticate {
     RACSignal *authSignal = [_server connectTo:@"eaccess.play.net" onPort:7900];
     
     [authSignal
@@ -676,41 +706,18 @@
          }
      }
      completed:^{
-        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
+        [self append:[TextTag tagFor:[@"[%@] disconnected from authentication server\n" stringFromDateFormat:@"HH:mm"]
                                 mono:true]
                   to:@"main"];
     }];
     
-    [[[_server authenticate:_gameContext.settings.account
+    [[_server authenticate:_gameContext.settings.account
                    password:_gameContext.settings.password
                        game:_gameContext.settings.game
                   character:_gameContext.settings.character]
-    flattenMap:^RACStream *(GameConnection *connection) {
+    subscribeNext:^(GameConnection *connection) {
         NSLog(@"Connection: %@", connection);
-        RACMulticastConnection *conn = [_gameStream connect:connection];
-        return [conn.signal deliverOn:[RACScheduler mainThreadScheduler]];
-    }]
-    subscribeNext:^(NSArray *tags) {
-        
-        _viewModel.righthand = [NSString stringWithFormat:@"R: %@", [_gameContext.globalVars get:@"righthand"]];
-        _viewModel.lefthand = [NSString stringWithFormat:@"L: %@", [_gameContext.globalVars get:@"lefthand"]];
-        
-        for (TextTag *tag in tags) {
-            NSString *target = [self windowForTarget:tag.targetWindow];
-            [self append:tag to:target];
-        }
-        
-    } completed:^{
-        [self append:[TextTag tagFor:[@"[%@] disconnected\n" stringFromDateFormat:@"HH:mm"]
-                                mono:true]
-                  to:@"main"];
-        
-        if(_gameStream) {
-            [_gameStream unsubscribe];
-            _gameStream = nil;
-        }
-        
-        [_gameContext.events publish:@"disconnected" data:@{}];
+        [_gameStream connect:connection];
     }];
 }
 

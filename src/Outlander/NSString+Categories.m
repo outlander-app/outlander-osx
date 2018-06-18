@@ -10,6 +10,15 @@
 
 @implementation NSString (Categories)
 
++ (NSDateFormatter*) dateFormatter {
+    static NSDateFormatter *_specialFormatting;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _specialFormatting = [[NSDateFormatter alloc] init];
+    });
+    return _specialFormatting;
+}
+
 - (BOOL) appendToFile:(NSString *)path encoding:(NSStringEncoding)enc {
     BOOL result = YES;
     NSFileHandle* fh = [NSFileHandle fileHandleForWritingAtPath:path];
@@ -36,7 +45,7 @@
 }
 
 - (NSString*) stringFromDateFormat: (NSString*) dateFormat {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = NSString.dateFormatter;
     [formatter setDateFormat:dateFormat];
     
     return [NSString stringWithFormat:self, [formatter stringFromDate:[NSDate date]]];

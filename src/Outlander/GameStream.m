@@ -8,7 +8,6 @@
 
 #import "GameStream.h"
 #import "GameServer.h"
-#import "GameParser.h"
 #import "GameConnection.h"
 #import "TextTag.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -16,7 +15,7 @@
 #import "Outlander-Swift.h"
 
 @interface GameStream () {
-    RACSignal *_connection;
+    GameServer *_gameServer;
     GameContext *_gameContext;
     GameCommandRelay *_commandRelay;
     RACSubject *_mainSubject;
@@ -40,8 +39,6 @@
     _gameContext = context;
     _commandRelay = [[GameCommandRelay alloc] initWith:context.events];
     
-    _gameServer = [[GameServer alloc] initWithContext:context];
-    _gameParser = [[GameParser alloc] initWithContext:context];
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
     _scriptStreamHandler = [ScriptStreamHandler newInstance];
@@ -71,7 +68,7 @@
     };
     
     _tagStreamer.emitRoom = ^{
-        [_gameParser.room sendNext:@""];
+        [_room sendNext:@""];
     };
     
     _tagStreamer.emitVitals = ^(Vitals *vital) {
@@ -79,7 +76,7 @@
     };
     
     _tagStreamer.emitSpell = ^(NSString *spell) {
-        [_gameParser.spell sendNext:spell];
+        [_spell sendNext:spell];
     };
     
     _tagStreamer.emitClearStream = ^(NSString *window) {
@@ -108,33 +105,27 @@
         [[NSWorkspace sharedWorkspace] openURL:[req URL]];
     };
     
-    _vitals = _gameParser.vitals;
-    _indicators = _gameParser.indicators;
-    _directions = _gameParser.directions;
-    
-    _room = [_gameParser.room multicast:[RACSubject subject]];
-    [_room connect];
-    _spell = [_gameParser.spell multicast:[RACSubject subject]];
-    [_spell connect];
-    _exp = _gameParser.exp;
-    _thoughts = _gameParser.thoughts;
-    _chatter = _gameParser.chatter;
-    _arrivals = _gameParser.arrivals;
-    _deaths = _gameParser.deaths;
-    _familiar = _gameParser.familiar;
-    _log = _gameParser.log;
-    _roundtime = _gameParser.roundtime;
-    
+    _vitals = [RACSubject subject];
+    _indicators = [RACSubject subject];
+    _directions = [RACSubject subject];
+
+    _room = [RACSubject subject];
+    _spell = [RACSubject subject];
+    _exp = [RACSubject subject];
+    _thoughts = [RACSubject subject];
+    _chatter = [RACSubject subject];
+    _arrivals = [RACSubject subject];
+    _deaths = [RACSubject subject];
+    _familiar = [RACSubject subject];
+    _log = [RACSubject subject];
+    _roundtime = [RACSubject subject];
+
     _connected = [RACSubject subject];
+    _disconnected = [RACSubject subject];
     _mainSubject = [RACSubject subject];
     _subject = [_mainSubject multicast:[RACSubject subject]];
     [_subject connect];
     
-    [_gameServer.connected subscribeNext:^(id x) {
-        id<RACSubscriber> sub = (id<RACSubscriber>)_connected;
-        [sub sendNext:x];
-    }];
-
     [_gameContext.events subscribe:self token:@"ol:testxml"];
 
     return self;
@@ -145,19 +136,25 @@
     [self processXml:xml];
 }
 
+-(void)resetGameServer {
+
+    if(_gameServer) {
+        [_gameServer disconnect];
+    }
+
+    _gameServer = [[GameServer alloc] initWithContext:_gameContext];
+    
+    [_gameServer.connected subscribeNext:^(id x) {
+        id<RACSubscriber> sub = (id<RACSubscriber>)_connected;
+        [sub sendNext:x];
+    }];
+}
+
 -(void) publish:(id)item {
     [_mainSubject sendNext:item];
 }
 
--(void) complete {
-    [_gameServer disconnect];
-    [_triggerHandler unsubscribe];
-    [_mainSubject sendCompleted];
-    [_gameContext.events unSubscribeListener:self];
-}
-
--(void) unsubscribe {
-    [_triggerHandler unsubscribe];
+-(void) reset {
 }
 
 -(void) error:(NSError *)error {
@@ -169,6 +166,8 @@
 }
 
 -(RACMulticastConnection *) connect:(GameConnection *)connection {
+
+    [self resetGameServer];
     
     [[_gameServer connect:connection.key
                   toHost:connection.host
@@ -178,8 +177,8 @@
          [self processXml:rawXml];
 
      } completed:^{
-         [self unsubscribe];
-         [_mainSubject sendCompleted];
+         id<RACSubscriber> sub = (id<RACSubscriber>)_disconnected;
+         [sub sendNext:@""];
      }];
     
     return _subject;
