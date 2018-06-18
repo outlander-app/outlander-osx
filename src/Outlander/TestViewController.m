@@ -700,10 +700,6 @@
          if(authMsg) {
              [self appendError:authMsg];
          }
-         
-         if (_gameStream) {
-            [_gameStream unsubscribe];
-         }
      }
      completed:^{
         [self append:[TextTag tagFor:[@"[%@] disconnected from authentication server\n" stringFromDateFormat:@"HH:mm"]
