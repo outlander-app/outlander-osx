@@ -45,7 +45,7 @@
     
     [[NSColor colorWithHexString:@"#003366"] set];
     
-    NSRectFillUsingOperation(progressRect, NSCompositeSourceOver);
+    NSRectFillUsingOperation(progressRect, NSCompositingOperationSourceOver);
     
     [super drawRect:dirtyRect];
 }

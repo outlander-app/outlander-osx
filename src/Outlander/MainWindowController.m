@@ -176,6 +176,9 @@
 
 - (void)windowDidResize:(NSNotification *)notification {
     [self updateWindowLayout];
+
+    GameViewController *ctrl = (GameViewController *)_currentViewController;
+    [ctrl applyYogaLayout];
 }
 
 - (void)updateWindowLayout {
@@ -190,23 +193,24 @@
     [super windowDidLoad];
     
     [_settingsWindowController setContext:_gameContext];
-    
-//    GameViewController *gv = [[GameViewController alloc] initWithNibName:@"GameViewController" bundle:nil];
-//    [self setCurrentViewController:gv];
-    
-    TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
-    [self setCurrentViewController:vc];
-    
+    _loginViewController.context = _gameContext;
+
     NSDictionary *dict = [[NSBundle bundleForClass:self.class] infoDictionary];
     NSString *version = dict[@"CFBundleShortVersionString"];
     
     [self.window setTitle:[NSString stringWithFormat:@"Outlander %@ Alpha", version]];
     
-    _loginViewController.context = _gameContext;
+//    GameViewController *gv = [[GameViewController alloc] initWithNibName:@"GameViewController" bundle:nil];
+    GameViewController *gv = [GameViewController new];
+    [self setCurrentViewController:gv];
+    [gv applyYogaLayout];
 
-    [self printSettings];
-
-    [self.window makeFirstResponder:vc._CommandTextField];
+//    TestViewController *vc = [[TestViewController alloc] initWithContext:_gameContext];
+//    [self setCurrentViewController:vc];
+//
+//    [self printSettings];
+//
+//    [self.window makeFirstResponder:vc._CommandTextField];
 }
 
 -(void)echoText:(NSString *)text withMono:(BOOL)mono {
@@ -255,6 +259,7 @@
 	
 	_currentViewController = vc;
 	self.window.contentView = _currentViewController.view;
+    self.window.contentView.wantsLayer = YES;
 }
 
 - (void) saveSettings {

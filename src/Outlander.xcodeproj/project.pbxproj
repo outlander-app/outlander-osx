@@ -114,10 +114,6 @@
 		F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */; };
 		F95538A71B2809AB007DCCD4 /* TriggersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95538A41B2809AB007DCCD4 /* TriggersViewController.xib */; };
 		F95538A81B2809AB007DCCD4 /* TriggersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F95538A41B2809AB007DCCD4 /* TriggersViewController.xib */; };
-		F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
-		F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959D3CF1AC6897000B2A659 /* GameViewController.swift */; };
-		F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
-		F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F959D3D01AC6897000B2A659 /* GameViewController.xib */; };
 		F959D3D61AC7264300B2A659 /* MacroTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D51AC7264300B2A659 /* MacroTester.m */; };
 		F959D3DA1AC8759500B2A659 /* OLShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3D91AC8759500B2A659 /* OLShortcutView.m */; };
 		F959D3DD1AC8AC5100B2A659 /* MASShortcut+Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = F959D3DC1AC8AC5100B2A659 /* MASShortcut+Categories.m */; };
@@ -151,7 +147,6 @@
 		F971EFD7193880B6008AF6A8 /* GameCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD5193880B6008AF6A8 /* GameCommandRelay.m */; };
 		F971EFDA1938830D008AF6A8 /* StubCommandRelay.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFD91938830D008AF6A8 /* StubCommandRelay.m */; };
 		F971EFDD1938D7D0008AF6A8 /* StubInfoStream.m in Sources */ = {isa = PBXBuildFile; fileRef = F971EFDC1938D7D0008AF6A8 /* StubInfoStream.m */; };
-		F97217801DDE7EE600E8FC4E /* (null) in Copy Files */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
@@ -177,6 +172,19 @@
 		F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217B01DDF831B00E8FC4E /* Squirrel.framework */; };
 		F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217B01DDF831B00E8FC4E /* Squirrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; };
+		F97283B320DDBDDE00F8E4CA /* YogaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97283B220DDBDDE00F8E4CA /* YogaKit.framework */; };
+		F97283B420DDBDDE00F8E4CA /* YogaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97283B220DDBDDE00F8E4CA /* YogaKit.framework */; };
+		F97283B520DDBDFB00F8E4CA /* YogaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97283B220DDBDDE00F8E4CA /* YogaKit.framework */; };
+		F97283B620DDBDFB00F8E4CA /* YogaKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97283B220DDBDDE00F8E4CA /* YogaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F97283B820DDBF1400F8E4CA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283B720DDBF1400F8E4CA /* GameViewController.swift */; };
+		F97283B920DDBF1400F8E4CA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283B720DDBF1400F8E4CA /* GameViewController.swift */; };
+		F97283BB20DDC0D200F8E4CA /* YogaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283BA20DDC0D200F8E4CA /* YogaView.swift */; };
+		F97283BC20DDC0D200F8E4CA /* YogaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283BA20DDC0D200F8E4CA /* YogaView.swift */; };
+		F97283C320DDD6C200F8E4CA /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F97283C220DDD6C200F8E4CA /* libyoga.a */; };
+		F97283C420DDD6C200F8E4CA /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F97283C220DDD6C200F8E4CA /* libyoga.a */; };
+		F97283C520DDD86E00F8E4CA /* libyoga.a in Copy Files */ = {isa = PBXBuildFile; fileRef = F97283C220DDD6C200F8E4CA /* libyoga.a */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F97283D120DDDF5E00F8E4CA /* YGLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283D020DDDF5E00F8E4CA /* YGLayoutExtensions.swift */; };
+		F97283D220DDDF5E00F8E4CA /* YGLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97283D020DDDF5E00F8E4CA /* YGLayoutExtensions.swift */; };
 		F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466AE1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */; };
 		F97466B11ABE51C10075AC77 /* StormFrontTagStreamerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */; };
@@ -486,6 +494,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F97283C520DDD86E00F8E4CA /* libyoga.a in Copy Files */,
 				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
 				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
@@ -493,8 +502,8 @@
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
 				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
+				F97283B620DDBDFB00F8E4CA /* YogaKit.framework in Copy Files */,
 				F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */,
-				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -576,8 +585,6 @@
 		F955389E1B27EFB5007DCCD4 /* CharacterStatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CharacterStatusViewController.xib; sourceTree = "<group>"; };
 		F95538A31B2809AB007DCCD4 /* TriggersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersViewController.swift; sourceTree = "<group>"; };
 		F95538A41B2809AB007DCCD4 /* TriggersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TriggersViewController.xib; sourceTree = "<group>"; };
-		F959D3CF1AC6897000B2A659 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		F959D3D01AC6897000B2A659 /* GameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameViewController.xib; sourceTree = "<group>"; };
 		F959D3D51AC7264300B2A659 /* MacroTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacroTester.m; sourceTree = "<group>"; };
 		F959D3D71AC8757F00B2A659 /* OLShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OLShortcutView.h; sourceTree = "<group>"; };
 		F959D3D91AC8759500B2A659 /* OLShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OLShortcutView.m; sourceTree = "<group>"; };
@@ -624,6 +631,11 @@
 		F97217B01DDF831B00E8FC4E /* Squirrel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Squirrel.framework; path = Frameworks/Squirrel.framework; sourceTree = "<group>"; };
 		F97217BF1DDF833700E8FC4E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Frameworks/Nimble.framework; sourceTree = "<group>"; };
 		F97217C01DDF833700E8FC4E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Frameworks/Quick.framework; sourceTree = "<group>"; };
+		F97283B220DDBDDE00F8E4CA /* YogaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YogaKit.framework; path = Frameworks/YogaKit.framework; sourceTree = "<group>"; };
+		F97283B720DDBF1400F8E4CA /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		F97283BA20DDC0D200F8E4CA /* YogaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YogaView.swift; sourceTree = "<group>"; };
+		F97283C220DDD6C200F8E4CA /* libyoga.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyoga.a; path = Frameworks/libyoga.a; sourceTree = "<group>"; };
+		F97283D020DDDF5E00F8E4CA /* YGLayoutExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YGLayoutExtensions.swift; sourceTree = "<group>"; };
 		F97466AC1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamer.swift; sourceTree = "<group>"; };
 		F97466AF1ABE51C10075AC77 /* StormFrontTagStreamerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StormFrontTagStreamerTester.swift; sourceTree = "<group>"; };
 		F9762F76192E4EEB00B873D7 /* Alias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alias.h; sourceTree = "<group>"; };
@@ -904,14 +916,17 @@
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
 				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
+				F97283C320DDD6C200F8E4CA /* libyoga.a in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
+				F97283B320DDBDDE00F8E4CA /* YogaKit.framework in Frameworks */,
 				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
+				F97283B520DDBDFB00F8E4CA /* YogaKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -924,7 +939,9 @@
 				F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217BC1DDF831B00E8FC4E /* ReactiveCocoa.framework in Frameworks */,
 				F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
+				F97283B420DDBDDE00F8E4CA /* YogaKit.framework in Frameworks */,
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
+				F97283C420DDD6C200F8E4CA /* libyoga.a in Frameworks */,
 				F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -1087,8 +1104,7 @@
 				F97A5C9D1895C10100E2C318 /* CharacterViewModel.m */,
 				F92A82391AEB061C005BBD2F /* ChooseProfileViewController.swift */,
 				F92A823A1AEB061C005BBD2F /* ChooseProfileViewController.xib */,
-				F959D3CF1AC6897000B2A659 /* GameViewController.swift */,
-				F959D3D01AC6897000B2A659 /* GameViewController.xib */,
+				F97283B720DDBF1400F8E4CA /* GameViewController.swift */,
 				F9D6A6ED1ACBC8AB00FEA665 /* HighlightsViewController.swift */,
 				F9D6A6EE1ACBC8AB00FEA665 /* HighlightsViewController.xib */,
 				F98F22D119248506008175FD /* LoginViewController.h */,
@@ -1131,6 +1147,7 @@
 				F9B6CD781E73549B0085195F /* UpdateWindowController.h */,
 				F9B6CD791E73549B0085195F /* UpdateWindowController.m */,
 				F9B6CD7A1E73549B0085195F /* UpdateWindowController.xib */,
+				F97283D020DDDF5E00F8E4CA /* YGLayoutExtensions.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1278,6 +1295,7 @@
 				F959D3D71AC8757F00B2A659 /* OLShortcutView.h */,
 				F959D3D91AC8759500B2A659 /* OLShortcutView.m */,
 				F9C178851B140F2A00CC7291 /* FlippedView.swift */,
+				F97283BA20DDC0D200F8E4CA /* YogaView.swift */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -1400,6 +1418,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F97283C220DDD6C200F8E4CA /* libyoga.a */,
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
@@ -1413,6 +1432,7 @@
 				F9CC818A1DDFDEB700ACE72E /* OysterKit.framework */,
 				F9F3D85A1957E54A005B9D68 /* Carbon.framework */,
 				F9CF926A1890832800449548 /* Cocoa.framework */,
+				F97283B220DDBDDE00F8E4CA /* YogaKit.framework */,
 				F9CF926C1890832800449548 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -1610,7 +1630,6 @@
 				F91ADCE01ACA63C100B78327 /* VariablesViewController.xib in Resources */,
 				F9AE6A9918A0001300A11EE9 /* ProgressBarViewController.xib in Resources */,
 				F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
-				F959D3D31AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F95538A71B2809AB007DCCD4 /* TriggersViewController.xib in Resources */,
 				F95538A11B27EFB5007DCCD4 /* CharacterStatusViewController.xib in Resources */,
 				F9D6A6F11ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
@@ -1629,7 +1648,6 @@
 				F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */,
 				F9D6A6F21ACBC8AB00FEA665 /* HighlightsViewController.xib in Resources */,
 				F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */,
-				F959D3D41AC6897000B2A659 /* GameViewController.xib in Resources */,
 				F9C178841B1398DA00CC7291 /* ScriptToolbarViewController.xib in Resources */,
 				F9F3D83D1956721C005B9D68 /* MacrosViewController.xib in Resources */,
 				F98F22D719248506008175FD /* LoginViewController.xib in Resources */,
@@ -1706,6 +1724,7 @@
 				F9762F7C192E4F8700B873D7 /* AliasLoader.m in Sources */,
 				F98782C7194228C000D76231 /* BasicToken.m in Sources */,
 				F9B3AC6D1940686700C081C4 /* PutToken.m in Sources */,
+				F97283D120DDDF5E00F8E4CA /* YGLayoutExtensions.swift in Sources */,
 				F97A5CA61895E2C400E2C318 /* MyNSTextField.m in Sources */,
 				F97466AD1ABDDCAD0075AC77 /* StormFrontTagStreamer.swift in Sources */,
 				F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */,
@@ -1751,6 +1770,7 @@
 				F9B6CD891E78C2F90085195F /* ClassCommandHandler.swift in Sources */,
 				F94A3FCD1948AE6700D6B35D /* ActionToken.m in Sources */,
 				F97CD5871ACD27D3007E5804 /* MapNode.swift in Sources */,
+				F97283BB20DDC0D200F8E4CA /* YogaView.swift in Sources */,
 				F98782F71942AB6200D76231 /* RegexToken.m in Sources */,
 				F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F9A3452F1913390400920F0E /* WindowData.m in Sources */,
@@ -1775,6 +1795,7 @@
 				F9D6A6F41ACBE1A700FEA665 /* NSColorExtensions.swift in Sources */,
 				F98782CB194235EF00D76231 /* TokenSingle.m in Sources */,
 				F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */,
+				F97283B820DDBF1400F8E4CA /* GameViewController.swift in Sources */,
 				F97A5C9A18957A5D00E2C318 /* TSMutableDictionary.m in Sources */,
 				F9F3D83A1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F9B6CD801E779CD50085195F /* VitalsLoader.swift in Sources */,
@@ -1852,7 +1873,6 @@
 				F9B9BFE11ABD558F00CB44B6 /* GameServer2.swift in Sources */,
 				F91A39AC194BD706006144F8 /* OLPauseCondition.m in Sources */,
 				F91A39CA194DFFA9006144F8 /* SimpleQueue.m in Sources */,
-				F959D3D11AC6897000B2A659 /* GameViewController.swift in Sources */,
 				F9ACB140192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1882,6 +1902,7 @@
 				F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */,
 				F96ECDB719343F5B00787CB9 /* ScriptLoader.m in Sources */,
 				F9A345411919D83900920F0E /* AppSettings.m in Sources */,
+				F97283D220DDDF5E00F8E4CA /* YGLayoutExtensions.swift in Sources */,
 				F91A39A9194B523E006144F8 /* SendToken.m in Sources */,
 				F9A74F1219305D14008F410A /* VariablesLoader.m in Sources */,
 				F91A39AD194BD706006144F8 /* OLPauseCondition.m in Sources */,
@@ -1985,6 +2006,7 @@
 				F931A37920C2012A000DCE53 /* VariableReplacer2.swift in Sources */,
 				F90CEC111ACEEEBF00204243 /* MapNode.swift in Sources */,
 				F9B6CD811E779CD50085195F /* VitalsLoader.swift in Sources */,
+				F97283BC20DDC0D200F8E4CA /* YogaView.swift in Sources */,
 				F97A5C841893962E00E2C318 /* GameParser.m in Sources */,
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
@@ -1995,7 +2017,7 @@
 				F9A74F141930606A008F410A /* VariablesLoaderTester.m in Sources */,
 				F95538A01B27EFB5007DCCD4 /* CharacterStatusViewController.swift in Sources */,
 				F9FFE7851E7F801300FD33B8 /* AppConfigLoader.swift in Sources */,
-				F959D3D21AC6897000B2A659 /* GameViewController.swift in Sources */,
+				F97283B920DDBF1400F8E4CA /* GameViewController.swift in Sources */,
 				F9316D271AD9E1D400880149 /* Actor.swift in Sources */,
 				F9B3AC721940C5CE00C081C4 /* PauseToken.m in Sources */,
 				F91031521B3D0F140039BDF0 /* Gag.swift in Sources */,
@@ -2216,14 +2238,17 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(inherited)",
+					/usr/local/include,
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2267,14 +2292,17 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
 					"$(inherited)",
+					/usr/local/include,
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "Outlander/Outlander-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2325,6 +2353,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (
@@ -2367,6 +2396,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = (

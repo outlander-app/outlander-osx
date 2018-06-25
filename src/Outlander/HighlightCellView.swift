@@ -20,11 +20,11 @@ class HighlightCellView: NSView {
         }
     }
     
-    var backgroundColor:NSColor? {
-        didSet {
-            self.needsDisplay = true
-        }
-    }
+//    var backgroundColor:NSColor? {
+//        didSet {
+//            self.needsDisplay = true
+//        }
+//    }
 
     var selectedColor:NSColor = NSColor(hex:"#3399ff") {
         didSet {

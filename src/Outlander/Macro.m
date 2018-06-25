@@ -25,8 +25,7 @@
 }
 
 -(void)setKeys:(NSString *)keys {
-    //NSArray *items = [keys componentsSeparatedByString:@","];
-    
+
     __block NSString *strKeyCode = @"";
     __block NSUInteger modifiers = 0;
     
@@ -50,20 +49,20 @@
     unichar chars[4];
     NSUInteger count = 0;
     // These are in the same order as the menu manager shows them
-    if (self.modifiers & NSControlKeyMask) chars[count++] = kControlUnicode;
-    if (self.modifiers & NSAlternateKeyMask) chars[count++] = kOptionUnicode;
-    if (self.modifiers & NSShiftKeyMask) chars[count++] = kShiftUnicode;
-    if (self.modifiers & NSCommandKeyMask) chars[count++] = kCommandUnicode;
+    if (self.modifiers & NSEventModifierFlagControl) chars[count++] = kControlUnicode;
+    if (self.modifiers & NSEventModifierFlagOption) chars[count++] = kOptionUnicode;
+    if (self.modifiers & NSEventModifierFlagShift) chars[count++] = kShiftUnicode;
+    if (self.modifiers & NSEventModifierFlagCommand) chars[count++] = kCommandUnicode;
     return (count ? [NSString stringWithCharacters:chars length:count] : @"");
 }
 
 +(NSUInteger)stringToFlags:(NSString *)flags {
     
     NSDictionary *lookup =
-        @{  @"⌥": [NSNumber numberWithInteger:NSAlternateKeyMask],
-            @"⌃": [NSNumber numberWithInteger:NSControlKeyMask],
-            @"⌘": [NSNumber numberWithInteger:NSCommandKeyMask],
-            @"⇧": [NSNumber numberWithInteger:NSShiftKeyMask]
+        @{  @"⌥": [NSNumber numberWithInteger:NSEventModifierFlagOption],
+            @"⌃": [NSNumber numberWithInteger:NSEventModifierFlagControl],
+            @"⌘": [NSNumber numberWithInteger:NSEventModifierFlagCommand],
+            @"⇧": [NSNumber numberWithInteger:NSEventModifierFlagShift]
         };
     
     NSMutableArray *array = [NSMutableArray array];
