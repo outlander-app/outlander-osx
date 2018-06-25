@@ -155,8 +155,6 @@
 		F97217A71DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217A81DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */; };
 		F97217B21DDF831B00E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
-		F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
-		F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; };
 		F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
 		F97217B61DDF831B00E8FC4E /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; };
 		F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; };
@@ -168,7 +166,6 @@
 		F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217C01DDF833700E8FC4E /* Quick.framework */; };
 		F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; };
 		F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AC1DDF831B00E8FC4E /* Mantle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F97217AE1DDF831B00E8FC4E /* PEGKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -302,6 +299,10 @@
 		F98F22D519248506008175FD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F98F22D219248506008175FD /* LoginViewController.m */; };
 		F98F22D619248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
 		F98F22D719248506008175FD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F98F22D319248506008175FD /* LoginViewController.xib */; };
+		F994B07720E1C25E00DCC143 /* Fuzi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F994B07620E1C25E00DCC143 /* Fuzi.framework */; };
+		F994B07820E1C25E00DCC143 /* Fuzi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F994B07620E1C25E00DCC143 /* Fuzi.framework */; };
+		F994B07920E1C32A00DCC143 /* Fuzi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F994B07620E1C25E00DCC143 /* Fuzi.framework */; };
+		F994B07A20E1C32A00DCC143 /* Fuzi.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = F994B07620E1C25E00DCC143 /* Fuzi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9A2C1711B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1721B22ABA1005B9B6C /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1701B22ABA1005B9B6C /* Trigger.swift */; };
 		F9A2C1741B22AE41005B9B6C /* TriggersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */; };
@@ -489,10 +490,10 @@
 				F97217CC1DDF837700E8FC4E /* PEGKit.framework in Copy Files */,
 				F97217CA1DDF837700E8FC4E /* MASShortcut.framework in Copy Files */,
 				F97217C41DDF837700E8FC4E /* CocoaAsyncSocket.framework in Copy Files */,
+				F994B07A20E1C32A00DCC143 /* Fuzi.framework in Copy Files */,
 				F97217CE1DDF837700E8FC4E /* ReactiveCocoa.framework in Copy Files */,
 				F97217C81DDF837700E8FC4E /* Mantle.framework in Copy Files */,
 				F97217D01DDF837700E8FC4E /* Squirrel.framework in Copy Files */,
-				F97217C61DDF837700E8FC4E /* GlimpseXML.framework in Copy Files */,
 				F9CC818E1DDFDECF00ACE72E /* OysterKit.framework in Copy Files */,
 				F97217801DDE7EE600E8FC4E /* (null) in Copy Files */,
 			);
@@ -616,7 +617,6 @@
 		F97217A31DDEBE3F00E8FC4E /* NSArray+PEGKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PEGKitAdditions.h"; sourceTree = "<group>"; };
 		F97217A61DDEBE6100E8FC4E /* NSArray+PEGKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PEGKitAdditions.m"; sourceTree = "<group>"; };
 		F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Frameworks/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
-		F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GlimpseXML.framework; path = Frameworks/GlimpseXML.framework; sourceTree = "<group>"; };
 		F97217AC1DDF831B00E8FC4E /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Frameworks/Mantle.framework; sourceTree = "<group>"; };
 		F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MASShortcut.framework; path = Frameworks/MASShortcut.framework; sourceTree = "<group>"; };
 		F97217AE1DDF831B00E8FC4E /* PEGKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PEGKit.framework; path = Frameworks/PEGKit.framework; sourceTree = "<group>"; };
@@ -747,6 +747,7 @@
 		F98F22D219248506008175FD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		F98F22D319248506008175FD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		F98F22D81926654D008175FD /* Commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Commands.h; sourceTree = "<group>"; };
+		F994B07620E1C25E00DCC143 /* Fuzi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fuzi.framework; path = Frameworks/Fuzi.framework; sourceTree = "<group>"; };
 		F9A2C1701B22ABA1005B9B6C /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		F9A2C1731B22AE41005B9B6C /* TriggersLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoader.swift; sourceTree = "<group>"; };
 		F9A2C1761B22B67F005B9B6C /* TriggersLoaderTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggersLoaderTester.swift; sourceTree = "<group>"; };
@@ -903,12 +904,13 @@
 			files = (
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
+				F994B07720E1C25E00DCC143 /* Fuzi.framework in Frameworks */,
 				F9CC818D1DDFDECF00ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C31DDF837700E8FC4E /* CocoaAsyncSocket.framework in Frameworks */,
 				F97217B51DDF831B00E8FC4E /* Mantle.framework in Frameworks */,
-				F97217B31DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 				F97217B71DDF831B00E8FC4E /* MASShortcut.framework in Frameworks */,
 				F97217CD1DDF837700E8FC4E /* ReactiveCocoa.framework in Frameworks */,
+				F994B07920E1C32A00DCC143 /* Fuzi.framework in Frameworks */,
 				F910E4A11D76B8A5000A7A8F /* libxml2.tbd in Frameworks */,
 				F97217CF1DDF837700E8FC4E /* Squirrel.framework in Frameworks */,
 				F9CF926B1890832800449548 /* Cocoa.framework in Frameworks */,
@@ -927,9 +929,9 @@
 				F97217C11DDF833700E8FC4E /* Nimble.framework in Frameworks */,
 				F9CC818C1DDFDEB700ACE72E /* OysterKit.framework in Frameworks */,
 				F97217C21DDF833700E8FC4E /* Quick.framework in Frameworks */,
+				F994B07820E1C25E00DCC143 /* Fuzi.framework in Frameworks */,
 				F9CF928B1890832800449548 /* Cocoa.framework in Frameworks */,
 				F97217BE1DDF831B00E8FC4E /* Squirrel.framework in Frameworks */,
-				F97217B41DDF831B00E8FC4E /* GlimpseXML.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1401,10 +1403,10 @@
 			isa = PBXGroup;
 			children = (
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
+				F994B07620E1C25E00DCC143 /* Fuzi.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
 				F97217C01DDF833700E8FC4E /* Quick.framework */,
 				F97217AA1DDF831B00E8FC4E /* CocoaAsyncSocket.framework */,
-				F97217AB1DDF831B00E8FC4E /* GlimpseXML.framework */,
 				F97217AC1DDF831B00E8FC4E /* Mantle.framework */,
 				F97217AD1DDF831B00E8FC4E /* MASShortcut.framework */,
 				F97217AE1DDF831B00E8FC4E /* PEGKit.framework */,
