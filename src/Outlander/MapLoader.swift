@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import GlimpseXML
+import Fuzi
 
 enum MapLoadResult {
     case Success(MapZone)
@@ -76,9 +76,11 @@ final class MapLoader {
         let filePath = folder.stringByAppendingPathComponent(file)
 
         do {
-            let doc = try GlimpseXML.Document.parseFile(filePath)
-            let id = doc.rootElement.attributeValue("id", namespace: nil)!
-            let name = doc.rootElement.attributeValue("name", namespace: nil)!
+            let doc3 = try XMLDocument(data: NSData(contentsOfFile: filePath)!)
+
+            let id = doc3.root?.attr("id") ?? ""
+            let name = doc3.root?.attr("name") ?? ""
+
             return MapMetaResult.Success(
                 MapInfo(id, name: name, file: file)
             )
@@ -98,36 +100,32 @@ final class MapLoader {
     func load(filePath: String) -> MapLoadResult {
 
         do {
-            let doc = try GlimpseXML.Document.parseFile(filePath)
+            let doc = try XMLDocument(data: NSData(contentsOfFile: filePath)!)
 
-            let id = doc.rootElement.attributeValue("id")!
-            let name = doc.rootElement.attributeValue("name")!
-            
+            let id = doc.root!.attr("id")!
+            let name = doc.root!.attr("name")!
+
             let mapZone = MapZone(id, name)
-
-            let roomNodes = try doc.xpath("/zone/node")
-
-            for n in roomNodes {
-                let desc = self.descriptions(n.children)
-                let position = self.position(n.children)
-                let arcs = self.arcs(n.children)
-                let room =  MapNode(
-                    id: n.attributeValue("id")!,
-                    name: n.attributeValue("name")!,
+            
+            for node in doc.xpath("/zone/node") {
+                let desc:[String] = self.descriptions(node)
+                let position:MapPosition = self.position(node)
+                let arcs:[MapArc] = self.arcs(node)
+                let room = MapNode(
+                    id: node["id"]!,
+                    name: node["name"]!,
                     descriptions: desc,
-                    notes: n.attributeValue("note"),
-                    color: n.attributeValue("color"),
+                    notes: node["note"],
+                    color: node["color"],
                     position: position,
-                    arcs: arcs)
-
+                    arcs: arcs
+                )
                 mapZone.addRoom(room)
             }
 
-            let labelNodes = try doc.xpath("/zone/label")
-            mapZone.labels = labelNodes.map {
-                let text = $0.attributeValue("text") ?? ""
-                let position = self.position($0.children)
-
+            mapZone.labels = doc.xpath("/zone/label").map {
+                let text = $0["text"] ?? ""
+                let position:MapPosition = self.position($0)
                 return MapLabel(text: text, position: position)
             }
 
@@ -137,40 +135,27 @@ final class MapLoader {
             return MapLoadResult.Error(error)
         }
     }
-    
-    private func descriptions(nodes:[GlimpseXML.Node]) -> [String] {
 
-        return nodes
-            .filter { $0.name == "description" }
-            .map { $0.text?.replace("\"", withString: "").replace(";", withString: "") ?? "" }
-    }
-    
-    private func arcs(nodes:[GlimpseXML.Node]) -> [MapArc] {
-
-        return nodes
-            .filter {$0.name == "arc"}
-            .map {
-                MapArc(
-                    exit: $0.attributeValue("exit") ?? "",
-                    move: $0.attributeValue("move") ?? "",
-                    destination: $0.attributeValue("destination") ?? "",
-                    hidden: $0.attributeValue("hidden") == "True")
+    private func descriptions(node:Fuzi.XMLElement) -> [String] {
+        return node.xpath("description").map {
+            return $0.stringValue.replace("\"", withString: "").replace(";", withString: "") ?? ""
         }
     }
-    
-    func position(items:[GlimpseXML.Node]) -> MapPosition {
-        
-        let filtered = items.filter { $0.name == "position" }
-        
-        if filtered.count > 0 {
-            let item = filtered[0]
-            return MapPosition(
-                x: Int(item.attributeValue("x")!)!,
-                y: Int(item.attributeValue("y")!)!,
-                z: Int(item.attributeValue("z")!)!
-            )
+
+    private func position(node:Fuzi.XMLElement) -> MapPosition {
+        if let element = node.firstChild(tag: "position") {
+            return MapPosition(x: Int(element["x"]!)!, y: Int(element["y"]!)!, z: Int(element["z"]!)!)
         }
-        
         return MapPosition(x: 0, y: 0, z: 0)
+    }
+
+    private func arcs(node:Fuzi.XMLElement) -> [MapArc] {
+        return node.xpath("arc").map {
+            return MapArc(
+                exit: $0["exit"] ?? "",
+                move: $0["move"] ?? "",
+                destination: $0["destination"] ?? "",
+                hidden: $0["hidden"] == "True")
+        }
     }
 }

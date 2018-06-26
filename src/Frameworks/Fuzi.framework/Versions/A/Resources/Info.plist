@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>16E195</string>
+	<string>16G1314</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>GlimpseXML</string>
+	<string>Fuzi</string>
 	<key>CFBundleIdentifier</key>
-	<string>io.glimpse.GlimpseXML</string>
+	<string>me.cezheng.Fuzi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>GlimpseXML</string>
+	<string>Fuzi</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.4</string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -25,7 +25,7 @@
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string></string>
+	<string>1</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -40,5 +40,12 @@
 	<string>0821</string>
 	<key>DTXcodeBuild</key>
 	<string>8C1002</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015 Ce Zheng. All rights reserved.</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
 </dict>
 </plist>
