@@ -1,26 +1,26 @@
-var that = this
+import console from './console'
 
-var modules = {
+const modules = {
   math: {
     add: function (x, y) {
       nativeCallback('math', 'add', [x,y])
       return x + y;
     }
-  },
-  win: {
-    get: function() {
-      return that
-    }
   }
 };
 
-var Bridge = {
+const Bridge = {
   callFunction: function(moduleName, method, args) {
     var module = modules[moduleName]
     return module[method].apply(null, args)
+  },
+
+  registerModule: function(name, module) {
+    console.log('registerModule', name, module)
+    modules[name] = module
   }
 }
 
-function require(module) {
-  return modules[module]
-}
+global.Bridge = Bridge
+
+export default Bridge

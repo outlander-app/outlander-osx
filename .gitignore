@@ -10,4 +10,8 @@ xcuserdata
 
 .build
 node_modules
+<<<<<<< HEAD
 yarn-error.log
+=======
+yarn-error.log
+>>>>>>> Babel + React

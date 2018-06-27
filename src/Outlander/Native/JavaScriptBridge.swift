@@ -16,10 +16,19 @@ class JavaScriptExecutor {
     init() {
         self.context = JSContext()
 
-        let nativeCallback: @convention(block) (String, String, [AnyObject]) -> Void = { (module, method, arguments) in
-            print("\(module) / \(method) / \(arguments)")
+        context.exceptionHandler = { context, exception in
+            print("JS Error: \(exception)")
+        }
+
+        let nativeCallback: @convention(block) (AnyObject, AnyObject, [AnyObject]) -> Void = { (module, method, arguments) in
+            print("nativeCallback: \(module) / \(method) / \(arguments)")
         }
         self.context.setObject(unsafeBitCast(nativeCallback, AnyObject.self), forKeyedSubscript: "nativeCallback")
+
+        let log: @convention(block) [AnyObject] -> Void = { input in
+            print("log: \(input)")
+        }
+        self.context.setObject(unsafeBitCast(log, AnyObject.self), forKeyedSubscript: "log2")
     }
 
     func evaluate(script:String) -> JSValue {
