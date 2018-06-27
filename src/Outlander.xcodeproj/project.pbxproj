@@ -91,6 +91,10 @@
 		F934625A1AC3DB7700B10ADF /* Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = F93462581AC3DB7700B10ADF /* Layout.m */; };
 		F93A1A40193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
 		F93A1A41193AEF9F00ED5C2E /* Match.m in Sources */ = {isa = PBXBuildFile; fileRef = F93A1A3F193AEF9F00ED5C2E /* Match.m */; };
+		F93B99EA20E1FEF500F76E21 /* JavaScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93B99E920E1FEF500F76E21 /* JavaScriptBridge.swift */; };
+		F93B99EB20E1FEF500F76E21 /* JavaScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93B99E920E1FEF500F76E21 /* JavaScriptBridge.swift */; };
+		F93B99ED20E1FF0200F76E21 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93B99EC20E1FF0200F76E21 /* JavaScriptCore.framework */; };
+		F93B99F020E319C400F76E21 /* JavaScriptBridgeTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93B99EF20E319C400F76E21 /* JavaScriptBridgeTester.swift */; };
 		F949238D1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F949238E1B07C6F50051F7F5 /* HighlightCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */; };
 		F94923901B07C7280051F7F5 /* HighlightCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949238F1B07C7280051F7F5 /* HighlightCellView.swift */; };
@@ -559,6 +563,9 @@
 		F93462581AC3DB7700B10ADF /* Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Layout.m; sourceTree = "<group>"; };
 		F93A1A3E193AEF9F00ED5C2E /* Match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Match.h; sourceTree = "<group>"; };
 		F93A1A3F193AEF9F00ED5C2E /* Match.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Match.m; sourceTree = "<group>"; };
+		F93B99E920E1FEF500F76E21 /* JavaScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JavaScriptBridge.swift; path = Native/JavaScriptBridge.swift; sourceTree = "<group>"; };
+		F93B99EC20E1FF0200F76E21 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F93B99EF20E319C400F76E21 /* JavaScriptBridgeTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JavaScriptBridgeTester.swift; path = Native/JavaScriptBridgeTester.swift; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
@@ -898,6 +905,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93B99ED20E1FF0200F76E21 /* JavaScriptCore.framework in Frameworks */,
 				F9E515D91E04C37200C53DAD /* Carbon.framework in Frameworks */,
 				F97217D11DDF83CD00E8FC4E /* PEGKit.framework in Frameworks */,
 				F994B07720E1C25E00DCC143 /* Fuzi.framework in Frameworks */,
@@ -948,6 +956,22 @@
 			);
 			name = Engine;
 			path = Scripting;
+			sourceTree = "<group>";
+		};
+		F93B99E820E1FEAA00F76E21 /* Native */ = {
+			isa = PBXGroup;
+			children = (
+				F93B99E920E1FEF500F76E21 /* JavaScriptBridge.swift */,
+			);
+			name = Native;
+			sourceTree = "<group>";
+		};
+		F93B99EE20E3198600F76E21 /* Native */ = {
+			isa = PBXGroup;
+			children = (
+				F93B99EF20E319C400F76E21 /* JavaScriptBridgeTester.swift */,
+			);
+			name = Native;
 			sourceTree = "<group>";
 		};
 		F9772F101940383500172083 /* Tokens */ = {
@@ -1395,6 +1419,7 @@
 		F9CF92691890832800449548 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F93B99EC20E1FF0200F76E21 /* JavaScriptCore.framework */,
 				F910E4A01D76B8A5000A7A8F /* libxml2.tbd */,
 				F994B07620E1C25E00DCC143 /* Fuzi.framework */,
 				F97217BF1DDF833700E8FC4E /* Nimble.framework */,
@@ -1433,6 +1458,8 @@
 				F97CD5731ACD2598007E5804 /* AutoMapper */,
 				F97A5CAC1895E72D00E2C318 /* Controls */,
 				F97A5C6D1892CDAA00E2C318 /* Core */,
+
+				F93B99E820E1FEAA00F76E21 /* Native */,
 				F97A5C1A1890A07B00E2C318 /* Scripting */,
 				F9A345391919CC0500920F0E /* Settings */,
 				F97A5C5C1891AADB00E2C318 /* Support */,
@@ -1464,6 +1491,7 @@
 				F982EB8F218D1E4E00007E66 /* Automapper */,
 				F9FCFB5021029C3D004CA73B /* Scripting */,
 				F9B9BFF01ABD724600CB44B6 /* Text */,
+				F93B99EE20E3198600F76E21 /* Native */,
 				F989E202192C2BA700562E32 /* Stubs */,
 				F9762F7E192E50EF00B873D7 /* AliasesTester.m */,
 				F92A4FBD192ADAE4006C71F9 /* AppSettingsTester.m */,
@@ -1671,6 +1699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93B99EA20E1FEF500F76E21 /* JavaScriptBridge.swift in Sources */,
 				F91A39CE194E7135006144F8 /* SendCommandHandler.m in Sources */,
 				F9E307731AE9F0A6003018BD /* ExpUpdateHandler.swift in Sources */,
 				F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */,
@@ -1947,6 +1976,7 @@
 				F9B6CD7C1E73549B0085195F /* UpdateWindowController.m in Sources */,
 				F90CEC161ACEEED300204243 /* TreeNode.swift in Sources */,
 				F96ECDC419345CAA00787CB9 /* ScriptHandler.m in Sources */,
+				F93B99F020E319C400F76E21 /* JavaScriptBridgeTester.swift in Sources */,
 				F9F3D83B1956721C005B9D68 /* MacrosViewController.m in Sources */,
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
@@ -1990,6 +2020,7 @@
 				F9F3D82D1953364F005B9D68 /* Macro.m in Sources */,
 				F9B9BFEC1ABD5DBE00CB44B6 /* SwiftRegex.swift in Sources */,
 				F9E307771AE9F3C2003018BD /* ExpUpdateHandlerTester.swift in Sources */,
+				F93B99EB20E1FEF500F76E21 /* JavaScriptBridge.swift in Sources */,
 				F9E86BCF1AEC78700065E04A /* EventAggregator.swift in Sources */,
 				F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */,
 				F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */,
