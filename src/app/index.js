@@ -14,3 +14,5 @@ const testRenderer = TestRenderer.create(
 const json = testRenderer.toJSON();
 
 console.log(json)
+
+console.log(testRenderer.toTree())

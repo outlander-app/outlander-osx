@@ -16,7 +16,7 @@ const Bridge = {
   },
 
   registerModule: function(name, module) {
-    console.log('registerModule', name, module)
+    console.log('registerModule', name)
     modules[name] = module
   }
 }

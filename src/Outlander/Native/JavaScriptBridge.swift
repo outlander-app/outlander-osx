@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WebKit
 import JavaScriptCore
 
 class JavaScriptExecutor {
@@ -15,6 +16,7 @@ class JavaScriptExecutor {
 
     init() {
         self.context = JSContext()
+        self.context.name = "exec"
 
         context.exceptionHandler = { context, exception in
             print("JS Error: \(exception)")

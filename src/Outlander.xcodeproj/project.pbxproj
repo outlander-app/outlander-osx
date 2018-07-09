@@ -566,6 +566,7 @@
 		F93B99E920E1FEF500F76E21 /* JavaScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JavaScriptBridge.swift; path = Native/JavaScriptBridge.swift; sourceTree = "<group>"; };
 		F93B99EC20E1FF0200F76E21 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F93B99EF20E319C400F76E21 /* JavaScriptBridgeTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JavaScriptBridgeTester.swift; path = Native/JavaScriptBridgeTester.swift; sourceTree = "<group>"; };
+		F93B99F120E5F8F000F76E21 /* Outlander.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Outlander.entitlements; sourceTree = "<group>"; };
 		F949238C1B07C6F50051F7F5 /* HighlightCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HighlightCellView.xib; sourceTree = "<group>"; };
 		F949238F1B07C7280051F7F5 /* HighlightCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightCellView.swift; sourceTree = "<group>"; };
 		F94A3FC71948AE0500D6B35D /* GosubToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GosubToken.h; sourceTree = "<group>"; };
@@ -1451,6 +1452,7 @@
 		F9CF92701890832800449548 /* Outlander */ = {
 			isa = PBXGroup;
 			children = (
+				F93B99F120E5F8F000F76E21 /* Outlander.entitlements */,
 				F9CF927C1890832800449548 /* AppDelegate.h */,
 				F9CF927D1890832800449548 /* AppDelegate.m */,
 				F9CF92821890832800449548 /* Images.xcassets */,
@@ -1590,6 +1592,11 @@
 						DevelopmentTeam = 9TZ225FMST;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					F9CF92871890832800449548 = {
 						LastSwiftMigration = 0810;
@@ -2233,6 +2240,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Outlander/Outlander.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2284,6 +2292,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Outlander/Outlander.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
