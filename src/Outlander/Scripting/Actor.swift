@@ -772,11 +772,18 @@ public class Script : IScript {
         
         let current = self.context!.getVariable(mathMsg.variable)?.toDouble() ?? 0
         let result = mathMsg.calcResult(current)
-        let strResult = String(format:"%g", result)
+
+        var strResult = ""
+
+        if result == rint(result) {
+            strResult = "\(Int(result))"
+        } else {
+            strResult = "\(result)"
+        }
         
-        self.setVariable(mathMsg.variable, value: "\(strResult)")
+        self.setVariable(mathMsg.variable, value: strResult)
         
-        self.notify(TextTag("math \(mathMsg.variable): \(current) \(mathMsg.operation) \(mathMsg.number) = \(result)\n", mono: true), debug:ScriptLogLevel.Vars)
+        self.notify(TextTag("math \(mathMsg.variable): \(current) \(mathMsg.operation) \(mathMsg.number) = \(strResult)\n", mono: true), debug:ScriptLogLevel.Vars)
     }
     
     func setVariable(name:String, value:String) {

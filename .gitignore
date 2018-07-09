@@ -7,3 +7,7 @@ podfile.lock
 gemfile.lock
 xcuserdata
 .idea
+
+.build
+node_modules
+yarn-error.log
