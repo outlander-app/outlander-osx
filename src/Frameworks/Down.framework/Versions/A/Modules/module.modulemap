@@ -1,0 +1,10 @@
+framework module Down {
+  umbrella header "Down.h"
+
+  export *
+  module * { export * }
+}
+
+module Down.Swift {
+    header "Down-Swift.h"
+}

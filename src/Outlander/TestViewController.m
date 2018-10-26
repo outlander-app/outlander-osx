@@ -520,7 +520,7 @@
     [controller endEdit];
 }
 
-- (void)set:(NSString*)key withTags:(NSArray *)tags {
+- (void)set:(NSString*)key withTags:(NSMutableArray *)tags {
     TextViewController *controller = [_windows cacheObjectForKey:key];
     [controller setWithTags:tags];
 }

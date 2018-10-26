@@ -222,8 +222,8 @@
     [self append:text toTextView:_TextView];
 }
 
-- (void)setWithTags:(NSArray *)tags {
-    
+- (void)setWithTags:(NSMutableArray *)tags {
+
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
@@ -250,8 +250,9 @@
             
             [target appendAttributedString:[self stringFromTag:tag]];
         }
-    
-        
+
+        [tags removeAllObjects];
+
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [_TextView.textStorage setAttributedString:target];
