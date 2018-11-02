@@ -38,7 +38,8 @@
     
     _gameContext = context;
     _commandRelay = [[GameCommandRelay alloc] initWith:context.events];
-    
+
+
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
     _scriptStreamHandler = [ScriptStreamHandler newInstance];
@@ -46,57 +47,68 @@
     _tdpUpdateHandler = [TDPUpdateHandler newInstance];
     _expUpdateHandler = [ExpUpdateHandler newInstance];
     _triggerHandler = [TriggerHandler newInstance:context relay:_commandRelay];
-    
-    _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value){
-        [_gameContext.globalVars set:value forKey:key];
+
+    @weakify(self)
+
+    _expUpdateHandler.emitSetting = ^(NSString *key, NSString *value) {
+        @strongify(self)
+        [self->_gameContext.globalVars set:value forKey:key];
     };
     
     _expUpdateHandler.emitExp = ^(SkillExp *exp) {
-        [_exp sendNext:exp];
+        @strongify(self)
+        [self.exp sendNext:exp];
     };
     
     _tagStreamer.emitSetting = ^(NSString *key, NSString *value){
-        [_gameContext.globalVars set:value forKey:key];
+        @strongify(self)
+        [self->_gameContext.globalVars set:value forKey:key];
     };
     
     _tagStreamer.emitExp = ^(SkillExp *exp) {
-        [_exp sendNext:exp];
+        @strongify(self)
+        [self.exp sendNext:exp];
     };
     
     _tagStreamer.emitRoundtime = ^(Roundtime *rt) {
-        [_roundtime sendNext:rt];
+        @strongify(self)
+        [self.roundtime sendNext:rt];
     };
     
     _tagStreamer.emitRoom = ^{
-        [_room sendNext:@""];
+        @strongify(self)
+        [self.room sendNext:@""];
     };
     
     _tagStreamer.emitVitals = ^(Vitals *vital) {
-        [_vitals sendNext:vital];
+        @strongify(self)
+        [self.vitals sendNext:vital];
     };
     
     _tagStreamer.emitSpell = ^(NSString *spell) {
-        [_spell sendNext:spell];
+        @strongify(self)
+        [self.spell sendNext:spell];
     };
     
     _tagStreamer.emitClearStream = ^(NSString *window) {
+        @strongify(self)
         CommandContext *ctx = [[CommandContext alloc] init];
         ctx.command = [NSString stringWithFormat:@"#window clear %@", window];
-        
-        [_commandRelay sendCommand:ctx];
+
+        [self->_commandRelay sendCommand:ctx];
     };
     
     _tagStreamer.emitWindow = ^(NSString *window, NSString *title, NSString *closedTarget) {
+        @strongify(self)
         NSDictionary *win = @{
             @"name" : window,
             @"title" : title != nil ? title : [NSNull null],
             @"closedTarget" : closedTarget != nil ? closedTarget : [NSNull null]
         };
-        [_gameContext.events publish:@"OL:window:ensure" data:win];
+        [self->_gameContext.events publish:@"OL:window:ensure" data:win];
     };
 
     _tagStreamer.emitLaunchUrl = ^(NSString *url) {
-
         if ([url hasPrefix:@"/forums"]) {
             url = [NSString stringWithFormat:@"http://play.net%@", url];
         }
