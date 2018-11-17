@@ -39,7 +39,6 @@
     _gameContext = context;
     _commandRelay = [[GameCommandRelay alloc] initWith:context.events];
 
-
     _tokenizer = [StormFrontTokenizer newInstance];
     _tagStreamer = [StormFrontTagStreamer newInstance];
     _scriptStreamHandler = [ScriptStreamHandler newInstance];

@@ -12,6 +12,7 @@ import Foundation
 public final class MapZone : NSObject {
     var id:String
     var name:String
+    var file:String
     var rooms:[MapNode]
     var labels:[MapLabel]
     var roomIdLookup:[String:MapNode]
@@ -19,6 +20,7 @@ public final class MapZone : NSObject {
     init(_ id:String, _ name:String) {
         self.id = id
         self.name = name
+        file = ""
         rooms = []
         labels = []
         roomIdLookup = [:]
@@ -78,19 +80,13 @@ public final class MapZone : NSObject {
         
         let last = roomIdLookup[id]
         
-        let trimmed = description
-       
-//        if description.characters.count > 50 {
-//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
-//        }
-
         let filtered = last?.arcs.filter { $0.destination.characters.count > 0 }
  
         for arc in filtered! {
             
             if let room = roomIdLookup[arc.destination] {
                 
-                if room.name == name && room.hasMatchingDescription(trimmed) {
+                if room.name == name && room.hasMatchingDescription(description) {
                     return room
                 }
             }
@@ -99,41 +95,34 @@ public final class MapZone : NSObject {
         return nil
     }
     
-    
-    func findRoomFuzyFrom(currentRoomId:String?, name:String, description:String) -> MapNode? {
+    func findRoomFuzyFrom(previousRoomId:String?, name:String, description:String, exits:[String], ignoreTransfers:Bool = false) -> MapNode? {
         
-        let trimmed = description
-       
-//        if description.characters.count > 50 {
-//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
-//        }
-
-        let currentRoom = roomWithId(currentRoomId ?? "")
-        
-        if currentRoom == nil || currentRoom!.name != name || !currentRoom!.hasMatchingDescription(trimmed) {
-            return self.findRoom(name, description: description)
+        guard let previousRoom = roomWithId(previousRoomId ?? "") else {
+            return self.findRoom(name, description: description, directions: exits, ignoreTransfers: ignoreTransfers)
         }
-        
-        return currentRoom
+
+        for arc in previousRoom.arcs {
+            if let nextRoom = roomWithId(arc.destination) {
+                if nextRoom.matches(name, description: description, exits: exits, ignoreTransfers: ignoreTransfers) {
+                    return nextRoom
+                }
+            }
+        }
+
+        return self.findRoom(name, description: description, directions: exits, ignoreTransfers: ignoreTransfers)
     }
     
-    func findRoom(name:String, description:String) -> MapNode? {
+    func findRoom(name:String, description:String, directions: [String], ignoreTransfers:Bool) -> MapNode? {
         
-        let trimmed = description
-       
-//        if description.characters.count > 50 {
-//            trimmed = description.substringToIndex(description.startIndex.advancedBy(50))
-//        }
-
         for room in rooms {
-            if room.name == name && room.hasMatchingDescription(trimmed) {
-               return room
+            if room.matches(name, description: description, exits: directions, ignoreTransfers: ignoreTransfers) {
+                return room
             }
         }
         
         return nil
     }
-    
+
     func roomsWithNote(note:String) -> [MapNode] {
         
         return self.rooms.filter {

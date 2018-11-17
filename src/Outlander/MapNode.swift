@@ -39,6 +39,10 @@ final class MapNode {
         self.position = position
         self.arcs = arcs
     }
+
+    func isTransfer() -> Bool {
+        return self.notes?.containsString(".xml") == true
+    }
     
     func arcWithId(id:String) -> MapArc? {
         return arcs.filter { $0.destination == id }.first
@@ -47,7 +51,32 @@ final class MapNode {
     func nonCardinalExists() -> [MapArc] {
         return arcs.filter { !self.cardinalDirs.contains($0.exit) }
     }
-    
+
+    func cardinalExits() -> [String] {
+        return arcs.filter { self.cardinalDirs.contains($0.exit) }.map { $0.exit }.sort()
+    }
+
+    func matchesExits(exits: [String]) -> Bool {
+        return self.cardinalExits().elementsEqual(exits, isEquivalent: {
+            $0 == $1
+        })
+    }
+
+    func matches(name:String, description:String, exits:[String], ignoreTransfers:Bool) -> Bool {
+
+        if (ignoreTransfers && self.isTransfer()) {
+            return false
+        }
+
+        if exits.count > 0 {
+            return self.matchesExits(exits)
+                && self.name == name
+                && self.hasMatchingDescription(description)
+        }
+
+        return self.name == name && self.hasMatchingDescription(description)
+    }
+
     func hasMatchingDescription(description:String) -> Bool {
 
         let mod = description.replace("\"", withString: "").replace(";", withString: "")

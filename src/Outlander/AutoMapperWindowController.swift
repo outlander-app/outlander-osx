@@ -94,6 +94,7 @@ class MapsDataSource : NSObject, NSComboBoxDataSource {
                 switch result {
 
                 case let .Success(zone):
+                    zone.file = m.file
                     m.zone = zone
 
                 case let .Error(error):
@@ -257,24 +258,11 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
     
     func findCurrentRoom(zone:MapZone) -> MapNode? {
         if let ctx = self.context {
-            
-            let roomId = ctx.globalVars["roomid"]
-            
-            var name = ctx.globalVars["roomtitle"] ?? ""
-            name = name.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
-            
-            let description = ctx.globalVars["roomdesc"] ?? ""
-            
-            if let room = zone.findRoomFuzyFrom(roomId, name: name, description: description) {
 
-                if roomId != room.id {
-                    ctx.globalVars["roomid"] = room.id
-                }
-
-                return room
-            }
+            let roomId = ctx.globalVars["roomid"] ?? ""
+            return zone.roomWithId(roomId)
         }
-        
+
         return nil
     }
     

@@ -245,6 +245,7 @@
 		F982CF621AD7834200BB9574 /* WindowsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */; };
 		F982CF631AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
 		F982CF641AD7834200BB9574 /* WindowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F982CF601AD7834200BB9574 /* WindowsViewController.xib */; };
+		F982EB91218D1E6000007E66 /* MapZoneTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982EB90218D1E6000007E66 /* MapZoneTester.swift */; };
 		F98782B719420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
 		F98782B819420CB500D76231 /* EchoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782B619420CB500D76231 /* EchoToken.m */; };
 		F98782BB19420E5D00D76231 /* GotoToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F98782BA19420E5D00D76231 /* GotoToken.m */; };
@@ -687,6 +688,7 @@
 		F9818D60190D75E800137896 /* TextViewControllerTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewControllerTester.m; sourceTree = "<group>"; };
 		F982CF5F1AD7834200BB9574 /* WindowsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowsViewController.swift; sourceTree = "<group>"; };
 		F982CF601AD7834200BB9574 /* WindowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WindowsViewController.xib; sourceTree = "<group>"; };
+		F982EB90218D1E6000007E66 /* MapZoneTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapZoneTester.swift; sourceTree = "<group>"; };
 		F98782B519420CB500D76231 /* EchoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoToken.h; sourceTree = "<group>"; };
 		F98782B619420CB500D76231 /* EchoToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoToken.m; sourceTree = "<group>"; };
 		F98782B919420E5D00D76231 /* GotoToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GotoToken.h; sourceTree = "<group>"; };
@@ -1282,6 +1284,14 @@
 			name = AutoMapper;
 			sourceTree = "<group>";
 		};
+		F982EB8F218D1E4E00007E66 /* Automapper */ = {
+			isa = PBXGroup;
+			children = (
+				F982EB90218D1E6000007E66 /* MapZoneTester.swift */,
+			);
+			name = Automapper;
+			sourceTree = "<group>";
+		};
 		F989E202192C2BA700562E32 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1445,6 +1455,7 @@
 			isa = PBXGroup;
 			children = (
 				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
+				F982EB8F218D1E4E00007E66 /* Automapper */,
 				F9FCFB5021029C3D004CA73B /* Scripting */,
 				F9B9BFF01ABD724600CB44B6 /* Text */,
 				F989E202192C2BA700562E32 /* Stubs */,
@@ -1932,6 +1943,7 @@
 				F91ADCDF1ACA63C100B78327 /* VariablesViewController.swift in Sources */,
 				F96ECDD01934E84D00787CB9 /* VarCommandHandlerTester.m in Sources */,
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
+				F982EB91218D1E6000007E66 /* MapZoneTester.swift in Sources */,
 				F92C1D6120C26A0F0076BF19 /* GlobalVariablesTester.swift in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,

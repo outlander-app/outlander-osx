@@ -19,6 +19,7 @@ class RoomChangeHandler : NSObject, NodeHandler {
     var relay:CommandRelay
     
     private var showAfterPrompt = false
+    private var movedRooms = false
     
     class func newInstance(relay:CommandRelay) -> RoomChangeHandler {
         return RoomChangeHandler(relay)
@@ -33,57 +34,59 @@ class RoomChangeHandler : NSObject, NodeHandler {
         if let zone = context.mapZone {
             
             for node in nodes {
+
+                if node.name == "nav" {
+                    self.movedRooms = true
+                }
                 
                 if node.name == "compass" {
-                    
                     self.showAfterPrompt = true
                 }
                 
                 if node.name == "prompt" && self.showAfterPrompt {
-                    
+
                     self.showAfterPrompt = false
+                    let assignRoom = self.movedRooms
+                    self.movedRooms = false
                     
-                    var title = context.globalVars["roomtitle"] ?? ""
+                    let title = context.trimmedRoomTitle()
                     let desc = context.globalVars["roomdesc"] ?? ""
                     
-                    title = title.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "[]"))
-                    
                     let roomId = context.globalVars["roomid"]
-                    
-                    self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc)
+
+                    let start = NSDate()
+
+                    if let room = self.findRoom(context, zone: zone, previousRoomId: roomId, name: title, description: desc) {
+
+                        // check for edge of map, change zone if needed
+                        let swapped = self.swapMaps(context, room: room, name: title, description: desc)
+
+                        let diff = NSDate().timeIntervalSinceDate(start)
+                        self.send(context, room: swapped, diff: diff, assignRoom: assignRoom)
+                    }
                 }
             }
         }
     }
     
-    func findRoom(context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) {
+    func findRoom(context:GameContext, zone:MapZone, previousRoomId:String?, name:String, description:String) -> MapNode? {
 
-        let start = NSDate()
+        let exits = context.availableExits()
 
-        if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description) {
-            
-            let diff = NSDate().timeIntervalSinceDate(start)
-            self.send(context, room: room, diff: diff)
+        if let room = zone.findRoomFuzyFrom(previousRoomId, name: name, description: description, exits: exits) {
+            return room
         }
-        else {
-            if let room = context.findRoomInZones(name, description: description) {
 
-                let diff = NSDate().timeIntervalSinceDate(start)
-                self.send(context, room: room, diff: diff)
-            }
-        }
+        return context.findRoomInZones(name, description: description, exits: exits)
     }
-    
-    func send(context:GameContext, room:MapNode, diff:Double) {
-        
-        context.globalVars["roomid"] = room.id
-        
+
+    func send(context:GameContext, room:MapNode, diff:Double, assignRoom:Bool) {
+
         var tag = TextTag()
         
         if context.globalVars["debugautomapper"] == "1" {
         
             tag.text = "[AutoMapper] Debug: Found room #\(room.id) in \(diff) seconds\n"
-//            tag.color = "#00ffff"
             tag.preset = "automapper"
             self.relay.sendEcho(tag)
         }
@@ -94,9 +97,33 @@ class RoomChangeHandler : NSObject, NodeHandler {
         
             tag = TextTag()
             tag.text = "Mapped exits: \(exits)\n"
-//            tag.color = "#00ffff"
             tag.preset = "automapper"
             self.relay.sendEcho(tag)
         }
+
+        if assignRoom {
+            context.globalVars["roomid"] = room.id
+        }
+    }
+
+    func swapMaps(context:GameContext, room:MapNode, name:String, description:String) -> MapNode {
+        if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
+
+            let groups = room.notes!["(.+\\.xml)"].groups()
+            
+            if groups.count > 1 {
+                let mapfile = groups[1]
+                if let zone = context.zoneFromFile(mapfile) {
+
+                    context.mapZone = zone
+
+                    if let found = self.findRoom(context, zone: zone, previousRoomId: nil, name: name, description: description) {
+                        return found
+                    }
+                }
+            }
+        }
+
+        return room
     }
 }
