@@ -10,7 +10,14 @@ Outlander supports Genie map files.  View maps via the `⌘M` shortcut.  Mouse o
 #### Automapper Usage
 
 * `#goto <roomid>`, `#goto <named room>`
-* ex: `#goto 123`  `#goto bank`
+    ex: `#goto 123`  `#goto bank`
+
+Sometimes the automapper can get confused and not know what room you're in.  Use these commands to help:
+
+* `#goto <roomid> from <roomid>` - use when you know what room you're in and have the automapper find a path from there.
+* `#mapper`
+    * `#mapper reset` - will attempt to find what room/map your character is located in
+    * `#mapper reload` - will reload map files from disk
 
 #### Automapper Installation
 * Use svn from terminal to download maps: `$ svn checkout http://svn.code.sf.net/p/geniemapsfordr/Genie3Maps/trunk Maps`

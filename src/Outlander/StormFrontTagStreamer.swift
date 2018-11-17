@@ -260,6 +260,8 @@ public class StormFrontTagStreamer : NSObject {
             for dir in notFound {
                 emitSetting?(dir, "0")
             }
+
+            emitRoom?()
             
         case _ where node.name == "streamwindow":
             let id = node.attr("id")

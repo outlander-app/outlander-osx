@@ -8,8 +8,6 @@
 
 #import "TestViewController.h"
 #import "VitalsViewController.h"
-#import "HTMLNode.h"
-#import "HTMLParser.h"
 #import "TextTag.h"
 #import "NSString+Categories.h"
 #import "NSColor+Categories.h"
@@ -520,7 +518,7 @@
     [controller endEdit];
 }
 
-- (void)set:(NSString*)key withTags:(NSArray *)tags {
+- (void)set:(NSString*)key withTags:(NSMutableArray *)tags {
     TextViewController *controller = [_windows cacheObjectForKey:key];
     [controller setWithTags:tags];
 }
@@ -736,7 +734,6 @@
     NSMutableString *room = [[NSMutableString alloc] init];
     if(name != nil && name.length != 0) {
         TextTag *nameTag = [TextTag tagFor:name mono:false];
-//        nameTag.color = @"#0000FF";
         nameTag.preset = @"roomname";
         [tags addObject:nameTag];
         [room appendString:@"\n"];
@@ -769,19 +766,7 @@
 }
 
 -(void)updateCardinalDirections {
-    
-    NSArray *options = @[@"north", @"south", @"east", @"west", @"northeast", @"northwest", @"southeast", @"southwest", @"up", @"down", @"out"];
-    
-    NSMutableArray *dirs = [NSMutableArray new];
-    
-    for (NSString *option in options) {
-        NSString *res = [_gameContext.globalVars get:option];
-        if ([res isEqualToString:@"1"]) {
-            [dirs addObject:option];
-        }
-    }
-    
-    [_directionsView setDirections:dirs];
+    [_directionsView setDirections:_gameContext.availableExits];
 }
 
 - (void) writeLog:(TextTag *)tag {

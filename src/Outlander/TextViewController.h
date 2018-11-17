@@ -43,7 +43,7 @@
 - (NSColor *)backgroundColor;
 - (NSColor *)borderColor;
 - (NSString *)text;
-- (void)setWithTags:(NSArray *)tags;
+- (void)setWithTags:(NSMutableArray *)tags;
 - (void)beginEdit;
 - (void)endEdit;
 - (void)clear;

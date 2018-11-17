@@ -11,7 +11,7 @@ import Quick
 import Nimble
 
 class AttributesTokenizerTester: QuickSpec {
-    
+
     override func spec() {
         describe("tokenizer", {
             
