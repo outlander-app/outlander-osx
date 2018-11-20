@@ -393,7 +393,10 @@ public class StormFrontTagStreamer : NSObject {
         case _ where node.name == "a":
             tag = emitTag(node)
             tag?.href = node.attr("href")
-            
+            if inStream {
+                tag?.targetWindow = lastStreamId
+            }
+
         case _ where node.name == "b":
             
             tag = emitTag(node)
@@ -419,6 +422,10 @@ public class StormFrontTagStreamer : NSObject {
             if let cmd = node.attr("cmd") {
                 tag?.command = cmd
             }
+
+            if inStream {
+                tag?.targetWindow = lastStreamId
+            }
             
         case _ where node.name == "dynastream":
             if node.children.count > 0 {
@@ -426,6 +433,10 @@ public class StormFrontTagStreamer : NSObject {
                 tag?.text = self.nodeChildValues(node)
             } else {
                 tag = emitTag(node)
+            }
+
+            if inStream {
+                tag?.targetWindow = lastStreamId
             }
             
         default:

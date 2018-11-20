@@ -339,9 +339,18 @@
         fontName = self.monoFontName;
         fontSize = self.monoFontSize;
     }
-    [attr addAttribute:NSFontAttributeName value:[NSFont fontWithName:fontName size:fontSize] range:range];
+    [attr addAttribute:NSFontAttributeName value:[self fontWithName:fontName size:fontSize] range:range];
     
     return attr;
+}
+
+- (NSFont *)fontWithName:(NSString *)fontName size:(double) size {
+    NSFont *font = [NSFont fontWithName:fontName size:size];
+    if (font != nil) {
+        return font;
+    }
+
+    return [NSFont fontWithName:@"Menlo" size:size];
 }
 
 - (void)append:(TextTag*)text toTextView:(MyNSTextView *) textView {
