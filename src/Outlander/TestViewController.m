@@ -580,7 +580,6 @@
         return;
     }
 
-//    [self connectStream];
     [self authenticate];
 }
 
@@ -646,10 +645,6 @@
         }].array;
         
         NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
-        
-        if(_expTracker.startOfTracking == nil) {
-            _expTracker.startOfTracking = [NSDate date];
-        }
         
         NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
         

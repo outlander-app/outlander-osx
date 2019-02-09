@@ -24,7 +24,7 @@ describe(@"Substitute Specs", ^{
     __block GameContext *_context;
 
     beforeEach(^{
-        _replacer = [[TextViewController alloc] init];
+        _replacer = [[TextViewController alloc] initWithKey:@"subtest"];
         _context = [GameContext newInstance];
         [_replacer setGameContext: _context];
     });

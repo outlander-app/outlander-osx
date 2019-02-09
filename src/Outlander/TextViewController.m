@@ -16,15 +16,21 @@
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
     __weak IBOutlet NSScrollView *_scrollView;
+    dispatch_queue_t _serialQueue;
 }
 @end
 
 @implementation TextViewController
 
-- (id)init {
+- (id)initWithKey:(NSString *)key {
     self = [super initWithNibName:NSStringFromClass([self class]) bundle:nil];
 	if(self == nil) return nil;
-    
+
+    _key = key;
+
+    NSString *queueName = [NSString stringWithFormat:@"com.outlander.window.%@", key];
+    _serialQueue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_SERIAL);
+
     _keyup = [RACSubject subject];
     _command = [RACSubject subject];
     
@@ -224,7 +230,7 @@
 
 - (void)setWithTags:(NSMutableArray *)tags {
 
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(_serialQueue, ^{
         
         NSMutableAttributedString *target = [[NSMutableAttributedString alloc] initWithString:@""];
         
@@ -252,6 +258,8 @@
         }
 
         [tags removeAllObjects];
+
+        target = [self processHighlights: target];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -290,9 +298,8 @@
     return newTag;
 }
 
-- (NSAttributedString *)stringFromTag:(TextTag *)text {
+- (NSMutableAttributedString *)stringFromTag:(TextTag *)text {
     if(text.bold) {
-//        text.color = @"#FFFF00";
         text.preset = @"creatures";
     }
 
@@ -316,16 +323,12 @@
         [attr addAttribute:NSLinkAttributeName value:[NSString stringWithFormat:@"command:%@", text.command] range:range];
     }
     
-    NSColor *color = nil;
+    NSColor *color = _fontColor;
     
     if(text.color != nil && text.color.length > 0){
         color = [NSColor colorWithHexString:text.color];
     }
-    else {
-//        color = [NSColor colorWithHexString:@"#cccccc"];
-        color = _fontColor;
-    }
-    
+
     [attr addAttribute:NSForegroundColorAttributeName value:color range:range];
     
     if(text.backgroundColor != nil && text.backgroundColor.length > 0) {
@@ -354,68 +357,70 @@
 }
 
 - (void)append:(TextTag*)text toTextView:(MyNSTextView *) textView {
-    if(text.text == nil || text.text.length == 0 || [self matchesGag:text.text]) {
-        return;
-    }
-
-    text.text = [self processSubs:text.text];
-    NSAttributedString *attr = [self stringFromTag:text];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        BOOL endswithNewline = [self endsWithNewline:textView];
-        BOOL timestamp = textView.displayTimestamp && (textView.textStorage.length == 0 || endswithNewline);
-
-        NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
+    dispatch_async(_serialQueue, ^{
         
-        double autoScrollToleranceLineCount = 3.0;
-        
-        NSUInteger lines = [self countLines:[textView string]];
-        double scrolled = [scroller doubleValue];
-        double scrollDiff = 1.0 - scrolled;
-        double percentScrolled = autoScrollToleranceLineCount / lines;
-        
-        BOOL shouldScrollToBottom = scrollDiff <= percentScrolled;
-        
-        if (timestamp) {
-            [[textView textStorage] appendAttributedString:[self stringFromTag:[self timestampTag]]];
-        }
-        
-        if ([text.scriptName length] > 0 &&  text.scriptLine > -1) {
-            [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
+        if(text.text == nil || text.text.length == 0 || [self matchesGag:text.text]) {
+            return;
         }
 
-//        NSLog(@"**** Should Scroll: (%@) %hhd, %f, %f", self.key, shouldScrollToBottom, scrollDiff, percentScrolled);
-//        
-//        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
+        text.text = [self processSubs:text.text];
+        NSAttributedString *attr = [self processHighlights: [self stringFromTag:text]];
 
-        NSRange removeRange;
-        BOOL shouldRemoveRange = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            BOOL endswithNewline = [self endsWithNewline:textView];
+            BOOL timestamp = textView.displayTimestamp && (textView.textStorage.length == 0 || endswithNewline);
 
-        if (lines >= self.bufferSize) {
-            shouldRemoveRange = YES;
-            removeRange = [self getRemovalRange:textView.string withDiff:lines - self.bufferSize];
-        }
+            NSScroller *scroller = [[textView enclosingScrollView] verticalScroller];
+            
+            double autoScrollToleranceLineCount = 3.0;
+            
+            NSUInteger lines = [self countLines:[textView string]];
+            double scrolled = [scroller doubleValue];
+            double scrollDiff = 1.0 - scrolled;
+            double percentScrolled = autoScrollToleranceLineCount / lines;
+            
+            BOOL shouldScrollToBottom = scrollDiff <= percentScrolled;
+            
+            if (timestamp) {
+                [[textView textStorage] appendAttributedString:[self stringFromTag:[self timestampTag]]];
+            }
+            
+            if ([text.scriptName length] > 0 &&  text.scriptLine > -1) {
+                [[textView textStorage] appendAttributedString:[self stringFromTag:[self scriptTag:text]]];
+            }
 
-//        [textView.textStorage beginEditing];
+    //        NSLog(@"**** Should Scroll: (%@) %hhd, %f, %f", self.key, shouldScrollToBottom, scrollDiff, percentScrolled);
+    //        
+    //        NSLog(@"**** TS Length: (%@) %lu/%lu ****", self.key, lines, textView.textStorage.length);
 
-        if (shouldRemoveRange) {
-//            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
-            [textView.textStorage deleteCharactersInRange:removeRange];
-        }
+            NSRange removeRange;
+            BOOL shouldRemoveRange = NO;
 
-        [textView.textStorage appendAttributedString:attr];
-        
-//        [textView.textStorage endEditing];
+            if (lines >= self.bufferSize) {
+                shouldRemoveRange = YES;
+                removeRange = [self getRemovalRange:textView.string withDiff:lines - self.bufferSize];
+            }
 
-        if(shouldScrollToBottom) {
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-//                [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
-//            });
-//            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
-            NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
-            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0 inModes:modes];
-        }
+    //        [textView.textStorage beginEditing];
+
+            if (shouldRemoveRange) {
+    //            NSLog(@"**** Deleting [%lu,%lu] ****", removeRange.location, removeRange.length);
+                [textView.textStorage deleteCharactersInRange:removeRange];
+            }
+
+            [textView.textStorage appendAttributedString:attr];
+            
+    //        [textView.textStorage endEditing];
+
+            if(shouldScrollToBottom) {
+    //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+    //                [textView scrollRangeToVisible:NSMakeRange([[textView string] length], 0)];
+    //            });
+    //            [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0];
+                NSArray *modes = [[NSArray alloc] initWithObjects:NSRunLoopCommonModes, nil];
+                [self performSelector:@selector(scrollTextView:) withObject:textView afterDelay:0 inModes:modes];
+            }
+        });
     });
 }
 
@@ -451,17 +456,7 @@
     return numberOfLines;
 }
 
-- (void)textStorageDidProcessEditing:(NSNotification *)notification {
-
-    NSTextStorage *textStorage = [notification object];
-    
-    NSRange editedRange = textStorage.editedRange;
-    NSString *data = [textStorage.string substringWithRange:editedRange];
-    
-    if(!data || data.length == 0) return;
-    
-    NSUInteger len = textStorage.length;
-
+- (NSMutableAttributedString *) processHighlights:(NSMutableAttributedString *)str {
     NSArray *disabledClasses = [_gameContext.classSettings disabled];
     NSArray *highlights = [_gameContext.highlights filter:[NSPredicate predicateWithBlock:^BOOL(Highlight *hl, NSDictionary *bindings) {
 
@@ -471,7 +466,7 @@
 
         return ![disabledClasses containsObject:[hl.filterClass lowercaseString]];
     }]];
-    
+
     [highlights enumerateObjectsUsingBlock:^(Highlight *hl, NSUInteger idx, BOOL *stop) {
 
         if([hl.pattern length] == 0) {
@@ -488,7 +483,7 @@
             return;
         }
 
-        [[data matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        [[str.string matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
 
             if (idx > 1000) {
                 *stop = YES;
@@ -508,26 +503,30 @@
                     [_gameContext.events sendCommand:ctx];
                 }
 
-                NSRange newRange = NSMakeRange(range.location + editedRange.location, range.length);
+                NSRange newRange = NSMakeRange(range.location, range.length);
 
-                if(textStorage.string && textStorage.string.length >= len) {
-                    [textStorage addAttribute:NSForegroundColorAttributeName
-                                        value:[NSColor colorWithHexString:hl.color]
+                [str addAttribute:NSForegroundColorAttributeName
+                                    value:[NSColor colorWithHexString:hl.color]
+                                    range:newRange];
+
+                if (hl.backgroundColor != nil && ![hl.backgroundColor isEqualToString:@""]) {
+                    [str addAttribute:NSBackgroundColorAttributeName
+                                        value:[NSColor colorWithHexString:hl.backgroundColor]
                                         range:newRange];
-
-                    if (hl.backgroundColor != nil && ![hl.backgroundColor isEqualToString:@""]) {
-                        [textStorage addAttribute:NSBackgroundColorAttributeName
-                                            value:[NSColor colorWithHexString:hl.backgroundColor]
-                                            range:newRange];
-                    }
                 }
             }
         }];
     }];
+
+    return str;
+}
+
+- (void)textStorageDidProcessEditing:(NSNotification *)notification {
+
 }
 
 - (NSString *)processSubs:(NSString *)text {
-    
+
     __block NSString *data = text;
 
     NSArray *disabledClasses = [_gameContext.classSettings disabled];

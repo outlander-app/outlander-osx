@@ -28,6 +28,10 @@
 -(void) update:(SkillExp *)exp {
     
     if(exp == nil) return;
+
+    if(self.startOfTracking == nil) {
+        self.startOfTracking = [NSDate date];
+    }
     
     SkillExp *skill = [_skills cacheObjectForKey:exp.name];
     

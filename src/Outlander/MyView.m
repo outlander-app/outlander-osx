@@ -138,7 +138,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
 }
 
 - (TextViewController*)createTextController:(NSString *)key atLoc:(NSRect)rect {
-    TextViewController *textcrl = [[TextViewController alloc] init];
+    TextViewController *textcrl = [[TextViewController alloc] initWithKey:key];
     [textcrl.view setFrameSize:NSMakeSize(rect.size.width, rect.size.height)];
     [textcrl.view fixLeftEdge:YES];
     [textcrl.view fixTopEdge:YES];
@@ -169,7 +169,7 @@ typedef NS_ENUM(NSInteger, DragLocationState) {
     view.showBorder = YES;
     [self addSubview:view];
     
-    TextViewController *textcrl = [[TextViewController alloc] init];
+    TextViewController *textcrl = [[TextViewController alloc] initWithKey: key];
     [textcrl.view setFrameSize:NSMakeSize(rect.size.width, rect.size.height)];
     [textcrl.view fixLeftEdge:YES];
     [textcrl.view fixTopEdge:YES];

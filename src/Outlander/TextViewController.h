@@ -35,6 +35,8 @@
 @property (nonatomic, assign) NSUInteger bufferSize;
 @property (nonatomic, assign) NSUInteger bufferClearSize;
 
+- (id)initWithKey:(NSString *)key;
+
 - (BOOL)showBorder;
 - (void)setShowBorder:(BOOL)show;
 - (void)setDisplayTimestamp:(BOOL)timestamp;
