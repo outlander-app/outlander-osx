@@ -47,6 +47,7 @@
     id<CommandProcessor> _commandProcessor;
     VariableReplacer *_variablesReplacer;
     BOOL _isApplicationActive;
+    dispatch_queue_t _serialQueue;
 }
 
 -(id)initWithContext:(GameContext *)gameContext {
@@ -786,17 +787,30 @@
         return;
     }
 
-    NSString *ending = isRaw ? @"-raw" : @"";
-    
-    NSString *logsDir = _gameContext.pathProvider.logsFolder;
-    NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@%@.txt",
-                          _gameContext.settings.character,
-                          _gameContext.settings.game,
-                          [@"%@" stringFromDateFormat:@"yyyy-MM-dd"],
-                          ending];
-    
-    NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
-    [tag.text appendToFile:filePath encoding:NSUTF8StringEncoding];
+//    NSString *uuid = [[NSUUID UUID] UUIDString];
+//    NSString *queueName = [NSString stringWithFormat:@"outlander.text.controller.%@", uuid];
+
+    if (_serialQueue == nil) {
+        NSString *queueName = [NSString stringWithFormat:@"outlander.text.controller.%@", _gameContext.settings.character];
+        _serialQueue = dispatch_queue_create([queueName UTF8String], DISPATCH_QUEUE_SERIAL);
+    }
+
+    NSString *text = tag.text;
+
+    dispatch_async(_serialQueue, ^{
+
+        NSString *ending = isRaw ? @"-raw" : @"";
+        
+        NSString *logsDir = _gameContext.pathProvider.logsFolder;
+        NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@%@.txt",
+                              _gameContext.settings.character,
+                              _gameContext.settings.game,
+                              [@"%@" stringFromDateFormat:@"yyyy-MM-dd"],
+                              ending];
+
+        NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];
+        [text appendToFile:filePath encoding:NSUTF8StringEncoding];
+    });
 }
 
 @end

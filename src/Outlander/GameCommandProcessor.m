@@ -110,7 +110,7 @@
 
 //    NSLog(@"%f // %ld // %@", interval, (long)_lastCommandCount, context.command);
 
-    if(_lastCommandCount > 50) {
+    if(_lastCommandCount > 100) {
         context.tag = NULL;
 
         if([context.scriptName length] > 0) {
