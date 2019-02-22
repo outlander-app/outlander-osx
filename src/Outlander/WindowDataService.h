@@ -13,10 +13,7 @@
 
 @interface WindowDataService : NSObject
 
-- (Layout *)readLayoutJson:(GameContext *)context;
-- (void)write:(GameContext *)context LayoutJson:(Layout *)layout;
+- (Layout *)readFromFile:(NSString *)file withContext:(GameContext *)context;
+- (void)write:(Layout *)layout toFile:(NSString *)file withContext:(GameContext *)context;
 
-//- (WindowData *)dataFor:(NSDictionary *)json;
-//- (NSArray *)readWindowJson:(GameContext *)context;
-//- (void)write:(GameContext *)context WindowJson:(NSArray *)windows;
 @end

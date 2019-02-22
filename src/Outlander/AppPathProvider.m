@@ -36,6 +36,10 @@
     return [[self rootFolder] stringByAppendingPathComponent:_settings.configFolder];
 }
 
+- (NSString *)layoutFolder {
+    return [[self configFolder] stringByAppendingPathComponent:_settings.layoutFolder];
+}
+
 - (NSString *)logsFolder {
     return [[self rootFolder] stringByAppendingPathComponent:_settings.logsFolder];
 }

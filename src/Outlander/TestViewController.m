@@ -190,6 +190,7 @@
 
     } else if ([action isEqualToString:@"reload"]) {
 
+        [self reloadTheme];
         [self removeAllWindows];
         [self loadWindows];
         

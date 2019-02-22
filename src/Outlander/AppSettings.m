@@ -21,8 +21,11 @@
     self.password = @"";
     self.character = @"";
 
+    self.layout = @"default.cfg";
+
     self.homeDirectory = @"Outlander";
     self.configFolder = @"Config";
+    self.layoutFolder = @"Layout";
     self.logsFolder = @"Logs";
     self.profilesFolder = @"Profiles";
     self.scriptsFolder = @"Scripts";

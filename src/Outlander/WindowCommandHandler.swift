@@ -29,7 +29,7 @@ class WindowCommandHandler : NSObject, CommandHandler {
 
         if commands.hasPrefix("reload") {
             let loader = WindowDataService()
-            let layout = loader.readLayoutJson(withContext)
+            let layout = loader.readFromFile(withContext.settings.layout, withContext: withContext)
             withContext.layout = layout
             withContext.events.publish("OL:window", data: ["action":"reload", "window":""])
             return

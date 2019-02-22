@@ -14,7 +14,6 @@
 @implementation WindowDataService
 
 - (NSDictionary *)jsonFor:(WindowData *)data {
-    
     return [MTLJSONAdapter JSONDictionaryFromModel:data];
 }
 
@@ -64,9 +63,9 @@
     return data;
 }
 
-- (Layout *)readLayoutJson:(GameContext *)context {
-    
-    NSString *filePath = [self get:context FilePath:@"layout.cfg"];
+- (Layout *)readFromFile:(NSString *)file withContext:(GameContext *)context {
+
+    NSString *filePath = [self get:context FilePath:file];
     NSData *json = [NSData dataWithContentsOfFile:filePath];
     
     if(!json) {
@@ -111,8 +110,8 @@
     }
 }
 
-- (void)write:(GameContext *)context LayoutJson:(Layout *)layout {
-    
+- (void)write:(Layout *)layout toFile:(NSString *)file withContext:(GameContext *)context {
+
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     [dict setValue:[self jsonFor:layout.primaryWindow] forKey:@"primary"];
     
@@ -124,7 +123,7 @@
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dict
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
-    NSString *filePath = [self get:context FilePath:@"layout.cfg"];
+    NSString *filePath = [self get:context FilePath:file];
     [jsonData writeToFile:filePath atomically:YES];
 }
 
@@ -152,6 +151,11 @@
     chatter.closedTarget = @"main";
     [items addObject:chatter];
     
+    WindowData *raw = [WindowData windowWithName:@"raw" atLoc:NSMakeRect(0, 0, 200, 200) andTimestamp:NO];
+    raw.visible = NO;
+    raw.closedTarget = @"";
+    [items addObject:raw];
+    
     Layout *layout = [[Layout alloc] init];
     layout.primaryWindow = [WindowData windowWithName:@"primary" atLoc:NSMakeRect(0, 0, 900, 615) andTimestamp:NO];
     layout.windows = items;
@@ -160,8 +164,7 @@
 }
 
 -(NSString *)get:(GameContext *)context FilePath:(NSString *)fileName {
-    
-    return [context.pathProvider.profileFolder stringByAppendingPathComponent:fileName];
+    return [context.pathProvider.layoutFolder stringByAppendingPathComponent:fileName];
 }
 
 @end

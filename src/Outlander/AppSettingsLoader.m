@@ -75,7 +75,7 @@
 
     [self loadProfile];
     
-    [self loadLayout];
+    [self loadLayout:_context.settings.layout];
     
     [self loadHighlights];
     [self loadVariables];
@@ -97,12 +97,12 @@
     [_appConfigLoader save];
 }
 
-- (void)loadLayout {
-    _context.layout = [_windowDataService readLayoutJson:_context];
+- (void)loadLayout:(NSString *)file {
+    _context.layout = [_windowDataService readFromFile:file withContext:_context];
 }
 
-- (void)saveLayout {
-    [_windowDataService write:_context LayoutJson:_context.layout];
+- (void)saveLayout:(NSString *)file {
+    [_windowDataService write:_context.layout toFile:file withContext:_context];
 }
 
 - (void)loadProfile {
@@ -194,7 +194,7 @@
 }
 
 - (void)writeConfigFolders:(NSString *)profile {
-    [self writeProfileFolders:profile];
+    [self ensurePath:[_context.pathProvider layoutFolder]];
     [self ensurePath:[_context.pathProvider logsFolder]];
     [self ensurePath:[_context.pathProvider scriptsFolder]];
     [self ensurePath:[_context.pathProvider mapsFolder]];

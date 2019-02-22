@@ -101,6 +101,7 @@
     __block BOOL handled = NO;
 
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate: _lastCommandDate];
+    _lastCommandDate = [NSDate date];
 
     if(interval < 0.1) {
         _lastCommandCount++;
@@ -126,8 +127,6 @@
             return;
         }
     }
-
-    _lastCommandDate = [NSDate date];
 
     if(!context.isSystemCommand) {
         [_gameContext.globalVars set:context.command forKey:@"lastcommand"];

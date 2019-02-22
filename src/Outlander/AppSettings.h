@@ -15,6 +15,8 @@
 @property (nonatomic, copy) NSString *account;
 @property (nonatomic, copy) NSString *password;
 
+@property (nonatomic, copy) NSString *layout;
+
 @property (nonatomic, assign) BOOL loggingEnabled;
 @property (nonatomic, assign) BOOL rawLoggingEnabled;
 
@@ -23,6 +25,7 @@
 
 @property (nonatomic, copy) NSString *homeDirectory;
 @property (nonatomic, copy) NSString *configFolder;
+@property (nonatomic, copy) NSString *layoutFolder;
 @property (nonatomic, copy) NSString *logsFolder;
 @property (nonatomic, copy) NSString *profilesFolder;
 @property (nonatomic, copy) NSString *scriptsFolder;

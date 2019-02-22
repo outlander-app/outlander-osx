@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16G1815" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
     </dependencies>
@@ -138,8 +138,7 @@
                                     <action selector="paste:" target="-1" id="226"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Paste and Match Style" keyEquivalent="V" id="485">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Paste and Match Style" keyEquivalent="v" id="485">
                                 <connections>
                                     <action selector="pasteAsPlainText:" target="-1" id="486"/>
                                 </connections>
@@ -597,6 +596,37 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Layout" id="IPr-9h-sLW">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Layout" id="c31-yg-rxX">
+                        <items>
+                            <menuItem title="Load Default Layout" id="gSm-DD-vwp">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="loadDefaultLayoutAction:" target="494" id="ZPq-QW-LKo"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Save As Default Layout" id="3dU-K7-8XG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveDefaultLayoutAction:" target="494" id="5JY-Qg-hos"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Load Layout..." id="CxH-5c-eVO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="loadLayoutAction:" target="494" id="lMs-p0-RKH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Save Layout As..." id="YaN-wf-NYV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveLayoutAsAction:" target="494" id="XxY-ZX-los"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Window" id="19">
                     <menu key="submenu" title="Window" systemMenu="window" id="24">
                         <items>
@@ -637,5 +667,93 @@
         </menu>
         <customObject id="494" customClass="AppDelegate"/>
         <customObject id="420" customClass="NSFontManager"/>
+        <menuItem title="Application" id="GWa-L6-V8W">
+            <modifierMask key="keyEquivalentModifierMask"/>
+            <menu key="submenu" title="Application" id="ifX-dE-Gkk">
+                <items>
+                    <menuItem title="About Application" id="Ajq-Jf-cTC">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="orderFrontStandardAboutPanel:" target="-1" id="lCv-LY-RIs"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="fDf-wi-COh"/>
+                    <menuItem title="Preferences…" keyEquivalent="," id="H4F-N7-Xd9"/>
+                    <menuItem isSeparatorItem="YES" id="C6U-fO-8XS"/>
+                    <menuItem title="Services" id="HsB-cc-LqF">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <menu key="submenu" title="Services" systemMenu="services" id="Dd3-4v-r9w"/>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="oOP-By-TBW"/>
+                    <menuItem title="Hide Application" keyEquivalent="h" id="J1V-0n-ym7">
+                        <connections>
+                            <action selector="hide:" target="-1" id="754-SQ-wcB"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Hide Others" keyEquivalent="h" id="wZs-Qz-ZDi">
+                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="hideOtherApplications:" target="-1" id="EW6-Uo-OkP"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Show All" id="xdh-vn-a3O">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="unhideAllApplications:" target="-1" id="1kp-Aj-Jyq"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="YWI-iX-y8e"/>
+                    <menuItem title="Quit Application" keyEquivalent="q" id="KwN-d3-Ahm">
+                        <connections>
+                            <action selector="terminate:" target="-1" id="8Ri-L9-KEb"/>
+                        </connections>
+                    </menuItem>
+                </items>
+            </menu>
+        </menuItem>
+        <menuItem title="Application" id="Gck-SK-t1h">
+            <modifierMask key="keyEquivalentModifierMask"/>
+            <menu key="submenu" title="Application" id="eco-el-IiI">
+                <items>
+                    <menuItem title="About Application" id="caN-Xe-PKM">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="orderFrontStandardAboutPanel:" target="-1" id="hCQ-IB-eiD"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="TMP-3m-Jka"/>
+                    <menuItem title="Preferences…" keyEquivalent="," id="AAa-OO-RWE"/>
+                    <menuItem isSeparatorItem="YES" id="zYN-G6-413"/>
+                    <menuItem title="Services" id="hCl-pk-g8L">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <menu key="submenu" title="Services" systemMenu="services" id="xkC-eS-9qY"/>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="mnJ-Z5-mMG"/>
+                    <menuItem title="Hide Application" keyEquivalent="h" id="5LM-LF-URL">
+                        <connections>
+                            <action selector="hide:" target="-1" id="apq-Tq-8eS"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Hide Others" keyEquivalent="h" id="bFF-Ws-arr">
+                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <connections>
+                            <action selector="hideOtherApplications:" target="-1" id="Ldg-bS-YOg"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Show All" id="kkA-AW-2yK">
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="unhideAllApplications:" target="-1" id="t64-9m-jTg"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem isSeparatorItem="YES" id="eEo-us-6IA"/>
+                    <menuItem title="Quit Application" keyEquivalent="q" id="wXW-MP-9Nj">
+                        <connections>
+                            <action selector="terminate:" target="-1" id="SAo-La-VGh"/>
+                        </connections>
+                    </menuItem>
+                </items>
+            </menu>
+        </menuItem>
     </objects>
 </document>

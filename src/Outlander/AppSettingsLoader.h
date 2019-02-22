@@ -13,9 +13,13 @@
 - (id)initWithContext:(GameContext *)context;
 - (void)loadProfile:(NSString *)profile;
 - (void)load;
+
 - (void)loadConfig;
 - (void)saveConfig;
-- (void)saveLayout;
+
+- (void)loadLayout:(NSString *)file;
+- (void)saveLayout:(NSString *)file;
+
 - (void)saveProfile;
 - (void)saveVariables;
 - (void)saveHighlights;

@@ -39,6 +39,7 @@
     if(gameMatch && gameMatch.length > 0) {
         _context.settings.game = gameMatch;
     }
+
     NSString *character = [self matchFor:data pattern:@"Character: (.+)"];
     if(character && character.length > 0) {
         _context.settings.character = character;
@@ -58,6 +59,11 @@
     if(rawLogging && rawLogging.length > 0 && ([[rawLogging lowercaseString] hasPrefix:@"yes"] || [[rawLogging lowercaseString] hasPrefix:@"true"])) {
         _context.settings.rawLoggingEnabled = YES;
     }
+
+    NSString *layout = [self matchFor:data pattern:@"Layout: (.+)"];
+    if(layout && layout.length > 0) {
+        _context.settings.layout = layout;
+    }
 }
 
 - (void)save {
@@ -70,6 +76,7 @@
     [profile appendFormat:@"Character: %@\n", _context.settings.character];
     [profile appendFormat:@"Logging: %@\n", _context.settings.loggingEnabled ? @"yes" : @"no"];
     [profile appendFormat:@"RawLogging: %@\n", _context.settings.rawLoggingEnabled ? @"yes" : @"no"];
+    [profile appendFormat:@"Layout: %@\n", _context.settings.layout];
 
     NSData *data = [profile dataUsingEncoding:NSUTF8StringEncoding];
     

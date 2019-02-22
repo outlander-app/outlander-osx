@@ -62,6 +62,22 @@
     [self sendCommand:@"showAutoMapper"];
 }
 
+- (IBAction)loadDefaultLayoutAction:(id)sender {
+    [self sendCommand:@"layout:LoadDefault"];
+}
+
+- (IBAction)saveDefaultLayoutAction:(id)sender {
+    [self sendCommand:@"layout:SaveDefault"];
+}
+
+- (IBAction)loadLayoutAction:(id)sender {
+    [self sendCommand:@"layout:Load"];
+}
+
+- (IBAction)saveLayoutAsAction:(id)sender {
+    [self sendCommand:@"layout:SaveAs"];
+}
+
 - (IBAction)checkforUpdatesAction:(id)sender {
 
 //    NSDictionary *dict = @{

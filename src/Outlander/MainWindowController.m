@@ -84,16 +84,10 @@
         [[self currentVC] reloadTheme];
         [[self currentVC] removeAllWindows];
         [[self currentVC] loadWindows];
+        [self setWindowFrame];
 
         [self echoText:[NSString stringWithFormat:@"Loaded profile: %@\n", _gameContext.pathProvider.profileFolder] withMono:YES];
 
-        [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
-                                         _gameContext.layout.primaryWindow.y,
-                                         _gameContext.layout.primaryWindow.width,
-                                         _gameContext.layout.primaryWindow.height)
-                      display:YES
-                      animate:NO];
-        
         [self showLogin];
         
         return [RACSignal empty];
@@ -240,14 +234,18 @@
     [_appSettingsLoader load];
     [_autoMapperWindowController loadMaps];
 
+    [self setWindowFrame];
+    
+    self.window.delegate = self;
+}
+
+- (void)setWindowFrame {
     [self.window setFrame:NSMakeRect(_gameContext.layout.primaryWindow.x,
                                      _gameContext.layout.primaryWindow.y,
                                      _gameContext.layout.primaryWindow.width,
                                      _gameContext.layout.primaryWindow.height)
                   display:YES
                   animate:NO];
-    
-    self.window.delegate = self;
 }
 
 - (void)setCurrentViewController:(NSViewController *)vc {
@@ -259,11 +257,9 @@
 
 - (void) saveSettings {
     TestViewController *vc = [self currentVC];
-    
     _gameContext.layout.windows = [vc getWindows];
 
     [_appSettingsLoader saveConfig];
-    [_appSettingsLoader saveLayout];
     [_appSettingsLoader saveProfile];
     [_appSettingsLoader saveVariables];
     [_appSettingsLoader saveHighlights];
@@ -276,13 +272,11 @@
     [_appSettingsLoader saveVitals];
     [_appSettingsLoader saveClasses];
     
-    [vc append:[TextTag tagFor:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"]
-                          mono:true]
-            to:@"main"];
+    [self echoText:[@"[%@] settings saved\n" stringFromDateFormat:@"HH:mm"] withMono:YES];
 }
 
 - (void)command:(NSString *)command {
-    
+
     if([command isEqualToString:@"saveSettings"]) {
         
         [self saveSettings];
@@ -298,10 +292,93 @@
             [_autoMapperWindowController setSelectedZone];
         });
 
+    } else if([command isEqualToString:@"layout:LoadDefault"]) {
+
+        [self loadLayout:@"default.cfg"];
+
+    } else if([command isEqualToString:@"layout:SaveDefault"]) {
+
+        [self saveLayout:@"default.cfg"];
+
+    } else if([command isEqualToString:@"layout:Load"]) {
+
+        NSString *file = [self pickOpenFile];
+        if (file.length != 0) {
+            [self loadLayout:file];
+        }
+
+    } else if([command isEqualToString:@"layout:SaveAs"]) {
+
+        NSString *file = [self pickSaveFile];
+        if (file.length != 0) {
+            [self saveLayout:file];
+        }
+
     } else if([_currentViewController conformsToProtocol:@protocol(Commands)]) {
         id<Commands> vc = (id<Commands>)_currentViewController;
         [vc command:command];
     }
+}
+
+- (void)loadLayout:(NSString *)file {
+    _gameContext.settings.layout = file;
+    [_appSettingsLoader saveProfile];
+    [_appSettingsLoader loadLayout:_gameContext.settings.layout];
+
+    TestViewController *vc = [self currentVC];
+    [vc reloadTheme];
+    [vc removeAllWindows];
+    [vc loadWindows];
+
+    [self setWindowFrame];
+
+    NSString *text = [NSString stringWithFormat:@"%@ loaded layout %@\n", [@"[%@]" stringFromDateFormat:@"HH:mm"], file];
+    [self echoText:text withMono:YES];
+}
+
+- (void)saveLayout:(NSString *)file {
+    TestViewController *vc = [self currentVC];
+
+    _gameContext.settings.layout = file;
+    _gameContext.layout.windows = [vc getWindows];
+
+    [_appSettingsLoader saveProfile];
+    [_appSettingsLoader saveLayout:_gameContext.settings.layout];
+
+    NSString *text = [NSString stringWithFormat:@"%@ saved layout as %@\n", [@"[%@]" stringFromDateFormat:@"HH:mm"], file];
+    [self echoText:text withMono:YES];
+}
+
+- (NSString *)pickOpenFile {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    [panel setDirectoryURL: [NSURL URLWithString:_gameContext.pathProvider.layoutFolder]];
+    [panel setCanChooseFiles:YES];
+    [panel setCanChooseDirectories:NO];
+    [panel setAllowsMultipleSelection:NO];
+
+    NSInteger clicked = [panel runModal];
+
+    if (clicked == NSFileHandlingPanelOKButton) {
+        for (NSURL *url in [panel URLs]) {
+            return [url lastPathComponent];
+        }
+    }
+
+    return @"";
+}
+
+- (NSString *)pickSaveFile {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    [panel setDirectoryURL: [NSURL URLWithString:_gameContext.pathProvider.layoutFolder]];
+    [panel setNameFieldStringValue:_gameContext.settings.layout];
+
+    NSInteger clicked = [panel runModal];
+
+    if (clicked == NSFileHandlingPanelOKButton) {
+        return [[panel URL] lastPathComponent];
+    }
+
+    return @"";
 }
 
 - (void)showLogin {

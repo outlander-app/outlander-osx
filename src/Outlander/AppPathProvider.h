@@ -17,6 +17,7 @@
 - (NSString *)mapsFolder;
 - (NSString *)soundsFolder;
 - (NSString *)configFolder;
+- (NSString *)layoutFolder;
 - (NSString *)profileFolder;
 - (NSString *)folderForProfile:(NSString *)profile;
 
