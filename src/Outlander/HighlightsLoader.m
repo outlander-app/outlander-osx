@@ -10,6 +10,7 @@
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSString+Categories.h"
 #import "Outlander-Swift.h"
+#import "Regex.h"
 
 @interface HighlightsLoader () {
     GameContext *_context;
@@ -40,7 +41,8 @@
     [_context.highlights removeAll];
     
     NSString *pattern = @"^#highlight \\{(.*?)\\} \\{(.*?)\\}(?:\\s\\{(.*?)\\})?(?:\\s\\{(.*?)\\})?$";
-    [[data matchesForPattern:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+
+    [[Regex matchesForString:data with:pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
         if(res.numberOfRanges > 1) {
             Highlight *hl = [[Highlight alloc] init];
             NSString *colorsStr = [data substringWithRange:[res rangeAtIndex:1]];

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F9091447222503CE00B85F62 /* Regex.m in Sources */ = {isa = PBXBuildFile; fileRef = F9091446222503CE00B85F62 /* Regex.m */; };
+		F9091448222503CE00B85F62 /* Regex.m in Sources */ = {isa = PBXBuildFile; fileRef = F9091446222503CE00B85F62 /* Regex.m */; };
 		F90BCF8C1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90BCF8D1AE174BC00FBD7C4 /* TDPUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */; };
 		F90CEC101ACEEEBB00204243 /* MapZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97CD5821ACD27D3007E5804 /* MapZone.swift */; };
@@ -499,6 +501,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F9091445222503CE00B85F62 /* Regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Regex.h; sourceTree = "<group>"; };
+		F9091446222503CE00B85F62 /* Regex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Regex.m; sourceTree = "<group>"; };
 		F90BCF8B1AE174BC00FBD7C4 /* TDPUpdateHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDPUpdateHandler.swift; sourceTree = "<group>"; };
 		F90CEC171AD037CE00204243 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = AutoMapper/MapView.swift; sourceTree = "<group>"; };
 		F90CEC1D1AD2281900204243 /* RoomChangeHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomChangeHandler.swift; sourceTree = "<group>"; };
@@ -1230,6 +1234,8 @@
 				F931A37720C2012A000DCE53 /* VariableReplacer2.swift */,
 				F92C1D5D20C258E20076BF19 /* Utilities.swift */,
 				F9C651C620C64CB300746661 /* Clock.swift */,
+				F9091445222503CE00B85F62 /* Regex.h */,
+				F9091446222503CE00B85F62 /* Regex.m */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -1813,6 +1819,7 @@
 				F959D3E11AC8FB6300B2A659 /* AliasesViewController.swift in Sources */,
 				F9A74F1119305D14008F410A /* VariablesLoader.m in Sources */,
 				F9B3AC6919405BD700C081C4 /* Atom.m in Sources */,
+				F9091447222503CE00B85F62 /* Regex.m in Sources */,
 				F98F22D419248506008175FD /* LoginViewController.m in Sources */,
 				F989E1F9192C27AD00562E32 /* LocalFileSystem.m in Sources */,
 				F9FFE7811E7C7BD400FD33B8 /* PlayCommandHandler.swift in Sources */,
@@ -1900,6 +1907,7 @@
 				F97A5CBC1895EEF500E2C318 /* NSTextField+Categories.m in Sources */,
 				F98782C01942128F00D76231 /* IdToken.m in Sources */,
 				F96ECDCC1934E6EB00787CB9 /* VarCommandHandler.m in Sources */,
+				F9091448222503CE00B85F62 /* Regex.m in Sources */,
 				F9E4DD6A1B0060430094DD08 /* IgnoreCaseKeywords.swift in Sources */,
 				F90CEC151ACEEED000204243 /* Pathfinder.swift in Sources */,
 				F9B6CD841E779F9C0085195F /* JsonSerializer.swift in Sources */,

@@ -53,17 +53,19 @@ class LogCommandHandler : NSObject, CommandHandler {
     }
 
     func handle(command: String, withContext: GameContext) {
-        let echo = command
-            .substringFromIndex(command.startIndex.advancedBy(4))
-            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        let log = command
+            .substringFromIndex(command.startIndex.advancedBy(5))
 
-        var groups = echo["^(>([\\w\\.\\$%-]+)\\s)?(.*)"].groups()
+        var groups = log["^(>([\\w\\.\\$%-]+)\\s)?(.*)"].groups()
 
         var fileName = groups[2]
         var text = groups[3]
 
         fileName = (fileName == regexNoGroup || fileName == "") ? "\(withContext.settings.character)-\(withContext.settings.game).txt" : fileName
         text = text == regexNoGroup ? "" : text
+
+        text = text.replace("\\n", withString: "\n")
+        text = text.replace("\\r", withString: "\r")
 
         do {
             let filePath = "\(withContext.pathProvider.logsFolder())"
