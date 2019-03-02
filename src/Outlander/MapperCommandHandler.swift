@@ -190,7 +190,9 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
     func goto(context:GameContext, to:MapNode?, from:MapNode?, matches:[MapNode], area:String) -> [String] {
 
         guard let zone = context.mapZone else {
-            self.sendMessage("no map data loaded")
+            let msg = "no map data loaded"
+            self.sendMessage(msg)
+            self.sendCommand("#parse \(msg)")
             self.sendCommand("#parse AUTOMAPPER NO MAP DATA")
             return []
         }
@@ -202,14 +204,17 @@ class MapperGotoCommandHandler : NSObject, CommandHandler {
         }
 
         guard to != nil && from != nil else {
-            self.sendMessage("no path found for \"\(area)\"")
+            let msg = "no path found for \"\(area)\""
+            self.sendMessage(msg)
+            self.sendCommand("#parse \(msg)")
             self.sendCommand("#parse AUTOMAPPER NO PATH FOUND")
             return []
         }
 
         if to!.id == from!.id {
-            
-            self.sendMessage("You are already here!")
+            let msg = "You are already here!"
+            self.sendMessage(msg)
+            self.sendCommand("#parse \(msg)")
             self.sendCommand("#parse AUTOMAPPER ALREADY HERE")
             
             return []

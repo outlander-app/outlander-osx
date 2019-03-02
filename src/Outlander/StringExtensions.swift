@@ -28,7 +28,7 @@ extension String {
         
         return self
     }
-    
+
     public func trimSuffix(suffix:String) -> String {
         
         if(self.hasSuffix(suffix)) {

@@ -12,6 +12,7 @@
 #import "MyView.h"
 #import "MMScroller.h"
 #import "Outlander-Swift.h"
+#import "Regex.h"
 
 @interface TextViewController () {
     NSDateFormatter *_dateFormatter;
@@ -343,7 +344,7 @@
         fontSize = self.monoFontSize;
     }
     [attr addAttribute:NSFontAttributeName value:[self fontWithName:fontName size:fontSize] range:range];
-    
+
     return attr;
 }
 
@@ -483,7 +484,7 @@
             return;
         }
 
-        [[str.string matchesForPattern:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
+        [[Regex matchesForString:str.string with:hl.pattern] enumerateObjectsUsingBlock:^(NSTextCheckingResult *res, NSUInteger idx, BOOL *stop) {
 
             if (idx > 1000) {
                 *stop = YES;

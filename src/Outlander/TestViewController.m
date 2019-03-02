@@ -31,6 +31,7 @@
 #import <MASShortcut/MASShortcut.h>
 #import <MASShortcut/MASShortcutMonitor.h>
 #import "NSArray+PEGKitAdditions.h"
+#import "Regex.h"
 
 @interface TestViewController ()
 @end
@@ -392,7 +393,7 @@
     [controller.keyup subscribeNext:^(NSEvent *theEvent) {
         
         NSString *val = [theEvent charactersIgnoringModifiers];
-        NSArray *matches = [val matchesForPattern:@"[a-zA-Z0-9\\!\\\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\\\\\-\\./:;<=>\\?@\\[\\]\\^_`{|}~]"];
+        NSArray *matches = [Regex matchesForString:val with:@"[a-zA-Z0-9\\!\\\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\\\\\-\\./:;<=>\\?@\\[\\]\\^_`{|}~]"];
         
         NSNumber *keyCode = [NSNumber numberWithInteger:[theEvent keyCode]];
         
