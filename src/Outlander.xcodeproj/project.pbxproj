@@ -186,6 +186,7 @@
 		F9762F7F192E50EF00B873D7 /* AliasesTester.m in Sources */ = {isa = PBXBuildFile; fileRef = F9762F7E192E50EF00B873D7 /* AliasesTester.m */; };
 		F9772F171940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
 		F9772F181940389E00172083 /* VarToken.m in Sources */ = {isa = PBXBuildFile; fileRef = F9772F161940389E00172083 /* VarToken.m */; };
+		F978272C222F4EEA009BAF1A /* VariableReplacerTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F978272B222F4EEA009BAF1A /* VariableReplacerTester.swift */; };
 		F97A05DF1B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A05E01B24CEBD009B5885 /* TriggerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */; };
 		F97A5C241890A6B600E2C318 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97A5C221890A6B600E2C318 /* MainWindowController.m */; };
@@ -634,6 +635,7 @@
 		F9772F151940389E00172083 /* VarToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VarToken.h; sourceTree = "<group>"; };
 		F9772F161940389E00172083 /* VarToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VarToken.m; sourceTree = "<group>"; };
 		F9772F19194038D900172083 /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
+		F978272B222F4EEA009BAF1A /* VariableReplacerTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VariableReplacerTester.swift; path = Core/VariableReplacerTester.swift; sourceTree = "<group>"; };
 		F97A05DE1B24CEBD009B5885 /* TriggerHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TriggerHandler.swift; path = Scripting/TriggerHandler.swift; sourceTree = "<group>"; };
 		F97A5C211890A6B600E2C318 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		F97A5C221890A6B600E2C318 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
@@ -1012,6 +1014,14 @@
 				F98782FA1946873500D76231 /* WaitForToken.m */,
 			);
 			name = Tokens;
+			sourceTree = "<group>";
+		};
+		F978272A222F4EC1009BAF1A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F978272B222F4EEA009BAF1A /* VariableReplacerTester.swift */,
+			);
+			name = Core;
 			sourceTree = "<group>";
 		};
 		F97A5C1A1890A07B00E2C318 /* Scripting */ = {
@@ -1462,6 +1472,7 @@
 			children = (
 				F9B9BFDF1ABD558F00CB44B6 /* OutlanderTests-Bridging-Header.h */,
 				F982EB8F218D1E4E00007E66 /* Automapper */,
+				F978272A222F4EC1009BAF1A /* Core */,
 				F9FCFB5021029C3D004CA73B /* Scripting */,
 				F9B9BFF01ABD724600CB44B6 /* Text */,
 				F989E202192C2BA700562E32 /* Stubs */,
@@ -1953,6 +1964,7 @@
 				F94923911B07C7280051F7F5 /* HighlightCellView.swift in Sources */,
 				F982EB91218D1E6000007E66 /* MapZoneTester.swift in Sources */,
 				F92C1D6120C26A0F0076BF19 /* GlobalVariablesTester.swift in Sources */,
+				F978272C222F4EEA009BAF1A /* VariableReplacerTester.swift in Sources */,
 				F98782FC1946873500D76231 /* WaitForToken.m in Sources */,
 				F95538A61B2809AB007DCCD4 /* TriggersViewController.swift in Sources */,
 				F9316D231AD9E1D400880149 /* ScriptContext.swift in Sources */,

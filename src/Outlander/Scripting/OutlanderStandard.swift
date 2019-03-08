@@ -959,7 +959,7 @@ public class OutlanderScriptParser : StackParser {
         var inExpression = false
         
         for (_, t) in token.body.enumerate() {
-            if (t.name == "variable" || t.name == "globalvar") && !foundVar && !inExpression {
+            if (t.name == "keyword" || t.name == "word" || t.name == "variable" || t.name == "globalvar") && !foundVar && !inExpression {
                 evalToken.variable = t.characters
                 foundVar = true
             } else if (foundVar || inExpression || t is FuncToken) && t.name != "close-paren" {
