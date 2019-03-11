@@ -1,4 +1,6 @@
 
+See the YouTube Channel with for some how-to videos: https://www.youtube.com/channel/UCH7LuCxJkg_wJ0l2KUHia0g
+
 * [Automapper](#automapper)
 * [Configuration Commands](#configuration-commands)
 * [Scripting](#scripting)
