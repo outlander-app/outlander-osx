@@ -8,6 +8,9 @@ Like Outlander?  Consider [becoming a Patreon](https://www.patreon.com/outlander
 Question or suggestion?
 
 Join the Discord Server - https://discord.gg/XqyCNEq
+
+See the YouTube Channel with for some how-to videos: https://www.youtube.com/channel/UCH7LuCxJkg_wJ0l2KUHia0g
+
 You can also read the [player documentation](commands.md) to see all of the available [commands](commands.md).
 
 [Scripting support](commands.md#scripting) and [Example scripts](commands.md#example-scripts)
