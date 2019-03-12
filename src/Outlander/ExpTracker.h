@@ -10,10 +10,13 @@
 
 @interface ExpTracker : NSObject
 
+@property (nonatomic, copy) NSString *orderBy;
 @property (nonatomic, strong) NSDate *startOfTracking;
 
+-(void)reset;
 -(void) update:(SkillExp *)exp;
 -(NSArray *) skills;
--(NSArray *) skillsWithExp;
+-(NSArray *) skillsWithMindState;
+-(NSArray *) skillsWithExpOrMindState;
 
 @end

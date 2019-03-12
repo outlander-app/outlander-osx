@@ -20,9 +20,13 @@
     return self;
 }
 
+-(double)earnedRanks {
+    return _ranks.doubleValue - _originalRanks.doubleValue;
+}
+
 - (NSString *)description {
     NSString *mindstate = [NSString stringWithFormat:@"(%@/34)", @(self.mindState.rateId)];
-    double diff = _ranks.doubleValue - _originalRanks.doubleValue;
+    double diff = [self earnedRanks];
     NSString *sign = diff > 0 ? @"+" : @"-";
     if (diff == 0.0) {
         sign = @" ";

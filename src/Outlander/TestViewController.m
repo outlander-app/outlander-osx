@@ -119,6 +119,7 @@
     
     [gameContext.events subscribe:self token:@"OL:window"];
     [gameContext.events subscribe:self token:@"OL:window:ensure"];
+    [gameContext.events subscribe:self token:@"OL:tracker"];
     
     return self;
 }
@@ -160,10 +161,67 @@
         
         return;
     }
+
+    if ([token isEqualToString:@"OL:tracker"]) {
+        [self processTrackerCommand:data[@"command"] withValue:data[@"value"]];
+    }
+}
+
+- (void)processTrackerCommand:(NSString *)flag withValue:(NSString *)value {
+
+    if ([flag isEqualToString:@"reset"]) {
+        [_expTracker reset];
+        [self updateExpWindow];
+        [self append:[TextTag tagFor:@"\nExperience Tracker reset\n\n" mono:YES] to:@"main"];
+    }
+
+    if ([flag isEqualToString:@"update"]) {
+        [self updateExpWindow];
+    }
+
+    if ([flag isEqualToString:@"orderby"] || [flag isEqualToString:@"sortby"]) {
+        _expTracker.orderBy = [value lowercaseString];
+        [self append:[TextTag tagFor:@"\nExperience Tracker\n" mono:YES] to:@"main"];
+        [self append:[TextTag tagFor:[NSString stringWithFormat:@"Ordering skills by %@\n\n", _expTracker.orderBy] mono:YES] to:@"main"];
+        [self updateExpWindow];
+    }
+
+    if ([flag isEqualToString:@"report"]) {
+        NSArray *result = [_expTracker.skillsWithExpOrMindState.rac_sequence map:^id(SkillExp *value) {
+            TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\n", value.description]
+                                      mono:true];
+            if(value.isNew) {
+                tag.preset = @"exptracker";
+            }
+            tag.targetWindow = @"main";
+            return tag;
+        }].array;
+
+        NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
+        
+        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
+        
+        unsigned int seconds = (unsigned int)round(secondsBetween);
+        NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
+                            seconds / 3600, (seconds / 60) % 60, seconds % 60];
+        
+        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars get:@"tdp"]] mono:YES]];
+        [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
+        [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
+
+        [self append:[TextTag tagFor:@"\nExperience Tracker\n" mono:YES] to:@"main"];
+        [self append:[TextTag tagFor:@"Showing all skills with field experience or earned ranks.\n\n" mono:YES] to:@"main"];
+
+        for (TextTag *tag in tags) {
+            NSString *target = [self windowForTarget:tag.targetWindow];
+            [self append:tag to:target];
+        }
+
+        [self append:[TextTag tagFor:@"\n" mono:YES] to:@"main"];
+    }
 }
 
 - (void)processWindowCommand:(NSString *)action target:(NSString *)window {
-    NSLog(@"#window command: %@ %@", action, window);
     if ([action isEqualToString:@"clear"]) {
         
         [self clearWindow:window];
@@ -638,29 +696,7 @@
     }];
     [_gameStream.exp subscribeNext:^(SkillExp *skillExp) {
         [_expTracker update:skillExp];
-        NSArray *result = [_expTracker.skillsWithExp.rac_sequence map:^id(SkillExp *value) {
-            TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\r\n", value.description]
-                                      mono:true];
-            if(value.isNew) {
-                tag.color = @"#66FFFF";
-            }
-            return tag;
-        }].array;
-        
-        NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
-        
-        NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
-        
-        unsigned int seconds = (unsigned int)round(secondsBetween);
-        NSLog(@"seconds: %u", seconds);
-        NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
-                            seconds / 3600, (seconds / 60) % 60, seconds % 60];
-        
-        [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars get:@"tdp"]] mono:YES]];
-        [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
-        [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
-        
-        [self set:@"experience" withTags:tags];
+        [self updateExpWindow];
     }];
 
     [[_gameStream.subject.signal deliverOn:[RACScheduler mainThreadScheduler]]
@@ -718,6 +754,31 @@
     [self append:[TextTag tagFor:[NSString stringWithFormat:@"[%@] %@\n", dateFormat, msg]
                             mono:true]
               to:@"main"];
+}
+
+- (void)updateExpWindow {
+    NSArray *result = [_expTracker.skillsWithMindState.rac_sequence map:^id(SkillExp *value) {
+        TextTag *tag = [TextTag tagFor:[NSString stringWithFormat:@"%@\r\n", value.description]
+                                  mono:true];
+        if(value.isNew) {
+            tag.preset = @"exptracker";
+        }
+        return tag;
+    }].array;
+    
+    NSMutableArray *tags = [[NSMutableArray alloc] initWithArray:result];
+    
+    NSTimeInterval secondsBetween = [[NSDate date] timeIntervalSinceDate:_expTracker.startOfTracking];
+    
+    unsigned int seconds = (unsigned int)round(secondsBetween);
+    NSString *trackingFor = [NSString stringWithFormat:@"Tracking for: %02u:%02u:%02u\n",
+                        seconds / 3600, (seconds / 60) % 60, seconds % 60];
+    
+    [tags addObject:[[TextTag alloc] initWith:[NSString stringWithFormat:@"\nTDPs: %@\n", [_gameContext.globalVars get:@"tdp"]] mono:YES]];
+    [tags addObject:[[TextTag alloc] initWith:trackingFor mono:YES]];
+    [tags addObject:[[TextTag alloc] initWith:[@"Last updated: %@\n" stringFromDateFormat:@"hh:mm:ss a"] mono:YES]];
+    
+    [self set:@"experience" withTags:tags];
 }
 
 - (void)updateRoom {

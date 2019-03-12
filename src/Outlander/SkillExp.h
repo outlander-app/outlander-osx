@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSDecimalNumber *ranks;
 @property (nonatomic, strong) NSDecimalNumber *originalRanks;
 @property (nonatomic, assign) BOOL isNew;
+@property (nonatomic, readonly) double earnedRanks;
 
 @end

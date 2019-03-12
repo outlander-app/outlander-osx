@@ -71,6 +71,7 @@
     [_handlers addObject:[PlayCommandHandler newInstance:[[LocalFileSystem alloc] init]]];
     [_handlers addObject:[BugCommandHandler newInstance]];
     [_handlers addObject:[TestXmlCommandHandler newInstance]];
+    [_handlers addObject:[TrackerCommandHandler newInstance]];
     
     [context.events subscribe:self token:@"OL:command"];
     [context.events subscribe:self token:@"OL:echo"];

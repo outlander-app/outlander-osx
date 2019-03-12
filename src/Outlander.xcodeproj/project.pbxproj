@@ -405,6 +405,8 @@
 		F9C651C820C64CB300746661 /* Clock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C620C64CB300746661 /* Clock.swift */; };
 		F9C651CA20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */; };
 		F9C651CB20CBA1F800746661 /* TestXmlCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */; };
+		F9C7A8AF22379BAD0049C62F /* TrackerCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C7A8AE22379BAD0049C62F /* TrackerCommandHandler.swift */; };
+		F9C7A8B022379BAD0049C62F /* TrackerCommandHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C7A8AE22379BAD0049C62F /* TrackerCommandHandler.swift */; };
 		F9CAB0B41AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CAB0B51AD727DB001296BE /* AuthBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */; };
 		F9CB31101903238B004587A5 /* SkillExp.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CB310F1903238B004587A5 /* SkillExp.m */; };
@@ -836,6 +838,7 @@
 		F9C29109189AB86000F70224 /* Vitals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vitals.m; sourceTree = "<group>"; };
 		F9C651C620C64CB300746661 /* Clock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clock.swift; sourceTree = "<group>"; };
 		F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestXmlCommandHandler.swift; sourceTree = "<group>"; };
+		F9C7A8AE22379BAD0049C62F /* TrackerCommandHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackerCommandHandler.swift; path = Scripting/TrackerCommandHandler.swift; sourceTree = "<group>"; };
 		F9CAB0B31AD727DB001296BE /* AuthBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBuilder.swift; sourceTree = "<group>"; };
 		F9CB310E1903238B004587A5 /* SkillExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillExp.h; sourceTree = "<group>"; };
 		F9CB310F1903238B004587A5 /* SkillExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillExp.m; sourceTree = "<group>"; };
@@ -1069,6 +1072,7 @@
 				F931A37420C1B261000DCE53 /* LogCommandHandler.swift */,
 				F9C651C920CBA1F800746661 /* TestXmlCommandHandler.swift */,
 				F92C1D6220C386170076BF19 /* SendQueue.swift */,
+				F9C7A8AE22379BAD0049C62F /* TrackerCommandHandler.swift */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -1705,6 +1709,7 @@
 				F97A5CA21895E06400E2C318 /* MyView.m in Sources */,
 				F9316D261AD9E1D400880149 /* Actor.swift in Sources */,
 				F96ECDB619343F5B00787CB9 /* ScriptLoader.m in Sources */,
+				F9C7A8AF22379BAD0049C62F /* TrackerCommandHandler.swift in Sources */,
 				F94A3FC91948AE0500D6B35D /* GosubToken.m in Sources */,
 				F9B6CD8C1E7903DA0085195F /* ClassesLoader.swift in Sources */,
 				F97CD5891ACD27D3007E5804 /* MapZone.swift in Sources */,
@@ -2020,6 +2025,7 @@
 				F9ACB141192ECFC3006D3548 /* VariableReplacer.m in Sources */,
 				F90CEC131ACEEEC300204243 /* MapArc.swift in Sources */,
 				F91761321E328DB90091A617 /* PresetLoaderTester.swift in Sources */,
+				F9C7A8B022379BAD0049C62F /* TrackerCommandHandler.swift in Sources */,
 				F94E78E71E37DFF60095CBF8 /* PresetCommandHandler.swift in Sources */,
 				F9B9BFF21ABD726000CB44B6 /* StormFrontTokenizerTester.swift in Sources */,
 				F9818D5B1908CE4800137896 /* ExpTrackerTester.m in Sources */,

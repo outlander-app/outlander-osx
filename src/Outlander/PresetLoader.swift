@@ -75,6 +75,10 @@ class PresetLoader : NSObject {
                 self.context.presets[item.name] = item
             }
         }
+
+        if self.context.presets["exptracker"] == nil {
+            self.add("exptracker", "#66FFFF")
+        }
     }
 
     func save() {
@@ -108,19 +112,20 @@ class PresetLoader : NSObject {
     }
 
     func setupDefaults() {
-        self.add("automapper", "#99FFFF")
-        self.add("chatter", "#99FFFF")
+        self.add("automapper", "#66FFFF")
+        self.add("chatter", "#66FFFF")
         self.add("creatures", "#FFFF00")
         self.add("roomdesc", "#cccccc")
         self.add("roomname", "#0000FF")
-        self.add("scriptecho", "#99FFFF")
+        self.add("scriptecho", "#66FFFF")
         self.add("scripterror", "#efefef", "#ff3300")
         self.add("scriptinfo", "#0066cc")
         self.add("scriptinput", "#acff2f")
         self.add("sendinput", "#acff2f")
-        self.add("speech", "#99FFFF")
-        self.add("thought", "#99FFFF")
-        self.add("whisper", "#99FFFF")
+        self.add("speech", "#66FFFF")
+        self.add("thought", "#66FFFF")
+        self.add("whisper", "#66FFFF")
+        self.add("exptracker", "#66FFFF")
     }
 
     func add(name:String, _ color:String, _ backgroundColor:String? = nil) {
