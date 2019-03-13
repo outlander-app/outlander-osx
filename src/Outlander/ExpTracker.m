@@ -83,19 +83,22 @@
 }
 
 -(NSArray *)orderBy:(NSArray *)array {
-    if ([[_orderBy lowercaseString] isEqualToString:@"name"]) {
+
+    NSString *ob = _orderBy.lowercaseString;
+    
+    if ([ob isEqualToString:@"name"]) {
         return [self orderByName:array ascending:YES];
     }
 
-    if ([[_orderBy lowercaseString] isEqualToString:@"name desc"]) {
+    if ([ob isEqualToString:@"name desc"]) {
         return [self orderByName:array ascending:NO];
     }
 
-    if ([[_orderBy lowercaseString] isEqualToString:@"rank"]) {
+    if ([ob isEqualToString:@"rank"] || [ob isEqualToString:@"ranks"]) {
         return [self orderByRank:array];
     }
 
-    if ([[_orderBy lowercaseString] isEqualToString:@"rank desc"]) {
+    if ([ob isEqualToString:@"rank desc"] || [ob isEqualToString:@"ranks desc"]) {
         return [self orderByRankDesc:array];
     }
 

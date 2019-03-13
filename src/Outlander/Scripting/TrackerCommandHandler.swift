@@ -28,7 +28,7 @@ class TrackerCommandHandler : NSObject, CommandHandler {
         if text.characters.count == 0 {
             withContext.events.echoText("\nExperience Tracker", mono: true, preset: "default")
             withContext.events.echoText("Available commands:", mono: true, preset: "default")
-            withContext.events.echoText("  orderby: order skills by skillset, name, name desc, ranks, ranks desc.", mono: true, preset: "default")
+            withContext.events.echoText("  orderby: order skills by skillset, name, name desc, rank, rank desc.", mono: true, preset: "default")
             withContext.events.echoText("  report:  display a report of skills with field experience or earned ranks.", mono: true, preset: "default")
             withContext.events.echoText("  reset:   resets the tracking data.", mono: true, preset: "default")
             withContext.events.echoText("  update:  refreshes the experience window.", mono: true, preset: "default")
