@@ -107,19 +107,18 @@ class RoomChangeHandler : NSObject, NodeHandler {
     }
 
     func swapMaps(context:GameContext, room:MapNode, name:String, description:String) -> MapNode {
-        if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
-
-            let groups = room.notes!["(.+\\.xml)"].groups()
+        if room.isTransfer() {
             
-            if groups.count > 1 {
-                let mapfile = groups[1]
-                if let zone = context.zoneFromFile(mapfile) {
+            guard let mapfile = room.transferMap else {
+                return room
+            }
 
-                    context.mapZone = zone
+            if let zone = context.zoneFromFile(mapfile) {
 
-                    if let found = self.findRoom(context, zone: zone, previousRoomId: nil, name: name, description: description) {
-                        return found
-                    }
+                context.mapZone = zone
+
+                if let found = self.findRoom(context, zone: zone, previousRoomId: nil, name: name, description: description) {
+                    return found
                 }
             }
         }

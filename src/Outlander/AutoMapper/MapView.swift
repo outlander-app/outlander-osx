@@ -43,6 +43,8 @@ class MapView: NSView {
     var zoneExitPathColor:NSColor = NSColor(hex:"#0000ff")
     
     var nodeHover:((MapNode?)->Void)?
+    var nodeClicked:((MapNode)->Void)?
+    var nodeTravelTo:((MapNode)->Void)?
     
     func getCurrentZoneId() -> String? {
         return self.mapZone?.id
@@ -94,7 +96,27 @@ class MapView: NSView {
         
         self.debouceLookupRoom()
     }
-    
+
+    override func mouseUp(event: NSEvent) {
+        let globalLocation = NSEvent.mouseLocation()
+        let windowLocation = self.window!.convertRectFromScreen(NSRect(x: globalLocation.x, y: globalLocation.y, width: 0, height: 0))
+        let viewLocation = self.convertPoint(windowLocation.origin, fromView: nil)
+
+        if let room = self.lookupRoomFromPoint(viewLocation) {
+            self.nodeClicked?(room)
+        }
+    }
+
+    override func rightMouseUp(event: NSEvent) {
+        let globalLocation = NSEvent.mouseLocation()
+        let windowLocation = self.window!.convertRectFromScreen(NSRect(x: globalLocation.x, y: globalLocation.y, width: 0, height: 0))
+        let viewLocation = self.convertPoint(windowLocation.origin, fromView: nil)
+
+        if let room = self.lookupRoomFromPoint(viewLocation) {
+            self.nodeTravelTo?(room)
+        }
+    }
+
     var lastMousePosition:CGPoint?
     var debounceTimer:NSTimer?
     
@@ -105,22 +127,24 @@ class MapView: NSView {
         debounceTimer = NSTimer(timeInterval: 0.07, target: self, selector: #selector(MapView.lookupRoom), userInfo: nil, repeats: false)
         NSRunLoop.currentRunLoop().addTimer(debounceTimer!, forMode: "NSDefaultRunLoopMode")
     }
-    
-    func lookupRoom() {
-        
-        let point = self.lastMousePosition!
-        
-        var room:MapNode?
-        
+
+    func lookupRoomFromPoint(maybePoint:CGPoint?) -> MapNode? {
+        guard let point = maybePoint else {
+            return nil
+        }
+
         for (key,value) in self.nodeLookup {
             if key.rectValue.contains(point) {
-                
-                room = self.mapZone?.roomWithId(value)
-                
-                break
+                return self.mapZone?.roomWithId(value)
             }
         }
-        
+
+        return nil
+    }
+
+    func lookupRoom() {
+        let room = self.lookupRoomFromPoint(self.lastMousePosition)
+
         dispatch_async(dispatch_get_main_queue(), {
             self.nodeHover?(room)
         })
@@ -186,7 +210,7 @@ class MapView: NSView {
                     
                     //println("(\(room.position.x), \(room.position.y)) to \(point)")
                     
-                    if let notes = room.notes where notes.rangeOfString(".xml") != nil {
+                    if room.isTransfer() {
                         strokeWidth = 1.5
                         NSBezierPath.setDefaultLineWidth(strokeWidth)
                         self.zoneExitPathColor.setStroke()

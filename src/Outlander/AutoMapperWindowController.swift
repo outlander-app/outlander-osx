@@ -173,6 +173,16 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
                 self.nodeNameLabel.stringValue = ""
             }
         }
+
+        self.mapView.nodeClicked = { node in
+            if node.isTransfer() {
+                self.context?.globalVars.set(node.id, forKey: "roomid")
+            }
+        }
+
+        self.mapView.nodeTravelTo = { node in
+            self.context?.events.sendCommandText("#goto \(node.id)")
+        }
     }
     
     func setSelectedZone() {
@@ -205,17 +215,16 @@ class AutoMapperWindowController: NSWindowController, NSComboBoxDataSource, ISub
         if key == "roomid" {
             if let id = changed["roomid"], let room = self.context!.mapZone?.roomWithId(id) {
 
-                if room.notes != nil && room.notes!.rangeOfString(".xml") != nil {
-                    
-                    let groups = room.notes!["(.+\\.xml)"].groups()
-                    
-                    if groups.count > 1 {
-                        let mapfile = groups[1]
-                        
-                        if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
-                            self.setZoneFromMap(mapInfo)
-                        }
+                if room.isTransfer() {
+
+                    guard let mapfile = room.transferMap else {
+                        return
                     }
+
+                    if let mapInfo = self.mapsDataSource.mapForFile(mapfile) {
+                        self.setZoneFromMap(mapInfo)
+                    }
+
                 } else {
                     mainThread {
                         if self.mapView != nil {

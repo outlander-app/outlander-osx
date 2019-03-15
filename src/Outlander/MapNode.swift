@@ -40,6 +40,19 @@ final class MapNode {
         self.arcs = arcs
     }
 
+    var transferMap:String? {
+        get {
+            if self.isTransfer() {
+                let groups = self.notes?["(.+\\.xml)"].groups()
+                if groups?.count > 1 {
+                    return groups?[1]
+                }
+            }
+
+            return nil
+        }
+    }
+
     func isTransfer() -> Bool {
         return self.notes?.containsString(".xml") == true
     }

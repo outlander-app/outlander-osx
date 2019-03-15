@@ -868,7 +868,7 @@
         NSString *fileName = [NSString stringWithFormat:@"%@-%@-%@%@.txt",
                               _gameContext.settings.character,
                               _gameContext.settings.game,
-                              [@"%@" stringFromDateFormat:@"yyyy-MM-dd"],
+                              [@"%@" stringFromDateFormat:_gameContext.settings.variableDateFormat],
                               ending];
 
         NSString *filePath = [logsDir stringByAppendingPathComponent:fileName];

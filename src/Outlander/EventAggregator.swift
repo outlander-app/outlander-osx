@@ -69,6 +69,12 @@ public class EventAggregator : NSObject {
         }
     }
 
+    public func sendCommandText(command:String) {
+        let context = CommandContext()
+        context.command = command
+        publish("OL:command", data: ["command":context])
+    }
+
     public func sendCommand(context:CommandContext) {
         publish("OL:command", data: ["command":context])
     }
