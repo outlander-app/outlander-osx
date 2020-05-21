@@ -104,8 +104,8 @@ Yes - the Genie map files have several commands that are not yet fully supported
 ## Scripting
 
 #### Example Scripts
-* Repository of several scripts: https://github.com/joemcbride/outlander-osx-scripts
-* [hunt.cmd](https://github.com/joemcbride/outlander-osx-scripts/blob/master/hunt.cmd) - basic hunt script
+* Repository of several scripts: https://github.com/outlander-app/scripts
+* [hunt.cmd](https://github.com/outlander-app/scripts/blob/master/hunt.cmd) - basic hunt script
 ```
 supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
 
@@ -113,10 +113,10 @@ supported options: throw, lob, hurl, offhand, ambush, poach, snipe, exp
 .hunt poach shortbow
 .hunt ambush "short sword"
 ```
-* [disarm.cmd](https://github.com/joemcbride/outlander-osx-scripts/blob/master/disarm.cmd) - disarm and pick boxes (supports lockpick rings or loose lockpicks, removes and re-equips armor)
-* [swim.cmd](https://github.com/joemcbride/outlander-osx-scripts/blob/master/swim.cmd) - swim between two rooms `.swim north south`
-* [simpletravel.cmd](https://github.com/joemcbride/outlander-osx-scripts/blob/master/simpletravel.cmd) - travel to locations across maps  `.simpletravel "w gate" brook`
-* [automapper.cmd](https://github.com/joemcbride/outlander-osx-scripts/blob/master/automapper.cmd) - required for `#goto` map commands to work.  Set `#var powerwalk 1` to enable powerwalking to the given destination.
+* [disarm.cmd](https://github.com/outlander-app/scripts/blob/master/disarm.cmd) - disarm and pick boxes (supports lockpick rings or loose lockpicks, removes and re-equips armor)
+* [swim.cmd](https://github.com/outlander-app/scripts/blob/master/swim.cmd) - swim between two rooms `.swim north south`
+* [simpletravel.cmd](https://github.com/outlander-app/scripts/blob/master/simpletravel.cmd) - travel to locations across maps  `.simpletravel "w gate" brook`
+* [automapper.cmd](https://github.com/outlander-app/scripts/blob/master/automapper.cmd) - required for `#goto` map commands to work.  Set `#var powerwalk 1` to enable powerwalking to the given destination.
 
 #### Scripting Basics
 ```
